@@ -1,0 +1,450 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+    --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+    --display:"Oswald","Arial Narrow",sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)}
+  .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+         color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;color:var(--ink);margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+     margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+  .lead{color:var(--dim)}
+
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+
+  table.pins{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
+  table.pins td.n{font-family:var(--mono);color:var(--amber);width:26px}
+
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)}
+  .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .note p+p{margin-top:8px}
+
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+
+  .banner{background:var(--panel-2);border-bottom:1px solid var(--amber);padding:11px 20px;font-size:13px;color:var(--dim);display:flex;gap:14px;align-items:center;justify-content:space-between}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+
+<div id="banner" class="banner">
+  <span>Planches issues directement du manuel officiel Magnitude 3 (AN-01-45MAG-3) — hébergées dans <code>img/</code>, aucune dépendance externe.</span>
+  <button class="ghost" onclick="document.getElementById('banner').remove()">OK</button>
+</div>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px">&larr; Accueil</a>
+      <div class="tail">Section A · F4U-1D</div>
+      <h1>Découverte<br>&amp; cockpit</h1>
+      <p class="sub">Sept leçons illustrées, planches du manuel Magnitude 3 à l'appui.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+/* Images : planches officielles extraites du manuel Magnitude 3, servies localement */
+const IMG = {
+  overview:   "airframe_overview.jpg",
+  axistune:   "options_axis_tune.jpg",
+  cfwd:       "cockpit_forward.jpg",
+  cleft:      "cockpit_left.jpg",
+  cright:     "cockpit_right.jpg",
+  instr:      "instrument_panels.jpg",
+  stick:      "flight_controls_stick.jpg",
+  trim:       "flight_controls_trim.jpg",
+  ecu:        "engine_control_unit.jpg",
+  hydgauge:   "hydraulic_gauge.jpg",
+  hydpump:    "hydraulic_handpump.jpg",
+  wfold:      "wingfold_folding.jpg",
+  wspread:    "wingfold_spreading.jpg",
+  wpin:       "wingfold_pin.jpg",
+  windic:     "wingfold_indicator.jpg",
+  geardown:   "gear_down.jpg",
+  gearup:     "gear_up.jpg",
+  gearphoto:  "gear_dcs_photo.jpg",
+  divebrake:  "divebrake_dcs_photo.jpg",
+  flaplever:  "flap_lever_clicks.jpg",
+  flappanel:  "flap_control_panel.jpg",
+  hookdown:   "hook_down.jpg",
+  hookpark:   "hook_parking.jpg",
+  hookup:     "hook_up.jpg",
+  gunpanel:   "gun_charging_panel.jpg",
+  gunknoba:   "gun_charging_knob_a.jpg",
+  gunknobb:   "gun_charging_knob_b.jpg",
+  mirror1:    "mirror_1.jpg",
+  mirror2:    "mirror_2.jpg",
+  mirror3:    "mirror_3.jpg",
+};
+
+/* Sources */
+const DOC = {
+  manuel:    ["Manuel officiel (PDF)","docs/manuel-f4u1d.pdf"],
+  checklist: ["Checklist procédurale V5 (ED Forums)","https://www.digitalcombatsimulator.com/en/files/3345416/"],
+  kneeboard: ["Kneeboards à jour (ED Forums)","https://www.digitalcombatsimulator.com/en/files/3345803/"],
+  videos:    ["Playlist tutoriels vidéo","https://www.youtube.com/playlist?list=PLODX_e0mlZ2UvjOjEvgd0Pflyci7JARkm"],
+};
+
+const L = [
+{id:"a1", title:"Tour du cockpit", isNew:true,
+ intro:"Le F4U-1D est un cockpit analogique de 1944 : pas d'écran, pas de menu, juste des manettes, des cadrans et des cliquets. Trois zones à connaître par cœur avant de toucher au démarreur : la planche avant, la console gauche, la console droite.",
+ body:[
+  {t:"h", v:"Planche avant"},
+  {t:"p", v:"Face à toi : le viseur Mk.8 Mod.8, le tableau d'instruments principal, et deux boîtiers de commande d'armement de part et d'autre du pare-brise."},
+  {t:"img", k:"cfwd", c:"Cockpit — vue avant. Planche d'instruments, viseur, dégivreur."},
+  {t:"table", cols:["#","Élément"], rows:[
+    ["1","Boîtier de commande des canons (Gun Armament Switch Box)"],
+    ["2","Viseur Mk.8 Mod.8"],
+    ["3","Commande du dégivreur"],
+    ["4","Boîtier de largage de bombes"],
+    ["5","Tableau d'instruments principal"],
+    ["6","Ventilateur de cockpit"],
+    ["7","Régulateur de pression du réservoir principal"],
+    ["8","Tableau d'instruments auxiliaire"]]},
+  {t:"h", v:"Console gauche"},
+  {t:"p", v:"C'est ta main gauche pendant tout le vol : manette des gaz et bloc moteur complet, train, volets, aérofrein, pompe hydraulique de secours, verrouillage des ailes repliables, sélecteur de carburant."},
+  {t:"img", k:"cleft", c:"Console gauche du cockpit — bloc moteur, train, volets, verrouillage des ailes."},
+  {t:"table", cols:["#","Élément"], rows:[
+    ["1","Verrouillage des broches de repliage des ailes"],
+    ["2","Commande de repliage des ailes"],
+    ["3","Largage manuel du réservoir largable et des bombes"],
+    ["4","Verrouillage de la roulette de queue"],
+    ["5","Commandes des compensateurs (trims)"],
+    ["6","Bloc de commande moteur (RPM / gaz / mixture / suralimentation)"],
+    ["7","Commande du train et de l'aérofrein"],
+    ["8","Commutateur de lancement des roquettes"],
+    ["9","Commutateur d'allumage (magnétos)"],
+    ["10","Commande des volets"],
+    ["11 à 16","G-suit, CO2 train secours, pompe hydraulique à main, sélecteur carburant, pompe carburant auxiliaire"]]},
+  {t:"h", v:"Console droite"},
+  {t:"p", v:"Électricité, oxygène, radio, crosse d'appontage, et l'ensemble volets de refroidissement (capot, radiateur d'huile, intercooler)."},
+  {t:"img", k:"cright", c:"Console droite — refroidissement, radio, crosse, oxygène."},
+  {t:"table", cols:["#","Élément"], rows:[
+    ["1","Tableau d'instruments auxiliaire"],
+    ["2","Boîtier de distribution des roquettes Mk.3"],
+    ["3","Commande des volets de refroidissement"],
+    ["4","Boîtier de distribution pilote"],
+    ["5","Télécommandes radio AN/ARC-5"],
+    ["6","Commande de la crosse d'appontage"],
+    ["7 à 13","Fusées éclairantes, bouteille et régulateur d'oxygène, pistolet AN-M8, dégivreur, batterie, boîte à cartes"]]},
+  {t:"img", k:"overview", c:"Le F4U-1D en vol — pour se souvenir de ce à quoi tout ça sert."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission d'entraînement, avion froid, au parking.",
+   "Passe en revue les trois planches ci-dessus dans l'ordre : avant, gauche, droite.",
+   "Repère et pointe à la souris <b>dix commandes</b> : manette des gaz, mixture, RPM, suralimentation, train, volets, aérofrein, crosse, sélecteur carburant, magnétos.",
+   "Ferme les yeux, ouvre-les, retrouve les dix de mémoire sans relire tes notes."]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Le F4U-1D n'a pas d'aérofrein classique : ce sont les jambes de train avant qui font office de frein de piqué (voir leçon A5). Ne cherche pas un levier séparé, il n'existe pas."},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu retrouves les dix commandes sans hésiter."},
+  {t:"src", v:["manuel","videos"]}
+]},
+
+{id:"a2", title:"Planche de bord & instruments",
+ intro:"Vingt-deux instruments à l'avant, répartis entre planche principale et planche auxiliaire. Pas besoin de tous les mémoriser aujourd'hui — repère les six qui comptent en permanence.",
+ body:[
+  {t:"h", v:"Les six qui comptent en vol"},
+  {t:"p", v:"Tachymètre (RPM), pression d'admission (MAP), badin, altimètre, température culasse, et la jauge moteur combinée (huile/carburant). Le reste est soit occasionnel (horizon gyro, boussole), soit d'urgence (pression hydraulique, volt/ampèremètre)."},
+  {t:"img", k:"instr", c:"Planche principale et planche auxiliaire, avec la légende complète du manuel."},
+  {t:"table", cols:["#","Élément"], rows:[
+    ["1","Tachymètre — RPM"],["2","Altimètre — pieds"],["3","Gyro directionnel"],
+    ["4","Voyant d'injection d'eau (WEP)"],["5","Voyant d'alerte décrochage"],["6","Éclairage boîte à cartes"],
+    ["7","Boussole"],["8","Voyant température d'air carburateur"],["9","Horizon gyroscopique"],
+    ["10","Chronomètre 24h"],["11","Sélecteur réservoir largable central"],["12","Pression d'admission — MAP (in/hg)"],
+    ["13","Badin — nœuds"],["14","Indicateur de virage et dérapage"],["15","Variomètre — pieds/minute"],
+    ["16","Température culasse (°C)"],["17","Jauge moteur combinée"],["18","Jauge carburant — gallons"],
+    ["19","Pression hydraulique — PSI"],["20","Volt/ampèremètre"],["21","Pression d'eau WEP — PSI"],["22","Accéléromètre"]]},
+  {t:"note", k:"", lbl:"Repère utile", v:"La MAP (pression d'admission) est ton instrument de puissance principal — pas les RPM seuls. Un moteur à hélice à pas variable comme le R-2800 se pilote aux deux : RPM pour le régime, MAP pour la charge. Retiens les seuils : 54 in/Hg décollage, 260°C culasse max en puissance militaire/urgence."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Zoom sur la planche avant, identifie les 6 instruments essentiels un par un.",
+   "Démarre le moteur (auto-start) et observe : RPM qui grimpe, MAP qui bouge avec la manette des gaz, température culasse qui monte lentement.",
+   "Coupe le moteur, recommence en identifiant cette fois les instruments auxiliaires (18 à 22).",
+   "Note les seuils critiques : 90°C huile max, 260°C culasse max (5 min), 43°C air carburateur max hors WEP."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu sais lire la MAP et les RPM sans hésiter, et tu connais les trois seuils de température par cœur."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"a3", title:"Commandes de vol & bloc moteur",
+ intro:"Manche, palonniers, trims, et le bloc moteur complet — quatre manettes qui font tout le travail sur un monomoteur à hélice à pas variable et suralimentation à deux étages.",
+ body:[
+  {t:"h", v:"Manche, palonniers, compensateurs"},
+  {t:"p", v:"Le manche déflecte les ailerons — 19° vers le haut, 14° vers le bas — et la profondeur, 16° à piquer, 20° à cabrer en butée. Les palonniers déflectent la dérive de 25° et servent aussi de freins différentiels gauche/droite."},
+  {t:"img", k:"stick", c:"Manche et palonniers."},
+  {t:"img", k:"trim", c:"Les trois molettes de compensateur : latéral, directionnel, profondeur."},
+  {t:"p", v:"Trois molettes de trim : latérale (bank), directionnelle (yaw), et une grande molette verticale pour la profondeur sur le côté du tableau auxiliaire — étiquetée « ELEVATOR TAB », à ne pas confondre avec les tabs d'équilibrage non réglables."},
+  {t:"h", v:"Le bloc moteur"},
+  {t:"p", v:"Quatre manettes dans le même quadrant, sur la console gauche : régime hélice (RPM), gaz (throttle), richesse du mélange (mixture), et suralimentation (supercharger). Une cinquième, l'interrupteur maître d'injection d'eau, complète le bloc."},
+  {t:"img", k:"ecu", c:"Bloc de commande moteur : RPM, gaz, mixture, suralimentation, injection d'eau."},
+  {t:"table", cols:["Manette","Fonction"], rows:[
+    ["RPM (régulateur d'hélice)","Position basse = 2700 RPM plein régime. Position haute ≈ 1200 RPM."],
+    ["Gaz","Avant = OPEN, plus de puissance. Arrière = CLOSE."],
+    ["Mixture","3 positions utiles : IDLE CUT-OFF (coupure), AUTO LEAN (croisière), AUTO RICH (décollage, approche, sol)."],
+    ["Suralimentation (SC)","NEUTRAL / LOW / HIGH selon l'altitude — voir tableau moteur en leçon C."],
+    ["Injection d'eau (WEP)","S'active automatiquement plein gaz si MAP ≥ 54 in/Hg ; se coupe sous 52 in/Hg."]]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Oublier de repasser la mixture en AUTO RICH avant le décollage : le moteur cale ou surchauffe. C'est la première chose à vérifier avant de lâcher les freins."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Avion froid, cockpit ouvert. Place chaque manette du bloc moteur dans sa position de démarrage (voir checklist en Section B) sans regarder le clavier — uniquement à la souris.",
+   "Fais varier la mixture entre les trois positions utiles et observe l'effet sur le régime au ralenti une fois le moteur tournant.",
+   "Manche plein débattement dans les quatre coins, palonniers plein débattement — observe les gouvernes à l'extérieur (vue F2).",
+   "Règle les trois trims en position neutre, puis en position décollage : bank 6° droite, lacet 6° droite, tangage 1° à cabrer."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu positionnes le bloc moteur entier sans regarder le clavier, et tu sais expliquer à quoi sert chaque manette."},
+  {t:"src", v:["manuel","videos"]}
+]},
+
+{id:"a4", title:"Refroidissement, carburant & hydraulique",
+ intro:"Un moteur radial de 2000 ch se refroidit à la main : trois volets à régler en permanence. Le carburant et l'hydraulique suivent la même logique — peu de systèmes, mais qu'il faut surveiller soi-même.",
+ body:[
+  {t:"h", v:"Les trois volets de refroidissement"},
+  {t:"p", v:"Volet de capot moteur, volet radiateur d'huile, volet d'intercooler — trois leviers à ressort, à maintenir en position OUVERT ou FERMÉ jusqu'au réglage voulu puis relâcher. Réglages de base : huile 1/3 ouvert, intercooler 1/4 ouvert, capot légèrement ouvert la plupart du temps."},
+  {t:"table", cols:["Phase","Réglage recommandé"], rows:[
+    ["Montée / manœuvres normales","Capot 1/2 ouvert"],
+    ["Manœuvres sévères","Capot grand ouvert"],
+    ["Croisière / palier","Capot 1/4 ouvert"],
+    ["Roulage / attente au sol","Capot grand ouvert (le buffeting en vol est acceptable au sol)"]]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Le voyant rouge « CARB. AIR TEMP » s'allume souvent en montée forte à basse altitude si la suralimentation est trop haute pour le palier — la solution est de redescendre d'un cran de suralimentation, pas d'ouvrir plus les volets."},
+  {t:"h", v:"Carburant"},
+  {t:"p", v:"Un seul réservoir interne auto-obturant de 237 gallons US (dont 50 de réserve), devant le cockpit. Le sélecteur a 4 positions : OFF, MAIN, RESERVE, réservoir largable centre/aile. Utilise toujours la réserve pour décollage et atterrissage, jamais en croisière."},
+  {t:"note", k:"", lbl:"Pompe auxiliaire", v:"La pompe carburant auxiliaire doit être sur ON pour : démarrage, décollage, atterrissage, changement de réservoir, et chaque fois que la pression carburant descend sous 16 PSI."},
+  {t:"h", v:"Hydraulique"},
+  {t:"p", v:"Une pompe entraînée par le moteur maintient 900 à 1150 PSI en continu — train, volets, volets de refroidissement, chargement des canons. En cas de panne moteur ou de pression basse, une pompe à main sur la console gauche prend le relais : un clic pour pousser, un clic pour tirer."},
+  {t:"img", k:"hydgauge", c:"Manomètre de pression hydraulique, planche auxiliaire."},
+  {t:"img", k:"hydpump", c:"Pompe hydraulique à main — avant / après actionnement."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Moteur tournant, règle les trois volets de refroidissement aux valeurs recommandées en palier.",
+   "Ouvre le sélecteur carburant et identifie ses quatre positions à la souris.",
+   "Coupe le moteur en vol (touche dédiée ou mixture idle cut-off pour test), observe la pression hydraulique chuter, actionne la pompe à main.",
+   "Redémarre, remets tout en configuration normale."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu sais régler les volets de refroidissement sans hésiter, et tu localises la pompe à main hydraulique les yeux fermés."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"a5", title:"Train, ailes repliables, aérofrein & volets",
+ intro:"Quatre commandes hydrauliques du bord gauche, quatre logiques à retenir. Piège classique du Corsair : l'aérofrein n'existe pas en tant que tel — ce sont les jambes de train avant qui jouent ce rôle.",
+ body:[
+  {t:"h", v:"Repliage des ailes"},
+  {t:"p", v:"Deux commandes séparées : le verrouillage des broches (rouge, à l'arrière) et le levier de repliage. Séquence pour replier : <b>clic gauche</b> sur le verrouillage pour le faire descendre, puis <b>clic gauche</b> sur le levier pour FOLD. Pour déployer : levier sur SPREAD (clic droit), puis verrouillage remonté (clic droit) une fois les ailes bien à plat."},
+  {t:"img", k:"wfold", c:"Repliage des ailes en cours."},
+  {t:"img", k:"wspread", c:"Ailes en cours de déploiement."},
+  {t:"img", k:"windic", c:"Voyant de verrouillage des broches, visible dans la zone de pliage de l'aile."},
+  {t:"note", k:"warn", lbl:"Alarme sonore", v:"Le klaxon d'avertissement sonne durant les 7 derniers degrés de mouvement des ailes. Il s'arrête une fois les broches verrouillées — c'est ton seul retour fiable que le verrouillage a réussi."},
+  {t:"h", v:"Train d'atterrissage"},
+  {t:"p", v:"Une seule poignée : <b>clic droit</b> pour sortir (DOWN), <b>clic gauche</b> pour rentrer (UP). Vérifie toujours les indicateurs avant de te poser — ils sont électro-hydrauliques, pas un simple voyant."},
+  {t:"img", k:"geardown", c:"Poignée de train — position sortie."},
+  {t:"img", k:"gearup", c:"Poignée de train — position rentrée."},
+  {t:"h", v:"Le « frein de piqué »"},
+  {t:"p", v:"Le F4U-1D n'a pas d'aérofrein dédié : ce sont les jambes de train avant (roulette de queue rentrée) qui servent de frein en piqué. Touche par défaut : <b>B</b>. Limite stricte : 260 nœuds, au-delà le train risque d'être endommagé."},
+  {t:"img", k:"divebrake", c:"Train avant sorti en configuration frein de piqué, en vol."},
+  {t:"h", v:"Volets"},
+  {t:"p", v:"Réglables par pas de 10°, jusqu'à 50° plein sorti. <b>Clic gauche</b> pour augmenter l'angle, <b>clic droit</b> pour diminuer. Vitesse max avec volets sortis : 200 nœuds jusqu'à 20° (« volets de combat »), 130 nœuds à 50°."},
+  {t:"img", k:"flaplever", c:"Commande des volets — augmenter / diminuer l'angle."},
+  {t:"img", k:"flappanel", c:"Levier des volets sur le tableau de bord."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Avion au parking, replie puis déploie les ailes en suivant la séquence exacte (verrouillage → levier → vérifier l'indicateur).",
+   "Sors et rentre le train trois fois, en vérifiant l'indicateur à chaque fois avant de considérer la manœuvre terminée.",
+   "En vol, à moins de 260 nœuds, sors le frein de piqué (train avant) et observe l'effet sur la vitesse en léger piqué.",
+   "Sors les volets par paliers de 10° jusqu'à 50°, note le changement d'assiette à chaque palier."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu replies/déploies les ailes sans déclencher d'alarme surprise, et tu sais pourquoi le Corsair n'a pas d'aérofrein classique."},
+  {t:"src", v:["manuel","videos"]}
+]},
+
+{id:"a6", title:"Crosse d'appontage & armement des canons",
+ intro:"Deux commandes qu'on retrouvera en détail plus loin (Section E pour la crosse, Section G pour l'armement), mais qu'il faut savoir localiser dès maintenant : elles font partie du tour de cockpit.",
+ body:[
+  {t:"h", v:"Crosse d'appontage"},
+  {t:"p", v:"Trois positions : DOWN (sortie, pour l'appontage), PARKING (position par défaut en jeu, isole la ligne hydraulique de la crosse), UP (rentrée, tout vol et sol sauf appontage). Le levier par défaut du jeu est sur PARKING — <b>clic gauche</b> pour sortir la crosse, <b>clic droit</b> une ou deux fois pour la rentrer."},
+  {t:"img", k:"hookdown", c:"Crosse — position DOWN."},
+  {t:"img", k:"hookpark", c:"Crosse — position PARKING (défaut en jeu)."},
+  {t:"img", k:"hookup", c:"Crosse — position UP."},
+  {t:"note", k:"warn", lbl:"Ordre impératif", v:"La roulette de queue doit être sortie avant de sortir la crosse, et la crosse doit être rentrée avant de rentrer la roulette de queue. Dans le mauvais ordre, l'une abîme l'autre."},
+  {t:"h", v:"Chargement des canons"},
+  {t:"p", v:"Six canons de 12,7 mm (.50 cal) dans les ailes, chargés hydrauliquement. Deux boutons de chargement sous la planche principale : le haut pour les trois canons de droite, le bas pour les trois de gauche."},
+  {t:"img", k:"gunpanel", c:"Boîtier de commande d'armement — vue d'ensemble."},
+  {t:"img", k:"gunknoba", c:"Bouton de chargement — position CHARGE."},
+  {t:"img", k:"gunknobb", c:"Bouton de chargement — position SAFE."},
+  {t:"p", v:"<b>Clic gauche</b> pour armer (CHARGE) — le bouton ressort automatiquement une fois le cycle terminé. <b>Clic droit</b> pour sécuriser (SAFE), qui bloque le départ du coup sans vider la chambre. Si les canons ont déjà été chargés, une recharge fait perdre une cartouche par canon."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Localise la commande de crosse et fais les trois positions dans l'ordre DOWN → PARKING → UP.",
+   "Localise les deux boutons de chargement des canons, arme puis sécurise chaque groupe.",
+   "Vérifie l'ordre roulette de queue / crosse en le faisant volontairement dans le bon sens."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu retrouves crosse et boutons de chargement sans hésiter, et tu connais l'ordre roulette de queue / crosse."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"a7", title:"Réglages recommandés, rétroviseurs & confort cockpit",
+ intro:"Dernière leçon de la section : configurer tes axes et tes touches comme le recommande Magnitude 3, et repérer les petits équipements qu'on oublie — rétroviseurs, lampe torche, boîte à cartes.",
+ body:[
+  {t:"h", v:"Réglages d'axes recommandés"},
+  {t:"p", v:"Le manuel recommande une zone morte de 2 à 3 sur les axes manche/palonnier, et une courbe légère sur le palonnier si le débattement physique est faible. Gaz : sans zone morte, réponse linéaire."},
+  {t:"img", k:"axistune", c:"Fenêtre de réglage d'axe, avec zone morte et courbure."},
+  {t:"table", cols:["Commande","Touche clavier par défaut"], rows:[
+    ["Mixture (augmenter / diminuer)","Inser / Suppr"],
+    ["RPM hélice (augmenter / diminuer)","Pg.préc / Pg.suiv"],
+    ["Suralimentation (augmenter / diminuer)","Origine / Fin"],
+    ["Magnétos (par étapes)","L / point (.)"],
+    ["Cache du démarreur","Ctrl droit + ="],
+    ["Démarreur","="],
+    ["Frein de piqué (sortir/rentrer)","B"],
+    ["Lampe torche","Alt droit + L"]]},
+  {t:"note", k:"warn", lbl:"Piège fréquent", v:"Le démarreur ne répond pas tant que son cache (starter cover) n'est pas ouvert — même bien mappé sur une manette. Toujours ouvrir le cache avant d'actionner le démarreur."},
+  {t:"h", v:"Rétroviseurs"},
+  {t:"p", v:"Trois rétroviseurs convexes réglables sur l'armature de la verrière coulissante — ta seule vue arrière, essentielle en patrouille comme en approche de porte-avions."},
+  {t:"img", k:"mirror1", c:"Rétroviseur central."},
+  {t:"img", k:"mirror2", c:"Rétroviseur latéral."},
+  {t:"img", k:"mirror3", c:"Vue d'ensemble des trois rétroviseurs."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Ouvre les réglages de contrôles du jeu et applique les zones mortes recommandées sur manche et palonnier.",
+   "Vérifie que les huit touches du tableau ci-dessus sont bien mappées (par défaut ou sur ton HOTAS).",
+   "Ouvre le cache du démarreur puis actionne le démarreur pour vérifier que le mapping fonctionne.",
+   "Ajuste les trois rétroviseurs pour avoir une vue arrière correcte depuis le siège."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Ton HOTAS est mappé, tes zones mortes sont réglées, et tu es prêt pour la Section B : démarrage et roulage."},
+  {t:"src", v:["manuel","checklist","kneeboard"]}
+]}
+];
+
+/* ---------- état ---------- */
+const KEY="f4u1d-sectionA";
+let st={done:{},notes:{}}, cur=0;
+async function load(){ try{const r=await __sget(KEY); if(r&&r.value) st=Object.assign(st,JSON.parse(r.value));}catch(e){} }
+let tm=null;
+function save(){ clearTimeout(tm); tm=setTimeout(async()=>{ try{await __sset(KEY,JSON.stringify(st));}catch(e){} },400); }
+
+/* ---------- rendu ---------- */
+function fig(k,c){
+  const fn=IMG[k];
+  return `<figure><img src="img/${fn}" alt="${c}" loading="lazy" onclick="openLb(this.src)">
+    <figcaption><span>${c}</span><a href="img/${fn}" target="_blank" rel="noopener">Original &#8599;</a></figcaption></figure>`;
+}
+function table(cols, rows){
+  return `<table class="pins"><tbody>${rows.map(r=>`<tr><td class="n">${r[0]}</td><td>${r[1]}</td></tr>`).join("")}</tbody></table>`;
+}
+function block(b){
+  if(b.t==="h")   return `<h3>${b.v}${b.badge?'<span class="badge" style="margin-left:8px;vertical-align:0">Nouveau</span>':''}</h3>`;
+  if(b.t==="p")   return `<p>${b.v}</p>`;
+  if(b.t==="img") return fig(b.k,b.c);
+  if(b.t==="table")return table(b.cols,b.rows);
+  if(b.t==="proc")return `<ol class="proc">${b.v.map(s=>`<li><span>${s}</span></li>`).join("")}</ol>`;
+  if(b.t==="note")return `<div class="note ${b.k||""}"><span class="lbl">${b.lbl}</span><p>${b.v}</p></div>`;
+  if(b.t==="src") return `<h3>Sources</h3><div class="srcs">${
+      b.v.map(k=>`<a href="${DOC[k][1]}" target="_blank" rel="noopener">${DOC[k][0]} &#8599;</a>`).join("")}</div>`;
+  return "";
+}
+function render(){
+  const l=L[cur];
+  document.getElementById("main").innerHTML=`<div class="page">
+    <div class="eyebrow">Section A · leçon ${cur+1} sur ${L.length}</div>
+    <h2>${l.title}${l.isNew?'<span class="badge">Nouveau module</span>':""}</h2>
+    <p class="intro">${l.intro}</p>
+    ${l.body.map(block).join("")}
+    <h3>Tes notes de vol</h3>
+    <textarea id="nt" placeholder="Procédures exactes, séquences de touches, ce qui a coincé…">${(st.notes[l.id]||"").replace(/</g,"&lt;")}</textarea>
+    <button class="doneline${st.done[l.id]?" on":""}" id="dn"><span class="box"></span>
+      <span>${st.done[l.id]?"Leçon validée":"Marquer cette leçon comme validée"}</span></button>
+    <div class="nav">
+      <button class="ghost" id="pv"${cur?"":" disabled style=opacity:.3"}>&larr; Précédent</button>
+      <button class="ghost" id="nx"${cur<L.length-1?"":" disabled style=opacity:.3"}>Suivant &rarr;</button>
+    </div></div>`;
+  document.getElementById("nt").oninput=e=>{st.notes[l.id]=e.target.value;save();};
+  document.getElementById("dn").onclick=()=>{st.done[l.id]=!st.done[l.id];save();render();};
+  if(cur) document.getElementById("pv").onclick=()=>{cur--;render();window.scrollTo(0,0);};
+  if(cur<L.length-1) document.getElementById("nx").onclick=()=>{cur++;render();window.scrollTo(0,0);};
+  rail();
+}
+function rail(){
+  const r=document.getElementById("rail"); r.innerHTML="";
+  L.forEach((l,i)=>{
+    const b=document.createElement("button");
+    b.className="item"+(i===cur?" on":"")+(st.done[l.id]?" done":"");
+    b.innerHTML=`<span class="idx">${st.done[l.id]?"&check;":String(i+1).padStart(2,"0")}</span><span class="nm">${l.title}</span>`;
+    b.onclick=()=>{cur=i;render();window.scrollTo(0,0);};
+    r.appendChild(b);
+  });
+  const n=L.filter(l=>st.done[l.id]).length;
+  document.getElementById("foot").textContent=`${n} / ${L.length} leçons validées`;
+}
+function openLb(src){const lb=document.getElementById("lb");document.getElementById("lbimg").src=src;lb.classList.add("on");}
+document.getElementById("lb").onclick=()=>document.getElementById("lb").classList.remove("on");
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") document.getElementById("lb").classList.remove("on");
+  if(e.target.matches("textarea")) return;
+  if(e.key==="ArrowRight"&&cur<L.length-1){cur++;render();window.scrollTo(0,0);}
+  if(e.key==="ArrowLeft"&&cur>0){cur--;render();window.scrollTo(0,0);}
+});
+load().then(render);
+</script>

@@ -11,6 +11,7 @@ STRUCTURE
 Documents/
   Claude/               <- ce dossier, racine de tous les projets
     F14BU/                <- tutoriel de pilotage F-14B(U)
+    F4U1D/                <- tutoriel de pilotage F4U-1D Corsair
     [prochain-projet]/
     index.html            <- page d'accueil, liens vers chaque projet
     LISEZMOI.txt

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursus F4U-1D Corsair — Tutoriel</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;
+    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  .wrap{max-width:880px;margin:0 auto;padding:48px 24px 80px}
+  .tail{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:44px;letter-spacing:.04em;line-height:1.02;margin:10px 0 8px;text-transform:uppercase}
+  .sub{color:var(--dim);max-width:60ch;margin:0 0 36px}
+  a.card{display:flex;gap:18px;align-items:baseline;border:1px solid var(--line);background:var(--panel);
+         padding:18px 20px;margin:10px 0;text-decoration:none;color:var(--ink);transition:border-color .12s}
+  a.card:hover{border-color:var(--amber)}
+  a.card.soon{opacity:.6}
+  .idx{font-family:var(--mono);font-size:13px;color:var(--amber);min-width:26px}
+  .nm{font-family:var(--display);font-size:19px;letter-spacing:.04em;text-transform:uppercase}
+  .ds{color:var(--dim);font-size:13.5px;margin-left:auto;text-align:right;max-width:44%}
+  .tag{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+       color:var(--deck);background:var(--go);padding:2px 6px;margin-left:8px;vertical-align:2px}
+  .tag.soon{background:var(--dim)}
+  .hr{border-top:1px solid var(--line);margin:34px 0 22px}
+  h2{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:0 0 12px}
+  p{margin:12px 0;color:var(--dim)}
+  code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:2px 6px;border:1px solid var(--line);color:var(--amber)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:16px">&larr; Accueil</a>
+  <div class="tail">DCS · Magnitude 3 · F4U-1D Corsair</div>
+  <h1>Cursus complet<br>de pilotage</h1>
+  <p class="sub">Sept sections, du parking froid à la mission complète, illustrées avec les planches du manuel officiel Magnitude 3 (AN-01-45MAG-3). Chaque section garde ta progression et tes notes d'une session à l'autre, dans le même navigateur.</p>
+
+  <a class="card" href="section-a-cockpit.html"><span class="idx">A</span><span class="nm">Découverte &amp; cockpit<span class="tag">Prêt</span></span><span class="ds">Planches avant/gauche/droite, instruments, commandes de vol, bloc moteur, HOTAS</span></a>
+  <a class="card soon" href="section-b-demarrage.html"><span class="idx">B</span><span class="nm">Démarrage &amp; roulage<span class="tag soon">À venir</span></span><span class="ds">Procédure de mise en route, tests moteur, roulage en S</span></a>
+  <a class="card soon" href="section-c-decollage.html"><span class="idx">C</span><span class="nm">Décollage<span class="tag soon">À venir</span></span><span class="ds">Terrain, distance minimale, roulant et catapulté depuis l'Essex</span></a>
+  <a class="card soon" href="section-d-vol.html"><span class="idx">D</span><span class="nm">Vol normal<span class="tag soon">À venir</span></span><span class="ds">Régimes moteur, suralimentation, carburant, WEP, voltige permise</span></a>
+  <a class="card soon" href="section-e-appontage.html"><span class="idx">E</span><span class="nm">Appontage &amp; atterrissage<span class="tag soon">À venir</span></span><span class="ds">Terrain, vent de travers, circuit Essex-class complet</span></a>
+  <a class="card soon" href="section-f-urgences.html"><span class="idx">F</span><span class="nm">Urgences<span class="tag soon">À venir</span></span><span class="ds">Panne moteur, atterrissage forcé, ditching, évacuation</span></a>
+  <a class="card soon" href="section-g-armement.html"><span class="idx">G</span><span class="nm">Armement &amp; radio/nav<span class="tag soon">À venir</span></span><span class="ds">Canons, bombes, HVAR/Tiny Tim, Bat Bomb, ARC-5/ARR-2, Morse</span></a>
+
+  <div class="hr"></div>
+  <h2>Sources</h2>
+  <p>Toutes les planches viennent directement du manuel officiel Magnitude 3 (<code>AN-01-45MAG-3</code>, 16 septembre 2025), extraites et hébergées localement dans <code>img/</code> — aucune dépendance à un Drive externe. Le PDF complet est disponible dans <code>docs/manuel-f4u1d.pdf</code>. En complément : checklists et kneeboards communautaires à jour (ED Forums), et une série de tutoriels vidéo pour les points encore absents du manuel (early access).</p>
+</div>
+</body></html>
