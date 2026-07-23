@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>F-14B(U) — Mapping HOTAS · Rev. D</title>
+<title>F-14B(U) — Mapping HOTAS · Rev. E</title>
 <style>
   :root{
     --paper:#EDEDE8; --panel:#FFFFFF; --ink:#14181C; --ink-soft:#4A5158; --rule:#B9BCB4;
@@ -66,6 +66,9 @@
   .lbl small{display:block;font-weight:400;font-size:.78cqw;opacity:.9}
   .lbl .q{color:var(--hl);font-weight:900}
   .lbl.dim{opacity:.14}
+  .lbl.chk{box-shadow:0 0 0 2px var(--hl),0 1px 3px rgba(0,0,0,.35)}
+  .lbl.snap{outline:2px solid var(--hl)}
+  .board.editing .boxghost{position:absolute;border:1px dashed rgba(0,120,255,.45);pointer-events:none}
   .board.editing .lbl{cursor:grab;outline:1px dashed var(--hl)}
   .board.editing .lbl:active{cursor:grabbing}
   .lbl.sm{font-size:.92cqw;max-width:10cqw;padding:.22cqw .4cqw}
@@ -117,7 +120,7 @@
   <div class="doc-ref">
     <span><a href="cursus-complet.html" style="color:inherit;text-decoration:none">&larr; CURSUS</a> · <a href="../index.html" style="color:inherit;text-decoration:none">ACCUEIL</a></span>
     <span>NAVAIR 01-F14AAP-1 · SUPPL. HOTAS — USAGE SIMULATION</span>
-    <span>REV. D — <span id="today"></span></span>
+    <span>REV. E — <span id="today"></span></span>
   </div>
   <h1>F-14B(U) <span>Tomcat</span> — Mapping contrôles</h1>
   <div class="subtitle">MongoosT-50CM3 + Alpha Prime [R] · VPC Throttle CM3 · WinWing PTO2 · CSL Elite V2 (vJoy)</div>
@@ -243,122 +246,88 @@
 
 <div class="footer-note">
   Catégories : <b style="color:var(--arm)">rouge</b> armement · <b style="color:var(--vol)">bleu</b> vol/moteurs · <b style="color:var(--sens)">vert</b> senseurs · <b style="color:var(--comm)">ambre</b> comms/CM · <b style="color:var(--misc)">gris</b> divers.
-  Étiquettes suffixées <b style="color:var(--comm)">?</b> : correspondance N°↔bouton à confirmer au VPC Joy Tester. Rev. D.
+  Étiquettes cerclées de jaune : position à confirmer. Étiquettes suffixées <b style="color:var(--comm)">?</b> : correspondance N°↔bouton à confirmer au VPC Joy Tester. Rev. E.
 </div>
 
 <script>
 const DETAILS={"stick|rY": {"det": "Déplace verticalement le curseur d'acquisition (TDC) sur le DDD/PTID pour hooker un contact radar.", "lec": "d1"}, "stick|6": {"det": "Verrouille le contact sous le curseur : le radar passe en poursuite (STT) ou hook TWS selon le mode.", "lec": "d1"}, "stick|rX": {"det": "Déplace horizontalement le curseur d'acquisition sur l'affichage radar.", "lec": "d1"}, "stick|7": {"det": "Coupe instantanément le pilote automatique (paddle NOGO) — réflexe avant toute manœuvre brutale.", "lec": "a6"}, "stick|9": {"det": "Sélectionne le radar AWG-9 comme senseur principal d'acquisition.", "lec": "d1"}, "stick|10": {"det": "Bascule sur la caméra TCS : identification visuelle longue distance, asservie au radar.", "lec": "d2"}, "stick|8": {"det": "Relâche le verrouillage en cours et rend la main au balayage radar normal.", "lec": "d1"}, "stick|12": {"det": "Mode d'acquisition automatique : le système choisit le meilleur senseur disponible.", "lec": "d1"}, "stick|11": {"det": "Sélectionne l'IRST/pointage alternatif (selon configuration B(U)).", "lec": "d1"}, "stick|13": {"det": "Libère la tête chercheuse du Sidewinder pour qu'elle suive la cible hors axe (SEAM).", "lec": "d4"}, "stick|29": {"det": "Éjecte des fusées éclairantes ALE-47 pour leurrer les missiles infrarouges.", "lec": "e2"}, "stick|28": {"det": "Passe au programme de contre-mesures suivant (séquences chaff/flare préprogrammées).", "lec": "e2"}, "stick|30": {"det": "Éjecte des paillettes métalliques pour brouiller les radars et missiles semi-actifs.", "lec": "e2"}, "stick|15": {"det": "Abaisse le nez : soulage la pression à cabrer, essentiel après variation de vitesse ou flèche.", "lec": "a6"}, "stick|16": {"det": "Compense une tendance au roulis à droite (dissymétrie carburant/emports).", "lec": "a6"}, "stick|14": {"det": "Engage le pilote automatique dans le mode sélectionné au panneau AFCS.", "lec": "a6"}, "stick|18": {"det": "Compense une tendance au roulis à gauche.", "lec": "a6"}, "stick|17": {"det": "Relève le nez : trim de base pour tenir l'AoA en approche (unités 15).", "lec": "a7"}, "stick|1": {"det": "Largue l'arme sélectionnée : bombe, missile A/G ou tir Phoenix/Sparrow selon le mode maître.", "lec": "f1"}, "stick|2": {"det": "Déclenche l'enregistrement caméra (gun camera) sans tirer.", "lec": "d4"}, "stick|3": {"det": "Combinaison flip+détente disponible pour une fonction future.", "lec": "a2"}, "stick|4": {"det": "Premier cran : prépare le tir (interlock) — le canon ne tire pas encore.", "lec": "d4"}, "stick|5": {"det": "Tir du M61 Vulcan : 6000 coups/min, 675 obus — comptez vos rafales.", "lec": "d4"}, "stick|21": {"det": "Resserre le champ de vision : lecture des instruments ou identification visuelle.", "lec": "a1"}, "stick|19": {"det": "Alterne l'affichage entre caméra TCS et FLIR LANTIRN sur le PTID.", "lec": "f2"}, "stick|20": {"det": "Alterne le radar entre poursuite multi-cibles TWS et poursuite mono-cible PSTT.", "lec": "d6"}, "stick|22": {"det": "Élargit le champ de vision : conscience situationnelle en combat.", "lec": "a1"}, "stick|32": {"det": "Serre/relâche le frein de parking — indispensable pour le point fixe et le démarrage.", "lec": "a4"}, "stick|SLDR": {"det": "Freinage progressif des roues au roulage et à l'atterrissage (pas de freinage différentiel).", "lec": "a5"}, "stick|Z": {"det": "Twist verrouillé mécaniquement : le lacet passe par les pédales, plus précis.", "lec": "a2"}, "stick|24": {"det": "Vue extérieure de l'appareil (F2).", "lec": "a1"}, "stick|25": {"det": "Regard rapide vers la gauche du cockpit.", "lec": "a1"}, "stick|23": {"det": "Verrouille la caméra sur la cible ou l'ailier le plus proche.", "lec": "d7"}, "stick|27": {"det": "Regard rapide vers la droite du cockpit.", "lec": "a1"}, "stick|26": {"det": "Recentre la vue cockpit vers le HUD (F1).", "lec": "a1"}, "stick|31": {"det": "Déploie les aérofreins tant que le bouton est tenu — se rétractent automatiquement en PC.", "lec": "a6"}, "throttle|rX": {"det": "Règle la luminosité de la symbologie HUD (jour/nuit).", "lec": "a1"}, "throttle|2": {"det": "Augmente le volume de l'intercom (ICS) avec Jester.", "lec": "a3"}, "throttle|1": {"det": "Appuie pour parler à Jester : ouvre le menu radial du RIO virtuel.", "lec": "a3"}, "throttle|3": {"det": "Diminue le volume de l'intercom.", "lec": "a3"}, "throttle|rY": {"det": "Règle manuellement l'élévation de l'antenne AWG-9 — LE geste réflexe du pilote Tomcat pour balayer en altitude.", "lec": "d1"}, "throttle|Y": {"det": "Manette moteur droit F110-GE-400 : idle → military → zones PC 1-5.", "lec": "a5"}, "throttle|13": {"det": "Finger-lift : franchit le cran idle/cutoff (démarrage et extinction moteur).", "lec": "a4"}, "throttle|X": {"det": "Manette moteur gauche : gérez-les symétriquement sauf panne.", "lec": "a5"}, "throttle|9": {"det": "Élève le faisceau radar : cherche les cibles au-dessus de votre altitude.", "lec": "d1"}, "throttle|12": {"det": "Réduit l'échelle de portée affichée sur le DDD/PTID (zoom avant tactique).", "lec": "d2"}, "throttle|8": {"det": "Recentre l'antenne sur l'horizon.", "lec": "d1"}, "throttle|10": {"det": "Augmente l'échelle de portée affichée.", "lec": "d2"}, "throttle|11": {"det": "Abaisse le faisceau radar : cherche les cibles en dessous (look-down).", "lec": "d1"}, "throttle|Z": {"det": "Ajuste le zoom/l'échelle du DDD.", "lec": "d2"}, "throttle|4": {"det": "Appuie pour émettre sur la radio UHF (AN/ARC-182) vers le contrôle ou les ailiers.", "lec": "a3"}, "throttle|7": {"det": "Canal préréglé suivant sur la radio principale.", "lec": "a3"}, "throttle|6": {"det": "Valide la sélection de canal.", "lec": "a3"}, "throttle|5": {"det": "Canal préréglé précédent.", "lec": "a3"}, "throttle|25": {"det": "Navigation vers le haut dans le menu radial Jester.", "lec": "a3"}, "throttle|24": {"det": "Navigation vers la gauche dans le menu Jester.", "lec": "a3"}, "throttle|22": {"det": "Ouvre/ferme le menu radial Jester.", "lec": "a3"}, "throttle|26": {"det": "Navigation vers la droite dans le menu Jester.", "lec": "a3"}, "throttle|23": {"det": "Navigation vers le bas dans le menu Jester.", "lec": "a3"}, "throttle|20": {"det": "Sélectionne le Sidewinder (SW) ou remonte dans la liste d'armes.", "lec": "d4"}, "throttle|19": {"det": "Sélection d'arme vers la gauche.", "lec": "d4"}, "throttle|16": {"det": "Fait défiler les armes disponibles : SW → SP → PH → GUN.", "lec": "d4"}, "throttle|17": {"det": "Sélection d'arme vers la droite.", "lec": "d4"}, "throttle|18": {"det": "Sélectionne Phoenix (PH) ou le canon (GUN).", "lec": "d6"}, "throttle|14": {"det": "Mode maître suivant : NAV → A/A → A/G. Configure HUD, radar et armement d'un coup.", "lec": "d3"}, "throttle|15": {"det": "Mode maître précédent.", "lec": "d3"}, "throttle|32": {"det": "Désignation TDC secondaire (poste throttle) — utile en gestion radar main gauche.", "lec": "d1"}, "throttle|30": {"det": "Regard vers le haut (check-six partiel).", "lec": "a1"}, "throttle|34": {"det": "Éteint le voyant Master Caution après lecture de la panne au panneau.", "lec": "g1"}, "throttle|29": {"det": "Regard vers la gauche.", "lec": "a1"}, "throttle|27": {"det": "Recentre la vue VR — à binder absolument si vous volez en casque.", "lec": "a2"}, "throttle|31": {"det": "Regard vers la droite.", "lec": "a1"}, "throttle|28": {"det": "Regard vers le bas (instruments).", "lec": "a1"}, "throttle|36": {"det": "Arme le circuit de tir : sans Master Arm, ni canon ni largage ne fonctionnent.", "lec": "d4"}, "throttle|37": {"det": "Coupe le circuit de tir — position sécurité au roulage et à l'appontage.", "lec": "d4"}, "throttle|35": {"det": "Annule la désignation TDC en cours.", "lec": "d1"}, "throttle|44": {"det": "Feux de navigation (position) : vol de nuit et formation.", "lec": "a4"}, "throttle|46": {"det": "Réchauffage Pitot : obligatoire avant décollage, évite le givrage anémométrique.", "lec": "a4"}, "throttle|48": {"det": "Ouvre la purge carburant : vidange rapide pour revenir au poids max d'appontage.", "lec": "g1"}, "throttle|45": {"det": "Feux anticollision (strobes).", "lec": "a4"}, "throttle|47": {"det": "Coupe le réchauffage Pitot.", "lec": "a4"}, "throttle|49": {"det": "Ferme la purge carburant.", "lec": "g1"}, "throttle|21": {"det": "Active/coupe le brouilleur DECM (AN/ALQ-126) — attention, il vous rend aussi détectable.", "lec": "e3"}, "throttle|33": {"det": "Sort/rentre la sonde de ravitaillement (côté droit du nez).", "lec": "g2"}, "throttle|rZ": {"det": "Contrôle progressif des aérofreins : plus fin que le tout-ou-rien du bouton manche.", "lec": "a6"}, "throttle|38": {"det": "Rentre le train — secours si vous n'utilisez pas le PTO2.", "lec": "a5"}, "throttle|39": {"det": "Sort le train (vitesse max 280 kt).", "lec": "a7"}, "throttle|40": {"det": "Rentre les volets.", "lec": "a5"}, "throttle|41": {"det": "Sort les volets (approche).", "lec": "a7"}, "throttle|42": {"det": "Flèche d'aile en mode automatique : l'ordinateur CADC optimise selon le Mach.", "lec": "a6"}, "throttle|43": {"det": "Flèche manuelle 68° (bomb mode) — configuration spécifique.", "lec": "a6"}, "throttle|52": {"det": "Augmente la luminosité des instruments.", "lec": "a4"}, "throttle|55": {"det": "Canal radio préréglé suivant (encodeur).", "lec": "a3"}, "throttle|50": {"det": "Bascule éclairage jour/nuit.", "lec": "a4"}, "throttle|53": {"det": "Valide le canal sélectionné.", "lec": "a3"}, "throttle|51": {"det": "Diminue la luminosité des instruments.", "lec": "a4"}, "throttle|54": {"det": "Canal radio préréglé précédent.", "lec": "a3"}, "throttle|OFF": {"det": "Pilote automatique coupé — pilotage manuel DFCS.", "lec": "a6"}, "throttle|M1": {"det": "Maintien d'attitude : conserve assiette et inclinaison actuelles.", "lec": "a6"}, "throttle|M2": {"det": "Maintien d'altitude : tient l'altitude barométrique en croisière.", "lec": "a6"}, "throttle|M3": {"det": "Maintien de cap (heading hold).", "lec": "a6"}, "throttle|M4": {"det": "Mode approche couplée (ACLS/AP appontage).", "lec": "c4"}, "pto2|35-37": {"det": "Sort/rentre le train tricycle. Levier physique = geste réaliste ; vitesse max sortie 280 kt.", "lec": "a5"}, "pto2|2": {"det": "Éteint le voyant Master Caution après identification de la panne.", "lec": "g1"}, "pto2|1": {"det": "Passe au programme de leurres ALE-47 suivant.", "lec": "e2"}, "pto2|3-4": {"det": "Abaisse la barre de catapultage sur le train avant pour l'accrochage au shuttle (avec kneel).", "lec": "c1"}, "pto2|5-7": {"det": "Volets/becs : Up (lisse), Maneuver (combat), Down (approche). Changent radicalement l'AoA utile.", "lec": "a7"}, "pto2|8-9": {"det": "Phare de roulage sur le train avant — pont de nuit et taxiways.", "lec": "a4"}, "pto2|10-11": {"det": "Anti-dérapage des freins (opérations terrestres uniquement, OFF sur porte-avions).", "lec": "a5"}, "pto2|12-13": {"det": "Bypass crosse : Field fait remonter la crosse au toucher, Carrier la maintient pour prendre le brin.", "lec": "c4"}, "pto2|14-16": {"det": "Sort la sonde de ravitaillement ; position secours (Emerg) si l'hydraulique est perdue.", "lec": "g2"}, "pto2|17-22": {"det": "Rotacteur de largage sélectif : choisit quoi larguer en urgence (fuselage, rails, racks).", "lec": "g1"}, "pto2|23-27": {"det": "Boutons de sélection des stations d'emport (1-8) pour armement et largage.", "lec": "f1"}, "pto2|38-41": {"det": "Tourner+tirer = frein parking ; tirer seul = freinage secours pneumatique si hydraulique HS.", "lec": "g1"}, "pto2|32-34": {"det": "Descend la crosse d'appontage pour attraper les brins d'arrêt (ou piste équipée).", "lec": "c4"}, "pto2|28-31": {"det": "Flèche des ailes : Auto (CADC optimise 20-68°), Manuel, Oversweep 75° pour le parking pont.", "lec": "a6"}, "pedals|1": {"det": "Pousse la dérive à gauche : coordination des virages, décrabe à l'atterrissage, roulage (NWS).", "lec": "a5"}, "pedals|2": {"det": "Pousse la dérive à droite. En BFM, le lacet devient une vraie commande de roulis à haute AoA.", "lec": "d7"}, "pedals|3": {"det": "L'axe combiné envoyé à DCS : le F-14 se pilote AUSSI aux pieds, surtout au-dessus de 15 unités AoA.", "lec": "a6"}, "pedals|4": {"det": "Freinage principal des roues (backup de la palette manche) — atterrissage et point fixe.", "lec": "a5"}};
 const LESSONS={"a1": "Tour du cockpit", "a2": "Commandes et bindings", "a3": "Travailler avec JESTER", "a4": "Démarrage à froid", "a5": "Roulage et décollage", "a6": "Vol de base, AoA et DFCS", "a7": "Retour terrain et atterrissage", "b1": "Comprendre le système", "b2": "Aligner l'EGI", "b3": "Saisir un waypoint", "b4": "Suivre une route", "b5": "TACAN et guidage", "c1": "Départ catapulte", "c2": "Théorie de l'appontage", "c3": "Voler le circuit", "c4": "Poser sur le pont", "d1": "Le radar : modes et vocabulaire", "d2": "Lire le PTID", "d3": "Le HUD en air-air", "d4": "Sidewinder et canon", "d5": "Sparrow", "d6": "Phoenix et tir multi-cibles", "d7": "BFM : le Tomcat au manche", "e1": "Lire le RWR", "e2": "L'ALE-47 : leurres programmés", "e3": "Survivre à un engagement", "f1": "Bombes lisses et symbologie A/G", "f2": "LGB et LANTIRN", "f3": "JDAM", "g1": "Urgences", "g2": "Ravitaillement en vol", "g3": "La mission complète"};
 const CURSUS='cursus-complet.html';
+const IND={"throttle|9": "Antenne radar ↑", "throttle|10": "Portée +", "throttle|11": "Antenne radar ↓", "throttle|12": "Portée −", "throttle|23": "Jester ↓", "throttle|24": "Jester ←", "throttle|25": "Jester ↑", "throttle|26": "Jester →", "throttle|17": "Arme →", "throttle|18": "Arme ↓", "throttle|19": "Arme ←", "throttle|20": "Arme ↑", "throttle|28": "Vue ↓", "throttle|29": "Vue ←", "throttle|30": "Vue ↑", "throttle|31": "Vue →", "throttle|3": "Volume ICS −", "throttle|5": "Canal radio −", "throttle|7": "Canal radio +", "throttle|15": "Mode maître −", "throttle|37": "Master Arm OFF", "throttle|45": "Feux anticollision", "throttle|47": "Pitot heat OFF", "throttle|49": "Purge carburant OFF", "throttle|39": "Train DOWN", "throttle|41": "Volets DOWN", "throttle|43": "Flèche aile MAN 68°", "throttle|51": "Luminosité −", "throttle|52": "Luminosité +", "throttle|54": "Canal préréglé −", "throttle|55": "Canal préréglé +", "throttle|M1": "PA Attitude", "throttle|M2": "PA Altitude", "throttle|M3": "PA Cap", "throttle|M4": "PA Approche"};
 const CAT_COLOR={arm:'#B3382C',vol:'#1F5FA8',sens:'#2E7D46',comm:'#8A5A00',misc:'#5C5F66'};
 
 /* x,y en % (coin gauche / centre vertical) · t = texte · s = sous-texte · v = à vérifier · sm = petite étiquette */
 const LABELS={
 stick:[
- {n:'rY', cat:'sens', t:'Slew TDC ↑↓', x:19.0,y:6.6},
- {n:'6',  cat:'sens', t:'Désignation TDC', x:19.0,y:12.2},
- {n:'rX', cat:'sens', t:'Slew TDC ←→', x:19.0,y:17.5},
- {n:'7',  cat:'vol',  t:'PA désengagé', v:1, x:37.5,y:11.5},
- {n:'9',  cat:'sens', t:'Senseur : Radar', v:1, x:68.5,y:6.6},
- {n:'10', cat:'sens', t:'Senseur : TCS', v:1, x:58.0,y:12.2},
- {n:'8',  cat:'sens', t:'Undesignate', v:1, x:68.5,y:12.2},
- {n:'12', cat:'sens', t:'Senseur : Auto', v:1, x:79.0,y:12.2},
- {n:'11', cat:'sens', t:'Senseur : IRST', v:1, x:68.5,y:17.5},
- {n:'13', cat:'arm',  t:'Uncage seeker', v:1, x:69.0,y:25.6},
- {n:'29', cat:'comm', t:'FLARES', v:1, x:85.0,y:26.0},
- {n:'28', cat:'comm', t:'Prog. CM suiv.', v:1, x:85.0,y:31.8},
- {n:'30', cat:'comm', t:'CHAFF', v:1, x:85.0,y:37.5},
- {n:'15', cat:'vol',  t:'Trim piqué', x:18.5,y:28.6},
- {n:'16', cat:'vol',  t:'Trim roulis G', x:7.5,y:34.4},
- {n:'14', cat:'vol',  t:'PA engagé', v:1, x:18.5,y:34.4},
- {n:'18', cat:'vol',  t:'Trim roulis D', x:29.5,y:34.4},
- {n:'17', cat:'vol',  t:'Trim cabré', x:18.5,y:40.4},
- {n:'1',  cat:'arm',  t:'PICKLE (largage)', v:1, x:69.0,y:37.5},
- {n:'2',  cat:'arm',  t:'Caméra canon', v:1, x:69.0,y:43.4},
- {n:'3',  cat:'misc', t:'Réserve', v:1, x:69.0,y:49.0},
- {n:'21', cat:'misc', t:'Zoom FOV +', x:18.5,y:51.6},
- {n:'19', cat:'misc', t:'TCS ↔ FLIR', v:1, x:18.5,y:57.5},
- {n:'20', cat:'sens', t:'TWS ↔ PSTT', v:1, x:18.5,y:63.3},
- {n:'22', cat:'misc', t:'Zoom FOV −', x:18.5,y:69.0},
- {n:'4',  cat:'arm',  t:'Interlock 1er cran', v:1, x:69.0,y:57.5},
- {n:'5',  cat:'arm',  t:'FEU CANON', v:1, x:69.0,y:63.3},
- {n:'32', cat:'vol',  t:'Frein parking', v:1, x:53.0,y:57.5},
- {n:'SLDR',cat:'vol', t:'Frein roues (axe)', x:53.0,y:63.3},
- {n:'Z',  cat:'misc', t:'Twist verrouillé', x:18.5,y:79.6},
- {n:'24', cat:'misc', t:'Vue extérieure', v:1, x:53.0,y:74.5},
- {n:'25', cat:'misc', t:'Snap view G', v:1, x:42.5,y:80.3},
- {n:'23', cat:'misc', t:'Padlock', v:1, x:53.0,y:80.3},
- {n:'27', cat:'misc', t:'Snap view D', v:1, x:64.0,y:80.3},
- {n:'26', cat:'misc', t:'Vue centrée', v:1, x:53.0,y:86.2},
- {n:'31', cat:'vol',  t:'Aérofrein (tenir)', v:1, x:53.0,y:93.5},
+ {n:"rY", cat:'sens', t:"Slew TDC ↑↓", x:18.92, y:6.86, bw:8.5},
+ {n:"9", cat:'sens', t:"Senseur : Radar", x:70.22, y:6.86, bw:8.5},
+ {n:"6", cat:'sens', t:"Désignation TDC", x:20.11, y:12.45, bw:8.5},
+ {n:"7", cat:'vol', t:"PA désengagé", x:38.61, y:12.45, bw:8.58},
+ {n:"10", cat:'sens', t:"Senseur : TCS", x:59.56, y:12.45, bw:8.5},
+ {n:"8", cat:'sens', t:"Undesignate", x:70.22, y:12.45, bw:8.5},
+ {n:"12", cat:'sens', t:"Senseur : Auto", x:80.96, y:12.45, bw:8.58},
+ {n:"rX", cat:'sens', t:"Slew TDC ←→", x:18.92, y:17.99, bw:8.5},
+ {n:"11", cat:'sens', t:"Senseur : IRST", x:70.22, y:17.99, bw:8.5},
+ {n:"13", cat:'arm', t:"Uncage seeker", x:70.22, y:26.16, bw:8.5},
+ {n:"29", cat:'comm', t:"FLARES", x:86.03, y:26.21, bw:8.5},
+ {n:"15", cat:'vol', t:"Trim piqué", x:20.04, y:28.9, bw:8.58},
+ {n:"28", cat:'comm', t:"Prog. CM suiv.", x:86.03, y:31.8, bw:8.5},
+ {n:"16", cat:'vol', t:"Trim roulis G", x:9.37, y:34.49, bw:8.5},
+ {n:"14", cat:'vol', t:"PA engagé", x:20.04, y:34.49, bw:8.58},
+ {n:"18", cat:'vol', t:"Trim roulis D", x:30.85, y:34.49, bw:8.5},
+ {n:"30", cat:'comm', t:"CHAFF", x:86.03, y:37.34, bw:8.5},
+ {n:"1", cat:'arm', t:"PICKLE (largage)", x:70.22, y:37.39, bw:8.5},
+ {n:"17", cat:'vol', t:"Trim cabré", x:20.04, y:40.08, bw:8.58},
+ {n:"2", cat:'arm', t:"Caméra canon", x:70.22, y:43.04, bw:8.5},
+ {n:"3", cat:'misc', t:"Réserve", x:70.22, y:48.58, bw:8.5},
+ {n:"21", cat:'misc', t:"Zoom FOV +", x:20.04, y:51.48, bw:8.58},
+ {n:"19", cat:'misc', t:"TCS ↔ FLIR", x:20.11, y:57.12, bw:8.5},
+ {n:"32", cat:'vol', t:"Frein parking", x:54.79, y:57.59, bw:8.58},
+ {n:"4", cat:'arm', t:"Interlock 1er cran", x:70.22, y:57.65, bw:8.5},
+ {n:"20", cat:'sens', t:"TWS ↔ PSTT", x:20.04, y:62.66, bw:8.58},
+ {n:"SLDR", cat:'vol', t:"Frein roues (axe)", x:53.67, y:63.19, bw:8.87},
+ {n:"5", cat:'arm', t:"FEU CANON", x:70.22, y:63.19, bw:8.5},
+ {n:"22", cat:'misc', t:"Zoom FOV −", x:20.04, y:68.25, bw:8.58},
+ {n:"24", cat:'misc', t:"Vue extérieure", x:54.86, y:74.31, bw:8.5},
+ {n:"Z", cat:'misc', t:"Twist verrouillé", x:18.92, y:79.85, bw:8.5},
+ {n:"25", cat:'misc', t:"Snap view G", x:44.12, y:79.91, bw:8.5},
+ {n:"23", cat:'misc', t:"Padlock", x:54.86, y:79.91, bw:8.5},
+ {n:"27", cat:'misc', t:"Snap view D", x:65.6, y:79.91, bw:8.5},
+ {n:"26", cat:'misc', t:"Vue centrée", x:54.86, y:85.5, bw:8.5},
+ {n:"31", cat:'vol', t:"Aérofrein (tenir)", x:54.86, y:94.36, bw:8.5}
 ],
 throttle:[
- {n:'rX', cat:'misc', t:'Lum. HUD (axe)', v:1, x:9.0,y:5.2, sm:1},
- {n:'2',  cat:'comm', t:'Volume +', v:1, x:4.0,y:10.3, sm:1},
- {n:'1',  cat:'comm', t:'PTT Intercom Jester', v:1, x:4.0,y:14.7, sm:1},
- {n:'3',  cat:'comm', t:'Volume −', v:1, x:4.0,y:19.2, sm:1},
- {n:'rY', cat:'sens', t:'Élév. antenne (axe)', v:1, x:41.5,y:3.7, sm:1},
- {n:'Y',  cat:'vol',  t:'MOTEUR DROIT', x:87.3,y:7.2, sm:1},
- {n:'13', cat:'vol',  t:'Détent AB (lift)', v:1, x:87.3,y:12.2, sm:1},
- {n:'X',  cat:'vol',  t:'MOTEUR GAUCHE', x:87.3,y:16.7, sm:1},
- {n:'9',  cat:'sens', t:'Antenne ↑', v:1, x:61.5,y:10.7, sm:1},
- {n:'12', cat:'sens', t:'Portée −', v:1, x:50.5,y:14.7, sm:1},
- {n:'8',  cat:'sens', t:'Antenne reset', v:1, x:61.5,y:14.7, sm:1},
- {n:'10', cat:'sens', t:'Portée +', v:1, x:71.5,y:14.7, sm:1},
- {n:'11', cat:'sens', t:'Antenne ↓', v:1, x:61.5,y:19.2, sm:1},
- {n:'Z',  cat:'sens', t:'Zoom DDD (axe)', v:1, x:26.0,y:18.2, sm:1},
- {n:'4',  cat:'comm', t:'PTT Radio UHF', v:1, x:4.0,y:26.2, sm:1},
- {n:'7',  cat:'comm', t:'Canal +', v:1, x:15.0,y:26.2, sm:1},
- {n:'6',  cat:'comm', t:'Canal valider', v:1, x:15.0,y:30.5, sm:1},
- {n:'5',  cat:'comm', t:'Canal −', v:1, x:15.0,y:34.7, sm:1},
- {n:'25', cat:'sens', t:'Jester ↑', v:1, x:42.0,y:20.7, sm:1},
- {n:'24', cat:'sens', t:'Jester ←', v:1, x:31.0,y:25.0, sm:1},
- {n:'22', cat:'sens', t:'Jester menu', v:1, x:42.0,y:25.0, sm:1},
- {n:'26', cat:'sens', t:'Jester →', v:1, x:52.5,y:25.0, sm:1},
- {n:'23', cat:'sens', t:'Jester ↓', v:1, x:42.0,y:29.2, sm:1},
- {n:'20', cat:'arm',  t:'Arme ↑ (SW/SP)', v:1, x:77.5,y:20.7, sm:1},
- {n:'19', cat:'arm',  t:'Arme ← ', v:1, x:66.5,y:25.0, sm:1},
- {n:'16', cat:'arm',  t:'Arme : cycle', v:1, x:77.5,y:25.0, sm:1},
- {n:'17', cat:'arm',  t:'Arme →', v:1, x:88.3,y:25.0, sm:1},
- {n:'18', cat:'arm',  t:'Arme ↓ (PH/GUN)', v:1, x:77.5,y:29.4, sm:1},
- {n:'14', cat:'arm',  t:'Master Mode +', v:1, x:56.0,y:30.4, sm:1},
- {n:'15', cat:'arm',  t:'Master Mode −', v:1, x:56.0,y:34.7, sm:1},
- {n:'32', cat:'sens', t:'TDC désign. (2nd)', v:1, x:41.5,y:32.8, sm:1},
- {n:'30', cat:'misc', t:'Vue / regard ↑', v:1, x:77.5,y:34.7, sm:1},
- {n:'34', cat:'misc', t:'Reset M.Caution', v:1, x:41.5,y:39.4, sm:1},
- {n:'29', cat:'misc', t:'Vue ←', v:1, x:66.5,y:38.8, sm:1},
- {n:'27', cat:'misc', t:'Recentrage VR', v:1, x:77.5,y:38.8, sm:1},
- {n:'31', cat:'misc', t:'Vue →', v:1, x:88.3,y:38.8, sm:1},
- {n:'28', cat:'misc', t:'Vue ↓', v:1, x:77.5,y:43.0, sm:1},
- {n:'36', cat:'arm',  t:'JT3 : Master Arm ON', v:1, x:25.5,y:39.3, sm:1},
- {n:'37', cat:'arm',  t:'JT4 : Master Arm OFF', v:1, x:25.5,y:44.3, sm:1},
- {n:'35', cat:'sens', t:'Undesignate', v:1, x:41.5,y:44.8, sm:1},
- {n:'44', cat:'misc', t:'T5↑ Feux nav', v:1, x:4.0,y:49.3, sm:1},
- {n:'46', cat:'vol',  t:'T6↑ Pitot heat ON', v:1, x:15.0,y:49.3, sm:1},
- {n:'48', cat:'vol',  t:'T7↑ Purge carb ON', v:1, x:26.0,y:49.3, sm:1},
- {n:'45', cat:'misc', t:'T5↓ Feux anticol', v:1, x:4.0,y:53.8, sm:1},
- {n:'47', cat:'vol',  t:'T6↓ Pitot heat OFF', v:1, x:15.0,y:53.8, sm:1},
- {n:'49', cat:'vol',  t:'T7↓ Purge carb OFF', v:1, x:26.0,y:53.8, sm:1},
- {n:'21', cat:'comm', t:'JT1 : ECM ON/OFF', v:1, x:80.5,y:48.3, sm:1},
- {n:'33', cat:'vol',  t:'JT2 : Sonde ravito', v:1, x:76.5,y:52.3, sm:1},
- {n:'rZ', cat:'vol',  t:'AÉROFREIN (axe)', x:66.5,y:52.3, sm:1},
- {n:'38', cat:'vol',  t:'B1 Train UP', v:1, x:66.5,y:59.3, sm:1},
- {n:'39', cat:'vol',  t:'B2 Train DOWN', v:1, x:77.5,y:59.3, sm:1},
- {n:'40', cat:'vol',  t:'B3 Volets UP', v:1, x:88.3,y:59.3, sm:1},
- {n:'41', cat:'vol',  t:'B4 Volets DOWN', v:1, x:66.5,y:63.8, sm:1},
- {n:'42', cat:'vol',  t:'B5 Ailes AUTO', v:1, x:77.5,y:63.8, sm:1},
- {n:'43', cat:'vol',  t:'B6 Ailes MAN 68°', v:1, x:88.3,y:63.8, sm:1},
- {n:'52', cat:'misc', t:'E1 + Lum. instr.', v:1, x:9.0,y:62.3, sm:1},
- {n:'55', cat:'comm', t:'E2 + Canal préréglé', v:1, x:20.0,y:62.3, sm:1},
- {n:'50', cat:'misc', t:'E1 push Jour/Nuit', v:1, x:9.0,y:67.0, sm:1},
- {n:'53', cat:'comm', t:'E2 push Valider', v:1, x:20.0,y:67.0, sm:1},
- {n:'51', cat:'misc', t:'E1 − Lum. instr.', v:1, x:9.0,y:71.8, sm:1},
- {n:'54', cat:'comm', t:'E2 − Canal préréglé', v:1, x:20.0,y:71.8, sm:1},
- {n:'OFF', cat:'vol', t:'PA : OFF', x:34.0,y:74.3, sm:1},
- {n:'M1', cat:'vol',  t:'PA : Attitude', x:45.0,y:74.3, sm:1},
- {n:'M2', cat:'vol',  t:'PA : Alt hold', x:56.0,y:74.3, sm:1},
- {n:'M3', cat:'vol',  t:'PA : Cap (HDG)', x:67.0,y:74.3, sm:1},
- {n:'M4', cat:'vol',  t:'PA : Approche', x:78.0,y:74.3, sm:1},
+ {n:"rX", cat:'misc', t:"Lum. HUD (axe)", x:9.01, y:4.98, bw:8.58, sm:1, chk:1},
+ {n:"rY", cat:'sens', t:"Élév. antenne (axe)", x:41.3, y:4.98, bw:8.58, sm:1},
+ {n:"Y", cat:'vol', t:"MOTEUR DROIT", x:87.13, y:10.14, bw:8.58, sm:1},
+ {n:"2", cat:'comm', t:"Volume ICS + / −", x:5.19, y:14.35, bw:8.58, sm:1, grp:["2", "3"]},
+ {n:"13", cat:'vol', t:"Détent AB (lift)", x:88.3, y:15.74, bw:8.55, sm:1},
+ {n:"1", cat:'comm', t:"PTT Intercom Jester", x:5.19, y:19.95, bw:8.58, sm:1},
+ {n:"8", cat:'sens', t:"Antenne radar ↑↓ · Portée ←→ · push reset", x:61.79, y:20.17, bw:8.58, sm:1, grp:["8", "9", "10", "11", "12"]},
+ {n:"X", cat:'vol', t:"MOTEUR GAUCHE", x:87.13, y:21.3, bw:8.55, sm:1},
+ {n:"Z", cat:'sens', t:"Zoom DDD (axe)", x:25.49, y:25.57, bw:8.58, sm:1},
+ {n:"22", cat:'sens', t:"Menu Jester ↑↓←→ · push ouvrir", x:42.47, y:33.64, bw:8.58, sm:1, grp:["22", "23", "24", "25", "26"]},
+ {n:"16", cat:'arm', t:"Sélection arme ↑↓←→ · push cycle", x:77.55, y:33.64, bw:8.58, sm:1, grp:["16", "17", "18", "19", "20"]},
+ {n:"4", cat:'comm', t:"PTT Radio UHF", x:5.17, y:35.93, bw:8.58, sm:1},
+ {n:"14", cat:'arm', t:"Mode maître + / −", x:56.61, y:41.52, bw:8.58, sm:1, grp:["14", "15"]},
+ {n:"6", cat:'comm', t:"Canal radio + / − · push valider", x:15.94, y:41.54, bw:8.58, sm:1, grp:["6", "5", "7"]},
+ {n:"32", cat:'sens', t:"TDC désign. (2nd)", x:42.47, y:47.12, bw:8.58, sm:1, chk:1},
+ {n:"rZ", cat:'vol', t:"AÉROFREIN (axe)", x:66.86, y:52.74, bw:8.58, sm:1, chk:1},
+ {n:"27", cat:'misc', t:"Vues ↑↓←→ · push recentrage VR", x:77.55, y:52.74, bw:8.58, sm:1, grp:["27", "28", "29", "30", "31"]},
+ {n:"34", cat:'misc', t:"Reset M.Caution", x:42.47, y:53.99, bw:8.58, sm:1},
+ {n:"48", cat:'vol', t:"T7 · Purge carburant ON / OFF", x:26.65, y:54.03, bw:8.61, sm:1, chk:1, grp:["48", "49"]},
+ {n:"36", cat:'arm', t:"Master Arm  ON / OFF", x:26.65, y:59.63, bw:8.61, sm:1, chk:1, grp:["36", "37"]},
+ {n:"35", cat:'sens', t:"Undesignate", x:42.47, y:61.93, bw:8.58, sm:1},
+ {n:"40", cat:'vol', t:"B3-B4 · Volets UP / DOWN", x:88.27, y:64.79, bw:8.61, sm:1, chk:1, grp:["40", "41"]},
+ {n:"44", cat:'misc', t:"T5 · Feux nav / anticollision", x:5.19, y:66.47, bw:8.58, sm:1, grp:["44", "45"]},
+ {n:"46", cat:'vol', t:"T6 · Réchauffage Pitot ON / OFF", x:15.94, y:66.47, bw:8.58, sm:1, grp:["46", "47"]},
+ {n:"38", cat:'vol', t:"B1-B2 · Train UP / DOWN", x:66.72, y:78.58, bw:8.55, sm:1, grp:["38", "39"]},
+ {n:"33", cat:'vol', t:"JT2 : Sonde ravito", x:77.41, y:78.58, bw:8.58, sm:1, chk:1},
+ {n:"42", cat:'vol', t:"B5-B6 · Flèche aile AUTO / MAN 68°", x:77.41, y:84.18, bw:8.58, sm:1, grp:["42", "43"]},
+ {n:"21", cat:'comm', t:"JT1 : ECM ON/OFF", x:88.27, y:84.18, bw:8.55, sm:1, chk:1},
+ {n:"50", cat:'misc', t:"E1 · Luminosité instruments (± / push)", x:10.32, y:87.83, bw:8.58, sm:1, grp:["50", "51", "52"]},
+ {n:"53", cat:'comm', t:"E2 · Canal radio préréglé (± / push)", x:21.1, y:87.83, bw:8.58, sm:1, grp:["53", "54", "55"]},
+ {n:"OFF", cat:'vol', t:"Pilote auto : Off · Att · Alt · Cap · App", x:34.63, y:93.37, bw:8.58, sm:1, grp:["OFF", "M1", "M2", "M3", "M4"]}
 ],
 pto2:[
  {n:'35-37', cat:'vol', t:'TRAIN Up / Down', x:1.5,y:31.0},
@@ -383,6 +352,8 @@ pedals:[
  {n:'4', cat:'vol', t:'Frein roues (backup)', x:40.0,y:12.0},
 ]
 };
+const BOXES={"stick": [[18.57, 6.86, 8.5], [69.87, 6.86, 8.5], [19.76, 12.45, 8.5], [38.26, 12.45, 8.58], [59.21, 12.45, 8.5], [69.87, 12.45, 8.5], [80.61, 12.45, 8.58], [18.57, 17.99, 8.5], [69.87, 17.99, 8.5], [69.87, 26.16, 8.5], [85.68, 26.21, 8.5], [19.69, 28.9, 8.58], [85.68, 31.8, 8.5], [9.02, 34.49, 8.5], [19.69, 34.49, 8.58], [30.5, 34.49, 8.5], [69.87, 37.39, 8.5], [85.68, 37.34, 8.5], [19.69, 40.08, 8.58], [69.87, 43.04, 8.5], [19.69, 51.48, 8.58], [69.87, 48.58, 8.5], [19.76, 57.12, 8.5], [54.44, 57.59, 8.58], [69.87, 57.65, 8.5], [19.69, 62.66, 8.58], [53.32, 63.19, 8.87], [69.87, 63.19, 8.5], [19.69, 68.25, 8.58], [54.51, 74.31, 8.5], [18.57, 79.85, 8.5], [43.77, 79.91, 8.5], [54.51, 79.91, 8.5], [65.25, 79.91, 8.5], [54.51, 85.5, 8.5], [54.51, 94.36, 8.5]], "throttle": [[8.66, 4.98, 8.58], [40.95, 4.98, 8.58], [86.78, 10.14, 8.58], [4.84, 14.35, 8.58], [61.44, 14.57, 8.58], [87.95, 15.74, 8.55], [4.84, 19.95, 8.58], [50.76, 20.17, 8.58], [61.44, 20.17, 8.58], [72.21, 20.17, 8.55], [86.78, 21.3, 8.55], [4.84, 25.51, 8.58], [25.14, 25.57, 8.58], [61.44, 25.74, 8.58], [42.12, 28.03, 8.58], [77.2, 28.03, 8.58], [4.82, 35.93, 8.58], [15.56, 35.93, 8.61], [31.43, 33.64, 8.58], [42.12, 33.64, 8.58], [52.86, 33.64, 8.58], [66.51, 33.64, 8.58], [77.2, 33.64, 8.58], [87.95, 33.64, 8.58], [42.12, 39.2, 8.58], [77.2, 39.2, 8.58], [15.59, 41.54, 8.58], [56.26, 41.52, 8.58], [15.56, 47.1, 8.61], [42.12, 47.12, 8.58], [56.26, 47.12, 8.58], [77.2, 47.14, 8.58], [26.3, 54.03, 8.61], [42.12, 53.99, 8.58], [66.51, 52.74, 8.58], [77.2, 52.74, 8.58], [87.95, 52.74, 8.58], [26.3, 59.63, 8.61], [77.2, 58.3, 8.58], [42.12, 61.93, 8.58], [4.84, 66.47, 8.58], [15.59, 66.47, 8.58], [26.33, 66.47, 8.58], [87.92, 64.79, 8.61], [65.2, 69.35, 8.58], [77.2, 67.05, 8.58], [4.84, 72.07, 8.58], [15.59, 72.07, 8.58], [26.36, 72.07, 8.55], [66.37, 78.58, 8.55], [77.06, 78.58, 8.58], [87.89, 78.58, 8.58], [9.97, 82.22, 8.58], [20.75, 82.22, 8.58], [66.37, 84.18, 8.58], [77.06, 84.18, 8.58], [87.92, 84.18, 8.55], [9.97, 87.83, 8.58], [20.75, 87.83, 8.58], [9.97, 93.39, 8.58], [20.75, 93.39, 8.58], [34.28, 93.37, 8.58], [44.97, 93.37, 8.58], [55.69, 93.37, 8.55], [66.34, 93.37, 8.61], [77.06, 93.37, 8.55]]};
+
 
 /* ---------- Render ---------- */
 function render(dev){
@@ -394,6 +365,8 @@ function render(dev){
     el.style.setProperty('--c',CAT_COLOR[d.cat]);
     el.style.left=d.x+'%';
     el.style.top=d.y+'%';
+    if(d.bw){ el.style.width=d.bw+'%'; el.style.maxWidth='none'; }
+    if(d.chk) el.classList.add('chk');
     el.dataset.cat=d.cat; el.dataset.dev=dev; el.dataset.i=i;
     el.innerHTML=`${d.t}${d.v?' <span class="q">?</span>':''}<small>${d.n}</small>`;
     board.appendChild(el);
@@ -406,14 +379,16 @@ Object.keys(LABELS).forEach(render);
 function renderTable(dev){
   const tbody=document.querySelector('#dtbl-'+dev+' tbody');
   if(!tbody)return; tbody.innerHTML='';
-  LABELS[dev].forEach(d=>{
-    const key=dev+'|'+d.n, x=DETAILS[key]||{};
+  const rows=[];
+  LABELS[dev].forEach(d=>{ (d.grp||[d.n]).forEach(n=>rows.push({n:n,cat:d.cat,t:d.t,v:d.v,src:d})); });
+  rows.forEach(d=>{
+    const key=dev+'|'+d.n, x=Object.assign({},DETAILS[key]||{},{lbl:IND[key]});
     const color=CAT_COLOR[d.cat];
     const lec=x.lec, lt=lec?LESSONS[lec]:'';
     const tr=document.createElement('tr');
     tr.dataset.cat=d.cat;
     tr.innerHTML=`<td class="c1"><span class="num-badge" style="--c:${color}">${d.n}</span></td>
-      <td class="c2"><b>${d.t.replace(/ <span.*$/,'')}</b><span>${d.n}${d.v?' · à vérifier':''}</span></td>
+      <td class="c2"><b>${(x.lbl||d.t).replace(/ <span.*$/,'')}</b><span>${d.n}${d.v?' · à vérifier':''}</span></td>
       <td class="c3">${x.det||'—'}</td>
       <td>${lec?`<a class="lec-link" href="${CURSUS}#${lec}" >${lec.toUpperCase()}<small>${lt}</small></a>`:'—'}</td>`;
     tbody.appendChild(tr);
@@ -459,13 +434,23 @@ document.addEventListener('pointerdown',e=>{
 });
 document.addEventListener('pointermove',e=>{
   if(!dragEl)return;
-  const board=dragEl.parentElement;
+  const dev=dragEl.dataset.dev, board=dragEl.parentElement;
   const r=board.getBoundingClientRect();
-  const x=Math.min(99,Math.max(0,(e.clientX-r.left)/r.width*100));
-  const y=Math.min(99,Math.max(0,(e.clientY-r.top)/r.height*100));
+  let x=Math.min(99,Math.max(0,(e.clientX-r.left)/r.width*100));
+  let y=Math.min(99,Math.max(0,(e.clientY-r.top)/r.height*100));
+  // magnétisme : accroche à la case la plus proche si on est dedans
+  let snapped=false;
+  (BOXES[dev]||[]).forEach(b=>{
+    if(x>=b[0]-2 && x<=b[0]+b[2]+2 && Math.abs(y-b[1])<3.2){
+      x=b[0]+0.35; y=b[1]; snapped=true;
+      dragEl.style.width=b[2]+'%'; dragEl.style.maxWidth='none';
+    }
+  });
+  dragEl.classList.toggle('snap',snapped);
   dragEl.style.left=x+'%'; dragEl.style.top=y+'%';
-  const d=LABELS[dragEl.dataset.dev][dragEl.dataset.i];
-  d.x=Math.round(x*10)/10; d.y=Math.round(y*10)/10;
+  const d=LABELS[dev][dragEl.dataset.i];
+  d.x=Math.round(x*100)/100; d.y=Math.round(y*100)/100;
+  if(snapped) dragEl.classList.remove('chk');
 });
 document.addEventListener('pointerup',()=>{dragEl=null;});
 
