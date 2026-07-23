@@ -1,33 +1,399 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Décollage — F4U-1D Corsair</title>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
-  :root{--deck:#10161a;--panel:#18222a;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;
-    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  :root{
+    --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+    --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+    --display:"Oswald","Arial Narrow",sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
   *{box-sizing:border-box}
   body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
-  .wrap{max-width:640px;margin:0 auto;padding:80px 24px}
-  .nav{display:flex;gap:18px;margin-bottom:36px}
-  .nav a{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none}
-  .nav a:hover{color:var(--amber)}
-  .tail{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
-  h1{font-family:var(--display);font-weight:600;font-size:38px;letter-spacing:.03em;line-height:1.05;margin:10px 0 18px;text-transform:uppercase}
-  p{color:var(--dim);max-width:56ch}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)}
+  .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
   .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-         color:var(--deck);background:var(--amber);padding:4px 9px;margin-top:20px}
+         color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;color:var(--ink);margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+     margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+  .lead{color:var(--dim)}
+
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+
+  table.pins{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
+  table.pins td.n{font-family:var(--mono);color:var(--amber);width:26px}
+
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)}
+  .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .note p+p{margin-top:8px}
+
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+
+  .banner{background:var(--panel-2);border-bottom:1px solid var(--amber);padding:11px 20px;font-size:13px;color:var(--dim);display:flex;gap:14px;align-items:center;justify-content:space-between}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 </style>
-</head>
-<body>
-<div class="wrap">
-  <div class="nav"><a href="../index.html">&larr; Accueil</a><a href="index.html">&larr; Cursus F4U-1D</a></div>
-  <div class="tail">Section C · F4U-1D Corsair</div>
-  <h1>Décollage</h1>
-  <p>Décollage terrain standard, distance minimale, et décollage roulant ou catapulté depuis l'Essex-class.</p>
-  <p>Cette section arrive dans une prochaine mise à jour du cursus, construite avec les mêmes planches officielles du manuel Magnitude 3 que la Section A.</p>
-  <span class="badge">En construction</span>
+
+<div id="banner" class="banner">
+  <span>Planches issues directement du manuel officiel Magnitude 3 (AN-01-45MAG-3) — hébergées dans <code>img/</code>, aucune dépendance externe.</span>
+  <button class="ghost" onclick="document.getElementById('banner').remove()">OK</button>
 </div>
-</body></html>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px">&larr; Accueil</a>
+      <a href="index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px;margin-left:14px">&larr; Cursus F4U-1D</a>
+      <div class="tail">Section C · F4U-1D</div>
+      <h1>Décollage</h1>
+      <p class="sub">Sept leçons illustrées — terrain, distance minimale, et depuis l'Essex.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const IMG = {
+  carrierphoto: "takeoff_carrier_photo.jpg",
+  tworoll:      "takeoff_tworoll_cockpit.jpg",
+  afterto:      "takeoff_afterto_photo.jpg",
+  trimwheels:   "prep_trim_wheels.jpg",
+  flapknob:     "prep_flap_knob.jpg",
+  ecu:          "engine_control_unit.jpg",
+  hooklever:    "taxi_hook_lever.jpg",
+};
+
+const DOC = {
+  manuel:    ["Manuel officiel (PDF)","docs/manuel-f4u1d.pdf"],
+  checklist: ["Checklist procédurale V5 (ED Forums)","https://www.digitalcombatsimulator.com/en/files/3345416/"],
+  kneeboard: ["Kneeboards à jour (ED Forums)","https://www.digitalcombatsimulator.com/en/files/3345803/"],
+  videos:    ["Playlist tutoriels vidéo","https://www.youtube.com/playlist?list=PLODX_e0mlZ2UvjOjEvgd0Pflyci7JARkm"],
+};
+
+const L = [
+{id:"c1", title:"Généralités & configuration", isNew:true,
+ intro:"Avant de lâcher les freins, trois réflexes à avoir : le bon angle de volets pour le terrain visé, un trim adapté, et une anticipation du départ vers la gauche au décollage — une signature de tous les gros monomoteurs à hélice droite.",
+ body:[
+  {t:"img", k:"carrierphoto", c:"F4U-1D au catapultage, moteur en pleine puissance."},
+  {t:"h", v:"Volets : quel angle pour quel terrain"},
+  {t:"table", cols:["Configuration","Angle recommandé"], rows:[
+    ["Terrain standard","20°"],
+    ["Porte-avions","30° ou plus"],
+    ["Distance mini nécessaire","jusqu'à 50° plein sorti, au prix d'une montée initiale moins bonne"],
+    ["Piste très longue, aucune contrainte","0° — pas besoin de rentrer les volets juste après décollage"]]},
+  {t:"img", k:"flapknob", c:"Commande des volets, réglable par pas de 10°."},
+  {t:"h", v:"Le départ vers la gauche"},
+  {t:"p", v:"Couple moteur et souffle hélicoïdal font systématiquement piquer du nez à gauche et incliner à droite juste après le décollage. Le trim latéral réglé à 6° à droite avant le roulage (leçon B4) absorbe une bonne partie de cet effet — le reste se corrige au palonnier."},
+  {t:"img", k:"trimwheels", c:"Trims réglés avant roulage : 6° latéral droite, 6° directionnel droite, 1° profondeur à cabrer."},
+  {t:"note", k:"", lbl:"Repère du manuel", v:"Avec volets sortis et une pression d'admission supérieure à 44 in/Hg, la queue est difficile à maintenir au sol manche plein en arrière. C'est normal — la solution est dans la technique de roulage, pas dans le trim."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Choisis un terrain avec une piste de longueur normale (2000m+).",
+   "Configure les volets à 20°, vérifie les trims de la leçon B4.",
+   "Visualise mentalement la séquence : roulage → deux roues → décollage → dérive à gauche à corriger."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu sais dire sans hésiter quel angle de volets utiliser pour terrain, porte-avions, et piste courte."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"c2", title:"Décollage terrain standard",
+ intro:"La procédure de référence, celle que tu utiliseras 90% du temps. Elle se découpe en deux temps : la checklist avant roulage, puis la mise de gaz progressive jusqu'à la rotation.",
+ body:[
+  {t:"h", v:"Checklist avant roulage"},
+  {t:"proc", v:[
+   "Freins maintenus enfoncés.",
+   "Verrière — <b>ouverte</b>.",
+   "Ailes déployées et verrouillées, indicateurs de broches invisibles.",
+   "Avion trimmé, volets abaissés pour le décollage (leçon B4).",
+   "Roulette de queue — <b>verrouillée</b>.",
+   "Interrupteur maître d'injection d'eau — selon besoin.",
+   "Crosse d'appontage — <b>UP</b>.",
+   "Mixture — <b>AUTO RICH</b>.",
+   "Suralimentation — <b>NEUTRAL</b>.",
+   "Régulateur RPM — <b>régime max (INCREASE)</b>.",
+   "Volets réglés.",
+   "Altimètre calé sur 0 pied.",
+   "Éclairage selon besoin."]},
+  {t:"h", v:"La mise de gaz — « Let's roll »"},
+  {t:"proc", v:[
+   "Manche plein en arrière pour éviter un basculement sur le nez en cas de gaz impatients.",
+   "Augmente les gaz progressivement. Débutant : relâche les freins vers <b>30 in/Hg</b>. Pilote confirmé : relâche vers <b>40-45 in/Hg</b>.",
+   "Dès que l'avion roule, place le manche légèrement en avant pour faire lever la queue au plus vite.",
+   "Continue à augmenter les gaz, jamais en dessous de <b>45 in/Hg</b>. Puissance militaire : <b>50 in/Hg</b> (injection d'eau OFF). Urgence (WEP) : plein gaz jusqu'à <b>~58 in/Hg</b> (injection d'eau ON).",
+   "L'avion tire à gauche et penche à droite dès que le nez s'abaisse : compense au palonnier, ramène le manche vers le neutre.",
+   "Position deux roues atteinte vers <b>60 nœuds</b> — maintiens-la, ne cherche pas à décoller avant <b>90 nœuds</b>.",
+   "Au décollage naturel, soutiens l'avion en tirant le manche à environ un tiers de son débattement vers l'arrière pour bien établir la montée."]},
+  {t:"img", k:"tworoll", c:"Vue cockpit en roulage deux roues, juste avant la rotation."},
+  {t:"note", k:"warn", lbl:"Piège", v:"Plus tu mets de puissance, plus la technique doit être précise — la tentation de tout mettre plein gaz dès le début du roulage rend la correction au palonnier beaucoup plus difficile pour un débutant."},
+  {t:"h", v:"Après le décollage"},
+  {t:"proc", v:[
+   "Cabre d'environ 10° pour la montée initiale (2000-2500 ft/min environ).",
+   "Rentre le train, vérifie l'indicateur en position rentrée.",
+   "Rentre les volets, en une fois ou par paliers."]},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Fais la checklist avant roulage complète.",
+   "Décolle en puissance militaire (50 in/Hg), en gardant la vitesse deux roues jusqu'à 90 nœuds avant de laisser l'avion partir seul.",
+   "Recommence avec injection d'eau (jusqu'à 58 in/Hg) pour sentir la différence de puissance disponible.",
+   "Rentre train et volets proprement après la montée initiale."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu décolles droit, sans embardée, en corrigeant la dérive à gauche avant qu'elle ne s'installe."},
+  {t:"src", v:["manuel","videos"]}
+]},
+
+{id:"c3", title:"Décollage distance minimale",
+ intro:"Piste courte, terrain improvisé, ou simplement s'entraîner à sortir vite : la configuration change sensiblement par rapport au décollage standard.",
+ body:[
+  {t:"proc", v:[
+   "Volets — <b>50° plein sorti</b>.",
+   "Trim profondeur — <b>3 à 4° à cabrer</b>.",
+   "Régulateur RPM — <b>régime max (INCREASE)</b>.",
+   "Pression d'admission : puissance militaire <b>54 in/Hg</b>, urgence <b>~58 in/Hg</b>.",
+   "Maintiens légèrement les freins jusqu'à ce que la queue commence à se lever.",
+   "Relâche les freins et laisse la queue monter jusqu'à une assiette quasi horizontale.",
+   "Décolle dès <b>70 nœuds</b> minimum — le nez sera légèrement lourd."]},
+  {t:"note", k:"", lbl:"Terrain non préparé", v:"Sur surface non revêtue, garde la queue légèrement plus basse que d'habitude. Si un obstacle doit être franchi en sortie de piste, préfère des volets à 30° plutôt que 50°."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Choisis une portion de piste courte ou limite artificiellement ta distance disponible.",
+   "Configure volets 50°, trim 3-4° cabré, RPM max.",
+   "Décolle en gardant les freins légèrement serrés jusqu'à la levée de queue, puis relâche.",
+   "Compare la distance de roulage à celle d'un décollage standard (leçon C2)."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu décolles net avant 70 nœuds sur une piste nettement plus courte que d'habitude."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"c4", title:"Décollage roulant depuis l'Essex",
+ intro:"Le porte-avions bouge, la piste est courte, et il n'y a pas de deuxième essai si tu rates ta trajectoire. Le décollage roulant reste la méthode la plus fiable pour l'instant en DCS.",
+ body:[
+  {t:"h", v:"Conditions et position"},
+  {t:"p", v:"Un décollage roulant n'est possible que si le porte-avions avance à au moins <b>10 nœuds</b>. Sur un porte-avions classe Essex, positionne-toi entre 1/4 et 1/3 de la longueur du pont depuis l'arrière — recule vers la poupe si tu as un doute sur la puissance ou le poids disponible."},
+  {t:"h", v:"Checklist avant roulage (spécifique porte-avions)"},
+  {t:"proc", v:[
+   "Freins maintenus, verrière ouverte.",
+   "Ailes déployées et verrouillées.",
+   "Avion trimmé, volets à <b>30° ou plus</b>.",
+   "Roulette de queue — <b>déverrouillée</b> (contrairement au décollage terrain).",
+   "Crosse d'appontage — <b>UP</b>.",
+   "Mixture <b>AUTO RICH</b>, suralimentation <b>NEUTRAL</b>, RPM <b>max</b>."]},
+  {t:"img", k:"hooklever", c:"Vérifie la crosse sur UP avant tout décollage — porte-avions comme terrain."},
+  {t:"h", v:"La mise de gaz"},
+  {t:"proc", v:[
+   "Manche plein en arrière au départ, puis légèrement en avant dès que l'avion roule.",
+   "Relâche les freins vers <b>40-45 in/Hg</b>, gaz toujours en augmentation.",
+   "Puissance militaire : <b>50 in/Hg</b> (injection d'eau OFF). Urgence : jusqu'à <b>~56 in/Hg</b> (injection d'eau ON).",
+   "Compense la dérive à gauche au palonnier, ramène le manche au neutre.",
+   "Position deux roues vers <b>60 nœuds</b> — ne force pas le décollage avant <b>85 à 90 nœuds</b>, atteints avant la fin du pont.",
+   "Soutiens l'avion en tirant le manche à un tiers de son débattement à la séparation."]},
+  {t:"note", k:"warn", lbl:"Le moment critique", v:"Juste après la séparation en bout de pont, ne panique pas et ne tire pas trop — tu décrocherais. Ne tire pas trop peu non plus — tu descendrais vers l'eau, ce qui pousse justement à sur-corriger. Reste calme : 2000+ ch suffisent largement à te faire remonter si tu ne bouges pas trop le manche."},
+  {t:"h", v:"Après la séparation"},
+  {t:"proc", v:[
+   "Cabre 5 à 10° pour la montée initiale (1500-2000 ft/min environ).",
+   "Rentre le train, vérifie l'indicateur.",
+   "Rentre les volets.",
+   "La verrière peut rester ouverte jusqu'à 300 nœuds si besoin."]},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Charge une mission avec porte-avions Essex-class en mouvement à 10+ nœuds.",
+   "Positionne-toi à 1/4 de la longueur du pont depuis l'arrière, ailes déployées, volets 30°.",
+   "Fais un décollage roulant complet en puissance militaire, sans forcer le décollage avant 85-90 nœuds.",
+   "Recommence en position plus reculée pour avoir plus de marge, et compare le ressenti."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu décolles du pont sans jamais descendre vers l'eau après la séparation, quelle que soit ta position de départ."},
+  {t:"src", v:["manuel","videos"]}
+]},
+
+{id:"c5", title:"Catapultage",
+ intro:"Une leçon volontairement courte : le catapultage n'est pas encore implémenté dans le module en early access.",
+ body:[
+  {t:"note", k:"", lbl:"État actuel", v:"Le manuel officiel réserve trois sous-sections au catapultage (« Catapult Launch From Aircraft Carriers ») mais les marque toutes <b>TBA</b> — à venir. En pratique aujourd'hui, seul le décollage roulant (leçon C4) fonctionne pour quitter un porte-avions dans le module."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Vérifie dans les notes de mise à jour du module si le catapultage a été ajouté depuis la rédaction de cette leçon.",
+   "En attendant, entraîne-toi plutôt sur le décollage roulant (C4), qui restera de toute façon utile même une fois le catapultage disponible."],},
+  {t:"src", v:["manuel","kneeboard"]}
+]},
+
+{id:"c6", title:"Panne moteur au décollage & configuration après décollage",
+ intro:"Deux situations bien différentes à distinguer : la panne pendant le roulage ou juste après le décollage, où il faut se poser tout de suite droit devant — et la configuration normale, une fois la montée initiale établie.",
+ body:[
+  {t:"h", v:"Panne moteur au décollage : se pose droit devant"},
+  {t:"proc", v:[
+   "Largue toute charge externe.",
+   "Train — <b>UP</b>, sauf s'il reste assez de piste devant toi, auquel cas garde-le sorti ou rentre-le partiellement.",
+   "Volets — <b>50° plein sorti</b>.",
+   "Batterie — <b>OFF</b>.",
+   "Allumage — <b>OFF</b>.",
+   "Sélecteur carburant — <b>OFF</b>."]},
+  {t:"note", k:"warn", lbl:"Règle d'or", v:"Ne tente jamais de virer pour revenir au terrain après une panne au décollage à basse hauteur — pose-toi droit devant, même sur un terrain imparfait. Un virage serré à basse vitesse et faible altitude finit en décrochage."},
+  {t:"h", v:"Configuration après un décollage normal"},
+  {t:"table", cols:["Paramètre","Réglage"], rows:[
+    ["Pression d'admission","Sous 44 in/Hg"],
+    ["Régime hélice","2550 tr/min ou moins"],
+    ["Train","UP"],
+    ["Volets","UP"],
+    ["Trim","125 nœuds pour le meilleur taux de montée"],
+    ["Volets de refroidissement","Ajustés selon besoin"],
+    ["Mixture","AUTO LEAN"]]},
+  {t:"img", k:"afterto", c:"Montée initiale après décollage, configuration nettoyée."},
+  {t:"p", v:"Sauf besoin d'un taux de montée maximal, réduis encore à <b>35 in/Hg</b> et <b>2300 tr/min</b>, et vise une vitesse 10 nœuds au-dessus de la normale en montée — plus économique et moins fatigant pour le moteur sur la durée."},
+  {t:"note", k:"warn", lbl:"Piège", v:"Ne rentre pas les volets trop vite après le décollage si la vitesse est encore faible — l'avion peut « s'affaisser » par perte de portance. Plus la vitesse de décollage était élevée, meilleure est la marge de contrôle."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Simule une panne moteur juste après le décollage et pose-toi droit devant, sans virer.",
+   "Refais un décollage normal, puis applique la configuration de montée complète (tableau ci-dessus).",
+   "Compare le taux de montée en configuration économique (35 in/Hg, 2300 tr/min) versus pleine puissance."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu sais réagir sans hésiter à une panne moteur au décollage, et tu configures l'avion pour une montée économique de mémoire."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"c7", title:"Ce qu'il faut retenir avant la Section D",
+ intro:"Un tableau récapitulatif des chiffres clés du décollage, à garder en tête avant de passer au vol en palier et à la gestion moteur détaillée.",
+ body:[
+  {t:"table", cols:["Situation","MAP (puissance militaire / urgence)"], rows:[
+    ["Décollage terrain standard","50 in/Hg / ~58 in/Hg"],
+    ["Décollage distance minimale","54 in/Hg / ~58 in/Hg"],
+    ["Décollage roulant porte-avions","50 in/Hg / ~56 in/Hg"]]},
+  {t:"table", cols:["Vitesse","Signification"], rows:[
+    ["60 nœuds","Position deux roues établie"],
+    ["70 nœuds","Vitesse minimale, distance mini"],
+    ["85-90 nœuds","Vitesse mini avant séparation, porte-avions"],
+    ["90 nœuds","Vitesse mini avant séparation, terrain"],
+    ["125 nœuds","Meilleur taux de montée, configuration nettoyée"]]},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Enchaîne les trois types de décollage (standard, distance mini, porte-avions) dans une même session, sans relire les leçons.",
+   "Vérifie que tu retrouves les chiffres du tableau ci-dessus de mémoire."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu maîtrises les trois profils de décollage. Prochaine étape : la Section D, vol normal et gestion moteur."},
+  {t:"src", v:["manuel","checklist","videos"]}
+]}
+];
+
+const KEY="f4u1d-sectionC";
+let st={done:{},notes:{}}, cur=0;
+async function load(){ try{const r=await __sget(KEY); if(r&&r.value) st=Object.assign(st,JSON.parse(r.value));}catch(e){} }
+let tm=null;
+function save(){ clearTimeout(tm); tm=setTimeout(async()=>{ try{await __sset(KEY,JSON.stringify(st));}catch(e){} },400); }
+
+function fig(k,c){
+  const fn=IMG[k];
+  return `<figure><img src="img/${fn}" alt="${c}" loading="lazy" onclick="openLb(this.src)">
+    <figcaption><span>${c}</span><a href="img/${fn}" target="_blank" rel="noopener">Original &#8599;</a></figcaption></figure>`;
+}
+function table(cols, rows){
+  return `<table class="pins"><tbody>${rows.map(r=>`<tr><td class="n">${r[0]}</td><td>${r[1]}</td></tr>`).join("")}</tbody></table>`;
+}
+function block(b){
+  if(b.t==="h")   return `<h3>${b.v}${b.badge?'<span class="badge" style="margin-left:8px;vertical-align:0">Nouveau</span>':''}</h3>`;
+  if(b.t==="p")   return `<p>${b.v}</p>`;
+  if(b.t==="img") return fig(b.k,b.c);
+  if(b.t==="table")return table(b.cols,b.rows);
+  if(b.t==="proc")return `<ol class="proc">${b.v.map(s=>`<li><span>${s}</span></li>`).join("")}</ol>`;
+  if(b.t==="note")return `<div class="note ${b.k||""}"><span class="lbl">${b.lbl}</span><p>${b.v}</p></div>`;
+  if(b.t==="src") return `<h3>Sources</h3><div class="srcs">${
+      b.v.map(k=>`<a href="${DOC[k][1]}" target="_blank" rel="noopener">${DOC[k][0]} &#8599;</a>`).join("")}</div>`;
+  return "";
+}
+function render(){
+  const l=L[cur];
+  document.getElementById("main").innerHTML=`<div class="page">
+    <div class="eyebrow">Section C · leçon ${cur+1} sur ${L.length}</div>
+    <h2>${l.title}${l.isNew?'<span class="badge">Nouveau module</span>':""}</h2>
+    <p class="intro">${l.intro}</p>
+    ${l.body.map(block).join("")}
+    <h3>Tes notes de vol</h3>
+    <textarea id="nt" placeholder="Procédures exactes, séquences de touches, ce qui a coincé…">${(st.notes[l.id]||"").replace(/</g,"&lt;")}</textarea>
+    <button class="doneline${st.done[l.id]?" on":""}" id="dn"><span class="box"></span>
+      <span>${st.done[l.id]?"Leçon validée":"Marquer cette leçon comme validée"}</span></button>
+    <div class="nav">
+      <button class="ghost" id="pv"${cur?"":" disabled style=opacity:.3"}>&larr; Précédent</button>
+      <button class="ghost" id="nx"${cur<L.length-1?"":" disabled style=opacity:.3"}>Suivant &rarr;</button>
+    </div></div>`;
+  document.getElementById("nt").oninput=e=>{st.notes[l.id]=e.target.value;save();};
+  document.getElementById("dn").onclick=()=>{st.done[l.id]=!st.done[l.id];save();render();};
+  if(cur) document.getElementById("pv").onclick=()=>{cur--;render();window.scrollTo(0,0);};
+  if(cur<L.length-1) document.getElementById("nx").onclick=()=>{cur++;render();window.scrollTo(0,0);};
+  rail();
+}
+function rail(){
+  const r=document.getElementById("rail"); r.innerHTML="";
+  L.forEach((l,i)=>{
+    const b=document.createElement("button");
+    b.className="item"+(i===cur?" on":"")+(st.done[l.id]?" done":"");
+    b.innerHTML=`<span class="idx">${st.done[l.id]?"&check;":String(i+1).padStart(2,"0")}</span><span class="nm">${l.title}</span>`;
+    b.onclick=()=>{cur=i;render();window.scrollTo(0,0);};
+    r.appendChild(b);
+  });
+  const n=L.filter(l=>st.done[l.id]).length;
+  document.getElementById("foot").textContent=`${n} / ${L.length} leçons validées`;
+}
+function openLb(src){const lb=document.getElementById("lb");document.getElementById("lbimg").src=src;lb.classList.add("on");}
+document.getElementById("lb").onclick=()=>document.getElementById("lb").classList.remove("on");
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") document.getElementById("lb").classList.remove("on");
+  if(e.target.matches("textarea")) return;
+  if(e.key==="ArrowRight"&&cur<L.length-1){cur++;render();window.scrollTo(0,0);}
+  if(e.key==="ArrowLeft"&&cur>0){cur--;render();window.scrollTo(0,0);}
+});
+load().then(render);
+</script>
