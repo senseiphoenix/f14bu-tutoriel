@@ -98,7 +98,6 @@
   <aside class="rail">
     <div class="rail-head">
       <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px">&larr; Accueil</a>
-      <a href="index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px;margin-left:14px">&larr; Cursus F4U-1D</a>
       <div class="tail">Section B · F4U-1D</div>
       <h1>Démarrage<br>&amp; roulage</h1>
       <p class="sub">Sept leçons illustrées, du parking froid jusqu'au seuil de piste.</p>
@@ -117,18 +116,17 @@ async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v
   try{localStorage.setItem(k,v);}catch(e){} }
 
 const IMG = {
-  cfwd:        "cockpit_forward.jpg",
-  cleft:       "cockpit_left.jpg",
-  ecu:         "engine_control_unit.jpg",
-  startupctl:  "startup_controls_before.jpg",
-  startupok:   "startup_visual_success.jpg",
-  wingfold:    "prep_wing_lever.jpg",
-  wingindic:   "prep_wing_indicator.jpg",
-  flapknob:    "prep_flap_knob.jpg",
-  trimwheels:  "prep_trim_wheels.jpg",
-  hydgauge:    "hydraulic_gauge.jpg",
-  hooklever:   "taxi_hook_lever.jpg",
-  tailwheel:   "taxi_tailwheel_lock.jpg",
+  cgdiag:     "weight_cg_diagram.jpg",
+  startpanel: "engine_start_panel.jpg",
+  startok:    "engine_start_success.jpg",
+  wingflever: "prep_wingfold_lever.jpg",
+  warnhorn:   "prep_warning_horn.jpg",
+  flapsext:   "prep_flaps_extend.jpg",
+  cowltrim:   "prep_cowlflaps_trim.jpg",
+  tailwheel:  "taxi_tailwheel_lock.jpg",
+  hooklever:  "taxi_arrestor_hook.jpg",
+  ecu:        "engine_control_unit.jpg",
+  cfwd:       "cockpit_forward.jpg",
 };
 
 const DOC = {
@@ -139,199 +137,214 @@ const DOC = {
 };
 
 const L = [
-{id:"b1", title:"Avant de monter à bord", isNew:true,
- intro:"Trois choses à savoir avant de toucher au cockpit : les limites de vitesse à ne jamais dépasser, le poids de base de l'appareil, et les deux raccourcis qui peuvent te faire gagner du temps — ou t'empêcher d'apprendre les procédures.",
+{id:"b1", title:"Avant de monter à bord",
+ intro:"Deux choses à vérifier avant même d'ouvrir la verrière : les limitations de vitesse de l'appareil, et ta masse/centrage. Le Corsair n'est pas rancunier sur ce point tant que tu restes dans l'enveloppe, mais autant prendre le réflexe tout de suite.",
  body:[
-  {t:"h", v:"Limites de vitesse à connaître par cœur"},
+  {t:"h", v:"Limitations de vitesse à connaître"},
   {t:"table", cols:["Élément","Limite"], rows:[
-    ["Train ou frein de piqué (sortie/rentrée)","200 nœuds"],
-    ["Volets — jusqu'à 20° (« combat flaps »)","200 nœuds"],
-    ["Volets — 50° plein sorti","130 nœuds"],
+    ["Train ou aérofrein (sortie/rentrée)","200 nœuds"],
+    ["Volets — plein débattement 0° à 50°","200 nœuds"],
+    ["Volets à 50°","130 nœuds"],
     ["Verrière ouverte","300 nœuds"],
-    ["Ailerons pleine débattement","300 nœuds"],
+    ["Ailerons plein débattement","300 nœuds"],
     ["Réservoir largable central en piqué","375 nœuds"],
-    ["Réservoirs des pylônes en piqué","375 nœuds"]]},
-  {t:"note", k:"", lbl:"Poids de base", v:"Environ 9475 livres à vide en configuration canons .50 cal, ailes standard. Le calcul du poids et centrage se fait automatiquement dans l'éditeur de mission et à l'armement — retiens surtout l'ordre de grandeur."},
-  {t:"h", v:"Auto-start et auto-shutdown"},
-  {t:"p", v:"Deux raccourcis clavier permettent de sauter la procédure manuelle : <b>Windows+Origine</b> pour un démarrage automatique complet, <b>Windows+Fin</b> pour un arrêt automatique. Pratiques pour rejoindre vite une mission d'entraînement — mais la vraie procédure manuelle (leçons B3 et B5) reste ce qu'il faut maîtriser pour comprendre l'avion et réagir en cas de panne."},
+    ["Réservoirs largables sous pylônes en piqué","375 nœuds"]]},
+  {t:"note", k:"", lbl:"Masse à vide", v:"Un F4U-1D armé de canons .50 cal, plein d'essence et de munitions, sans charge externe : environ 9 475 livres (≈ 4 300 kg). Le manuel calcule automatiquement la masse et le centrage réels dans l'éditeur de mission — tu n'as rien à faire, juste à savoir que ça existe."},
+  {t:"img", k:"cgdiag", c:"Diagramme de centrage et de masse au décollage (poids brut recommandé)."},
+  {t:"h", v:"Démarrage automatique ou manuel ?"},
+  {t:"p", v:"Le module propose une procédure de démarrage et d'extinction automatiques, pratique pour tes premiers vols ou pour aller vite en mission. Une fois la procédure manuelle maîtrisée (leçon B3), privilégie le manuel : c'est plus proche du pilotage réel et ça évite les mauvaises surprises si l'auto-start est interrompu par une action au sol."},
+  {t:"table", cols:["Action","Combinaison"], rows:[
+    ["Démarrage automatique","Windows gauche + Origine (Home)"],
+    ["Extinction automatique","Windows gauche + Fin (End)"]]},
   {t:"h", v:"Ce que tu fais maintenant"},
   {t:"proc", v:[
    "Charge une mission avec le Corsair au parking, moteur froid.",
-   "Repère les limites de vitesse ci-dessus — elles reviendront dans toutes les sections suivantes.",
-   "Teste une fois l'auto-start (Windows+Origine) pour voir l'avion prêt à rouler, puis coupe avec Windows+Fin.",
-   "Recharge la mission : cette fois, tu vas tout faire à la main dans les leçons qui suivent."]},
-  {t:"note", k:"warn", lbl:"Piège", v:"S'habituer à l'auto-start seul empêche de comprendre pourquoi un démarrage rate en conditions dégradées (batterie faible, moteur noyé). Utilise-le pour gagner du temps une fois la procédure manuelle acquise, pas avant."},
+   "Repère les sept limitations de vitesse ci-dessus — tu n'as pas besoin de les retenir par cœur tout de suite, juste de savoir où les retrouver.",
+   "Lance un démarrage automatique une première fois pour observer la séquence complète sans stress.",
+   "Éteins le moteur avec la combinaison d'extinction automatique et observe la remise en configuration parking."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu as vu une séquence de démarrage et d'extinction complète, et tu sais où sont les limites de vitesse si besoin de les revérifier en vol."},
   {t:"src", v:["manuel"]}
 ]},
 
 {id:"b2", title:"Checklist avant vol",
- intro:"Neuf points à vérifier à chaque vol en entrant dans le cockpit, avant même de penser à démarrer. Trois de plus si c'est un vol de nuit.",
+ intro:"Neuf points avant tout vol, trois de plus pour un vol de nuit. Rien de sorcier, mais l'ordre compte : la mixture doit être coupée avant la batterie, sous peine de noyer les cylindres inférieurs.",
  body:[
-  {t:"h", v:"Avant tout vol"},
+  {t:"h", v:"Avant tous les vols"},
   {t:"proc", v:[
-   "Ajuste la position du siège si nécessaire.",
-   "Vérifie le débattement du manche et des palonniers.",
-   "Mixture sur <b>IDLE CUT-OFF</b>, puis batterie sur <b>ON</b>.",
-   "Interrupteur d'instruments sur <b>ON</b>.",
-   "Vérifie la quantité de carburant à bord (fenêtre « équipe au sol » si besoin d'ajuster).",
+   "Règle la position du siège si besoin.",
+   "Vérifie le bon débattement des commandes de vol.",
+   "<b>Mixture sur IDLE CUT-OFF</b>, puis batterie sur <b>ON</b> — jamais l'inverse.",
+   "Commutateur d'instruments sur <b>ON</b>.",
+   "Vérifie la quantité de carburant, ajuste si besoin via la fenêtre « équipe au sol ».",
    "Décage l'horizon gyroscopique et le gyro directionnel.",
    "Règle l'altimètre sur la pression barométrique du terrain.",
    "Teste le circuit d'oxygène.",
-   "Vérifie que tous les interrupteurs d'armement sont <b>OFF</b> et que les canons sont sur <b>SAFE</b>."]},
-  {t:"img", k:"cfwd", c:"Planche avant — c'est ici que se lisent la plupart de ces points."},
+   "Vérifie que tous les interrupteurs d'armement sont sur <b>OFF</b> et les boutons de chargement des canons sur <b>SAFE</b>."]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Batterie sur ON alors que la mixture n'est pas sur IDLE CUT-OFF, avec la pompe carburant déjà active : les cylindres inférieurs se noient de carburant brut, ce qui peut endommager le moteur au démarrage suivant. Toujours mixture d'abord."},
   {t:"h", v:"En plus, pour un vol de nuit"},
   {t:"proc", v:[
-   "Éclairage cockpit — teste chaque interrupteur du boîtier de distribution pilote.",
-   "Éclairage de la planche d'instruments — même boîtier.",
-   "Feux extérieurs (formation, section, reconnaissance) — teste chaque interrupteur, plus l'interrupteur maître."]},
-  {t:"note", k:"", lbl:"Bon réflexe", v:"Fais cette checklist dans le même ordre à chaque fois, même en mission rapide. C'est elle qui évite l'altimètre mal calé ou l'horizon caged qu'on découvre seulement en sortie de nuages."},
+   "Éclairage cockpit : teste chaque interrupteur du boîtier de distribution pilote.",
+   "Éclairage planche d'instruments : même boîtier.",
+   "Feux extérieurs : formation, section, reconnaissance, feux d'aile, et l'interrupteur maître des feux extérieurs."]},
+  {t:"img", k:"cfwd", c:"Planche avant — c'est ici que tu vérifies l'essentiel des points de la checklist."},
   {t:"h", v:"Ce que tu fais maintenant"},
   {t:"proc", v:[
-   "Refais la checklist des 9 points dans l'ordre, à voix haute si besoin, sans sauter d'étape.",
-   "Décage manuellement l'horizon gyroscopique et le gyro directionnel — retrouve les deux commandes.",
-   "Cale l'altimètre sur 0 pied au sol (référence QFE)."],},
-  {t:"note", k:"go", lbl:"Validation", v:"Tu fais la checklist des 9 points sans notes, dans l'ordre."},
+   "Reprends la checklist des neuf points dans l'ordre exact, sans sauter d'étape, avion froid.",
+   "Recommence une deuxième fois en ajoutant les trois points de vol de nuit.",
+   "Chronomètre-toi : l'objectif n'est pas la vitesse mais la régularité — vise le même temps à chaque passage."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu enchaînes la checklist des neuf points sans notes, dans le bon ordre."},
   {t:"src", v:["manuel","checklist"]}
 ]},
 
 {id:"b3", title:"Démarrage moteur pas à pas",
- intro:"Dix-sept étapes, mais une logique simple : ventiler le moteur, amorcer, lancer, puis stabiliser. Le R-2800 est un 18 cylindres en étoile — il se noie facilement si on est impatient.",
+ intro:"Dix-sept étapes pour un radial 18 cylindres à froid. La procédure manuelle demande de la rigueur, mais chaque étape a une raison précise — ce n'est pas arbitraire.",
  body:[
-  {t:"img", k:"startupctl", c:"Bloc de commande moteur avant démarrage."},
   {t:"h", v:"La procédure complète"},
   {t:"proc", v:[
-   "Volets de capot — <b>grand ouvert</b>.",
-   "Mixture — <b>IDLE CUT-OFF</b>.",
+   "Volets de capot — grand ouverts.",
+   "Manette de richesse — <b>IDLE CUT-OFF</b>.",
    "Sélecteur carburant — <b>RESERVE</b>.",
    "Suralimentation — <b>NEUTRAL</b>.",
-   "Régulateur RPM — <b>régime max (HIGH)</b>.",
-   "Manette des gaz — <b>un pouce en avant</b>.",
+   "Régulateur RPM — plein régime <b>HIGH</b>.",
+   "Manette des gaz — un pouce en avant.",
    "Batterie — <b>ON</b>.",
    "Pompe carburant auxiliaire — <b>ON</b>.",
-   "Maintiens l'amorçage (primer) <b>7 à 10 secondes</b>.",
-   "Magnétos — <b>BOTH</b>.",
+   "Maintiens l'amorceur (primer) enfoncé 7 à 10 secondes.",
+   "Magnétos — sur <b>BOTH</b>.",
    "Maintiens les freins.",
    "Soulève le cache du démarreur.",
-   "Maintiens le démarreur enfoncé — le moteur commence à tourner. Après 5-6 secondes, passe la mixture en <b>AUTO RICH</b>. Relâche le démarreur une fois le régime supérieur à 500 tr/min.",
-   "Cale la manette des gaz pour un régime de <b>800-900 tr/min</b>.",
-   "Passe à <b>1000 tr/min</b> dès que la pression d'huile commence à baisser.",
-   "Ajuste les volets de capot à environ <b>1/3</b> ouvert.",
+   "Maintiens le démarreur enfoncé — le moteur commence à tourner ; après 5-6 secondes, passe la richesse en <b>AUTO RICH</b>. Relâche le démarreur une fois le régime supérieur à 500 RPM.",
+   "Place la manette des gaz pour ne pas dépasser 800-900 RPM.",
+   "Monte à 1000 RPM une fois la pression d'huile commencée à chuter.",
+   "Ouvre les volets de capot à environ un tiers, surveille températures et pression d'huile.",
    "Allume l'éclairage intérieur si besoin."]},
-  {t:"img", k:"startupok", c:"Aspect visuel après un démarrage réussi — repère-toi à cette image."},
-  {t:"note", k:"warn", lbl:"Piège : moteur noyé", v:"Si le moteur est trop amorcé, le démarrage prend beaucoup plus longtemps — les cylindres doivent évacuer l'excès de carburant. Deux solutions : attendre quelques minutes, ou faire tourner le moteur au démarreur pendant 15-20 secondes sans allumer les magnétos pour purger."},
-  {t:"note", k:"", lbl:"Repère", v:"La position du cache du démarreur conditionne tout : si tu presses le démarreur sans l'avoir relevé, rien ne se passe, même avec le bon mapping clavier ou manette."},
+  {t:"img", k:"startpanel", c:"Bloc moteur — configuration avant la mise en route."},
+  {t:"img", k:"startok", c:"Apparence normale du cockpit juste après un démarrage réussi."},
+  {t:"note", k:"warn", lbl:"Piège : moteur noyé", v:"Si l'amorçage est excessif, le démarrage prend beaucoup plus longtemps — les cylindres doivent évacuer le surplus de carburant, soit en attendant quelques minutes, soit en faisant tourner le moteur au démarreur 15 à 20 secondes sans allumage."},
   {t:"h", v:"Ce que tu fais maintenant"},
   {t:"proc", v:[
-   "Avion froid au parking. Fais les 17 étapes une par une, sans auto-start.",
-   "Chronomètre-toi : combien de temps entre le premier clic et un moteur stable à 1000 tr/min ?",
-   "Recommence en essayant volontairement de noyer le moteur (amorçage trop long) pour reconnaître les symptômes.",
-   "Coupe le moteur, relance une procédure propre pour finir sur un démarrage réussi."],},
-  {t:"note", k:"go", lbl:"Validation", v:"Tu démarres le moteur à la main, sans notes, en moins de deux minutes."},
+   "Avion froid, exécute la procédure manuelle complète dans l'ordre exact, sans regarder tes notes après le troisième essai.",
+   "Provoque volontairement un moteur noyé (amorceur trop longtemps) pour observer le symptôme et la récupération.",
+   "Compare ton résultat final au repère visuel de la planche « startok » — températures et pression d'huile qui montent normalement."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu démarres le moteur manuellement, dix-sept étapes, sans notes et sans caler."},
   {t:"src", v:["manuel","videos"]}
 ]},
 
 {id:"b4", title:"Préparation au roulage",
- intro:"Moteur tournant, il reste à préparer l'avion pour le roulage et le décollage : ailes, volets, trims, refroidissement. Tout se fait pendant que le moteur chauffe, pas d'urgence.",
+ intro:"Le moteur tourne, mais l'avion n'est pas encore prêt à bouger : ailes à déployer, volets à sortir, trims à régler, capot à ajuster. Cinq minutes bien utilisées pendant que le moteur chauffe.",
  body:[
   {t:"h", v:"Déploiement des ailes"},
-  {t:"p", v:"Déverrouille les broches de repliage (levier en position basse), puis mets le levier de repliage sur <b>SPREAD</b>. Le klaxon sonne durant les 7 derniers degrés de mouvement — une fois les ailes stabilisées, verrouille les broches (levier en position haute) : le klaxon s'arrête."},
-  {t:"img", k:"wingfold", c:"Levier de repliage / déploiement des ailes."},
-  {t:"img", k:"wingindic", c:"Indicateur de verrouillage des broches — visible dans la zone de pliage."},
-  {t:"h", v:"Volets"},
-  {t:"p", v:"20° pour un décollage terrain, 30° pour un décollage porte-avions. Une plage de 0° à 50° reste utilisable selon la distance de piste disponible — plus l'angle est grand, plus le roulage est court, mais moins bon est le taux de montée initial."},
-  {t:"img", k:"flapknob", c:"Commande des volets, réglable par pas de 10°."},
-  {t:"h", v:"Trims de décollage"},
-  {t:"p", v:"Trois molettes à régler avant de rouler : <b>latéral 6° à droite</b>, <b>directionnel 6° à droite</b>, <b>profondeur 1° à cabrer</b>. Ces valeurs compensent le couple moteur et le souffle hélicoïdal dès les premiers mètres de roulage."},
-  {t:"img", k:"trimwheels", c:"Les trois molettes de compensateur, à régler avant le roulage."},
-  {t:"h", v:"Refroidissement"},
-  {t:"p", v:"Capot moteur entre 1/3 et 2/3 ouvert selon la température extérieure, radiateur d'huile à 1/3, intercooler à 1/4. La position des volets de capot s'estime à l'œil — il n'y a pas d'indicateur chiffré."},
+  {t:"p", v:"Si les ailes sont repliées, déverrouille les broches (levier en position basse) puis passe le levier de repliage sur <b>SPREAD</b>. Durant les 7 derniers degrés de mouvement, le klaxon d'avertissement sonne — c'est normal, il s'arrête une fois les broches reverrouillées en position haute."},
+  {t:"img", k:"wingflever", c:"Levier de repliage des ailes, en position de déploiement."},
+  {t:"img", k:"warnhorn", c:"Repère du klaxon d'avertissement pendant le mouvement des ailes."},
+  {t:"h", v:"Volets pour le décollage"},
+  {t:"table", cols:["Contexte","Volets"], rows:[
+    ["Terrain","20°"],
+    ["Porte-avions","30°"],
+    ["Distance de roulage minimale","jusqu'à 50° selon expérience"]]},
+  {t:"img", k:"flapsext", c:"Extension des volets avant roulage."},
+  {t:"h", v:"Trims et volets de capot"},
+  {t:"table", cols:["Compensateur","Position décollage"], rows:[
+    ["Latéral (bank)","6° à droite"],
+    ["Directionnel (lacet)","6° à droite"],
+    ["Profondeur (tangage)","1° à cabrer"]]},
+  {t:"p", v:"Ouvre les volets de capot entre 1/3 et 2/3 selon la température, le radiateur d'huile à 1/3, l'intercooler à 1/4 — ces réglages s'estiment visuellement, il n'y a pas d'indicateur chiffré."},
+  {t:"img", k:"cowltrim", c:"Volets de capot et molettes de compensateur."},
   {t:"h", v:"Ce que tu fais maintenant"},
   {t:"proc", v:[
-   "Moteur tournant, déploie les ailes en suivant la séquence exacte et vérifie que le klaxon s'arrête bien.",
-   "Sors les volets à 20° pour un décollage terrain standard.",
-   "Règle les trois trims aux valeurs de décollage recommandées.",
-   "Ajuste les trois volets de refroidissement (capot, huile, intercooler) à leurs valeurs de roulage."],},
-  {t:"note", k:"go", lbl:"Validation", v:"Ton avion est ailes déployées et verrouillées, volets et trims réglés, refroidissement ajusté — prêt pour les tests moteur."},
+   "Déploie les ailes si repliées, vérifie que le klaxon s'arrête bien à la fin du mouvement.",
+   "Sors les volets à 20° pour un départ terrain.",
+   "Règle les trois trims aux valeurs de décollage.",
+   "Ouvre les volets de capot, radiateur d'huile et intercooler aux valeurs recommandées."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Ailes déployées et verrouillées, volets et trims réglés, capot ajusté — tout ça en moins de deux minutes."},
   {t:"src", v:["manuel"]}
 ]},
 
 {id:"b5", title:"Chauffe et tests moteur au sol",
- intro:"Avant de rouler vers la piste, le manuel prévoit une série de vérifications moteur — utiles pour repérer un problème avant de s'engager, et indispensables pour bien comprendre les instruments.",
+ intro:"Avant de bouger, le moteur doit chauffer et passer une série de contrôles courts. C'est ce qui évite les mauvaises surprises pendant le décollage — un magnéto faible ou un mélange mal réglé se détectent ici, pas en piste.",
  body:[
   {t:"h", v:"Chauffe moteur"},
-  {t:"p", v:"À froid, la pression d'huile peut dépasser 200 PSI le temps qu'elle atteigne 40°C, et la culasse 120°C. Laisse tourner au ralenti à <b>1000 tr/min</b> jusqu'à ces deux seuils avant d'aller plus loin."},
-  {t:"h", v:"Tests moteur et accessoires"},
-  {t:"table", cols:["Test","Valeurs attendues"], rows:[
-    ["Contrôle initial (2200 tr/min, 30 in/Hg)","Huile 85-90 PSI · Carburant 16-18 PSI · Chute magnétos ≤ 100 tr/min en RIGHT/LEFT"],
-    ["Mélange au ralenti (600 tr/min, mixture vers IDLE CUT-OFF)","Une légère hausse de 5 à 10 tr/min avant coupure = réglage correct"],
-    ["Suralimentation (1400 tr/min ± 200)","Cycle NEUTRAL → LOW (30-60s) → HIGH (30-60s) → NEUTRAL, pour purger les embrayages"],
-    ["Générateur (&gt;1300 tr/min)","27,5 à 28,5 volts"],
-    ["Pression hydraulique","900 à 1150 PSI"],
-    ["Régulateur d'hélice (2000 tr/min, INCREASE→DECREASE)","Le régime doit chuter à environ 1200 tr/min"],
-    ["Contrôle final","Vérifie le fonctionnement des volets et du repliage des ailes"]]},
-  {t:"img", k:"hydgauge", c:"Manomètre de pression hydraulique — à surveiller pendant les tests."},
-  {t:"note", k:"warn", lbl:"Piège", v:"Une ouverture brutale des gaz depuis le ralenti peut provoquer des ratés moteur (backfire), en vol comme au sol. Ouvre toujours progressivement lors du contrôle initial."},
+  {t:"p", v:"Au ralenti 1000 RPM jusqu'à ce que l'huile atteigne 40°C et la culasse 120°C. La pression d'huile peut dépasser 200 PSI tant que l'huile est froide — c'est normal, elle redescend en chauffant."},
+  {t:"h", v:"Contrôles moteur et accessoires"},
+  {t:"table", cols:["Test","Ce qu'on vérifie"], rows:[
+    ["Contrôle initial (2200 RPM, 30 in/Hg)","Pression d'huile 85-90 PSI, pression carburant 16-18 PSI, chute RPM magnétos ≤ 100"],
+    ["Richesse au ralenti","600 RPM, passage en IDLE CUT-OFF : une hausse de 5 à 10 RPM avant la coupure est le réglage correct"],
+    ["Suralimentation","Alterne NEUTRAL → LOW → HIGH → NEUTRAL, 30 à 60 s par position, pour éviter l'encrassement des embrayages"],
+    ["Générateur","Au-dessus de 1300 RPM, tension attendue 27,5 à 28,5 V"],
+    ["Pression hydraulique","900 à 1150 PSI attendus"],
+    ["Régulateur d'hélice","2000 RPM, cycle INCREASE→DECREASE, le régime doit chuter vers 1200 RPM puis remonter"],
+    ["Contrôles finaux","Volets et repliage des ailes, un cycle complet chacun"]]},
+  {t:"note", k:"warn", lbl:"Piège", v:"N'ouvre jamais les gaz brutalement depuis le ralenti — retour de flamme possible, en vol comme au sol. Monte en puissance progressivement, y compris pour ces tests."},
   {t:"h", v:"Ce que tu fais maintenant"},
   {t:"proc", v:[
-   "Laisse chauffer le moteur au ralenti jusqu'aux seuils de température indiqués.",
-   "Fais le contrôle initial à 2200 tr/min et relève les pressions huile/carburant.",
-   "Exerce les embrayages de suralimentation avec le cycle NEUTRAL/LOW/HIGH/NEUTRAL.",
-   "Vérifie le générateur, la pression hydraulique et le régulateur d'hélice."],},
-  {t:"note", k:"go", lbl:"Validation", v:"Tu sais expliquer pourquoi on exerce les embrayages de suralimentation avant chaque vol."},
+   "Laisse chauffer le moteur jusqu'aux seuils indiqués (huile 40°C, culasse 120°C).",
+   "Exécute le contrôle initial à 2200 RPM et note les trois valeurs relevées.",
+   "Fais le cycle complet de suralimentation NEUTRAL/LOW/HIGH/NEUTRAL.",
+   "Vérifie générateur, pression hydraulique et régulateur d'hélice un par un."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu sais exécuter les six contrôles dans l'ordre et dire ce que chacun vérifie."},
   {t:"src", v:["manuel"]}
 ]},
 
 {id:"b6", title:"Roulage",
- intro:"Le nez du Corsair cache la piste devant toi — c'est le principal défi du roulage. La solution est le roulage en S, comme sur la plupart des chasseurs à hélice de l'époque.",
+ intro:"Le nez du Corsair masque presque toute la piste devant toi — impossible de rouler tout droit sans technique. La solution historique : le S de roulage.",
  body:[
-  {t:"h", v:"Avant de rouler"},
+  {t:"h", v:"Avant de bouger"},
   {t:"proc", v:[
-   "Freins maintenus enfoncés.",
-   "Interrupteur maître d'injection d'eau — <b>OFF</b>.",
-   "Crosse d'appontage — <b>UP</b> (vérifie le levier si un doute).",
+   "Freins serrés.",
+   "Injection d'eau (WEP) — interrupteur maître sur <b>OFF</b>.",
+   "Crosse d'appontage — <b>UP</b> (levier en position arrière si doute).",
    "Roulette de queue — <b>déverrouillée</b> (levier en position haute), sinon les virages seront très difficiles.",
-   "Régulateur RPM — <b>HIGH</b>.",
-   "Augmente les gaz à 1000-1500 tr/min et relâche les freins."]},
-  {t:"img", k:"hooklever", c:"Levier de crosse d'appontage — vérifie qu'elle est rentrée avant de rouler."},
+   "Régulateur RPM — <b>HIGH</b> (position basse).",
+   "Gaz — 1000 à 1500 RPM, puis relâche les freins."]},
   {t:"img", k:"tailwheel", c:"Verrouillage de la roulette de queue."},
-  {t:"h", v:"Le roulage en S"},
-  {t:"p", v:"Le nez masque la piste droit devant : zigzague légèrement de gauche à droite pour voir ce qu'il y a devant toi, en laissant l'avion rouler librement et en utilisant les freins pour diriger et t'arrêter, pas pour freiner en continu."},
-  {t:"note", k:"warn", lbl:"Piège", v:"Un freinage brutal en roulage avant peut faire basculer l'avion sur le nez (« forward flip »), endommageant l'hélice et le moteur. Freine par petites touches, jamais à fond d'un coup."},
-  {t:"h", v:"Vitesse et technique"},
-  {t:"p", v:"Vitesse de roulage confortable : environ <b>850 tr/min</b>. Ne dépasse pas <b>10 nœuds (20 km/h)</b> — réduis à 700 tr/min ou au ralenti si besoin. En roulage prolongé par vent de travers, verrouille la roulette de queue pour limiter le freinage différentiel nécessaire."},
+  {t:"img", k:"hooklever", c:"Commande de la crosse d'appontage — vérifier UP avant roulage."},
+  {t:"h", v:"La technique du S"},
+  {t:"p", v:"Le nez masque la vue droit devant. Roule en zigzag léger, en alternant les virages gauche/droite avec le palonnier et les freins, pour dégager la vue sur la piste devant toi par intermittence."},
+  {t:"table", cols:["Repère","Valeur"], rows:[
+    ["Vitesse de roulage optimale","≈ 850 RPM"],
+    ["Vitesse maximale au sol","10 nœuds (≈ 20 km/h) — réduis à 700 RPM ou ralenti si besoin"],
+    ["Technique de freinage","Tapote les freins, jamais de pression brutale continue"]]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Un freinage brutal en roulant peut provoquer un capotage sur le nez (basculement avant), avec dégâts moteur et hélice quasi certains. Tapote toujours les freins, ne les serre jamais d'un coup."},
+  {t:"h", v:"Roulage par vent de travers"},
+  {t:"p", v:"Verrouille la roulette de queue pour réduire le freinage nécessaire à la tenue de cap."},
   {t:"h", v:"Ce que tu fais maintenant"},
   {t:"proc", v:[
-   "Fais la checklist avant roulage dans l'ordre.",
-   "Roule jusqu'au point d'attente en S-turn, vitesse sous 10 nœuds, en utilisant les freins par petites touches.",
-   "Immobilise-toi aligné avec la piste, RPM au ralenti.",
-   "Verrouille la roulette de queue avant l'alignement final."],},
-  {t:"note", k:"go", lbl:"Validation", v:"Tu roules jusqu'au seuil de piste sans jamais perdre la visibilité devant toi, et sans basculer sur le nez."},
+   "Fais la checklist avant roulage, vérifie roulette de queue déverrouillée et crosse UP.",
+   "Roule en S sur une centaine de mètres, alterne les virages, garde une vitesse sous 10 nœuds.",
+   "Provoque volontairement un freinage brutal à vitesse modérée pour observer le risque de capotage (sans aller jusqu'au bout du geste si tu veux garder l'avion intact).",
+   "Amène l'avion au seuil de piste, aligné, freins serrés, prêt pour la Section C."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu roules en S sans perdre la piste de vue, à vitesse contrôlée, sans jamais serrer les freins d'un coup."},
   {t:"src", v:["manuel","videos"]}
 ]},
 
-{id:"b7", title:"Bonnes pratiques & pour aller plus loin",
- intro:"Dernière leçon de la section : comment articuler procédure manuelle et raccourcis, et où trouver les ressources qui complètent le manuel officiel — encore incomplet en early access.",
+{id:"b7", title:"Auto-start/auto-shutdown & routine perso",
+ intro:"Dernière leçon : construire ta propre routine, celle que tu répéteras à chaque vol. Le but n'est pas de tout refaire de mémoire à chaque fois, mais d'avoir un enchaînement fiable.",
  body:[
-  {t:"h", v:"Manuel vs auto-start"},
-  {t:"p", v:"Une fois la procédure manuelle maîtrisée (leçons B3 et B5), l'auto-start (Windows+Origine) et l'auto-shutdown (Windows+Fin) deviennent de vrais gains de temps pour l'entraînement à l'armement, à la navigation ou à l'appontage — là où le sujet du jour n'est pas le démarrage lui-même."},
-  {t:"h", v:"Ce que le manuel ne couvre pas encore"},
-  {t:"p", v:"Le F4U-1D est encore en early access : certains systèmes ne sont pas implémentés (pressurisation du réservoir principal, disjoncteurs, dégivreur pitot, IFF). Les checklists et kneeboards communautaires listés ci-dessous suivent les mises à jour du module plus vite que le manuel PDF."},
+  {t:"h", v:"Récapitulatif des deux méthodes"},
+  {t:"table", cols:["Méthode","Quand l'utiliser"], rows:[
+    ["Manuelle (leçon B3)","Entraînement, immersion, préparation aux pannes de démarreur"],
+    ["Automatique (LWIN+Home / LWIN+End)","Missions rapides, tests, quand la procédure n'est pas le sujet du vol"]]},
+  {t:"img", k:"ecu", c:"Le bloc moteur au complet — le cœur de toute checklist Corsair, qu'elle soit manuelle ou automatique."},
+  {t:"h", v:"Construire ta checklist perso"},
+  {t:"p", v:"Les kneeboards communautaires (lien en source) reprennent l'ensemble des procédures normales et d'urgence sous forme de fiches consultables en vol, en jeu, sans quitter le cockpit — pratique pour ne plus avoir à ouvrir un PDF externe pendant un vol."},
   {t:"h", v:"Ce que tu fais maintenant"},
   {t:"proc", v:[
-   "Refais une procédure de démarrage et de roulage complète, de mémoire, sans relire les leçons précédentes.",
-   "Compare ton temps de démarrage à celui de la leçon B3 — vise la régularité plus que la vitesse.",
-   "Jette un œil à la checklist et au kneeboard communautaires en lien ci-dessous, et repère ce qui a changé depuis la rédaction du manuel."],},
-  {t:"note", k:"go", lbl:"Validation", v:"Tu maîtrises la chaîne complète parking froid → seuil de piste, à la main. Prochaine étape : la Section C, décollage."},
-  {t:"src", v:["manuel","checklist","kneeboard","videos"]}
+   "Enchaîne, sans t'arrêter, les leçons B1 à B6 dans l'ordre — du parking froid jusqu'au seuil de piste.",
+   "Chronomètre l'ensemble une première fois, puis recommence en visant plus de régularité que de vitesse.",
+   "Installe le kneeboard communautaire si tu veux une fiche consultable en vol plutôt que de repasser par ce tutoriel à chaque fois."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Du parking froid au seuil de piste, sans notes, en moins de dix minutes. Tu es prêt pour la Section C : décollage."},
+  {t:"src", v:["manuel","checklist","kneeboard"]}
 ]}
 ];
 
+/* ---------- état ---------- */
 const KEY="f4u1d-sectionB";
 let st={done:{},notes:{}}, cur=0;
 async function load(){ try{const r=await __sget(KEY); if(r&&r.value) st=Object.assign(st,JSON.parse(r.value));}catch(e){} }
 let tm=null;
 function save(){ clearTimeout(tm); tm=setTimeout(async()=>{ try{await __sset(KEY,JSON.stringify(st));}catch(e){} },400); }
 
+/* ---------- rendu ---------- */
 function fig(k,c){
   const fn=IMG[k];
   return `<figure><img src="img/${fn}" alt="${c}" loading="lazy" onclick="openLb(this.src)">

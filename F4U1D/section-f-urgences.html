@@ -1,33 +1,347 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Urgences — F4U-1D Corsair</title>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
-  :root{--deck:#10161a;--panel:#18222a;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;
-    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  :root{
+    --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+    --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+    --display:"Oswald","Arial Narrow",sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
   *{box-sizing:border-box}
   body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
-  .wrap{max-width:640px;margin:0 auto;padding:80px 24px}
-  .nav{display:flex;gap:18px;margin-bottom:36px}
-  .nav a{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none}
-  .nav a:hover{color:var(--amber)}
-  .tail{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
-  h1{font-family:var(--display);font-weight:600;font-size:38px;letter-spacing:.03em;line-height:1.05;margin:10px 0 18px;text-transform:uppercase}
-  p{color:var(--dim);max-width:56ch}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)}
+  .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
   .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-         color:var(--deck);background:var(--amber);padding:4px 9px;margin-top:20px}
+         color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;color:var(--ink);margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+     margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+  .lead{color:var(--dim)}
+
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+
+  table.pins{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
+  table.pins td.n{font-family:var(--mono);color:var(--amber);width:26px}
+
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)}
+  .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .note p+p{margin-top:8px}
+
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+
+  .banner{background:var(--panel-2);border-bottom:1px solid var(--amber);padding:11px 20px;font-size:13px;color:var(--dim);display:flex;gap:14px;align-items:center;justify-content:space-between}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 </style>
-</head>
-<body>
-<div class="wrap">
-  <div class="nav"><a href="../index.html">&larr; Accueil</a><a href="index.html">&larr; Cursus F4U-1D</a></div>
-  <div class="tail">Section F · F4U-1D Corsair</div>
-  <h1>Urgences</h1>
-  <p>Panne moteur en vol, atterrissage forcé, ditching en mer, évacuation en urgence.</p>
-  <p>Cette section arrive dans une prochaine mise à jour du cursus, construite avec les mêmes planches officielles du manuel Magnitude 3 que la Section A.</p>
-  <span class="badge">En construction</span>
+
+<div id="banner" class="banner">
+  <span>Planches issues directement du manuel officiel Magnitude 3 (AN-01-45MAG-3) — hébergées dans <code>img/</code>, aucune dépendance externe.</span>
+  <button class="ghost" onclick="document.getElementById('banner').remove()">OK</button>
 </div>
-</body></html>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px">&larr; Accueil</a>
+      <div class="tail">Section F · F4U-1D</div>
+      <h1>Urgences</h1>
+      <p class="sub">Sept leçons illustrées : panne moteur, atterrissage forcé, amerrissage, évacuation.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const IMG = {
+  canopy:     "canopy_release_handle.jpg",
+  ecu:        "engine_control_unit.jpg",
+  cfwd:       "cockpit_forward.jpg",
+  gearup:     "gear_up.jpg",
+  flappanel:  "flap_control_panel.jpg",
+  overview:   "airframe_overview.jpg",
+  cleft:      "cockpit_left.jpg",
+};
+
+const DOC = {
+  manuel:    ["Manuel officiel (PDF)","docs/manuel-f4u1d.pdf"],
+  checklist: ["Checklist procédurale V5 (ED Forums)","https://www.digitalcombatsimulator.com/en/files/3345416/"],
+  kneeboard: ["Kneeboards à jour (ED Forums)","https://www.digitalcombatsimulator.com/en/files/3345803/"],
+  videos:    ["Playlist tutoriels vidéo","https://www.youtube.com/playlist?list=PLODX_e0mlZ2UvjOjEvgd0Pflyci7JARkm"],
+};
+
+const L = [
+{id:"f1", title:"Évacuation d'urgence",
+ intro:"La verrière entière peut être larguée en vol. Deux poignées rouges, une de chaque côté de l'armature — mais elles sont bloquées par une goupille de sécurité qu'il faut retirer avant tout.",
+ body:[
+  {t:"h", v:"Le mécanisme"},
+  {t:"p", v:"Les poignées « CABIN EMERGENCY RELEASE » désengagent d'abord les galets avant, puis, en poussant la verrière vers le haut, les galets arrière — elle part ensuite emportée par le vent relatif."},
+  {t:"img", k:"canopy", c:"Poignée d'éjection d'urgence de la verrière, goupille de sécurité visible."},
+  {t:"table", cols:["Étape (réelle)","Détail"], rows:[
+    ["1","Retirer les boucles de goupille de sécurité des poignées rouges"],
+    ["2","Tirer les deux poignées vers l'intérieur simultanément, puis les pousser vers l'avant"],
+    ["3","Dégager la verrière en poussant vers le haut sur les poignées"]]},
+  {t:"note", k:"", lbl:"En jeu", v:"Cette séquence détaillée n'est pas encore simulée geste par geste. Le raccourci par défaut <b>Ctrl gauche + E</b>, pressé trois fois, éjecte directement la verrière."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "En vol, à altitude de sécurité, déclenche l'éjection de la verrière avec le raccourci par défaut.",
+   "Observe le comportement de l'avion juste après — la trainée augmente, prépare-toi à compenser légèrement.",
+   "Recommence une deuxième fois pour que le geste devienne un réflexe, pas une recherche de touche sous stress."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu retrouves le raccourci d'éjection de verrière sans hésiter, même sous pression."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"f2", title:"Reconnaître une panne moteur",
+ intro:"Un radial de 2000 ch peut tomber en panne de deux façons très différentes : le moteur gèle net, ou il continue à tourner en roue libre (windmilling) sans plus produire de puissance. Savoir distinguer les deux change tout de suite ta réponse.",
+ body:[
+  {t:"h", v:"Les deux symptômes"},
+  {t:"table", cols:["Signe","Interprétation"], rows:[
+    ["Silence moteur brutal, hélice arrêtée","Le moteur a gelé net"],
+    ["Bruit moteur qui persiste, mais chute d'altitude et de vitesse","Hélice en moulinet (windmilling) — pas de puissance malgré le bruit apparent"]]},
+  {t:"note", k:"", lbl:"Ce qui reste utilisable en windmilling", v:"Tant que l'hélice tourne en moulinet, la pression d'admission réagit encore normalement aux gaz, et l'angle des pales reste modifiable. Le système hydraulique continue aussi de fonctionner normalement dans ce cas."},
+  {t:"note", k:"warn", lbl:"Piège", v:"Si le moteur a réellement gelé (régulateur d'hélice forcé en petit pas pour l'arrêter), le système hydraulique n'est plus alimenté par la pompe moteur — il faut basculer immédiatement sur la pompe à main pour toute commande hydraulique (train, volets)."},
+  {t:"img", k:"ecu", c:"Bloc moteur — le point de départ de tout diagnostic de panne."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "En vol stabilisé, coupe le moteur (mixture idle cut-off) pour observer le comportement en moulinet.",
+   "Vérifie que la MAP répond encore aux gaz et que le train/les volets sortent normalement à la pompe hydraulique moteur.",
+   "Coupe ensuite complètement (magnétos off) pour comparer avec un arrêt moteur franc, sans moulinet."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu distingues moteur gelé et hélice en moulinet en moins de trois secondes d'observation."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"f3", title:"Chercher la panne en vol",
+ intro:"Si l'altitude le permet, il vaut la peine de chercher la cause avant de te préparer à un atterrissage forcé. Trois vérifications rapides, dans l'ordre.",
+ body:[
+  {t:"h", v:"La procédure de diagnostic"},
+  {t:"proc", v:[
+   "Le réservoir sélectionné est peut-être vide — <b>bascule sur un autre réservoir</b> (sélecteur console gauche).",
+   "Si le problème ne vient visiblement pas du circuit carburant et que l'altitude le permet : <b>mixture sur AUTO RICH</b>.",
+   "Teste les <b>magnétos individuellement</b> (LEFT / RIGHT / BOTH) pour isoler un magnéto défaillant."],},
+  {t:"img", k:"cleft", c:"Console gauche — sélecteur carburant et bloc moteur, premiers réflexes en cas de panne."},
+  {t:"note", k:"", lbl:"Vitesse de plané", v:"Si le moteur ne redémarre pas après ces trois vérifications, prépare l'atterrissage forcé (leçon F4). La meilleure vitesse de plané, configuration lisse, est de <b>140 nœuds</b> — retiens ce chiffre, c'est ta référence pour gérer l'altitude restante."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Simule une panne carburant (réservoir vide) et corrige en basculant de réservoir.",
+   "Simule un magnéto défaillant en le coupant volontairement, identifie la perte de régime, puis reviens sur BOTH.",
+   "En panne totale simulée, stabilise l'avion à 140 nœuds et observe le taux de descente en plané."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu exécutes les trois vérifications dans l'ordre sans notes, et tu tiens 140 nœuds de plané sans y penser."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"f4", title:"Décision : où et comment se poser",
+ intro:"Le choix du terrain conditionne directement si tu sors de l'appareil indemne ou pas. La règle du manuel est contre-intuitive au premier abord : parfois, il vaut mieux rentrer le train.",
+ body:[
+  {t:"h", v:"Le critère décisif : la nature du terrain"},
+  {t:"table", cols:["Terrain","Configuration train"], rows:[
+    ["Terrain souple ou irrégulier (golf, champ labouré, rochers, souches)","Train RENTRÉ — un train sorti dans ces conditions provoque un capotage, cause principale des blessures graves"],
+    ["Terrain dur et dégagé, piste ou équivalent","Train sorti possible si la distance le permet"]]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Un terrain qui paraît lisse et plat vu d'en haut se révèle souvent accidenté, traversé de fossés ou encombré une fois au sol. Ne fais jamais confiance à l'apparence depuis l'altitude."},
+  {t:"p", v:"Tout atterrissage forcé doit se faire nettement au-dessus de la vitesse de décrochage — tenter de se poser à la vitesse de décrochage ou juste au-dessus ne laisse plus aucun contrôle de l'appareil. L'avion doit être au sol avant d'atteindre le décrochage, pas l'inverse."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Repère depuis les airs trois types de terrain différents (piste, champ, zone rocheuse) et détermine à voix haute la configuration train adaptée à chacun.",
+   "Rappelle-toi la règle : jamais à la vitesse de décrochage pile, toujours confortablement au-dessus jusqu'au contact."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Face à un terrain donné, tu décides train rentré ou sorti en moins de cinq secondes, sans hésiter."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"f5", title:"Atterrissage forcé sur le ventre",
+ intro:"Train rentré, sur une surface qui ne le permet pas. La séquence a un ordre précis : préparation de la cellule, puis coupure des systèmes juste avant le contact — pas avant, pas après.",
+ body:[
+  {t:"h", v:"Préparation avant l'approche finale"},
+  {t:"proc", v:[
+   "Largue les réservoirs et charges externes.",
+   "Train — <b>UP</b> (rentré).",
+   "Volets d'atterrissage — <b>DOWN</b> (sortis).",
+   "Roquettes HVAR — <b>OFF</b>.",
+   "Largue la verrière (leçon F1).",
+   "Relâchement de pression du réservoir carburant — position <b>AFT</b>."]},
+  {t:"img", k:"gearup", c:"Poignée de train en position rentrée — configuration ventre."},
+  {t:"img", k:"flappanel", c:"Commande des volets, à sortir en finale."},
+  {t:"h", v:"Juste avant le contact"},
+  {t:"proc", v:[
+   "Interrupteurs batterie et allumage — <b>OFF</b>.",
+   "Sélecteur carburant — <b>OFF</b>.",
+   "Interrupteur maître d'armement — <b>OFF</b>."],},
+  {t:"note", k:"warn", lbl:"Piège d'ordre", v:"Ne coupe batterie/allumage/carburant qu'au tout dernier moment avant le contact, pas pendant l'approche — tu as besoin des instruments et du contrôle moteur jusque-là. Couper trop tôt te prive de marge de manœuvre."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Simule une panne moteur, choisis un terrain souple, et exécute la préparation complète (réservoirs, train, volets, HVAR, verrière).",
+   "Garde les interrupteurs vitaux allumés jusqu'aux dernières secondes avant contact, puis coupe-les dans l'ordre indiqué.",
+   "Répète l'exercice une deuxième fois sans notes, chronométré depuis la panne jusqu'au contact."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu exécutes la préparation ventre complète sans notes, et tu coupes les systèmes au bon moment, pas trop tôt."},
+  {t:"src", v:["manuel","videos"]}
+]},
+
+{id:"f6", title:"Amerrissage",
+ intro:"Même procédure que l'atterrissage sur le ventre — mais le Corsair a un avantage historique méconnu sur l'eau : son aile en mouette inversée.",
+ body:[
+  {t:"h", v:"Pourquoi le Corsair se comporte bien sur l'eau"},
+  {t:"p", v:"L'aile en mouette inversée fait « planer » l'appareil à la surface au contact de l'eau, plutôt que de plonger le nez. Grâce à cet effet de planage, un atterrissage en décrochage complet n'est pas nécessaire — contrairement à beaucoup de chasseurs de la même époque."},
+  {t:"img", k:"overview", c:"Le profil d'aile en mouette inversée qui facilite le planage en amerrissage."},
+  {t:"h", v:"Procédure"},
+  {t:"p", v:"Identique à l'atterrissage forcé sur le ventre (leçon F5) : réservoirs largués, train rentré, volets sortis, HVAR coupés, verrière larguée, relâchement de pression carburant, puis coupure batterie/allumage/carburant/armement juste avant le contact."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Simule une panne au-dessus de l'eau, exécute la même préparation que pour un atterrissage ventre.",
+   "Vise le contact à une vitesse raisonnablement au-dessus du décrochage, sans cherche à décrocher pile à la surface.",
+   "Compare mentalement avec la leçon F5 — c'est la même checklist, seul le terrain change."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu sais que la procédure d'amerrissage est identique à l'atterrissage ventre, et pourquoi le Corsair s'en sort mieux que d'autres sur l'eau."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"f7", title:"Construire ton réflexe d'urgence",
+ intro:"Dernière leçon : enchaîner tout ce qui précède sans réfléchir à chaque étape. Sous stress, c'est la préparation qui parle, pas l'improvisation.",
+ body:[
+  {t:"h", v:"Le fil conducteur complet"},
+  {t:"table", cols:["Étape","Leçon"], rows:[
+    ["Panne détectée","F2 — identifier gel moteur ou moulinet"],
+    ["Recherche de cause si l'altitude permet","F3 — réservoir, mixture, magnétos, 140 nœuds de plané"],
+    ["Décision terrain","F4 — train rentré ou sorti selon la nature du sol"],
+    ["Préparation cellule","F5/F6 — réservoirs, train, volets, HVAR, verrière"],
+    ["Coupure finale","F5/F6 — batterie, allumage, carburant, armement, juste avant contact"],
+    ["Si nécessaire à tout moment","F1 — éjection de la verrière"]]},
+  {t:"img", k:"cfwd", c:"Le cockpit qui a tout donné — c'est ici que se joue la dernière minute."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Provoque une panne moteur surprise (toi-même, sans savoir quand) en vol de croisière.",
+   "Enchaîne diagnostic, décision de terrain, préparation et coupure finale sans consulter tes notes.",
+   "Debrief : qu'est-ce qui a coincé ? Note-le dans tes notes de vol ci-dessous pour la prochaine session."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Panne surprise jusqu'au contact au sol, sans notes, dans l'ordre. Tu es prêt pour la Section G : armement et radio/nav."},
+  {t:"src", v:["manuel","checklist","kneeboard"]}
+]}
+];
+
+/* ---------- état ---------- */
+const KEY="f4u1d-sectionF";
+let st={done:{},notes:{}}, cur=0;
+async function load(){ try{const r=await __sget(KEY); if(r&&r.value) st=Object.assign(st,JSON.parse(r.value));}catch(e){} }
+let tm=null;
+function save(){ clearTimeout(tm); tm=setTimeout(async()=>{ try{await __sset(KEY,JSON.stringify(st));}catch(e){} },400); }
+
+/* ---------- rendu ---------- */
+function fig(k,c){
+  const fn=IMG[k];
+  return `<figure><img src="img/${fn}" alt="${c}" loading="lazy" onclick="openLb(this.src)">
+    <figcaption><span>${c}</span><a href="img/${fn}" target="_blank" rel="noopener">Original &#8599;</a></figcaption></figure>`;
+}
+function table(cols, rows){
+  return `<table class="pins"><tbody>${rows.map(r=>`<tr><td class="n">${r[0]}</td><td>${r[1]}</td></tr>`).join("")}</tbody></table>`;
+}
+function block(b){
+  if(b.t==="h")   return `<h3>${b.v}${b.badge?'<span class="badge" style="margin-left:8px;vertical-align:0">Nouveau</span>':''}</h3>`;
+  if(b.t==="p")   return `<p>${b.v}</p>`;
+  if(b.t==="img") return fig(b.k,b.c);
+  if(b.t==="table")return table(b.cols,b.rows);
+  if(b.t==="proc")return `<ol class="proc">${b.v.map(s=>`<li><span>${s}</span></li>`).join("")}</ol>`;
+  if(b.t==="note")return `<div class="note ${b.k||""}"><span class="lbl">${b.lbl}</span><p>${b.v}</p></div>`;
+  if(b.t==="src") return `<h3>Sources</h3><div class="srcs">${
+      b.v.map(k=>`<a href="${DOC[k][1]}" target="_blank" rel="noopener">${DOC[k][0]} &#8599;</a>`).join("")}</div>`;
+  return "";
+}
+function render(){
+  const l=L[cur];
+  document.getElementById("main").innerHTML=`<div class="page">
+    <div class="eyebrow">Section F · leçon ${cur+1} sur ${L.length}</div>
+    <h2>${l.title}${l.isNew?'<span class="badge">Nouveau module</span>':""}</h2>
+    <p class="intro">${l.intro}</p>
+    ${l.body.map(block).join("")}
+    <h3>Tes notes de vol</h3>
+    <textarea id="nt" placeholder="Procédures exactes, séquences de touches, ce qui a coincé…">${(st.notes[l.id]||"").replace(/</g,"&lt;")}</textarea>
+    <button class="doneline${st.done[l.id]?" on":""}" id="dn"><span class="box"></span>
+      <span>${st.done[l.id]?"Leçon validée":"Marquer cette leçon comme validée"}</span></button>
+    <div class="nav">
+      <button class="ghost" id="pv"${cur?"":" disabled style=opacity:.3"}>&larr; Précédent</button>
+      <button class="ghost" id="nx"${cur<L.length-1?"":" disabled style=opacity:.3"}>Suivant &rarr;</button>
+    </div></div>`;
+  document.getElementById("nt").oninput=e=>{st.notes[l.id]=e.target.value;save();};
+  document.getElementById("dn").onclick=()=>{st.done[l.id]=!st.done[l.id];save();render();};
+  if(cur) document.getElementById("pv").onclick=()=>{cur--;render();window.scrollTo(0,0);};
+  if(cur<L.length-1) document.getElementById("nx").onclick=()=>{cur++;render();window.scrollTo(0,0);};
+  rail();
+}
+function rail(){
+  const r=document.getElementById("rail"); r.innerHTML="";
+  L.forEach((l,i)=>{
+    const b=document.createElement("button");
+    b.className="item"+(i===cur?" on":"")+(st.done[l.id]?" done":"");
+    b.innerHTML=`<span class="idx">${st.done[l.id]?"&check;":String(i+1).padStart(2,"0")}</span><span class="nm">${l.title}</span>`;
+    b.onclick=()=>{cur=i;render();window.scrollTo(0,0);};
+    r.appendChild(b);
+  });
+  const n=L.filter(l=>st.done[l.id]).length;
+  document.getElementById("foot").textContent=`${n} / ${L.length} leçons validées`;
+}
+function openLb(src){const lb=document.getElementById("lb");document.getElementById("lbimg").src=src;lb.classList.add("on");}
+document.getElementById("lb").onclick=()=>document.getElementById("lb").classList.remove("on");
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") document.getElementById("lb").classList.remove("on");
+  if(e.target.matches("textarea")) return;
+  if(e.key==="ArrowRight"&&cur<L.length-1){cur++;render();window.scrollTo(0,0);}
+  if(e.key==="ArrowLeft"&&cur>0){cur--;render();window.scrollTo(0,0);}
+});
+load().then(render);
+</script>
