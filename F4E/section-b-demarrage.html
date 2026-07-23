@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Section B — Démarrage &amp; roulage — F-4E</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+    --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+    --display:"Oswald","Arial Narrow",sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)}
+  .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+         color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;color:var(--ink);margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+     margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+  .lead{color:var(--dim)}
+
+  table.pins{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
+  table.pins td.n{font-family:var(--mono);color:var(--amber);width:26px}
+
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+  .tag-p{display:inline-block;font-family:var(--mono);font-size:9.5px;color:var(--deck);background:var(--go);padding:1px 5px;margin-right:6px;vertical-align:1px}
+  .tag-w{display:inline-block;font-family:var(--mono);font-size:9.5px;color:var(--deck);background:var(--amber);padding:1px 5px;margin-right:6px;vertical-align:1px}
+
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)}
+  .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .note p+p{margin-top:8px}
+
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+
+  .banner{background:var(--panel-2);border-bottom:1px solid var(--amber);padding:11px 20px;font-size:13px;color:var(--dim);display:flex;gap:14px;align-items:center;justify-content:space-between}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+
+<div id="banner" class="banner">
+  <span>Contenu issu du guide communautaire de Chuck (DCS GUIDE F-4E PHANTOM II) — pages 161 à 220, en complément du manuel officiel Heatblur.</span>
+  <button class="ghost" onclick="document.getElementById('banner').remove()">OK</button>
+</div>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <a href="index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:6px">&larr; Cursus F-4E</a><br>
+      <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px">&larr; Accueil</a>
+      <div class="tail">Section B · F-4E Phantom II</div>
+      <h1>Démarrage<br>&amp; roulage</h1>
+      <p class="sub">Quatre leçons, du démarrage moteur au point d'attente piste.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const LESSONS = [
+{
+  id: "b1", idx:"B1", nm:"Démarrage moteur", badge:"Procédure",
+  intro: "Le F-4E n'a ni batterie ni APU : tout démarrage dépend d'une source d'air comprimé extérieure (ou de cartouches explosives) fournie par l'équipe au sol. On démarre le moteur droit en premier.",
+  body: `
+    <div class="note warn">
+      <span class="lbl">Piège classique</span>
+      <p>Vérifie que les manettes sont bien sur le cran OFF avant toute chose. Démarrer avec les manettes hors du cran OFF entraîne une accumulation de carburant non brûlé — et potentiellement un départ de feu au démarrage (« hot start »).</p>
+    </div>
+    <h3>Moteur droit</h3>
+    <ol class="proc">
+      <li><span class="tag-p">P+WSO</span> Vérifier les deux manettes sur OFF.</li>
+      <li><span class="tag-p">P</span> Vérifier les deux Engine Master Switches sur OFF (arrière).</li>
+      <li><span class="tag-p">P</span> Demander au chef d'équipe (roue Jester, touche A → CREW CHIEF → AIR SOURCE → CONNECT TO RIGHT ENGINE) de connecter l'alimentation en air comprimé au moteur droit.</li>
+      <li><span class="tag-p">P</span> RPM droit à 0 % confirmé, puis Right Engine Master Switch — ON.</li>
+      <li><span class="tag-p">P</span> Demander START AIRFLOW au chef d'équipe.</li>
+      <li><span class="tag-p">P</span> À 10 % RPM, presser et maintenir le bouton d'allumage droit (RCTRL+HOME).</li>
+      <li><span class="tag-p">P</span> Manette droite : sortir du cran OFF à mi-course, allumage toujours maintenu.</li>
+      <li><span class="tag-p">P</span> Manette droite : revenir sur IDLE, allumage toujours maintenu.</li>
+      <li><span class="tag-p">P</span> Confirmer l'allumage (hausse de l'EGT), relâcher le bouton d'allumage.</li>
+      <li><span class="tag-p">P</span> À 45 % RPM, demander STOP AIRFLOW — l'air extérieur n'est plus nécessaire.</li>
+      <li><span class="tag-p">P</span> Vérifier les paramètres moteur stabilisés (voir tableau ci-dessous).</li>
+      <li><span class="tag-p">P</span> Right Generator Switch — ON, confirmer extinction du voyant RH GEN OUT.</li>
+    </ol>
+    <table class="pins">
+      <tr><td class="n">EGT</td><td>220 à 420 °C</td></tr>
+      <tr><td class="n">FF</td><td>800 à 1400 lbs/h</td></tr>
+      <tr><td class="n">RPM</td><td>65 % au ralenti</td></tr>
+      <tr><td class="n">Boost</td><td>30 (± 5) psi</td></tr>
+      <tr><td class="n">Huile</td><td>12 à 50 psi</td></tr>
+      <tr><td class="n">PC-2</td><td>3000 (± 250) psi</td></tr>
+      <tr><td class="n">Utility</td><td>2755 (± 255) psi</td></tr>
+    </table>
+    <h3>Moteur gauche</h3>
+    <p class="lead">Même séquence, symétrique : connecter l'air au moteur gauche, Left Engine Master ON, START AIRFLOW, allumage à 10 % RPM (RALT+HOME cette fois), passage IDLE, confirmation EGT, STOP AIRFLOW à 45 %, puis Left Generator Switch ON.</p>
+    <ol class="proc">
+      <li><span class="tag-p">P</span> Left Generator Switch — ON, confirmer extinction du voyant LH GEN OUT.</li>
+      <li><span class="tag-p">P</span> Cycler le Right Generator Switch (OFF puis ON) et vérifier que le voyant BUS TIE OPEN s'éteint.</li>
+      <li><span class="tag-p">P</span> Demander la déconnexion de l'air comprimé, puis de l'alimentation électrique externe.</li>
+    </ol>
+    <div class="note go">
+      <span class="lbl">Alternative</span>
+      <p>Sans source d'air disponible sur le terrain, l'équipe au sol peut installer des cartouches explosives : mets l'Engine Start Switch sur LEFT ou RIGHT pour les déclencher, le reste de la séquence reste identique.</p>
+    </div>
+  `
+},
+{
+  id: "b2", idx:"B2", nm:"Alignement INS", badge:"WSO",
+  intro: "Une fois les moteurs lancés, le WSO aligne la centrale inertielle (INS) — trois méthodes possibles, avec un compromis précision / rapidité.",
+  body: `
+    <h3>Les trois méthodes</h3>
+    <table class="pins">
+      <tr><td class="n">A</td><td><b>Gyrocompass complet</b> — 8 à 12 min. CEP de 3 nm/h. Nécessite latitude/longitude/MAGVAR saisies manuellement depuis le kneeboard.</td></tr>
+      <tr><td class="n">B</td><td><b>BATH (Best Available True Heading)</b> — 2 min 15. CEP d'environ 5.5 nm/h. Rapide mais peut être imprécis si le cap réel ne correspond pas au cap attendu.</td></tr>
+      <tr><td class="n">C</td><td><b>HDG MEM (cap mémorisé)</b> — 2 min 15, même précision que le Gyrocompass complet si le précédent alignement date de moins de 2h. Doit être activé dans l'éditeur de mission.</td></tr>
+    </table>
+    <div class="note go">
+      <span class="lbl">Avec Jester</span>
+      <p>Si le WSO est confié à Jester : quand il demande « Are you ready for alignment? », répondre Oui, puis choisir le type d'alignement souhaité. Ce tutoriel utilise BATH pour un départ rapide. Jester entre aussi automatiquement les points de route.</p>
+    </div>
+    <h3>Alignement BATH (méthode manuelle rapide)</h3>
+    <ol class="proc">
+      <li><span class="tag-w">WSO</span> Vérifier avec le pilote l'état électrique de l'avion (moteurs tournants avec générateurs ON, ou puissance externe avec Instrument Ground Power Test Switch sur TEST).</li>
+      <li><span class="tag-w">WSO</span> Navigation Computer Mode Selector — OFF, puis INS Power Selector — OFF.</li>
+      <li><span class="tag-w">WSO</span> Navigation Computer Mode Selector — STBY, Position Update Switch — NORMAL.</li>
+      <li><span class="tag-w">WSO</span> Saisir latitude, longitude et MAGVAR du point initial (données du kneeboard).</li>
+      <li><span class="tag-w">WSO</span> Ouvrir le cache du INS Alignment Mode Switch, vérifier GYRO COMP (position par défaut, cache baissé).</li>
+      <li><span class="tag-w">WSO</span> INS Power Selector — STBY, puis ALIGN.</li>
+      <li><span class="tag-w">WSO</span> Attendre l'allumage fixe du voyant ALIGN (~2 min 15).</li>
+      <li><span class="tag-w">WSO</span> INS Power Selector — NAV, vérifier extinction du voyant ALIGN, refermer le cache.</li>
+    </ol>
+    <div class="note warn">
+      <span class="lbl">Piège classique</span>
+      <p>Ne jamais laisser l'INS en mode ALIGN pendant une coupure d'alimentation (par exemple lors du passage de l'alimentation externe aux générateurs) — cela déclenche une erreur "INS NO-GO". Si ça arrive, repasser le sélecteur sur OFF puis reprendre l'alignement.</p>
+    </div>
+  `
+},
+{
+  id: "b3", idx:"B3", nm:"Avant roulage", badge:"Checklist",
+  intro: "Configuration finale des deux postes avant de bouger : repères de vol, RWR, IFF, altimètre — pilote et WSO en parallèle.",
+  body: `
+    <h3>Pilote</h3>
+    <ol class="proc">
+      <li>Reference System Switch — PRIMARY, une fois l'INS aligné.</li>
+      <li>Ajuster la ligne d'assiette de l'ADI sur l'horizon ; décager le Standby Attitude Indicator et recaler.</li>
+      <li>Navigation Mode Selector et Navigation Input Selector — NAV COMP.</li>
+      <li>Compass Mode Selector — SYNC (relâcher, revient sur SLAVED).</li>
+      <li>Si STATIC CORR OFF allumé : CADC Switch sur RESET CORR puis NORM.</li>
+      <li>Réinitialiser le Master Caution.</li>
+      <li>Pitot Heat — OFF pour l'instant (à activer juste avant décollage, pas plus d'une minute avant sinon risque de dommage).</li>
+      <li>Régler le code transpondeur IFF selon la mission.</li>
+      <li>Régler la pression barométrique de l'altimètre (élévation terrain, ou 0 pour une lecture AGL).</li>
+      <li>Allumer le radioaltimètre, régler le seuil d'alerte basse altitude.</li>
+      <li>Allumer le RWR (AN/ALR-46), attendre le BIT (~9 sec), activer le mode recherche.</li>
+      <li>Optical Sight Mode — STANDBY. DSCG Screen Mode — RADAR.</li>
+      <li>Couper les trois axes d'augmentation de stabilité (Stab Aug) pour le roulage — <b>PITCH AUG OFF doit s'allumer</b>, c'est normal au sol.</li>
+      <li>Anti-Skid — OFF (normal au sol, le voyant ANTI-SKID INOPERATIVE s'allume).</li>
+      <li>Trim de tangage — 3 unités piqué.</li>
+    </ol>
+    <h3>WSO</h3>
+    <ol class="proc">
+      <li>Instrument Ground Power Test Switch — NORM (une fois moteurs tournants).</li>
+      <li>Battery Bypass Switch — OFF.</li>
+      <li>WSO Navigation Mode Selector — NAVIGATION COMPUTER.</li>
+      <li>Régler la poignée de commande d'éjection (WSO seul ou BOTH).</li>
+      <li>KY-28 (chiffrement radio) — ON, mode Plain ou Cipher selon besoin.</li>
+      <li>Radar APQ-120 — Power Selector STBY, laisser chauffer 3 minutes.</li>
+      <li>DSCG Mode Selector — RDR ou STBY.</li>
+      <li>Régler les modes chaff/flare de l'AN/ALE-40.</li>
+      <li>Si Pave Spike équipé : alimentation ON, tête stockée (STOW).</li>
+      <li>Informer le pilote : « prêt pour le roulage ».</li>
+    </ol>
+  `
+},
+{
+  id: "b4", idx:"B4", nm:"Roulage", badge:"Sol",
+  intro: "Direction par la roulette avant, vitesse limitée en virage, canopy ouverte par tradition — le roulage du Phantom a ses habitudes.",
+  body: `
+    <ol class="proc">
+      <li>Demander le retrait des cales aux roues (roue Jester → CREW CHIEF → WHEEL CHOCKS → REMOVE).</li>
+      <li>Tester le freinage au pied.</li>
+      <li>Taxi/Landing Light — position TAXI.</li>
+      <li>Relâcher les freins, avancer doucement.</li>
+      <li>Pour tourner : maintenir le bouton de direction roulette avant (touche N) et utiliser les palonniers — braquage max ±70° par rapport à l'axe.</li>
+      <li>Ne pas dépasser 15 kts en virage, 60 kts en ligne droite.</li>
+      <li>S'arrêter au point d'attente, effectuer la checklist avant décollage.</li>
+    </ol>
+    <div class="note go">
+      <span class="lbl">Anecdote</span>
+      <p>Rouler canopy ouverte était une pratique courante chez les équipages du Phantom — la climatisation était si mauvaise que l'essentiel de l'air prélevé servait à refroidir l'avionique plutôt que le cockpit.</p>
+    </div>
+    <h3>Avant décollage (point d'attente)</h3>
+    <ol class="proc">
+      <li>Obtenir la clairance de la tour.</li>
+      <li>Stab Aug (Yaw/Roll/Pitch) — ON, le voyant PITCH AUG OFF doit s'éteindre.</li>
+      <li>Volets/becs — OUT &amp; DOWN complet.</li>
+      <li>Aérofreins — rentrés (IN), voyant SPEEDBRAKE OUT éteint, puis remettre au neutre.</li>
+      <li>Vérifier trim toujours 3 unités piqué.</li>
+      <li>Taxi/Landing Light — OFF.</li>
+      <li>Fermer la verrière (WSO d'abord, puis pilote) — voyant CANOPY UNLOCKED éteint.</li>
+      <li>Anti-Skid — ON, voyant ANTI-SKID INOPERATIVE éteint.</li>
+      <li>Pitot Heat — ON (pas avant, pas plus d'une minute avant le décollage).</li>
+      <li>IFF Master Selector — NORMAL.</li>
+      <li>Vérifier disjoncteurs et voyants d'alerte — tous éteints.</li>
+    </ol>
+    <div class="srcs">
+      <a href="index.html">Retour au sommaire</a>
+    </div>
+  `
+}
+];
+
+let progress = {}, notes = {};
+const K_PROG = "f4e_b_progress", K_NOTES = "f4e_b_notes";
+
+function renderRail(){
+  const rail = document.getElementById('rail');
+  rail.innerHTML = LESSONS.map(l => `
+    <button class="item ${progress[l.id]?'done':''} ${l.id===current?'on':''}" onclick="goTo('${l.id}')">
+      <span class="idx">${l.idx}</span><span class="nm">${l.nm.replace(/&amp;/g,'&')}</span>
+    </button>`).join('');
+  const done = Object.values(progress).filter(Boolean).length;
+  document.getElementById('foot').textContent = `${done} / ${LESSONS.length} leçons terminées`;
+}
+
+function esc(s){ return (s||"").replace(/[&<>]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+
+async function renderMain(){
+  const l = LESSONS.find(x=>x.id===current);
+  const i = LESSONS.indexOf(l);
+  const prev = LESSONS[i-1], next = LESSONS[i+1];
+  const noteVal = notes[l.id] || "";
+  document.getElementById('main').innerHTML = `
+    <div class="page">
+      <div class="eyebrow">Leçon ${l.idx} · Section B</div>
+      <h2>${l.nm.replace(/&amp;/g,'&')}<span class="badge">${l.badge}</span></h2>
+      <p class="intro">${l.intro}</p>
+      ${l.body}
+      <h3>Notes personnelles</h3>
+      <textarea id="notes" placeholder="Tes remarques, réglages, pièges rencontrés...">${esc(noteVal)}</textarea>
+      <div class="doneline ${progress[l.id]?'on':''}" id="doneline" onclick="toggleDone('${l.id}')">
+        <div class="box"></div><span>${progress[l.id] ? 'Leçon marquée comme terminée' : 'Marquer cette leçon comme terminée'}</span>
+      </div>
+      <div class="nav">
+        ${prev ? `<button class="ghost" onclick="goTo('${prev.id}')">&larr; ${prev.nm.replace(/&amp;/g,'&')}</button>` : `<a class="ghost" href="index.html">&larr; Sommaire</a>`}
+        ${next ? `<button class="ghost" onclick="goTo('${next.id}')">${next.nm.replace(/&amp;/g,'&')} &rarr;</button>` : `<a class="ghost" href="index.html">Sommaire &rarr;</a>`}
+      </div>
+    </div>`;
+  const ta = document.getElementById('notes');
+  ta.addEventListener('input', async () => { notes[l.id] = ta.value; await __sset(K_NOTES, JSON.stringify(notes)); });
+}
+
+async function toggleDone(id){
+  progress[id] = !progress[id];
+  await __sset(K_PROG, JSON.stringify(progress));
+  renderRail(); renderMain();
+}
+
+let current = LESSONS[0].id;
+function goTo(id){ current = id; renderRail(); renderMain(); window.scrollTo(0,0); }
+
+(async function init(){
+  const p = await __sget(K_PROG); if (p && p.value) { try { progress = JSON.parse(p.value); } catch(e){} }
+  const n = await __sget(K_NOTES); if (n && n.value) { try { notes = JSON.parse(n.value); } catch(e){} }
+  renderRail(); renderMain();
+})();
+</script>
+</html>
