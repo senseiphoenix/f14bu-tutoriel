@@ -83,6 +83,7 @@
   <aside class="rail">
     <div class="rail-head">
       <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px">&larr; Accueil</a>
+      <a href="mapping-hotas.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px;margin-left:14px">Mapping HOTAS</a>
       <div class="tail">DCS · F-14B(U) Tomcat</div>
       <h1>Cursus<br>complet</h1>
       <p class="sub">32 leçons, 7 sections, une seule progression.</p>
@@ -1224,6 +1225,16 @@ document.addEventListener("keydown",e=>{
   if(e.key==="ArrowRight"&&!(sIdx===SECTIONS.length-1&&lIdx===SEC.L.length-1)){ if(lIdx<SEC.L.length-1)lIdx++; else {sIdx++;lIdx=0;} render(); }
   if(e.key==="ArrowLeft"&&!(sIdx===0&&lIdx===0)){ if(lIdx>0)lIdx--; else {sIdx--;lIdx=SECTIONS[sIdx].L.length-1;} render(); }
 });
-load().then(render);
+function applyHash(){
+  const h=(location.hash||'').replace('#','').toLowerCase();
+  if(!h) return false;
+  for(let i=0;i<SECTIONS.length;i++){
+    const j=SECTIONS[i].L.findIndex(l=>l.id===h);
+    if(j>=0){ sIdx=i; lIdx=j; return true; }
+  }
+  return false;
+}
+window.addEventListener('hashchange',()=>{ if(applyHash()){ render(); window.scrollTo(0,0);} });
+load().then(()=>{ applyHash(); render(); });
 </script>
 </body></html>
