@@ -87,7 +87,7 @@
       <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px">&larr; Accueil</a>
       <div class="tail">Section D · F-4E Phantom II</div>
       <h1>Vol normal<br>&amp; navigation</h1>
-      <p class="sub">Quatre leçons : commandes de vol, gestion carburant, radionavigation, alignement INS en croisière.</p>
+      <p class="sub">Cinq leçons : commandes de vol, gestion carburant, radionavigation, alignement INS en croisière, ravitaillement en vol.</p>
     </div>
     <nav class="rail-list" id="rail"></nav>
     <div class="rail-foot" id="foot"></div>
@@ -197,6 +197,32 @@ const LESSONS = [
       <p>Un recalage sur la mauvaise position dégrade la centrale au lieu de la corriger — et affecte aussi le calcul de dérive sur les vols suivants. Mieux vaut ne pas recaler que recaler sur un point incertain.</p>
     </div>
     <p class="lead">Alternative : comparer la distance/relèvement d'une station TACAN connue avec celle calculée vers un waypoint placé sur cette même station — un écart révèle la dérive accumulée.</p>
+  `
+},
+{
+  id: "d5", idx:"D5", nm:"Ravitaillement en vol (AAR)", badge:"Boom",
+  intro: "Le F-4E n'accepte que la perche rigide (flying boom) — pas de panier souple. C'est l'exercice le plus redouté en DCS : turbulence de sillage et vol en formation combinés.",
+  body: `
+    <ol class="proc">
+      <li>Régler le TACAN du ravitailleur (fourni au briefing) et sa fréquence UHF, rejoindre l'altitude et la vitesse de rendez-vous demandées (souvent 18 000 ou 10 000 ft, ~270 kts).</li>
+      <li>Air Refuel Switch — EXTEND : ouvre la trappe, dépressurise les réservoirs, active les pompes de transfert et le voyant READY.</li>
+      <li>Refueling Select Switch — INT ONLY (réservoirs internes) ou ALL (bidons externes inclus).</li>
+      <li>Master Arm — SAFE. Stab Aug (tangage/roulis/lacet) — ON.</li>
+      <li>Se positionner ~20 ft sous la perche, appeler le ravitailleur pour le pre-contact.</li>
+      <li>Trimmer parfaitement, voler en formation sur le <b>ravitailleur</b>, pas sur la perche — petits mouvements de manche, pas de palonnier, poussées courtes de manette.</li>
+      <li>Se caler sur la bande jaune peinte sous le ravitailleur et suivre les Pilot Director Lights (D/U pour haut-bas, F/A pour avant-arrière) — ce sont des indications de <b>direction</b>, pas de position : « Go Down », « Go Up », etc. Une lumière fixe = correction importante, clignotante = correction légère.</li>
+      <li>Laisser l'opérateur guider la perche jusqu'au réceptacle — annonce « Contact » puis « You are taking fuel ». Le voyant READY s'éteint.</li>
+      <li>Débit max ~3900 lbs/min (fortement variable selon les réservoirs encore disponibles) ; compter 5 à 7 minutes pour un plein complet interne + externe.</li>
+      <li>Déconnexion : voyant DISENGAGED allumé. Air Refuel Switch — RETRACT pour fermer la trappe.</li>
+    </ol>
+    <div class="note warn">
+      <span class="lbl">Piège classique</span>
+      <p>Si le voyant DISENGAGED s'allume de façon inattendue (décrochage accidentel), il faut cycler l'Air Refuel Switch (RETRACT puis EXTEND) avant de pouvoir retenter la connexion — le système ne se réinitialise pas seul.</p>
+    </div>
+    <div class="srcs">
+      <a href="section-c-decollage.html">← Décollage</a>
+      <a href="section-e-atterrissage.html">Atterrissage →</a>
+    </div>
   `
 }
 ];

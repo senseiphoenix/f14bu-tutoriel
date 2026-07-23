@@ -35,7 +35,7 @@
   .item.done .nm{color:var(--dim)}
   .item.done .idx{color:var(--go)}
   .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
-  .page{padding:34px 44px 90px;max-width:900px}
+  .page{padding:34px 44px 90px;max-width:920px}
   @media(max-width:700px){.page{padding:22px 18px 70px}}
   .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
   h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
@@ -44,11 +44,12 @@
   .intro{font-size:16px;color:var(--ink);margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
   h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
      margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin:24px 0 10px}
   p{margin:14px 0}
   .lead{color:var(--dim)}
   table.pins{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
   table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
-  table.pins td.n{font-family:var(--mono);color:var(--amber);width:26px}
+  table.pins td.n{font-family:var(--mono);color:var(--amber);width:70px}
   ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
   ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
   ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
@@ -78,7 +79,7 @@
 </style>
 
 <div id="banner" class="banner">
-  <span>Contenu issu du manuel officiel Heatblur et du guide communautaire de Chuck (radar, cockpit, armement) — pages 275 à 320 et 641 à 724 notamment.</span>
+  <span>Contenu issu du manuel officiel Heatblur et du guide complet de Chuck (pages 275 à 800) — radar, Pave Spike, armement air-air/air-sol, RWR/contre-mesures, IFF, radio, autopilote.</span>
   <button class="ghost" onclick="document.getElementById('banner').remove()">OK</button>
 </div>
 
@@ -89,7 +90,7 @@
       <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px">&larr; Accueil</a>
       <div class="tail">Section G · F-4E Phantom II</div>
       <h1>Armement<br>&amp; capteurs</h1>
-      <p class="sub">Quatre leçons : radar APQ-120, armement air-air, armement air-sol, RWR/contre-mesures.</p>
+      <p class="sub">Six leçons : radar, canon/Sidewinder, Sparrow, air-sol/Pave Spike, RWR/contre-mesures/IFF, radio/autopilote.</p>
     </div>
     <nav class="rail-list" id="rail"></nav>
     <div class="rail-foot" id="foot"></div>
@@ -106,90 +107,236 @@ async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v
 const LESSONS = [
 {
   id: "g1", idx:"G1", nm:"Radar AN/APQ-120", badge:"WSO",
-  intro: "Un radar à impulsions « brut » — il capte tout, à l'air comme au sol, sans filtrage automatique. C'est au WSO de trier.",
+  intro: "Un radar à impulsions « brut » qui capte tout, air et sol, sans filtrage automatique — c'est au WSO de trier. Trois façons d'entrer en lock : recherche classique, Cage/CAA au combat rapproché, et ranging air-sol.",
   body: `
+    <h3>Mise en route</h3>
     <ol class="proc">
       <li><span class="tag-w">WSO</span> Vérifier : moteurs tournants, générateurs ON, INS aligné, Instrument Ground Power Test Switch sur NORM.</li>
-      <li><span class="tag-w">WSO</span> Radar Power Selector — STBY. Chauffe de 3 minutes (magnétron actif après 3 min, klystron après 100 sec).</li>
-      <li><span class="tag-w">WSO</span> Une fois la chauffe terminée <b>et en vol uniquement</b> : Radar Power Selector — OPR.</li>
-      <li><span class="tag-w">WSO</span> DSCG Mode Selector — RDR.</li>
-      <li><span class="tag-p">P</span> DSCG Screen Mode Switch — RADAR, pour voir le répétiteur côté pilote.</li>
+      <li><span class="tag-w">WSO</span> Radar Power Selector — STBY. Le magnétron n'est alimenté qu'après 3 min, le klystron après 100 sec.</li>
+      <li><span class="tag-w">WSO</span> Une fois la chauffe terminée <b>et en vol uniquement</b> : Radar Power Selector — OPR (jamais au sol, pour la sécurité du personnel).</li>
+      <li><span class="tag-w">WSO</span> DSCG Mode Selector — RDR. <span class="tag-p">P</span> DSCG Screen Mode Switch — RADAR pour voir le répétiteur.</li>
+    </ol>
+    <h3>Recherche &amp; verrouillage longue distance (BVR)</h3>
+    <ol class="proc">
+      <li><span class="tag-w">WSO</span> Mode radar — RDR (avec nutation) ou MAP (sans nutation, faisceau plus étroit).</li>
+      <li><span class="tag-w">WSO</span> Display Selector — B NAR/WIDE (le mode B-Scope permet le verrouillage ; le mode PPI non).</li>
+      <li><span class="tag-w">WSO</span> Portée conseillée : 25 ou 50 nm. Stab Switch — NORMAL, Polarization — LINEAR, Maneuver — HI G, Track — AUTO, Pulse — AUTO.</li>
+      <li><span class="tag-w">WSO</span> Ajuster le gain pour distinguer les échos parasites des contacts réels.</li>
+      <li><span class="tag-w">WSO</span> Glisser le curseur radar sur la cible avec l'Antenna Hand Control, presser la détente en second cran (Full-Action) pour tenter l'accrochage.</li>
+      <li><span class="tag-w">WSO</span> Accrochage confirmé : voyants SKIN TRK et « T » allumés, cercle ASE et point de visée (Aim Dot) affichés.</li>
+    </ol>
+    <div class="note go">
+      <span class="lbl">Calcul rapide d'altitude cible</span>
+      <p>Différence d'altitude (centaines de ft) = angle d'élévation (deg) × distance (nm). Exemple : cible à 10 nm, 5° au-dessus → 50 centaines de ft = 5000 ft au-dessus de toi.</p>
+    </div>
+    <h3>Combat rapproché — Cage &amp; CAA</h3>
+    <ol class="proc">
+      <li><span class="tag-p">P</span> Presser le bouton Cage sur la manette — passe en mode Boresight, limite la portée à 5 nm.</li>
+      <li><span class="tag-p">P</span> Presser le bouton de direction roulette avant (touche N) pour entrer en CAA (Computer Automatic Acquisition) — le radar balaie une zone verticale de 78° de haut sur 15° de large.</li>
+      <li><span class="tag-p">P</span> Le Pinky Switch déplace la zone de balayage : AFT = 15° à gauche, CENTER = centré, FWD = 15° à droite. Je recommande de le laisser sur CENTER (HEAT) pour aligner simplement le viseur optique sur la cible.</li>
+      <li><span class="tag-p">P</span> Toute cible détectée dans le volume balayé, dans les 5 nm, est automatiquement verrouillée.</li>
     </ol>
     <div class="note warn">
       <span class="lbl">Piège classique</span>
-      <p>Ne jamais passer le radar sur OPR au sol — c'est réservé au vol, pour la sécurité du personnel et des autres appareils autour.</p>
+      <p>Ne pas confondre Cage Mode (fixe l'antenne sur la ligne de visée) et CAA Mode (balayage automatique déclenché depuis Cage) — CAA se sélectionne en pressant le bouton de direction roulette avant une fois en Cage.</p>
     </div>
-    <h3>Ce qui dégrade l'image radar</h3>
-    <table class="pins">
-      <tr><td class="n">Gain</td><td>Trop bas = cibles filtrées. Trop haut = bruit thermique noyant l'écran. Se règle en continu, pas de valeur fixe.</td></tr>
-      <tr><td class="n">Clutter</td><td>Retours du lobe principal (relief, lacs, villes) et des lobes secondaires (plus difficiles à distinguer d'une vraie cible).</td></tr>
-      <tr><td class="n">Brouillage</td><td>Une ligne verticale de bruit apparaît si un brouilleur est dans le volume balayé — le radar peut entrer en mode Home-On-Jam automatiquement (voyant « H »).</td></tr>
-    </table>
-    <p class="lead">Le radar détecte un gros porteur (bombardier) jusqu'à 40-50 nm, un chasseur jusqu'à 25 nm, avec un accrochage généralement possible sous 20 nm.</p>
+    <h3>Ranging air-sol</h3>
+    <p class="lead">Mode AIR-GRD (portée 5 ou 10 nm uniquement) : l'antenne reste fixe sur la ligne de visée radar, stabilisée en dérive, et ne piste qu'en distance (pas en angle). Utilisé pour le Dive Toss — voir Leçon G4.</p>
   `
 },
 {
-  id: "g2", idx:"G2", nm:"Armement air-air", badge:"Emploi",
-  intro: "Canon, AIM-7 Sparrow guidé radar, AIM-9 Sidewinder guidé infrarouge — sélectionnés au Gun/Missile Pinky Switch sur la manette gauche.",
+  id: "g2", idx:"G2", nm:"Canon &amp; AIM-9 Sidewinder", badge:"Emploi",
+  intro: "Le canon Vulcan et le Sidewinder partagent le même viseur optique LCOSS — la lecture change selon qu'un lock radar existe ou non.",
   body: `
-    <h3>Sélection d'arme</h3>
-    <table class="pins">
-      <tr><td class="n">AVT</td><td>Radar (AIM-7)</td></tr>
-      <tr><td class="n">CTR</td><td>Chaleur (AIM-9)</td></tr>
-      <tr><td class="n">ARR</td><td>Canon (M61A1)</td></tr>
-      <tr><td class="n">UP</td><td>Reject — passe à la station suivante du même type</td></tr>
-    </table>
-    <p class="lead">Les voyants HUD RADAR/HEAT/GUN/ARM indiquent l'arme sélectionnée et l'état du Master Arm — vérifiés d'un coup d'œil avant le tir.</p>
-    <h3>Canon M61A1 Vulcan</h3>
-    <p class="lead">639 obus, cadence sélectionnable 4000 ou 6000 coups/min. Le viseur LCOSS (Lead Computing Optical Sight System) calcule le point de tir avec un réticule de 25 mils (anneau intérieur) et 50 mils (anneau extérieur). Règle pratique : diamètre en mils = 1000 × envergure cible (ft) / distance (ft) — un MiG-21 (23 ft d'envergure) qui remplit l'anneau intérieur (25 mils) indique environ 1000 ft de distance.</p>
-    <h3>AIM-7 Sparrow — guidage radar semi-actif</h3>
-    <p class="lead">Nécessite un accrochage radar maintenu jusqu'à l'impact — le missile suit l'écho radar réfléchi par la cible. Sensible au brouillage et aux ruptures de lock.</p>
-    <h3>AIM-9 Sidewinder — guidage infrarouge</h3>
-    <p class="lead">Autoguidé sur la chaleur, ne nécessite pas de maintien du radar après le tir — mais sensible aux leurres thermiques (flares) de la cible.</p>
+    <h3>M61A1 Vulcan (20 mm)</h3>
+    <p class="lead">639 obus, cadence sélectionnable 4000 ou 6000 coups/min. Le viseur LCOSS projette un réticule de 2 mils (pipper), un anneau intérieur de 25 mils et un anneau extérieur de 50 mils.</p>
     <div class="note go">
-      <span class="lbl">Avant l'engagement</span>
-      <p>Toujours larguer les bidons externes avant un combat air-air rapproché (sauf contre un gros porteur lent) — et dans tous les cas, larguer le bidon centre qui bloque le tir des Sparrow sur les stations avant.</p>
+      <span class="lbl">Règle pratique de distance</span>
+      <p>Diamètre en mils = 1000 × envergure cible (ft) / distance (ft). Un MiG-21 (23 ft d'envergure) qui remplit l'anneau intérieur (25 mils) = environ 1000 ft, la distance de tir optimale.</p>
+    </div>
+    <ol class="proc">
+      <li><span class="tag-p">P</span> Gun/Missile Pinky Switch — GUN (arrière).</li>
+      <li><span class="tag-p">P</span> Weapon Selector Knob — toute position sauf TV ou ARM. Air-to-Ground Delivery Mode — OFF.</li>
+      <li><span class="tag-p">P</span> Master Arm — ARMED. Vérifier voyants ARM et GUN allumés.</li>
+      <li><span class="tag-p">P</span> Sight Mode Selector — A/A.</li>
+      <li><span class="tag-p">P</span> Sans lock radar : le réticule vise à une distance par défaut de 1000 ft. Avec lock : la barre de distance s'étend de 1000 ft (6h) à 6700 ft (1h).</li>
+      <li><span class="tag-p">P</span> Le bouton Cage « fige » le réticule sur la ligne de visée radar — utile en forte G quand le pipper sort du champ visuel.</li>
+      <li><span class="tag-p">P</span> Aligner le pipper sur la cible, presser la détente en second cran pour tirer.</li>
+    </ol>
+    <div class="note">
+      <span class="lbl">À savoir</span>
+      <p>La trappe de purge des gaz s'ouvre automatiquement pendant le tir et se referme 10 sec à 1 min après, selon la durée de la rafale.</p>
+    </div>
+    <h3>AIM-9 Sidewinder — guidage infrarouge</h3>
+    <p class="lead">Le radar n'est jamais nécessaire pour guider le Sidewinder — il ne sert qu'à obtenir une solution de tir. Le missile s'autoguide sur la chaleur, quel que soit le mode d'emploi.</p>
+    <h4>Sans radar</h4>
+    <ol class="proc">
+      <li><span class="tag-p">P</span> Pinky Switch — HEAT (centre). Master Arm — ARMED. Sight Mode — A/A.</li>
+      <li><span class="tag-p">P</span> Aligner le viseur sur la cible — grognement grave = pas d'accrochage thermique, tonalité aiguë = cible détectée.</li>
+      <li><span class="tag-p">P</span> Maintenir le bouton Air Refueling Release pour « découvrir » (uncage) le chercheur du missile et suivre la cible en manœuvrant.</li>
+      <li><span class="tag-p">P</span> Tonalité aiguë maintenue, dans la portée efficace : presser la détente en second cran pour tirer.</li>
+    </ol>
+    <h4>Avec radar (Cage/CAA)</h4>
+    <p class="lead">Même séquence Cage/CAA que pour le canon (voir G1). Une fois verrouillé : Pinky Switch sur HEAT, cercle ASE et point de visée affichés, deux repères de portée (Rmin/Rmax) apparaissent. Quand IN RANGE et SHOOT s'allument, la cible est dans l'enveloppe de tir.</p>
+    <div class="note warn">
+      <span class="lbl">Piège classique</span>
+      <p>Les voyants IN RANGE/SHOOT indiquent une solution de tir valide — ils ne garantissent pas que le Sidewinder accrochera la cible. Vérifie toujours la tonalité aiguë du chercheur avant de tirer.</p>
     </div>
   `
 },
 {
-  id: "g3", idx:"G3", nm:"Armement air-sol", badge:"Précision",
-  intro: "Bombes lisses ou guidées, Maverick électro-optique, nacelle de désignation Pave Spike — plusieurs modes de largage selon la précision recherchée.",
+  id: "g3", idx:"G3", nm:"AIM-7 Sparrow", badge:"Équipage",
+  intro: "Guidage radar semi-actif : le radar doit rester verrouillé jusqu'à l'impact. Portée maximale ~26 nm, mais vise plutôt 10 nm pour une probabilité de tir correcte.",
   body: `
-    <h3>Modes de largage principaux</h3>
-    <table class="pins">
-      <tr><td class="n">DIRECT</td><td>Largage manuel en palier, visée optique directe.</td></tr>
-      <tr><td class="n">DIVE TOSS</td><td>Calcul automatique du point de largage en piqué.</td></tr>
-      <tr><td class="n">LOFT</td><td>Largage en ressource, minimise l'exposition à la DCA mais très imprécis — hérité de la doctrine nucléaire.</td></tr>
-      <tr><td class="n">TGT FIND</td><td>Désignation via Pave Spike ou radar, pour une précision accrue.</td></tr>
-    </table>
-    <h3>AN/AVQ-23 Pave Spike (nacelle de désignation)</h3>
-    <p class="lead">Fournit une image TV orientable pour repérer les cibles au sol, et peut désigner au laser pour guider les bombes à guidage laser. Mise en route : alimentation ON, tête stockée (STOW), puis désignation via l'Antenna Hand Control du WSO.</p>
-    <h3>AGM-65 Maverick</h3>
-    <p class="lead">Missile air-sol à guidage électro-optique (ou infrarouge selon variante) — le Forward Hand Control du pilote permet de piloter le viseur du missile avant le tir, en mode contraste clair/sombre (WHT/BLK, AUTO, ou BLK/WHT selon l'arrière-plan).</p>
+    <h3>Préparation du missile</h3>
+    <ol class="proc">
+      <li><span class="tag-p">P</span> Missile Power Switch — CW ON. Démarre la mise en fréquence du klystron.</li>
+      <li><span class="tag-p">P</span> Attendre la fin de la mise en fréquence : 4 min pour l'AIM-7E, 1 min pour l'AIM-7F.</li>
+      <li><span class="tag-p">P</span> Vérifier les voyants RDR allumés. Interlock Switch — IN (bride le tir hors solution valide) ou OUT (outrepasse les limites).</li>
+      <li><span class="tag-p">P</span> Master Arm — ARMED. Pinky Switch — RADAR (avant). Sight Mode — A/A.</li>
+    </ol>
+    <h3>Séquence de tir (équipage humain, longue distance)</h3>
+    <ol class="proc">
+      <li><span class="tag-w">WSO</span> Effectuer le lock radar (voir G1 — procédure BVR).</li>
+      <li><span class="tag-w">WSO</span> Compter 4 secondes à voix haute (AIM-7E) ou 2 secondes (AIM-7F) après le lock, pour laisser le temps au verrouillage Doppler du missile — « 1 Mississippi... Shoot ».</li>
+      <li><span class="tag-p">P</span> Centrer le point de visée (Aim Dot) dans le cercle ASE.</li>
+      <li><span class="tag-p">P</span> Voyants IN RANGE et SHOOT allumés → presser la détente en second cran.</li>
+      <li><span class="tag-p">P</span> Après le tir, maintenir le lock radar — le missile est guidé par ton radar jusqu'à l'impact.</li>
+    </ol>
     <div class="note warn">
       <span class="lbl">Piège classique</span>
-      <p>Sans accrochage radar ni désignation, le mode LOFT reste le plus simple à utiliser mais aussi le moins précis — ne pas l'employer sur une cible ponctuelle si un mode de désignation est disponible.</p>
+      <p>Ne pas respecter le délai de mise en phase Doppler (4 sec / 2 sec) peut faire échouer le guidage — le missile n'aura pas reçu l'injection correcte de vitesse de fermeture.</p>
+    </div>
+    <h3>Avec Jester</h3>
+    <p class="lead">Jester gère automatiquement le compte à rebours de mise en phase et l'annonce vocalement. Utilise l'action contextuelle (touche V) : appui court pour sélectionner une cible, appui long pour verrouiller/déverrouiller.</p>
+    <div class="note go">
+      <span class="lbl">Restriction de tir</span>
+      <p>Si l'aspect de la cible est de 90° ±9° et qu'elle vole sous 5° au-dessus de l'horizon, les voyants SHOOT sont inhibés — pour éviter un tir dans le lobe principal du clutter au sol.</p>
     </div>
   `
 },
 {
-  id: "g4", idx:"G4", nm:"RWR &amp; contre-mesures", badge:"Défense",
-  intro: "Le RWR indique qui te vise ; chaff, flares et brouilleur ALQ-131 répondent chacun à une menace différente.",
+  id: "g4", idx:"G4", nm:"Armement air-sol &amp; Pave Spike", badge:"Précision",
+  intro: "Le Dive Toss reste le mode le plus flexible pour les cibles d'opportunité ; le Pave Spike ajoute la désignation laser pour les bombes guidées.",
   body: `
-    <h3>Deux types de menace, deux réponses</h3>
+    <h3>Modes de largage — vue d'ensemble</h3>
     <table class="pins">
-      <tr><td class="n">IR</td><td>Missile à guidage infrarouge (chaleur) → <b>Flares</b>, qui offrent une source de chaleur plus attractive que les réacteurs.</td></tr>
-      <tr><td class="n">Radar</td><td>Missile ou tir radar-guidé → <b>Chaff</b> (paillettes métalliques, brouillage passif) ou <b>brouilleur AN/ALQ-131</b> (brouillage actif/continu).</td></tr>
+      <tr><td class="n">DT (Dive Toss)</td><td>Précis, cible d'opportunité — le WSO obtient la distance radar, le pilote tient le pipper et largue en tirant sur le manche.</td></tr>
+      <tr><td class="n">DIRECT</td><td>Visée manuelle classique, sans WRCS ni ARBCS — profil de secours si le Dive Toss échoue.</td></tr>
+      <tr><td class="n">TGT FIND</td><td>Comme le Dive Toss mais désignation via le Pave Spike au lieu du radar.</td></tr>
+      <tr><td class="n">OFFSET</td><td>Largage « à l'aveugle » via un point de référence (IP) connu, quand la cible n'est pas visible directement.</td></tr>
+      <tr><td class="n">L / DL (Laydown)</td><td>Basse altitude, en palier — bombes à traînée élevée ou munitions à sous-munitions.</td></tr>
+      <tr><td class="n">LOFT / O/S</td><td>Conçu à l'origine pour l'arme nucléaire — permet de larguer à distance de sécurité en ressource.</td></tr>
     </table>
+    <div class="note go">
+      <span class="lbl">Outil indispensable</span>
+      <p>La calculatrice de bombardement (RCTRL+B) calcule automatiquement le coefficient de traînée, la portée de largage, la dépression de visée et l'avance de largage — évite de fouiller les tables papier.</p>
+    </div>
+    <h3>Dive Toss — procédure complète</h3>
+    <ol class="proc">
+      <li>Vérifier la pression barométrique (QNH) correcte pour la zone cible.</li>
+      <li>Remplir la calculatrice (RCTRL+B) : mode DT, type de bombe, vitesse d'approche, altitude cible/largage, angle de piqué → obtenir coefficient de traînée et avance de largage.</li>
+      <li><span class="tag-p">P</span> Sélectionner la station, Weapon Selector — BOMBS, Delivery Mode — DT, régler l'AWRU (quantité, intervalle), Fuzing — NOSE &amp; TAIL, Master Arm — ARMED.</li>
+      <li><span class="tag-p">P</span> Sight Mode — A/G. Piquer sur la cible à la vitesse et l'angle planifiés.</li>
+      <li><span class="tag-w">WSO</span> Radar en mode AIR-GRD, portée 5 ou 10 nm, glisser le curseur sur le retour radar au sol, verrouiller (Full-Action) — appeler « Captured » une fois le lock confirmé.</li>
+      <li><span class="tag-p">P</span> Stabiliser le pipper sur la cible, presser et maintenir le bouton de largage (insère la distance radar dans le WRCS), puis débuter la ressource en palier.</li>
+      <li>Une tonalité confirme l'acceptation de la distance par le WRCS ; les bombes larguent automatiquement au bon moment de la trajectoire.</li>
+    </ol>
+    <div class="note go">
+      <span class="lbl">Bon réflexe</span>
+      <p>Toujours préparer un profil Direct en secours, 5° plus plat que le Dive Toss prévu — si le radar ou le WRCS tombe en panne, tu peux basculer sans replanifier entièrement.</p>
+    </div>
+    <h3>Pave Spike — mise en route et désignation laser</h3>
+    <ol class="proc">
+      <li><span class="tag-w">WSO</span> Target Designation Power — ON, vérifier BIT = 1, Stow Button — ON (tête stockée).</li>
+      <li><span class="tag-w">WSO</span> Régler le code laser désiré, presser Laser Code Enter — le voyant NO GO doit s'éteindre.</li>
+      <li><span class="tag-w">WSO</span> Stow Button — OFF (dé-stockage, ~5 sec), presser Laser Ready — voyant LASER READY allumé.</li>
+      <li><span class="tag-p">P</span> Delivery Mode — TGT FIND, Weapon Release Mode — WRCS.</li>
+      <li><span class="tag-w">WSO</span> Acquisition Mode — 12-VIS (ligne de visée au 12h, légèrement piquée) pour repérer visuellement, puis Video Select — ASQ-153, DSCG Mode — TV.</li>
+      <li><span class="tag-p">P</span> Amener le réticule sur la cible, annoncer « Tracking ».</li>
+      <li><span class="tag-w">WSO</span> Demi-course de la détente pour entrer en mode Track, puis pleine course pour tirer le laser — annoncer « Capture » une fois stabilisé, puis « Acceptance » une fois la solution acquise.</li>
+    </ol>
     <div class="note warn">
       <span class="lbl">Piège classique</span>
-      <p>Déployer des contre-mesures contre le mauvais type de menace ne sert à rien — un missile IR ignore complètement le chaff, et inversement.</p>
+      <p>Le laser a une portée max d'environ 11 nm et ne doit pas être utilisé plus de 15 min sans pause refroidissement (30 min max en vol lent et bas). Si la distance mesurée au laser diffère de plus de 20% de la distance calculée par l'INS/WRCS, elle est rejetée — presser Reject/Override pour forcer la valeur laser, plus précise en pratique.</p>
     </div>
-    <h3>AN/ALE-40 (chaff/flares)</h3>
-    <p class="lead">Piloté depuis les deux postes : réglages de salve (nombre, intervalle) sur le panneau CCU du WSO, bouton de largage sur la manette du pilote ou le CCU du WSO. Le largage nécessite volets et aérofreins rentrés.</p>
-    <h3>Jester WSO — l'essentiel</h3>
-    <p class="lead">Si tu voles seul, Jester gère automatiquement l'alignement INS, le radar, le DSCG, le WRCS et la navigation par « leapfrogging » entre les points de route. La roue de commandes s'ouvre par une pression courte sur A, se referme par une pression longue.</p>
+  `
+},
+{
+  id: "g5", idx:"G5", nm:"RWR, contre-mesures &amp; IFF", badge:"Défense",
+  intro: "Le RWR indique qui te vise et comment ; chaff, flares et brouilleur actif répondent chacun à une menace différente ; l'IFF évite le tir fratricide.",
+  body: `
+    <h3>AN/ALR-46 RWR — mise en route et lecture</h3>
+    <ol class="proc">
+      <li>Presser System Power — BIT de 9 secondes.</li>
+      <li>Activer le mode SEARCH pour voir aussi les radars de veille longue portée (symbole « S »).</li>
+      <li>La menace prioritaire est entourée d'un losange ; un cercle autour d'un symbole signale un guidage de missile actif.</li>
+    </ol>
+    <table class="pins">
+      <tr><td class="n">MODE</td><td>OPEN (jusqu'à 16 menaces) ou PRIORITY (les 5 plus dangereuses seulement).</td></tr>
+      <tr><td class="n">ACTIVITY</td><td>Commande de guidage SAM détectée — cercle autour de l'émetteur.</td></tr>
+      <tr><td class="n">LAUNCH</td><td>Lancement de missile détecté — tonalité de 7 bips.</td></tr>
+      <tr><td class="n">HANDOFF</td><td>Maintenu : fait défiler manuellement la priorité entre émetteurs (verrouille sur un choix).</td></tr>
+      <tr><td class="n">ALTITUDE</td><td>LOW ALT réintègre les menaces basse altitude normalement écartées par l'estimation d'enveloppe.</td></tr>
+      <tr><td class="n">UNKNOWN</td><td>Signale un émetteur sans entrée catalogue mais jugé menaçant (symbole « U »).</td></tr>
+    </table>
+    <div class="note go">
+      <span class="lbl">Tonalité « new guy »</span>
+      <p>Trois bips rapides signalent l'apparition d'un nouvel émetteur ou un changement de fréquence — un signal pour vérifier l'écran RWR immédiatement.</p>
+    </div>
+    <h3>AN/ALE-40 — chaff &amp; flares</h3>
+    <p class="lead">Flares contre menace infrarouge, chaff contre menace radar (brouillage passif). Le largage nécessite volets et aérofreins rentrés.</p>
+    <ol class="proc">
+      <li>Mode SGL (chaff/flare unique par pression), MULT (rafale selon réglage), ou PROG (plusieurs salves programmées).</li>
+      <li>Régler nombre/intervalle de rafales (chaff) et de salves, ainsi que l'intervalle des flares sur le panneau programmateur.</li>
+      <li>Larguer via le bouton de la manette (pilote) ou le CCU (WSO).</li>
+    </ol>
+    <h3>AN/ALQ-131 — brouilleur actif</h3>
+    <ol class="proc">
+      <li><span class="tag-w">WSO</span> Jamais d'activation au sol (risque pour le personnel).</li>
+      <li><span class="tag-w">WSO</span> En vol : sélecteur — STBY, chauffe d'environ 3 minutes (voyants STBY confirment la fin de chauffe).</li>
+      <li><span class="tag-w">WSO</span> XMIT 1, XMIT 2 ou BOTH pour brouiller. Voyant AI (Air Intercept) confirme un brouillage actif contre un radar ennemi.</li>
+      <li><span class="tag-w">WSO</span> Ne pas dépasser 20 minutes de transmission continue sans pause refroidissement — un voyant de défaut clignotant signale une surchauffe, repasser immédiatement en STBY.</li>
+    </ol>
+    <h3>IFF — Identify Friend or Foe</h3>
+    <p class="lead">Le Mode 4 est le seul sécurisé (chiffré) — les modes 1, 2 et 3 peuvent être copiés par l'adversaire et trahir ta position à chaque réponse.</p>
+    <div class="note warn">
+      <span class="lbl">Piège classique</span>
+      <p>L'absence de réponse IFF ne garantit <b>pas</b> qu'un contact est hostile — un allié peut avoir un transpondeur endommagé, un mauvais code, ou simplement l'IFF éteint. Toujours croiser avec une identification visuelle ou les instructions d'un contrôleur avant d'engager.</p>
+    </div>
+    <ol class="proc">
+      <li><span class="tag-p">P</span> IFF Master Selector — STANDBY, attendre ~80 sec de chauffe, puis NORM.</li>
+      <li><span class="tag-p">P</span> Régler le code Mode 3/A demandé par la mission.</li>
+      <li><span class="tag-w">WSO</span> Pour interroger : radar allumé, presser le bouton Challenge sur l'Antenna Hand Control. Deux lignes au-dessus/en dessous du retour radar = ami confirmé ; une seule ligne = mode compatible mais code différent ; aucune ligne = pas de réponse.</li>
+    </ol>
+  `
+},
+{
+  id: "g6", idx:"G6", nm:"Radio, autopilote &amp; Jester", badge:"Systèmes",
+  intro: "Deux radios UHF (COMM émission/réception, AUX réception seule), un intercom, et un AFCS qui peut tenir cap et altitude — plus Jester qui peut gérer tout ça pour toi.",
+  body: `
+    <h3>Radio UHF</h3>
+    <ol class="proc">
+      <li>Mode Selector — T/R+G (émission/réception + fréquence de garde).</li>
+      <li>Preset (canal pré-réglé, non modifiable en vol) ou Manual (fréquence libre).</li>
+      <li>Squelch — ON, régler le volume, vérifier le voyant COMM CMD allumé (sinon presser le bouton de bascule de commande).</li>
+      <li>Émettre en maintenant le Mic Switch en position UHF (avant).</li>
+    </ol>
+    <p class="lead">La radio AUX ne fait que recevoir — utile pour surveiller une deuxième fréquence sans quitter la principale. Le chiffrement KY-28 (mode Cipher) protège les communications sensibles, au prix d'un léger délai de synchronisation à chaque transmission.</p>
+    <h3>AFCS — pilote automatique</h3>
+    <ol class="proc">
+      <li>Engager le Stab Aug (Yaw/Roll/Pitch) — ON.</li>
+      <li>Trimmer l'avion en vol stabilisé avant d'engager l'AFCS.</li>
+      <li>AFCS Mode Switch — ENGAGE : tient l'assiette et le cap dans une plage de ±70° de tangage et de roulis.</li>
+      <li>Pour Altitude Hold : engager d'abord l'AFCS, trimmer en palier, puis Altitude Hold Switch — ENGAGE.</li>
+    </ol>
+    <div class="note warn">
+      <span class="lbl">Piège classique</span>
+      <p>Ne jamais tenter de corriger l'assiette depuis le poste arrière en mode AFCS — sans capteur de force sur le manche WSO, toute pression fait dériver le trim et peut provoquer des oscillations violentes si le pilote reprend la main brutalement ensuite.</p>
+    </div>
+    <p class="lead">Le système se désengage automatiquement au-delà de +4G ou -1G (dispositif de sécurité), et complètement si la palette d'urgence (Emergency Quick Release) est pressée.</p>
+    <h3>Jester WSO — recentrage</h3>
+    <p class="lead">Si tu voles seul, Jester gère l'alignement INS, le radar (recherche, lock, CAA), le Pave Spike, les contre-mesures, la radio et la navigation par leapfrogging entre les points de route. La roue de commandes s'ouvre par une pression courte sur A, se referme par une pression longue. L'action contextuelle (touche V, à mapper) s'adapte au contexte : sélection de cible en phase de recherche, verrouillage/déverrouillage en phase de tracking, sélection d'aspect en Cage/Boresight.</p>
     <div class="srcs">
       <a href="index.html">Retour au sommaire</a>
     </div>
