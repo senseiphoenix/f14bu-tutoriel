@@ -49,6 +49,13 @@
   table.pins{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
   table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
   table.pins td.n{font-family:var(--mono);color:var(--amber);width:26px}
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%}
   ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
   ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
   ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
@@ -94,6 +101,7 @@
   </aside>
   <main id="main"></main>
 </div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
 
 <script>
 async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
@@ -101,6 +109,11 @@ async function __sget(k){ try{ if(window.storage){const r=await window.storage.g
 async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
   try{localStorage.setItem(k,v);}catch(e){} }
 
+const IMG = {
+  gear: "ext_landing_gear.jpg",
+  flaps: "ext_slats_and_flaps.jpg",
+  gearflight: "landing_gear_in_flight.jpg"
+};
 const LESSONS = [
 {
   id: "c1", idx:"C1", nm:"Mise en puissance", badge:"Piste",
@@ -115,6 +128,7 @@ const LESSONS = [
       <li>Manettes — Post-combustion.</li>
       <li>Direction roulette avant désengagée avant 70 kts.</li>
     </ol>
+    <figure><img data-src="gearflight" alt="Rentrée du train"><figcaption><span>Le train en cours de rentrée après décollage</span></figcaption></figure>
     <div class="note warn">
       <span class="lbl">Piège classique</span>
       <p>Un mouvement franc et complet du manche vers l'arrière entre la vitesse de décollage et 30 kts en-dessous peut faire toucher le stabilisateur sur la piste, avec risque d'endommager son vérin. Progressivité de rigueur.</p>
@@ -130,6 +144,7 @@ const LESSONS = [
       <li>Maintenir une assiette de 10 à 12° de tangage, trimmer au besoin.</li>
       <li>Après rotation et taux de montée positif confirmé : train — rentré.</li>
     </ol>
+    <figure><img data-src="gear" alt="Train sorti"><figcaption><span>Train d'atterrissage, position sortie</span></figcaption></figure>
     <div class="note warn">
       <span class="lbl">Piège classique</span>
       <p>Le train et ses trappes doivent être complètement rentrés et verrouillés avant d'atteindre la vitesse limite de 250 kts, sous peine de charges aérodynamiques excessives pouvant endommager le mécanisme.</p>
@@ -139,6 +154,7 @@ const LESSONS = [
       <li>Accélérer à 180 kts, puis volets/becs — rentrés (NORM).</li>
       <li>Vérifier indication SLATS IN et FLAPS UP.</li>
     </ol>
+    <figure><img data-src="flaps" alt="Volets et becs"><figcaption><span>Volets et becs de bord d'attaque</span></figcaption></figure>
     <div class="note">
       <span class="lbl">À surveiller</span>
       <p>Un bruit de cliquetis au niveau des gouvernes pendant la rentrée des volets/becs, couplé à une fluctuation de la pression hydraulique Utility, impose de rester sous 250 kts et de cycler volets/becs pour clarifier la situation.</p>
@@ -197,6 +213,10 @@ async function renderMain(){
         ${next ? `<button class="ghost" onclick="goTo('${next.id}')">${next.nm.replace(/&amp;/g,'&')} &rarr;</button>` : `<a class="ghost" href="index.html">Sommaire &rarr;</a>`}
       </div>
     </div>`;
+  document.querySelectorAll('img[data-src]').forEach(img=>{
+    img.src = "img/" + IMG[img.dataset.src];
+    img.onclick = () => openLb(img.src);
+  });
   const ta = document.getElementById('notes');
   ta.addEventListener('input', async () => { notes[l.id] = ta.value; await __sset(K_NOTES, JSON.stringify(notes)); });
 }
@@ -205,6 +225,8 @@ async function toggleDone(id){
   await __sset(K_PROG, JSON.stringify(progress));
   renderRail(); renderMain();
 }
+function openLb(src){ document.getElementById('lbimg').src = src; document.getElementById('lb').classList.add('on'); }
+document.getElementById('lb').onclick = () => document.getElementById('lb').classList.remove('on');
 let current = LESSONS[0].id;
 function goTo(id){ current = id; renderRail(); renderMain(); window.scrollTo(0,0); }
 (async function init(){

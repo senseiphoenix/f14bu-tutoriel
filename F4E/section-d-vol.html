@@ -49,6 +49,13 @@
   table.pins{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
   table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
   table.pins td.n{font-family:var(--mono);color:var(--amber);width:26px}
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%}
   ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
   ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
   ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
@@ -94,6 +101,7 @@
   </aside>
   <main id="main"></main>
 </div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
 
 <script>
 async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
@@ -101,12 +109,22 @@ async function __sget(k){ try{ if(window.storage){const r=await window.storage.g
 async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
   try{localStorage.setItem(k,v);}catch(e){} }
 
+const IMG = {
+  afcs: "pilot_afcs_control_panel.jpg",
+  fuelsys: "f4_fuel_system.jpg",
+  fuelpanel: "pilot_fuel_control_panel.jpg",
+  tacan: "hsi_tacan_mode.jpg",
+  navcomp: "hsi_nav_comp_mode.jpg",
+  tacangen: "tacan_general.jpg",
+  aar: "ext_air_to_air_refuel.jpg"
+};
 const LESSONS = [
 {
   id: "d1", idx:"D1", nm:"Commandes de vol &amp; AFCS", badge:"Systèmes",
   intro: "Un système hydraulique à trois circuits indépendants, un Stab Aug qui amortit sans corriger, et un ARI qui coordonne les virages à basse vitesse.",
   body: `
     <h3>Trois circuits hydrauliques</h3>
+    <figure><img data-src="afcs" alt="Panneau AFCS"><figcaption><span>Panneau de contrôle AFCS/Stab Aug</span></figcaption></figure>
     <table class="pins">
       <tr><td class="n">PC-1</td><td>Alimente le côté gauche (aileron, spoiler) — pompe moteur gauche.</td></tr>
       <tr><td class="n">PC-2</td><td>Alimente le côté droit — pompe moteur droit.</td></tr>
@@ -138,6 +156,8 @@ const LESSONS = [
     </table>
     <p class="lead">La cellule 1 alimente les moteurs. Les cellules 4 et 6 ont des pompes de transfert vers les cellules 1 et 2 ; les autres cellules alimentent par gravité. La cellule 7 (réserve) ne commence à transférer que sous 1800 lbs dans les cellules 1+2.</p>
     <h3>Gestion des bidons externes</h3>
+    <figure><img data-src="fuelsys" alt="Système carburant"><figcaption><span>Schéma du système carburant F-4E</span></figcaption></figure>
+    <figure><img data-src="fuelpanel" alt="Panneau carburant"><figcaption><span>Panneau de contrôle carburant, poste pilote</span></figcaption></figure>
     <ol class="proc">
       <li>Avant décollage : External Transfer Switch sur OUTBD si voilure seule, ou CENTER si bidon centre + voilure (le centre est consommé en premier).</li>
       <li>Au sol, aucun carburant externe ou voilure n'est consommé (non pressurisés) — seul le carburant fuselage brûle.</li>
@@ -148,6 +168,7 @@ const LESSONS = [
       <p>Le voyant CL TK ABOARD signale que le bidon centre interdit l'utilisation des AIM-7 sur les deux postes avant — il faut larguer le bidon centre avant d'engager avec des Sparrow depuis ces stations.</p>
     </div>
     <h3>Ravitaillement en vol</h3>
+    <figure><img data-src="aar" alt="Ravitaillement en vol"><figcaption><span>Perche de ravitaillement sortie</span></figcaption></figure>
     <p class="lead">Air Refuel Switch — EXTEND pour sortir la perche. Le voyant READY confirme que le système est prêt (perche sortie, réservoirs dépressurisés). Le voyant DISENGAGED s'allume si la perche se déconnecte — il faut alors cycler l'Air Refuel Switch pour réinitialiser avant de retenter.</p>
     <div class="srcs">
       <a href="section-c-decollage.html">← Décollage</a>
@@ -160,6 +181,8 @@ const LESSONS = [
   intro: "Trois moyens classiques pour intercepter une radiale et rejoindre un point — le TACAN reste le plus précis car il donne la distance en plus du cap.",
   body: `
     <h3>TACAN — la référence</h3>
+    <figure><img data-src="tacangen" alt="Principe TACAN"><figcaption><span>Principe de fonctionnement du TACAN</span></figcaption></figure>
+    <figure><img data-src="tacan" alt="HSI mode TACAN"><figcaption><span>HSI en mode TACAN</span></figcaption></figure>
     <ol class="proc">
       <li>Vérifier le voyant NAV CMD allumé côté pilote (sinon presser le bouton de bascule de commande).</li>
       <li>TACAN Mode Selector — T/R.</li>
@@ -186,6 +209,7 @@ const LESSONS = [
   body: `
     <p>La centrale inertielle ne mémorise qu'un seul point à la fois (TGT 2). Pour suivre un plan de vol à plusieurs points, le WSO doit charger le point suivant à l'avance pendant que l'avion navigue encore vers le point courant — c'est la technique dite du <b>« leapfrogging »</b>. Jester le fait automatiquement.</p>
     <h3>Recalage par survol d'un point connu</h3>
+    <figure><img data-src="navcomp" alt="HSI mode Nav Comp"><figcaption><span>HSI en mode Navigation Computer</span></figcaption></figure>
     <ol class="proc">
       <li>Choisir un repère visuel net (bâtiment, pont, croisement de routes) dont les coordonnées exactes sont connues.</li>
       <li>Position Update Switch — SET, entrer les coordonnées exactes du point.</li>
@@ -261,6 +285,10 @@ async function renderMain(){
         ${next ? `<button class="ghost" onclick="goTo('${next.id}')">${next.nm.replace(/&amp;/g,'&')} &rarr;</button>` : `<a class="ghost" href="index.html">Sommaire &rarr;</a>`}
       </div>
     </div>`;
+  document.querySelectorAll('img[data-src]').forEach(img=>{
+    img.src = "img/" + IMG[img.dataset.src];
+    img.onclick = () => openLb(img.src);
+  });
   const ta = document.getElementById('notes');
   ta.addEventListener('input', async () => { notes[l.id] = ta.value; await __sset(K_NOTES, JSON.stringify(notes)); });
 }
@@ -269,6 +297,8 @@ async function toggleDone(id){
   await __sset(K_PROG, JSON.stringify(progress));
   renderRail(); renderMain();
 }
+function openLb(src){ document.getElementById('lbimg').src = src; document.getElementById('lb').classList.add('on'); }
+document.getElementById('lb').onclick = () => document.getElementById('lb').classList.remove('on');
 let current = LESSONS[0].id;
 function goTo(id){ current = id; renderRail(); renderMain(); window.scrollTo(0,0); }
 (async function init(){

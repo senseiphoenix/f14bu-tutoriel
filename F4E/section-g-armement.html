@@ -50,6 +50,13 @@
   table.pins{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
   table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
   table.pins td.n{font-family:var(--mono);color:var(--amber);width:70px}
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%}
   ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
   ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
   ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
@@ -97,6 +104,7 @@
   </aside>
   <main id="main"></main>
 </div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
 
 <script>
 async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
@@ -104,6 +112,24 @@ async function __sget(k){ try{ if(window.storage){const r=await window.storage.g
 async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
   try{localStorage.setItem(k,v);}catch(e){} }
 
+const IMG = {
+  radarscreen: "radar_screen.jpg",
+  ase: "radar_ase_circle.jpg",
+  aimdot: "radar_aim_dot.jpg",
+  cage: "radar_cage_mode.jpg",
+  search: "radar_search.jpg",
+  track: "radar_track.jpg",
+  pavepod: "pave_spike_pod.jpg",
+  pavesym: "pave_spike_symbology.jpg",
+  pavescreen: "pave_spike_screen_example.jpg",
+  rwrscope: "rwr_with_contacts.jpg",
+  rwrind: "pilot_rwr_indicator.jpg",
+  iffpanel: "pilot_iff_panel.jpg",
+  ifffriend: "radar_iff_friendly.jpg",
+  ale40: "pilot_an_ale_40_switch.jpg",
+  alq131: "ext_alq_131_ecm_pod.jpg",
+  jesterui: "jester_wheel_ui.jpg"
+};
 const LESSONS = [
 {
   id: "g1", idx:"G1", nm:"Radar AN/APQ-120", badge:"WSO",
@@ -117,6 +143,8 @@ const LESSONS = [
       <li><span class="tag-w">WSO</span> DSCG Mode Selector — RDR. <span class="tag-p">P</span> DSCG Screen Mode Switch — RADAR pour voir le répétiteur.</li>
     </ol>
     <h3>Recherche &amp; verrouillage longue distance (BVR)</h3>
+    <figure><img data-src="search" alt="Radar en recherche"><figcaption><span>Écran radar en phase de recherche</span></figcaption></figure>
+    <figure><img data-src="track" alt="Radar en poursuite"><figcaption><span>Cible verrouillée, mode poursuite</span></figcaption></figure>
     <ol class="proc">
       <li><span class="tag-w">WSO</span> Mode radar — RDR (avec nutation) ou MAP (sans nutation, faisceau plus étroit).</li>
       <li><span class="tag-w">WSO</span> Display Selector — B NAR/WIDE (le mode B-Scope permet le verrouillage ; le mode PPI non).</li>
@@ -130,6 +158,7 @@ const LESSONS = [
       <p>Différence d'altitude (centaines de ft) = angle d'élévation (deg) × distance (nm). Exemple : cible à 10 nm, 5° au-dessus → 50 centaines de ft = 5000 ft au-dessus de toi.</p>
     </div>
     <h3>Combat rapproché — Cage &amp; CAA</h3>
+    <figure><img data-src="cage" alt="Mode Cage"><figcaption><span>Radar en mode Cage/Boresight</span></figcaption></figure>
     <ol class="proc">
       <li><span class="tag-p">P</span> Presser le bouton Cage sur la manette — passe en mode Boresight, limite la portée à 5 nm.</li>
       <li><span class="tag-p">P</span> Presser le bouton de direction roulette avant (touche N) pour entrer en CAA (Computer Automatic Acquisition) — le radar balaie une zone verticale de 78° de haut sur 15° de large.</li>
@@ -149,6 +178,7 @@ const LESSONS = [
   intro: "Le canon Vulcan et le Sidewinder partagent le même viseur optique LCOSS — la lecture change selon qu'un lock radar existe ou non.",
   body: `
     <h3>M61A1 Vulcan (20 mm)</h3>
+    <figure><img data-src="radarscreen" alt="Écran radar"><figcaption><span>Écran radar avec repère de portée</span></figcaption></figure>
     <p class="lead">639 obus, cadence sélectionnable 4000 ou 6000 coups/min. Le viseur LCOSS projette un réticule de 2 mils (pipper), un anneau intérieur de 25 mils et un anneau extérieur de 50 mils.</p>
     <div class="note go">
       <span class="lbl">Règle pratique de distance</span>
@@ -177,6 +207,7 @@ const LESSONS = [
       <li><span class="tag-p">P</span> Tonalité aiguë maintenue, dans la portée efficace : presser la détente en second cran pour tirer.</li>
     </ol>
     <h4>Avec radar (Cage/CAA)</h4>
+    <figure><img data-src="aimdot" alt="Point de visée"><figcaption><span>Point de visée (Aim Dot) et cercle ASE</span></figcaption></figure>
     <p class="lead">Même séquence Cage/CAA que pour le canon (voir G1). Une fois verrouillé : Pinky Switch sur HEAT, cercle ASE et point de visée affichés, deux repères de portée (Rmin/Rmax) apparaissent. Quand IN RANGE et SHOOT s'allument, la cible est dans l'enveloppe de tir.</p>
     <div class="note warn">
       <span class="lbl">Piège classique</span>
@@ -189,6 +220,7 @@ const LESSONS = [
   intro: "Guidage radar semi-actif : le radar doit rester verrouillé jusqu'à l'impact. Portée maximale ~26 nm, mais vise plutôt 10 nm pour une probabilité de tir correcte.",
   body: `
     <h3>Préparation du missile</h3>
+    <figure><img data-src="ase" alt="Cercle ASE"><figcaption><span>Cercle ASE (Allowable Steering Error)</span></figcaption></figure>
     <ol class="proc">
       <li><span class="tag-p">P</span> Missile Power Switch — CW ON. Démarre la mise en fréquence du klystron.</li>
       <li><span class="tag-p">P</span> Attendre la fin de la mise en fréquence : 4 min pour l'AIM-7E, 1 min pour l'AIM-7F.</li>
@@ -220,6 +252,7 @@ const LESSONS = [
   intro: "Le Dive Toss reste le mode le plus flexible pour les cibles d'opportunité ; le Pave Spike ajoute la désignation laser pour les bombes guidées.",
   body: `
     <h3>Modes de largage — vue d'ensemble</h3>
+    <figure><img data-src="pavepod" alt="Nacelle Pave Spike"><figcaption><span>Nacelle AN/AVQ-23 Pave Spike</span></figcaption></figure>
     <table class="pins">
       <tr><td class="n">DT (Dive Toss)</td><td>Précis, cible d'opportunité — le WSO obtient la distance radar, le pilote tient le pipper et largue en tirant sur le manche.</td></tr>
       <tr><td class="n">DIRECT</td><td>Visée manuelle classique, sans WRCS ni ARBCS — profil de secours si le Dive Toss échoue.</td></tr>
@@ -247,6 +280,8 @@ const LESSONS = [
       <p>Toujours préparer un profil Direct en secours, 5° plus plat que le Dive Toss prévu — si le radar ou le WRCS tombe en panne, tu peux basculer sans replanifier entièrement.</p>
     </div>
     <h3>Pave Spike — mise en route et désignation laser</h3>
+    <figure><img data-src="pavesym" alt="Symbologie Pave Spike"><figcaption><span>Symbologie du réticule Pave Spike</span></figcaption></figure>
+    <figure><img data-src="pavescreen" alt="Écran Pave Spike"><figcaption><span>Écran DSCG en mode TV — vue Pave Spike</span></figcaption></figure>
     <ol class="proc">
       <li><span class="tag-w">WSO</span> Target Designation Power — ON, vérifier BIT = 1, Stow Button — ON (tête stockée).</li>
       <li><span class="tag-w">WSO</span> Régler le code laser désiré, presser Laser Code Enter — le voyant NO GO doit s'éteindre.</li>
@@ -267,6 +302,8 @@ const LESSONS = [
   intro: "Le RWR indique qui te vise et comment ; chaff, flares et brouilleur actif répondent chacun à une menace différente ; l'IFF évite le tir fratricide.",
   body: `
     <h3>AN/ALR-46 RWR — mise en route et lecture</h3>
+    <figure><img data-src="rwrscope" alt="Écran RWR"><figcaption><span>Écran RWR avec plusieurs contacts</span></figcaption></figure>
+    <figure><img data-src="rwrind" alt="Indicateur RWR"><figcaption><span>Indicateur RWR, poste pilote</span></figcaption></figure>
     <ol class="proc">
       <li>Presser System Power — BIT de 9 secondes.</li>
       <li>Activer le mode SEARCH pour voir aussi les radars de veille longue portée (symbole « S »).</li>
@@ -292,6 +329,7 @@ const LESSONS = [
       <li>Larguer via le bouton de la manette (pilote) ou le CCU (WSO).</li>
     </ol>
     <h3>AN/ALQ-131 — brouilleur actif</h3>
+    <figure><img data-src="ale40" alt="Panneau ALE-40"><figcaption><span>Sélecteurs chaff/flares AN/ALE-40</span></figcaption></figure>
     <ol class="proc">
       <li><span class="tag-w">WSO</span> Jamais d'activation au sol (risque pour le personnel).</li>
       <li><span class="tag-w">WSO</span> En vol : sélecteur — STBY, chauffe d'environ 3 minutes (voyants STBY confirment la fin de chauffe).</li>
@@ -299,6 +337,7 @@ const LESSONS = [
       <li><span class="tag-w">WSO</span> Ne pas dépasser 20 minutes de transmission continue sans pause refroidissement — un voyant de défaut clignotant signale une surchauffe, repasser immédiatement en STBY.</li>
     </ol>
     <h3>IFF — Identify Friend or Foe</h3>
+    <figure><img data-src="alq131" alt="Nacelle brouilleur"><figcaption><span>Nacelle brouilleur AN/ALQ-131</span></figcaption></figure>
     <p class="lead">Le Mode 4 est le seul sécurisé (chiffré) — les modes 1, 2 et 3 peuvent être copiés par l'adversaire et trahir ta position à chaque réponse.</p>
     <div class="note warn">
       <span class="lbl">Piège classique</span>
@@ -316,6 +355,8 @@ const LESSONS = [
   intro: "Deux radios UHF (COMM émission/réception, AUX réception seule), un intercom, et un AFCS qui peut tenir cap et altitude — plus Jester qui peut gérer tout ça pour toi.",
   body: `
     <h3>Radio UHF</h3>
+    <figure><img data-src="iffpanel" alt="Panneau IFF"><figcaption><span>Panneau de contrôle IFF</span></figcaption></figure>
+    <figure><img data-src="ifffriend" alt="Réponse IFF amie"><figcaption><span>Symbologie radar — réponse IFF amie confirmée</span></figcaption></figure>
     <ol class="proc">
       <li>Mode Selector — T/R+G (émission/réception + fréquence de garde).</li>
       <li>Preset (canal pré-réglé, non modifiable en vol) ou Manual (fréquence libre).</li>
@@ -336,6 +377,7 @@ const LESSONS = [
     </div>
     <p class="lead">Le système se désengage automatiquement au-delà de +4G ou -1G (dispositif de sécurité), et complètement si la palette d'urgence (Emergency Quick Release) est pressée.</p>
     <h3>Jester WSO — recentrage</h3>
+    <figure><img data-src="jesterui" alt="Roue Jester"><figcaption><span>Interface de la roue de commandes Jester</span></figcaption></figure>
     <p class="lead">Si tu voles seul, Jester gère l'alignement INS, le radar (recherche, lock, CAA), le Pave Spike, les contre-mesures, la radio et la navigation par leapfrogging entre les points de route. La roue de commandes s'ouvre par une pression courte sur A, se referme par une pression longue. L'action contextuelle (touche V, à mapper) s'adapte au contexte : sélection de cible en phase de recherche, verrouillage/déverrouillage en phase de tracking, sélection d'aspect en Cage/Boresight.</p>
     <div class="srcs">
       <a href="index.html">Retour au sommaire</a>
@@ -378,6 +420,10 @@ async function renderMain(){
         ${next ? `<button class="ghost" onclick="goTo('${next.id}')">${next.nm.replace(/&amp;/g,'&')} &rarr;</button>` : `<a class="ghost" href="index.html">Sommaire &rarr;</a>`}
       </div>
     </div>`;
+  document.querySelectorAll('img[data-src]').forEach(img=>{
+    img.src = "img/" + IMG[img.dataset.src];
+    img.onclick = () => openLb(img.src);
+  });
   const ta = document.getElementById('notes');
   ta.addEventListener('input', async () => { notes[l.id] = ta.value; await __sset(K_NOTES, JSON.stringify(notes)); });
 }
@@ -386,6 +432,8 @@ async function toggleDone(id){
   await __sset(K_PROG, JSON.stringify(progress));
   renderRail(); renderMain();
 }
+function openLb(src){ document.getElementById('lbimg').src = src; document.getElementById('lb').classList.add('on'); }
+document.getElementById('lb').onclick = () => document.getElementById('lb').classList.remove('on');
 let current = LESSONS[0].id;
 function goTo(id){ current = id; renderRail(); renderMain(); window.scrollTo(0,0); }
 (async function init(){

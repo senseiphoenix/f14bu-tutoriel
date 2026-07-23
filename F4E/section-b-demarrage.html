@@ -54,6 +54,13 @@
   table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
   table.pins td.n{font-family:var(--mono);color:var(--amber);width:26px}
 
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%}
   ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
   ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
   ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
@@ -106,6 +113,7 @@
   </aside>
   <main id="main"></main>
 </div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
 
 <script>
 async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
@@ -113,6 +121,14 @@ async function __sget(k){ try{ if(window.storage){const r=await window.storage.g
 async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
   try{localStorage.setItem(k,v);}catch(e){} }
 
+const IMG = {
+  engstart: "pilot_engine_start_switch.jpg",
+  engmaster: "pilot_engine_master_switches.jpg",
+  cart: "f_4_cartridge_start.jpg",
+  ins: "manual_ins_diagram.jpg",
+  inspanel: "wso_ins_control_panel.jpg",
+  gndpwr: "wso_instrument_ground_power_switch.jpg"
+};
 const LESSONS = [
 {
   id: "b1", idx:"B1", nm:"Démarrage moteur", badge:"Procédure",
@@ -123,6 +139,8 @@ const LESSONS = [
       <p>Vérifie que les manettes sont bien sur le cran OFF avant toute chose. Démarrer avec les manettes hors du cran OFF entraîne une accumulation de carburant non brûlé — et potentiellement un départ de feu au démarrage (« hot start »).</p>
     </div>
     <h3>Moteur droit</h3>
+    <figure><img data-src="engmaster" alt="Engine Master Switches"><figcaption><span>Engine Master Switches</span></figcaption></figure>
+    <figure><img data-src="engstart" alt="Bouton d'allumage moteur"><figcaption><span>Bouton d'allumage moteur</span></figcaption></figure>
     <ol class="proc">
       <li><span class="tag-p">P+WSO</span> Vérifier les deux manettes sur OFF.</li>
       <li><span class="tag-p">P</span> Vérifier les deux Engine Master Switches sur OFF (arrière).</li>
@@ -155,6 +173,7 @@ const LESSONS = [
     </ol>
     <div class="note go">
       <span class="lbl">Alternative</span>
+    <figure><img data-src="cart" alt="Démarrage par cartouche"><figcaption><span>Démarrage par cartouche explosive</span></figcaption></figure>
       <p>Sans source d'air disponible sur le terrain, l'équipe au sol peut installer des cartouches explosives : mets l'Engine Start Switch sur LEFT ou RIGHT pour les déclencher, le reste de la séquence reste identique.</p>
     </div>
   `
@@ -164,6 +183,7 @@ const LESSONS = [
   intro: "Une fois les moteurs lancés, le WSO aligne la centrale inertielle (INS) — trois méthodes possibles, avec un compromis précision / rapidité.",
   body: `
     <h3>Les trois méthodes</h3>
+    <figure><img data-src="ins" alt="Schéma INS"><figcaption><span>Principe de la centrale inertielle AN/ASN-63</span></figcaption></figure>
     <table class="pins">
       <tr><td class="n">A</td><td><b>Gyrocompass complet</b> — 8 à 12 min. CEP de 3 nm/h. Nécessite latitude/longitude/MAGVAR saisies manuellement depuis le kneeboard.</td></tr>
       <tr><td class="n">B</td><td><b>BATH (Best Available True Heading)</b> — 2 min 15. CEP d'environ 5.5 nm/h. Rapide mais peut être imprécis si le cap réel ne correspond pas au cap attendu.</td></tr>
@@ -174,6 +194,7 @@ const LESSONS = [
       <p>Si le WSO est confié à Jester : quand il demande « Are you ready for alignment? », répondre Oui, puis choisir le type d'alignement souhaité. Ce tutoriel utilise BATH pour un départ rapide. Jester entre aussi automatiquement les points de route.</p>
     </div>
     <h3>Alignement BATH (méthode manuelle rapide)</h3>
+    <figure><img data-src="inspanel" alt="Panneau INS"><figcaption><span>Panneau de contrôle INS, poste WSO</span></figcaption></figure>
     <ol class="proc">
       <li><span class="tag-w">WSO</span> Vérifier avec le pilote l'état électrique de l'avion (moteurs tournants avec générateurs ON, ou puissance externe avec Instrument Ground Power Test Switch sur TEST).</li>
       <li><span class="tag-w">WSO</span> Navigation Computer Mode Selector — OFF, puis INS Power Selector — OFF.</li>
@@ -213,6 +234,7 @@ const LESSONS = [
       <li>Trim de tangage — 3 unités piqué.</li>
     </ol>
     <h3>WSO</h3>
+    <figure><img data-src="gndpwr" alt="Instrument Ground Power"><figcaption><span>Instrument Ground Power Test Switch</span></figcaption></figure>
     <ol class="proc">
       <li>Instrument Ground Power Test Switch — NORM (une fois moteurs tournants).</li>
       <li>Battery Bypass Switch — OFF.</li>
@@ -301,6 +323,10 @@ async function renderMain(){
         ${next ? `<button class="ghost" onclick="goTo('${next.id}')">${next.nm.replace(/&amp;/g,'&')} &rarr;</button>` : `<a class="ghost" href="index.html">Sommaire &rarr;</a>`}
       </div>
     </div>`;
+  document.querySelectorAll('img[data-src]').forEach(img=>{
+    img.src = "img/" + IMG[img.dataset.src];
+    img.onclick = () => openLb(img.src);
+  });
   const ta = document.getElementById('notes');
   ta.addEventListener('input', async () => { notes[l.id] = ta.value; await __sset(K_NOTES, JSON.stringify(notes)); });
 }
@@ -311,6 +337,8 @@ async function toggleDone(id){
   renderRail(); renderMain();
 }
 
+function openLb(src){ document.getElementById('lbimg').src = src; document.getElementById('lb').classList.add('on'); }
+document.getElementById('lb').onclick = () => document.getElementById('lb').classList.remove('on');
 let current = LESSONS[0].id;
 function goTo(id){ current = id; renderRail(); renderMain(); window.scrollTo(0,0); }
 

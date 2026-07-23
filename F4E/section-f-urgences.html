@@ -49,6 +49,13 @@
   table.pins{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
   table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
   table.pins td.n{font-family:var(--mono);color:var(--amber);width:26px}
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%}
   ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
   ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
   ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--warn);padding-top:4px;min-width:22px}
@@ -99,6 +106,7 @@
   </aside>
   <main id="main"></main>
 </div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
 
 <script>
 async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
@@ -106,6 +114,12 @@ async function __sget(k){ try{ if(window.storage){const r=await window.storage.g
 async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
   try{localStorage.setItem(k,v);}catch(e){} }
 
+const IMG = {
+  fire: "pilot_fire_overheat.jpg",
+  firetest: "pilot_fire_test.jpg",
+  relight: "airstart_envelope.jpg",
+  ebrake: "pilot_emergency_hydraulic_brake.jpg"
+};
 const LESSONS = [
 {
   id: "f1", idx:"F1", nm:"Feu &amp; surchauffe moteur", badge:"Critique",
@@ -117,6 +131,8 @@ const LESSONS = [
       <ol><li>MANETTES — OFF</li></ol>
     </div>
     <h3>En vol</h3>
+    <figure><img data-src="fire" alt="Voyants feu/surchauffe moteur"><figcaption><span>Voyants d'alerte feu/surchauffe moteur</span></figcaption></figure>
+    <figure><img data-src="firetest" alt="Bouton test feu"><figcaption><span>Bouton de test du système de détection incendie</span></figcaption></figure>
     <ol class="proc">
       <li>Manette du moteur affecté — IDLE.</li>
       <li>Maintenir au moins 300 kts. Anticiper une panne hydraulique Utility, éviter de virer vers le moteur affecté.</li>
@@ -144,6 +160,7 @@ const LESSONS = [
       <li>Si le pompage ne se résorbe pas : couper le générateur, couper la manette, vérifier les volets d'admission rétractés (WSO), rallumer en maintenant le bouton d'allumage, manette IDLE, surveiller les paramètres, puis remettre le générateur.</li>
     </ol>
     <h3>Extinction en vol — rallumage en moulinet</h3>
+    <figure><img data-src="relight" alt="Enveloppe de rallumage"><figcaption><span>Enveloppe de rallumage en moulinet (RPM requis selon altitude)</span></figcaption></figure>
     <ol class="proc">
       <li>Maintenir plus de 300 kts (ou Mach 0.6).</li>
       <li>Engine Master Switch — ON.</li>
@@ -203,11 +220,13 @@ const LESSONS = [
     </div>
     <div class="bf">
       <span class="lbl">Pneu éclaté au décollage/atterrissage</span>
+
       <ol>
         <li>DIRECTION ROULETTE AVANT — ENGAGER</li>
         <li>ANTI-SKID — OFF</li>
       </ol>
     </div>
+    <figure><img data-src="ebrake" alt="Frein d'urgence"><figcaption><span>Levier de freinage hydraulique d'urgence</span></figcaption></figure>
     <p class="lead">La marque du véritable "Phantom Phlyer" est de réciter ces séquences sans une seconde d'hésitation — en conditions réelles, aucune erreur n'était tolérée.</p>
     <div class="srcs">
       <a href="index.html">Retour au sommaire</a>
@@ -250,6 +269,10 @@ async function renderMain(){
         ${next ? `<button class="ghost" onclick="goTo('${next.id}')">${next.nm.replace(/&amp;/g,'&')} &rarr;</button>` : `<a class="ghost" href="index.html">Sommaire &rarr;</a>`}
       </div>
     </div>`;
+  document.querySelectorAll('img[data-src]').forEach(img=>{
+    img.src = "img/" + IMG[img.dataset.src];
+    img.onclick = () => openLb(img.src);
+  });
   const ta = document.getElementById('notes');
   ta.addEventListener('input', async () => { notes[l.id] = ta.value; await __sset(K_NOTES, JSON.stringify(notes)); });
 }
@@ -258,6 +281,8 @@ async function toggleDone(id){
   await __sset(K_PROG, JSON.stringify(progress));
   renderRail(); renderMain();
 }
+function openLb(src){ document.getElementById('lbimg').src = src; document.getElementById('lb').classList.add('on'); }
+document.getElementById('lb').onclick = () => document.getElementById('lb').classList.remove('on');
 let current = LESSONS[0].id;
 function goTo(id){ current = id; renderRail(); renderMain(); window.scrollTo(0,0); }
 (async function init(){
