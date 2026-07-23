@@ -1,33 +1,399 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Appontage & atterrissage — F4U-1D Corsair</title>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
-  :root{--deck:#10161a;--panel:#18222a;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;
-    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  :root{
+    --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+    --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+    --display:"Oswald","Arial Narrow",sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
   *{box-sizing:border-box}
   body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
-  .wrap{max-width:640px;margin:0 auto;padding:80px 24px}
-  .nav{display:flex;gap:18px;margin-bottom:36px}
-  .nav a{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none}
-  .nav a:hover{color:var(--amber)}
-  .tail{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
-  h1{font-family:var(--display);font-weight:600;font-size:38px;letter-spacing:.03em;line-height:1.05;margin:10px 0 18px;text-transform:uppercase}
-  p{color:var(--dim);max-width:56ch}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)}
+  .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
   .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-         color:var(--deck);background:var(--amber);padding:4px 9px;margin-top:20px}
+         color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;color:var(--ink);margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+     margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+  .lead{color:var(--dim)}
+
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+
+  table.pins{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
+  table.pins td.n{font-family:var(--mono);color:var(--amber);width:26px}
+
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)}
+  .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .note p+p{margin-top:8px}
+
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+
+  .banner{background:var(--panel-2);border-bottom:1px solid var(--amber);padding:11px 20px;font-size:13px;color:var(--dim);display:flex;gap:14px;align-items:center;justify-content:space-between}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 </style>
-</head>
-<body>
-<div class="wrap">
-  <div class="nav"><a href="../index.html">&larr; Accueil</a><a href="index.html">&larr; Cursus F4U-1D</a></div>
-  <div class="tail">Section E · F4U-1D Corsair</div>
-  <h1>Appontage & atterrissage</h1>
-  <p>Atterrissage terrain, vent de travers, distance minimale, et circuit complet d'appontage sur porte-avions Essex-class.</p>
-  <p>Cette section arrive dans une prochaine mise à jour du cursus, construite avec les mêmes planches officielles du manuel Magnitude 3 que la Section A.</p>
-  <span class="badge">En construction</span>
+
+<div id="banner" class="banner">
+  <span>Planches issues directement du manuel officiel Magnitude 3 (AN-01-45MAG-3) — hébergées dans <code>img/</code>, aucune dépendance externe.</span>
+  <button class="ghost" onclick="document.getElementById('banner').remove()">OK</button>
 </div>
-</body></html>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px">&larr; Accueil</a>
+      <a href="index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px;margin-left:14px">&larr; Cursus F4U-1D</a>
+      <div class="tail">Section E · F4U-1D</div>
+      <h1>Appontage<br>&amp; atterrissage</h1>
+      <p class="sub">Sept leçons — terrain, vent de travers, et circuit complet sur l'Essex.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const IMG = {
+  finalturn:  "landing_turn_final_cockpit.jpg",
+  pattern:    "carrier_pattern_diagram.jpg",
+  deck:       "landing_deck_parked.jpg",
+  hooklever:  "taxi_hook_lever.jpg",
+  hookdown:   "hook_down.jpg",
+  hookup:     "hook_up.jpg",
+  gearup:     "gear_up.jpg",
+  geardown:   "gear_down.jpg",
+};
+
+const DOC = {
+  manuel:    ["Manuel officiel (PDF)","docs/manuel-f4u1d.pdf"],
+  checklist: ["Checklist procédurale V5 (ED Forums)","https://www.digitalcombatsimulator.com/en/files/3345416/"],
+  kneeboard: ["Kneeboards à jour (ED Forums)","https://www.digitalcombatsimulator.com/en/files/3345803/"],
+  videos:    ["Playlist tutoriels vidéo","https://www.youtube.com/playlist?list=PLODX_e0mlZ2UvjOjEvgd0Pflyci7JARkm"],
+};
+
+const L = [
+{id:"e1", title:"Checklist d'approche", isNew:true,
+ intro:"Treize points à vérifier avant de te présenter en finale, terrain comme porte-avions. La séquence recommandée compte pour beaucoup : sortir le train avant les volets, pas l'inverse.",
+ body:[
+  {t:"proc", v:[
+   "Roulette de queue — <b>LOCKED</b> pour un terrain, <b>UNLOCKED</b> pour un porte-avions.",
+   "Pompe carburant électrique — <b>ON</b>.",
+   "Sélecteur carburant — <b>RESERVE</b>.",
+   "Mixture — <b>AUTO RICH</b>.",
+   "Suralimentation — <b>NEUTRAL</b>.",
+   "Régulateur RPM — <b>2300 à 2400 tr/min</b>.",
+   "Volets de capot — <b>fermés</b>.",
+   "Train — <b>DOWN</b>, sous 200 nœuds.",
+   "Volets — <b>30°</b> pour un terrain, <b>50°</b> pour un porte-avions.",
+   "Crosse d'appontage — <b>UP</b> pour un terrain, <b>DOWN</b> pour un porte-avions.",
+   "Interrupteurs de canons — <b>OFF</b>.",
+   "Boutons de chargement des canons — <b>SAFE</b>.",
+   "Interrupteurs de roquettes et pylônes — <b>OFF</b>."]},
+  {t:"img", k:"geardown", c:"Poignée de train sortie — vérifie toujours l'indicateur, pas juste la poignée."},
+  {t:"h", v:"L'ordre recommandé"},
+  {t:"proc", v:[
+   "Sors le train sous 200 nœuds.",
+   "Abaisse les volets à l'angle voulu.",
+   "Termine avec le reste de la checklist."]},
+  {t:"note", k:"", lbl:"Pour un débutant terrain", v:"Utilise 30° de volets tant que tu n'es pas à l'aise avec l'avion — moins d'angle allonge la distance de roulage à l'atterrissage. Réserve les 50° plein sortis pour l'appontage, ou pour le terrain une fois expérimenté."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "En vol de croisière, fais la checklist des 13 points dans l'ordre recommandé.",
+   "Vérifie particulièrement l'ordre train → volets, pas l'inverse."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu fais la checklist d'approche sans notes, dans le bon ordre."},
+  {t:"src", v:["manuel","checklist"]}
+]},
+
+{id:"e2", title:"Atterrissage terrain",
+ intro:"La séquence de référence pour se poser sur une piste : réduire tôt, stabiliser en vent arrière, et ne couper les gaz qu'au-dessus du seuil.",
+ body:[
+  {t:"proc", v:[
+   "Descends à <b>800 pieds</b> au-dessus de la piste visée, vitesse 120 à 150 nœuds.",
+   "Réduis à <b>27 in/Hg</b> et passe à <b>2400 tr/min</b>.",
+   "Prends une position vent arrière.",
+   "Une fois établi, sors le train et les volets à <b>30°</b>.",
+   "Trimme pour annuler tout dérapage, roulis ou tangage indésirable.",
+   "Laisse la vitesse descendre sous <b>100 nœuds</b> en approchant 0,5 mille nautique en vent arrière du seuil de piste.",
+   "À ce point, entame le virage vers la piste et commence à descendre à environ <b>600 pieds/minute</b>."]},
+  {t:"img", k:"finalturn", c:"Le bon moment pour virer en finale — repère-toi aux références visuelles au sol."},
+  {t:"proc", v:[
+   "Utilise les repères visuels en approche pour ajuster descente et point de toucher.",
+   "Si besoin, étends les volets à <b>50°</b> en augmentant légèrement la puissance pour tenir la vitesse.",
+   "Au-dessus du seuil de piste, coupe la puissance et laisse l'avion se poser sur les trois roues.",
+   "Après l'atterrissage, si tu comptes redécoller, vérifie qu'il te reste assez de piste devant toi — sinon, roulage de repositionnement ou procédure d'arrêt (leçon E7)."]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Sous 90 nœuds, le risque de décrochage augmente fortement — ne laisse jamais la vitesse tomber en dessous en approche. Évite aussi les approches trop plates : après l'arrondi, un atterrissage trois points normal ne devrait poser aucune difficulté."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Fais un circuit complet terrain : vent arrière à 800ft, réduction, sortie train/volets 30°, virage finale à 0,5nm, atterrissage trois points.",
+   "Recommence avec des volets à 50° et compare la distance de roulage."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu te poses trois points, sans rebond, sans jamais passer sous 90 nœuds avant le seuil."},
+  {t:"src", v:["manuel","videos"]}
+]},
+
+{id:"e3", title:"Vent de travers & distance minimale",
+ intro:"Deux variantes de l'atterrissage terrain : la technique pour un vent de travers marqué, et la configuration pour se poser sur le plus court possible.",
+ body:[
+  {t:"h", v:"Vent de travers"},
+  {t:"p", v:"Pose-toi queue légèrement haute, avec un angle de volets un peu inférieur à la normale (moins de 30°). Juste avant le toucher, applique du palonnier sous le vent pour aligner l'avion avec sa trajectoire au sol. Après le toucher, l'aile au vent tendra à se lever et l'avion à s'orienter face au vent — corrige au palonnier ou légèrement au frein."},
+  {t:"note", k:"warn", lbl:"Piège", v:"N'utilise les freins qu'avec prudence tant que la roulette de queue n'est pas posée au sol — un freinage trop tôt en vent de travers peut faire ripper l'avion."},
+  {t:"h", v:"Atterrissage distance minimale"},
+  {t:"proc", v:[
+   "Volets — <b>50° plein sorti</b>.",
+   "Régulateur RPM — <b>régime max (INCREASE)</b>.",
+   "Gaz — légèrement ouverts.",
+   "Vitesse d'approche — environ <b>95 nœuds</b>.",
+   "Approche plate comme pour un appontage, nez haut. Amène l'avion à environ 3 mètres au-dessus de la piste, coupe les gaz et laisse-le se poser.",
+   "Utilise les freins autant que nécessaire une fois au sol."]},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Simule un vent de travers marqué et pose-toi en appliquant la technique ci-dessus.",
+   "Enchaîne avec un atterrissage distance minimale sur une portion de piste courte, et mesure ta distance de roulage."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu te poses proprement par vent de travers, et tu maîtrises la configuration distance minimale."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"e4", title:"Circuit d'appontage Essex — mise en place",
+ intro:"Le circuit d'appontage classe Essex est le plus exigeant du jeu : piste droite, pas d'angle par rapport à l'axe du navire. Trois points essentiels avant même de commencer : pas plus de 50% de carburant interne, vent relatif minimum 30 nœuds sur le pont, taux de descente maximum 500 ft/min à tout moment.",
+ body:[
+  {t:"img", k:"pattern", c:"Circuit d'appontage complet — positions A (alignement), B (travers), C (finale)."},
+  {t:"h", v:"1. Alignement sur le porte-avions (position A)"},
+  {t:"proc", v:[
+   "Aligne-toi tribord du porte-avions.",
+   "Altitude <b>300 pieds</b>, réglage moteur <b>30 in/Hg — 2400 tr/min</b>, vitesse <b>130 à 150 nœuds</b>.",
+   "Cale le repère de cap sur ta route actuelle.",
+   "Vole tout droit <b>15 secondes</b> (environ 0,5 mille nautique) avant d'entamer le virage.",
+   "En formation, décale ton virage de 15 secondes après l'avion qui te précède — cela garantit 30 secondes d'espacement à l'appontage."]},
+  {t:"h", v:"2. Après avoir dépassé le porte-avions"},
+  {t:"proc", v:[
+   "Entame un virage standard de 180° sur 30 secondes.",
+   "Entre les points 2 et 3 : sors le train, puis abaisse la crosse d'appontage.",
+   "Entre les points 3 et 4 : vérifie la pression hydraulique, sors les volets à <b>50°</b>.",
+   "En fin de virage (point 4), amorce une légère descente, sans jamais descendre sous <b>200 pieds</b>."]},
+  {t:"img", k:"hookdown", c:"Crosse d'appontage sortie — vérifiée entre les points 2 et 3 du circuit."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Positionne-toi tribord du porte-avions à 300 pieds, 130-150 nœuds.",
+   "Fais le virage de 180° en 30 secondes en sortant train et crosse au bon moment.",
+   "Stabilise-toi à 200 pieds minimum en sortie de virage, volets à 50°."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu sors train, crosse et volets exactement entre les points indiqués, sans jamais descendre sous 200 pieds avant la finale."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"e5", title:"Circuit d'appontage Essex — approche finale",
+ intro:"La suite du circuit, jusqu'au crochetage. C'est ici que la précision de vitesse et d'assiette compte le plus — la marge d'erreur est faible.",
+ body:[
+  {t:"h", v:"3. En approchant le porte-avions"},
+  {t:"p", v:"Entre les points 5 et 6, exécute la checklist finale : ailes à plat, altitude minimum 200 pieds, assiette trois points."},
+  {t:"h", v:"4. Travers du porte-avires (position B)"},
+  {t:"proc", v:[
+   "Entre les points 6 et 7, entame le virage vers la finale.",
+   "Distance au porte-avions — environ <b>0,5 mille nautique (1 km)</b>.",
+   "Réglage recommandé — <b>28 in/Hg — 2400 tr/min</b>."]},
+  {t:"h", v:"5. Finale (position C)"},
+  {t:"proc", v:[
+   "Au point 8, observe le pont et ajuste ton angle de descente.",
+   "Maintiens une vitesse minimum de <b>90 nœuds</b>, jamais plus de <b>100 nœuds</b>.",
+   "Coupe la puissance à quelques mètres du pont, ou au bord arrière du pont selon ta vitesse et ton réglage.",
+   "Laisse l'avion se poser trois points pour accrocher l'un des 14 câbles d'arrêt disponibles."]},
+  {t:"img", k:"deck", c:"Corsairs au parking sur le pont — vérifie l'espace disponible après un appontage réussi."},
+  {t:"h", v:"6. Après l'appontage"},
+  {t:"p", v:"S'il te reste assez de piste devant toi et que tu comptes redécoller, fais le roulage de repositionnement (Section B). Sinon, passe à la procédure d'arrêt (leçon E7)."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Complète le circuit depuis le travers (position B) jusqu'au crochetage.",
+   "Vise 90-95 nœuds en finale, coupe la puissance au bon moment.",
+   "Répète le circuit complet (leçons E4 et E5) trois fois pour stabiliser ta technique."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu appontes de manière répétable, entre 90 et 100 nœuds, sans jamais descendre en dessous de 200 pieds avant la finale."},
+  {t:"src", v:["manuel","videos"]}
+]},
+
+{id:"e6", title:"Remise des gaz (wave-off)",
+ intro:"Une approche ratée n'est jamais un drame — sauf si la décision de remettre les gaz arrive trop tard. Le bon réflexe est de partir tôt, jamais au-dessus du pont.",
+ body:[
+  {t:"proc", v:[
+   "Si l'appontage ne va pas se faire correctement, entame une remise des gaz <b>immédiatement</b> — n'attends pas de voir si ça s'arrange.",
+   "Pousse la puissance au maximum.",
+   "Dégage le pont d'envol par le côté <b>bâbord</b> du porte-avions.",
+   "Remonte pour rejoindre le virage vent arrière du circuit (point 9)."]},
+  {t:"img", k:"hookup", c:"Crosse rentrée — à remonter une fois de retour dans le circuit après une remise de gaz."},
+  {t:"note", k:"warn", lbl:"Règle absolue", v:"Une remise des gaz doit être décidée tôt. Exécutée trop près du porte-avires ou au-dessus du pont, elle expose à un risque élevé de collision avec le navire ou un autre appareil au parking."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "En finale, décide volontairement une remise des gaz avant le seuil du pont et exécute-la proprement.",
+   "Rejoins le circuit vent arrière et refais une approche complète.",
+   "Provoque une approche visiblement mauvaise (trop haute, trop rapide) et entraîne-toi à reconnaître le moment de partir."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu décides une remise des gaz sans hésiter dès qu'une approche part mal, bien avant d'arriver au-dessus du pont."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"e7", title:"Atterrissage manqué, arrêt moteur & fin de vol",
+ intro:"Dernière leçon de la section : que faire si un atterrissage terrain ne se termine pas normalement, et la procédure complète pour couper le moteur une fois posé.",
+ body:[
+  {t:"h", v:"Atterrissage non complété (terrain)"},
+  {t:"p", v:"Si un atterrissage terrain ne se termine pas normalement (approche interrompue, besoin de remettre les gaz), la logique est la même que pour un wave-off porte-avions, en configuration nettoyée :"},
+  {t:"proc", v:[
+   "Manette des gaz — avance progressivement.",
+   "Régulateur RPM — avance si nécessaire.",
+   "Train — <b>UP</b>.",
+   "Tous les volets de refroidissement — <b>OPEN</b>.",
+   "Volets — <b>UP</b>."]},
+  {t:"note", k:"", lbl:"Pourquoi", v:"Cette séquence évite de faire surchauffer le moteur si tu dois rester en configuration d'atterrissage plus longtemps que prévu — entraîne-toi une fois pour l'avoir en réflexe."},
+  {t:"h", v:"Procédure d'arrêt complète"},
+  {t:"proc", v:[
+   "Crosse d'appontage — <b>PARKING</b>.",
+   "Roulette de queue — <b>déverrouillée</b>.",
+   "Volets — plein <b>UP</b>.",
+   "Roule jusqu'à une position de parking sûre — replie les ailes si tu es sur un pont de porte-avions, pour te faire plus compact.",
+   "Immobilise l'avion, roulette de queue — <b>verrouillée</b>.",
+   "Demande à l'équipe au sol de placer les cales.",
+   "Replie les ailes si souhaité.",
+   "Coupe le moteur : mixture <b>IDLE CUT-OFF</b>, attends que le régime commence à chuter, pousse brièvement les gaz au maximum pour nettoyer les cylindres, puis remets les gaz au ralenti une fois le moteur arrêté.",
+   "Allumage — <b>OFF</b>.",
+   "Pompe carburant auxiliaire — <b>OFF</b>.",
+   "Instruments — <b>OFF</b>.",
+   "Batterie — <b>OFF</b>.",
+   "Sélecteur carburant — <b>OFF</b>.",
+   "Coupe tous les autres équipements utilisés en vol (radio, feux…).",
+   "Volets de capot — <b>OPEN</b>."]},
+  {t:"note", k:"", lbl:"Refroidissement optionnel", v:"En conditions réelles, un temps de refroidissement précède l'arrêt moteur — pas obligatoire dans DCS, mais recommandé : tous les volets de refroidissement ouverts, régime maximal réglé, gaz cales à 800-900 tr/min jusqu'à ramener la culasse vers 170°C, puis fermer radiateur d'huile et intercooler une fois refroidi."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Simule un atterrissage terrain interrompu et applique la procédure de configuration nettoyée.",
+   "Pose-toi normalement, puis exécute la procédure d'arrêt complète du parking jusqu'à la coupure batterie.",
+   "Refais une fois avec le refroidissement optionnel avant l'arrêt moteur."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu enchaînes appontage réussi ou raté, wave-off si besoin, jusqu'à l'arrêt moteur complet, sans notes. Prochaine étape : la Section F, urgences."},
+  {t:"src", v:["manuel","checklist","kneeboard"]}
+]}
+];
+
+const KEY="f4u1d-sectionE";
+let st={done:{},notes:{}}, cur=0;
+async function load(){ try{const r=await __sget(KEY); if(r&&r.value) st=Object.assign(st,JSON.parse(r.value));}catch(e){} }
+let tm=null;
+function save(){ clearTimeout(tm); tm=setTimeout(async()=>{ try{await __sset(KEY,JSON.stringify(st));}catch(e){} },400); }
+
+function fig(k,c){
+  const fn=IMG[k];
+  return `<figure><img src="img/${fn}" alt="${c}" loading="lazy" onclick="openLb(this.src)">
+    <figcaption><span>${c}</span><a href="img/${fn}" target="_blank" rel="noopener">Original &#8599;</a></figcaption></figure>`;
+}
+function table(cols, rows){
+  return `<table class="pins"><tbody>${rows.map(r=>`<tr><td class="n">${r[0]}</td><td>${r[1]}</td></tr>`).join("")}</tbody></table>`;
+}
+function block(b){
+  if(b.t==="h")   return `<h3>${b.v}${b.badge?'<span class="badge" style="margin-left:8px;vertical-align:0">Nouveau</span>':''}</h3>`;
+  if(b.t==="p")   return `<p>${b.v}</p>`;
+  if(b.t==="img") return fig(b.k,b.c);
+  if(b.t==="table")return table(b.cols,b.rows);
+  if(b.t==="proc")return `<ol class="proc">${b.v.map(s=>`<li><span>${s}</span></li>`).join("")}</ol>`;
+  if(b.t==="note")return `<div class="note ${b.k||""}"><span class="lbl">${b.lbl}</span><p>${b.v}</p></div>`;
+  if(b.t==="src") return `<h3>Sources</h3><div class="srcs">${
+      b.v.map(k=>`<a href="${DOC[k][1]}" target="_blank" rel="noopener">${DOC[k][0]} &#8599;</a>`).join("")}</div>`;
+  return "";
+}
+function render(){
+  const l=L[cur];
+  document.getElementById("main").innerHTML=`<div class="page">
+    <div class="eyebrow">Section E · leçon ${cur+1} sur ${L.length}</div>
+    <h2>${l.title}${l.isNew?'<span class="badge">Nouveau module</span>':""}</h2>
+    <p class="intro">${l.intro}</p>
+    ${l.body.map(block).join("")}
+    <h3>Tes notes de vol</h3>
+    <textarea id="nt" placeholder="Procédures exactes, séquences de touches, ce qui a coincé…">${(st.notes[l.id]||"").replace(/</g,"&lt;")}</textarea>
+    <button class="doneline${st.done[l.id]?" on":""}" id="dn"><span class="box"></span>
+      <span>${st.done[l.id]?"Leçon validée":"Marquer cette leçon comme validée"}</span></button>
+    <div class="nav">
+      <button class="ghost" id="pv"${cur?"":" disabled style=opacity:.3"}>&larr; Précédent</button>
+      <button class="ghost" id="nx"${cur<L.length-1?"":" disabled style=opacity:.3"}>Suivant &rarr;</button>
+    </div></div>`;
+  document.getElementById("nt").oninput=e=>{st.notes[l.id]=e.target.value;save();};
+  document.getElementById("dn").onclick=()=>{st.done[l.id]=!st.done[l.id];save();render();};
+  if(cur) document.getElementById("pv").onclick=()=>{cur--;render();window.scrollTo(0,0);};
+  if(cur<L.length-1) document.getElementById("nx").onclick=()=>{cur++;render();window.scrollTo(0,0);};
+  rail();
+}
+function rail(){
+  const r=document.getElementById("rail"); r.innerHTML="";
+  L.forEach((l,i)=>{
+    const b=document.createElement("button");
+    b.className="item"+(i===cur?" on":"")+(st.done[l.id]?" done":"");
+    b.innerHTML=`<span class="idx">${st.done[l.id]?"&check;":String(i+1).padStart(2,"0")}</span><span class="nm">${l.title}</span>`;
+    b.onclick=()=>{cur=i;render();window.scrollTo(0,0);};
+    r.appendChild(b);
+  });
+  const n=L.filter(l=>st.done[l.id]).length;
+  document.getElementById("foot").textContent=`${n} / ${L.length} leçons validées`;
+}
+function openLb(src){const lb=document.getElementById("lb");document.getElementById("lbimg").src=src;lb.classList.add("on");}
+document.getElementById("lb").onclick=()=>document.getElementById("lb").classList.remove("on");
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") document.getElementById("lb").classList.remove("on");
+  if(e.target.matches("textarea")) return;
+  if(e.key==="ArrowRight"&&cur<L.length-1){cur++;render();window.scrollTo(0,0);}
+  if(e.key==="ArrowLeft"&&cur>0){cur--;render();window.scrollTo(0,0);}
+});
+load().then(render);
+</script>
