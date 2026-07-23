@@ -1,33 +1,376 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vol normal — F4U-1D Corsair</title>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+
 <style>
-  :root{--deck:#10161a;--panel:#18222a;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;
-    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  :root{
+    --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+    --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+    --display:"Oswald","Arial Narrow",sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
   *{box-sizing:border-box}
   body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
-  .wrap{max-width:640px;margin:0 auto;padding:80px 24px}
-  .nav{display:flex;gap:18px;margin-bottom:36px}
-  .nav a{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none}
-  .nav a:hover{color:var(--amber)}
-  .tail{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
-  h1{font-family:var(--display);font-weight:600;font-size:38px;letter-spacing:.03em;line-height:1.05;margin:10px 0 18px;text-transform:uppercase}
-  p{color:var(--dim);max-width:56ch}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)}
+  .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
   .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
-         color:var(--deck);background:var(--amber);padding:4px 9px;margin-top:20px}
+         color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;color:var(--ink);margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+     margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+  .lead{color:var(--dim)}
+
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+
+  table.pins{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
+  table.pins td.n{font-family:var(--mono);color:var(--amber);width:26px}
+
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)}
+  .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .note p+p{margin-top:8px}
+
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+
+  .banner{background:var(--panel-2);border-bottom:1px solid var(--amber);padding:11px 20px;font-size:13px;color:var(--dim);display:flex;gap:14px;align-items:center;justify-content:space-between}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 </style>
-</head>
-<body>
-<div class="wrap">
-  <div class="nav"><a href="../index.html">&larr; Accueil</a><a href="index.html">&larr; Cursus F4U-1D</a></div>
-  <div class="tail">Section D · F4U-1D Corsair</div>
-  <h1>Vol normal</h1>
-  <p>Gestion du régime moteur et de la suralimentation en croisière et en montée, carburant, injection d'eau (WEP), voltige permise.</p>
-  <p>Cette section arrive dans une prochaine mise à jour du cursus, construite avec les mêmes planches officielles du manuel Magnitude 3 que la Section A.</p>
-  <span class="badge">En construction</span>
+
+<div id="banner" class="banner">
+  <span>Planches issues directement du manuel officiel Magnitude 3 (AN-01-45MAG-3) — hébergées dans <code>img/</code>, aucune dépendance externe.</span>
+  <button class="ghost" onclick="document.getElementById('banner').remove()">OK</button>
 </div>
-</body></html>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px">&larr; Accueil</a>
+      <a href="index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px;margin-left:14px">&larr; Cursus F4U-1D</a>
+      <div class="tail">Section D · F4U-1D</div>
+      <h1>Vol normal</h1>
+      <p class="sub">Sept leçons — régimes moteur, croisière, limites et voltige permise.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const IMG = {
+  ecu:        "engine_control_unit.jpg",
+  highalt:    "flight_photo_high_altitude.jpg",
+  gload:      "gload_diagram.jpg",
+  gyrodir:    "directional_gyro_caged.jpg",
+  gyrohoriz:  "gyro_horizon_caged.jpg",
+  aerobatics: "aerobatics_photo.jpg",
+  flapknob:   "prep_flap_knob.jpg",
+};
+
+const DOC = {
+  manuel:    ["Manuel officiel (PDF)","docs/manuel-f4u1d.pdf"],
+  checklist: ["Checklist procédurale V5 (ED Forums)","https://www.digitalcombatsimulator.com/en/files/3345416/"],
+  kneeboard: ["Kneeboards à jour (ED Forums)","https://www.digitalcombatsimulator.com/en/files/3345803/"],
+  videos:    ["Playlist tutoriels vidéo","https://www.youtube.com/playlist?list=PLODX_e0mlZ2UvjOjEvgd0Pflyci7JARkm"],
+};
+
+const L = [
+{id:"d1", title:"Puissance militaire & régime nominal", isNew:true,
+ intro:"Le R-2800 se pilote à deux paramètres croisés : le régime (RPM) et la pression d'admission (MAP), avec un étagement de suralimentation (NEUTRAL/LOW/HIGH) qui change selon l'altitude. Deux tableaux du manuel donnent les réglages exacts.",
+ body:[
+  {t:"img", k:"ecu", c:"Bloc de commande moteur — RPM, gaz, mixture, suralimentation."},
+  {t:"h", v:"Puissance militaire — 2700 tr/min"},
+  {t:"table", cols:["Altitude","MAP / Suralimentation"], rows:[
+    ["0 — 2000 ft","54.0 in/Hg — NEUTRAL"],
+    ["2000 — 6500 ft","Plein gaz (passer en LOW quand MAP chute à 45)"],
+    ["7000 — 14 500 ft","53.0 in/Hg — LOW"],
+    ["14 500 — 20 500 ft","Plein gaz (passer en HIGH quand MAP chute à 50)"],
+    ["20 500 — 21 500 ft","49.5 in/Hg — HIGH"]]},
+  {t:"h", v:"Régime nominal — 2550 tr/min"},
+  {t:"table", cols:["Altitude","MAP / Suralimentation"], rows:[
+    ["0 — 5500 ft","44.0 in/Hg — NEUTRAL"],
+    ["5500 — 7000 ft","Plein gaz (passer en LOW quand MAP chute à 45)"],
+    ["7000 — 16 000 ft","49.5 in/Hg — LOW"],
+    ["16 500 — 18 000 ft","Plein gaz (passer en HIGH quand MAP chute à 47)"],
+    ["18 000 — 22 000 ft","49.5 in/Hg — HIGH"]]},
+  {t:"note", k:"warn", lbl:"Ne jamais dépasser", v:"260°C de température culasse, dans les deux régimes. Au changement de suralimentation, réduis la pression d'admission de 3 à 4 in/Hg juste avant de basculer, pour éviter un pic de pression (« power surge »)."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "En montée, applique le Tableau I (puissance militaire) et bascule NEUTRAL → LOW → HIGH aux altitudes indiquées.",
+   "Refais la montée en régime nominal (Tableau II), plus économique.",
+   "Observe la température culasse tout du long — reste sous 260°C."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu sais dans quelle plage d'altitude passer de NEUTRAL à LOW puis à HIGH, sans consulter le tableau."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"d2", title:"Stabilité & changements de trim",
+ intro:"L'avion est stable dans toutes les configurations de chargement permises — mais sa stabilité en tangage se dégrade nettement dans un cas précis : centrage arrière, basse vitesse, forte puissance.",
+ body:[
+  {t:"h", v:"Quand la stabilité se dégrade"},
+  {t:"p", v:"Montée à forte puissance et approche de porte-avions sont les deux situations où la stabilité longitudinale (tangage) devient faible si le centrage approche sa limite arrière. En croisière, à l'inverse, l'avion reste très stable quel que soit le centrage permis."},
+  {t:"h", v:"Ce qui change le trim automatiquement"},
+  {t:"table", cols:["Action","Effet sur le trim"], rows:[
+    ["Sortie du train","Cabreur en début de sortie, piqueur une fois le train complètement sorti"],
+    ["Sortie des volets","Cabreur à petit angle, piqueur à grand angle"],
+    ["Ouverture des volets de capot","Piqueur"],
+    ["Ouverture du radiateur d'huile","Cabreur"],
+    ["Ouverture de l'intercooler","Cabreur"]]},
+  {t:"note", k:"", lbl:"Bonne nouvelle", v:"Malgré ces changements, les tabs de compensation restent efficaces à toutes les vitesses — y compris à basse vitesse avec de la puissance appliquée. Pas besoin de forcer sur le manche pour compenser, un ajustement de trim suffit toujours."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "En croisière stable, sors le train puis les volets et observe le sens du changement de trim à chaque étape.",
+   "Recommence à basse vitesse et forte puissance (config montée) et compare la difficulté à tenir l'assiette."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu anticipes le sens du changement de trim avant de sortir train ou volets, sans être surpris."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"d3", title:"Croisière économique",
+ intro:"Le mélange en AUTO LEAN et un régime modéré donnent au Corsair une autonomie confortable — utile en patrouille longue ou en transit vers une zone de mission.",
+ body:[
+  {t:"h", v:"Réglage du mélange"},
+  {t:"p", v:"Garde la mixture en <b>AUTO LEAN</b> pour toute croisière. Si la température culasse dépasse 232°C, repasse en <b>AUTO RICH</b>."},
+  {t:"h", v:"Deux niveaux de croisière"},
+  {t:"table", cols:["Mode","Description"], rows:[
+    ["Maximum","N'importe quelle puissance sous le régime nominal ; au-delà de 65% du régime nominal, la consommation devient nettement moins économique"],
+    ["Recommandé","Puissance nettement inférieure à la croisière maximale — c'est la configuration la plus efficace"]]},
+  {t:"note", k:"", lbl:"Meilleure autonomie", v:"Environ 150 nœuds indiqués, 1300 tr/min, suralimentation NEUTRAL — proche de 42 gallons/heure. Une bonne valeur de référence pour calculer ton rayon d'action avant une mission longue."},
+  {t:"note", k:"warn", lbl:"Piège électrique", v:"Sous 1400 tr/min, le générateur charge moins bien la batterie. Coupe tout équipement électrique non essentiel pour éviter de la vider en croisière lente prolongée."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Stabilise-toi à 150 nœuds, 1300 tr/min, suralimentation NEUTRAL, mixture AUTO LEAN.",
+   "Note ta consommation horaire affichée et compare-la à la valeur de référence (~42 gal/h).",
+   "Coupe l'équipement électrique non essentiel et observe l'effet sur le volt/ampèremètre."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu sais régler une croisière économique de mémoire et expliquer pourquoi limiter l'électrique sous 1400 tr/min."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"d4", title:"Vibrations & pompage moteur",
+ intro:"Deux zones de fonctionnement à éviter, pas parce qu'elles sont dangereuses en soi, mais parce qu'elles sont inconfortables et signalent un mauvais compromis RPM/MAP.",
+ body:[
+  {t:"h", v:"La zone de vibration"},
+  {t:"p", v:"Entre <b>1700 et 2200 tr/min</b> avec une pression d'admission de <b>30 à 35 in/Hg</b>, le fonctionnement devient nettement moins lisse. Ce n'est pas dangereux, mais évite cette combinaison si tu as le choix — décale légèrement le régime ou la pression."},
+  {t:"h", v:"Le pompage (surging)"},
+  {t:"p", v:"Évite un régime élevé combiné à une pression d'admission basse, en suralimentation LOW ou HIGH — des fluctuations de puissance et un pompage sont probables."},
+  {t:"proc", v:[
+   "Augmente la pression d'admission, gaz ouverts.",
+   "Réduis le régime moteur pour repasser en suralimentation LOW.",
+   "Réajuste la puissance au réglage voulu."]},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Stabilise-toi volontairement entre 1700 et 2200 tr/min à 30-35 in/Hg et ressens la vibration.",
+   "Sors de cette zone en changeant le régime, pas la pression.",
+   "Provoque un léger pompage (RPM élevé, MAP basse en HIGH) puis applique la procédure de récupération."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu identifies la zone de vibration à l'oreille et tu sais sortir d'un pompage sans paniquer."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"d5", title:"Limites de vitesse & facteur de charge",
+ intro:"Le Corsair encaisse beaucoup, mais la limite réelle n'est pas un chiffre fixe : c'est le buffeting. Dès qu'il commence, réduis — la structure de la queue est ce qui morfle en premier.",
+ body:[
+  {t:"img", k:"gload", c:"Diagramme de résistance en vol — vitesse indiquée / facteur de charge, par altitude, pour 12 000 livres."},
+  {t:"h", v:"Le principe"},
+  {t:"p", v:"Le diagramme est calculé pour 12 000 livres. À un autre poids, le facteur de charge admissible varie pour garder le produit poids × facteur de charge constant — avec deux bornes absolues : <b>+7,5 g</b> et <b>-3,4 g</b> en usage courant, <b>9 g</b> à ne jamais dépasser quelle que soit la configuration."},
+  {t:"h", v:"Repères simplifiés à 3g"},
+  {t:"table", cols:["Altitude","Vitesse"], rows:[
+    ["10 000 pieds","390 nœuds"],
+    ["20 000 pieds","335 nœuds"],
+    ["30 000 pieds","255 nœuds"]]},
+  {t:"h", v:"Charges externes : restrictions supplémentaires"},
+  {t:"table", cols:["Charge","Limite"], rows:[
+    ["Réservoir largable central plein","5 g positif · 375 nœuds max"],
+    ["Bombe de 1000 livres au centre","5 g positif"],
+    ["Réservoirs ou bombes sur pylônes latéraux","5 g positif · 375 nœuds max"]]},
+  {t:"img", k:"highalt", c:"Le Corsair en vol — les limites ci-dessus s'appliquent à toute altitude."},
+  {t:"note", k:"warn", lbl:"Le vrai signal", v:"Le buffeting (tremblement général de la cellule) est ton vrai indicateur de limite — pas le badin. Dès qu'il commence, réduis vitesse et/ou facteur de charge immédiatement : continuer à tirer accentue la charge structurelle sur la queue et peut endommager stabilisateurs et gouvernes de profondeur."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "En palier, calcule le facteur de charge max pour ton poids actuel avec la formule du manuel.",
+   "Fais un piqué modéré et identifie le moment où le buffeting commence — réduis immédiatement.",
+   "Avec un réservoir largable plein, reste sous 375 nœuds et 5g en piqué."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu reconnais le buffeting et tu réagis en réduisant, sans attendre d'aller plus loin."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"d6", title:"Horizon gyroscopique, virages & volets de combat",
+ intro:"Deux instruments à protéger avant les manœuvres serrées, et un réglage de volets qui améliore vraiment le rayon de virage à basse vitesse.",
+ body:[
+  {t:"h", v:"Limites des gyros"},
+  {t:"table", cols:["Instrument","Montée/Piqué","Inclinaison G/D"], rows:[
+    ["Horizon gyroscopique","70°","100°"],
+    ["Gyro directionnel","55°","55°"]]},
+  {t:"img", k:"gyrohoriz", c:"Horizon gyroscopique caged."},
+  {t:"img", k:"gyrodir", c:"Gyro directionnel caged."},
+  {t:"p", v:"Cage les deux instruments avant tout combat tournoyant ou piqué serré — au-delà de ces limites, tu risques d'endommager les cardans gyroscopiques. Décage-les ensuite en vol stabilisé."},
+  {t:"h", v:"Volets de combat"},
+  {t:"p", v:"Une déflexion de <b>20° ou moins</b> réduit sensiblement le rayon de virage à basse vitesse (environ 150 nœuds) sans les inconvénients des volets pleins sortis — c'est la configuration dite « combat flaps ». Utilisable jusqu'à <b>200 nœuds</b>, jamais au-delà."},
+  {t:"img", k:"flapknob", c:"Commande des volets — 20° ou moins pour la configuration combat."},
+  {t:"note", k:"", lbl:"Ailerons", v:"Débattement complet du manche en roulis reste utilisable jusqu'à 300 nœuds."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Cage les deux gyros, puis fais un virage engagé à forte inclinaison pour vérifier qu'ils restent protégés.",
+   "Sors les volets à 20° sous 200 nœuds et compare ton rayon de virage avec et sans.",
+   "Décage les gyros une fois stabilisé."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu cages systématiquement les gyros avant les manœuvres serrées, et tu utilises les volets de combat à bon escient."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"d7", title:"Voltige & piqués permis",
+ intro:"Dernière leçon de la section : ce qui est autorisé en voltige normale, et la checklist complète avant un piqué prolongé.",
+ body:[
+  {t:"img", k:"aerobatics", c:"Le Corsair civil « Lucky Gallon » en meeting — la voltige normale reste dans les capacités de l'appareil."},
+  {t:"h", v:"Voltige normale — conditions"},
+  {t:"p", v:"Autorisée sans charge externe (armement ni réservoirs largables), dans le respect des vitesses et facteurs de charge de la leçon D5, avec ces précautions supplémentaires :"},
+  {t:"table", cols:["Manœuvre","Vitesse minimale (pilote débutant)"], rows:[
+    ["Looping / Immelmann","280 nœuds"],
+    ["Tonneau lent","180 nœuds"]]},
+  {t:"note", k:"warn", lbl:"Vol dos", v:"Ne dépasse pas 10 secondes en vol inversé — au-delà, la pression d'huile chute et les paliers moteur risquent une lubrification insuffisante. (Non modélisé actuellement dans le module.)"},
+  {t:"h", v:"Checklist avant un piqué"},
+  {t:"proc", v:[
+   "Verrière — <b>fermée</b>.",
+   "Train — <b>UP</b>.",
+   "Volets — <b>UP</b>.",
+   "Régulateur RPM — <b>2050 à 2250 tr/min</b>.",
+   "Mixture — <b>AUTO RICH</b>.",
+   "Suralimentation — <b>NEUTRAL</b>, sauf à haute altitude.",
+   "Gaz — légèrement ouverts ; repasse en NEUTRAL avant de réduire les gaz.",
+   "Sélecteur carburant — <b>RESERVE</b>.",
+   "Tous les volets de refroidissement — <b>fermés</b>.",
+   "Frein de piqué (train avant) — <b>ON</b> ou <b>OFF</b> selon besoin."]},
+  {t:"note", k:"warn", lbl:"Limite stricte", v:"Un maximum de 3060 tr/min peut être atteint, mais jamais plus de 30 secondes d'affilée. Une pression d'admission de 15 à 20 in/Hg est recommandée pour un piqué prolongé — en dessous de 15 in/Hg, le moteur s'encrasse rapidement. Ouvre les gaz très progressivement en sortie de piqué pour éviter que le moteur ne cale."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Sans charge externe, fais un looping en respectant la vitesse minimale de 280 nœuds.",
+   "Fais un piqué complet en suivant la checklist ci-dessus, RPM limité à 30 secondes max si tu approches 3060 tr/min.",
+   "Ouvre les gaz progressivement en ressource pour éviter le calage moteur."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu fais un piqué complet checklist en main, et tu connais les vitesses minimales de voltige. Prochaine étape : la Section E, appontage et atterrissage."},
+  {t:"src", v:["manuel","videos"]}
+]}
+];
+
+const KEY="f4u1d-sectionD";
+let st={done:{},notes:{}}, cur=0;
+async function load(){ try{const r=await __sget(KEY); if(r&&r.value) st=Object.assign(st,JSON.parse(r.value));}catch(e){} }
+let tm=null;
+function save(){ clearTimeout(tm); tm=setTimeout(async()=>{ try{await __sset(KEY,JSON.stringify(st));}catch(e){} },400); }
+
+function fig(k,c){
+  const fn=IMG[k];
+  return `<figure><img src="img/${fn}" alt="${c}" loading="lazy" onclick="openLb(this.src)">
+    <figcaption><span>${c}</span><a href="img/${fn}" target="_blank" rel="noopener">Original &#8599;</a></figcaption></figure>`;
+}
+function table(cols, rows){
+  return `<table class="pins"><tbody>${rows.map(r=>`<tr><td class="n">${r[0]}</td><td>${r[1]}</td></tr>`).join("")}</tbody></table>`;
+}
+function block(b){
+  if(b.t==="h")   return `<h3>${b.v}${b.badge?'<span class="badge" style="margin-left:8px;vertical-align:0">Nouveau</span>':''}</h3>`;
+  if(b.t==="p")   return `<p>${b.v}</p>`;
+  if(b.t==="img") return fig(b.k,b.c);
+  if(b.t==="table")return table(b.cols,b.rows);
+  if(b.t==="proc")return `<ol class="proc">${b.v.map(s=>`<li><span>${s}</span></li>`).join("")}</ol>`;
+  if(b.t==="note")return `<div class="note ${b.k||""}"><span class="lbl">${b.lbl}</span><p>${b.v}</p></div>`;
+  if(b.t==="src") return `<h3>Sources</h3><div class="srcs">${
+      b.v.map(k=>`<a href="${DOC[k][1]}" target="_blank" rel="noopener">${DOC[k][0]} &#8599;</a>`).join("")}</div>`;
+  return "";
+}
+function render(){
+  const l=L[cur];
+  document.getElementById("main").innerHTML=`<div class="page">
+    <div class="eyebrow">Section D · leçon ${cur+1} sur ${L.length}</div>
+    <h2>${l.title}${l.isNew?'<span class="badge">Nouveau module</span>':""}</h2>
+    <p class="intro">${l.intro}</p>
+    ${l.body.map(block).join("")}
+    <h3>Tes notes de vol</h3>
+    <textarea id="nt" placeholder="Procédures exactes, séquences de touches, ce qui a coincé…">${(st.notes[l.id]||"").replace(/</g,"&lt;")}</textarea>
+    <button class="doneline${st.done[l.id]?" on":""}" id="dn"><span class="box"></span>
+      <span>${st.done[l.id]?"Leçon validée":"Marquer cette leçon comme validée"}</span></button>
+    <div class="nav">
+      <button class="ghost" id="pv"${cur?"":" disabled style=opacity:.3"}>&larr; Précédent</button>
+      <button class="ghost" id="nx"${cur<L.length-1?"":" disabled style=opacity:.3"}>Suivant &rarr;</button>
+    </div></div>`;
+  document.getElementById("nt").oninput=e=>{st.notes[l.id]=e.target.value;save();};
+  document.getElementById("dn").onclick=()=>{st.done[l.id]=!st.done[l.id];save();render();};
+  if(cur) document.getElementById("pv").onclick=()=>{cur--;render();window.scrollTo(0,0);};
+  if(cur<L.length-1) document.getElementById("nx").onclick=()=>{cur++;render();window.scrollTo(0,0);};
+  rail();
+}
+function rail(){
+  const r=document.getElementById("rail"); r.innerHTML="";
+  L.forEach((l,i)=>{
+    const b=document.createElement("button");
+    b.className="item"+(i===cur?" on":"")+(st.done[l.id]?" done":"");
+    b.innerHTML=`<span class="idx">${st.done[l.id]?"&check;":String(i+1).padStart(2,"0")}</span><span class="nm">${l.title}</span>`;
+    b.onclick=()=>{cur=i;render();window.scrollTo(0,0);};
+    r.appendChild(b);
+  });
+  const n=L.filter(l=>st.done[l.id]).length;
+  document.getElementById("foot").textContent=`${n} / ${L.length} leçons validées`;
+}
+function openLb(src){const lb=document.getElementById("lb");document.getElementById("lbimg").src=src;lb.classList.add("on");}
+document.getElementById("lb").onclick=()=>document.getElementById("lb").classList.remove("on");
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") document.getElementById("lb").classList.remove("on");
+  if(e.target.matches("textarea")) return;
+  if(e.key==="ArrowRight"&&cur<L.length-1){cur++;render();window.scrollTo(0,0);}
+  if(e.key==="ArrowLeft"&&cur>0){cur--;render();window.scrollTo(0,0);}
+});
+load().then(render);
+</script>
