@@ -37,7 +37,7 @@
   .item.done .idx{color:var(--go)}
   .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
 
-  .page{padding:34px 44px 90px;max-width:900px}
+  .page{padding:34px 44px 90px;max-width:920px}
   @media(max-width:700px){.page{padding:22px 18px 70px}}
   .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
   h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
@@ -54,10 +54,13 @@
   figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px}
   figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
   figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%}
 
   table.pins{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
   table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
-  table.pins td.n{font-family:var(--mono);color:var(--amber);width:26px}
+  table.pins td.n{font-family:var(--mono);color:var(--amber);width:150px}
 
   ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
   ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
@@ -87,14 +90,11 @@
   .ghost:hover{color:var(--ink);border-color:var(--amber)}
 
   .banner{background:var(--panel-2);border-bottom:1px solid var(--amber);padding:11px 20px;font-size:13px;color:var(--dim);display:flex;gap:14px;align-items:center;justify-content:space-between}
-  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
-  .lb.on{display:flex}
-  .lb img{max-width:100%;max-height:100%}
   :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
 </style>
 
 <div id="banner" class="banner">
-  <span>Planches issues directement du manuel officiel Heatblur Simulations — hébergées dans <code>img/</code>, aucune dépendance externe.</span>
+  <span>Section enrichie avec le détail exhaustif du guide de Chuck (Part 3 — Cockpit &amp; Equipment, pages 32 à 160) et les planches du manuel officiel Heatblur.</span>
   <button class="ghost" onclick="document.getElementById('banner').remove()">OK</button>
 </div>
 
@@ -105,7 +105,7 @@
       <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px">&larr; Accueil</a>
       <div class="tail">Section A · F-4E Phantom II</div>
       <h1>Découverte<br>&amp; cockpit</h1>
-      <p class="sub">Quatre leçons illustrées, planches du manuel Heatblur à l'appui. Pilote et WSO.</p>
+      <p class="sub">Huit leçons, panneau par panneau — pilote et WSO, planches du manuel Heatblur à l'appui.</p>
     </div>
     <nav class="rail-list" id="rail"></nav>
     <div class="rail-foot" id="foot"></div>
@@ -121,11 +121,26 @@ async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v
   try{localStorage.setItem(k,v);}catch(e){} }
 
 const IMG = {
-  ext:      "ext_f4_cockpit_overview.jpg",
-  pilot:    "pilot_overview_coloured.jpg",
-  pilotn:   "pilot_overview_numbered.jpg",
-  wso:      "wso_overview.jpg",
-  stick:    "pilot_stick.jpg"
+  ext: "ext_f4_cockpit_overview.jpg",
+  pilot: "pilot_overview_coloured.jpg",
+  wso: "wso_overview.jpg",
+  stick: "pilot_stick.jpg",
+  fdg: "pilot_flight_director_group_coloured.jpg",
+  hsi: "pilot_hsi.jpg",
+  adi: "adi_scheme.jpg",
+  overhead: "pilot_overhead_indicators.jpg",
+  iff: "pilot_iff_panel.jpg",
+  leftcons: "pilot_left_console_overview.jpg",
+  leftsub: "pilot_left_sub_panel_overview.jpg",
+  rightcons: "pilot_right_console.jpg",
+  pedestal: "pilot_pedestal_group_overview.jpg",
+  rightmain: "pilot_right_main_panel_overview.jpg",
+  rightsub: "pilot_right_sub_panel_overview.jpg",
+  wsofdg: "wso_flight_director_group.jpg",
+  wsodscg: "wso_dscg_controls.jpg",
+  wsoleft: "wso_left_console.jpg",
+  wsoright: "wso_right_console.jpg",
+  wsopedestal: "wso_pedestal_group_overview.jpg"
 };
 
 const LESSONS = [
@@ -136,58 +151,227 @@ const LESSONS = [
     <h3>Deux hommes, un avion</h3>
     <p>Le F-4E Phantom II de Heatblur se pilote à deux : le pilote à l'avant, l'officier systèmes d'armes (WSO — Weapons Systems Officer) à l'arrière. Chaque poste a son propre jeu d'instruments, mais partage la même logique de commandes : le pilote gère le vol et le tir, le WSO gère le radar, la navigation et l'armement air-sol de précision.</p>
     <figure><img data-src="ext" alt="Vue d'ensemble cockpits"><figcaption><span>Cockpits avant et arrière, vue d'ensemble</span><a href="#" onclick="return false">Manuel Heatblur — Cockpit Overview</a></figcaption></figure>
-    <p class="lead">En jouant seul, tu peux occuper les deux postes tour à tour, ou laisser Jester (l'IA WSO) s'occuper de l'arrière — voir la section G pour son fonctionnement.</p>
+    <p class="lead">En jouant seul, tu peux occuper les deux postes tour à tour, ou laisser Jester (l'IA WSO) s'occuper de l'arrière — voir la Section G pour son fonctionnement.</p>
     <div class="note">
-      <span class="lbl">À retenir</span>
-      <p>Les switches détaillés dans ce chapitre sont expliqués fonction par fonction dans le chapitre Systèmes du manuel (radar, armement, hydraulique, etc.) — cette section A ne fait que te repérer dans le cockpit.</p>
+      <span class="lbl">Pourquoi cette section est dense</span>
+      <p>Le F-4E a plus de 300 interrupteurs, boutons et voyants répartis sur les deux postes. Ce chapitre les regroupe par panneau physique (comme le fait le manuel officiel) pour que tu puisses t'y retrouver sans tout apprendre par cœur d'un coup — reviens-y comme référence.</p>
     </div>
   `
 },
 {
-  id: "a2", idx:"A2", nm:"Poste pilote", badge:"Layout",
-  intro: "Le cockpit avant se découpe en quatre zones : panneau frontal, console gauche, pupitre central, console droite.",
+  id: "a2", idx:"A2", nm:"Instruments de vol &amp; viseur", badge:"Pilote",
+  intro: "Le cœur du pilotage : HSI, ADI, instruments de secours et viseur optique LCOSS — ce que l'œil du pilote croise en permanence.",
   body: `
-    <h3>Répartition des zones</h3>
-    <figure><img data-src="pilot" alt="Poste pilote"><figcaption><span>Poste pilote — vue générale</span></figcaption></figure>
+    <figure><img data-src="pilot" alt="Poste pilote vue générale"><figcaption><span>Poste pilote — vue générale, répartition des zones</span></figcaption></figure>
+    <h3>HSI — Horizontal Situation Indicator</h3>
+    <figure><img data-src="hsi" alt="HSI"><figcaption><span>HSI, poste pilote</span></figcaption></figure>
     <table class="pins">
-      <tr><td class="n">1</td><td>Commandes DSCG (Director/Sight Control Group)</td></tr>
-      <tr><td class="n">2</td><td>Voyants du panneau supérieur</td></tr>
-      <tr><td class="n">3</td><td>Gestion de l'armement</td></tr>
-      <tr><td class="n">4</td><td>Groupe directeur de vol</td></tr>
-      <tr><td class="n">5</td><td>Panneau principal droit</td></tr>
-      <tr><td class="n">6</td><td>Sous-panneau gauche</td></tr>
-      <tr><td class="n">7</td><td>Console gauche (avant / centre / arrière / paroi)</td></tr>
-      <tr><td class="n">8</td><td>Pupitre central (pedestal)</td></tr>
-      <tr><td class="n">9</td><td>Sous-panneau droit</td></tr>
-      <tr><td class="n">10</td><td>Console droite (avant / centre / arrière / paroi)</td></tr>
-      <tr><td class="n">11</td><td>Manche et siège</td></tr>
+      <tr><td class="n">Lubber line</td><td>Cap actuel de l'avion.</td></tr>
+      <tr><td class="n">Course arrow / CDI</td><td>Cap sélectionné et indicateur d'écart (Course Deviation Indicator).</td></tr>
+      <tr><td class="n">Bearing pointer</td><td>Relèvement vers l'aide de navigation sélectionnée.</td></tr>
+      <tr><td class="n">Voyants de mode</td><td>VOR / ILS / TAC / NAV / MAN (heading) / UHF (ADF) / TGT (bombardement offset).</td></tr>
+      <tr><td class="n">Nav Mode Selector</td><td>VOR/ILS, TAC, NAV COMP, ou HDG — pilote la logique de l'aiguille et du CDI.</td></tr>
+      <tr><td class="n">Nav Input Selector</td><td>Source affichée : VOR/TAC, TAC, ADF/TAC, ou NAV COMP.</td></tr>
     </table>
-    <p class="lead">Cette numérotation reprend celle du manuel officiel — pratique pour t'y retrouver quand tu consultes le chapitre Systèmes en parallèle.</p>
+    <h3>ADI — Attitude Director Indicator</h3>
+    <figure><img data-src="adi" alt="ADI"><figcaption><span>Schéma de l'ADI</span></figcaption></figure>
+    <table class="pins">
+      <tr><td class="n">Barres de guidage</td><td>Barre de roulis (bank steering) et de tangage (pitch steering), actives quand le Flight Director est ON.</td></tr>
+      <tr><td class="n">Échelle glide slope</td><td>Déviation verticale en approche ILS.</td></tr>
+      <tr><td class="n">Turn &amp; Slip</td><td>Bille et aiguille de virage — instrument de secours en cas de perte de références.</td></tr>
+      <tr><td class="n">Reference System Selector</td><td>STBY (ARBCS fournit l'azimut) ou PRIM (l'INS fournit l'azimut — position normale).</td></tr>
+    </table>
+    <h3>Instruments de secours &amp; de vol de base</h3>
+    <p class="lead">Standby Attitude Indicator (SAI) avec bouton de décagement, boussole magnétique de secours, altimètre (calage barométrique), variomètre (VVI), indicateur de vitesse anémométrique (IAS) et de vitesse vraie (TAS), horloge.</p>
+    <h3>Groupe directeur de vol (Flight Director Group)</h3>
+    <figure><img data-src="fdg" alt="Flight Director Group"><figcaption><span>Groupe directeur de vol, vue d'ensemble</span></figcaption></figure>
+    <p class="lead">Regroupe HSI, ADI et leurs commandes associées (FD Selector, Heading/Course Set) dans un même bloc, au centre du tableau de bord.</p>
+    <h3>Viseur optique — LCOSS</h3>
+    <p class="lead">Le Lead Computing Optical Sight System projette un réticule sur une glace combineuse : un pipper de 2 mils, un anneau de 25 mils, un anneau de 50 mils, et une barre de distance qui apparaît avec un lock radar. Détails complets du viseur en Section G (armement).</p>
+    <table class="pins">
+      <tr><td class="n">Sight Mode Selector</td><td>OFF / STBY / CAGE / A/G / A/A / BIT 1 / BIT 2.</td></tr>
+      <tr><td class="n">Voyants HUD</td><td>RADAR / HEAT / GUN (arme sélectionnée) / ARM (Master Arm armé).</td></tr>
+      <tr><td class="n">IN RANGE</td><td>S'allume quand la cible verrouillée est dans l'enveloppe de tir.</td></tr>
+    </table>
   `
 },
 {
-  id: "a3", idx:"A3", nm:"Poste WSO", badge:"Layout",
-  intro: "Le poste arrière est centré sur le radar et la navigation : moins de commandes de vol, beaucoup plus de gestion de capteurs.",
+  id: "a3", idx:"A3", nm:"Panneau supérieur, alarmes &amp; IFF", badge:"Pilote",
+  intro: "Le panneau supérieur gère les feux extérieurs et le compas ; le Warning Telelight Panel centralise toutes les alertes ; l'IFF évite le tir fratricide.",
   body: `
-    <h3>Répartition des zones</h3>
-    <figure><img data-src="wso" alt="Poste WSO"><figcaption><span>Poste WSO — vue générale</span></figcaption></figure>
+    <h3>Panneau supérieur</h3>
+    <figure><img data-src="overhead" alt="Panneau supérieur"><figcaption><span>Panneau supérieur — indicateurs et feux extérieurs</span></figcaption></figure>
     <table class="pins">
-      <tr><td class="n">1</td><td>Indicateurs frontaux (upfront)</td></tr>
-      <tr><td class="n">2</td><td>Sous-panneau gauche</td></tr>
-      <tr><td class="n">3</td><td>Console gauche</td></tr>
-      <tr><td class="n">4</td><td>Pupitre central</td></tr>
-      <tr><td class="n">5</td><td>Sous-panneau droit</td></tr>
-      <tr><td class="n">6</td><td>Console droite</td></tr>
-      <tr><td class="n">7</td><td>Manche et siège</td></tr>
+      <tr><td class="n">Feux de position / anti-collision</td><td>Chaque interrupteur : BRT (vif) / OFF (centre) / DIM (faible).</td></tr>
+      <tr><td class="n">Flasher Mode Switch</td><td>Flash / OFF / Steady pour les feux de queue, anti-collision et fuselage.</td></tr>
+      <tr><td class="n">Compass Mode Selector</td><td>COMP (secours) / DG (gyro directionnel, hautes latitudes) / SLAVED (mode normal) / SYNC (resynchronisation rapide, à ressort).</td></tr>
+      <tr><td class="n">Gyro Fast Erect Switch</td><td>Corrige rapidement une dérive gyroscopique après une ressource violente — ne pas maintenir plus de 60 sec.</td></tr>
     </table>
+    <h3>Warning Telelight Panel — la grille d'alarmes</h3>
+    <p class="lead">Un pavé de voyants regroupant toutes les alertes système. Les plus fréquentes en vol normal :</p>
+    <table class="pins">
+      <tr><td class="n">CANOPY UNLOCKED</td><td>Verrière non verrouillée.</td></tr>
+      <tr><td class="n">HOOK DOWN</td><td>Crosse d'appontage sortie.</td></tr>
+      <tr><td class="n">EXT FUEL (L/CTR/R)</td><td>Le bidon sélectionné ne transfère pas de carburant.</td></tr>
+      <tr><td class="n">FUEL LEVEL LOW</td><td>Cellules 1+2 sous ~1650 lbs.</td></tr>
+      <tr><td class="n">SLATS IN</td><td>Slats Override Switch sur IN — becs bloqués rentrés.</td></tr>
+      <tr><td class="n">SPEEDBRAKE OUT</td><td>Aérofreins non complètement rentrés.</td></tr>
+      <tr><td class="n">CHECK HYD GAUGES</td><td>Une pression hydraulique sous ~1500 psi.</td></tr>
+      <tr><td class="n">PITCH AUG OFF</td><td>Stab Aug tangage désengagé (normal au sol).</td></tr>
+      <tr><td class="n">INERTIAL NAV SYS OUT</td><td>INS hors service ou éteinte.</td></tr>
+      <tr><td class="n">FIRE SYS</td><td>Détecteur feu/surchauffe défaillant.</td></tr>
+      <tr><td class="n">OXYGEN LOW</td><td>Réserve d'oxygène sous 1 litre.</td></tr>
+    </table>
+    <p class="lead">Le Master Caution Light s'allume avec toute nouvelle alerte du panneau et se réinitialise avec le bouton dédié — sans effacer l'alerte elle-même sur le pavé.</p>
+    <h3>IFF — panneau d'interrogation</h3>
+    <figure><img data-src="iff" alt="Panneau IFF"><figcaption><span>Panneau de contrôle IFF, poste pilote</span></figcaption></figure>
+    <table class="pins">
+      <tr><td class="n">Master Selector</td><td>OFF / STBY / LOW / NORM / EMER (répond en 7700 sur Mode 3/A en urgence).</td></tr>
+      <tr><td class="n">Modes 1/2/3A/3C</td><td>Chacun : TEST / ON / OFF, avec molettes de code à 4 chiffres pour les modes 1 et 3/A.</td></tr>
+      <tr><td class="n">Mode 4</td><td>ZERO (efface les codes chiffrés) / A / B / HOLD — le seul mode sécurisé, voir Section G.</td></tr>
+      <tr><td class="n">Identification/Mic Switch</td><td>IDENT (avant) pour répondre à une demande de la tour, MIC (arrière) pour l'intercom.</td></tr>
+    </table>
+    <h3>Radios &amp; chiffrement</h3>
+    <p class="lead">Panneaux UHF COMM et AUX, sélecteur de fonction radio, et voyants KY-28 (Plain/Cipher) — détaillés en Section G (Radio &amp; autopilote).</p>
+  `
+},
+{
+  id: "a4", idx:"A4", nm:"Console gauche — moteur, AFCS &amp; carburant", badge:"Pilote",
+  intro: "Manettes, démarrage, augmentation de stabilité et gestion carburant — tout ce qui se manipule de la main gauche.",
+  body: `
+    <figure><img data-src="leftcons" alt="Console gauche"><figcaption><span>Console gauche, poste pilote — vue d'ensemble</span></figcaption></figure>
+    <h3>Bloc moteur</h3>
+    <table class="pins">
+      <tr><td class="n">Engine Master Switch (x2)</td><td>ON (avant) / OFF (arrière) — arme les vannes carburant et les pompes.</td></tr>
+      <tr><td class="n">Engine Start Switch</td><td>LEFT / MIDDLE (OFF) / RIGHT — démarrage par cartouche uniquement.</td></tr>
+      <tr><td class="n">Manettes + doigts de sécurité</td><td>Les Throttle Finger Lifts doivent être soulevés avant de ramener une manette sur OFF — évite une coupure accidentelle.</td></tr>
+      <tr><td class="n">Boutons d'allumage</td><td>Un par moteur, à maintenir pendant la séquence de démarrage (voir Section B).</td></tr>
+      <tr><td class="n">Rudder Trim Switch</td><td>Trim de la gouverne de direction.</td></tr>
+      <tr><td class="n">CADC / SPC Correction Switch</td><td>RESET CORR / NORMAL / CORR OFF — corrige le retard de l'altimètre lors des changements rapides d'altitude.</td></tr>
+      <tr><td class="n">Engine Anti-Icing Switch</td><td>DE-ICE / NORMAL — à utiliser en air turbulent ou orageux, pas en continu (risque de dommage moteur).</td></tr>
+    </table>
+    <h3>AFCS — augmentation de stabilité &amp; pilote automatique</h3>
+    <table class="pins">
+      <tr><td class="n">Stab Aug Pitch/Roll/Yaw</td><td>Chacun ON (avant) / OFF (arrière) — amortit sans corriger, voir Section G pour le détail.</td></tr>
+      <tr><td class="n">AFCS Mode Switch</td><td>ENGAGE — tient assiette et cap dans ±70°.</td></tr>
+      <tr><td class="n">Altitude Hold Switch</td><td>ENGAGE une fois l'AFCS actif et l'avion trimmé en palier.</td></tr>
+    </table>
+    <h3>Panneau carburant</h3>
+    <table class="pins">
+      <tr><td class="n">Fuel Boost Pump Switch (x2)</td><td>CHECK (test, coupe le moteur) / NORMAL.</td></tr>
+      <tr><td class="n">External Transfer Switch</td><td>OUTBD (bidons voilure) / OFF / CENTER (bidon centre en priorité).</td></tr>
+      <tr><td class="n">Internal Wing Transfer/Dump</td><td>Coupe ou vidange le transfert des réservoirs de voilure internes.</td></tr>
+      <tr><td class="n">Feed Tank Check Switch</td><td>Affiche la quantité de la seule cellule d'alimentation moteur (référence ~1400 lbs plein).</td></tr>
+    </table>
+    <h3>Contre-mesures — AN/ALE-40</h3>
+    <table class="pins">
+      <tr><td class="n">Chaff/Flare Burst &amp; Salvo</td><td>Molettes de quantité et d'intervalle, voir procédures complètes en Section G.</td></tr>
+      <tr><td class="n">Flares Select Switch</td><td>FLARES (largage systématique au bouton) / NORMAL (selon programmation).</td></tr>
+    </table>
+    <h3>Sous-panneau gauche</h3>
+    <figure><img data-src="leftsub" alt="Sous-panneau gauche"><figcaption><span>Sous-panneau gauche</span></figcaption></figure>
+    <p class="lead">Regroupe l'intercom (ICS Mode Selector, Amplifier Selector, volume) et divers réglages d'éclairage cockpit.</p>
+  `
+},
+{
+  id: "a5", idx:"A5", nm:"Console droite, pédale centrale &amp; armement", badge:"Pilote",
+  intro: "Sélection d'arme, navigation radio, train d'atterrissage — la main droite gère l'engagement et la configuration de l'avion.",
+  body: `
+    <figure><img data-src="rightcons" alt="Console droite"><figcaption><span>Console droite, poste pilote</span></figcaption></figure>
+    <h3>Sélection d'armement</h3>
+    <table class="pins">
+      <tr><td class="n">Weapon Selector Knob</td><td>AGM-12 / BOMBS / RKTS &amp; DISP / ARM / TV / B / A — sélectionne la famille d'arme.</td></tr>
+      <tr><td class="n">Air-to-Ground Delivery Mode Knob</td><td>DIRECT, DT, TGT FIND, LOFT, etc. — détail complet en Section G.</td></tr>
+      <tr><td class="n">Master Arm Switch</td><td>ARMED (haut) / SAFE (bas).</td></tr>
+      <tr><td class="n">Fuze Arming Switch</td><td>OFF / NOSE &amp; TAIL / NOSE / TAIL.</td></tr>
+      <tr><td class="n">Station Select Buttons</td><td>GUN / LO / LI / CTR / RI / RO — sélectionne les points d'emport actifs.</td></tr>
+      <tr><td class="n">Selective Jettison Knob</td><td>OFF / STORES / L-R FWD / L-R AFT / L-R WING — largage sélectif d'urgence.</td></tr>
+    </table>
+    <h3>Panneau AWRU (Aircraft Weapons Release Unit)</h3>
+    <table class="pins">
+      <tr><td class="n">Store Quantity Knob</td><td>C (continu) / S (salve) / P (paires).</td></tr>
+      <tr><td class="n">Weapon Interval Selector</td><td>Normal ou x10 sur la molette d'intervalle.</td></tr>
+      <tr><td class="n">Release Interval Knob</td><td>0.05 à 1 seconde entre chaque largage.</td></tr>
+    </table>
+    <h3>Radionavigation</h3>
+    <p class="lead">Panneau TACAN (mode, canal, volume) et panneau VOR/ILS (fréquence, test) — voir procédures complètes en Section D.</p>
+    <h3>Pédale centrale (Pedestal Group)</h3>
+    <figure><img data-src="pedestal" alt="Pédale centrale"><figcaption><span>Pédale centrale (Pedestal Group)</span></figcaption></figure>
+    <p class="lead">Regroupe une partie des commandes radio, le sélecteur d'antenne, et l'accès aux disjoncteurs.</p>
+    <h3>Panneau principal droit &amp; sous-panneau droit</h3>
+    <figure><img data-src="rightmain" alt="Panneau principal droit"><figcaption><span>Panneau principal droit</span></figcaption></figure>
+    <figure><img data-src="rightsub" alt="Sous-panneau droit"><figcaption><span>Sous-panneau droit</span></figcaption></figure>
+    <table class="pins">
+      <tr><td class="n">Landing Gear Lever</td><td>UP / DOWN / tiré (mode secours pneumatique).</td></tr>
+      <tr><td class="n">Speed Brake Switch</td><td>IN / STOP / OUT, sur la manette gauche.</td></tr>
+      <tr><td class="n">Drag Chute Lever</td><td>Tiré = déployé, poussé = jettisonné.</td></tr>
+      <tr><td class="n">Emergency Wheel Brake Lever</td><td>Vide l'accumulateur hydraulique dans les freins en cas de panne normale.</td></tr>
+      <tr><td class="n">Taxi/Landing Light Switch</td><td>TAXI / OFF / LDG.</td></tr>
+    </table>
+  `
+},
+{
+  id: "a6", idx:"A6", nm:"Poste WSO — instruments avant &amp; radar", badge:"WSO",
+  intro: "Le WSO n'a pas de commandes de vol primaires : son attention se porte sur le BDHI, l'écran radar (DSCG) et le RWR.",
+  body: `
+    <figure><img data-src="wso" alt="Poste WSO"><figcaption><span>Poste WSO — vue générale</span></figcaption></figure>
+    <h3>BDHI — Bearing Distance Heading Indicator</h3>
+    <table class="pins">
+      <tr><td class="n">Needle 1 / Needle 2</td><td>Deux aiguilles dont la source change selon le WSO Navigation Mode Selector Switch : UP = ADF/TACAN, MIDDLE = VOR/TACAN, DOWN = Nav Comp bearing/ground track.</td></tr>
+      <tr><td class="n">Range Indicator</td><td>Distance en nm vers la référence sélectionnée.</td></tr>
+    </table>
+    <h3>Groupe directeur de vol (WSO)</h3>
+    <figure><img data-src="wsofdg" alt="Flight Director Group WSO"><figcaption><span>Groupe directeur de vol, poste WSO</span></figcaption></figure>
+    <p class="lead">Réplique partielle du bloc HSI/ADI du pilote — utile pour surveiller une approche ILS ou suivre un cap sans avoir à le demander au pilote.</p>
+    <h3>Écran radar — DSCG</h3>
+    <figure><img data-src="wsodscg" alt="Commandes DSCG"><figcaption><span>Commandes du Digital Scan Converter Group</span></figcaption></figure>
+    <table class="pins">
+      <tr><td class="n">DSCG Mode Selector</td><td>OFF / STBY / TEST / RDR BIT / RDR / TV.</td></tr>
+      <tr><td class="n">Display Selector</td><td>VI / B NAR / B WIDE / PPI WIDE / PPI NAR.</td></tr>
+      <tr><td class="n">Radar Operation Mode</td><td>BST / RDR / MAP / AIR GRD / BEACON / TV — voir Section G pour l'emploi complet.</td></tr>
+      <tr><td class="n">Radar Range Selector</td><td>5 à 200 nm selon le mode.</td></tr>
+    </table>
+    <h3>RWR &amp; IFF (poste WSO)</h3>
+    <p class="lead">Indicateur et boutons de fonction RWR identiques à ceux du pilote (voir Section G), plus le panneau d'interrogation IFF Mode 4 avec le Test/Challenge Switch et le bouton Challenge sur l'Antenna Hand Control.</p>
     <div class="note go">
       <span class="lbl">Bon à savoir</span>
-      <p>Le WSO n'a pas de manche de pilotage réel — le "stick" arrière sert surtout au réticule optique et à des fonctions radar/armement, pas au contrôle de l'avion.</p>
+      <p>Le WSO n'a pas de manche de pilotage réel — le « stick » arrière sert surtout au réticule optique et à des fonctions radar/armement, pas au contrôle de l'avion.</p>
     </div>
   `
 },
 {
-  id: "a4", idx:"A4", nm:"Manche &amp; HOTAS", badge:"Commandes",
+  id: "a7", idx:"A7", nm:"Poste WSO — consoles &amp; navigation", badge:"WSO",
+  intro: "INS, TACAN, contre-mesures électroniques : les consoles latérales concentrent les systèmes que le pilote ne peut pas toucher lui-même.",
+  body: `
+    <figure><img data-src="wsoleft" alt="Console gauche WSO"><figcaption><span>Console gauche, poste WSO</span></figcaption></figure>
+    <h3>Panneau INS / Nav Computer</h3>
+    <table class="pins">
+      <tr><td class="n">INS Power Selector</td><td>OFF / STBY / ALIGN / NAV — séquence complète en Section B.</td></tr>
+      <tr><td class="n">INS Alignment Mode</td><td>HDG MEM (avant) / GYRO COMP (arrière, défaut).</td></tr>
+      <tr><td class="n">Navigation Computer Mode Selector</td><td>OFF / STBY / TGT 1 / TGT 2 / RESET — logique détaillée en Section D.</td></tr>
+      <tr><td class="n">Position Update Switch</td><td>SET / NORMAL / FIX — pour le recalage de dérive (Section D).</td></tr>
+      <tr><td class="n">Molettes Lat/Long/Target/MagVar/Vent</td><td>Saisie manuelle des coordonnées et paramètres de vent.</td></tr>
+      <tr><td class="n">Voyants LAT/LONG Sync</td><td>Signalent un écart de plus de 1.5 minute d'arc entre position affichée et position INS.</td></tr>
+    </table>
+    <h3>Console droite &amp; ECM</h3>
+    <figure><img data-src="wsoright" alt="Console droite WSO"><figcaption><span>Console droite, poste WSO</span></figcaption></figure>
+    <table class="pins">
+      <tr><td class="n">Panneau TACAN (WSO)</td><td>Réplique du panneau pilote — actif seulement si NAV CMD est basculé côté WSO.</td></tr>
+      <tr><td class="n">Panneau ECM (AN/ALQ-131)</td><td>Sélecteurs gauche/droit OFF/STBY/XMIT1/XMIT2/BOTH, voyants STBY/XMIT/AI, bouton Reset — détail complet en Section G.</td></tr>
+      <tr><td class="n">Cursor Control Panel</td><td>Target Freeze / Target Insert / Target Reset, molettes Along Track / Cross Track — utilisées pour la désignation radar air-sol (Section G).</td></tr>
+    </table>
+    <h3>Pédale centrale WSO</h3>
+    <figure><img data-src="wsopedestal" alt="Pédale centrale WSO"><figcaption><span>Pédale centrale, poste WSO</span></figcaption></figure>
+    <table class="pins">
+      <tr><td class="n">Battery Bypass Switch</td><td>Isole ou connecte la batterie au bus essentiel 28V.</td></tr>
+      <tr><td class="n">Instrument Ground Power Test Switch</td><td>TEST (alimente le poste arrière sur groupe au sol) / NORMAL.</td></tr>
+      <tr><td class="n">Ejection Command Selector</td><td>Vertical = WSO seul ; horizontal = BOTH (éjection des deux sièges).</td></tr>
+      <tr><td class="n">KY-28 (chiffrement)</td><td>Power Selector OFF/ON/RLY, Mode Selector P (clair)/C (chiffré), bouton Zeroize.</td></tr>
+    </table>
+  `
+},
+{
+  id: "a8", idx:"A8", nm:"Manche &amp; HOTAS", badge:"Commandes",
   intro: "Switchologie quasi identique entre les deux manches — sauf une fonction propre au poste avant.",
   body: `
     <h3>Le manche</h3>
