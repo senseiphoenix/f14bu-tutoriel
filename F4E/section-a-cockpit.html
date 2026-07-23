@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Section A — Découverte &amp; cockpit — F-4E</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+    --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+    --display:"Oswald","Arial Narrow",sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)}
+  .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+         color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;color:var(--ink);margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+     margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+  .lead{color:var(--dim)}
+
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+
+  table.pins{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
+  table.pins td.n{font-family:var(--mono);color:var(--amber);width:26px}
+
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)}
+  .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .note p+p{margin-top:8px}
+
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+
+  .banner{background:var(--panel-2);border-bottom:1px solid var(--amber);padding:11px 20px;font-size:13px;color:var(--dim);display:flex;gap:14px;align-items:center;justify-content:space-between}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+
+<div id="banner" class="banner">
+  <span>Planches issues directement du manuel officiel Heatblur Simulations — hébergées dans <code>img/</code>, aucune dépendance externe.</span>
+  <button class="ghost" onclick="document.getElementById('banner').remove()">OK</button>
+</div>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <a href="index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:6px">&larr; Cursus F-4E</a><br>
+      <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px">&larr; Accueil</a>
+      <div class="tail">Section A · F-4E Phantom II</div>
+      <h1>Découverte<br>&amp; cockpit</h1>
+      <p class="sub">Quatre leçons illustrées, planches du manuel Heatblur à l'appui. Pilote et WSO.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const IMG = {
+  ext:      "ext_f4_cockpit_overview.jpg",
+  pilot:    "pilot_overview_coloured.jpg",
+  pilotn:   "pilot_overview_numbered.jpg",
+  wso:      "wso_overview.jpg",
+  stick:    "pilot_stick.jpg"
+};
+
+const LESSONS = [
+{
+  id: "a1", idx:"A1", nm:"Vue d'ensemble", badge:"Familiarisation",
+  intro: "Premier tour du propriétaire : où se trouvent les deux postes, comment ils se répartissent les tâches, et pourquoi ce chapitre vaut le détour avant de toucher au moindre interrupteur.",
+  body: `
+    <h3>Deux hommes, un avion</h3>
+    <p>Le F-4E Phantom II de Heatblur se pilote à deux : le pilote à l'avant, l'officier systèmes d'armes (WSO — Weapons Systems Officer) à l'arrière. Chaque poste a son propre jeu d'instruments, mais partage la même logique de commandes : le pilote gère le vol et le tir, le WSO gère le radar, la navigation et l'armement air-sol de précision.</p>
+    <figure><img data-src="ext" alt="Vue d'ensemble cockpits"><figcaption><span>Cockpits avant et arrière, vue d'ensemble</span><a href="#" onclick="return false">Manuel Heatblur — Cockpit Overview</a></figcaption></figure>
+    <p class="lead">En jouant seul, tu peux occuper les deux postes tour à tour, ou laisser Jester (l'IA WSO) s'occuper de l'arrière — voir la section G pour son fonctionnement.</p>
+    <div class="note">
+      <span class="lbl">À retenir</span>
+      <p>Les switches détaillés dans ce chapitre sont expliqués fonction par fonction dans le chapitre Systèmes du manuel (radar, armement, hydraulique, etc.) — cette section A ne fait que te repérer dans le cockpit.</p>
+    </div>
+  `
+},
+{
+  id: "a2", idx:"A2", nm:"Poste pilote", badge:"Layout",
+  intro: "Le cockpit avant se découpe en quatre zones : panneau frontal, console gauche, pupitre central, console droite.",
+  body: `
+    <h3>Répartition des zones</h3>
+    <figure><img data-src="pilot" alt="Poste pilote"><figcaption><span>Poste pilote — vue générale</span></figcaption></figure>
+    <table class="pins">
+      <tr><td class="n">1</td><td>Commandes DSCG (Director/Sight Control Group)</td></tr>
+      <tr><td class="n">2</td><td>Voyants du panneau supérieur</td></tr>
+      <tr><td class="n">3</td><td>Gestion de l'armement</td></tr>
+      <tr><td class="n">4</td><td>Groupe directeur de vol</td></tr>
+      <tr><td class="n">5</td><td>Panneau principal droit</td></tr>
+      <tr><td class="n">6</td><td>Sous-panneau gauche</td></tr>
+      <tr><td class="n">7</td><td>Console gauche (avant / centre / arrière / paroi)</td></tr>
+      <tr><td class="n">8</td><td>Pupitre central (pedestal)</td></tr>
+      <tr><td class="n">9</td><td>Sous-panneau droit</td></tr>
+      <tr><td class="n">10</td><td>Console droite (avant / centre / arrière / paroi)</td></tr>
+      <tr><td class="n">11</td><td>Manche et siège</td></tr>
+    </table>
+    <p class="lead">Cette numérotation reprend celle du manuel officiel — pratique pour t'y retrouver quand tu consultes le chapitre Systèmes en parallèle.</p>
+  `
+},
+{
+  id: "a3", idx:"A3", nm:"Poste WSO", badge:"Layout",
+  intro: "Le poste arrière est centré sur le radar et la navigation : moins de commandes de vol, beaucoup plus de gestion de capteurs.",
+  body: `
+    <h3>Répartition des zones</h3>
+    <figure><img data-src="wso" alt="Poste WSO"><figcaption><span>Poste WSO — vue générale</span></figcaption></figure>
+    <table class="pins">
+      <tr><td class="n">1</td><td>Indicateurs frontaux (upfront)</td></tr>
+      <tr><td class="n">2</td><td>Sous-panneau gauche</td></tr>
+      <tr><td class="n">3</td><td>Console gauche</td></tr>
+      <tr><td class="n">4</td><td>Pupitre central</td></tr>
+      <tr><td class="n">5</td><td>Sous-panneau droit</td></tr>
+      <tr><td class="n">6</td><td>Console droite</td></tr>
+      <tr><td class="n">7</td><td>Manche et siège</td></tr>
+    </table>
+    <div class="note go">
+      <span class="lbl">Bon à savoir</span>
+      <p>Le WSO n'a pas de manche de pilotage réel — le "stick" arrière sert surtout au réticule optique et à des fonctions radar/armement, pas au contrôle de l'avion.</p>
+    </div>
+  `
+},
+{
+  id: "a4", idx:"A4", nm:"Manche &amp; HOTAS", badge:"Commandes",
+  intro: "Switchologie quasi identique entre les deux manches — sauf une fonction propre au poste avant.",
+  body: `
+    <h3>Le manche</h3>
+    <figure><img data-src="stick" alt="Manche"><figcaption><span>Manche — vue détaillée</span></figcaption></figure>
+    <ol class="proc">
+      <li><b>Trim hat</b> — réduction d'effort et correction fine en tangage/roulis, présent sur les deux manches.</li>
+      <li><b>Bouton bombe</b> — largage des bombes.</li>
+      <li><b>Détente</b> — canon et missiles air-air ; le premier cran déclenche la caméra de tir.</li>
+      <li><b>Air Refueling Release (ARR)</b> — poste avant uniquement : déconnexion de la perche de ravitaillement, et fonctions annexes (slew Maverick/Sidewinder).</li>
+      <li><b>Nose Wheel Steering (NWS)</b> — direction de la roulette avant au sol ; en vol, sert à l'accrochage radar auto en combat rapproché et au focus capteur pour l'armement vidéo.</li>
+      <li><b>Palette de largage d'urgence</b> — coupe instantanément anti-skid, AFCS, STAB AUG et ARI.</li>
+    </ol>
+    <div class="note warn">
+      <span class="lbl">Piège classique</span>
+      <p>Le bouton ARR n'existe que sur le manche avant. Si tu configures ton HOTAS en pensant pouvoir ravitailler depuis le poste arrière, tu perdras du temps à chercher une fonction qui n'y est pas mappée par défaut.</p>
+    </div>
+    <div class="srcs">
+      <a href="../F14BU/index.html" target="_blank">Mapping HOTAS Virpil (F-14, à adapter)</a>
+    </div>
+  `
+}
+];
+
+let progress = {}, notes = {};
+const K_PROG = "f4e_a_progress", K_NOTES = "f4e_a_notes";
+
+function renderRail(){
+  const rail = document.getElementById('rail');
+  rail.innerHTML = LESSONS.map(l => `
+    <button class="item ${progress[l.id]?'done':''} ${l.id===current?'on':''}" onclick="goTo('${l.id}')">
+      <span class="idx">${l.idx}</span><span class="nm">${l.nm.replace(/&amp;/g,'&')}</span>
+    </button>`).join('');
+  const done = Object.values(progress).filter(Boolean).length;
+  document.getElementById('foot').textContent = `${done} / ${LESSONS.length} leçons terminées`;
+}
+
+function esc(s){ return (s||"").replace(/[&<>]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+
+async function renderMain(){
+  const l = LESSONS.find(x=>x.id===current);
+  const i = LESSONS.indexOf(l);
+  const prev = LESSONS[i-1], next = LESSONS[i+1];
+  const noteVal = notes[l.id] || "";
+  document.getElementById('main').innerHTML = `
+    <div class="page">
+      <div class="eyebrow">Leçon ${l.idx} · Section A</div>
+      <h2>${l.nm.replace(/&amp;/g,'&')}<span class="badge">${l.badge}</span></h2>
+      <p class="intro">${l.intro}</p>
+      ${l.body}
+      <h3>Notes personnelles</h3>
+      <textarea id="notes" placeholder="Tes remarques, réglages, pièges rencontrés...">${esc(noteVal)}</textarea>
+      <div class="doneline ${progress[l.id]?'on':''}" id="doneline" onclick="toggleDone('${l.id}')">
+        <div class="box"></div><span>${progress[l.id] ? 'Leçon marquée comme terminée' : 'Marquer cette leçon comme terminée'}</span>
+      </div>
+      <div class="nav">
+        ${prev ? `<button class="ghost" onclick="goTo('${prev.id}')">&larr; ${prev.nm.replace(/&amp;/g,'&')}</button>` : `<a class="ghost" href="index.html">&larr; Sommaire</a>`}
+        ${next ? `<button class="ghost" onclick="goTo('${next.id}')">${next.nm.replace(/&amp;/g,'&')} &rarr;</button>` : `<a class="ghost" href="index.html">Sommaire &rarr;</a>`}
+      </div>
+    </div>`;
+  document.querySelectorAll('img[data-src]').forEach(img=>{
+    img.src = "img/" + IMG[img.dataset.src];
+    img.onclick = () => openLb(img.src);
+  });
+  const ta = document.getElementById('notes');
+  ta.addEventListener('input', async () => { notes[l.id] = ta.value; await __sset(K_NOTES, JSON.stringify(notes)); });
+}
+
+async function toggleDone(id){
+  progress[id] = !progress[id];
+  await __sset(K_PROG, JSON.stringify(progress));
+  renderRail(); renderMain();
+}
+
+let current = LESSONS[0].id;
+function goTo(id){ current = id; renderRail(); renderMain(); window.scrollTo(0,0); }
+
+function openLb(src){ document.getElementById('lbimg').src = src; document.getElementById('lb').classList.add('on'); }
+document.getElementById('lb').onclick = () => document.getElementById('lb').classList.remove('on');
+
+(async function init(){
+  const p = await __sget(K_PROG); if (p && p.value) { try { progress = JSON.parse(p.value); } catch(e){} }
+  const n = await __sget(K_NOTES); if (n && n.value) { try { notes = JSON.parse(n.value); } catch(e){} }
+  renderRail(); renderMain();
+})();
+</script>
+</html>
