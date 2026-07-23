@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Section G — Armement &amp; capteurs — F-4E</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+    --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+    --display:"Oswald","Arial Narrow",sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)}
+  .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+         color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;color:var(--ink);margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+     margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+  .lead{color:var(--dim)}
+  table.pins{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
+  table.pins td.n{font-family:var(--mono);color:var(--amber);width:26px}
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+  .tag-p{display:inline-block;font-family:var(--mono);font-size:9.5px;color:var(--deck);background:var(--go);padding:1px 5px;margin-right:6px;vertical-align:1px}
+  .tag-w{display:inline-block;font-family:var(--mono);font-size:9.5px;color:var(--deck);background:var(--amber);padding:1px 5px;margin-right:6px;vertical-align:1px}
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)}
+  .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .note p+p{margin-top:8px}
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+  .banner{background:var(--panel-2);border-bottom:1px solid var(--amber);padding:11px 20px;font-size:13px;color:var(--dim);display:flex;gap:14px;align-items:center;justify-content:space-between}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+
+<div id="banner" class="banner">
+  <span>Contenu issu du manuel officiel Heatblur et du guide communautaire de Chuck (radar, cockpit, armement) — pages 275 à 320 et 641 à 724 notamment.</span>
+  <button class="ghost" onclick="document.getElementById('banner').remove()">OK</button>
+</div>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <a href="index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:6px">&larr; Cursus F-4E</a><br>
+      <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px">&larr; Accueil</a>
+      <div class="tail">Section G · F-4E Phantom II</div>
+      <h1>Armement<br>&amp; capteurs</h1>
+      <p class="sub">Quatre leçons : radar APQ-120, armement air-air, armement air-sol, RWR/contre-mesures.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const LESSONS = [
+{
+  id: "g1", idx:"G1", nm:"Radar AN/APQ-120", badge:"WSO",
+  intro: "Un radar à impulsions « brut » — il capte tout, à l'air comme au sol, sans filtrage automatique. C'est au WSO de trier.",
+  body: `
+    <ol class="proc">
+      <li><span class="tag-w">WSO</span> Vérifier : moteurs tournants, générateurs ON, INS aligné, Instrument Ground Power Test Switch sur NORM.</li>
+      <li><span class="tag-w">WSO</span> Radar Power Selector — STBY. Chauffe de 3 minutes (magnétron actif après 3 min, klystron après 100 sec).</li>
+      <li><span class="tag-w">WSO</span> Une fois la chauffe terminée <b>et en vol uniquement</b> : Radar Power Selector — OPR.</li>
+      <li><span class="tag-w">WSO</span> DSCG Mode Selector — RDR.</li>
+      <li><span class="tag-p">P</span> DSCG Screen Mode Switch — RADAR, pour voir le répétiteur côté pilote.</li>
+    </ol>
+    <div class="note warn">
+      <span class="lbl">Piège classique</span>
+      <p>Ne jamais passer le radar sur OPR au sol — c'est réservé au vol, pour la sécurité du personnel et des autres appareils autour.</p>
+    </div>
+    <h3>Ce qui dégrade l'image radar</h3>
+    <table class="pins">
+      <tr><td class="n">Gain</td><td>Trop bas = cibles filtrées. Trop haut = bruit thermique noyant l'écran. Se règle en continu, pas de valeur fixe.</td></tr>
+      <tr><td class="n">Clutter</td><td>Retours du lobe principal (relief, lacs, villes) et des lobes secondaires (plus difficiles à distinguer d'une vraie cible).</td></tr>
+      <tr><td class="n">Brouillage</td><td>Une ligne verticale de bruit apparaît si un brouilleur est dans le volume balayé — le radar peut entrer en mode Home-On-Jam automatiquement (voyant « H »).</td></tr>
+    </table>
+    <p class="lead">Le radar détecte un gros porteur (bombardier) jusqu'à 40-50 nm, un chasseur jusqu'à 25 nm, avec un accrochage généralement possible sous 20 nm.</p>
+  `
+},
+{
+  id: "g2", idx:"G2", nm:"Armement air-air", badge:"Emploi",
+  intro: "Canon, AIM-7 Sparrow guidé radar, AIM-9 Sidewinder guidé infrarouge — sélectionnés au Gun/Missile Pinky Switch sur la manette gauche.",
+  body: `
+    <h3>Sélection d'arme</h3>
+    <table class="pins">
+      <tr><td class="n">AVT</td><td>Radar (AIM-7)</td></tr>
+      <tr><td class="n">CTR</td><td>Chaleur (AIM-9)</td></tr>
+      <tr><td class="n">ARR</td><td>Canon (M61A1)</td></tr>
+      <tr><td class="n">UP</td><td>Reject — passe à la station suivante du même type</td></tr>
+    </table>
+    <p class="lead">Les voyants HUD RADAR/HEAT/GUN/ARM indiquent l'arme sélectionnée et l'état du Master Arm — vérifiés d'un coup d'œil avant le tir.</p>
+    <h3>Canon M61A1 Vulcan</h3>
+    <p class="lead">639 obus, cadence sélectionnable 4000 ou 6000 coups/min. Le viseur LCOSS (Lead Computing Optical Sight System) calcule le point de tir avec un réticule de 25 mils (anneau intérieur) et 50 mils (anneau extérieur). Règle pratique : diamètre en mils = 1000 × envergure cible (ft) / distance (ft) — un MiG-21 (23 ft d'envergure) qui remplit l'anneau intérieur (25 mils) indique environ 1000 ft de distance.</p>
+    <h3>AIM-7 Sparrow — guidage radar semi-actif</h3>
+    <p class="lead">Nécessite un accrochage radar maintenu jusqu'à l'impact — le missile suit l'écho radar réfléchi par la cible. Sensible au brouillage et aux ruptures de lock.</p>
+    <h3>AIM-9 Sidewinder — guidage infrarouge</h3>
+    <p class="lead">Autoguidé sur la chaleur, ne nécessite pas de maintien du radar après le tir — mais sensible aux leurres thermiques (flares) de la cible.</p>
+    <div class="note go">
+      <span class="lbl">Avant l'engagement</span>
+      <p>Toujours larguer les bidons externes avant un combat air-air rapproché (sauf contre un gros porteur lent) — et dans tous les cas, larguer le bidon centre qui bloque le tir des Sparrow sur les stations avant.</p>
+    </div>
+  `
+},
+{
+  id: "g3", idx:"G3", nm:"Armement air-sol", badge:"Précision",
+  intro: "Bombes lisses ou guidées, Maverick électro-optique, nacelle de désignation Pave Spike — plusieurs modes de largage selon la précision recherchée.",
+  body: `
+    <h3>Modes de largage principaux</h3>
+    <table class="pins">
+      <tr><td class="n">DIRECT</td><td>Largage manuel en palier, visée optique directe.</td></tr>
+      <tr><td class="n">DIVE TOSS</td><td>Calcul automatique du point de largage en piqué.</td></tr>
+      <tr><td class="n">LOFT</td><td>Largage en ressource, minimise l'exposition à la DCA mais très imprécis — hérité de la doctrine nucléaire.</td></tr>
+      <tr><td class="n">TGT FIND</td><td>Désignation via Pave Spike ou radar, pour une précision accrue.</td></tr>
+    </table>
+    <h3>AN/AVQ-23 Pave Spike (nacelle de désignation)</h3>
+    <p class="lead">Fournit une image TV orientable pour repérer les cibles au sol, et peut désigner au laser pour guider les bombes à guidage laser. Mise en route : alimentation ON, tête stockée (STOW), puis désignation via l'Antenna Hand Control du WSO.</p>
+    <h3>AGM-65 Maverick</h3>
+    <p class="lead">Missile air-sol à guidage électro-optique (ou infrarouge selon variante) — le Forward Hand Control du pilote permet de piloter le viseur du missile avant le tir, en mode contraste clair/sombre (WHT/BLK, AUTO, ou BLK/WHT selon l'arrière-plan).</p>
+    <div class="note warn">
+      <span class="lbl">Piège classique</span>
+      <p>Sans accrochage radar ni désignation, le mode LOFT reste le plus simple à utiliser mais aussi le moins précis — ne pas l'employer sur une cible ponctuelle si un mode de désignation est disponible.</p>
+    </div>
+  `
+},
+{
+  id: "g4", idx:"G4", nm:"RWR &amp; contre-mesures", badge:"Défense",
+  intro: "Le RWR indique qui te vise ; chaff, flares et brouilleur ALQ-131 répondent chacun à une menace différente.",
+  body: `
+    <h3>Deux types de menace, deux réponses</h3>
+    <table class="pins">
+      <tr><td class="n">IR</td><td>Missile à guidage infrarouge (chaleur) → <b>Flares</b>, qui offrent une source de chaleur plus attractive que les réacteurs.</td></tr>
+      <tr><td class="n">Radar</td><td>Missile ou tir radar-guidé → <b>Chaff</b> (paillettes métalliques, brouillage passif) ou <b>brouilleur AN/ALQ-131</b> (brouillage actif/continu).</td></tr>
+    </table>
+    <div class="note warn">
+      <span class="lbl">Piège classique</span>
+      <p>Déployer des contre-mesures contre le mauvais type de menace ne sert à rien — un missile IR ignore complètement le chaff, et inversement.</p>
+    </div>
+    <h3>AN/ALE-40 (chaff/flares)</h3>
+    <p class="lead">Piloté depuis les deux postes : réglages de salve (nombre, intervalle) sur le panneau CCU du WSO, bouton de largage sur la manette du pilote ou le CCU du WSO. Le largage nécessite volets et aérofreins rentrés.</p>
+    <h3>Jester WSO — l'essentiel</h3>
+    <p class="lead">Si tu voles seul, Jester gère automatiquement l'alignement INS, le radar, le DSCG, le WRCS et la navigation par « leapfrogging » entre les points de route. La roue de commandes s'ouvre par une pression courte sur A, se referme par une pression longue.</p>
+    <div class="srcs">
+      <a href="index.html">Retour au sommaire</a>
+    </div>
+  `
+}
+];
+
+let progress = {}, notes = {};
+const K_PROG = "f4e_g_progress", K_NOTES = "f4e_g_notes";
+
+function renderRail(){
+  const rail = document.getElementById('rail');
+  rail.innerHTML = LESSONS.map(l => `
+    <button class="item ${progress[l.id]?'done':''} ${l.id===current?'on':''}" onclick="goTo('${l.id}')">
+      <span class="idx">${l.idx}</span><span class="nm">${l.nm.replace(/&amp;/g,'&')}</span>
+    </button>`).join('');
+  const done = Object.values(progress).filter(Boolean).length;
+  document.getElementById('foot').textContent = `${done} / ${LESSONS.length} leçons terminées`;
+}
+function esc(s){ return (s||"").replace(/[&<>]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+async function renderMain(){
+  const l = LESSONS.find(x=>x.id===current);
+  const i = LESSONS.indexOf(l);
+  const prev = LESSONS[i-1], next = LESSONS[i+1];
+  const noteVal = notes[l.id] || "";
+  document.getElementById('main').innerHTML = `
+    <div class="page">
+      <div class="eyebrow">Leçon ${l.idx} · Section G</div>
+      <h2>${l.nm.replace(/&amp;/g,'&')}<span class="badge">${l.badge}</span></h2>
+      <p class="intro">${l.intro}</p>
+      ${l.body}
+      <h3>Notes personnelles</h3>
+      <textarea id="notes" placeholder="Tes remarques, réglages, pièges rencontrés...">${esc(noteVal)}</textarea>
+      <div class="doneline ${progress[l.id]?'on':''}" id="doneline" onclick="toggleDone('${l.id}')">
+        <div class="box"></div><span>${progress[l.id] ? 'Leçon marquée comme terminée' : 'Marquer cette leçon comme terminée'}</span>
+      </div>
+      <div class="nav">
+        ${prev ? `<button class="ghost" onclick="goTo('${prev.id}')">&larr; ${prev.nm.replace(/&amp;/g,'&')}</button>` : `<a class="ghost" href="index.html">&larr; Sommaire</a>`}
+        ${next ? `<button class="ghost" onclick="goTo('${next.id}')">${next.nm.replace(/&amp;/g,'&')} &rarr;</button>` : `<a class="ghost" href="index.html">Sommaire &rarr;</a>`}
+      </div>
+    </div>`;
+  const ta = document.getElementById('notes');
+  ta.addEventListener('input', async () => { notes[l.id] = ta.value; await __sset(K_NOTES, JSON.stringify(notes)); });
+}
+async function toggleDone(id){
+  progress[id] = !progress[id];
+  await __sset(K_PROG, JSON.stringify(progress));
+  renderRail(); renderMain();
+}
+let current = LESSONS[0].id;
+function goTo(id){ current = id; renderRail(); renderMain(); window.scrollTo(0,0); }
+(async function init(){
+  const p = await __sget(K_PROG); if (p && p.value) { try { progress = JSON.parse(p.value); } catch(e){} }
+  const n = await __sget(K_NOTES); if (n && n.value) { try { notes = JSON.parse(n.value); } catch(e){} }
+  renderRail(); renderMain();
+})();
+</script>
+</html>

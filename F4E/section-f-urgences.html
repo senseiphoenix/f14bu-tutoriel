@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Section F — Urgences — F-4E</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+    --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+    --display:"Oswald","Arial Narrow",sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)}
+  .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+         color:var(--deck);background:var(--warn);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;color:var(--ink);margin:18px 0 0;border-left:2px solid var(--warn);padding-left:16px}
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+     margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+  .lead{color:var(--dim)}
+  table.pins{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
+  table.pins td.n{font-family:var(--mono);color:var(--amber);width:26px}
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--warn);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+  .bf{border:1px solid var(--warn);background:rgba(217,105,90,.08);padding:14px 16px;margin:16px 0}
+  .bf .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--warn);display:block;margin-bottom:8px}
+  .bf ol{list-style:none;counter-reset:s;padding:0;margin:0}
+  .bf ol li{counter-increment:s;padding:5px 0;font-family:var(--mono);font-size:13.5px}
+  .bf ol li::before{content:counter(s)". ";color:var(--warn)}
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)}
+  .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .note p+p{margin-top:8px}
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+  .banner{background:var(--panel-2);border-bottom:1px solid var(--warn);padding:11px 20px;font-size:13px;color:var(--dim);display:flex;gap:14px;align-items:center;justify-content:space-between}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+
+<div id="banner" class="banner">
+  <span>Contenu issu du guide communautaire de Chuck — pages 236 à 274, en complément du manuel officiel Heatblur. Les procédures « Bold Face » sont à connaître par cœur.</span>
+  <button class="ghost" onclick="document.getElementById('banner').remove()">OK</button>
+</div>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <a href="index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:6px">&larr; Cursus F-4E</a><br>
+      <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px">&larr; Accueil</a>
+      <div class="tail">Section F · F-4E Phantom II</div>
+      <h1>Urgences</h1>
+      <p class="sub">Trois leçons : feu moteur, panne moteur, items « Bold Face » à réciter sans checklist.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const LESSONS = [
+{
+  id: "f1", idx:"F1", nm:"Feu &amp; surchauffe moteur", badge:"Critique",
+  intro: "Le F-4E n'a pas d'extincteur moteur — la seule parade en vol est de couper l'alimentation en carburant du moteur affecté.",
+  body: `
+    <h3>Au sol</h3>
+    <div class="bf">
+      <span class="lbl">Bold Face — Feu moteur au sol</span>
+      <ol><li>MANETTES — OFF</li></ol>
+    </div>
+    <h3>En vol</h3>
+    <ol class="proc">
+      <li>Manette du moteur affecté — IDLE.</li>
+      <li>Maintenir au moins 300 kts. Anticiper une panne hydraulique Utility, éviter de virer vers le moteur affecté.</li>
+      <li>Pour le moteur affecté : Generator — OFF, Throttle — OFF, Master Switch — OFF.</li>
+      <li>Air Refueling Switch — EXTEND (aide à la dépressurisation/sécurité).</li>
+      <li>Si le feu persiste : éjection.</li>
+      <li>Si le feu s'éteint : se poser dès que possible, sans tenter de relancer le moteur affecté.</li>
+    </ol>
+    <div class="note warn">
+      <span class="lbl">Pourquoi c'est sérieux</span>
+      <p>Sans extincteur embarqué, il n'y a aucun moyen actif d'éteindre un feu moteur — seule la coupure du carburant peut l'arrêter. C'est pourquoi la vitesse (300 kts mini) et l'orientation du virage comptent : elles limitent l'exposition du reste de l'avion aux flammes et préservent l'hydraulique restante.</p>
+    </div>
+  `
+},
+{
+  id: "f2", idx:"F2", nm:"Pannes moteur", badge:"Procédure",
+  intro: "Pompage (compressor stall) et extinction en vol se traitent différemment — mais tous deux commencent par réduire la puissance du moteur affecté.",
+  body: `
+    <h3>Pompage du compresseur (compressor stall)</h3>
+    <p class="lead">Une chute brutale de RPM signale un pompage — le J79 réagit lentement aux mouvements de manette, donc traite-la avec douceur.</p>
+    <ol class="proc">
+      <li>Manette — IDLE.</li>
+      <li>Piquer pour retrouver plus de 300 kts.</li>
+      <li>Une fois l'EGT redescendue et le buffet cessé, remettre doucement la manette et vérifier une accélération normale.</li>
+      <li>Si le pompage ne se résorbe pas : couper le générateur, couper la manette, vérifier les volets d'admission rétractés (WSO), rallumer en maintenant le bouton d'allumage, manette IDLE, surveiller les paramètres, puis remettre le générateur.</li>
+    </ol>
+    <h3>Extinction en vol — rallumage en moulinet</h3>
+    <ol class="proc">
+      <li>Maintenir plus de 300 kts (ou Mach 0.6).</li>
+      <li>Engine Master Switch — ON.</li>
+      <li>Manette — OFF.</li>
+      <li>Presser et maintenir le bouton d'allumage.</li>
+      <li>Manette — IDLE.</li>
+      <li>Surveiller RPM, EGT, pression huile et débit carburant — retour aux valeurs nominales.</li>
+    </ol>
+    <div class="note">
+      <span class="lbl">Enveloppe de rallumage</span>
+      <p>Le RPM de moulinet nécessaire augmente avec l'altitude : environ 13 % à 30 000 ft, 40 % à 40 000 ft, 60 % à 60 000 ft.</p>
+    </div>
+  `
+},
+{
+  id: "f3", idx:"F3", nm:"Bold Face — items critiques", badge:"À réciter",
+  intro: "Les équipages Phantom doivent réciter ces procédures sans checklist. Ce sont les gestes qui ne laissent pas le temps de lire.",
+  body: `
+    <div class="bf">
+      <span class="lbl">Évacuation d'urgence</span>
+      <ol>
+        <li>GARDE INFÉRIEURE — LEVÉE</li>
+        <li>HARNAIS D'ÉPAULE — LIBÉRÉ</li>
+        <li>POIGNÉE INTÉRIEURE — TOURNER VERS L'ARRIÈRE</li>
+        <li>POIGNÉE EXTÉRIEURE — VERROUILLER EN HAUT</li>
+      </ol>
+    </div>
+    <div class="bf">
+      <span class="lbl">Interruption décollage (ABORT)</span>
+      <ol>
+        <li>MANETTES — IDLE</li>
+        <li>PARACHUTE — DÉPLOYER</li>
+        <li>CROSSE — SORTIE</li>
+      </ol>
+    </div>
+    <div class="bf">
+      <span class="lbl">Récupération vol non contrôlé</span>
+      <ol>
+        <li>MANCHE — EN AVANT</li>
+        <li>AILERONS ET PALONNIER — NEUTRES</li>
+        <li>SI NON RÉCUPÉRÉ — MANCHE EN AVANT MAINTENU, PARACHUTE DÉPLOYÉ</li>
+      </ol>
+    </div>
+    <div class="bf">
+      <span class="lbl">Vrille en montée (upright spin)</span>
+      <ol>
+        <li>MANCHE — MAINTENIR PLEIN AVANT</li>
+        <li>AILERONS — PLEIN DANS LE SENS DE L'AIGUILLE DE VIRAGE</li>
+        <li>UNE FOIS L'AVION DÉLESTÉ — AILERONS NEUTRES</li>
+      </ol>
+    </div>
+    <div class="bf">
+      <span class="lbl">Panne moteur en finale</span>
+      <ol>
+        <li>MANETTES — POST-COMBUSTION</li>
+      </ol>
+    </div>
+    <div class="bf">
+      <span class="lbl">Pneu éclaté au décollage/atterrissage</span>
+      <ol>
+        <li>DIRECTION ROULETTE AVANT — ENGAGER</li>
+        <li>ANTI-SKID — OFF</li>
+      </ol>
+    </div>
+    <p class="lead">La marque du véritable "Phantom Phlyer" est de réciter ces séquences sans une seconde d'hésitation — en conditions réelles, aucune erreur n'était tolérée.</p>
+    <div class="srcs">
+      <a href="index.html">Retour au sommaire</a>
+    </div>
+  `
+}
+];
+
+let progress = {}, notes = {};
+const K_PROG = "f4e_f_progress", K_NOTES = "f4e_f_notes";
+
+function renderRail(){
+  const rail = document.getElementById('rail');
+  rail.innerHTML = LESSONS.map(l => `
+    <button class="item ${progress[l.id]?'done':''} ${l.id===current?'on':''}" onclick="goTo('${l.id}')">
+      <span class="idx">${l.idx}</span><span class="nm">${l.nm.replace(/&amp;/g,'&')}</span>
+    </button>`).join('');
+  const done = Object.values(progress).filter(Boolean).length;
+  document.getElementById('foot').textContent = `${done} / ${LESSONS.length} leçons terminées`;
+}
+function esc(s){ return (s||"").replace(/[&<>]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+async function renderMain(){
+  const l = LESSONS.find(x=>x.id===current);
+  const i = LESSONS.indexOf(l);
+  const prev = LESSONS[i-1], next = LESSONS[i+1];
+  const noteVal = notes[l.id] || "";
+  document.getElementById('main').innerHTML = `
+    <div class="page">
+      <div class="eyebrow">Leçon ${l.idx} · Section F</div>
+      <h2>${l.nm.replace(/&amp;/g,'&')}<span class="badge">${l.badge}</span></h2>
+      <p class="intro">${l.intro}</p>
+      ${l.body}
+      <h3>Notes personnelles</h3>
+      <textarea id="notes" placeholder="Tes remarques, réglages, pièges rencontrés...">${esc(noteVal)}</textarea>
+      <div class="doneline ${progress[l.id]?'on':''}" id="doneline" onclick="toggleDone('${l.id}')">
+        <div class="box"></div><span>${progress[l.id] ? 'Leçon marquée comme terminée' : 'Marquer cette leçon comme terminée'}</span>
+      </div>
+      <div class="nav">
+        ${prev ? `<button class="ghost" onclick="goTo('${prev.id}')">&larr; ${prev.nm.replace(/&amp;/g,'&')}</button>` : `<a class="ghost" href="index.html">&larr; Sommaire</a>`}
+        ${next ? `<button class="ghost" onclick="goTo('${next.id}')">${next.nm.replace(/&amp;/g,'&')} &rarr;</button>` : `<a class="ghost" href="index.html">Sommaire &rarr;</a>`}
+      </div>
+    </div>`;
+  const ta = document.getElementById('notes');
+  ta.addEventListener('input', async () => { notes[l.id] = ta.value; await __sset(K_NOTES, JSON.stringify(notes)); });
+}
+async function toggleDone(id){
+  progress[id] = !progress[id];
+  await __sset(K_PROG, JSON.stringify(progress));
+  renderRail(); renderMain();
+}
+let current = LESSONS[0].id;
+function goTo(id){ current = id; renderRail(); renderMain(); window.scrollTo(0,0); }
+(async function init(){
+  const p = await __sget(K_PROG); if (p && p.value) { try { progress = JSON.parse(p.value); } catch(e){} }
+  const n = await __sget(K_NOTES); if (n && n.value) { try { notes = JSON.parse(n.value); } catch(e){} }
+  renderRail(); renderMain();
+})();
+</script>
+</html>

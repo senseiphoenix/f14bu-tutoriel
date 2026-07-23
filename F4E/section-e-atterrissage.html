@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Section E — Atterrissage — F-4E</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+    --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+    --display:"Oswald","Arial Narrow",sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)}
+  .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+         color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;color:var(--ink);margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+     margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+  .lead{color:var(--dim)}
+  table.pins{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
+  table.pins td.n{font-family:var(--mono);color:var(--amber);width:26px}
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)}
+  .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .note p+p{margin-top:8px}
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+  .banner{background:var(--panel-2);border-bottom:1px solid var(--amber);padding:11px 20px;font-size:13px;color:var(--dim);display:flex;gap:14px;align-items:center;justify-content:space-between}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+
+<div id="banner" class="banner">
+  <span>Contenu issu du guide communautaire de Chuck — pages 209 à 221, en complément du manuel officiel Heatblur.</span>
+  <button class="ghost" onclick="document.getElementById('banner').remove()">OK</button>
+</div>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <a href="index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:6px">&larr; Cursus F-4E</a><br>
+      <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px">&larr; Accueil</a>
+      <div class="tail">Section E · F-4E Phantom II</div>
+      <h1>Atterrissage</h1>
+      <p class="sub">Le tour de piste visuel complet, étape par étape, jusqu'à l'arrêt complet.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const LESSONS = [
+{
+  id: "e1", idx:"E1", nm:"Approche initiale", badge:"Config",
+  intro: "Avant d'entrer dans le circuit : configuration des systèmes, alignement avec la piste à 1500 ft.",
+  body: `
+    <ol class="proc">
+      <li>Stab Aug (Yaw/Roll/Pitch) — ON, voyant PITCH AUG OFF éteint.</li>
+      <li>Sélecteur d'antenne comm — UPR (supérieure). Attention : direction roulette avant et anti-skid peuvent être perturbés en transmettant sur l'antenne inférieure.</li>
+      <li>Taxi/Landing Light — LDG LT.</li>
+      <li>Optical Sight Mode — STANDBY.</li>
+      <li>Régler le seuil d'alerte basse altitude du radioaltimètre.</li>
+      <li>Vérifier Anti-Skid ON, voyant ANTI-SKID INOPERATIVE éteint.</li>
+      <li>S'aligner avec la piste à 1500 ft AGL (ou selon procédure locale), maintenir 300 kts.</li>
+    </ol>
+  `
+},
+{
+  id: "e2", idx:"E2", nm:"Break &amp; vent arrière", badge:"Circuit",
+  intro: "Le break marque l'entrée dans le circuit ; le vent arrière prépare la configuration finale.",
+  body: `
+    <h3>Break</h3>
+    <ol class="proc">
+      <li>Break gauche ou droite au-dessus du point de poser visé.</li>
+      <li>Réduire la puissance selon besoin.</li>
+      <li>Sortir les aérofreins si nécessaire.</li>
+      <li>Effectuer le break en tirant environ 3 à 4 G, virage en palier.</li>
+    </ol>
+    <h3>Vent arrière</h3>
+    <ol class="proc">
+      <li>Sortir au vent arrière, cap opposé à l'atterrissage, à 200-220 kts et 1500 ft AGL (ne jamais dépasser 250 kts).</li>
+      <li>Éviter le buffet tout au long du circuit — ajuster la puissance pour respecter la vitesse de sortie de train.</li>
+      <li>Sortir le train.</li>
+      <li>Volets/becs — OUT &amp; DOWN complet.</li>
+      <li>Vérifier indication SLATS OUT et FLAPS DN.</li>
+      <li>Réduire à 180 kts minimum pour éviter un excès de vitesse en virage de base.</li>
+    </ol>
+    <div class="note">
+      <span class="lbl">À noter</span>
+      <p>L'extension réelle des volets peut ne se produire qu'en ralentissant sous 210 kts.</p>
+    </div>
+  `
+},
+{
+  id: "e3", idx:"E3", nm:"Virage de base &amp; finale", badge:"AoA",
+  intro: "Tout se joue sur l'AoA : 19.2 unités « On Speed », tenue jusqu'au seuil de piste.",
+  body: `
+    <h3>Virage de base</h3>
+    <ol class="proc">
+      <li>Initier le virage de base quand le bout d'aile forme un angle de 45° avec le bord de piste.</li>
+      <li>Trimmer pour tenir l'AoA On Speed — 19.2 unités. Trois indicateurs à surveiller : l'indexeur AoA (anneau = On Speed), l'indicateur numérique, et la tonalité sonore (constante et médium quand on est On Speed).</li>
+    </ol>
+    <h3>Virage final</h3>
+    <ol class="proc">
+      <li>Utiliser la manette pour contrôler le taux de descente, le manche pour tenir 19.2 unités d'AoA pendant tout le virage.</li>
+      <li>Sortir en finale et relever le nez pour tenir le plan de descente (300 ft AGL, 1 nm du point de poser).</li>
+    </ol>
+    <h3>Courte finale</h3>
+    <ol class="proc">
+      <li>Aligner le centre du viseur avec le seuil de piste pour un plan de descente de 3°, en maintenant 19.2° d'AoA.</li>
+      <li>Manette pour le taux de descente et le plan, manche pour l'AoA.</li>
+      <li>Trop haut sur le plan : réduire la puissance, établir un nouveau plan, puis remettre de la puissance une fois capturé.</li>
+      <li>Trop bas : ajouter de la puissance, tenir l'AoA, puis réduire une fois le plan recapturé.</li>
+      <li>Tenir l'AoA final jusqu'au toucher des roues — le F-4 se pose à la vitesse d'approche, la puissance reste donc relativement constante jusqu'au contact.</li>
+    </ol>
+    <div class="note go">
+      <span class="lbl">Formule de vitesse d'approche</span>
+      <p>Vitesse finale ≈ 142 kts pour une masse de 33 000 lbs, + 2 kts par tranche de 1000 lbs au-delà.</p>
+    </div>
+  `
+},
+{
+  id: "e4", idx:"E4", nm:"Poser &amp; arrêt", badge:"Sol",
+  intro: "Arrondi à 20 ft, parachute de freinage, freinage différentiel jusqu'à l'arrêt complet.",
+  body: `
+    <ol class="proc">
+      <li>Arrondir à 20 ft en tirant doucement le manche vers l'arrière, laisser l'avion se poser.</li>
+      <li>Au toucher, réduire la puissance à IDLE.</li>
+      <li>Déployer le parachute de freinage (touche P).</li>
+      <li>Manche à cabrer complet pour aider au freinage aérodynamique.</li>
+      <li>Palonniers et ailerons pour le contrôle directionnel jusqu'à 70 kts, puis freinage différentiel. La direction de roulette avant ne devrait pas être nécessaire par vent de travers léger.</li>
+      <li>Tapoter les freins doucement sous 70 kts jusqu'à l'arrêt complet.</li>
+      <li>Une fois arrêté, rétracter le parachute (ne jamais le larguer sur piste ou taxiway — technique habituelle : le gonfler au moteur en bord de taxiway avant de le larguer dans la bonne direction).</li>
+      <li>Rejoindre le parking et couper les moteurs.</li>
+    </ol>
+    <div class="note warn">
+      <span class="lbl">Piège classique</span>
+      <p>À 20 ft, l'effet de sol tend à faire piquer le nez — compenser en augmentant la pression à cabrer pendant le toucher. Si l'approche était haute sur le plan, le taux de descente sera élevé et demandera un peu de puissance supplémentaire pour l'amortir.</p>
+    </div>
+    <div class="srcs">
+      <a href="index.html">Retour au sommaire</a>
+    </div>
+  `
+}
+];
+
+let progress = {}, notes = {};
+const K_PROG = "f4e_e_progress", K_NOTES = "f4e_e_notes";
+
+function renderRail(){
+  const rail = document.getElementById('rail');
+  rail.innerHTML = LESSONS.map(l => `
+    <button class="item ${progress[l.id]?'done':''} ${l.id===current?'on':''}" onclick="goTo('${l.id}')">
+      <span class="idx">${l.idx}</span><span class="nm">${l.nm.replace(/&amp;/g,'&')}</span>
+    </button>`).join('');
+  const done = Object.values(progress).filter(Boolean).length;
+  document.getElementById('foot').textContent = `${done} / ${LESSONS.length} leçons terminées`;
+}
+function esc(s){ return (s||"").replace(/[&<>]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+async function renderMain(){
+  const l = LESSONS.find(x=>x.id===current);
+  const i = LESSONS.indexOf(l);
+  const prev = LESSONS[i-1], next = LESSONS[i+1];
+  const noteVal = notes[l.id] || "";
+  document.getElementById('main').innerHTML = `
+    <div class="page">
+      <div class="eyebrow">Leçon ${l.idx} · Section E</div>
+      <h2>${l.nm.replace(/&amp;/g,'&')}<span class="badge">${l.badge}</span></h2>
+      <p class="intro">${l.intro}</p>
+      ${l.body}
+      <h3>Notes personnelles</h3>
+      <textarea id="notes" placeholder="Tes remarques, réglages, pièges rencontrés...">${esc(noteVal)}</textarea>
+      <div class="doneline ${progress[l.id]?'on':''}" id="doneline" onclick="toggleDone('${l.id}')">
+        <div class="box"></div><span>${progress[l.id] ? 'Leçon marquée comme terminée' : 'Marquer cette leçon comme terminée'}</span>
+      </div>
+      <div class="nav">
+        ${prev ? `<button class="ghost" onclick="goTo('${prev.id}')">&larr; ${prev.nm.replace(/&amp;/g,'&')}</button>` : `<a class="ghost" href="index.html">&larr; Sommaire</a>`}
+        ${next ? `<button class="ghost" onclick="goTo('${next.id}')">${next.nm.replace(/&amp;/g,'&')} &rarr;</button>` : `<a class="ghost" href="index.html">Sommaire &rarr;</a>`}
+      </div>
+    </div>`;
+  const ta = document.getElementById('notes');
+  ta.addEventListener('input', async () => { notes[l.id] = ta.value; await __sset(K_NOTES, JSON.stringify(notes)); });
+}
+async function toggleDone(id){
+  progress[id] = !progress[id];
+  await __sset(K_PROG, JSON.stringify(progress));
+  renderRail(); renderMain();
+}
+let current = LESSONS[0].id;
+function goTo(id){ current = id; renderRail(); renderMain(); window.scrollTo(0,0); }
+(async function init(){
+  const p = await __sget(K_PROG); if (p && p.value) { try { progress = JSON.parse(p.value); } catch(e){} }
+  const n = await __sget(K_NOTES); if (n && n.value) { try { notes = JSON.parse(n.value); } catch(e){} }
+  renderRail(); renderMain();
+})();
+</script>
+</html>
