@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursus F-14B(U) — appli complète</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;--warn:#d9695a;
+    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)} .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+  .imgfail{display:none;padding:22px 14px;font-size:13px;color:var(--dim);text-align:center}
+  figure.failed img{display:none} figure.failed .imgfail{display:block}
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+  code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:2px 6px;border:1px solid var(--line);color:var(--amber)}
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)} .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .keytbl{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  .keytbl th,.keytbl td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+  .keytbl th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--panel)}
+  .keytbl td:first-child{font-family:var(--mono);white-space:nowrap}
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex} .lb img{max-width:100%;max-height:100%}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+<style>
+.phase-hd{display:flex;align-items:baseline;gap:8px;padding:18px 20px 6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber)}
+.phase-hd .rule{flex:1;height:1px;background:var(--line)}
+.gauge-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);position:relative;overflow:hidden;margin-top:14px}
+.gauge-fill{position:absolute;inset:0 auto 0 0;background:var(--go);width:0;transition:width .35s}
+.gauge-txt{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:6px}
+.pat{border:1px solid var(--line);background:#0b1114;padding:16px;margin:20px 0}
+.pat svg{width:100%;height:auto;display:block}
+.pat .cap{font-size:12.5px;color:var(--dim);margin-top:10px}
+</style>
+</head><body>
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <div class="tail">DCS · F-14B(U) Tomcat</div>
+      <h1>Cursus<br>complet</h1>
+      <p class="sub">32 leçons, 7 sections, une seule progression.</p>
+      <div class="gauge-bar"><div class="gauge-fill" id="gfill"></div></div>
+      <div class="gauge-txt"><span id="gpct">0 %</span><span id="gcnt"></span></div>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const LOCAL="img/";
+const D = id => `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+const V = id => `https://drive.google.com/file/d/${id}/view`;
+const FN = {"1q-DgLgU_caBr1MnRhDBCWqhBuJNhxPiV": "normalprocedureschecklistsoverview.jpg", "1dKLIRNF1kPhw96R6DnZjyoLmSvz_D20K": "checklist_tool_example.jpg", "1LSNf370Z76pfgLP3G2czpVpjV1FIW1_7": "f14bu_pilot_overview.jpg", "1yauTBGsEFR1cEUkcM-Ndlsx8bfwaQDDr": "f14bu_rio_overview.jpg", "1cRWJ_LuozK-F9PEuyrFNpO6YjG1dKAYG": "left_console_pilot-01.jpg", "1PBG842BX0rhlgg31DQmdGF2x956TnaDp": "left_instrument_panel-01.jpg", "1TMNAqLBvoD1N3zdWbrI4YbYM-sOEAnia": "left_instrument_panel_02-01.jpg", "1MJeyRSy0Xopj5r0Vy1EuXeVMbCWJ9ywh": "right_instrument_panel-01.jpg", "1iHXkN6fMCN5z0feGKcX2thLu3sE4ot7V": "left_console_cdnu-01.jpg", "1IJqaDS5W80PrrYzygxa8X84DqUNq711x": "overview_ptid.jpg", "1343TPem4GqbGhyWgmAadSdPBmD3gwPuj": "ptid_alignment_displays.jpg", "1Jf0BXSaEiddTTex3sjRWA92H_9RBuMkB": "throttle2.svg", "1btOScq6_6u7BDY4-JWTLuCDHL3zv_8hI": "left_vertical_console_landing_gear_control_panel.jpg", "1ckKAnQ42OHQlUoVfpwz43EghwIpEB3Qz": "left_console_arrestinghook-01.jpg", "10QucDurJZPC_VCxHu0r-KDezHt5LHc6w": "right_instrument_panel_wingsweep-01.jpg", "1D8RAKdjVRNsFb6o7xR7jJMBctNtcvVRq": "left_vertical_console_launch_bar_abort_switch.jpg", "1L-r0Hw4MSrXPKkACqWQRfjHGhNBbsXa-": "left_vertical_console_fuel_management_panel.jpg", "1Ios11Na-FMxu-OytIkKd29GWkTYN5vRh": "left_instrument_panel_left_engine-05.jpg", "1d69JHPEF-kG0jeqt-kXGclQ0UBZvEKbB": "right_instrument_panel_right_engine-01.jpg", "1OWx3BXaU7VuOdzGbJ2ojECuqg20P3duy": "left_knee_panel_oil_pressure_indicators.jpg", "1Bxye8blt540Y-K6onA6rtNWhpnNFLsLu": "left_knee_panel_hydraulic_pressure_indicator.jpg", "1Yx0il_HbxnUxZvmpWs3TaG0uTr_INVzh": "right_instrument_panel_checklist-06.jpg", "1gLKj-4lvCF8CB3NoH0aEbLMDKWfhkqlz": "left_instrument_panel_lndg_chklst-06.jpg", "1kaJNzj8rs69pQiSx5AH0zWbJ77L2PYg-": "left_instrument_panel_aoa_indexer-02.jpg", "1UJIDpo71d3Mqa2-LSJneG5sjUCjs6X2Q": "left_instrument_panel_airspeed_indicator-01.jpg", "1G5r5-i0Q3XRuZHqpT_fifsgS_pXDor9A": "left_instrument_panel_vvi-04.jpg", "13rHttpiCcdNSrf7agTSQnXaTIZFYR31-": "left_instrument_panel_baroalt-02.jpg", "1bK955HU9Sidlz_MZtQQPKrRtvbJxOIbq": "left_instrument_panel_radalt-01.jpg", "13k-UL5IKQnZ0QBo-OF7uoBMY2-z239p-": "left_instrument_panel_adi-02.jpg", "1qRAYprtHZ5NksPq4OKmLSl2LMzV7hStW": "left_vertical_console_control_surface_position_indicator.jpg", "1qn6aLQk6VesaiCnZMA4kKA3WNPGtzv0e": "vdigr_hud_cruise_manual.jpg", "1A5PAfefJPcyNiO_wJzHQGkR6Fgfo5UBs": "vdigr_vdi_cruise_manual.jpg", "1RzwhUjKozKvX7OSwt-AMnDhuvfix4I5O": "left_console_lcp-01.jpg", "18JLq9huWOJiKPSMt40iBQJ0XcO7ib3lw": "left_windshield_frame_caution_lights_left_windshield_frame.jpg", "1jzZXOauVEv9ozccCS1pukBAex6ojo2iX": "left_console_cap-01.jpg", "19rZHTKxwhB6jSAPFAfl0tn8swS3bk8is": "rio_overview_navigation_panels.jpg", "1rds13EirW0B-KSvLN6IYRXf7yPHRgIpx": "navigation_system_overview.jpg", "1KaA10yvEKk7f8BOnO1aQhIhKrwU9cjc1": "navigation_display_matrix.jpg", "1t0mGtJBNYeXfNdWT7N-aXZse9DtjdCcs": "rio_navigation_display.jpg", "1srqTn4tKvDn4r1XgWgQQNg6OYoMGK1EM": "egi_system_modes.jpg", "1Zzfri1WdBFf90IBoMZ58NSOJqmNcQFCZ": "egi_system_schematic.jpg", "1oMoElmBXaHDDC0-cEi2cOb6CUrXyVaQv": "egi_system_displays.jpg", "19G0SjnyxC30M-gSvdm2I8yWUGQhCoNpT": "ptid_system_displays.jpg", "1VHx7AfEbpn1QNnmk0bLd39ZPajQpQf5z": "pmdig_overview_hsd_pmdig.jpg", "11ytGklNKUzFZBvF3tkhSzbkBcqxUViAJ": "plt_pmdig_hsd_pmdig.jpg", "1Y5nJd_9MB_aqOnVKoqgowjNLNFEZtSco": "hsd_tidrepeat.jpg", "1CcyUvhC2u098w884Zk0LHFMT2yiGOV84": "right_instrument_panel_bdhi-04.jpg", "1enPBPfIrdQ8LR4JFTF4fiGrLNgiDhH63": "tacan-02.jpg", "1gO9FbnO6SMt2_Zf5C4xTJzSVQDn-LOhn": "instant_camera_example.jpg", "1Z7xBs_ilnQns6pv_l5MxuQwQQd0N0fcS": "instant_camera_keybinds.jpg", "1Xff5q-vh0U_1pI34rIJZzIqePuKTk3hk": "center_console_ptid.jpg", "1125vGfmaLxiHhkMkCEaDYUS8pNFgeyZY": "center_panel_ddd.jpg", "1AcyhMEECtkfS7WOn1wuSUKjrNflRYDdz": "vdigr_acm_manual.jpg", "1vSIGGY1nV0Z4oLnX4sDc0FCdY8VaXC64": "weapons_stores_overview_image.jpg", "1d43AjvVJvWjyrpZlXzuSEiyH80bDgcBj": "left_vertical_console_armament_control_panel.jpg", "1q4H10-mIpFHBNAU6yvqa4my94ltjXRVT": "stby_rdy_legend.jpg", "1XWPGKsRYuc6n6YVi-5PxIOw745ZC4qtD": "right_console_rwr-02.jpg"};
+const PATTERN_SVG = `<svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Circuit d'appontage CASE I">
+  <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L6,3 L0,6 Z" fill="#f2a93b"/></marker></defs>
+  <!-- carrier -->
+  <g transform="translate(250,250)">
+    <rect x="-14" y="-46" width="28" height="92" fill="none" stroke="#6fd08c" stroke-width="1.4"/>
+    <line x1="0" y1="46" x2="-30" y2="-42" stroke="#6fd08c" stroke-width="1" opacity=".5"/>
+    <text x="20" y="4" fill="#6fd08c" font-family="monospace" font-size="11">porte-avions</text>
+  </g>
+  <!-- break -->
+  <path d="M470,250 L280,250" stroke="#f2a93b" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  <circle cx="470" cy="250" r="4" fill="#f2a93b"/>
+  <text x="478" y="245" fill="#f2a93b" font-family="monospace" font-size="10">Break · 800 ft · 300-350 kt</text>
+  <!-- downwind -->
+  <path d="M255,240 L255,110" stroke="#f2a93b" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  <text x="120" y="175" fill="#e6e9e4" font-family="monospace" font-size="10">Vent arrière · 600 ft</text>
+  <text x="120" y="190" fill="#8b9aa3" font-family="monospace" font-size="9">train, volets, DLC, crosse</text>
+  <!-- 180 turn -->
+  <path d="M255,110 Q255,70 300,70 L360,70" stroke="#f2a93b" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  <text x="250" y="60" fill="#f2a93b" font-family="monospace" font-size="10">Le 180 · ~450-500 ft · 27-28° d'inclinaison</text>
+  <!-- 90 -->
+  <circle cx="360" cy="70" r="3" fill="#f2a93b"/>
+  <text x="366" y="66" fill="#8b9aa3" font-family="monospace" font-size="9">90°</text>
+  <!-- groove -->
+  <path d="M360,70 Q440,90 430,150 Q420,210 270,244" stroke="#f2a93b" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  <text x="440" y="150" fill="#f2a93b" font-family="monospace" font-size="10">Boule à ~0,6 nm</text>
+  <text x="440" y="165" fill="#8b9aa3" font-family="monospace" font-size="9">15-18 s dans l'axe</text>
+</svg>`;
+const SECTIONS = [
+{letter:"A", title:"Reprendre l'avion en main",
+IMG: {
+  pilot:      "1LSNf370Z76pfgLP3G2czpVpjV1FIW1_7",
+  rio:        "1yauTBGsEFR1cEUkcM-Ndlsx8bfwaQDDr",
+  lconsole:   "1cRWJ_LuozK-F9PEuyrFNpO6YjG1dKAYG",
+  lpanel:     "1PBG842BX0rhlgg31DQmdGF2x956TnaDp",
+  lpanel2:    "1TMNAqLBvoD1N3zdWbrI4YbYM-sOEAnia",
+  rpanel:     "1MJeyRSy0Xopj5r0Vy1EuXeVMbCWJ9ywh",
+  cdnu:       "1iHXkN6fMCN5z0feGKcX2thLu3sE4ot7V",
+  ptid:       "1IJqaDS5W80PrrYzygxa8X84DqUNq711x",
+  ptidalign:  "1343TPem4GqbGhyWgmAadSdPBmD3gwPuj",
+  throttle:   "1Jf0BXSaEiddTTex3sjRWA92H_9RBuMkB",
+  gear:       "1btOScq6_6u7BDY4-JWTLuCDHL3zv_8hI",
+  hook:       "1ckKAnQ42OHQlUoVfpwz43EghwIpEB3Qz",
+  wingsweep:  "10QucDurJZPC_VCxHu0r-KDezHt5LHc6w",
+  launchbar:  "1D8RAKdjVRNsFb6o7xR7jJMBctNtcvVRq",
+  fuelpanel:  "1L-r0Hw4MSrXPKkACqWQRfjHGhNBbsXa-",
+  lengine:    "1Ios11Na-FMxu-OytIkKd29GWkTYN5vRh",
+  rengine:    "1d69JHPEF-kG0jeqt-kXGclQ0UBZvEKbB",
+  oil:        "1OWx3BXaU7VuOdzGbJ2ojECuqg20P3duy",
+  hyd:        "1Bxye8blt540Y-K6onA6rtNWhpnNFLsLu",
+  checklist:  "1Yx0il_HbxnUxZvmpWs3TaG0uTr_INVzh",
+  lndgchk:    "1gLKj-4lvCF8CB3NoH0aEbLMDKWfhkqlz",
+  aoa:        "1kaJNzj8rs69pQiSx5AH0zWbJ77L2PYg-",
+  airspeed:   "1UJIDpo71d3Mqa2-LSJneG5sjUCjs6X2Q",
+  vvi:        "1G5r5-i0Q3XRuZHqpT_fifsgS_pXDor9A",
+  baroalt:    "13rHttpiCcdNSrf7agTSQnXaTIZFYR31-",
+  radalt:     "1bK955HU9Sidlz_MZtQQPKrRtvbJxOIbq",
+  adi:        "13k-UL5IKQnZ0QBo-OF7uoBMY2-z239p-",
+  csurf:      "1qRAYprtHZ5NksPq4OKmLSl2LMzV7hStW",
+  hudcruise:  "1qn6aLQk6VesaiCnZMA4kKA3WNPGtzv0e",
+  vdicruise:  "1A5PAfefJPcyNiO_wJzHQGkR6Fgfo5UBs",
+  lightpanel: "1RzwhUjKozKvX7OSwt-AMnDhuvfix4I5O",
+  cautionlt:  "18JLq9huWOJiKPSMt40iBQJ0XcO7ib3lw",
+  checklisttool: "1dKLIRNF1kPhw96R6DnZjyoLmSvz_D20K",
+  procov: "1q-DgLgU_caBr1MnRhDBCWqhBuJNhxPiV",
+},
+DOC: {
+  manuel:  ["Manuel Heatblur (PDF)","16Xl1mYmujB2wQVBK5kjhMm4GuDRBXH49"],
+  manFR:   ["Manuel A/B en français","1CMBhi8WS2QalriTmdwdlLXTDEAPay-ej"],
+  chuck1:  ["Chuck 1 · JESTER & contrôles","1kggb0SfAQLB41iyIqBkTt4Afi1EHR-J0"],
+  chuck2:  ["Chuck 2 · Cockpit","1tBT_z9QjfAZ-Vt2tTwc9j7s7QwDodkE8"],
+  chuck3:  ["Chuck 3 · Démarrage & décollage","1kn57knCUzVTAf4xBXslSOBooyUp0hvE0"],
+  chuck4:  ["Chuck 4 · Vol & aérodynamique","176bbRcBICqWrgUraEoHzS-ik_xnPHx_F"],
+  chuck7:  ["Chuck 7 · Navigation & ACLS","17VJ0irsI8iGmrUrgHhBtAmJiPMcgR1Uj"]
+},
+L: [
+{id:"a1", title:"Tour du cockpit", isNew:true,
+ intro:"Avant de toucher quoi que ce soit, il faut savoir où sont les choses. Le cockpit du B(U) garde l'ossature du Tomcat des années 70, avec trois écrans modernes greffés dessus. Cette leçon te donne la carte.",
+ body:[
+  {t:"h", v:"La vue d'ensemble"},
+  {t:"p", v:"Le manuel découpe le poste pilote en douze zones. Tu n'as pas besoin des douze aujourd'hui : repère les blocs, pas les interrupteurs. La console gauche porte les manettes et tout ce qui touche à la propulsion et au carburant ; la planche de bord porte les instruments de vol ; la console droite porte l'électricité, l'éclairage et les radios."},
+  {t:"img", k:"pilot", c:"Poste pilote du F-14B(U). Les zones numérotées correspondent aux chapitres du manuel."},
+  {t:"note", k:"", lbl:"Ce qui a changé", v:"Trois éléments n'existaient pas sur le Tomcat d'origine : le HUD moderne (piloté par le VDIG-R), le PTID au centre, et le CDNU sur la console gauche. Si tu as un souvenir de l'ancien cockpit, c'est là que ton repère saute."},
+  {t:"h", v:"Console gauche"},
+  {t:"p", v:"C'est ta main gauche pendant tout le vol : manettes des gaz, balayage des ailes au pouce, aérofreins, gestion carburant, crosse d'appontage. Le CDNU (clavier de navigation) est la grosse nouveauté de cette zone."},
+  {t:"img", k:"lconsole", c:"Console latérale gauche du pilote."},
+  {t:"img", k:"cdnu", c:"CDNU — le clavier de navigation. Nouveau sur le B(U), il commande l'EGI et les waypoints."},
+  {t:"h", v:"Planche de bord"},
+  {t:"p", v:"Instruments de vol à gauche, écrans au centre, moteurs et systèmes à droite. Les instruments à aiguilles restent présents : ce sont eux qui te sauveront le jour où un écran tombe."},
+  {t:"img", k:"lpanel", c:"Planche de bord gauche : badin, altimètre, ADI, variomètre, indexeur d'incidence."},
+  {t:"img", k:"ptid", c:"PTID — l'écran tactique. Il remplace l'ancien TID."},
+  {t:"img", k:"rpanel", c:"Planche de bord droite : paramètres moteurs, balayage des ailes, RWR, BDHI."},
+  {t:"h", v:"Le siège arrière"},
+  {t:"p", v:"Tu ne t'y assiéras probablement pas, mais tu dois savoir ce qu'il contient : c'est de là que JESTER travaille. Radar, navigation, désignation, contre-mesures — tout ce que tu lui demanderas se fait sur ces panneaux."},
+  {t:"img", k:"rio", c:"Poste RIO du B(U). Le domaine de JESTER."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission d'entraînement, avion au parking, <b>moteurs coupés</b>. Pas de vol aujourd'hui.",
+   "Ouvre le <b>manuel interactif in-game</b> et active le <b>click-to-explain</b> : survole un interrupteur, le jeu t'explique sa fonction. C'est la source la plus fiable qui existe pour ce module.",
+   "Fais le tour dans l'ordre des planches ci-dessus : console gauche, planche de bord, console droite.",
+   "Identifie et note l'emplacement de <b>douze commandes</b> : manettes, train, volets, aérofreins, crosse, freins, trim, balayage des ailes, master arm, HUD, PTID, CDNU.",
+   "Referme tout, rouvre la mission, et retrouve les douze de mémoire."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu poses le curseur sur les douze commandes sans hésiter et sans relire tes notes."},
+  {t:"src", v:["manuel","chuck2","manFR"]}
+]},
+
+{id:"a2", title:"Commandes et bindings",
+ intro:"La moitié des vols ratés en reprise viennent d'un binding manquant découvert en l'air. Une heure au sol maintenant t'évite dix frustrations plus tard.",
+ body:[
+  {t:"h", v:"La manette : le vrai poste de commande"},
+  {t:"p", v:"Sur Tomcat, la manette des gaz porte bien plus que la poussée. Le balayage des ailes se commande au pouce, les contre-mesures et plusieurs fonctions radar y sont aussi. C'est la pièce à cartographier en priorité sur ton HOTAS."},
+  {t:"img", k:"throttle", c:"Manette des gaz et ses commandes secondaires."},
+  {t:"h", v:"Les commandes de vol et de configuration"},
+  {t:"img", k:"gear", c:"Panneau du train d'atterrissage, console verticale gauche."},
+  {t:"img", k:"hook", c:"Commande de crosse d'appontage."},
+  {t:"img", k:"wingsweep", c:"Indicateur de balayage des ailes : position commandée, position réelle, mode en cours."},
+  {t:"note", k:"", lbl:"À savoir sur les ailes", v:"En mode AUTO, le calculateur d'air (CADC) place les ailes en fonction du Mach : environ 20° jusqu'à Mach 0,7, puis elles reculent progressivement jusqu'à 68° au-delà de Mach 1. Tu n'as normalement rien à faire. Le mode BOMB les fixe à 55° pour l'attaque au sol, et la poignée de secours sert au sur-balayage à 75° sur le pont.",},
+  {t:"img", k:"launchbar", c:"Barre de lancement / abort — pour la catapulte, plus tard."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Ouvre les commandes DCS et binde le <b>vital</b> : train, volets, aérofreins, crosse, freins de roue, direction de roue avant, trim, postcombustion.",
+   "Puis le <b>spécifique Tomcat</b> : balayage des ailes AVANT/ARRIÈRE au pouce, mode BOMB, verrière, éjection.",
+   "Puis le <b>tactique</b> : désignation cible, sélection d'arme, largage de contre-mesures, menu JESTER et bouton contexte.",
+   "Retourne dans le cockpit et <b>actionne chaque binding une fois</b>, en vérifiant l'effet à l'écran. Un binding non testé n'existe pas.",
+   "Note ci-dessous ta liste finale : elle te servira de référence quand tu changeras de matériel."]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Le binding le plus souvent oublié est celui des contre-mesures. On s'en aperçoit toujours au premier missile."},
+  {t:"src", v:["chuck1","manuel"]}
+]},
+
+{id:"a3", title:"Travailler avec JESTER",
+ intro:"Le Tomcat est un avion à deux équipiers. Tu ne pilotes pas seul : tu commandes un équipage. Presque tout ce qui touche au radar, à la navigation et à la désignation passe par ton RIO.",
+ body:[
+  {t:"h", v:"Ce que JESTER fait pour toi"},
+  {t:"p", v:"Il gère le radar (modes, portée, verrouillages), l'alignement de la navigation, la saisie des points, la nacelle de désignation, le datalink et les contre-mesures. Sur les tâches longues comme l'alignement de la centrale ou le démarrage, il peut même travailler pendant que tu observes — c'est une excellente façon d'apprendre une procédure avant de la faire soi-même."},
+  {t:"img", k:"rio", c:"Le poste que JESTER occupe. Chaque commande que tu lui donnes se traduit par une action sur ces panneaux."},
+  {t:"h", v:"Le bouton contexte", badge:true},
+  {t:"p", v:"C'est l'apport de JESTER 2.0, hérité du Phantom. Au lieu de descendre trois niveaux de menu, il te propose directement l'action pertinente selon la phase de vol. En pratique, tu vas l'utiliser 80 % du temps et n'ouvrir le menu complet que pour les cas particuliers."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Avion au parking, moteurs coupés. Ouvre le menu JESTER et <b>parcours toute l'arborescence</b> sans rien déclencher.",
+   "Note les trois ou quatre branches que tu utiliseras vraiment : radar, navigation, contre-mesures, communications.",
+   "Teste le <b>bouton contexte</b> dans trois situations différentes : au sol moteurs coupés, au sol prêt à rouler, en vol. Observe qu'il ne propose pas la même chose.",
+   "Demande-lui de faire le <b>démarrage complet</b> à ta place et regarde les interrupteurs bouger. C'est ta première leçon de démarrage, gratuite.",
+   "Écris ton propre lexique : pour chaque besoin fréquent, la phrase JESTER exacte à viser."]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Croire que JESTER anticipe. Il est compétent mais il attend des ordres : si tu ne demandes rien, il ne fait rien d'utile au moment critique."},
+  {t:"src", v:["chuck1"]}
+]},
+
+{id:"a4", title:"Démarrage à froid", isNew:true,
+ intro:"Le démarrage n'est pas une corvée : c'est la séquence qui t'apprend l'architecture de l'avion. Électricité, puis air, puis moteurs, puis avionique. Une fois cette logique comprise, tu peux démarrer n'importe quel appareil.",
+ body:[
+  {t:"h", v:"L'ordre à retenir"},
+  {t:"p", v:"Alimentation au sol ou APU pour avoir du courant. Air pour lancer les moteurs. Moteur droit puis moteur gauche. Génératrices en ligne. Avionique sous tension. Et surtout : <b>lancement de l'alignement de la navigation le plus tôt possible</b>, parce que c'est lui qui dicte l'heure à laquelle tu pourras rouler."},
+  {t:"img", k:"lconsole", c:"Console gauche : c'est ici que se joue l'essentiel du démarrage."},
+  {t:"img", k:"fuelpanel", c:"Panneau de gestion carburant."},
+  {t:"h", v:"Surveiller les moteurs"},
+  {t:"p", v:"Pendant le lancement, tu regardes trois choses : la montée du régime, la température, et la pression d'huile. Si l'une des trois ne se comporte pas comme prévu, tu coupes."},
+  {t:"img", k:"lengine", c:"Paramètres moteur gauche."},
+  {t:"img", k:"rengine", c:"Paramètres moteur droit."},
+  {t:"img", k:"oil", c:"Pressions d'huile."},
+  {t:"img", k:"hyd", c:"Pression hydraulique — à surveiller aussi, elle conditionne les commandes de vol."},
+  {t:"h", v:"L'alignement de la navigation", badge:true},
+  {t:"p", v:"Sur le B(U), l'alignement se suit au PTID. Deux points importants, hérités de l'architecture de l'avion et toujours vrais : la centrale a besoin du système d'armes, qui a lui-même besoin d'air de refroidissement prélevé sur les moteurs. Autrement dit, l'alignement <b>ne peut pas commencer avant que les moteurs tournent</b> et que le sélecteur d'air soit sur les deux moteurs. Et l'avion doit rester parfaitement immobile pendant toute la durée."},
+  {t:"img", k:"ptidalign", c:"Suivi de l'alignement sur le PTID."},
+  {t:"note", k:"", lbl:"Raccourci qui vaut le détour", v:"Demande à JESTER de lancer l'alignement et choisis la qualité voulue. Un alignement rapide suffit pour un vol d'entraînement ; l'alignement fin ne se justifie que si tu vas faire de la frappe sur coordonnées."},
+  {t:"h", v:"Après démarrage"},
+  {t:"p", v:"Il reste à configurer : écrans allumés, altimètre calé, gyro de secours érigé, radios et TACAN réglés, éclairage. Les checklists Minky de ton Drive donnent cette liste dans l'ordre — elles ont été écrites pour l'A/B, donc quelques repères d'écran diffèrent, mais l'ossature est la même."},
+  {t:"img", k:"procov", c:"Vue d'ensemble des checklists normales, outil intégré au module."},
+  {t:"img", k:"checklist", c:"La carte de checklist présente dans le cockpit."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Premier passage : laisse <b>JESTER démarrer</b> pendant que tu regardes. Ne touche à rien.",
+   "Deuxième passage : démarre toi-même, manuel ouvert sur le second écran, sans chronomètre.",
+   "Troisième passage : démarre en te chronométrant. Note le temps.",
+   "Recommence jusqu'à ce que tu tombes sous les <b>8 minutes</b> de façon régulière.",
+   "Écris ta séquence personnelle ci-dessous, dans tes mots — c'est ce que tu reliras dans trois semaines."]},
+  {t:"note", k:"warn", lbl:"Pièges", v:"Lancer l'alignement trop tard : tu attends au point d'arrêt pour rien. Bouger l'avion pendant l'alignement : tu recommences."},
+  {t:"note", k:"go", lbl:"Validation", v:"Démarrage complet en moins de 8 minutes, sans relire tes notes."},
+  {t:"src", v:["chuck3","manuel","manFR"]}
+]},
+
+{id:"a5", title:"Roulage et décollage",
+ intro:"On décolle d'une piste avant de toucher au porte-avions. Une variable difficile à la fois.",
+ body:[
+  {t:"h", v:"Avant de rouler"},
+  {t:"p", v:"Trois réglages qui comptent : l'anti-dérapage et le frein aérodynamique en position terrain, le contournement de crosse sur FIELD (et non CARRIER), et le mode HUD sur décollage. La roulette avant se braque avec un bouton au manche ; un témoin te confirme qu'elle est engagée."},
+  {t:"img", k:"procov", c:"Vue d'ensemble des checklists normales — les points de roulage y figurent."},
+  {t:"h", v:"Rouler"},
+  {t:"p", v:"L'avion est lourd et long. Tu anticipes tes virages, tu roules lentement, et tu freines par petites touches. Sur le pont d'un porte-avions plus tard, cette discipline sera la différence entre rester à bord et tomber à l'eau."},
+  {t:"h", v:"Décoller"},
+  {t:"p", v:"Configuration décollage, ailes en automatique, plein gaz ou postcombustion selon la masse. Tu tires doucement à la vitesse de rotation, tu rentres le train dès que le taux de montée est positif, puis tu nettoies la configuration. Les ailes se replient toutes seules quand la vitesse monte."},
+  {t:"img", k:"gear", c:"Panneau de train."},
+  {t:"img", k:"hudcruise", c:"Le HUD en croisière : vitesse, altitude, cap, vecteur vitesse."},
+  {t:"note", k:"warn", lbl:"Pièges", v:"Cabrer trop tôt ou trop fort : le Tomcat frotte facilement la queue. Rentrer les volets trop bas ou trop lent."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Trois décollages consécutifs, même terrain, même masse de carburant.",
+   "Le quatrième avec les réservoirs pleins : observe la différence de distance et d'assiette.",
+   "Après chaque décollage, tour de piste et retour au parking. Tu travailles le roulage autant que le décollage.",
+   "Note ci-dessous ta configuration et tes repères de rotation."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Trois décollages de suite, sans toucher la queue et sans sortir de l'axe."},
+  {t:"src", v:["chuck3"]}
+]},
+
+{id:"a6", title:"Vol de base, AoA et DFCS", isNew:true,
+ intro:"C'est la leçon la plus importante de la section. Le Tomcat se pilote à l'incidence, pas à la vitesse. Tout ce qui suivra — appontage, combat tournoyant, passes d'attaque — repose sur ce que tu vas sentir ici.",
+ body:[
+  {t:"h", v:"L'incidence commande tout"},
+  {t:"p", v:"L'indexeur d'incidence, sur le montant gauche, te dit en un coup d'œil si tu es trop rapide, trop lent, ou dans le créneau. En approche, c'est lui que tu regardes, pas le badin : à masse variable, la bonne vitesse change, mais la bonne incidence, jamais."},
+  {t:"img", k:"aoa", c:"Indexeur d'incidence : chevrons haut et bas, cercle au milieu. Le cercle, c'est le créneau."},
+  {t:"img", k:"airspeed", c:"Badin — utile, mais secondaire par rapport à l'incidence en régime lent."},
+  {t:"h", v:"Les instruments de tenue"},
+  {t:"img", k:"adi", c:"ADI — assiette et inclinaison."},
+  {t:"img", k:"vvi", c:"Variomètre."},
+  {t:"img", k:"baroalt", c:"Altimètre barométrique."},
+  {t:"img", k:"radalt", c:"Radioaltimètre — la vraie hauteur sol, indispensable en montagne et en attaque."},
+  {t:"h", v:"Le DFCS", badge:true},
+  {t:"p", v:"Le Tomcat d'origine avait une réputation méritée : sorties de contrôle brutales et vrilles difficiles à récupérer. Les commandes de vol numériques adoucissent nettement ce comportement — l'avion prévient mieux, décroche plus proprement, et pardonne des entrées que l'ancien ne pardonnait pas. Ce n'est pas une protection absolue : c'est une marge supplémentaire, pas un filet."},
+  {t:"img", k:"csurf", c:"Indicateur de position des gouvernes — utile pour voir ce que le système fait réellement."},
+  {t:"img", k:"vdicruise", c:"Le VDI en croisière."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Altitude de sécurité, 15 000 pieds minimum, zone dégagée.",
+   "Virages soutenus à différents facteurs de charge, en tenant une <b>incidence constante</b>. Ne regarde pas le badin.",
+   "Régimes lents : ralentis progressivement en configuration lisse, puis en configuration atterrissage. Sens où l'avion commence à prévenir.",
+   "Approche du décrochage, en douceur, et récupération. Répète jusqu'à ce que ce ne soit plus une surprise.",
+   "Enchaînements simples : virage inversé, montée en virage, descente à vitesse tenue.",
+   "Teste l'autopilot et ses modes de tenue.",
+   "Note tes repères : quelle incidence pour quoi, où l'avion commence à protester."]},
+  {t:"note", k:"warn", lbl:"Pièges", v:"Piloter à la vitesse. Et croire que le DFCS te rend intouchable : il repousse la limite, il ne l'efface pas."},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu tiens un virage soutenu à incidence constante sans jamais regarder le badin."},
+  {t:"src", v:["chuck4","manuel"]}
+]},
+
+{id:"a7", title:"Retour terrain et atterrissage",
+ intro:"L'atterrissage terrain, c'est l'appontage sans la pression. Tout ce que tu construis ici sera réutilisé tel quel quand tu passeras au bateau.",
+ body:[
+  {t:"h", v:"La configuration"},
+  {t:"p", v:"Train, volets, et la carte de checklist atterrissage du cockpit pour ne rien oublier. Crosse rentrée sur terrain, contournement de crosse sur FIELD, anti-dérapage actif — l'inverse exact de ce que tu feras au bateau."},
+  {t:"img", k:"lndgchk", c:"Carte de checklist atterrissage, planche de bord gauche."},
+  {t:"img", k:"gear", c:"Panneau de train."},
+  {t:"h", v:"L'approche"},
+  {t:"p", v:"Deux règles qui suffisent. L'assiette vise le point de toucher, la poussée règle le taux de descente. Et tu arrives <b>déjà stabilisé en incidence</b> avant le dernier virage : ce que tu n'as pas stabilisé en amont, tu ne le rattraperas pas en finale."},
+  {t:"img", k:"aoa", c:"L'indexeur, de nouveau. En approche, c'est lui ton instrument principal."},
+  {t:"img", k:"cautionlt", c:"Voyants d'alerte, montant gauche du pare-brise — un coup d'œil avant de sortir le train."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Circuit complet : vent arrière, base, finale. Cinq fois.",
+   "Varie la masse de carburant : léger, moyen, lourd. Constate que la <b>vitesse</b> change et que l'<b>incidence</b> ne change pas.",
+   "Fais trois remises de gaz volontaires : décision franche, plein gaz, pas d'hésitation. C'est le réflexe qui te sauvera au bateau.",
+   "Termine par cinq approches d'affilée en tenant l'incidence à une demi-unité près.",
+   "Note tes repères de circuit : altitudes, vitesses, points de virage."]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Approcher trop vite. C'est l'erreur la plus courante, et la seule qui soit vraiment punie au porte-avions."},
+  {t:"note", k:"go", lbl:"Validation", v:"Cinq approches consécutives à l'incidence de référence, plus ou moins une demi-unité. Tu es prêt pour la section B."},
+  {t:"src", v:["chuck3","manFR"]}
+]}
+]},
+{letter:"B", title:'Naviguer : EGI & CDNU',
+IMG: {
+  cdnu:        "1iHXkN6fMCN5z0feGKcX2thLu3sE4ot7V",
+  cap:         "1jzZXOauVEv9ozccCS1pukBAex6ojo2iX",
+  navpanels:   "19rZHTKxwhB6jSAPFAfl0tn8swS3bk8is",
+  navoverview: "1rds13EirW0B-KSvLN6IYRXf7yPHRgIpx",
+  navmatrix:   "1KaA10yvEKk7f8BOnO1aQhIhKrwU9cjc1",
+  navdisplay:  "1t0mGtJBNYeXfNdWT7N-aXZse9DtjdCcs",
+  egimodes:    "1srqTn4tKvDn4r1XgWgQQNg6OYoMGK1EM",
+  egischem:    "1Zzfri1WdBFf90IBoMZ58NSOJqmNcQFCZ",
+  egidisp:     "1oMoElmBXaHDDC0-cEi2cOb6CUrXyVaQv",
+  ptid:        "1IJqaDS5W80PrrYzygxa8X84DqUNq711x",
+  ptidalign:   "1343TPem4GqbGhyWgmAadSdPBmD3gwPuj",
+  ptidsys:     "19G0SjnyxC30M-gSvdm2I8yWUGQhCoNpT",
+  hsd:         "1VHx7AfEbpn1QNnmk0bLd39ZPajQpQf5z",
+  hsdplt:      "11ytGklNKUzFZBvF3tkhSzbkBcqxUViAJ",
+  hsdrepeat:   "1Y5nJd_9MB_aqOnVKoqgowjNLNFEZtSco",
+  hudcruise:   "1qn6aLQk6VesaiCnZMA4kKA3WNPGtzv0e",
+  vdicruise:   "1A5PAfefJPcyNiO_wJzHQGkR6Fgfo5UBs",
+  bdhi:        "1CcyUvhC2u098w884Zk0LHFMT2yiGOV84",
+  tacan:       "1enPBPfIrdQ8LR4JFTF4fiGrLNgiDhH63",
+  mark:        "1gO9FbnO6SMt2_Zf5C4xTJzSVQDn-LOhn",
+  markkeys:    "1Z7xBs_ilnQns6pv_l5MxuQwQQd0N0fcS"
+},
+DOC: {
+  manuel: ["Manuel Heatblur (PDF)","16Xl1mYmujB2wQVBK5kjhMm4GuDRBXH49"],
+  chuck7: ["Chuck 7 · Navigation & ACLS","17VJ0irsI8iGmrUrgHhBtAmJiPMcgR1Uj"],
+  chuck3: ["Chuck 3 · Démarrage","1kn57knCUzVTAf4xBXslSOBooyUp0hvE0"]
+},
+L: [
+
+{id:"b1", title:"Comprendre le système", isNew:true,
+ intro:"Avant de toucher au clavier, il faut comprendre ce qui a changé. Le B(U) ne modernise pas l'ancien système de navigation : il le remplace. Comprendre cette architecture t'évitera de chercher des commandes là où elles n'existent plus.",
+ body:[
+  {t:"h", v:"Du CAINS à l'EGI"},
+  {t:"p", v:"L'ancien Tomcat naviguait à la centrale inertielle seule (CAINS), qui dérivait sur les longs vols. Le B(U) repose sur l'EGI : une centrale à gyrolaser couplée à un récepteur GPS. Un filtre combine les deux et donne une position qui, avec le GPS, ne dérive pratiquement plus. C'est ce qui rend possibles les frappes sur coordonnées de la section F."},
+  {t:"img", k:"egischem", c:"Schéma du système EGI : centrale inertielle et GPS fusionnés."},
+  {t:"note", k:"warn", lbl:"Le piège qui piège tout le monde", v:"Sur l'ancien F-14, tu saisissais les coordonnées au clavier CAP, à droite du siège RIO. Sur le B(U), le CAP existe encore mais <b>ne sert plus à la navigation</b> : ses fonctions nav ont été retirées ou réaffectées. Toute la saisie passe désormais par le CDNU. Si un vieux tutoriel te fait taper des points dans le CAP, il décrit l'ancien avion."},
+  {t:"img", k:"cap", c:"Le CAP — toujours présent, mais retiré de la boucle de navigation sur le B(U)."},
+  {t:"h", v:"Le CDNU : le nouveau centre de commande"},
+  {t:"p", v:"Le CDNU (Control Display Navigation Unit) est sur la console gauche du RIO. C'est un petit écran à pages avec un clavier, exactement dans l'esprit d'une calculatrice de navigation d'avion de ligne. Tu y accèdes aux pages par des touches dédiées (FPLN, PROG, DIR, RNAV, IDX…) et tu valides tes saisies avec les touches latérales, les LSK, alignées de part et d'autre de l'écran."},
+  {t:"img", k:"cdnu", c:"Le CDNU. À gauche et à droite de l'écran : les touches de sélection de ligne (LSK). En bas : le scratchpad."},
+  {t:"note", k:"", lbl:"Le principe à retenir", v:"Tout se fait en deux temps. D'abord tu tapes ta donnée : elle apparaît dans le <b>scratchpad</b>, la ligne du bas entre crochets. Ensuite tu appuies sur la <b>LSK</b> en face du champ où tu veux la déposer. Taper puis déposer : c'est toute la logique du CDNU."},
+  {t:"h", v:"Où lire la navigation"},
+  {t:"p", v:"Le CDNU sert à saisir. Pour lire ta position dans le vol, tu as plusieurs écrans : le PTID côté tactique, le HSD (situation horizontale) et le HUD côté pilote, et le bon vieux BDHI à aiguilles. Le point actif de ta route apparaît sur le PTID sous forme d'un symbole en « os de chien »."},
+  {t:"img", k:"navoverview", c:"Vue d'ensemble du système de navigation du B(U)."},
+  {t:"img", k:"navpanels", c:"Les panneaux de navigation côté RIO."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Aucune manipulation. Cette leçon est de la lecture.",
+   "Ouvre le CDNU en jeu et repère physiquement : l'écran, les LSK, le clavier alphanumérique, le scratchpad, les touches dédiées FPLN / PROG / DIR / RNAV / IDX.",
+   "Appuie sur <code>MENU</code> pour voir la liste des fonctions, puis sur <code>IDX</code> pour voir la page d'index. Navigue sans rien saisir.",
+   "Note ci-dessous, dans tes mots, la différence entre une touche dédiée, une LSK et le scratchpad."]},
+  {t:"src", v:["manuel","chuck7"]}
+]},
+
+{id:"b2", title:"Aligner l'EGI", isNew:true,
+ intro:"L'alignement est ce qui bloque tout démarrage : tant qu'il n'est pas fini, l'avion ne sait pas où il est et rien de tactique ne fonctionne. Bonne nouvelle : sur le B(U), c'est plus simple qu'avant, parce que le système choisit lui-même son mode d'alignement.",
+ body:[
+  {t:"h", v:"Le sélecteur qui commande tout"},
+  {t:"p", v:"L'alignement se pilote avec le sélecteur NAV MODE sur le PTID. Dès que tu le sors de la position OFF, l'EGI démarre son alignement et choisit automatiquement le mode adapté selon ta situation : au sol frein serré, en mouvement, avec ou sans GPS. Tu n'as plus à sélectionner manuellement un mode d'alignement comme sur l'ancien avion."},
+  {t:"img", k:"ptidalign", c:"Suivi de l'alignement sur le PTID."},
+  {t:"table", head:["Position NAV MODE","Usage"], rows:[
+    ["GND","Alignement au sol, à terre, avion immobile."],
+    ["CV","Alignement sur porte-avions (tient compte du mouvement du pont)."],
+    ["NAV","Position de vol normale, une fois l'alignement terminé."],
+    ["OFF","Système éteint."]]},
+  {t:"note", k:"warn", lbl:"La contrainte physique", v:"L'alignement a besoin du système d'armes, qui a besoin d'air de refroidissement prélevé sur les moteurs. Conséquence concrète : <b>les deux moteurs doivent tourner et le sélecteur d'air être sur les deux moteurs</b> avant que l'alignement puisse aboutir. C'est pour ça qu'on démarre les moteurs tôt. Et l'avion doit rester immobile au sol pendant toute la durée."},
+  {t:"h", v:"Suivre la qualité"},
+  {t:"p", v:"Sur la page START du CDNU (via IDX puis LSK1, puis flèche bas pour la page 2/2), tu lis la qualité d'alignement en milles nautiques par heure de dérive, le nombre de satellites captés, et la solution de position active : GPS, mélangée, ou inertielle seule. Plus la valeur de dérive est basse, meilleur est l'alignement. Pour un vol d'entraînement, tu n'as pas besoin d'attendre la perfection."},
+  {t:"img", k:"egimodes", c:"Modes et états du système EGI."},
+  {t:"img", k:"egidisp", c:"Affichages EGI sur le CDNU."},
+  {t:"note", k:"", lbl:"Le raccourci JESTER", v:"Tu peux demander à JESTER de lancer et de gérer l'alignement, et choisir la qualité voulue. C'est parfait pour apprendre : tu le laisses faire une fois en observant la page START, puis tu refais toi-même."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission au sol, à terre. Démarre les moteurs (section A, leçon 4) et vérifie le sélecteur d'air sur les deux moteurs.",
+   "Mets le sélecteur NAV MODE du PTID sur <code>GND</code>. L'alignement démarre.",
+   "Ouvre la page START 2/2 du CDNU et <b>observe la dérive descendre</b> et les satellites se caler.",
+   "Une fois l'alignement suffisant, passe le sélecteur sur <code>NAV</code>.",
+   "Refais l'exercice sur un porte-avions avec la position <code>CV</code> et compare.",
+   "Note le temps d'alignement réel et les valeurs de dérive que tu obtiens."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu lances un alignement complet, tu le suis sur la page START, et tu passes en NAV sans aide extérieure."},
+  {t:"src", v:["manuel","chuck3"]}
+]},
+
+{id:"b3", title:"Saisir un waypoint", isNew:true,
+ intro:"Le cœur de la section. Une fois que tu sais créer un point proprement, tu peux construire n'importe quelle route et, plus tard, guider une JDAM. La procédure est précise, mais courte une fois comprise.",
+ body:[
+  {t:"h", v:"Le format des coordonnées"},
+  {t:"p", v:"Le CDNU attend des coordonnées en degrés et minutes décimales (DMM). Le format exact, sans aucun espace ni séparateur, est le suivant :"},
+  {t:"note", k:"", lbl:"Format DMM", v:"<code>Nddmm.mmm Wdddmm.mmm</code> — soit N ou S, quatre chiffres (deux de degrés, deux de minutes), puis E ou W, cinq chiffres (trois de degrés, deux de minutes). Les décimales de minute sont optionnelles. Exemple réel tiré du manuel : <code>N4358.257W10700.347</code>."},
+  {t:"note", k:"warn", lbl:"Les pièges de saisie", v:"<b>Zéros de tête obligatoires</b> : il n'y a pas de séparateur entre degrés et minutes, donc chaque chiffre compte. Pas d'espace, pas de « / », aucun caractère entre latitude et longitude. Une erreur d'un chiffre te déplace d'un kilomètre — ce qui, pour une JDAM, est un ratage complet."},
+  {t:"img", k:"cdnu", c:"Le CDNU. Tu vas taper dans le scratchpad, puis déposer avec une LSK."},
+  {t:"h", v:"Insérer le premier point d'une route vide"},
+  {t:"p", v:"Quand la route est vide, la page FPLN affiche « End of Flight Plan ». Le premier point que tu insères devient le point actif."},
+  {t:"proc", v:[
+   "Appuie sur la touche dédiée <code>FPLN</code> pour afficher la page du plan de vol.",
+   "Tape ta coordonnée au format DMM. Elle apparaît dans le <b>scratchpad</b> en bas.",
+   "Vérifie-la caractère par caractère. C'est le moment de corriger, avec <code>CLR</code>.",
+   "Appuie sur la <b>LSK gauche</b> en face de « End of Flight Plan ». Le point s'insère.",
+   "En vol, le système demande confirmation (« CONFIRM FLT PLN CHG ») : réappuie sur la même LSK pour valider."]},
+  {t:"img", k:"navmatrix", c:"Matrice des affichages de navigation : où ton point apparaît une fois saisi."},
+  {t:"h", v:"Insérer un point au milieu d'une route"},
+  {t:"proc", v:[
+   "Page <code>FPLN</code>, tape la nouvelle coordonnée dans le scratchpad.",
+   "Appuie sur la LSK du waypoint <b>devant lequel</b> tu veux insérer le nouveau. Il se glisse juste avant.",
+   "Pour supprimer un point : tape un tiret <code>-</code> dans le scratchpad, puis appuie sur la LSK du point à effacer. Les suivants remontent."]},
+  {t:"note", k:"", lbl:"Numérotation", v:"Les points préparés en mission portent les numéros 01 à 50. Ceux que tu crées en vol commencent à 51. Quand tu supprimes un point, les autres gardent leur numéro d'origine — l'ordre de vol, lui, est celui de la liste FPLN, pas celui des numéros."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Alignement fait, avion au sol. Ouvre la page <code>FPLN</code>.",
+   "Crée un premier waypoint de zéro, à partir de coordonnées lues sur la carte F10 ou le kneeboard.",
+   "Vérifie qu'il apparaît sur le PTID (symbole « os de chien ») et sur le HUD.",
+   "Crée-en deux autres, puis intercale-en un au milieu, puis supprime-en un.",
+   "Note ci-dessous la <b>séquence de touches exacte</b> — c'est le genre de chose qu'on oublie entre deux sessions, alors écris-la vraiment."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu crées un waypoint depuis une route vide en moins de 90 secondes, sans relire tes notes."},
+  {t:"src", v:["manuel","chuck7"]}
+]},
+
+{id:"b4", title:"Suivre une route", isNew:true,
+ intro:"Créer des points ne sert à rien si l'avion ne t'y emmène pas. Cette leçon relie ta route à ce que tu vois devant toi, et t'apprend à choisir comment l'avion enchaîne les points.",
+ body:[
+  {t:"h", v:"Les trois modes d'enchaînement"},
+  {t:"p", v:"Sur la page FPLN, une LSK bascule le mode de séquencement du point actif. C'est ce qui décide comment l'avion passe d'un waypoint au suivant."},
+  {t:"table", head:["Mode","Comportement"], rows:[
+    ["AUTO","L'avion anticipe le virage vers le point suivant, façon navigation aérienne classique. Pratique en croisière — mais déconseillé en vol basse altitude, car il coupe les virages."],
+    ["OFLY","L'avion vise le survol exact du point avant de séquencer. C'est le mode du vol tactique basse altitude, quand tu dois vraiment passer sur le point."],
+    ["MAN","Aucun enchaînement automatique. Le guidage reste sur le point actif jusqu'à ce que tu avances manuellement avec la fonction DIR."]]},
+  {t:"note", k:"warn", lbl:"À savoir", v:"Le mode AUTO « lisse » les virages pour rester dans un couloir aérien théorique. En basse altitude ou pour une frappe où le point compte vraiment, c'est OFLY qu'il te faut."},
+  {t:"h", v:"Lire la route en vol"},
+  {t:"p", v:"Le HSD, côté pilote, te donne la vue de dessus : cap commandé, écart de route, distance au point. La page PROG du CDNU, côté RIO, donne les chiffres : distance, temps au point, vitesse sol, dérive. Sur le HUD, le repère de direction t'amène au point actif."},
+  {t:"img", k:"hsd", c:"Le HSD — situation horizontale, la vue de dessus de ta route."},
+  {t:"img", k:"hudcruise", c:"Le HUD en croisière : suis le repère de direction vers le point actif."},
+  {t:"img", k:"navdisplay", c:"Affichage de navigation côté RIO."},
+  {t:"h", v:"Aller direct à un point"},
+  {t:"p", v:"La touche DIR permet de sauter directement à un point de ta route, en laissant les points précédents passer dans l'historique. C'est ta commande de secours quand le plan change : un détour, une menace, une nouvelle cible."},
+  {t:"proc", v:[
+   "Appuie sur <code>DIR</code>.",
+   "Fais défiler jusqu'au point voulu et sélectionne-le avec la LSK gauche.",
+   "Ce point devient le point actif ; l'avion t'y emmène directement. Les points sautés passent dans l'historique (les cinq derniers restent rappelables)."]},
+  {t:"h", v:"Marquer un point en vol"},
+  {t:"p", v:"La touche MARK enregistre ta position actuelle : utile pour noter un objectif que tu viens de survoler. Le point atterrit dans le scratchpad, tu le ranges ensuite dans la liste MARK via la page IDX."},
+  {t:"img", k:"mark", c:"Fonction MARK — enregistrer une position en vol."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Construis une route de quatre points (leçon B3).",
+   "Vole-la en <code>AUTO</code>, puis recommence en <code>OFLY</code> : sens la différence dans les virages.",
+   "En vol, survole un point d'intérêt et enregistre-le avec <code>MARK</code>.",
+   "Utilise <code>DIR</code> pour sauter directement au dernier point, puis reviens au marqué.",
+   "Exercice final : coupe le PTID et rentre au terrain au BDHI et au HSD seuls.",
+   "Note tes repères de lecture : où tu regardes pour quoi."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Navigation de quatre points et retour au terrain, sans jamais ouvrir la carte F10."},
+  {t:"src", v:["manuel","chuck7"]}
+]},
+
+{id:"b5", title:"TACAN et sources de guidage",
+ intro:"Dernière brique : comprendre que plusieurs systèmes peuvent te guider en même temps, et savoir lequel écoute ton HUD. C'est la source de confusion classique — « pourquoi mon HUD ne pointe pas où je veux ? »",
+ body:[
+  {t:"h", v:"Quatre sources, une seule écoutée à la fois"},
+  {t:"p", v:"Le B(U) a quatre sources de guidage : l'EGI (ta route CDNU), le calculateur de mission pour les modes d'attaque et de destination, le BDHI, et le TACAN. Le HUD et le HSD suivent l'une ou l'autre selon ce qui est sélectionné. La bascule principale se fait sur le panneau TACAN CMD, qui alterne entre <b>TACAN</b> et <b>EGI</b>."},
+  {t:"img", k:"navoverview", c:"Le système de navigation et ses sources de guidage."},
+  {t:"note", k:"", lbl:"La règle simple", v:"Si ton HUD ne t'emmène pas vers ton waypoint CDNU, vérifie d'abord le panneau TACAN CMD : il est probablement sur TACAN au lieu d'EGI. C'est l'explication dans neuf cas sur dix."},
+  {t:"h", v:"Le TACAN"},
+  {t:"p", v:"Le TACAN te guide vers une balise (une station sol, un porte-avions, un ravitailleur). Tu règles la fréquence sur le panneau TACAN, tu laisses chauffer, et le BDHI comme le HSD te donnent le cap et la distance vers la balise. C'est le même principe que sur l'ancien avion — cette partie n'a pas changé."},
+  {t:"img", k:"tacan", c:"Panneau TACAN."},
+  {t:"img", k:"bdhi", c:"Le BDHI — cap et distance, à aiguilles. Simple et increvable."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Règle un TACAN vers une balise sol et suis-la au BDHI jusqu'à la survoler.",
+   "Bascule le panneau TACAN CMD entre <code>TACAN</code> et <code>EGI</code> et observe comment le HUD change de source.",
+   "En fin de vol, règle le TACAN du porte-avions et sers-t'en pour rentrer vers le bateau — ça prépare la section C.",
+   "Note tes fréquences TACAN utiles et le réflexe de vérification EGI/TACAN."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu sais dire, à tout instant, quelle source guide ton HUD — et la changer. Tu es prêt pour la section C."},
+  {t:"src", v:["chuck7","manuel"]}
+]}
+]},
+{letter:"C", title:'Le porte-avions',
+IMG: {
+  launchbar:  "1D8RAKdjVRNsFb6o7xR7jJMBctNtcvVRq",
+  gear:       "1btOScq6_6u7BDY4-JWTLuCDHL3zv_8hI",
+  hook:       "1ckKAnQ42OHQlUoVfpwz43EghwIpEB3Qz",
+  aoa:        "1kaJNzj8rs69pQiSx5AH0zWbJ77L2PYg-",
+  hudcruise:  "1qn6aLQk6VesaiCnZMA4kKA3WNPGtzv0e",
+  vdicruise:  "1A5PAfefJPcyNiO_wJzHQGkR6Fgfo5UBs",
+  lndgchk:    "1gLKj-4lvCF8CB3NoH0aEbLMDKWfhkqlz",
+  tacan:      "1enPBPfIrdQ8LR4JFTF4fiGrLNgiDhH63",
+  wingsweep:  "10QucDurJZPC_VCxHu0r-KDezHt5LHc6w",
+  csurf:      "1qRAYprtHZ5NksPq4OKmLSl2LMzV7hStW",
+  checklisttool: "1dKLIRNF1kPhw96R6DnZjyoLmSvz_D20K",
+},
+DOC: {
+  manuel: ["Manuel Heatblur (PDF)","16Xl1mYmujB2wQVBK5kjhMm4GuDRBXH49"],
+  chuck7: ["Chuck 7 · Navigation & ACLS","17VJ0irsI8iGmrUrgHhBtAmJiPMcgR1Uj"],
+  chuck3: ["Chuck 3 · Démarrage & décollage","1kn57knCUzVTAf4xBXslSOBooyUp0hvE0"]
+},
+L: [
+
+{id:"c1", title:"Départ catapulte",
+ intro:"Le Tomcat est un avion embarqué : le porte-avions n'est pas un défi bonus, c'est son milieu naturel. On commence par en sortir, ce qui est bien plus facile que d'y revenir.",
+ body:[
+  {t:"h", v:"Rouler sur le pont"},
+  {t:"p", v:"Le pont est encombré et se termine dans l'eau. Tu suis les directeurs (les marshallers), tu roules lentement, et tu gardes les ailes en sur-balayage à 75° tant que tu manœuvres au parking, pour ne pas accrocher un autre appareil."},
+  {t:"img", k:"wingsweep", c:"Indicateur de balayage. Sur le pont, sur-balayage à 75° jusqu'à la mise en place."},
+  {t:"h", v:"Se mettre en place"},
+  {t:"p", v:"Une fois aligné sur la catapulte, tu déploies la barre de lancement et tu passes en configuration décollage : ailes sorties à 20°, volets et becs sortis, trim réglé. Le contournement de crosse doit être sur CARRIER."},
+  {t:"img", k:"launchbar", c:"Commande de barre de lancement et bouton d'abandon."},
+  {t:"img", k:"gear", c:"Panneau de train — la barre de lancement se gère depuis cette zone."},
+  {t:"h", v:"Le coup de catapulte"},
+  {t:"proc", v:[
+   "Plein gaz, voire postcombustion selon la masse et le vent sur le pont.",
+   "Passe rapidement les commandes en revue : gouvernes libres, paramètres moteurs verts.",
+   "Salut au directeur pour signaler que tu es prêt.",
+   "<b>Mains à l'écart du manche</b> pendant le lancement. Le Tomcat rote pratiquement tout seul.",
+   "Après le catapultage : rotation naturelle, train rentré dès taux de montée positif, puis nettoyage de la configuration."]},
+  {t:"note", k:"warn", lbl:"Pièges", v:"Toucher le manche pendant le lancement : tu induis une oscillation dangereuse à basse hauteur. Et décoller trop lourd pour le vent du jour : vérifie ta masse contre les conditions."},
+  {t:"img", k:"hudcruise", c:"Le HUD une fois en montée."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission au départ catapulte. Trois catapultages consécutifs, sans intervention hasardeuse au manche.",
+   "Un quatrième réservoirs pleins : observe la différence de comportement en sortie.",
+   "Note ta configuration de décollage et ton repère de rotation."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Trois catapultages de suite, mains propres, sans oscillation."},
+  {t:"src", v:["chuck3","manuel"]}
+]},
+
+{id:"c2", title:"La théorie de l'appontage",
+ intro:"Avant de tourner autour du bateau, il faut comprendre ce qu'on cherche à faire. L'appontage n'est pas un atterrissage précis : c'est trois paramètres tenus simultanément jusqu'au fil d'arrêt. Cette leçon est de la lecture — la pratique vient après.",
+ body:[
+  {t:"h", v:"Les trois paramètres"},
+  {t:"p", v:"Tout l'appontage tient dans un balayage permanent entre trois choses : la <b>boule</b> (ton plan de descente, lue sur le miroir optique du bateau), l'<b>alignement</b> (rester dans l'axe de la piste oblique, qui se dérobe puisque le bateau avance), et l'<b>incidence</b> (l'AoA, ta vitesse d'approche). Tu ne fixes jamais un seul des trois : tu balaies les trois en boucle."},
+  {t:"img", k:"aoa", c:"L'indexeur d'incidence. En approche bateau, c'est un de tes trois yeux."},
+  {t:"note", k:"", lbl:"Le mantra", v:"« Meatball, lineup, angle of attack » — boule, axe, incidence. Répété en boucle à voix haute, ça t'empêche de te fixer sur un seul paramètre et d'oublier les deux autres."},
+  {t:"h", v:"Le DLC : la commande secrète du Tomcat", badge:true},
+  {t:"p", v:"Le Tomcat a une commande que peu d'avions possèdent : le DLC (Direct Lift Control), une molette au pouce qui te fait monter ou descendre sur le plan <b>sans changer d'assiette</b>. Le manuel est catégorique : toutes les approches devraient se faire DLC engagé — sans lui, la tenue du plan se dégrade nettement. Tu l'engages une fois les volets complètement sortis, jamais pendant le cycle des volets."},
+  {t:"note", k:"warn", lbl:"Discipline moteur", v:"Les F110 répondent vite et fort. Le manuel insiste : évite de sur-contrôler la poussée. Petites corrections, jamais de grands coups de manette. La sensibilité de la manette est ton pire ennemi les premières fois."},
+  {t:"h", v:"Le circuit CASE I en chiffres"},
+  {t:"pat", v:PATTERN_SVG, cap:"Circuit visuel CASE I. Les valeurs sont celles du manuel Heatblur ; elles te donnent des repères, pas une contrainte au pied près."},
+  {t:"table", head:["Étape","Repères du manuel"], rows:[
+    ["Break","800 ft, 300 à 350 kt. Intervalle d'environ la moitié du temps souhaité entre deux appareils."],
+    ["Vent arrière","Descente et stabilisation à 600 ft. Ralentir à 15 unités d'incidence (ou vitesse on-speed). Sortir train, volets, becs, crosse. Engager le DLC une fois les volets sortis."],
+    ["Le 180","Amorcé à 1 à 1,2 nm par le travers de la plateforme LSO. Inclinaison de 27 à 28°."],
+    ["Le 90","Arrivée vers 450 à 500 ft."],
+    ["Acquisition de la boule","Vers 0,6 nm. Ne pas descendre sous 300 ft avant d'avoir la boule."],
+    ["Dans l'axe (groove)","Temps optimal sur le plan : 15 à 18 secondes."]]},
+  {t:"note", k:"", lbl:"Configuration de référence", v:"Le bateau attend un Tomcat en config standard : ailes à 20°, volets et becs sortis. Toute autre configuration doit être signalée au LSO, car elle change les conditions de vent sur le pont."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Rien à piloter. Lis cette leçon deux fois.",
+   "Regarde une vidéo d'appontage en gardant les trois paramètres en tête : repère la boule, l'axe, l'indexeur.",
+   "Récite le circuit CASE I dans l'ordre, avec ses chiffres, jusqu'à le connaître.",
+   "Note ci-dessous, dans tes mots, ce que fait le DLC et pourquoi il change tout."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu peux réciter le circuit CASE I et expliquer les trois paramètres sans relire."},
+  {t:"src", v:["manuel","chuck7"]}
+]},
+
+{id:"c3", title:"Voler le circuit",
+ intro:"Maintenant tu voles ce que tu viens d'apprendre. On construit le circuit morceau par morceau, sans chercher à réussir l'appontage du premier coup — l'objectif ici, c'est d'arriver dans l'axe, stabilisé, à la bonne incidence.",
+ body:[
+  {t:"h", v:"La configuration, dans l'ordre"},
+  {t:"p", v:"Le point qui sauve tout : tu arrives dans le dernier virage <b>déjà stabilisé en incidence</b>. Ce que tu n'as pas stabilisé en vent arrière et dans le 180, tu ne le rattraperas jamais dans l'axe. La configuration se fait donc entièrement avant le 90."},
+  {t:"img", k:"lndgchk", c:"Carte de checklist atterrissage, à compléter avant le 180."},
+  {t:"img", k:"hook", c:"Crosse d'appontage — sortie en vent arrière."},
+  {t:"img", k:"gear", c:"Train et volets."},
+  {t:"h", v:"Tenir l'incidence à la manette"},
+  {t:"p", v:"En approche, la logique s'inverse par rapport au vol normal : l'assiette vise l'axe, et c'est la <b>poussée qui règle le plan de descente</b> (aidée du DLC). Tu ne piques pas pour descendre : tu réduis un cheveu de poussée ou tu donnes une touche de DLC vers le bas. Corrections petites et permanentes."},
+  {t:"img", k:"vdicruise", c:"Le VDI — repère de plan et d'assiette en approche."},
+  {t:"note", k:"warn", lbl:"L'erreur numéro un", v:"Arriver trop vite. C'est la seule erreur vraiment punie au bateau : trop rapide, la crosse rebondit sur les brins ou tu passes au-dessus. L'incidence, pas la vitesse."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission avec le bateau, météo calme, avion léger (peu de carburant). On simplifie tout au début.",
+   "Vole le circuit complet mais <b>vise juste l'arrivée dans l'axe</b>, stabilisé, à 15 unités d'incidence. Ne cherche pas encore le brin.",
+   "Remets les gaz volontairement à chaque passage : tu travailles l'approche, pas le toucher.",
+   "Recommence jusqu'à arriver dans l'axe stabilisé de façon régulière.",
+   "Note tes repères réels : à quelle vitesse tu passes chaque étape, où tu amorces le 180."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu arrives dans l'axe, dans le groove, stabilisé en incidence, cinq fois de suite — sans forcément apponter."},
+  {t:"src", v:["manuel","chuck7"]}
+]},
+
+{id:"c4", title:"Poser sur le pont",
+ intro:"La dernière marche. Tu ajoutes le toucher à ce que tu maîtrises déjà. Il n'y a pas de raccourci ici : seulement du volume. Vingt appontages ratés valent mieux qu'un tutoriel de plus.",
+ body:[
+  {t:"h", v:"Le balayage final"},
+  {t:"p", v:"Dans l'axe, tu balaies en boucle : boule, axe, incidence. Corrections minuscules. Si la boule descend, une touche de poussée et de DLC vers le haut. Si tu dérives, une petite correction d'axe au manche, accompagnée d'un léger palonnier pour contrer le lacet. Jamais de grand geste."},
+  {t:"note", k:"", lbl:"Le geste qui compte", v:"Au toucher : <b>plein gaz militaire systématique</b>. Tu remets les gaz à chaque fois, avant même de savoir si tu as accroché un brin. Si la crosse tient, l'avion s'arrête ; si elle rebondit, tu es déjà en train de redécoller. Ce réflexe est non négociable — c'est lui qui transforme un raté en simple remise de gaz. Sélectionner la pleine poussée coupe aussi automatiquement le DLC et rentre les aérofreins."},
+  {t:"img", k:"csurf", c:"Position des gouvernes — utile pour voir tes propres entrées en finale."},
+  {t:"note", k:"warn", lbl:"Deux pièges mortels", v:"Piquer du nez juste avant le toucher : tu augmentes fortement le risque de rebond de crosse. Et vouloir casser un fort taux de chute au manche seul près du ramp : tu abîmes l'arrière de l'avion. Un taux de chute se casse à la poussée et au DLC, pas à l'assiette."},
+  {t:"h", v:"Après le toucher"},
+  {t:"p", v:"Si tu accroches : plein gaz maintenu, manche légèrement tiré, tu laisses les brins t'arrêter. Une fois immobilisé, tu réduis, tu remontes la crosse sur ordre, et tu dégages le pont vers un parking en suivant les directeurs. Si tu rebondis (bolter) : tu es déjà à fond, tu redécolles, et tu reprends le circuit pour un nouveau passage."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Reprends la mission de la leçon C3, toujours en météo calme.",
+   "Cette fois, va au bout : cherche le brin. Plein gaz au toucher, à chaque passage.",
+   "Compte tes réussites sur dix. Ne vise pas la perfection : vise la progression.",
+   "Quand tu passes cinq sur dix, complique : plus de carburant, mer formée, pont qui bouge.",
+   "Note après chaque série : qu'est-ce qui t'a fait rater ? Boule, axe, ou incidence ?"]},
+  {t:"note", k:"go", lbl:"Validation", v:"Cinq appontages réussis sur dix en conditions calmes, puis huit sur dix. Tu tiens le bateau — le reste du module s'ouvre à toi."},
+  {t:"src", v:["manuel","chuck7"]}
+]}
+]},
+{letter:"D", title:'Air-air : chasser',
+IMG: {
+  ptid:       "1IJqaDS5W80PrrYzygxa8X84DqUNq711x",
+  ptidsys:    "19G0SjnyxC30M-gSvdm2I8yWUGQhCoNpT",
+  ptidcenter: "1Xff5q-vh0U_1pI34rIJZzIqePuKTk3hk",
+  ddd:        "1125vGfmaLxiHhkMkCEaDYUS8pNFgeyZY",
+  acm:        "1AcyhMEECtkfS7WOn1wuSUKjrNflRYDdz",
+  hudcruise:  "1qn6aLQk6VesaiCnZMA4kKA3WNPGtzv0e",
+  vdicruise:  "1A5PAfefJPcyNiO_wJzHQGkR6Fgfo5UBs",
+  weapons:    "1vSIGGY1nV0Z4oLnX4sDc0FCdY8VaXC64",
+  armpanel:   "1d43AjvVJvWjyrpZlXzuSEiyH80bDgcBj",
+  stbyrdy:    "1q4H10-mIpFHBNAU6yvqa4my94ltjXRVT",
+  rwr:        "1XWPGKsRYuc6n6YVi-5PxIOw745ZC4qtD",
+  aoa:        "1kaJNzj8rs69pQiSx5AH0zWbJ77L2PYg-",
+  csurf:      "1qRAYprtHZ5NksPq4OKmLSl2LMzV7hStW"
+},
+DOC: {
+  manuel: ["Manuel Heatblur (PDF)","16Xl1mYmujB2wQVBK5kjhMm4GuDRBXH49"],
+  chuck6: ["Chuck 6 · Armement offensif","1yXqaXEh6SGtStgt1fgMVOLgl8ZZIO1hG"],
+  chuck9: ["Chuck 9 · Radar & capteurs (PDF)","1WBQtfg6oEEBkcGaDMI_EjKPgu6Xy9psv"]
+},
+L: [
+
+{id:"d1", title:"Le radar : modes et vocabulaire",
+ intro:"Le Tomcat est un intercepteur avant d'être un chasseur : le radar est l'arme principale, le missile n'est que la conséquence. Cette leçon te donne le vocabulaire qui te servira dans toutes les suivantes.",
+ body:[
+  {t:"h", v:"Deux familles, un compromis"},
+  {t:"p", v:"L'AN/AWG-9 fonctionne en pulse ou en pulse doppler. Le pulse voit dans toutes les directions, même une cible qui te fait face à vitesse nulle relative, mais il se noie dans le fouillis au sol et porte moins loin. Le pulse doppler porte beaucoup plus loin en se filtrant sur la vitesse relative de la cible — au prix d'un angle mort sur les cibles qui n'ont presque pas de vitesse de rapprochement (le fameux « notch »)."},
+  {t:"table", head:["Mode","Fonction","Portée typique"], rows:[
+   ["Recherche pulse","Recherche moyenne portée, secondaire air-sol.","60 nm"],
+   ["Poursuite pulse (P-STT)","Poursuite ferme courte-moyenne portée.","50 nm"],
+   ["Recherche pulse doppler","Recherche longue portée.","110 nm"],
+   ["Recherche avec télémétrie","Recherche longue portée avec distance.","90 nm"],
+   ["Poursuite sur passage (TWS)","Longue portée, plusieurs pistes, guidage AIM-54.","90 nm"],
+   ["Poursuite doppler (PD STT)","Poursuite ferme longue portée, tous les missiles.","90 nm"]]},
+  {t:"note", k:"", lbl:"Ce que ça veut dire pour toi", v:"En pratique tu vivras surtout dans deux modes : <b>TWS</b> pour surveiller et engager plusieurs pistes à la fois avec le Phoenix, et <b>PD STT</b> quand tu dois verrouiller fermement une cible pour un Sparrow, un Sidewinder guidé, ou un tir canon assisté."},
+  {t:"h", v:"Le panneau qui commande tout"},
+  {t:"p", v:"Le DDD, côté RIO, concentre les réglages : taille de cible attendue (petite/normale/grande — ça change la portée d'activation du missile), filtrage du fouillis, gain, et surtout les <b>voyants de poursuite</b> : ANT TRK (l'antenne suit l'angle), RDROT (la cible est dans la porte de distance), qui te disent si ton verrouillage est solide ou fragile."},
+  {t:"img", k:"ddd", c:"Le DDD — panneau de contrôle radar principal côté RIO."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission d'entraînement avec quelques appareils neutres à détecter, sans tirer.",
+   "Passe en recherche pulse doppler, repère un contact, note son comportement sur le DDD.",
+   "Fais-le passer en poursuite (STT) et observe les voyants ANT TRK et RDROT s'allumer.",
+   "Repasse en TWS et regarde plusieurs pistes coexister.",
+   "Note le vocabulaire dans tes mots : recherche, poursuite, TWS, STT."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu détectes, poursuis et identifies un contact à 40 nm sans stress, et tu sais dire dans quel mode tu es."},
+  {t:"src", v:["manuel","chuck9"]}
+]},
+
+{id:"d2", title:"Lire le PTID", isNew:true,
+ intro:"Le PTID remplace l'ancien TID. Il est plus riche mais il faut réapprendre où regarder. C'est ton centre de conscience tactique pour tout le reste de la section.",
+ body:[
+  {t:"h", v:"Ce qui a changé"},
+  {t:"p", v:"Le PTID reproduit les fonctions de l'ancien TID, mais les fonctions se sélectionnent désormais par des boutons-poussoirs autour de l'écran plutôt que par des commandes physiques séparées. Menus, échelle, désencombrement — tout passe par ces boutons numérotés."},
+  {t:"img", k:"ptidcenter", c:"Le PTID et sa console. Sélecteur NAV MODE à gauche, boutons de fonction tout autour de l'écran."},
+  {t:"h", v:"Les boutons qui comptent"},
+  {t:"table", head:["Bouton","Fonction"], rows:[
+   ["RANGE","Échelle de l'écran — le diamètre affiché correspond à la distance sélectionnée."],
+   ["MENU","Ouvre le menu complet du PTID."],
+   ["CLSN","Direction de collision vers la piste suivie ou le centre du groupe en TWS."],
+   ["THLD","Rétention de piste prolongée — deux minutes au lieu de 14 secondes environ."],
+   ["Zone de tir","Affiche les zones de tir missile, activées automatiquement 60 secondes avant la portée maximale."],
+   ["Désencombrement","Bascule altitude numérique, symboles secondaires, pistes datalink, pistes non engageables."]]},
+  {t:"h", v:"Piste brute et piste ferme"},
+  {t:"p", v:"C'est la distinction qui décide si tu peux tirer. Une piste brute est un simple contact détecté — pas encore assez de données pour un tir guidé. Une piste ferme, en poursuite (STT) ou en TWS établi, porte les informations de vecteur et de distance nécessaires au calcul de zone de tir."},
+  {t:"img", k:"ptid", c:"Vue d'ensemble du PTID."},
+  {t:"img", k:"ptidsys", c:"Affichages système du PTID."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Ouvre le PTID en vol, avec des contacts présents.",
+   "Change l'échelle avec RANGE et observe l'effet.",
+   "Active puis désactive chaque option de désencombrement une par une : regarde ce que chacune ajoute ou retire.",
+   "Identifie une piste brute puis fais-la passer en piste ferme.",
+   "Note ce que tu vois réellement dans ton cockpit, avec tes propres mots — les libellés exacts peuvent différer légèrement de ce texte."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu énonces la situation tactique du PTID en cinq secondes de lecture, sans hésiter sur les boutons."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"d3", title:"Le HUD en air-air",
+ intro:"Le nouveau HUD te permet de rester tête haute pendant tout l'engagement, là où l'ancien t'obligeait à plonger dans les instruments. Cette leçon relie ce que tu vois dehors à ce qui se passe sur ton radar.",
+ body:[
+  {t:"h", v:"Les invariants"},
+  {t:"p", v:"Vitesse, altitude, cap, vecteur vitesse et assiette restent affichés en permanence, comme en vol normal. Ce qui change en mode air-air, c'est la symbologie de tir qui vient se superposer : losange de cible désignée, distance, Rmin et Rmax (les bornes de la zone de tir), et l'indication de zone de lancement qui s'allume automatiquement en approche de portée."},
+  {t:"img", k:"hudcruise", c:"Le HUD hors mode armement. En A/A, la symbologie de tir vient s'ajouter par-dessus cette base."},
+  {t:"h", v:"Le losange et le réticule"},
+  {t:"p", v:"Pour le canon et l'AIM-9, deux repères travaillent ensemble : le <b>losange</b> indique la cible verrouillée par le radar, et le <b>réticule</b> (pipper) indique où va réellement le tir, une fois la solution de tête calculée. Ce n'est qu'avec un verrouillage radar que tu obtiens les deux ; sans lock, tu n'as que le réticule brut."},
+  {t:"img", k:"vdicruise", c:"Écran vertical — répète une partie de la symbologie du HUD, utile en secours."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Verrouille un contact ami en poursuite ferme et observe le losange apparaître au HUD.",
+   "Rapproche-toi et regarde Rmin/Rmax évoluer ainsi que l'indication de zone de tir s'activer.",
+   "Vole une interception complète en ne regardant que le HUD, du contact radar jusqu'au passage."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Interception complète tête haute, sans regarder la planche de bord."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"d4", title:"Sidewinder et canon",
+ intro:"On commence par les armes les plus simples : autonomes après le déclenchement, sans guidage à tenir. C'est là qu'on apprend les bases de la solution de tir avant de compliquer avec les missiles radar.",
+ body:[
+  {t:"h", v:"Préparer l'AIM-9"},
+  {t:"p", v:"Le refroidissement du viseur infrarouge doit être activé avant tir — il devient prêt immédiatement mais met environ 60 secondes à atteindre sa pleine performance. Une fois prêt, le mode normal (SEAM) laisse le viseur balayer autour de ta ligne de visée ou de ta cible verrouillée, dans un champ de 40° ; le mode boresight le fige strictement sur l'axe de l'avion, en 2,5° seulement."},
+  {t:"img", k:"armpanel", c:"Panneau d'armement — préparation missile et sélection."},
+  {t:"img", k:"stbyrdy", c:"Légende des voyants d'état missile : en attente, prêt."},
+  {t:"note", k:"", lbl:"Le son qui te guide", v:"Un grondement grave signifie que le viseur balaie sans trouver de source infrarouge. Un sifflement aigu signifie qu'il regarde une source chaude. C'est ce sifflement que tu attends avant de presser la détente."},
+  {t:"h", v:"Le canon"},
+  {t:"p", v:"Sans verrouillage radar, tu n'as que le réticule brut : pas de portée, seulement une solution de tête. Avec un verrouillage — même bref — tu obtiens portée, vitesse de rapprochement et solution complète. Rafales courtes : les munitions sont limitées."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Active le refroidissement AIM-9, attends la pleine performance.",
+   "Trois tirs sur cible non manœuvrante en mode SEAM, à courte distance.",
+   "Trois tirs sur cible manœuvrante — sens la différence de fenêtre de tir.",
+   "Passe au canon : un engagement sans verrouillage radar, un autre avec.",
+   "Note tes distances de tir réussies pour chaque arme."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Trois cibles abattues consécutivement, au moins une au canon."},
+  {t:"src", v:["chuck6","manuel"]}
+]},
+
+{id:"d5", title:"Sparrow",
+ intro:"Le Sparrow t'oblige à tenir ton verrouillage pendant tout le vol du missile. C'est l'école de la discipline de tir : rien n'est automatique après le départ.",
+ body:[
+  {t:"h", v:"Le principe du guidage semi-actif"},
+  {t:"p", v:"Le Sparrow ne « voit » pas sa cible : il suit l'énergie radar que ton avion réfléchit dessus. Concrètement, ça veut dire que <b>ton radar doit rester verrouillé sur la cible jusqu'à l'impact</b>. Si tu romps le lock, le missile perd son guidage et devient inutile."},
+  {t:"h", v:"Deux modes"},
+  {t:"p", v:"En mode normal, avec un verrouillage ferme (STT), le WCS peut guider en continu ou en pulse doppler selon le modèle de missile. En mode boresight, le radar illumine simplement tout ce qui se trouve dans l'axe — utile en dernier recours si le verrouillage se perd, car le radar bascule automatiquement sur ce mode quand la cible est perdue, te laissant une chance de repêcher le tir."},
+  {t:"img", k:"acm", c:"Panneau ACM — modes de tir rapproché et boresight."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Verrouillage ferme sur une cible, vérifie le domaine de tir affiché au HUD (Rmin/Rmax).",
+   "Tire, et <b>maintiens le verrouillage</b> pendant tout le vol du missile — ne romps rien, ne désengage rien.",
+   "Recommence sur une cible manœuvrante : sens à quel point il est facile de perdre le lock en la suivant.",
+   "Exercice : deux tirs successifs sur deux cibles séparées, en changeant de verrouillage entre les deux.",
+   "Note ta portée de tir réussie et ce qui t'a fait perdre le lock, le cas échéant."]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Manœuvrer trop fort juste après le tir : tu perds l'antenne sur la cible et le missile part pour rien."},
+  {t:"note", k:"go", lbl:"Validation", v:"Deux tirs sur trois au but, sur cible manœuvrante."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"d6", title:"Phoenix et tir multi-cibles", isNew:true,
+ intro:"L'arme qui rend le Tomcat unique : tirer loin, sur plusieurs cibles, avant même d'être vu. C'est aussi l'arme la plus longue à préparer et la plus facile à gâcher si on la tire trop tôt.",
+ body:[
+  {t:"h", v:"Portées réelles"},
+  {t:"p", v:"Contre une cible de la taille d'un chasseur, en altitude et en poursuite doppler ferme, compte au moins 60 nm de portée. En TWS contre plusieurs cibles à la fois, ça descend vers 50 nm. Si tu tires en mode actif d'entrée (le missile cherchant seul dès le départ), la portée s'effondre à environ 10 nm — c'est un mode de dernier recours, pas une tactique standard."},
+  {t:"h", v:"Préparation"},
+  {t:"p", v:"Comme le Sparrow, le Phoenix doit être préparé et accordé avant tir — environ deux minutes pour que les voyants de statut passent à « prêt ». Ne néglige pas ce délai dans ta planification d'engagement."},
+  {t:"img", k:"weapons", c:"Vue d'ensemble de l'armement — les Phoenix sur leurs rails fuselage."},
+  {t:"h", v:"Le principe du guidage"},
+  {t:"p", v:"En TWS, jusqu'à six Phoenix peuvent être guidés simultanément vers six cibles différentes. Le missile part semi-actif — guidé par ton radar — puis bascule en <b>autonome</b> (guidage radar actif embarqué) une fois assez proche de sa cible. Ce basculement n'est pas automatique dans l'absolu : c'est ton radar qui commande le passage en mode actif. Si ce signal n'arrive jamais, le missile continue en semi-actif jusqu'au bout — ce qui veut dire qu'il n'est <b>pas vraiment « tire et oublie »</b> tant qu'il n'a pas basculé."},
+  {t:"note", k:"", lbl:"Ce que ça implique pour toi", v:"Tu dois garder ta piste TWS active jusqu'à ce que le missile devienne autonome, pas juste jusqu'au moment du tir. Rompre le suivi trop tôt prive le missile de ses mises à jour de trajectoire."},
+  {t:"h", v:"Tir multi-cibles"},
+  {t:"p", v:"En TWS, tu assignes un missile à chaque piste voulue, tu tires en séquence, et tu maintiens le tableau de pistes actif pendant que les missiles convergent. C'est la manœuvre signature du Tomcat : rester en dehors de portée adverse tout en engageant plusieurs appareils."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Prépare tes Phoenix (deux minutes d'avance sur ton engagement prévu).",
+   "Tir sur cible unique à longue distance, en gardant le suivi radar actif jusqu'à l'impact.",
+   "Passe en TWS avec deux ou trois cibles, assigne et tire en séquence.",
+   "Note tes portées réelles observées — elles varient nettement avec l'altitude, la vitesse de tir et la manœuvre de la cible."]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Tirer au maximum théorique sur une cible manœuvrante : elle a largement le temps de se dérober avant l'impact. Réserve les longues portées aux cibles qui ne savent pas qu'elles sont visées."},
+  {t:"note", k:"go", lbl:"Validation", v:"Deux cibles engagées simultanément en TWS, au moins une abattue."},
+  {t:"src", v:["manuel","chuck9"]}
+]},
+
+{id:"d7", title:"BFM : le Tomcat au manche",
+ intro:"Dernière leçon de la section : le combat tournoyant. Le Tomcat est lourd mais ses ailes immenses le rendent redoutable à basse vitesse — à condition de ne pas gaspiller son énergie dans le premier virage.",
+ body:[
+  {t:"h", v:"Gérer l'énergie"},
+  {t:"p", v:"Chaque virage soutenu coûte de la vitesse. La question permanente en combat tournoyant n'est pas « puis-je tourner plus fort » mais « ai-je les moyens de le faire maintenant ». Le DFCS (section A) t'aide à sentir la limite, mais l'énergie, elle, ne se récupère qu'en ligne droite ou en piqué."},
+  {t:"img", k:"csurf", c:"Position des gouvernes — utile pour voir tes propres entrées en combat."},
+  {t:"img", k:"aoa", c:"L'indexeur d'incidence — ton limiteur de virage en combat serré, comme en approche."},
+  {t:"h", v:"Manœuvres de base"},
+  {t:"p", v:"Le virage soutenu à facteur de charge constant est ta manœuvre par défaut. Le tonneau barriqué casse une poursuite en te déplaçant latéralement sans perdre trop d'énergie. La mise en travers extrême réduit ta vitesse brutalement pour faire dépasser un poursuivant — dangereux si mal jugé, redoutable sinon."},
+  {t:"h", v:"Défensif"},
+  {t:"p", v:"En défensif, ton premier travail est de détecter la menace le plus tôt possible — c'est pour ça que le RWR (section E) et le fait de regarder dehors comptent autant que le pilotage. Une fois la menace identifiée, casse la solution de tir adverse par un virage franc vers elle, pas en t'éloignant."},
+  {t:"img", k:"rwr", c:"Détecteur d'alerte radar — ta première ligne de défense en combat."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Combat contre un adversaire de niveau facile, en offensif : garde l'énergie, ne tire pas sur le manche au premier virage.",
+   "Même exercice en défensif : détecte, réagis, casse la solution.",
+   "Combat contre un adversaire plus manœuvrant : accepte de perdre longtemps avant de trouver ton ouverture.",
+   "Note ce qui t'a coûté le plus d'énergie, et à quel moment tu aurais dû rompre plutôt qu'insister."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu tiens deux minutes en défensif face à un adversaire plus manœuvrant sans être abattu. Tu es prêt pour la section E."},
+  {t:"src", v:["chuck6","manuel"]}
+]}
+]},
+{letter:"E", title:'Survivre',
+IMG: {
+  rwrRio:   ["right_console_rwr-02.jpg","1XWPGKsRYuc6n6YVi-5PxIOw745ZC4qtD"],
+  rwrPlt:   ["right_instrument_panel_rwr-05.jpg","1PJBFGPUuDcG7da71CN-4hUGYzsjsw3a7"],
+  ecmd:     ["right_vertical_console_electronic_countermeasure_display.jpg","14UF20vaSs0ST5_ckquB8BNlcJLC178Lb"],
+  ecmdPm:   ["rio_pmdig_ecmd_pmdig.jpg","1-uATnpOitJFtaPQwOUbpW9SU2F1kfrds"],
+  decm:     ["right_console_decm-04.jpg","1di0m07GZz7ws14zFS4Fi8jXxwD3cnRUB"],
+  rconsole: ["right_console_right_side_console.jpg","1QkY4k-iKx-5OzoGds58aO7eBSr0bJ0d7"],
+  caution:  ["left_windshield_frame_caution_lights_left_windshield_frame.jpg","18JLq9huWOJiKPSMt40iBQJ0XcO7ib3lw"]
+},
+DOC: {
+  manuel: ["Manuel Heatblur (PDF)","16Xl1mYmujB2wQVBK5kjhMm4GuDRBXH49"],
+  chuck6b:["Chuck · RWR & contre-mesures","1yXqaXEh6SGtStgt1fgMVOLgl8ZZIO1hG"]
+},
+L: [
+
+{id:"e1", title:"Lire le RWR",
+ intro:"Le détecteur d'alerte radar (ALR-67) est ta première ligne de défense : il te dit qui t'illumine, d'où, et avec quelle intention. Savoir le lire en un coup d'œil vaut tous les leurres du monde.",
+ body:[
+  {t:"h", v:"Ce que l'écran te dit"},
+  {t:"p", v:"Chaque symbole représente un émetteur radar : sa position sur l'écran donne sa direction relative, son symbole donne son type. La distance au centre reflète la priorité de la menace, pas la distance réelle. Sur le B(U), l'affichage ECM passe par le PMDIG (l'écran de contre-mesures), avec une option de bascule automatique : dès qu'une menace apparaît, la page ECM peut prendre le dessus sur ce qui était affiché."},
+  {t:"img", k:"ecmd", c:"L'écran de contre-mesures (ECMD), console verticale droite du RIO."},
+  {t:"img", k:"ecmdPm", c:"L'ECMD au sein du groupe d'écrans programmables du B(U)."},
+  {t:"h", v:"Trois niveaux d'urgence"},
+  {t:"table", head:["Signal","Sens","Ta réaction"], rows:[
+   ["Recherche","Un radar balaie ta zone, sans te suivre.","Noter la direction, continuer la mission."],
+   ["Poursuite","Un radar te suit spécifiquement.","Préparer une réaction : cap, altitude, programme de leurres."],
+   ["Tir / guidage","Un missile est probablement en vol vers toi.","Réagir immédiatement : manœuvre + leurres. C'est maintenant."]]},
+  {t:"img", k:"rwrRio", c:"Panneau de commande du RWR côté RIO : alimentation, type de menaces affichées, volume."},
+  {t:"img", k:"rwrPlt", c:"Répétiteur RWR côté pilote."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission avec des radars sol actifs mais hors de portée de tir. Survole la zone en écoutant et regardant le RWR.",
+   "Associe chaque son à ce que tu vois à l'écran : recherche, poursuite, tir.",
+   "Règle le volume pour que l'alerte de tir soit impossible à rater sans que la recherche te fatigue.",
+   "Note les symboles des menaces de ta mission et leur signification."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu identifies le type et la direction d'une menace au son, avant même de regarder l'écran."},
+  {t:"src", v:["manuel","chuck6b"]}
+]},
+
+{id:"e2", title:"L'ALE-47 : leurres programmés", isNew:true,
+ intro:"Le B(U) remplace l'ancien système de contre-mesures par l'AN/ALE-47, programmable. La différence de philosophie est totale : tu ne largues plus au hasard sous le stress, tu déclenches des programmes préparés à froid.",
+ body:[
+  {t:"h", v:"Ce qui a changé"},
+  {t:"p", v:"L'ALE-47 se pilote via deux panneaux sur la console droite du RIO : l'unité d'affichage (DCDU) et le programmateur. Les programmes de largage — combien de paillettes ou de fusées, à quelle cadence, sur quelle durée — peuvent être préparés avant le vol, y compris chargés depuis l'éditeur de mission via la cartouche de données (MDL), la même qui transporte tes plans de vol."},
+  {t:"img", k:"rconsole", c:"Console droite du RIO — les panneaux ALE-47 (DCDU et programmateur) s'y trouvent."},
+  {t:"img", k:"decm", c:"Panneau DECM — le brouilleur, complémentaire des leurres."},
+  {t:"h", v:"Trois programmes types à préparer"},
+  {t:"table", head:["Situation","Logique du programme"], rows:[
+   ["Missile radar","Paillettes en salve, cadence rapide, couplées à une manœuvre dans le plan horizontal pour sortir du filtrage doppler."],
+   ["Missile infrarouge","Fusées espacées sur plusieurs secondes, le temps de casser l'accrochage pendant que tu changes de vecteur."],
+   ["Dégagement","Programme mixte plus long, pour couvrir une sortie de zone défendue."]]},
+  {t:"note", k:"", lbl:"Le principe qui rend tout efficace", v:"Un leurre sans manœuvre ne sauve presque jamais. Le programme donne au missile un faux choix ; c'est ta manœuvre qui rend le mauvais choix crédible. Les deux ensemble, toujours."},
+  {t:"h", v:"Côté déclenchement"},
+  {t:"p", v:"Les commandes de largage restent accessibles aux deux équipiers : le pilote a son bouton de contre-mesures (celui que tu as bindé en section A), et le RIO ses interrupteurs — largage unitaire ou lancement du programme sélectionné. En pratique avec JESTER, tu déclenches toi-même et il gère la sélection des programmes si tu le lui demandes."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Au sol, explore le DCDU et le programmateur ALE-47 avec le click-to-explain : identifie où se lisent les quantités restantes et le programme sélectionné.",
+   "Prépare (ou fais préparer via l'éditeur de mission) tes trois programmes types.",
+   "En vol, déclenche chaque programme à blanc et vérifie ce qui sort : type, cadence, durée.",
+   "Note tes programmes ci-dessous : contenu exact et situation d'emploi. C'est ta carte de survie personnelle."]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Vider tout son stock sur la première alerte. Les leurres sont une ressource de mission : un programme adapté en consomme peu et en garde pour le retour."},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu connais tes trois programmes par cœur et tu sais lequel déclencher sans réfléchir."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"e3", title:"Survivre à un engagement",
+ intro:"La leçon de synthèse : tout mettre ensemble sous pression. Détection, décision, manœuvre, leurres — dans cet ordre, en quelques secondes.",
+ body:[
+  {t:"h", v:"La séquence de survie"},
+  {t:"proc", v:[
+   "<b>Détecter</b> : l'alerte RWR ou le départ missile vu dehors. Chaque seconde d'avance compte double.",
+   "<b>Annoncer et localiser</b> : d'où vient la menace ? Le RWR te donne l'azimut ; tes yeux confirment.",
+   "<b>Manœuvrer</b> : virage franc pour mettre la menace sur le travers (radar) ou casser la ligne de vue (IR), en jouant l'altitude si le terrain le permet.",
+   "<b>Leurrer</b> : le bon programme, pendant la manœuvre, pas après.",
+   "<b>Réévaluer</b> : la menace a-t-elle décroché ? Sinon, on recommence. Si oui, on sort de la zone — on ne retourne pas voir."]},
+  {t:"img", k:"caution", c:"Voyants d'alerte du pare-brise — après un engagement, un coup d'œil pour vérifier que l'avion n'a rien pris."},
+  {t:"note", k:"", lbl:"Radar contre infrarouge", v:"Contre un missile radar, ta manœuvre vise à réduire ta vitesse relative vue du radar (le mettre sur le travers) pendant que les paillettes lui offrent une cible alternative. Contre un missile infrarouge, tout est dans la ligne de vue : fusées + changement de plan brutal pour sortir du champ du chercheur."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission : traverser une zone défendue par un ou deux systèmes sol-air de menace moyenne, aller-retour.",
+   "Premier passage haut et prudent : repère les menaces au RWR sans t'exposer.",
+   "Deuxième passage dans l'enveloppe : laisse-toi engager volontairement et déroule la séquence complète.",
+   "Répète jusqu'à sortir intact trois fois de suite.",
+   "Note ce qui t'a surpris et le délai réel entre l'alerte et ta réaction."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Trois traversées de zone défendue, engagé à chaque fois, intact à chaque fois. Direction la section F : rendre les coups."},
+  {t:"src", v:["manuel","chuck6b"]}
+]}
+]},
+{letter:"F", title:'Air-sol : frapper',
+IMG: {
+  stores:  ["weapons_stores_overview_image.jpg","1vSIGGY1nV0Z4oLnX4sDc0FCdY8VaXC64"],
+  armpanel:["left_vertical_console_armament_control_panel.jpg","1d43AjvVJvWjyrpZlXzuSEiyH80bDgcBj"],
+  lgbcues: ["typical_lgb_lts_cues.jpg","1kOiUlf4ldmWcWX2mwCue2-wdE_BOnE7-"],
+  ggwcues: ["typical_ggw_lts_cues.jpg","15Yl8TnfjMv1lLQq9JSqloY54yE9g7aVo"],
+  cdnu:    ["left_console_cdnu-01.jpg","1iHXkN6fMCN5z0feGKcX2thLu3sE4ot7V"],
+  ptid:    ["overview_ptid.jpg","1IJqaDS5W80PrrYzygxa8X84DqUNq711x"],
+  hud:     ["vdigr_hud_cruise_manual.jpg","1qn6aLQk6VesaiCnZMA4kKA3WNPGtzv0e"],
+  radalt:  ["left_instrument_panel_radalt-01.jpg","1bK955HU9Sidlz_MZtQQPKrRtvbJxOIbq"]
+},
+DOC: {
+  manuel: ["Manuel Heatblur (PDF)","16Xl1mYmujB2wQVBK5kjhMm4GuDRBXH49"],
+  chuck9: ["Chuck 9 · LANTIRN & capteurs","1WBQtfg6oEEBkcGaDMI_EjKPgu6Xy9psv"],
+  chuck6: ["Chuck 6 · Armement","1yXqaXEh6SGtStgt1fgMVOLgl8ZZIO1hG"]
+},
+L: [
+
+{id:"f1", title:"Bombes lisses et symbologie A/G", isNew:true,
+ intro:"On valide la nouvelle symbologie air-sol du HUD sur l'arme la plus simple. Une bombe non guidée qui touche, c'est la preuve que tu comprends la passe d'attaque — le reste n'est que du raffinement.",
+ body:[
+  {t:"h", v:"Configuration"},
+  {t:"p", v:"Sélection de l'arme et paramètres de largage sur le panneau d'armement, master arm en dernier. Le mode BOMB du balayage des ailes (section A) fixe les ailes à 55° pour stabiliser la plateforme en passe d'attaque."},
+  {t:"img", k:"stores", c:"Vue d'ensemble des emports."},
+  {t:"img", k:"armpanel", c:"Panneau d'armement — sélection et paramètres."},
+  {t:"h", v:"Deux logiques de largage"},
+  {t:"table", head:["Logique","Principe","Quand"], rows:[
+   ["Point d'impact continu","Le HUD affiche en permanence où tomberait la bombe si tu larguais maintenant. Tu amènes le repère sur la cible et tu presses.","Cible visible, passe en piqué. Le mode de l'apprentissage."],
+   ["Point calculé","Tu désignes la cible d'abord ; l'avion largue seul au bon moment pendant que tu voles le profil.","Largage en palier ou en ressource, cible désignée."]]},
+  {t:"img", k:"hud", c:"Le HUD — en mode A/G, la symbologie de largage s'ajoute par-dessus cette base."},
+  {t:"img", k:"radalt", c:"Le radioaltimètre — ta vraie hauteur sol en passe d'attaque. Règle un plancher d'alerte."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission avec cibles au sol non défendues. Configure une paire de bombes lisses.",
+   "Passe en piqué à 30° environ : point de roulis, mise en piqué, repère sur la cible, largage, ressource franche.",
+   "Cinq passes. Note ton altitude de largage et ta hauteur de ressource au radioaltimètre.",
+   "Puis trois passes au point calculé : désigne, vole le profil, laisse l'avion larguer.",
+   "Note tes paramètres de passe qui fonctionnent : angle, vitesse, altitude d'entrée et de largage."]},
+  {t:"note", k:"warn", lbl:"Pièges", v:"Descendre trop bas et se faire prendre par sa propre explosion. Et fixer la cible au point d'oublier la ressource — le sol gagne toujours."},
+  {t:"note", k:"go", lbl:"Validation", v:"Trois bombes sur cinq à moins de 50 m de la cible."},
+  {t:"src", v:["manuel","chuck6"]}
+]},
+
+{id:"f2", title:"Bombes guidées laser et LANTIRN",
+ intro:"La frappe de précision classique du Tomcat : la nacelle LANTIRN, tenue par ton RIO, illumine la cible et la bombe suit le point laser. Ta partie : voler le profil. Celle de JESTER : trouver, désigner, illuminer.",
+ body:[
+  {t:"h", v:"Mise en œuvre de la nacelle"},
+  {t:"p", v:"La nacelle demande de l'anticipation : alimentation au sol, puis environ huit minutes de refroidissement avant d'être opérationnelle. Ensuite : mode opérationnel, laser armé, et vérification du code laser — il doit correspondre à celui réglé sur tes bombes (1688 par défaut dans la plupart des missions)."},
+  {t:"img", k:"lgbcues", c:"Symbologie LANTIRN typique pour un largage de bombe guidée laser : temps avant largage, temps avant impact, distance oblique."},
+  {t:"h", v:"Le partage des rôles avec JESTER"},
+  {t:"proc", v:[
+   "Tu amènes l'avion vers la zone ; JESTER pointe la nacelle — sur un waypoint proche de la cible si tu en as créé un (section B), sinon devant le nez de l'avion.",
+   "JESTER cherche, trouve, et accroche la cible en suivi.",
+   "Tu voles la passe : le HUD et le PTID affichent le compte à rebours de largage (TREL).",
+   "Au signal, largage. La nacelle illumine — en automatique dans les dernières secondes du vol de la bombe, ou en manuel sur ta demande.",
+   "Après largage : vole doux et ne masque pas la ligne de vue de la nacelle vers la cible, jusqu'à l'impact."]},
+  {t:"note", k:"warn", lbl:"Pièges", v:"Illuminer trop tôt (la bombe plonge court en épuisant son énergie) ou masquer le laser en manœuvrant fort après le largage. La bombe suit le point laser : pas de point, pas d'impact."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Crée un waypoint sur ta cible avant le vol (section B) : le pointage de la nacelle en devient trivial.",
+   "Première attaque complète sur cible fixe, en laissant JESTER tout gérer côté capteur.",
+   "Deuxième attaque sur cible mobile : la nacelle suit, à toi de tenir un profil stable.",
+   "Note ton enchaînement JESTER exact — c'est la procédure la plus dépendante des menus, écris-la."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Deux cibles détruites en une passe chacune, dont une mobile."},
+  {t:"src", v:["chuck9","manuel"]}
+]},
+
+{id:"f3", title:"JDAM : frapper des coordonnées", isNew:true,
+ intro:"La capacité entièrement nouvelle du B(U), celle qui justifie à elle seule l'upgrade. Aucune image, aucun laser : des coordonnées, ton EGI, et une bombe qui plane vers le point. Tout ce que tu as appris en section B converge ici.",
+ body:[
+  {t:"h", v:"La chaîne complète"},
+  {t:"p", v:"Coordonnées de cible → système de navigation → transfert à la bombe → largage dans le domaine → guidage GPS autonome. Aucun maillon n'est visuel. C'est pour ça que la précision de saisie (section B, leçon 3) est vitale : la bombe ira exactement où tu as dit, y compris si tu as dit faux."},
+  {t:"img", k:"ggwcues", c:"Symbologie typique d'un largage d'arme guidée GPS (GGW) : point de largage, domaine, temps."},
+  {t:"h", v:"Programmer une cible depuis le CDNU"},
+  {t:"p", v:"Le chemin le plus propre passe par le plan de vol : chaque waypoint peut devenir une cible JDAM. Sur la page d'édition du waypoint (page 2/2), tu choisis la station d'emport (3, 4, 5 ou 6) puis tu transfères les données du point vers la bombe de cette station. La vérification se fait sur la page mission JDAM du PTID (JMSN)."},
+  {t:"proc", v:[
+   "Saisis ou vérifie le waypoint-cible : coordonnées <b>exactes</b>, format DMM, et surtout l'<b>altitude</b> du point — une JDAM guide en trois dimensions.",
+   "Ouvre la page d'édition du waypoint, seconde page.",
+   "Sélectionne la station d'emport voulue (rotation 3/4/5/6).",
+   "Transfère les données vers la station : le point devient la cible principale de cette bombe.",
+   "Vérifie sur la page <code>JMSN</code> du PTID que chaque station a bien sa cible.",
+   "Des missions pré-planifiées peuvent aussi être chargées entières depuis la cartouche de données (MDL), préparées dans l'éditeur de mission."]},
+  {t:"img", k:"cdnu", c:"Le CDNU — la page d'édition de waypoint est la porte d'entrée du ciblage JDAM."},
+  {t:"img", k:"ptid", c:"Le PTID — la page JMSN te montre l'assignation cibles/stations."},
+  {t:"note", k:"", lbl:"Coordonnées haute précision", v:"Pour une frappe sérieuse, utilise la page d'édition haute précision (touche <code>F3</code> du CDNU) : elle accepte les coordonnées au dix-millième de minute ou au centième de seconde, en DMM ou DMS. C'est là que tu saisis des coordonnées relevées sur la carte F10 en format fin."},
+  {t:"h", v:"Le largage"},
+  {t:"p", v:"La JDAM plane, mais pas indéfiniment : son domaine dépend de ton altitude et de ta vitesse au largage. Plus haut et plus vite = plus loin. Le HUD t'affiche le domaine et le point de largage ; tu voles vers la zone, master arm, et tu largues dans le domaine. Ensuite la bombe est autonome — tu peux dégager immédiatement."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Une cible, une bombe : chaîne complète du relevé de coordonnées à l'impact, par tous les temps — essaie de nuit ou dans les nuages, c'est là que la JDAM prend son sens.",
+   "Vérifie deux fois chaque coordonnée avant transfert. Prends-en l'habitude dès maintenant.",
+   "Puis la frappe multiple : quatre points, quatre bombes, quatre stations, un seul passage.",
+   "Note ta procédure complète ci-dessous — c'est la plus longue du module, et celle que tu oublieras le plus vite sans notes."]},
+  {t:"note", k:"warn", lbl:"Pièges", v:"Une erreur d'un chiffre dans les coordonnées : un kilomètre d'écart. Une altitude de cible fausse ou nulle : la bombe rate en trois dimensions. Un largage hors domaine : la bombe tombe court, proprement, inutilement."},
+  {t:"note", k:"go", lbl:"Validation", v:"Quatre points frappés en un seul passage, sans visuel sur aucune cible. Le B(U) n'a plus de secret offensif pour toi."},
+  {t:"src", v:["manuel"]}
+]}
+]},
+{letter:"G", title:'Mettre bout à bout',
+IMG: {
+  caution: ["left_windshield_frame_caution_lights_left_windshield_frame.jpg","18JLq9huWOJiKPSMt40iBQJ0XcO7ib3lw"],
+  lengine: ["left_instrument_panel_left_engine-05.jpg","1Ios11Na-FMxu-OytIkKd29GWkTYN5vRh"],
+  oil:     ["left_knee_panel_oil_pressure_indicators.jpg","1OWx3BXaU7VuOdzGbJ2ojECuqg20P3duy"],
+  hyd:     ["left_knee_panel_hydraulic_pressure_indicator.jpg","1Bxye8blt540Y-K6onA6rtNWhpnNFLsLu"],
+  fuel:    ["left_vertical_console_fuel_management_panel.jpg","1L-r0Hw4MSrXPKkACqWQRfjHGhNBbsXa-"],
+  canopy:  ["right_instrument_panel_canopy_jettison-02.jpg","12m376kGUqfY1DBH8bwsgUrDabAoBYmgG"],
+  checklisttool: ["checklist_tool_example.jpg","1dKLIRNF1kPhw96R6DnZjyoLmSvz_D20K"]
+},
+DOC: {
+  manuel: ["Manuel Heatblur (PDF)","16Xl1mYmujB2wQVBK5kjhMm4GuDRBXH49"],
+  chuck8: ["Chuck 8 · Ravitaillement en vol","1ZNa0UfSt5be5UTkGIFGfagRajieYp56X"],
+  chuck4: ["Chuck 4 · Vol & moteurs","176bbRcBICqWrgUraEoHzS-ik_xnPHx_F"]
+},
+L: [
+
+{id:"g1", title:"Urgences",
+ intro:"Un avion endommagé qui rentre vaut mieux qu'un avion perdu — et savoir quand s'éjecter fait partie du métier. On ne mémorise pas tout : on mémorise les réflexes immédiats, le reste se lit sur la checklist.",
+ body:[
+  {t:"h", v:"La règle des trois temps"},
+  {t:"p", v:"Toute urgence se traite en trois temps : <b>piloter</b> d'abord (l'avion vole encore, garde-le en vol), <b>identifier</b> ensuite (quel voyant, quel paramètre, quel moteur), <b>agir</b> enfin (les réflexes immédiats, puis la checklist). L'erreur classique est d'inverser : se jeter sur les interrupteurs pendant que l'avion part en vrille."},
+  {t:"img", k:"caution", c:"Voyants d'alerte du pare-brise — ta première information dans la plupart des pannes."},
+  {t:"h", v:"Panne moteur"},
+  {t:"p", v:"Le Tomcat vole très bien sur un moteur — le vrai danger est ailleurs : les moteurs sont très écartés, donc une poussée asymétrique à basse vitesse et forte incidence peut te mettre en lacet violent, jusqu'au départ. Réflexes : réduire l'incidence, compenser au palonnier, sécuriser le moteur mort (manette coupée, carburant fermé), et gérer le vol comme un avion en énergie limitée."},
+  {t:"img", k:"lengine", c:"Paramètres moteur — identifie le moteur en cause avant de couper quoi que ce soit."},
+  {t:"img", k:"oil", c:"Pressions d'huile — une chute lente ici annonce souvent la panne avant le voyant."},
+  {t:"h", v:"Hydraulique, incendie, carburant"},
+  {t:"table", head:["Panne","Le réflexe"], rows:[
+   ["Incendie moteur","Manette du moteur coupée, carburant fermé, agent extincteur. Ne pas rallumer un moteur qui a brûlé."],
+   ["Perte hydraulique","Surveiller l'autre circuit ; anticiper des commandes dégradées et un train à sortir en secours."],
+   ["Fuite carburant","Calcul immédiat : autonomie restante contre distance du terrain le plus proche. La réponse décide du déroutement."]]},
+  {t:"img", k:"hyd", c:"Pression hydraulique — deux circuits, tant qu'il en reste un, l'avion se pilote."},
+  {t:"img", k:"fuel", c:"Gestion carburant — en fuite, c'est ici que se joue le calcul du retour."},
+  {t:"h", v:"L'éjection"},
+  {t:"p", v:"La décision se prend avant d'en avoir besoin : fixe-toi des seuils à froid (par exemple : avion incontrôlable sous une certaine altitude = éjection immédiate, sans débat). Rappelle-toi que tu commandes un équipage : l'éjection concerne les deux sièges."},
+  {t:"img", k:"canopy", c:"Largage de verrière — connaître son emplacement avant d'en avoir besoin."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission d'entraînement avec pannes scriptées, ou pannes aléatoires activées.",
+   "Panne moteur en croisière : sécurise, déroute, pose sur un moteur.",
+   "Panne moteur au décollage — le cas le plus dangereux : décide vite entre continuer et s'arrêter.",
+   "Fuite carburant en mission : fais le calcul de déroutement en vol, réellement.",
+   "Note tes seuils d'éjection personnels et tes réflexes par panne."]},
+  {t:"note", k:"warn", lbl:"Piège", v:"S'acharner à ramener un avion condamné. Un déroutement raté par orgueil coûte l'équipage entier."},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu poses l'avion avec un moteur en panne, terrain puis bateau si tu te sens prêt."},
+  {t:"src", v:["manuel","chuck4"]}
+]},
+
+{id:"g2", title:"Ravitaillement en vol",
+ intro:"Optionnel mais transformateur : le ravitaillement étend tes missions et forge une précision de pilotage qui améliore tout le reste, appontage compris. C'est aussi l'exercice le plus frustrant du module — préviens ton ego.",
+ body:[
+  {t:"h", v:"Les principes qui marchent"},
+  {t:"proc", v:[
+   "Perche sortie (jamais au-dessus de 350 kt perche sortie), rejoins le ravitailleur et stabilise-toi en position pré-contact.",
+   "Demande le contact à la radio ; le panier se déploie.",
+   "Approche à 2-3 kt de plus que le ravitailleur, pas davantage. <b>Ne regarde pas le panier</b> : prends un repère fixe sur le ravitailleur et vole ce repère.",
+   "Trim en permanence. Un avion non trimé rend l'exercice impossible.",
+   "Corrections minuscules, jamais combinées : tangage OU roulis OU poussée, pas les trois ensemble.",
+   "Au contact : légère poussée pour maintenir la perche enfoncée, formation stable jusqu'au plein.",
+   "Pour te détacher : réduis doucement et rentre la perche."]},
+  {t:"note", k:"", lbl:"Le secret", v:"Le calme. Si tu rates trois fois de suite et que tu sens la crispation monter, éloigne-toi, respire, reviens. La précision vient de la détente, jamais de la force."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission avec ravitailleur en palier, météo calme. Vise d'abord la tenue de formation en pré-contact pendant une minute entière.",
+   "Puis les tentatives de contact : compte-les, sans te juger. La moyenne des débutants se chiffre en dizaines.",
+   "Premier plein complet réussi : note tes repères visuels exacts sur le ravitailleur.",
+   "Ensuite seulement : ravitaillement en virage doux."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Un plein complet sans décrochage du panier. Deux, et tu ne le perdras plus jamais."},
+  {t:"src", v:["chuck8"]}
+]},
+
+{id:"g3", title:"La mission complète",
+ intro:"Tout converge ici. Une mission de bout en bout, du pont au pont, sans pause ni sauvegarde. C'est la seule leçon qui vérifie que les six sections tiennent ensemble sous charge réelle.",
+ body:[
+  {t:"h", v:"Le gabarit de mission"},
+  {t:"table", head:["Phase","Sections mobilisées"], rows:[
+   ["Préparation : route, cibles, armement, programmes ALE-47, carburant","B · E · F"],
+   ["Démarrage, alignement, catapultage","A · B · C"],
+   ["Navigation vers la zone, en OFLY","B"],
+   ["Frappe air-sol (JDAM ou LGB) sur objectif","F"],
+   ["Menace air-air en sortie de zone : engagement ou évasion","D · E"],
+   ["Retour, ravitaillement si nécessaire","G"],
+   ["Appontage","C"]]},
+  {t:"img", k:"checklisttool", c:"L'outil de checklist intégré au module — ton compagnon pour toute la mission."},
+  {t:"h", v:"Les règles du jeu"},
+  {t:"proc", v:[
+   "Pas de pause active, pas de rejouabilité en cours de vol : si tu rates, la mission continue avec la conséquence.",
+   "Prépare la mission par écrit avant de lancer : coordonnées saisies sur papier, fréquences TACAN, programmes de leurres, seuil carburant de retour (bingo).",
+   "Vole-la en entier, quoi qu'il arrive.",
+   "<b>Débriefe par écrit</b> : ce qui a marché, ce qui a coincé, et quelle section retravailler. Le débrief vaut la moitié de l'apprentissage.",
+   "Recommence jusqu'à deux missions complètes réussies d'affilée."]},
+  {t:"note", k:"", lbl:"Si ça coince", v:"Ne recommence pas la mission entière en boucle : identifie la phase qui casse, retourne à la section concernée, retravaille la leçon, puis reviens. La mission est un examen, pas un exercice."},
+  {t:"h", v:"Et après"},
+  {t:"p", v:"Deux missions complètes réussies, et tu maîtrises le F-14B(U) mieux que la grande majorité des pilotes du module. La suite naturelle : le multijoueur avec un vrai RIO humain — l'avion change complètement de dimension — et les campagnes. Ton carnet de notes, lui, reste ton meilleur instructeur : relis-le de temps en temps, il contient tout ce que tu as appris à la dure."},
+  {t:"note", k:"go", lbl:"Validation finale", v:"Deux missions complètes, du pont au pont, réussies d'affilée. Cursus terminé — bienvenue chez les pilotes de Tomcat."},
+  {t:"src", v:["manuel"]}
+]}
+]}
+];
+
+const KEY="f14bu-cursus";
+let st={done:{},notes:{}}, sIdx=0, lIdx=0;
+async function load(){ const r=await __sget(KEY); if(r&&r.value){ try{st=Object.assign(st,JSON.parse(r.value));}catch(e){} } }
+let tm=null;
+function save(){ clearTimeout(tm); tm=setTimeout(()=>__sset(KEY,JSON.stringify(st)),400); }
+
+function fig(k,c){
+  const SEC=SECTIONS[sIdx], v=SEC.IMG[k]; let fn,id;
+  if(Array.isArray(v)){fn=v[0];id=v[1];} else {id=v;fn=FN[id]||id;}
+  return `<figure><img src="${LOCAL}${fn}" alt="${c}" loading="lazy"
+      onerror="if(!this.dataset.f){this.dataset.f=1;this.src='${D(id)}';}else{this.closest('figure').classList.add('failed');}"
+      onclick="openLb(this.src)">
+    <div class="imgfail">Image non chargée — ouvre-la dans Drive via le lien ci-dessous.</div>
+    <figcaption><span>${c}</span><a href="${V(id)}" target="_blank" rel="noopener">Drive ↗</a></figcaption></figure>`;
+}
+function table(h,rows){
+  return `<table class="keytbl"><thead><tr>${h.map(x=>`<th>${x}</th>`).join("")}</tr></thead>
+    <tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+}
+function block(b){
+  if(b.t==="h")   return `<h3>${b.v}${b.badge?'<span class="badge" style="margin-left:8px;vertical-align:0">Nouveau</span>':''}</h3>`;
+  if(b.t==="p")   return `<p>${b.v}</p>`;
+  if(b.t==="img") return fig(b.k,b.c);
+  if(b.t==="proc")return `<ol class="proc">${b.v.map(s=>`<li><span>${s}</span></li>`).join("")}</ol>`;
+  if(b.t==="table")return table(b.head,b.rows);
+  if(b.t==="pat") return `<div class="pat">${b.v}<div class="cap">${b.cap}</div></div>`;
+  if(b.t==="note")return `<div class="note ${b.k||""}"><span class="lbl">${b.lbl}</span><p>${b.v}</p></div>`;
+  if(b.t==="src"){
+    const SEC=SECTIONS[sIdx];
+    return `<h3>Sources dans ton Drive</h3><div class="srcs">${
+      b.v.map(k=>`<a href="${V(SEC.DOC[k][1])}" target="_blank" rel="noopener">${SEC.DOC[k][0]} ↗</a>`).join("")}</div>`;
+  }
+  return "";
+}
+function totals(){
+  let t=0,d=0;
+  SECTIONS.forEach(S=>S.L.forEach(l=>{t++; if(st.done[l.id])d++;}));
+  return [d,t];
+}
+function render(){
+  const SEC=SECTIONS[sIdx], l=SEC.L[lIdx];
+  const last = sIdx===SECTIONS.length-1 && lIdx===SEC.L.length-1;
+  const first = sIdx===0 && lIdx===0;
+  document.getElementById("main").innerHTML=`<div class="page">
+    <div class="eyebrow">Section ${SEC.letter} · ${SEC.title} · leçon ${lIdx+1} sur ${SEC.L.length}</div>
+    <h2>${l.title}${l.isNew?'<span class="badge">Nouveau sur le B(U)</span>':""}</h2>
+    <p class="intro">${l.intro}</p>
+    ${l.body.map(block).join("")}
+    <h3>Tes notes de vol</h3>
+    <textarea id="nt" placeholder="Procédures exactes, réglages, ce qui a coincé…">${(st.notes[l.id]||"").replace(/</g,"&lt;")}</textarea>
+    <button class="doneline${st.done[l.id]?" on":""}" id="dn"><span class="box"></span>
+      <span>${st.done[l.id]?"Leçon validée":"Marquer cette leçon comme validée"}</span></button>
+    <div class="nav">
+      <button class="ghost" id="pv"${first?" disabled style=opacity:.3":""}>← Précédent</button>
+      <button class="ghost" id="nx"${last?" disabled style=opacity:.3":""}>Suivant →</button>
+    </div></div>`;
+  document.getElementById("nt").oninput=e=>{st.notes[l.id]=e.target.value;save();};
+  document.getElementById("dn").onclick=()=>{st.done[l.id]=!st.done[l.id];save();render();};
+  if(!first) document.getElementById("pv").onclick=()=>{ if(lIdx>0)lIdx--; else {sIdx--;lIdx=SECTIONS[sIdx].L.length-1;} render(); window.scrollTo(0,0); };
+  if(!last)  document.getElementById("nx").onclick=()=>{ if(lIdx<SEC.L.length-1)lIdx++; else {sIdx++;lIdx=0;} render(); window.scrollTo(0,0); };
+  rail();
+}
+function rail(){
+  const r=document.getElementById("rail"); r.innerHTML="";
+  SECTIONS.forEach((S,i)=>{
+    const h=document.createElement("div");
+    h.className="phase-hd"; h.innerHTML=`<span>${S.letter} · ${S.title}</span><span class="rule"></span>`;
+    r.appendChild(h);
+    S.L.forEach((l,j)=>{
+      const b=document.createElement("button");
+      b.className="item"+(i===sIdx&&j===lIdx?" on":"")+(st.done[l.id]?" done":"");
+      b.innerHTML=`<span class="idx">${st.done[l.id]?"✓":String(j+1).padStart(2,"0")}</span><span class="nm">${l.title}</span>`;
+      b.onclick=()=>{sIdx=i;lIdx=j;render();window.scrollTo(0,0);};
+      r.appendChild(b);
+    });
+  });
+  const [d,t]=totals(), pc=t?Math.round(d/t*100):0;
+  document.getElementById("gfill").style.width=pc+"%";
+  document.getElementById("gpct").textContent=pc+" %";
+  document.getElementById("gcnt").textContent=`${d} / ${t} leçons`;
+  document.getElementById("foot").textContent=`Section en cours : ${SECTIONS[sIdx].letter} — ${SECTIONS[sIdx].title}`;
+}
+function openLb(src){document.getElementById("lbimg").src=src;document.getElementById("lb").classList.add("on");}
+document.getElementById("lb").onclick=()=>document.getElementById("lb").classList.remove("on");
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") document.getElementById("lb").classList.remove("on");
+  if(e.target.matches("textarea")) return;
+  const SEC=SECTIONS[sIdx];
+  if(e.key==="ArrowRight"&&!(sIdx===SECTIONS.length-1&&lIdx===SEC.L.length-1)){ if(lIdx<SEC.L.length-1)lIdx++; else {sIdx++;lIdx=0;} render(); }
+  if(e.key==="ArrowLeft"&&!(sIdx===0&&lIdx===0)){ if(lIdx>0)lIdx--; else {sIdx--;lIdx=SECTIONS[sIdx].L.length-1;} render(); }
+});
+load().then(render);
+</script>
+</body></html>

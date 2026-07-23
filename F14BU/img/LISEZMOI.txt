@@ -1,0 +1,11 @@
+Ce dossier accueille les planches du manuel Heatblur.
+
+Pour que le tutoriel fonctionne 100 % hors-ligne :
+1. Ouvre Google Drive, dossier "f-14-manual-v.2.0" > "img" > "bu"
+2. Clic droit sur le dossier "bu" > Telecharger (Drive genere un zip)
+3. Extrais TOUS les fichiers directement ICI (pas dans un sous-dossier)
+4. Ajoute aussi les fichiers "001 F-14 Checklists.png" a "005 ..." 
+   qui sont dans le dossier F-14 principal du Drive.
+
+Les noms de fichiers correspondent deja a ceux attendus : rien a renommer.
+Sans cette etape, les images se chargent depuis Drive (connexion Google requise).

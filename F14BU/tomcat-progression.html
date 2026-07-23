@@ -1,0 +1,679 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --deck:#10161a;
+    --panel:#18222a;
+    --panel-2:#1e2a33;
+    --line:#2c3b45;
+    --ink:#e6e9e4;
+    --ink-dim:#8b9aa3;
+    --amber:#f2a93b;
+    --onspeed:#6fd08c;
+    --caution:#d9695a;
+    --display:"Oswald","Arial Narrow",Impact,sans-serif;
+    --body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;
+       -webkit-text-size-adjust:100%}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  textarea{font:inherit}
+
+  /* ---------- shell ---------- */
+  .shell{display:grid;grid-template-columns:340px 1fr;min-height:100vh}
+  @media (max-width:900px){ .shell{grid-template-columns:1fr} .rail{border-right:none;border-bottom:1px solid var(--line)} }
+
+  /* ---------- rail ---------- */
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:22px 20px 16px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:30px;letter-spacing:.06em;line-height:1;
+     margin:8px 0 4px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--ink-dim);margin:0}
+
+  .gauge{margin-top:16px}
+  .gauge-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);position:relative;overflow:hidden}
+  .gauge-fill{position:absolute;inset:0 auto 0 0;background:var(--onspeed);width:0;transition:width .35s ease}
+  .gauge-txt{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;
+             color:var(--ink-dim);margin-top:6px;letter-spacing:.06em}
+
+  .rail-list{overflow-y:auto;flex:1;padding-bottom:20px}
+  .phase-hd{display:flex;align-items:baseline;gap:8px;padding:20px 20px 8px;
+            font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-dim)}
+  .phase-hd .rule{flex:1;height:1px;background:var(--line)}
+
+  .item{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;padding:9px 20px;
+        border-left:2px solid transparent;transition:background .12s}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--ink-dim);padding-top:3px;min-width:20px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--ink-dim)}
+  .tick{width:14px;height:14px;border:1px solid var(--line);margin-top:4px;flex:none;position:relative}
+  .item.done .tick{border-color:var(--onspeed);background:var(--onspeed)}
+  .item.part .tick::after{content:"";position:absolute;inset:3px;background:var(--amber)}
+
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;display:flex;gap:10px;flex-wrap:wrap}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+         color:var(--ink-dim);border:1px solid var(--line);padding:7px 11px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+
+  /* ---------- lesson ---------- */
+  .page{padding:34px 40px 90px;max-width:820px}
+  @media (max-width:700px){ .page{padding:24px 20px 70px} }
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:34px;letter-spacing:.03em;line-height:1.08;
+     margin:6px 0 0;text-transform:uppercase}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+         color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+
+  .obj{border-left:2px solid var(--amber);padding:10px 0 10px 16px;margin:22px 0 6px}
+  .obj .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber)}
+  .obj p{margin:4px 0 0;font-size:17px}
+  .why{color:var(--ink-dim);font-size:14.5px;margin:14px 0 0}
+
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-dim);
+     margin:34px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+
+  .step{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;padding:9px 10px 9px 0}
+  .step:hover .box{border-color:var(--amber)}
+  .box{width:16px;height:16px;border:1px solid var(--line);flex:none;margin-top:3px;position:relative}
+  .step.done .box{background:var(--onspeed);border-color:var(--onspeed)}
+  .step.done .box::after{content:"";position:absolute;left:5px;top:1px;width:4px;height:9px;
+                         border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .step.done .txt{color:var(--ink-dim);text-decoration:line-through;text-decoration-color:var(--line)}
+  .txt{flex:1}
+
+  .pitfall{display:flex;gap:10px;padding:7px 0;font-size:14.5px;color:var(--ink-dim)}
+  .pitfall b{color:var(--caution);font-family:var(--mono);font-size:12px;flex:none}
+
+  .check{border:1px solid var(--line);background:var(--panel);padding:16px 18px;margin-top:12px}
+  .check .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--onspeed)}
+  .check p{margin:6px 0 0}
+
+  textarea{width:100%;min-height:150px;background:var(--panel);border:1px solid var(--line);color:var(--ink);
+           padding:14px 16px;resize:vertical;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+  .hint{font-size:12.5px;color:var(--ink-dim);margin:8px 0 0}
+
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:46px;border-top:1px solid var(--line);padding-top:18px}
+
+  /* ---------- diagram ---------- */
+  .diag{border:1px solid var(--line);background:#0b1114;padding:10px;margin-top:8px}
+  .hot{cursor:pointer}
+  .hot circle{fill:var(--deck);stroke:var(--amber);stroke-width:1.5}
+  .hot.filled circle{fill:var(--amber)}
+  .hot text{fill:var(--amber);font-family:var(--mono);font-size:10px;text-anchor:middle}
+  .hot.filled text{fill:var(--deck)}
+  .hot:hover circle{stroke:var(--ink)}
+  .zone{fill:none;stroke:var(--line);stroke-width:1}
+  .glass{fill:none;stroke:var(--onspeed);stroke-width:1.2;opacity:.55}
+  .diag-note{margin-top:12px;border:1px solid var(--line);padding:12px 14px;background:var(--panel)}
+  .diag-note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;color:var(--amber);text-transform:uppercase}
+  .diag-note input{width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);
+                   color:var(--ink);font:inherit;padding:6px 0;margin-top:6px}
+  .diag-note input:focus{outline:none;border-color:var(--amber)}
+
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--panel-2);
+         border:1px solid var(--amber);color:var(--ink);font-family:var(--mono);font-size:12px;
+         padding:10px 16px;opacity:0;pointer-events:none;transition:opacity .25s}
+  .toast.up{opacity:1}
+
+  .sheet{position:fixed;inset:0;background:rgba(6,10,12,.86);display:none;padding:40px 20px;overflow:auto;z-index:9}
+  .sheet.up{display:block}
+  .sheet-inner{max-width:820px;margin:0 auto;background:var(--panel);border:1px solid var(--line);padding:22px}
+  .sheet pre{white-space:pre-wrap;font-family:var(--mono);font-size:12.5px;line-height:1.65;
+             max-height:56vh;overflow:auto;background:var(--deck);border:1px solid var(--line);padding:16px;margin:14px 0}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <div class="tail">VF—Tomcat · F-14B(U)</div>
+      <h1>Carnet de<br>progression</h1>
+      <p class="sub">Un parcours complet, de la mise en route au largage de JDAM. Coche, annote, imprime.</p>
+      <div class="gauge">
+        <div class="gauge-bar"><div class="gauge-fill" id="fill"></div></div>
+        <div class="gauge-txt"><span id="pct">0 %</span><span id="cnt">0 / 0 étapes</span></div>
+      </div>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot">
+      <button class="ghost" id="btn-md">Exporter en markdown</button>
+      <button class="ghost" id="btn-reset">Réinitialiser</button>
+    </div>
+  </aside>
+  <main id="main"><div class="page">Chargement…</div></main>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="sheet" id="sheet">
+  <div class="sheet-inner">
+    <div class="eyebrow">Markdown — copie tout, colle dans ton éditeur, imprime</div>
+    <pre id="md"></pre>
+    <div style="display:flex;gap:10px">
+      <button class="ghost" id="btn-copy">Copier</button>
+      <button class="ghost" id="btn-close">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+/* ============================================================
+   LE PROGRAMME — une seule source de vérité.
+   Édite ce tableau pour changer l'appli, l'export markdown
+   et la progression en même temps.
+   ============================================================ */
+const LESSONS = [
+
+/* ---------- A. REPRENDRE L'AVION EN MAIN ---------- */
+{id:"cockpit", phase:"A · Reprendre l'avion en main", title:"Tour du cockpit",
+ objective:"Savoir nommer et retrouver sans chercher les 12 commandes que tu toucheras à chaque vol.",
+ why:"Le Tomcat est un cockpit des années 70 modernisé : les instruments neufs (HUD, PTID, CDNU) cohabitent avec des interrupteurs d'origine. Tant que tu cherches tes boutons, tout le reste est plus dur qu'il ne devrait.",
+ steps:["Ouvre le manuel interactif in-game et le click-to-explain : survole un interrupteur, l'appli te dit ce qu'il fait. C'est ta meilleure source, plus fiable que n'importe quel tuto.",
+        "Situe les blocs : panneau gauche (moteurs, carburant, train), planche de bord (HUD, VDIG-R, instruments de secours), panneau droit (électricité, éclairage), console arrière RIO.",
+        "Repère le HUD, le PTID (grand écran central), le CDNU (clavier de navigation) et le panneau d'armement.",
+        "Note ci-dessous les 12 commandes de ton usage quotidien avec leur emplacement — écris-les de mémoire, puis corrige."],
+ pitfalls:["Vouloir tout comprendre d'un coup. 12 commandes suffisent pour voler."],
+ checkride:"Yeux fermés, tu poses la souris (ou la main en VR) sur le sélecteur de train, les manettes, le HUD et le CDNU."},
+
+{id:"controles", phase:"A · Reprendre l'avion en main", title:"Commandes et bindings",
+ objective:"Avoir un HOTAS configuré et testé au sol avant de décoller une seule fois.",
+ why:"La moitié des vols ratés en reprise viennent d'un binding manquant découvert en vol : crosse, aérofreins, ailes.",
+ steps:["Vérifie les bindings essentiels : train, volets, aérofreins, crosse d'appontage, PC (postcombustion), trim, freins de roue.",
+        "Spécifique Tomcat : balayage des ailes en manuel (l'auto suffit 95 % du temps), verrière, éjection.",
+        "Bindings systèmes : désignation cible, sélection d'arme, largage de contre-mesures, bouton contexte JESTER.",
+        "Fais un vol de test au sol : actionne chaque commande une fois et confirme visuellement l'effet dans le cockpit."],
+ pitfalls:["Oublier le binding des contre-mesures — tu ne t'en aperçois qu'au premier SAM."],
+ checkride:"Tu passes en revue les 12 commandes bindées sans regarder ta liste."},
+
+{id:"jester", phase:"A · Reprendre l'avion en main", title:"Travailler avec JESTER",
+ objective:"Obtenir de ton RIO ce que tu veux, quand tu le veux, sans fouiller les menus.",
+ why:"Sur ce module, le RIO fait la moitié du travail : radar, navigation, contre-mesures, désignation. Tu ne pilotes pas seul, tu commandes un équipage.",
+ steps:["Ouvre le menu JESTER et parcours l'arborescence à froid, au sol, moteurs coupés. Note les branches que tu utiliseras.",
+        "Apprends le bouton contexte (nouveauté) : il propose l'action pertinente selon la phase de vol, ce qui évite trois niveaux de menu.",
+        "Entraîne-toi aux commandes radar : changement de mode, portée, verrouillage, désengagement.",
+        "Note ton propre lexique : la phrase JESTER exacte que tu dois viser pour chaque besoin fréquent."],
+ pitfalls:["Croire que JESTER fera tout : il faut lui demander, explicitement, au bon moment."],
+ checkride:"Tu obtiens un changement de mode radar en moins de trois actions."},
+
+{id:"demarrage", phase:"A · Reprendre l'avion en main", title:"Démarrage à froid",
+ objective:"Passer d'un avion froid à un avion prêt au roulage, sans checklist sous les yeux.",
+ why:"Le démarrage n'est pas une corvée : c'est la séquence qui t'apprend l'architecture de l'avion (électricité → air → moteurs → avionique).",
+ steps:["Suis l'ordre logique : alimentation électrique externe ou APU, puis air, puis moteur droit, puis moteur gauche.",
+        "Une fois les génératrices en ligne, mets l'avionique sous tension et lance l'alignement EGI immédiatement — c'est ce qui prend le plus de temps (voir la leçon Navigation).",
+        "Configure les instruments : altimètre, éclairage, HUD, PTID.",
+        "Chronomètre-toi. L'objectif n'est pas la vitesse, mais la régularité.",
+        "Note ici ta séquence exacte, relevée dans le manuel Heatblur ou via JESTER qui peut faire le démarrage à ta place pendant que tu observes."],
+ pitfalls:["Lancer l'alignement EGI trop tard : tu attends au point d'arrêt.",
+           "Bouger l'avion pendant l'alignement."],
+ checkride:"Démarrage complet en moins de 8 minutes, sans relire tes notes."},
+
+{id:"decollage", phase:"A · Reprendre l'avion en main", title:"Roulage et décollage terrain",
+ objective:"Décoller proprement et rejoindre une altitude de croisière en configuration lisse.",
+ why:"Décoller d'une piste avant d'attaquer la catapulte : une variable difficile à la fois.",
+ steps:["Roulage : le Tomcat est lourd et la direction de roue avant demande de l'anticipation. Vitesse de roulage modérée.",
+        "Config décollage : volets, becs, trim, ailes en automatique.",
+        "Décollage : plein gaz ou PC, rotation à l'assiette indiquée, train rentré dès taux de montée positif.",
+        "Nettoie la configuration, laisse les ailes gérer leur balayage, et stabilise en montée."],
+ pitfalls:["Cabrer trop tôt ou trop fort : le Tomcat frotte facilement la queue.",
+           "Rentrer les volets trop bas."],
+ checkride:"Trois décollages de suite sans toucher la queue ni sortir de l'axe."},
+
+{id:"vol-base", phase:"A · Reprendre l'avion en main", title:"Vol de base, AoA et DFCS",
+ isNew:true,
+ objective:"Sentir l'avion : incidence, énergie, limites, et ce que le DFCS change pour toi.",
+ why:"Le Tomcat historique était réputé pour ses départs en vrille et son pilotage très physique. Le DFCS (commandes de vol numériques) de cette version adoucit ce comportement sans le supprimer. C'est la nouveauté qui change le plus tes sensations.",
+ steps:["Vol lisse : virages à facteur de charge, montées, descentes. Regarde l'indicateur d'incidence (AoA), pas seulement la vitesse.",
+        "Explore le domaine à haute incidence progressivement, à altitude sûre : où l'avion prévient, où il décroche.",
+        "Compare avec et sans DFCS engagé si le module le permet, pour comprendre ce qu'il fait pour toi.",
+        "Travaille les régimes lents : c'est là que se joue l'appontage.",
+        "Teste l'autopilot et ses modes."],
+ pitfalls:["Piloter à la vitesse au lieu de l'incidence. Sur Tomcat, l'AoA commande tout.",
+           "Croire que le DFCS te rend intouchable : il repousse la limite, il ne l'efface pas."],
+ checkride:"Tu tiens un virage soutenu à incidence constante sans regarder le badin."},
+
+{id:"atterrissage", phase:"A · Reprendre l'avion en main", title:"Retour terrain et atterrissage",
+ objective:"Poser l'avion à l'incidence correcte, en maîtrisant l'approche stabilisée.",
+ why:"L'atterrissage terrain, c'est l'appontage sans la pression. Tout ce que tu apprends ici sert au bateau.",
+ steps:["Circuit : gestion de la vitesse et du carburant, configuration (train, volets, crosse rentrée).",
+        "Approche à l'incidence de référence, tenue à la manette : l'assiette vise, la poussée règle le taux de descente.",
+        "Palier de sécurité au-dessus du seuil, poser, aérofreins, freinage.",
+        "Répète en variant la masse de carburant : l'avion ne réagit pas pareil lourd et léger."],
+ pitfalls:["Approcher trop vite : c'est l'erreur numéro un, et elle est fatale au bateau."],
+ checkride:"Cinq approches d'affilée à l'incidence de référence, ±½ unité."},
+
+/* ---------- B. NAVIGUER ---------- */
+{id:"egi", phase:"B · Naviguer", title:"Alignement EGI et CDNU", isNew:true,
+ objective:"Aligner la navigation et charger tes waypoints sans aide extérieure.",
+ why:"L'EGI (navigation inertielle couplée GPS) et le CDNU (clavier de commande) remplacent le système de navigation historique. Sans cette leçon, tu ne sais pas où tu es, et rien de ce qui suit — désignation, JDAM, retour bateau — ne fonctionne.",
+ steps:["Lance l'alignement dès la mise sous tension, avion immobile. Note la durée réelle, tu la subiras à chaque vol.",
+        "Découvre le CDNU : pages, saisie clavier, validation. C'est de la logique de calculatrice, pas d'interface moderne.",
+        "Saisis un waypoint manuellement : coordonnées, altitude, enregistrement.",
+        "Vérifie que le waypoint apparaît bien sur le HUD et le PTID.",
+        "Note ici la séquence de touches exacte — c'est le genre de chose qu'on oublie entre deux sessions."],
+ pitfalls:["Rouler pendant l'alignement.",
+           "Saisir des coordonnées dans le mauvais format."],
+ checkride:"Tu crées un waypoint de zéro en moins de 90 secondes."},
+
+{id:"nav-vol", phase:"B · Naviguer", title:"Naviguer en vol", isNew:true,
+ objective:"Suivre une route, changer de point, et retrouver ton terrain ou ton bateau.",
+ why:"Savoir rentrer chez soi est la compétence la moins spectaculaire et la plus utile.",
+ steps:["Affiche la route sur le PTID et sur le HUD : cap, distance, temps au point.",
+        "Enchaîne les waypoints, en manuel puis en séquence automatique.",
+        "Marque un point d'intérêt en vol (survol d'un objectif) et retourne-y.",
+        "Exercice : coupe le PTID, rentre au terrain aux instruments de secours. Tu sauras si tu dépends trop de l'écran."],
+ pitfalls:["Confondre l'altitude barométrique et l'altitude réelle en zone montagneuse."],
+ checkride:"Navigation de quatre points, retour au terrain, sans carte F10."},
+
+/* ---------- C. LE BATEAU ---------- */
+{id:"catapulte", phase:"C · Le porte-avions", title:"Départ catapulte",
+ objective:"Sortir du bateau proprement, à chaque fois.",
+ why:"Le Tomcat est un avion embarqué : le bateau n'est pas un bonus, c'est son milieu naturel.",
+ steps:["Roulage sur le pont : suis les directeurs, ça évite de finir à l'eau.",
+        "Mise en place sur la catapulte, sortie de la barre de lancement, config décollage.",
+        "Plein gaz, contrôles, salut au directeur, mains à l'écart du manche pendant le coup de catapulte.",
+        "Après le lancement : rotation naturelle, train rentré, montée."],
+ pitfalls:["Toucher le manche pendant le lancement.",
+           "Décoller trop lourd pour la configuration du jour."],
+ checkride:"Trois catapultages de suite sans intervention hasardeuse."},
+
+{id:"appontage", phase:"C · Le porte-avions", title:"Appontage",
+ objective:"Ramener l'avion sur le pont, à l'incidence et sur le miroir.",
+ why:"C'est l'épreuve reine du module, et celle qui rend tout le reste plus facile. Elle se travaille en dernier de cette phase, mais elle se prépare depuis la leçon de vol de base.",
+ steps:["Arrivée et circuit : break, vent arrière, configuration complète, crosse sortie.",
+        "Le virage final : commence l'approche déjà stabilisé en incidence, tu ne rattraperas pas après.",
+        "En finale, trois paramètres simultanés : boule (plan de descente), incidence, alignement de piste. Corrections petites et permanentes.",
+        "Touché : plein gaz systématique en cas de raté, pas de doute, pas d'hésitation.",
+        "Répète 20 fois. Il n'y a pas de raccourci, seulement du volume."],
+ pitfalls:["Fixer un seul paramètre et perdre les deux autres.",
+           "Réduire les gaz au toucher."],
+ checkride:"Cinq appontages sur dix réussis, puis huit sur dix."},
+
+/* ---------- D. AIR-AIR ---------- */
+{id:"awg9", phase:"D · Air-air", title:"Le radar : modes et vocabulaire",
+ objective:"Comprendre ce que ton radar fait, et donc ce que tu peux demander à JESTER.",
+ why:"Le Tomcat est un intercepteur : le radar est l'arme principale, le missile n'est que la conséquence.",
+ steps:["Apprends les trois familles de modes : recherche, poursuite sur passage (permet de suivre plusieurs pistes), poursuite unique (verrouillage ferme).",
+        "Comprends la notion de volume balayé : azimut, élévation, portée. Un contact hors du volume n'existe pas.",
+        "Fais du radar « à vide » : sur une mission d'entraînement, détecte et suis des appareils sans tirer.",
+        "Apprends les phrases JESTER correspondantes."],
+ pitfalls:["Balayer une élévation trop étroite et rater un contact plus bas."],
+ checkride:"Tu détectes, tu suis et tu identifies un contact à 40 nautiques sans stress."},
+
+{id:"ptid", phase:"D · Air-air", title:"Lire le PTID", isNew:true, diagram:"ptid",
+ objective:"Extraire en un coup d'œil la situation tactique de l'écran central.",
+ why:"Le PTID remplace l'ancien affichage tactique. Il est plus lisible et plus riche, mais il faut réapprendre où regarder. C'est le cœur de ta conscience de la situation.",
+ steps:["Identifie les zones de l'écran : pistes, données de la piste sélectionnée, paramètres système, mode en cours.",
+        "Distingue une piste ferme d'un contact brut : la différence décide si tu peux tirer.",
+        "Apprends à naviguer entre les pages et à changer l'échelle.",
+        "Annote le schéma ci-dessous avec ce que tu vois réellement dans ton cockpit."],
+ pitfalls:["Lire le PTID comme un radar de jeu vidéo : les symboles ont un sens précis, apprends-le."],
+ checkride:"Tu énonces à voix haute la situation tactique en 5 secondes de lecture."},
+
+{id:"hud-aa", phase:"D · Air-air", title:"Le HUD en air-air", isNew:true, diagram:"hud",
+ objective:"Piloter et tirer en gardant les yeux dehors.",
+ why:"Le nouveau HUD (VDIG-R) apporte une symbologie moderne : c'est probablement le changement le plus visible du cockpit. Il te permet de rester tête haute là où l'ancien t'obligeait à plonger dans les instruments.",
+ steps:["Repère les invariants : vitesse, altitude, cap, vecteur vitesse, assiette.",
+        "Repère la symbologie de tir : cible désignée, portée, domaine de tir, indications de lancement.",
+        "Vole une interception complète en ne regardant que le HUD.",
+        "Annote le schéma ci-dessous."],
+ pitfalls:["Confondre le vecteur vitesse et le repère de fuselage — l'erreur classique en approche."],
+ checkride:"Interception complète tête haute, sans regarder la planche de bord."},
+
+{id:"aim9", phase:"D · Air-air", title:"Sidewinder et canon",
+ objective:"Abattre une cible au combat rapproché.",
+ why:"On commence par l'arme la plus simple : autonome après tir, pas de guidage à tenir.",
+ steps:["Sélection de l'AIM-9, tonalité d'accrochage, domaine de tir.",
+        "Tir à courte distance sur cible non manœuvrante, puis manœuvrante.",
+        "Canon : la solution de tir au HUD, corrections, rafales courtes.",
+        "Gère tes munitions : le canon a peu d'obus."],
+ pitfalls:["Tirer hors domaine et gâcher le missile.",
+           "Rafale trop longue au canon."],
+ checkride:"Trois abattus consécutifs, un au missile, deux au canon."},
+
+{id:"aim7", phase:"D · Air-air", title:"Sparrow",
+ objective:"Tirer un missile à guidage semi-actif et le mener jusqu'à l'impact.",
+ why:"Le Sparrow t'oblige à tenir le verrouillage : c'est l'école de la discipline de tir.",
+ steps:["Verrouillage ferme, sélection du missile, vérification du domaine.",
+        "Tir, puis maintien du verrouillage pendant tout le vol du missile.",
+        "Apprends la manœuvre d'attente : rester dans le domaine sans t'exposer inutilement.",
+        "Exercice : deux tirs successifs sur deux cibles séparées."],
+ pitfalls:["Rompre le verrouillage trop tôt : le missile part à la poubelle."],
+ checkride:"Deux tirs sur trois au but, cible manœuvrante."},
+
+{id:"aim54", phase:"D · Air-air", title:"Phoenix et tir multi-cibles",
+ objective:"Employer l'arme signature du Tomcat comme elle a été conçue.",
+ why:"Le AIM-54 est ce qui rend cet avion unique : tirer loin, sur plusieurs cibles, avant d'être vu.",
+ steps:["Mets le radar en poursuite sur passage et constitue un tableau de pistes.",
+        "Comprends les modes du missile et l'effet de l'altitude et de la vitesse de tir sur la portée réelle.",
+        "Tir sur cible unique à longue distance, avec soutien radar jusqu'au moment où le missile devient autonome.",
+        "Tir multi-cibles : assigne, tire en séquence, gère la trajectoire d'attente.",
+        "Note tes portées réelles observées — elles diffèrent beaucoup des portées théoriques."],
+ pitfalls:["Tirer au maximum de portée sur une cible manœuvrante : gaspillage quasi garanti.",
+           "Rompre trop tôt et perdre le soutien radar."],
+ checkride:"Deux cibles engagées simultanément, au moins une abattue."},
+
+{id:"bfm", phase:"D · Air-air", title:"BFM : le Tomcat au manche",
+ objective:"Survivre et l'emporter en combat tournoyant.",
+ why:"Le Tomcat est lourd mais il a des ailes immenses : il tourne bien à basse vitesse et pardonne mal les erreurs d'énergie.",
+ steps:["Gestion de l'énergie : quand tirer sur le manche, quand rendre la main.",
+        "Manœuvres de base : virage soutenu, tonneau barriqué, mise en travers.",
+        "Combat défensif : détecter, réagir, casser la solution adverse.",
+        "Entraîne-toi contre un adversaire plus agile et accepte de perdre longtemps."],
+ pitfalls:["Tout dépenser dans le premier virage."],
+ checkride:"Tu tiens 2 minutes en défensif face à un adversaire plus manœuvrant."},
+
+/* ---------- E. SURVIVRE ---------- */
+{id:"ale47", phase:"E · Survivre", title:"RWR et contre-mesures", isNew:true,
+ objective:"Détecter une menace et réagir avant qu'il ne soit trop tard.",
+ why:"Le nouveau système de contre-mesures (ALE-47) est programmable : tu prépares des séquences avant le vol au lieu de larguer au hasard.",
+ steps:["Lecture du détecteur d'alerte radar : type de menace, direction, niveau d'urgence.",
+        "Comprends la programmation ALE-47 : programmes de largage, quantité, cadence.",
+        "Prépare deux ou trois programmes types : missile radar, missile infrarouge, dégagement.",
+        "Exercice : traverse une zone défendue et sors-en intact.",
+        "Note ici tes programmes et le contexte de chacun."],
+ pitfalls:["Larguer tout son stock sur la première alerte.",
+           "Contre-mesures sans manœuvre : les leurres seuls ne sauvent pas."],
+ checkride:"Tu survis à un engagement sol-air en zone défendue."},
+
+/* ---------- F. AIR-SOL ---------- */
+{id:"bombes", phase:"F · Air-sol", title:"Bombes lisses et symbologie A/G", isNew:true,
+ objective:"Placer une bombe non guidée sur une cible visible.",
+ why:"La symbologie air-sol du nouveau HUD est différente de tout ce que tu as connu sur cet avion. On la valide sur l'arme la plus simple avant de compliquer.",
+ steps:["Configuration air-sol : sélection d'arme, paramètres de largage, sécurités.",
+        "Comprends les deux logiques : largage au point d'impact continu (tu vises et tu lâches) et largage sur point calculé (tu désignes, l'avion lâche).",
+        "Passe d'attaque : angle, vitesse, altitude de largage, ressource.",
+        "Utilise le calculateur de bombardement intégré au module pour préparer tes paramètres.",
+        "Note tes réglages de passe qui fonctionnent."],
+ pitfalls:["Descendre trop bas et se faire prendre par sa propre explosion.",
+           "Oublier les sécurités d'armement."],
+ checkride:"Trois bombes sur cinq à moins de 50 m de la cible."},
+
+{id:"lgb", phase:"F · Air-sol", title:"Bombes guidées laser et LANTIRN",
+ objective:"Désigner une cible au laser et la détruire précisément.",
+ why:"C'est la capacité de frappe de précision classique du Tomcat : la nacelle de désignation, gérée en grande partie par le RIO.",
+ steps:["Mise en œuvre de la nacelle : alimentation, refroidissement, recherche de cible.",
+        "Travail avec JESTER : lui faire chercher, désigner et tenir la cible.",
+        "Code laser, moment d'illumination, contrainte géométrique du largage.",
+        "Attaque complète, puis attaque sur cible mobile."],
+ pitfalls:["Illuminer trop tôt ou masquer le laser en manœuvrant après le largage."],
+ checkride:"Deux cibles détruites en une passe chacune."},
+
+{id:"jdam", phase:"F · Air-sol", title:"JDAM / GBU-31", isNew:true,
+ objective:"Frapper des coordonnées, par tous les temps, sans voir la cible.",
+ why:"C'est la capacité entièrement nouvelle du B(U), celle qui fait entrer le Tomcat dans l'ère de la frappe moderne. Elle dépend entièrement de la leçon EGI/CDNU.",
+ steps:["Comprends la chaîne : coordonnées → système de navigation → bombe. Aucune n'est visuelle.",
+        "Saisis des coordonnées de cible et vérifie-les deux fois : une erreur de chiffre, c'est un kilomètre.",
+        "Configure les stores : sélection, paramètres, transfert des données à la bombe.",
+        "Vérifie le domaine de largage : la JDAM plane, mais pas indéfiniment.",
+        "Frappe multi-cibles : plusieurs bombes, plusieurs points, en un seul passage.",
+        "Note ici la procédure complète, c'est la plus longue du module."],
+ pitfalls:["Coordonnées mal saisies ou mauvais format.",
+           "Largage hors domaine : la bombe tombe court."],
+ checkride:"Quatre points frappés en un seul passage, sans visuel."},
+
+/* ---------- G. METTRE BOUT À BOUT ---------- */
+{id:"urgences", phase:"G · Mettre bout à bout", title:"Urgences",
+ objective:"Réagir correctement quand quelque chose casse.",
+ why:"Un avion endommagé qui rentre au bateau vaut mieux qu'un avion perdu. Et savoir quand s'éjecter fait partie du métier.",
+ steps:["Panne moteur : identification, sécurisation, vol et atterrissage sur un moteur.",
+        "Incendie, panne hydraulique, panne électrique : les réflexes immédiats.",
+        "Fuite de carburant et déroutement : calculer si tu rentres.",
+        "Éjection : quand décider, et comment commander l'éjection de l'équipage."],
+ pitfalls:["S'acharner à ramener un avion condamné."],
+ checkride:"Tu poses l'avion avec un moteur en panne."},
+
+{id:"mission", phase:"G · Mettre bout à bout", title:"Mission complète",
+ objective:"Enchaîner tout, du pont au pont, sans pause.",
+ why:"C'est la seule leçon qui compte vraiment : elle vérifie que tout le reste tient ensemble sous charge.",
+ steps:["Prépare la mission : route, cible, armement, contre-mesures, carburant.",
+        "Départ catapulte, navigation vers la zone.",
+        "Frappe air-sol sur objectif, puis défense contre une menace air-air.",
+        "Retour, ravitaillement si nécessaire, appontage.",
+        "Débrief écrit : ce qui a marché, ce qui a coincé. Reviens sur la leçon concernée."],
+ pitfalls:["Vouloir tout réussir du premier coup. Découpe, recommence."],
+ checkride:"Une mission complète réussie de bout en bout, deux fois de suite."}
+];
+
+/* ============================================================
+   Schémas annotables
+   ============================================================ */
+const DIAGRAMS = {
+  hud:{ title:"HUD (VDIG-R) — annote ce que tu vois",
+    hint:"Ces repères sont un gabarit, pas une reproduction. Ouvre ton cockpit, regarde, et corrige les libellés.",
+    svg:`<svg viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schéma du HUD">
+      <rect class="zone" x="60" y="30" width="520" height="320"/>
+      <circle class="glass" cx="320" cy="190" r="16"/>
+      <path class="glass" d="M304 190 h-26 M336 190 h26 M320 174 v-14"/>
+      <path class="glass" d="M120 190 h60 M460 190 h60"/>
+      <path class="glass" d="M240 100 h160 M240 280 h160"/>
+      <path class="glass" d="M320 40 v22"/>
+      HOTSPOTS</svg>`,
+    spots:[[130,120,"Échelle de vitesse"],[510,120,"Échelle d'altitude"],[320,58,"Cap"],
+           [320,190,"Vecteur vitesse"],[320,105,"Assiette / horizon"],[320,285,"Mode et armement"],
+           [140,300,"Incidence (AoA)"],[500,300,"Portée / domaine de tir"]] },
+  ptid:{ title:"PTID — annote ce que tu vois",
+    hint:"Découpe l'écran en zones et note ce que chacune t'apprend. C'est plus utile qu'une liste de symboles.",
+    svg:`<svg viewBox="0 0 640 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schéma du PTID">
+      <rect class="zone" x="70" y="30" width="500" height="360"/>
+      <path class="zone" d="M70 90 h500 M70 320 h500 M180 90 v230"/>
+      <path class="glass" d="M320 300 l0 -30 M300 300 h40"/>
+      <circle class="glass" cx="380" cy="200" r="5"/>
+      <circle class="glass" cx="270" cy="150" r="5"/>
+      <circle class="glass" cx="440" cy="130" r="5"/>
+      HOTSPOTS</svg>`,
+    spots:[[320,60,"Bandeau de mode"],[125,140,"Commandes latérales"],[125,260,"Réglages radar"],
+           [380,200,"Piste ferme"],[270,150,"Contact brut"],[320,290,"Ton avion"],
+           [480,200,"Échelle de portée"],[320,355,"Données de la piste"]] }
+};
+
+/* ============================================================
+   État : progression + notes, persistés
+   ============================================================ */
+const KEY = "f14bu-carnet";
+let state = { steps:{}, notes:{}, labels:{} };
+let current = 0;
+
+async function load(){
+  try{
+    const r = await __sget(KEY);
+    if(r && r.value) state = Object.assign(state, JSON.parse(r.value));
+  }catch(e){ /* première ouverture ou stockage indisponible : on part à neuf */ }
+}
+let saveTimer=null;
+function save(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(async ()=>{
+    try{ await __sset(KEY, JSON.stringify(state)); }
+    catch(e){ toast("Sauvegarde impossible — copie tes notes via l'export"); }
+  }, 400);
+}
+function toast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.classList.add("up");
+  setTimeout(()=>t.classList.remove("up"),2200);
+}
+
+const sKey=(l,i)=>l.id+":"+i;
+const doneCount=l=>l.steps.filter((_,i)=>state.steps[sKey(l,i)]).length;
+const totalSteps=()=>LESSONS.reduce((n,l)=>n+l.steps.length,0);
+const doneTotal=()=>LESSONS.reduce((n,l)=>n+doneCount(l),0);
+
+/* ============================================================
+   Rendu
+   ============================================================ */
+function renderRail(){
+  const rail=document.getElementById("rail");
+  rail.innerHTML="";
+  let phase=null, n=0;
+  LESSONS.forEach((l,i)=>{
+    if(l.phase!==phase){
+      phase=l.phase;
+      const h=document.createElement("div");
+      h.className="phase-hd";
+      h.innerHTML=`<span>${phase}</span><span class="rule"></span>`;
+      rail.appendChild(h);
+    }
+    n++;
+    const d=doneCount(l);
+    const b=document.createElement("button");
+    b.className="item"+(i===current?" on":"")+(d===l.steps.length?" done":(d>0?" part":""));
+    b.innerHTML=`<span class="tick"></span><span class="idx">${String(n).padStart(2,"0")}</span><span class="nm">${l.title}</span>`;
+    b.onclick=()=>{ current=i; render(); document.getElementById("main").scrollIntoView({block:"start"}); };
+    rail.appendChild(b);
+  });
+  const tot=totalSteps(), dn=doneTotal(), pc=tot?Math.round(dn/tot*100):0;
+  document.getElementById("fill").style.width=pc+"%";
+  document.getElementById("pct").textContent=pc+" %";
+  document.getElementById("cnt").textContent=`${dn} / ${tot} étapes`;
+}
+
+function diagramHTML(l){
+  const d=DIAGRAMS[l.diagram];
+  if(!d) return "";
+  const spots=d.spots.map((s,i)=>{
+    const filled=state.labels[l.diagram+":"+i]?" filled":"";
+    return `<g class="hot${filled}" data-d="${l.diagram}" data-i="${i}" tabindex="0" role="button" aria-label="${s[2]}">
+              <circle cx="${s[0]}" cy="${s[1]}" r="11"/>
+              <text x="${s[0]}" y="${s[1]+4}">${i+1}</text></g>`;
+  }).join("");
+  const notes=d.spots.map((s,i)=>{
+    const v=state.labels[l.diagram+":"+i]||"";
+    return `<div class="diag-note"><div class="lbl">${i+1} · ${s[2]}</div>
+            <input data-lab="${l.diagram}:${i}" value="${v.replace(/"/g,"&quot;")}"
+                   placeholder="Ce que tu vois vraiment à cet endroit"></div>`;
+  }).join("");
+  return `<h3>${d.title}</h3><div class="diag">${d.svg.replace("HOTSPOTS",spots)}</div>
+          <p class="hint">${d.hint}</p><div style="margin-top:10px">${notes}</div>`;
+}
+
+function render(){
+  const l=LESSONS[current];
+  const main=document.getElementById("main");
+  main.innerHTML=`<div class="page">
+    <div class="eyebrow">${l.phase}</div>
+    <h2>${l.title}${l.isNew?'<span class="badge">Nouveau sur le B(U)</span>':""}</h2>
+
+    <div class="obj"><div class="lbl">Objectif</div><p>${l.objective}</p></div>
+    <p class="why">${l.why}</p>
+
+    <h3>Étapes</h3>
+    <div id="steps"></div>
+
+    <h3>Pièges connus</h3>
+    <div>${l.pitfalls.map(p=>`<div class="pitfall"><b>!</b><span>${p}</span></div>`).join("")}</div>
+
+    <h3>Validation</h3>
+    <div class="check"><div class="lbl">Tu passes à la suite quand</div><p>${l.checkride}</p></div>
+
+    ${diagramHTML(l)}
+
+    <h3>Tes notes</h3>
+    <textarea id="note" placeholder="Procédure exacte, séquence de touches, réglages, ce qui t'a bloqué…">${(state.notes[l.id]||"").replace(/</g,"&lt;")}</textarea>
+    <p class="hint">Écris ici ce que tu relèves dans le manuel Heatblur ou via le click-to-explain in-game. Tout est repris dans l'export markdown.</p>
+
+    <div class="nav">
+      <button class="ghost" id="prev" ${current===0?"disabled style=opacity:.3":""}>← Précédent</button>
+      <button class="ghost" id="next" ${current===LESSONS.length-1?"disabled style=opacity:.3":""}>Suivant →</button>
+    </div>
+  </div>`;
+
+  const sc=document.getElementById("steps");
+  l.steps.forEach((s,i)=>{
+    const b=document.createElement("button");
+    b.className="step"+(state.steps[sKey(l,i)]?" done":"");
+    b.innerHTML=`<span class="box"></span><span class="txt">${s}</span>`;
+    b.setAttribute("aria-pressed", !!state.steps[sKey(l,i)]);
+    b.onclick=()=>{ state.steps[sKey(l,i)]=!state.steps[sKey(l,i)]; save(); render(); };
+    sc.appendChild(b);
+  });
+
+  const ta=document.getElementById("note");
+  ta.oninput=()=>{ state.notes[l.id]=ta.value; save(); };
+
+  main.querySelectorAll(".hot").forEach(g=>{
+    const focusInput=()=>{
+      const inp=main.querySelector(`[data-lab="${g.dataset.d}:${g.dataset.i}"]`);
+      inp.focus(); inp.scrollIntoView({block:"center"});
+    };
+    g.onclick=focusInput;
+    g.onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();focusInput();} };
+  });
+  main.querySelectorAll("[data-lab]").forEach(inp=>{
+    inp.oninput=()=>{ state.labels[inp.dataset.lab]=inp.value; save(); };
+    inp.onblur=()=>render();
+  });
+
+  const p=document.getElementById("prev"), nx=document.getElementById("next");
+  if(current>0) p.onclick=()=>{current--;render();};
+  if(current<LESSONS.length-1) nx.onclick=()=>{current++;render();};
+
+  renderRail();
+}
+
+/* ============================================================
+   Export markdown
+   ============================================================ */
+function markdown(){
+  let out=`# F-14B(U) — carnet de progression\n\n`;
+  out+=`Avancement : ${doneTotal()} / ${totalSteps()} étapes.\n\n---\n\n`;
+  let phase=null;
+  LESSONS.forEach(l=>{
+    if(l.phase!==phase){ phase=l.phase; out+=`\n## ${phase}\n`; }
+    out+=`\n### ${l.title}${l.isNew?" *(nouveau sur le B(U))*":""}\n\n`;
+    out+=`**Objectif —** ${l.objective}\n\n${l.why}\n\n`;
+    l.steps.forEach((s,i)=>{ out+=`- [${state.steps[sKey(l,i)]?"x":" "}] ${s}\n`; });
+    out+=`\n**Pièges :**\n`; l.pitfalls.forEach(p=>out+=`- ${p}\n`);
+    out+=`\n**Validation —** ${l.checkride}\n`;
+    if(l.diagram){
+      const d=DIAGRAMS[l.diagram];
+      const lines=d.spots.map((s,i)=>{
+        const v=state.labels[l.diagram+":"+i];
+        return v?`- ${s[2]} : ${v}`:null;
+      }).filter(Boolean);
+      if(lines.length) out+=`\n**Schéma :**\n`+lines.join("\n")+"\n";
+    }
+    const n=state.notes[l.id];
+    if(n && n.trim()) out+=`\n**Notes :**\n\n${n.trim()}\n`;
+    out+=`\n`;
+  });
+  return out;
+}
+
+document.getElementById("btn-md").onclick=()=>{
+  document.getElementById("md").textContent=markdown();
+  document.getElementById("sheet").classList.add("up");
+};
+document.getElementById("btn-close").onclick=()=>document.getElementById("sheet").classList.remove("up");
+document.getElementById("btn-copy").onclick=async()=>{
+  try{ await navigator.clipboard.writeText(markdown()); toast("Markdown copié"); }
+  catch(e){ toast("Sélectionne le texte et copie-le à la main"); }
+};
+document.getElementById("btn-reset").onclick=async()=>{
+  if(!confirm("Effacer la progression, les notes et les annotations ?")) return;
+  state={steps:{},notes:{},labels:{}};
+  try{ await __sset(KEY, JSON.stringify(state)); }catch(e){}
+  render(); toast("Carnet remis à zéro");
+};
+document.addEventListener("keydown",e=>{
+  if(e.target.matches("textarea,input")) return;
+  if(e.key==="ArrowRight"&&current<LESSONS.length-1){current++;render();}
+  if(e.key==="ArrowLeft"&&current>0){current--;render();}
+  if(e.key==="Escape") document.getElementById("sheet").classList.remove("up");
+});
+
+load().then(render);
+</script>

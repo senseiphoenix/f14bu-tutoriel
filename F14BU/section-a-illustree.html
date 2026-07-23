@@ -1,0 +1,421 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+    --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+    --display:"Oswald","Arial Narrow",sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)}
+  .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+         color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;color:var(--ink);margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+     margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+  .lead{color:var(--dim)}
+
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+  .imgfail{display:none;padding:22px 14px;font-size:13px;color:var(--dim);text-align:center}
+  figure.failed img{display:none} figure.failed .imgfail{display:block}
+
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)}
+  .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .note p+p{margin-top:8px}
+
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+
+  .banner{background:var(--panel-2);border-bottom:1px solid var(--amber);padding:11px 20px;font-size:13px;color:var(--dim);display:flex;gap:14px;align-items:center;justify-content:space-between}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+
+<div id="banner" class="banner">
+  <span>Les planches viennent de ton Drive. Si elles n'apparaissent pas : clic droit sur le dossier des images dans Drive → Partager → « Tous les utilisateurs disposant du lien ».</span>
+  <button class="ghost" onclick="document.getElementById('banner').remove()">OK</button>
+</div>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <div class="tail">Section A · F-14B(U)</div>
+      <h1>Reprendre<br>l'avion en main</h1>
+      <p class="sub">Sept leçons illustrées, planches du manuel Heatblur à l'appui.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const D = id => `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+const V = id => `https://drive.google.com/file/d/${id}/view`;
+const FN = {"1q-DgLgU_caBr1MnRhDBCWqhBuJNhxPiV": "normalprocedureschecklistsoverview.jpg", "1dKLIRNF1kPhw96R6DnZjyoLmSvz_D20K": "checklist_tool_example.jpg", "1LSNf370Z76pfgLP3G2czpVpjV1FIW1_7": "f14bu_pilot_overview.jpg", "1yauTBGsEFR1cEUkcM-Ndlsx8bfwaQDDr": "f14bu_rio_overview.jpg", "1cRWJ_LuozK-F9PEuyrFNpO6YjG1dKAYG": "left_console_pilot-01.jpg", "1PBG842BX0rhlgg31DQmdGF2x956TnaDp": "left_instrument_panel-01.jpg", "1TMNAqLBvoD1N3zdWbrI4YbYM-sOEAnia": "left_instrument_panel_02-01.jpg", "1MJeyRSy0Xopj5r0Vy1EuXeVMbCWJ9ywh": "right_instrument_panel-01.jpg", "1iHXkN6fMCN5z0feGKcX2thLu3sE4ot7V": "left_console_cdnu-01.jpg", "1IJqaDS5W80PrrYzygxa8X84DqUNq711x": "overview_ptid.jpg", "1343TPem4GqbGhyWgmAadSdPBmD3gwPuj": "ptid_alignment_displays.jpg", "1Jf0BXSaEiddTTex3sjRWA92H_9RBuMkB": "throttle2.svg", "1btOScq6_6u7BDY4-JWTLuCDHL3zv_8hI": "left_vertical_console_landing_gear_control_panel.jpg", "1ckKAnQ42OHQlUoVfpwz43EghwIpEB3Qz": "left_console_arrestinghook-01.jpg", "10QucDurJZPC_VCxHu0r-KDezHt5LHc6w": "right_instrument_panel_wingsweep-01.jpg", "1D8RAKdjVRNsFb6o7xR7jJMBctNtcvVRq": "left_vertical_console_launch_bar_abort_switch.jpg", "1L-r0Hw4MSrXPKkACqWQRfjHGhNBbsXa-": "left_vertical_console_fuel_management_panel.jpg", "1Ios11Na-FMxu-OytIkKd29GWkTYN5vRh": "left_instrument_panel_left_engine-05.jpg", "1d69JHPEF-kG0jeqt-kXGclQ0UBZvEKbB": "right_instrument_panel_right_engine-01.jpg", "1OWx3BXaU7VuOdzGbJ2ojECuqg20P3duy": "left_knee_panel_oil_pressure_indicators.jpg", "1Bxye8blt540Y-K6onA6rtNWhpnNFLsLu": "left_knee_panel_hydraulic_pressure_indicator.jpg", "1Yx0il_HbxnUxZvmpWs3TaG0uTr_INVzh": "right_instrument_panel_checklist-06.jpg", "1gLKj-4lvCF8CB3NoH0aEbLMDKWfhkqlz": "left_instrument_panel_lndg_chklst-06.jpg", "1kaJNzj8rs69pQiSx5AH0zWbJ77L2PYg-": "left_instrument_panel_aoa_indexer-02.jpg", "1UJIDpo71d3Mqa2-LSJneG5sjUCjs6X2Q": "left_instrument_panel_airspeed_indicator-01.jpg", "1G5r5-i0Q3XRuZHqpT_fifsgS_pXDor9A": "left_instrument_panel_vvi-04.jpg", "13rHttpiCcdNSrf7agTSQnXaTIZFYR31-": "left_instrument_panel_baroalt-02.jpg", "1bK955HU9Sidlz_MZtQQPKrRtvbJxOIbq": "left_instrument_panel_radalt-01.jpg", "13k-UL5IKQnZ0QBo-OF7uoBMY2-z239p-": "left_instrument_panel_adi-02.jpg", "1qRAYprtHZ5NksPq4OKmLSl2LMzV7hStW": "left_vertical_console_control_surface_position_indicator.jpg", "1qn6aLQk6VesaiCnZMA4kKA3WNPGtzv0e": "vdigr_hud_cruise_manual.jpg", "1A5PAfefJPcyNiO_wJzHQGkR6Fgfo5UBs": "vdigr_vdi_cruise_manual.jpg", "1RzwhUjKozKvX7OSwt-AMnDhuvfix4I5O": "left_console_lcp-01.jpg", "18JLq9huWOJiKPSMt40iBQJ0XcO7ib3lw": "left_windshield_frame_caution_lights_left_windshield_frame.jpg", "1jzZXOauVEv9ozccCS1pukBAex6ojo2iX": "left_console_cap-01.jpg", "19rZHTKxwhB6jSAPFAfl0tn8swS3bk8is": "rio_overview_navigation_panels.jpg", "1rds13EirW0B-KSvLN6IYRXf7yPHRgIpx": "navigation_system_overview.jpg", "1KaA10yvEKk7f8BOnO1aQhIhKrwU9cjc1": "navigation_display_matrix.jpg", "1t0mGtJBNYeXfNdWT7N-aXZse9DtjdCcs": "rio_navigation_display.jpg", "1srqTn4tKvDn4r1XgWgQQNg6OYoMGK1EM": "egi_system_modes.jpg", "1Zzfri1WdBFf90IBoMZ58NSOJqmNcQFCZ": "egi_system_schematic.jpg", "1oMoElmBXaHDDC0-cEi2cOb6CUrXyVaQv": "egi_system_displays.jpg", "19G0SjnyxC30M-gSvdm2I8yWUGQhCoNpT": "ptid_system_displays.jpg", "1VHx7AfEbpn1QNnmk0bLd39ZPajQpQf5z": "pmdig_overview_hsd_pmdig.jpg", "11ytGklNKUzFZBvF3tkhSzbkBcqxUViAJ": "plt_pmdig_hsd_pmdig.jpg", "1Y5nJd_9MB_aqOnVKoqgowjNLNFEZtSco": "hsd_tidrepeat.jpg", "1CcyUvhC2u098w884Zk0LHFMT2yiGOV84": "right_instrument_panel_bdhi-04.jpg", "1enPBPfIrdQ8LR4JFTF4fiGrLNgiDhH63": "tacan-02.jpg", "1gO9FbnO6SMt2_Zf5C4xTJzSVQDn-LOhn": "instant_camera_example.jpg", "1Z7xBs_ilnQns6pv_l5MxuQwQQd0N0fcS": "instant_camera_keybinds.jpg", "1Xff5q-vh0U_1pI34rIJZzIqePuKTk3hk": "center_console_ptid.jpg", "1125vGfmaLxiHhkMkCEaDYUS8pNFgeyZY": "center_panel_ddd.jpg", "1AcyhMEECtkfS7WOn1wuSUKjrNflRYDdz": "vdigr_acm_manual.jpg", "1vSIGGY1nV0Z4oLnX4sDc0FCdY8VaXC64": "weapons_stores_overview_image.jpg", "1d43AjvVJvWjyrpZlXzuSEiyH80bDgcBj": "left_vertical_console_armament_control_panel.jpg", "1q4H10-mIpFHBNAU6yvqa4my94ltjXRVT": "stby_rdy_legend.jpg", "1XWPGKsRYuc6n6YVi-5PxIOw745ZC4qtD": "right_console_rwr-02.jpg"};
+
+
+/* Planches du manuel Heatblur v2.0, telles que présentes dans le Drive */
+const IMG = {
+  pilot:      "1LSNf370Z76pfgLP3G2czpVpjV1FIW1_7",
+  rio:        "1yauTBGsEFR1cEUkcM-Ndlsx8bfwaQDDr",
+  lconsole:   "1cRWJ_LuozK-F9PEuyrFNpO6YjG1dKAYG",
+  lpanel:     "1PBG842BX0rhlgg31DQmdGF2x956TnaDp",
+  lpanel2:    "1TMNAqLBvoD1N3zdWbrI4YbYM-sOEAnia",
+  rpanel:     "1MJeyRSy0Xopj5r0Vy1EuXeVMbCWJ9ywh",
+  cdnu:       "1iHXkN6fMCN5z0feGKcX2thLu3sE4ot7V",
+  ptid:       "1IJqaDS5W80PrrYzygxa8X84DqUNq711x",
+  ptidalign:  "1343TPem4GqbGhyWgmAadSdPBmD3gwPuj",
+  throttle:   "1Jf0BXSaEiddTTex3sjRWA92H_9RBuMkB",
+  gear:       "1btOScq6_6u7BDY4-JWTLuCDHL3zv_8hI",
+  hook:       "1ckKAnQ42OHQlUoVfpwz43EghwIpEB3Qz",
+  wingsweep:  "10QucDurJZPC_VCxHu0r-KDezHt5LHc6w",
+  launchbar:  "1D8RAKdjVRNsFb6o7xR7jJMBctNtcvVRq",
+  fuelpanel:  "1L-r0Hw4MSrXPKkACqWQRfjHGhNBbsXa-",
+  lengine:    "1Ios11Na-FMxu-OytIkKd29GWkTYN5vRh",
+  rengine:    "1d69JHPEF-kG0jeqt-kXGclQ0UBZvEKbB",
+  oil:        "1OWx3BXaU7VuOdzGbJ2ojECuqg20P3duy",
+  hyd:        "1Bxye8blt540Y-K6onA6rtNWhpnNFLsLu",
+  checklist:  "1Yx0il_HbxnUxZvmpWs3TaG0uTr_INVzh",
+  lndgchk:    "1gLKj-4lvCF8CB3NoH0aEbLMDKWfhkqlz",
+  aoa:        "1kaJNzj8rs69pQiSx5AH0zWbJ77L2PYg-",
+  airspeed:   "1UJIDpo71d3Mqa2-LSJneG5sjUCjs6X2Q",
+  vvi:        "1G5r5-i0Q3XRuZHqpT_fifsgS_pXDor9A",
+  baroalt:    "13rHttpiCcdNSrf7agTSQnXaTIZFYR31-",
+  radalt:     "1bK955HU9Sidlz_MZtQQPKrRtvbJxOIbq",
+  adi:        "13k-UL5IKQnZ0QBo-OF7uoBMY2-z239p-",
+  csurf:      "1qRAYprtHZ5NksPq4OKmLSl2LMzV7hStW",
+  hudcruise:  "1qn6aLQk6VesaiCnZMA4kKA3WNPGtzv0e",
+  vdicruise:  "1A5PAfefJPcyNiO_wJzHQGkR6Fgfo5UBs",
+  lightpanel: "1RzwhUjKozKvX7OSwt-AMnDhuvfix4I5O",
+  cautionlt:  "18JLq9huWOJiKPSMt40iBQJ0XcO7ib3lw",
+  checklisttool: "1dKLIRNF1kPhw96R6DnZjyoLmSvz_D20K",
+  procov: "1q-DgLgU_caBr1MnRhDBCWqhBuJNhxPiV",
+};
+
+/* Documents sources dans le Drive */
+const DOC = {
+  manuel:  ["Manuel Heatblur (PDF)","16Xl1mYmujB2wQVBK5kjhMm4GuDRBXH49"],
+  manFR:   ["Manuel A/B en français","1CMBhi8WS2QalriTmdwdlLXTDEAPay-ej"],
+  chuck1:  ["Chuck 1 · JESTER & contrôles","1kggb0SfAQLB41iyIqBkTt4Afi1EHR-J0"],
+  chuck2:  ["Chuck 2 · Cockpit","1tBT_z9QjfAZ-Vt2tTwc9j7s7QwDodkE8"],
+  chuck3:  ["Chuck 3 · Démarrage & décollage","1kn57knCUzVTAf4xBXslSOBooyUp0hvE0"],
+  chuck4:  ["Chuck 4 · Vol & aérodynamique","176bbRcBICqWrgUraEoHzS-ik_xnPHx_F"],
+  chuck7:  ["Chuck 7 · Navigation & ACLS","17VJ0irsI8iGmrUrgHhBtAmJiPMcgR1Uj"]
+};
+
+const L = [
+{id:"a1", title:"Tour du cockpit", isNew:true,
+ intro:"Avant de toucher quoi que ce soit, il faut savoir où sont les choses. Le cockpit du B(U) garde l'ossature du Tomcat des années 70, avec trois écrans modernes greffés dessus. Cette leçon te donne la carte.",
+ body:[
+  {t:"h", v:"La vue d'ensemble"},
+  {t:"p", v:"Le manuel découpe le poste pilote en douze zones. Tu n'as pas besoin des douze aujourd'hui : repère les blocs, pas les interrupteurs. La console gauche porte les manettes et tout ce qui touche à la propulsion et au carburant ; la planche de bord porte les instruments de vol ; la console droite porte l'électricité, l'éclairage et les radios."},
+  {t:"img", k:"pilot", c:"Poste pilote du F-14B(U). Les zones numérotées correspondent aux chapitres du manuel."},
+  {t:"note", k:"", lbl:"Ce qui a changé", v:"Trois éléments n'existaient pas sur le Tomcat d'origine : le HUD moderne (piloté par le VDIG-R), le PTID au centre, et le CDNU sur la console gauche. Si tu as un souvenir de l'ancien cockpit, c'est là que ton repère saute."},
+  {t:"h", v:"Console gauche"},
+  {t:"p", v:"C'est ta main gauche pendant tout le vol : manettes des gaz, balayage des ailes au pouce, aérofreins, gestion carburant, crosse d'appontage. Le CDNU (clavier de navigation) est la grosse nouveauté de cette zone."},
+  {t:"img", k:"lconsole", c:"Console latérale gauche du pilote."},
+  {t:"img", k:"cdnu", c:"CDNU — le clavier de navigation. Nouveau sur le B(U), il commande l'EGI et les waypoints."},
+  {t:"h", v:"Planche de bord"},
+  {t:"p", v:"Instruments de vol à gauche, écrans au centre, moteurs et systèmes à droite. Les instruments à aiguilles restent présents : ce sont eux qui te sauveront le jour où un écran tombe."},
+  {t:"img", k:"lpanel", c:"Planche de bord gauche : badin, altimètre, ADI, variomètre, indexeur d'incidence."},
+  {t:"img", k:"ptid", c:"PTID — l'écran tactique. Il remplace l'ancien TID."},
+  {t:"img", k:"rpanel", c:"Planche de bord droite : paramètres moteurs, balayage des ailes, RWR, BDHI."},
+  {t:"h", v:"Le siège arrière"},
+  {t:"p", v:"Tu ne t'y assiéras probablement pas, mais tu dois savoir ce qu'il contient : c'est de là que JESTER travaille. Radar, navigation, désignation, contre-mesures — tout ce que tu lui demanderas se fait sur ces panneaux."},
+  {t:"img", k:"rio", c:"Poste RIO du B(U). Le domaine de JESTER."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission d'entraînement, avion au parking, <b>moteurs coupés</b>. Pas de vol aujourd'hui.",
+   "Ouvre le <b>manuel interactif in-game</b> et active le <b>click-to-explain</b> : survole un interrupteur, le jeu t'explique sa fonction. C'est la source la plus fiable qui existe pour ce module.",
+   "Fais le tour dans l'ordre des planches ci-dessus : console gauche, planche de bord, console droite.",
+   "Identifie et note l'emplacement de <b>douze commandes</b> : manettes, train, volets, aérofreins, crosse, freins, trim, balayage des ailes, master arm, HUD, PTID, CDNU.",
+   "Referme tout, rouvre la mission, et retrouve les douze de mémoire."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu poses le curseur sur les douze commandes sans hésiter et sans relire tes notes."},
+  {t:"src", v:["manuel","chuck2","manFR"]}
+]},
+
+{id:"a2", title:"Commandes et bindings",
+ intro:"La moitié des vols ratés en reprise viennent d'un binding manquant découvert en l'air. Une heure au sol maintenant t'évite dix frustrations plus tard.",
+ body:[
+  {t:"h", v:"La manette : le vrai poste de commande"},
+  {t:"p", v:"Sur Tomcat, la manette des gaz porte bien plus que la poussée. Le balayage des ailes se commande au pouce, les contre-mesures et plusieurs fonctions radar y sont aussi. C'est la pièce à cartographier en priorité sur ton HOTAS."},
+  {t:"img", k:"throttle", c:"Manette des gaz et ses commandes secondaires."},
+  {t:"h", v:"Les commandes de vol et de configuration"},
+  {t:"img", k:"gear", c:"Panneau du train d'atterrissage, console verticale gauche."},
+  {t:"img", k:"hook", c:"Commande de crosse d'appontage."},
+  {t:"img", k:"wingsweep", c:"Indicateur de balayage des ailes : position commandée, position réelle, mode en cours."},
+  {t:"note", k:"", lbl:"À savoir sur les ailes", v:"En mode AUTO, le calculateur d'air (CADC) place les ailes en fonction du Mach : environ 20° jusqu'à Mach 0,7, puis elles reculent progressivement jusqu'à 68° au-delà de Mach 1. Tu n'as normalement rien à faire. Le mode BOMB les fixe à 55° pour l'attaque au sol, et la poignée de secours sert au sur-balayage à 75° sur le pont.",},
+  {t:"img", k:"launchbar", c:"Barre de lancement / abort — pour la catapulte, plus tard."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Ouvre les commandes DCS et binde le <b>vital</b> : train, volets, aérofreins, crosse, freins de roue, direction de roue avant, trim, postcombustion.",
+   "Puis le <b>spécifique Tomcat</b> : balayage des ailes AVANT/ARRIÈRE au pouce, mode BOMB, verrière, éjection.",
+   "Puis le <b>tactique</b> : désignation cible, sélection d'arme, largage de contre-mesures, menu JESTER et bouton contexte.",
+   "Retourne dans le cockpit et <b>actionne chaque binding une fois</b>, en vérifiant l'effet à l'écran. Un binding non testé n'existe pas.",
+   "Note ci-dessous ta liste finale : elle te servira de référence quand tu changeras de matériel."]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Le binding le plus souvent oublié est celui des contre-mesures. On s'en aperçoit toujours au premier missile."},
+  {t:"src", v:["chuck1","manuel"]}
+]},
+
+{id:"a3", title:"Travailler avec JESTER",
+ intro:"Le Tomcat est un avion à deux équipiers. Tu ne pilotes pas seul : tu commandes un équipage. Presque tout ce qui touche au radar, à la navigation et à la désignation passe par ton RIO.",
+ body:[
+  {t:"h", v:"Ce que JESTER fait pour toi"},
+  {t:"p", v:"Il gère le radar (modes, portée, verrouillages), l'alignement de la navigation, la saisie des points, la nacelle de désignation, le datalink et les contre-mesures. Sur les tâches longues comme l'alignement de la centrale ou le démarrage, il peut même travailler pendant que tu observes — c'est une excellente façon d'apprendre une procédure avant de la faire soi-même."},
+  {t:"img", k:"rio", c:"Le poste que JESTER occupe. Chaque commande que tu lui donnes se traduit par une action sur ces panneaux."},
+  {t:"h", v:"Le bouton contexte", badge:true},
+  {t:"p", v:"C'est l'apport de JESTER 2.0, hérité du Phantom. Au lieu de descendre trois niveaux de menu, il te propose directement l'action pertinente selon la phase de vol. En pratique, tu vas l'utiliser 80 % du temps et n'ouvrir le menu complet que pour les cas particuliers."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Avion au parking, moteurs coupés. Ouvre le menu JESTER et <b>parcours toute l'arborescence</b> sans rien déclencher.",
+   "Note les trois ou quatre branches que tu utiliseras vraiment : radar, navigation, contre-mesures, communications.",
+   "Teste le <b>bouton contexte</b> dans trois situations différentes : au sol moteurs coupés, au sol prêt à rouler, en vol. Observe qu'il ne propose pas la même chose.",
+   "Demande-lui de faire le <b>démarrage complet</b> à ta place et regarde les interrupteurs bouger. C'est ta première leçon de démarrage, gratuite.",
+   "Écris ton propre lexique : pour chaque besoin fréquent, la phrase JESTER exacte à viser."]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Croire que JESTER anticipe. Il est compétent mais il attend des ordres : si tu ne demandes rien, il ne fait rien d'utile au moment critique."},
+  {t:"src", v:["chuck1"]}
+]},
+
+{id:"a4", title:"Démarrage à froid", isNew:true,
+ intro:"Le démarrage n'est pas une corvée : c'est la séquence qui t'apprend l'architecture de l'avion. Électricité, puis air, puis moteurs, puis avionique. Une fois cette logique comprise, tu peux démarrer n'importe quel appareil.",
+ body:[
+  {t:"h", v:"L'ordre à retenir"},
+  {t:"p", v:"Alimentation au sol ou APU pour avoir du courant. Air pour lancer les moteurs. Moteur droit puis moteur gauche. Génératrices en ligne. Avionique sous tension. Et surtout : <b>lancement de l'alignement de la navigation le plus tôt possible</b>, parce que c'est lui qui dicte l'heure à laquelle tu pourras rouler."},
+  {t:"img", k:"lconsole", c:"Console gauche : c'est ici que se joue l'essentiel du démarrage."},
+  {t:"img", k:"fuelpanel", c:"Panneau de gestion carburant."},
+  {t:"h", v:"Surveiller les moteurs"},
+  {t:"p", v:"Pendant le lancement, tu regardes trois choses : la montée du régime, la température, et la pression d'huile. Si l'une des trois ne se comporte pas comme prévu, tu coupes."},
+  {t:"img", k:"lengine", c:"Paramètres moteur gauche."},
+  {t:"img", k:"rengine", c:"Paramètres moteur droit."},
+  {t:"img", k:"oil", c:"Pressions d'huile."},
+  {t:"img", k:"hyd", c:"Pression hydraulique — à surveiller aussi, elle conditionne les commandes de vol."},
+  {t:"h", v:"L'alignement de la navigation", badge:true},
+  {t:"p", v:"Sur le B(U), l'alignement se suit au PTID. Deux points importants, hérités de l'architecture de l'avion et toujours vrais : la centrale a besoin du système d'armes, qui a lui-même besoin d'air de refroidissement prélevé sur les moteurs. Autrement dit, l'alignement <b>ne peut pas commencer avant que les moteurs tournent</b> et que le sélecteur d'air soit sur les deux moteurs. Et l'avion doit rester parfaitement immobile pendant toute la durée."},
+  {t:"img", k:"ptidalign", c:"Suivi de l'alignement sur le PTID."},
+  {t:"note", k:"", lbl:"Raccourci qui vaut le détour", v:"Demande à JESTER de lancer l'alignement et choisis la qualité voulue. Un alignement rapide suffit pour un vol d'entraînement ; l'alignement fin ne se justifie que si tu vas faire de la frappe sur coordonnées."},
+  {t:"h", v:"Après démarrage"},
+  {t:"p", v:"Il reste à configurer : écrans allumés, altimètre calé, gyro de secours érigé, radios et TACAN réglés, éclairage. Les checklists Minky de ton Drive donnent cette liste dans l'ordre — elles ont été écrites pour l'A/B, donc quelques repères d'écran diffèrent, mais l'ossature est la même."},
+  {t:"img", k:"procov", c:"Vue d'ensemble des checklists normales, outil intégré au module."},
+  {t:"img", k:"checklist", c:"La carte de checklist présente dans le cockpit."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Premier passage : laisse <b>JESTER démarrer</b> pendant que tu regardes. Ne touche à rien.",
+   "Deuxième passage : démarre toi-même, manuel ouvert sur le second écran, sans chronomètre.",
+   "Troisième passage : démarre en te chronométrant. Note le temps.",
+   "Recommence jusqu'à ce que tu tombes sous les <b>8 minutes</b> de façon régulière.",
+   "Écris ta séquence personnelle ci-dessous, dans tes mots — c'est ce que tu reliras dans trois semaines."]},
+  {t:"note", k:"warn", lbl:"Pièges", v:"Lancer l'alignement trop tard : tu attends au point d'arrêt pour rien. Bouger l'avion pendant l'alignement : tu recommences."},
+  {t:"note", k:"go", lbl:"Validation", v:"Démarrage complet en moins de 8 minutes, sans relire tes notes."},
+  {t:"src", v:["chuck3","manuel","manFR"]}
+]},
+
+{id:"a5", title:"Roulage et décollage",
+ intro:"On décolle d'une piste avant de toucher au porte-avions. Une variable difficile à la fois.",
+ body:[
+  {t:"h", v:"Avant de rouler"},
+  {t:"p", v:"Trois réglages qui comptent : l'anti-dérapage et le frein aérodynamique en position terrain, le contournement de crosse sur FIELD (et non CARRIER), et le mode HUD sur décollage. La roulette avant se braque avec un bouton au manche ; un témoin te confirme qu'elle est engagée."},
+  {t:"img", k:"procov", c:"Vue d'ensemble des checklists normales — les points de roulage y figurent."},
+  {t:"h", v:"Rouler"},
+  {t:"p", v:"L'avion est lourd et long. Tu anticipes tes virages, tu roules lentement, et tu freines par petites touches. Sur le pont d'un porte-avions plus tard, cette discipline sera la différence entre rester à bord et tomber à l'eau."},
+  {t:"h", v:"Décoller"},
+  {t:"p", v:"Configuration décollage, ailes en automatique, plein gaz ou postcombustion selon la masse. Tu tires doucement à la vitesse de rotation, tu rentres le train dès que le taux de montée est positif, puis tu nettoies la configuration. Les ailes se replient toutes seules quand la vitesse monte."},
+  {t:"img", k:"gear", c:"Panneau de train."},
+  {t:"img", k:"hudcruise", c:"Le HUD en croisière : vitesse, altitude, cap, vecteur vitesse."},
+  {t:"note", k:"warn", lbl:"Pièges", v:"Cabrer trop tôt ou trop fort : le Tomcat frotte facilement la queue. Rentrer les volets trop bas ou trop lent."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Trois décollages consécutifs, même terrain, même masse de carburant.",
+   "Le quatrième avec les réservoirs pleins : observe la différence de distance et d'assiette.",
+   "Après chaque décollage, tour de piste et retour au parking. Tu travailles le roulage autant que le décollage.",
+   "Note ci-dessous ta configuration et tes repères de rotation."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Trois décollages de suite, sans toucher la queue et sans sortir de l'axe."},
+  {t:"src", v:["chuck3"]}
+]},
+
+{id:"a6", title:"Vol de base, AoA et DFCS", isNew:true,
+ intro:"C'est la leçon la plus importante de la section. Le Tomcat se pilote à l'incidence, pas à la vitesse. Tout ce qui suivra — appontage, combat tournoyant, passes d'attaque — repose sur ce que tu vas sentir ici.",
+ body:[
+  {t:"h", v:"L'incidence commande tout"},
+  {t:"p", v:"L'indexeur d'incidence, sur le montant gauche, te dit en un coup d'œil si tu es trop rapide, trop lent, ou dans le créneau. En approche, c'est lui que tu regardes, pas le badin : à masse variable, la bonne vitesse change, mais la bonne incidence, jamais."},
+  {t:"img", k:"aoa", c:"Indexeur d'incidence : chevrons haut et bas, cercle au milieu. Le cercle, c'est le créneau."},
+  {t:"img", k:"airspeed", c:"Badin — utile, mais secondaire par rapport à l'incidence en régime lent."},
+  {t:"h", v:"Les instruments de tenue"},
+  {t:"img", k:"adi", c:"ADI — assiette et inclinaison."},
+  {t:"img", k:"vvi", c:"Variomètre."},
+  {t:"img", k:"baroalt", c:"Altimètre barométrique."},
+  {t:"img", k:"radalt", c:"Radioaltimètre — la vraie hauteur sol, indispensable en montagne et en attaque."},
+  {t:"h", v:"Le DFCS", badge:true},
+  {t:"p", v:"Le Tomcat d'origine avait une réputation méritée : sorties de contrôle brutales et vrilles difficiles à récupérer. Les commandes de vol numériques adoucissent nettement ce comportement — l'avion prévient mieux, décroche plus proprement, et pardonne des entrées que l'ancien ne pardonnait pas. Ce n'est pas une protection absolue : c'est une marge supplémentaire, pas un filet."},
+  {t:"img", k:"csurf", c:"Indicateur de position des gouvernes — utile pour voir ce que le système fait réellement."},
+  {t:"img", k:"vdicruise", c:"Le VDI en croisière."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Altitude de sécurité, 15 000 pieds minimum, zone dégagée.",
+   "Virages soutenus à différents facteurs de charge, en tenant une <b>incidence constante</b>. Ne regarde pas le badin.",
+   "Régimes lents : ralentis progressivement en configuration lisse, puis en configuration atterrissage. Sens où l'avion commence à prévenir.",
+   "Approche du décrochage, en douceur, et récupération. Répète jusqu'à ce que ce ne soit plus une surprise.",
+   "Enchaînements simples : virage inversé, montée en virage, descente à vitesse tenue.",
+   "Teste l'autopilot et ses modes de tenue.",
+   "Note tes repères : quelle incidence pour quoi, où l'avion commence à protester."]},
+  {t:"note", k:"warn", lbl:"Pièges", v:"Piloter à la vitesse. Et croire que le DFCS te rend intouchable : il repousse la limite, il ne l'efface pas."},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu tiens un virage soutenu à incidence constante sans jamais regarder le badin."},
+  {t:"src", v:["chuck4","manuel"]}
+]},
+
+{id:"a7", title:"Retour terrain et atterrissage",
+ intro:"L'atterrissage terrain, c'est l'appontage sans la pression. Tout ce que tu construis ici sera réutilisé tel quel quand tu passeras au bateau.",
+ body:[
+  {t:"h", v:"La configuration"},
+  {t:"p", v:"Train, volets, et la carte de checklist atterrissage du cockpit pour ne rien oublier. Crosse rentrée sur terrain, contournement de crosse sur FIELD, anti-dérapage actif — l'inverse exact de ce que tu feras au bateau."},
+  {t:"img", k:"lndgchk", c:"Carte de checklist atterrissage, planche de bord gauche."},
+  {t:"img", k:"gear", c:"Panneau de train."},
+  {t:"h", v:"L'approche"},
+  {t:"p", v:"Deux règles qui suffisent. L'assiette vise le point de toucher, la poussée règle le taux de descente. Et tu arrives <b>déjà stabilisé en incidence</b> avant le dernier virage : ce que tu n'as pas stabilisé en amont, tu ne le rattraperas pas en finale."},
+  {t:"img", k:"aoa", c:"L'indexeur, de nouveau. En approche, c'est lui ton instrument principal."},
+  {t:"img", k:"cautionlt", c:"Voyants d'alerte, montant gauche du pare-brise — un coup d'œil avant de sortir le train."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Circuit complet : vent arrière, base, finale. Cinq fois.",
+   "Varie la masse de carburant : léger, moyen, lourd. Constate que la <b>vitesse</b> change et que l'<b>incidence</b> ne change pas.",
+   "Fais trois remises de gaz volontaires : décision franche, plein gaz, pas d'hésitation. C'est le réflexe qui te sauvera au bateau.",
+   "Termine par cinq approches d'affilée en tenant l'incidence à une demi-unité près.",
+   "Note tes repères de circuit : altitudes, vitesses, points de virage."]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Approcher trop vite. C'est l'erreur la plus courante, et la seule qui soit vraiment punie au porte-avions."},
+  {t:"note", k:"go", lbl:"Validation", v:"Cinq approches consécutives à l'incidence de référence, plus ou moins une demi-unité. Tu es prêt pour la section B."},
+  {t:"src", v:["chuck3","manFR"]}
+]}
+];
+
+/* ---------- état ---------- */
+const KEY="f14bu-sectionA";
+let st={done:{},notes:{}}, cur=0;
+async function load(){ try{const r=await __sget(KEY); if(r&&r.value) st=Object.assign(st,JSON.parse(r.value));}catch(e){} }
+let tm=null;
+function save(){ clearTimeout(tm); tm=setTimeout(async()=>{ try{await __sset(KEY,JSON.stringify(st));}catch(e){} },400); }
+
+/* ---------- rendu ---------- */
+function fig(k,c){
+  const id=IMG[k];
+  const fn=FN[id]||id;
+  return `<figure><img src="img/${fn}" alt="${c}" loading="lazy"
+      onerror="if(!this.dataset.f){this.dataset.f=1;this.src='${D(id)}';}else{this.closest('figure').classList.add('failed');}"
+      onclick="openLb(this.src)">
+    <div class="imgfail">Image non chargée — ouvre-la directement dans Drive.</div>
+    <figcaption><span>${c}</span><a href="${V(id)}" target="_blank" rel="noopener">Drive ↗</a></figcaption></figure>`;
+}
+function block(b){
+  if(b.t==="h")   return `<h3>${b.v}${b.badge?'<span class="badge" style="margin-left:8px;vertical-align:0">Nouveau</span>':''}</h3>`;
+  if(b.t==="p")   return `<p>${b.v}</p>`;
+  if(b.t==="img") return fig(b.k,b.c);
+  if(b.t==="proc")return `<ol class="proc">${b.v.map(s=>`<li><span>${s}</span></li>`).join("")}</ol>`;
+  if(b.t==="note")return `<div class="note ${b.k||""}"><span class="lbl">${b.lbl}</span><p>${b.v}</p></div>`;
+  if(b.t==="src") return `<h3>Sources dans ton Drive</h3><div class="srcs">${
+      b.v.map(k=>`<a href="${V(DOC[k][1])}" target="_blank" rel="noopener">${DOC[k][0]} ↗</a>`).join("")}</div>`;
+  return "";
+}
+function render(){
+  const l=L[cur];
+  document.getElementById("main").innerHTML=`<div class="page">
+    <div class="eyebrow">Section A · leçon ${cur+1} sur ${L.length}</div>
+    <h2>${l.title}${l.isNew?'<span class="badge">Nouveau sur le B(U)</span>':""}</h2>
+    <p class="intro">${l.intro}</p>
+    ${l.body.map(block).join("")}
+    <h3>Tes notes de vol</h3>
+    <textarea id="nt" placeholder="Procédures exactes, séquences de touches, temps chronométrés, ce qui a coincé…">${(st.notes[l.id]||"").replace(/</g,"&lt;")}</textarea>
+    <button class="doneline${st.done[l.id]?" on":""}" id="dn"><span class="box"></span>
+      <span>${st.done[l.id]?"Leçon validée":"Marquer cette leçon comme validée"}</span></button>
+    <div class="nav">
+      <button class="ghost" id="pv"${cur?"":" disabled style=opacity:.3"}>← Précédent</button>
+      <button class="ghost" id="nx"${cur<L.length-1?"":" disabled style=opacity:.3"}>Suivant →</button>
+    </div></div>`;
+  document.getElementById("nt").oninput=e=>{st.notes[l.id]=e.target.value;save();};
+  document.getElementById("dn").onclick=()=>{st.done[l.id]=!st.done[l.id];save();render();};
+  if(cur) document.getElementById("pv").onclick=()=>{cur--;render();window.scrollTo(0,0);};
+  if(cur<L.length-1) document.getElementById("nx").onclick=()=>{cur++;render();window.scrollTo(0,0);};
+  rail();
+}
+function rail(){
+  const r=document.getElementById("rail"); r.innerHTML="";
+  L.forEach((l,i)=>{
+    const b=document.createElement("button");
+    b.className="item"+(i===cur?" on":"")+(st.done[l.id]?" done":"");
+    b.innerHTML=`<span class="idx">${st.done[l.id]?"✓":String(i+1).padStart(2,"0")}</span><span class="nm">${l.title}</span>`;
+    b.onclick=()=>{cur=i;render();window.scrollTo(0,0);};
+    r.appendChild(b);
+  });
+  const n=L.filter(l=>st.done[l.id]).length;
+  document.getElementById("foot").textContent=`${n} / ${L.length} leçons validées`;
+}
+function openLb(src){const lb=document.getElementById("lb");document.getElementById("lbimg").src=src;lb.classList.add("on");}
+document.getElementById("lb").onclick=()=>document.getElementById("lb").classList.remove("on");
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") document.getElementById("lb").classList.remove("on");
+  if(e.target.matches("textarea")) return;
+  if(e.key==="ArrowRight"&&cur<L.length-1){cur++;render();window.scrollTo(0,0);}
+  if(e.key==="ArrowLeft"&&cur>0){cur--;render();window.scrollTo(0,0);}
+});
+load().then(render);
+</script>

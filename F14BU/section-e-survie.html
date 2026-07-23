@@ -1,0 +1,253 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;--warn:#d9695a;
+    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)} .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+  .imgfail{display:none;padding:22px 14px;font-size:13px;color:var(--dim);text-align:center}
+  figure.failed img{display:none} figure.failed .imgfail{display:block}
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+  code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:2px 6px;border:1px solid var(--line);color:var(--amber)}
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)} .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .keytbl{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  .keytbl th,.keytbl td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+  .keytbl th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--panel)}
+  .keytbl td:first-child{font-family:var(--mono);white-space:nowrap}
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex} .lb img{max-width:100%;max-height:100%}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <div class="tail">Section E · F-14B(U)</div>
+      <h1>Survivre</h1>
+      <p class="sub">Détecter la menace, réagir, et rentrer. Trois leçons courtes qui sauvent des vols entiers.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const LOCAL = "img/";
+const D = id => `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+const V = id => `https://drive.google.com/file/d/${id}/view`;
+
+const IMG = {
+  rwrRio:   ["right_console_rwr-02.jpg","1XWPGKsRYuc6n6YVi-5PxIOw745ZC4qtD"],
+  rwrPlt:   ["right_instrument_panel_rwr-05.jpg","1PJBFGPUuDcG7da71CN-4hUGYzsjsw3a7"],
+  ecmd:     ["right_vertical_console_electronic_countermeasure_display.jpg","14UF20vaSs0ST5_ckquB8BNlcJLC178Lb"],
+  ecmdPm:   ["rio_pmdig_ecmd_pmdig.jpg","1-uATnpOitJFtaPQwOUbpW9SU2F1kfrds"],
+  decm:     ["right_console_decm-04.jpg","1di0m07GZz7ws14zFS4Fi8jXxwD3cnRUB"],
+  rconsole: ["right_console_right_side_console.jpg","1QkY4k-iKx-5OzoGds58aO7eBSr0bJ0d7"],
+  caution:  ["left_windshield_frame_caution_lights_left_windshield_frame.jpg","18JLq9huWOJiKPSMt40iBQJ0XcO7ib3lw"]
+};
+const DOC = {
+  manuel: ["Manuel Heatblur (PDF)","16Xl1mYmujB2wQVBK5kjhMm4GuDRBXH49"],
+  chuck6b:["Chuck · RWR & contre-mesures","1yXqaXEh6SGtStgt1fgMVOLgl8ZZIO1hG"]
+};
+
+const L = [
+
+{id:"e1", title:"Lire le RWR",
+ intro:"Le détecteur d'alerte radar (ALR-67) est ta première ligne de défense : il te dit qui t'illumine, d'où, et avec quelle intention. Savoir le lire en un coup d'œil vaut tous les leurres du monde.",
+ body:[
+  {t:"h", v:"Ce que l'écran te dit"},
+  {t:"p", v:"Chaque symbole représente un émetteur radar : sa position sur l'écran donne sa direction relative, son symbole donne son type. La distance au centre reflète la priorité de la menace, pas la distance réelle. Sur le B(U), l'affichage ECM passe par le PMDIG (l'écran de contre-mesures), avec une option de bascule automatique : dès qu'une menace apparaît, la page ECM peut prendre le dessus sur ce qui était affiché."},
+  {t:"img", k:"ecmd", c:"L'écran de contre-mesures (ECMD), console verticale droite du RIO."},
+  {t:"img", k:"ecmdPm", c:"L'ECMD au sein du groupe d'écrans programmables du B(U)."},
+  {t:"h", v:"Trois niveaux d'urgence"},
+  {t:"table", head:["Signal","Sens","Ta réaction"], rows:[
+   ["Recherche","Un radar balaie ta zone, sans te suivre.","Noter la direction, continuer la mission."],
+   ["Poursuite","Un radar te suit spécifiquement.","Préparer une réaction : cap, altitude, programme de leurres."],
+   ["Tir / guidage","Un missile est probablement en vol vers toi.","Réagir immédiatement : manœuvre + leurres. C'est maintenant."]]},
+  {t:"img", k:"rwrRio", c:"Panneau de commande du RWR côté RIO : alimentation, type de menaces affichées, volume."},
+  {t:"img", k:"rwrPlt", c:"Répétiteur RWR côté pilote."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission avec des radars sol actifs mais hors de portée de tir. Survole la zone en écoutant et regardant le RWR.",
+   "Associe chaque son à ce que tu vois à l'écran : recherche, poursuite, tir.",
+   "Règle le volume pour que l'alerte de tir soit impossible à rater sans que la recherche te fatigue.",
+   "Note les symboles des menaces de ta mission et leur signification."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu identifies le type et la direction d'une menace au son, avant même de regarder l'écran."},
+  {t:"src", v:["manuel","chuck6b"]}
+]},
+
+{id:"e2", title:"L'ALE-47 : leurres programmés", isNew:true,
+ intro:"Le B(U) remplace l'ancien système de contre-mesures par l'AN/ALE-47, programmable. La différence de philosophie est totale : tu ne largues plus au hasard sous le stress, tu déclenches des programmes préparés à froid.",
+ body:[
+  {t:"h", v:"Ce qui a changé"},
+  {t:"p", v:"L'ALE-47 se pilote via deux panneaux sur la console droite du RIO : l'unité d'affichage (DCDU) et le programmateur. Les programmes de largage — combien de paillettes ou de fusées, à quelle cadence, sur quelle durée — peuvent être préparés avant le vol, y compris chargés depuis l'éditeur de mission via la cartouche de données (MDL), la même qui transporte tes plans de vol."},
+  {t:"img", k:"rconsole", c:"Console droite du RIO — les panneaux ALE-47 (DCDU et programmateur) s'y trouvent."},
+  {t:"img", k:"decm", c:"Panneau DECM — le brouilleur, complémentaire des leurres."},
+  {t:"h", v:"Trois programmes types à préparer"},
+  {t:"table", head:["Situation","Logique du programme"], rows:[
+   ["Missile radar","Paillettes en salve, cadence rapide, couplées à une manœuvre dans le plan horizontal pour sortir du filtrage doppler."],
+   ["Missile infrarouge","Fusées espacées sur plusieurs secondes, le temps de casser l'accrochage pendant que tu changes de vecteur."],
+   ["Dégagement","Programme mixte plus long, pour couvrir une sortie de zone défendue."]]},
+  {t:"note", k:"", lbl:"Le principe qui rend tout efficace", v:"Un leurre sans manœuvre ne sauve presque jamais. Le programme donne au missile un faux choix ; c'est ta manœuvre qui rend le mauvais choix crédible. Les deux ensemble, toujours."},
+  {t:"h", v:"Côté déclenchement"},
+  {t:"p", v:"Les commandes de largage restent accessibles aux deux équipiers : le pilote a son bouton de contre-mesures (celui que tu as bindé en section A), et le RIO ses interrupteurs — largage unitaire ou lancement du programme sélectionné. En pratique avec JESTER, tu déclenches toi-même et il gère la sélection des programmes si tu le lui demandes."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Au sol, explore le DCDU et le programmateur ALE-47 avec le click-to-explain : identifie où se lisent les quantités restantes et le programme sélectionné.",
+   "Prépare (ou fais préparer via l'éditeur de mission) tes trois programmes types.",
+   "En vol, déclenche chaque programme à blanc et vérifie ce qui sort : type, cadence, durée.",
+   "Note tes programmes ci-dessous : contenu exact et situation d'emploi. C'est ta carte de survie personnelle."]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Vider tout son stock sur la première alerte. Les leurres sont une ressource de mission : un programme adapté en consomme peu et en garde pour le retour."},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu connais tes trois programmes par cœur et tu sais lequel déclencher sans réfléchir."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"e3", title:"Survivre à un engagement",
+ intro:"La leçon de synthèse : tout mettre ensemble sous pression. Détection, décision, manœuvre, leurres — dans cet ordre, en quelques secondes.",
+ body:[
+  {t:"h", v:"La séquence de survie"},
+  {t:"proc", v:[
+   "<b>Détecter</b> : l'alerte RWR ou le départ missile vu dehors. Chaque seconde d'avance compte double.",
+   "<b>Annoncer et localiser</b> : d'où vient la menace ? Le RWR te donne l'azimut ; tes yeux confirment.",
+   "<b>Manœuvrer</b> : virage franc pour mettre la menace sur le travers (radar) ou casser la ligne de vue (IR), en jouant l'altitude si le terrain le permet.",
+   "<b>Leurrer</b> : le bon programme, pendant la manœuvre, pas après.",
+   "<b>Réévaluer</b> : la menace a-t-elle décroché ? Sinon, on recommence. Si oui, on sort de la zone — on ne retourne pas voir."]},
+  {t:"img", k:"caution", c:"Voyants d'alerte du pare-brise — après un engagement, un coup d'œil pour vérifier que l'avion n'a rien pris."},
+  {t:"note", k:"", lbl:"Radar contre infrarouge", v:"Contre un missile radar, ta manœuvre vise à réduire ta vitesse relative vue du radar (le mettre sur le travers) pendant que les paillettes lui offrent une cible alternative. Contre un missile infrarouge, tout est dans la ligne de vue : fusées + changement de plan brutal pour sortir du champ du chercheur."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission : traverser une zone défendue par un ou deux systèmes sol-air de menace moyenne, aller-retour.",
+   "Premier passage haut et prudent : repère les menaces au RWR sans t'exposer.",
+   "Deuxième passage dans l'enveloppe : laisse-toi engager volontairement et déroule la séquence complète.",
+   "Répète jusqu'à sortir intact trois fois de suite.",
+   "Note ce qui t'a surpris et le délai réel entre l'alerte et ta réaction."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Trois traversées de zone défendue, engagé à chaque fois, intact à chaque fois. Direction la section F : rendre les coups."},
+  {t:"src", v:["manuel","chuck6b"]}
+]}
+];
+
+const KEY="f14bu-sectionE";
+let st={done:{},notes:{}}, cur=0;
+async function load(){ try{const r=await __sget(KEY); if(r&&r.value) st=Object.assign(st,JSON.parse(r.value));}catch(e){} }
+let tm=null;
+function save(){ clearTimeout(tm); tm=setTimeout(async()=>{ try{await __sset(KEY,JSON.stringify(st));}catch(e){} },400); }
+
+function fig(k,c){
+  const [fn,id]=IMG[k];
+  return `<figure><img src="${LOCAL}${fn}" alt="${c}" loading="lazy"
+      onerror="if(!this.dataset.f){this.dataset.f=1;this.src='${D(id)}';}else{this.closest('figure').classList.add('failed');}"
+      onclick="openLb(this.src)">
+    <div class="imgfail">Image non chargée — ouvre-la dans Drive via le lien ci-dessous.</div>
+    <figcaption><span>${c}</span><a href="${V(id)}" target="_blank" rel="noopener">Drive ↗</a></figcaption></figure>`;
+}
+function table(h,rows){
+  return `<table class="keytbl"><thead><tr>${h.map(x=>`<th>${x}</th>`).join("")}</tr></thead>
+    <tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+}
+function block(b){
+  if(b.t==="h")   return `<h3>${b.v}</h3>`;
+  if(b.t==="p")   return `<p>${b.v}</p>`;
+  if(b.t==="img") return fig(b.k,b.c);
+  if(b.t==="proc")return `<ol class="proc">${b.v.map(s=>`<li><span>${s}</span></li>`).join("")}</ol>`;
+  if(b.t==="table")return table(b.head,b.rows);
+  if(b.t==="note")return `<div class="note ${b.k||""}"><span class="lbl">${b.lbl}</span><p>${b.v}</p></div>`;
+  if(b.t==="src") return `<h3>Sources dans ton Drive</h3><div class="srcs">${
+      b.v.map(k=>`<a href="${V(DOC[k][1])}" target="_blank" rel="noopener">${DOC[k][0]} ↗</a>`).join("")}</div>`;
+  return "";
+}
+function render(){
+  const l=L[cur];
+  document.getElementById("main").innerHTML=`<div class="page">
+    <div class="eyebrow">Section E · leçon ${cur+1} sur ${L.length}</div>
+    <h2>${l.title}${l.isNew?'<span class="badge">Nouveau sur le B(U)</span>':""}</h2>
+    <p class="intro">${l.intro}</p>
+    ${l.body.map(block).join("")}
+    <h3>Tes notes de vol</h3>
+    <textarea id="nt" placeholder="Programmes ALE-47, symboles de menaces, délais de réaction…">${(st.notes[l.id]||"").replace(/</g,"&lt;")}</textarea>
+    <button class="doneline${st.done[l.id]?" on":""}" id="dn"><span class="box"></span>
+      <span>${st.done[l.id]?"Leçon validée":"Marquer cette leçon comme validée"}</span></button>
+    <div class="nav">
+      <button class="ghost" id="pv"${cur?"":" disabled style=opacity:.3"}>← Précédent</button>
+      <button class="ghost" id="nx"${cur<L.length-1?"":" disabled style=opacity:.3"}>Suivant →</button>
+    </div></div>`;
+  document.getElementById("nt").oninput=e=>{st.notes[l.id]=e.target.value;save();};
+  document.getElementById("dn").onclick=()=>{st.done[l.id]=!st.done[l.id];save();render();};
+  if(cur) document.getElementById("pv").onclick=()=>{cur--;render();window.scrollTo(0,0);};
+  if(cur<L.length-1) document.getElementById("nx").onclick=()=>{cur++;render();window.scrollTo(0,0);};
+  rail();
+}
+function rail(){
+  const r=document.getElementById("rail"); r.innerHTML="";
+  L.forEach((l,i)=>{
+    const b=document.createElement("button");
+    b.className="item"+(i===cur?" on":"")+(st.done[l.id]?" done":"");
+    b.innerHTML=`<span class="idx">${st.done[l.id]?"✓":String(i+1).padStart(2,"0")}</span><span class="nm">${l.title}</span>`;
+    b.onclick=()=>{cur=i;render();window.scrollTo(0,0);};
+    r.appendChild(b);
+  });
+  document.getElementById("foot").textContent=`${L.filter(l=>st.done[l.id]).length} / ${L.length} leçons validées`;
+}
+function openLb(src){document.getElementById("lbimg").src=src;document.getElementById("lb").classList.add("on");}
+document.getElementById("lb").onclick=()=>document.getElementById("lb").classList.remove("on");
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") document.getElementById("lb").classList.remove("on");
+  if(e.target.matches("textarea")) return;
+  if(e.key==="ArrowRight"&&cur<L.length-1){cur++;render();window.scrollTo(0,0);}
+  if(e.key==="ArrowLeft"&&cur>0){cur--;render();window.scrollTo(0,0);}
+});
+load().then(render);
+</script>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cursus F-14B(U) — Tutoriel</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;
+    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  .wrap{max-width:880px;margin:0 auto;padding:48px 24px 80px}
+  .tail{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:44px;letter-spacing:.04em;line-height:1.02;margin:10px 0 8px;text-transform:uppercase}
+  .sub{color:var(--dim);max-width:60ch;margin:0 0 36px}
+  a.card{display:flex;gap:18px;align-items:baseline;border:1px solid var(--line);background:var(--panel);
+         padding:18px 20px;margin:10px 0;text-decoration:none;color:var(--ink);transition:border-color .12s}
+  a.card:hover{border-color:var(--amber)}
+  .idx{font-family:var(--mono);font-size:13px;color:var(--amber);min-width:26px}
+  .nm{font-family:var(--display);font-size:19px;letter-spacing:.04em;text-transform:uppercase}
+  .ds{color:var(--dim);font-size:13.5px;margin-left:auto;text-align:right;max-width:44%}
+  .hr{border-top:1px solid var(--line);margin:34px 0 22px}
+  h2{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:0 0 12px}
+  p{margin:12px 0;color:var(--dim)}
+  code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:2px 6px;border:1px solid var(--line);color:var(--amber)}
+  .ok{color:var(--go)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="tail">DCS · Heatblur · F-14B(U) Tomcat</div>
+  <h1>Cursus complet<br>de pilotage</h1>
+  <p class="sub">Sept sections, de l'avion froid à la mission complète, illustrées avec les planches du manuel Heatblur.
+  Chaque section garde ta progression et tes notes d'une session à l'autre (dans le même navigateur). Utilise l'appli complète ci-dessous, ou les sections individuelles si tu préfères des fichiers séparés.</p>
+
+  <a class="card" href="cursus-complet.html" style="border-color:var(--amber)"><span class="idx">★</span><span class="nm">Appli complète (recommandé)</span><span class="ds">Les 7 sections en une seule appli, progression globale unifiée</span></a>
+
+  <a class="card" href="section-a-illustree.html"><span class="idx">A</span><span class="nm">Reprendre l'avion en main</span><span class="ds">Cockpit, bindings, JESTER, démarrage, décollage, vol de base, atterrissage</span></a>
+  <a class="card" href="section-b-navigation.html"><span class="idx">B</span><span class="nm">Naviguer : EGI &amp; CDNU</span><span class="ds">Alignement, waypoints, routes, TACAN — le cœur du B(U)</span></a>
+  <a class="card" href="section-c-porte-avions.html"><span class="idx">C</span><span class="nm">Le porte-avions</span><span class="ds">Catapulte, circuit CASE I, DLC, appontage</span></a>
+  <a class="card" href="section-d-air-air.html"><span class="idx">D</span><span class="nm">Air-air : chasser</span><span class="ds">Radar, PTID, HUD, AIM-9/7/54, combat tournoyant</span></a>
+  <a class="card" href="section-e-survie.html"><span class="idx">E</span><span class="nm">Survivre</span><span class="ds">RWR, ALE-47, séquence de survie</span></a>
+  <a class="card" href="section-f-air-sol.html"><span class="idx">F</span><span class="nm">Air-sol : frapper</span><span class="ds">Bombes lisses, LGB/LANTIRN, JDAM</span></a>
+  <a class="card" href="section-g-mission.html"><span class="idx">G</span><span class="nm">Mettre bout à bout</span><span class="ds">Urgences, ravitaillement, mission complète</span></a>
+
+  <div class="hr"></div>
+  <h2>Outil compagnon</h2>
+  <a class="card" href="tomcat-progression.html"><span class="idx">✦</span><span class="nm">Carnet de progression</span><span class="ds">Vue d'ensemble des 24 leçons, export markdown imprimable</span></a>
+
+  <div class="hr"></div>
+  <h2>Images</h2>
+  <p>Les planches du manuel s'affichent depuis le sous-dossier <code>img/</code> s'il est rempli, sinon depuis ton Google Drive (il faut alors être connecté à ton compte dans le navigateur).</p>
+  <p><span class="ok">Pour tout avoir hors-ligne :</span> dans Google Drive, ouvre le dossier d'images du manuel (<code>f-14-manual-v.2.0 → img → bu</code>), télécharge-le (clic droit → Télécharger), et extrais son contenu directement dans le dossier <code>img/</code> à côté de ce fichier. Ajoute aussi les fichiers <code>00x F-14 Checklists.png</code> du dossier F-14 principal. Les noms de fichiers correspondent déjà : rien à renommer.</p>
+</div>
+</body>
+</html>

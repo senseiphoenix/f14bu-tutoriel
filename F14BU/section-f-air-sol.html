@@ -1,0 +1,262 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;--warn:#d9695a;
+    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)} .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+  .imgfail{display:none;padding:22px 14px;font-size:13px;color:var(--dim);text-align:center}
+  figure.failed img{display:none} figure.failed .imgfail{display:block}
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+  code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:2px 6px;border:1px solid var(--line);color:var(--amber)}
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)} .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .keytbl{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  .keytbl th,.keytbl td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+  .keytbl th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--panel)}
+  .keytbl td:first-child{font-family:var(--mono);white-space:nowrap}
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex} .lb img{max-width:100%;max-height:100%}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <div class="tail">Section F · F-14B(U)</div>
+      <h1>Air-sol :<br>frapper</h1>
+      <p class="sub">Des bombes lisses à la JDAM. La section où ton travail sur l'EGI paie enfin.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const LOCAL = "img/";
+const D = id => `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+const V = id => `https://drive.google.com/file/d/${id}/view`;
+
+const IMG = {
+  stores:  ["weapons_stores_overview_image.jpg","1vSIGGY1nV0Z4oLnX4sDc0FCdY8VaXC64"],
+  armpanel:["left_vertical_console_armament_control_panel.jpg","1d43AjvVJvWjyrpZlXzuSEiyH80bDgcBj"],
+  lgbcues: ["typical_lgb_lts_cues.jpg","1kOiUlf4ldmWcWX2mwCue2-wdE_BOnE7-"],
+  ggwcues: ["typical_ggw_lts_cues.jpg","15Yl8TnfjMv1lLQq9JSqloY54yE9g7aVo"],
+  cdnu:    ["left_console_cdnu-01.jpg","1iHXkN6fMCN5z0feGKcX2thLu3sE4ot7V"],
+  ptid:    ["overview_ptid.jpg","1IJqaDS5W80PrrYzygxa8X84DqUNq711x"],
+  hud:     ["vdigr_hud_cruise_manual.jpg","1qn6aLQk6VesaiCnZMA4kKA3WNPGtzv0e"],
+  radalt:  ["left_instrument_panel_radalt-01.jpg","1bK955HU9Sidlz_MZtQQPKrRtvbJxOIbq"]
+};
+const DOC = {
+  manuel: ["Manuel Heatblur (PDF)","16Xl1mYmujB2wQVBK5kjhMm4GuDRBXH49"],
+  chuck9: ["Chuck 9 · LANTIRN & capteurs","1WBQtfg6oEEBkcGaDMI_EjKPgu6Xy9psv"],
+  chuck6: ["Chuck 6 · Armement","1yXqaXEh6SGtStgt1fgMVOLgl8ZZIO1hG"]
+};
+
+const L = [
+
+{id:"f1", title:"Bombes lisses et symbologie A/G", isNew:true,
+ intro:"On valide la nouvelle symbologie air-sol du HUD sur l'arme la plus simple. Une bombe non guidée qui touche, c'est la preuve que tu comprends la passe d'attaque — le reste n'est que du raffinement.",
+ body:[
+  {t:"h", v:"Configuration"},
+  {t:"p", v:"Sélection de l'arme et paramètres de largage sur le panneau d'armement, master arm en dernier. Le mode BOMB du balayage des ailes (section A) fixe les ailes à 55° pour stabiliser la plateforme en passe d'attaque."},
+  {t:"img", k:"stores", c:"Vue d'ensemble des emports."},
+  {t:"img", k:"armpanel", c:"Panneau d'armement — sélection et paramètres."},
+  {t:"h", v:"Deux logiques de largage"},
+  {t:"table", head:["Logique","Principe","Quand"], rows:[
+   ["Point d'impact continu","Le HUD affiche en permanence où tomberait la bombe si tu larguais maintenant. Tu amènes le repère sur la cible et tu presses.","Cible visible, passe en piqué. Le mode de l'apprentissage."],
+   ["Point calculé","Tu désignes la cible d'abord ; l'avion largue seul au bon moment pendant que tu voles le profil.","Largage en palier ou en ressource, cible désignée."]]},
+  {t:"img", k:"hud", c:"Le HUD — en mode A/G, la symbologie de largage s'ajoute par-dessus cette base."},
+  {t:"img", k:"radalt", c:"Le radioaltimètre — ta vraie hauteur sol en passe d'attaque. Règle un plancher d'alerte."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission avec cibles au sol non défendues. Configure une paire de bombes lisses.",
+   "Passe en piqué à 30° environ : point de roulis, mise en piqué, repère sur la cible, largage, ressource franche.",
+   "Cinq passes. Note ton altitude de largage et ta hauteur de ressource au radioaltimètre.",
+   "Puis trois passes au point calculé : désigne, vole le profil, laisse l'avion larguer.",
+   "Note tes paramètres de passe qui fonctionnent : angle, vitesse, altitude d'entrée et de largage."]},
+  {t:"note", k:"warn", lbl:"Pièges", v:"Descendre trop bas et se faire prendre par sa propre explosion. Et fixer la cible au point d'oublier la ressource — le sol gagne toujours."},
+  {t:"note", k:"go", lbl:"Validation", v:"Trois bombes sur cinq à moins de 50 m de la cible."},
+  {t:"src", v:["manuel","chuck6"]}
+]},
+
+{id:"f2", title:"Bombes guidées laser et LANTIRN",
+ intro:"La frappe de précision classique du Tomcat : la nacelle LANTIRN, tenue par ton RIO, illumine la cible et la bombe suit le point laser. Ta partie : voler le profil. Celle de JESTER : trouver, désigner, illuminer.",
+ body:[
+  {t:"h", v:"Mise en œuvre de la nacelle"},
+  {t:"p", v:"La nacelle demande de l'anticipation : alimentation au sol, puis environ huit minutes de refroidissement avant d'être opérationnelle. Ensuite : mode opérationnel, laser armé, et vérification du code laser — il doit correspondre à celui réglé sur tes bombes (1688 par défaut dans la plupart des missions)."},
+  {t:"img", k:"lgbcues", c:"Symbologie LANTIRN typique pour un largage de bombe guidée laser : temps avant largage, temps avant impact, distance oblique."},
+  {t:"h", v:"Le partage des rôles avec JESTER"},
+  {t:"proc", v:[
+   "Tu amènes l'avion vers la zone ; JESTER pointe la nacelle — sur un waypoint proche de la cible si tu en as créé un (section B), sinon devant le nez de l'avion.",
+   "JESTER cherche, trouve, et accroche la cible en suivi.",
+   "Tu voles la passe : le HUD et le PTID affichent le compte à rebours de largage (TREL).",
+   "Au signal, largage. La nacelle illumine — en automatique dans les dernières secondes du vol de la bombe, ou en manuel sur ta demande.",
+   "Après largage : vole doux et ne masque pas la ligne de vue de la nacelle vers la cible, jusqu'à l'impact."]},
+  {t:"note", k:"warn", lbl:"Pièges", v:"Illuminer trop tôt (la bombe plonge court en épuisant son énergie) ou masquer le laser en manœuvrant fort après le largage. La bombe suit le point laser : pas de point, pas d'impact."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Crée un waypoint sur ta cible avant le vol (section B) : le pointage de la nacelle en devient trivial.",
+   "Première attaque complète sur cible fixe, en laissant JESTER tout gérer côté capteur.",
+   "Deuxième attaque sur cible mobile : la nacelle suit, à toi de tenir un profil stable.",
+   "Note ton enchaînement JESTER exact — c'est la procédure la plus dépendante des menus, écris-la."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Deux cibles détruites en une passe chacune, dont une mobile."},
+  {t:"src", v:["chuck9","manuel"]}
+]},
+
+{id:"f3", title:"JDAM : frapper des coordonnées", isNew:true,
+ intro:"La capacité entièrement nouvelle du B(U), celle qui justifie à elle seule l'upgrade. Aucune image, aucun laser : des coordonnées, ton EGI, et une bombe qui plane vers le point. Tout ce que tu as appris en section B converge ici.",
+ body:[
+  {t:"h", v:"La chaîne complète"},
+  {t:"p", v:"Coordonnées de cible → système de navigation → transfert à la bombe → largage dans le domaine → guidage GPS autonome. Aucun maillon n'est visuel. C'est pour ça que la précision de saisie (section B, leçon 3) est vitale : la bombe ira exactement où tu as dit, y compris si tu as dit faux."},
+  {t:"img", k:"ggwcues", c:"Symbologie typique d'un largage d'arme guidée GPS (GGW) : point de largage, domaine, temps."},
+  {t:"h", v:"Programmer une cible depuis le CDNU"},
+  {t:"p", v:"Le chemin le plus propre passe par le plan de vol : chaque waypoint peut devenir une cible JDAM. Sur la page d'édition du waypoint (page 2/2), tu choisis la station d'emport (3, 4, 5 ou 6) puis tu transfères les données du point vers la bombe de cette station. La vérification se fait sur la page mission JDAM du PTID (JMSN)."},
+  {t:"proc", v:[
+   "Saisis ou vérifie le waypoint-cible : coordonnées <b>exactes</b>, format DMM, et surtout l'<b>altitude</b> du point — une JDAM guide en trois dimensions.",
+   "Ouvre la page d'édition du waypoint, seconde page.",
+   "Sélectionne la station d'emport voulue (rotation 3/4/5/6).",
+   "Transfère les données vers la station : le point devient la cible principale de cette bombe.",
+   "Vérifie sur la page <code>JMSN</code> du PTID que chaque station a bien sa cible.",
+   "Des missions pré-planifiées peuvent aussi être chargées entières depuis la cartouche de données (MDL), préparées dans l'éditeur de mission."]},
+  {t:"img", k:"cdnu", c:"Le CDNU — la page d'édition de waypoint est la porte d'entrée du ciblage JDAM."},
+  {t:"img", k:"ptid", c:"Le PTID — la page JMSN te montre l'assignation cibles/stations."},
+  {t:"note", k:"", lbl:"Coordonnées haute précision", v:"Pour une frappe sérieuse, utilise la page d'édition haute précision (touche <code>F3</code> du CDNU) : elle accepte les coordonnées au dix-millième de minute ou au centième de seconde, en DMM ou DMS. C'est là que tu saisis des coordonnées relevées sur la carte F10 en format fin."},
+  {t:"h", v:"Le largage"},
+  {t:"p", v:"La JDAM plane, mais pas indéfiniment : son domaine dépend de ton altitude et de ta vitesse au largage. Plus haut et plus vite = plus loin. Le HUD t'affiche le domaine et le point de largage ; tu voles vers la zone, master arm, et tu largues dans le domaine. Ensuite la bombe est autonome — tu peux dégager immédiatement."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Une cible, une bombe : chaîne complète du relevé de coordonnées à l'impact, par tous les temps — essaie de nuit ou dans les nuages, c'est là que la JDAM prend son sens.",
+   "Vérifie deux fois chaque coordonnée avant transfert. Prends-en l'habitude dès maintenant.",
+   "Puis la frappe multiple : quatre points, quatre bombes, quatre stations, un seul passage.",
+   "Note ta procédure complète ci-dessous — c'est la plus longue du module, et celle que tu oublieras le plus vite sans notes."]},
+  {t:"note", k:"warn", lbl:"Pièges", v:"Une erreur d'un chiffre dans les coordonnées : un kilomètre d'écart. Une altitude de cible fausse ou nulle : la bombe rate en trois dimensions. Un largage hors domaine : la bombe tombe court, proprement, inutilement."},
+  {t:"note", k:"go", lbl:"Validation", v:"Quatre points frappés en un seul passage, sans visuel sur aucune cible. Le B(U) n'a plus de secret offensif pour toi."},
+  {t:"src", v:["manuel"]}
+]}
+];
+
+const KEY="f14bu-sectionF";
+let st={done:{},notes:{}}, cur=0;
+async function load(){ try{const r=await __sget(KEY); if(r&&r.value) st=Object.assign(st,JSON.parse(r.value));}catch(e){} }
+let tm=null;
+function save(){ clearTimeout(tm); tm=setTimeout(async()=>{ try{await __sset(KEY,JSON.stringify(st));}catch(e){} },400); }
+
+function fig(k,c){
+  const [fn,id]=IMG[k];
+  return `<figure><img src="${LOCAL}${fn}" alt="${c}" loading="lazy"
+      onerror="if(!this.dataset.f){this.dataset.f=1;this.src='${D(id)}';}else{this.closest('figure').classList.add('failed');}"
+      onclick="openLb(this.src)">
+    <div class="imgfail">Image non chargée — ouvre-la dans Drive via le lien ci-dessous.</div>
+    <figcaption><span>${c}</span><a href="${V(id)}" target="_blank" rel="noopener">Drive ↗</a></figcaption></figure>`;
+}
+function table(h,rows){
+  return `<table class="keytbl"><thead><tr>${h.map(x=>`<th>${x}</th>`).join("")}</tr></thead>
+    <tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+}
+function block(b){
+  if(b.t==="h")   return `<h3>${b.v}</h3>`;
+  if(b.t==="p")   return `<p>${b.v}</p>`;
+  if(b.t==="img") return fig(b.k,b.c);
+  if(b.t==="proc")return `<ol class="proc">${b.v.map(s=>`<li><span>${s}</span></li>`).join("")}</ol>`;
+  if(b.t==="table")return table(b.head,b.rows);
+  if(b.t==="note")return `<div class="note ${b.k||""}"><span class="lbl">${b.lbl}</span><p>${b.v}</p></div>`;
+  if(b.t==="src") return `<h3>Sources dans ton Drive</h3><div class="srcs">${
+      b.v.map(k=>`<a href="${V(DOC[k][1])}" target="_blank" rel="noopener">${DOC[k][0]} ↗</a>`).join("")}</div>`;
+  return "";
+}
+function render(){
+  const l=L[cur];
+  document.getElementById("main").innerHTML=`<div class="page">
+    <div class="eyebrow">Section F · leçon ${cur+1} sur ${L.length}</div>
+    <h2>${l.title}${l.isNew?'<span class="badge">Nouveau sur le B(U)</span>':""}</h2>
+    <p class="intro">${l.intro}</p>
+    ${l.body.map(block).join("")}
+    <h3>Tes notes de vol</h3>
+    <textarea id="nt" placeholder="Paramètres de passe, procédure JDAM complète, enchaînements JESTER…">${(st.notes[l.id]||"").replace(/</g,"&lt;")}</textarea>
+    <button class="doneline${st.done[l.id]?" on":""}" id="dn"><span class="box"></span>
+      <span>${st.done[l.id]?"Leçon validée":"Marquer cette leçon comme validée"}</span></button>
+    <div class="nav">
+      <button class="ghost" id="pv"${cur?"":" disabled style=opacity:.3"}>← Précédent</button>
+      <button class="ghost" id="nx"${cur<L.length-1?"":" disabled style=opacity:.3"}>Suivant →</button>
+    </div></div>`;
+  document.getElementById("nt").oninput=e=>{st.notes[l.id]=e.target.value;save();};
+  document.getElementById("dn").onclick=()=>{st.done[l.id]=!st.done[l.id];save();render();};
+  if(cur) document.getElementById("pv").onclick=()=>{cur--;render();window.scrollTo(0,0);};
+  if(cur<L.length-1) document.getElementById("nx").onclick=()=>{cur++;render();window.scrollTo(0,0);};
+  rail();
+}
+function rail(){
+  const r=document.getElementById("rail"); r.innerHTML="";
+  L.forEach((l,i)=>{
+    const b=document.createElement("button");
+    b.className="item"+(i===cur?" on":"")+(st.done[l.id]?" done":"");
+    b.innerHTML=`<span class="idx">${st.done[l.id]?"✓":String(i+1).padStart(2,"0")}</span><span class="nm">${l.title}</span>`;
+    b.onclick=()=>{cur=i;render();window.scrollTo(0,0);};
+    r.appendChild(b);
+  });
+  document.getElementById("foot").textContent=`${L.filter(l=>st.done[l.id]).length} / ${L.length} leçons validées`;
+}
+function openLb(src){document.getElementById("lbimg").src=src;document.getElementById("lb").classList.add("on");}
+document.getElementById("lb").onclick=()=>document.getElementById("lb").classList.remove("on");
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") document.getElementById("lb").classList.remove("on");
+  if(e.target.matches("textarea")) return;
+  if(e.key==="ArrowRight"&&cur<L.length-1){cur++;render();window.scrollTo(0,0);}
+  if(e.key==="ArrowLeft"&&cur>0){cur--;render();window.scrollTo(0,0);}
+});
+load().then(render);
+</script>

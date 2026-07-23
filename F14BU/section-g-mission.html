@@ -1,0 +1,261 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;--warn:#d9695a;
+    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)} .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
+  .intro{font-size:16px;margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+  .imgfail{display:none;padding:22px 14px;font-size:13px;color:var(--dim);text-align:center}
+  figure.failed img{display:none} figure.failed .imgfail{display:block}
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)} .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .keytbl{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  .keytbl th,.keytbl td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+  .keytbl th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--panel)}
+  .keytbl td:first-child{font-family:var(--mono);white-space:nowrap}
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex} .lb img{max-width:100%;max-height:100%}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <div class="tail">Section G · F-14B(U)</div>
+      <h1>Mettre bout<br>à bout</h1>
+      <p class="sub">Les urgences, puis la mission complète. La seule leçon qui compte vraiment.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const LOCAL = "img/";
+const D = id => `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+const V = id => `https://drive.google.com/file/d/${id}/view`;
+
+const IMG = {
+  caution: ["left_windshield_frame_caution_lights_left_windshield_frame.jpg","18JLq9huWOJiKPSMt40iBQJ0XcO7ib3lw"],
+  lengine: ["left_instrument_panel_left_engine-05.jpg","1Ios11Na-FMxu-OytIkKd29GWkTYN5vRh"],
+  oil:     ["left_knee_panel_oil_pressure_indicators.jpg","1OWx3BXaU7VuOdzGbJ2ojECuqg20P3duy"],
+  hyd:     ["left_knee_panel_hydraulic_pressure_indicator.jpg","1Bxye8blt540Y-K6onA6rtNWhpnNFLsLu"],
+  fuel:    ["left_vertical_console_fuel_management_panel.jpg","1L-r0Hw4MSrXPKkACqWQRfjHGhNBbsXa-"],
+  canopy:  ["right_instrument_panel_canopy_jettison-02.jpg","12m376kGUqfY1DBH8bwsgUrDabAoBYmgG"],
+  checklisttool: ["checklist_tool_example.jpg","1dKLIRNF1kPhw96R6DnZjyoLmSvz_D20K"]
+};
+const DOC = {
+  manuel: ["Manuel Heatblur (PDF)","16Xl1mYmujB2wQVBK5kjhMm4GuDRBXH49"],
+  chuck8: ["Chuck 8 · Ravitaillement en vol","1ZNa0UfSt5be5UTkGIFGfagRajieYp56X"],
+  chuck4: ["Chuck 4 · Vol & moteurs","176bbRcBICqWrgUraEoHzS-ik_xnPHx_F"]
+};
+
+const L = [
+
+{id:"g1", title:"Urgences",
+ intro:"Un avion endommagé qui rentre vaut mieux qu'un avion perdu — et savoir quand s'éjecter fait partie du métier. On ne mémorise pas tout : on mémorise les réflexes immédiats, le reste se lit sur la checklist.",
+ body:[
+  {t:"h", v:"La règle des trois temps"},
+  {t:"p", v:"Toute urgence se traite en trois temps : <b>piloter</b> d'abord (l'avion vole encore, garde-le en vol), <b>identifier</b> ensuite (quel voyant, quel paramètre, quel moteur), <b>agir</b> enfin (les réflexes immédiats, puis la checklist). L'erreur classique est d'inverser : se jeter sur les interrupteurs pendant que l'avion part en vrille."},
+  {t:"img", k:"caution", c:"Voyants d'alerte du pare-brise — ta première information dans la plupart des pannes."},
+  {t:"h", v:"Panne moteur"},
+  {t:"p", v:"Le Tomcat vole très bien sur un moteur — le vrai danger est ailleurs : les moteurs sont très écartés, donc une poussée asymétrique à basse vitesse et forte incidence peut te mettre en lacet violent, jusqu'au départ. Réflexes : réduire l'incidence, compenser au palonnier, sécuriser le moteur mort (manette coupée, carburant fermé), et gérer le vol comme un avion en énergie limitée."},
+  {t:"img", k:"lengine", c:"Paramètres moteur — identifie le moteur en cause avant de couper quoi que ce soit."},
+  {t:"img", k:"oil", c:"Pressions d'huile — une chute lente ici annonce souvent la panne avant le voyant."},
+  {t:"h", v:"Hydraulique, incendie, carburant"},
+  {t:"table", head:["Panne","Le réflexe"], rows:[
+   ["Incendie moteur","Manette du moteur coupée, carburant fermé, agent extincteur. Ne pas rallumer un moteur qui a brûlé."],
+   ["Perte hydraulique","Surveiller l'autre circuit ; anticiper des commandes dégradées et un train à sortir en secours."],
+   ["Fuite carburant","Calcul immédiat : autonomie restante contre distance du terrain le plus proche. La réponse décide du déroutement."]]},
+  {t:"img", k:"hyd", c:"Pression hydraulique — deux circuits, tant qu'il en reste un, l'avion se pilote."},
+  {t:"img", k:"fuel", c:"Gestion carburant — en fuite, c'est ici que se joue le calcul du retour."},
+  {t:"h", v:"L'éjection"},
+  {t:"p", v:"La décision se prend avant d'en avoir besoin : fixe-toi des seuils à froid (par exemple : avion incontrôlable sous une certaine altitude = éjection immédiate, sans débat). Rappelle-toi que tu commandes un équipage : l'éjection concerne les deux sièges."},
+  {t:"img", k:"canopy", c:"Largage de verrière — connaître son emplacement avant d'en avoir besoin."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission d'entraînement avec pannes scriptées, ou pannes aléatoires activées.",
+   "Panne moteur en croisière : sécurise, déroute, pose sur un moteur.",
+   "Panne moteur au décollage — le cas le plus dangereux : décide vite entre continuer et s'arrêter.",
+   "Fuite carburant en mission : fais le calcul de déroutement en vol, réellement.",
+   "Note tes seuils d'éjection personnels et tes réflexes par panne."]},
+  {t:"note", k:"warn", lbl:"Piège", v:"S'acharner à ramener un avion condamné. Un déroutement raté par orgueil coûte l'équipage entier."},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu poses l'avion avec un moteur en panne, terrain puis bateau si tu te sens prêt."},
+  {t:"src", v:["manuel","chuck4"]}
+]},
+
+{id:"g2", title:"Ravitaillement en vol",
+ intro:"Optionnel mais transformateur : le ravitaillement étend tes missions et forge une précision de pilotage qui améliore tout le reste, appontage compris. C'est aussi l'exercice le plus frustrant du module — préviens ton ego.",
+ body:[
+  {t:"h", v:"Les principes qui marchent"},
+  {t:"proc", v:[
+   "Perche sortie (jamais au-dessus de 350 kt perche sortie), rejoins le ravitailleur et stabilise-toi en position pré-contact.",
+   "Demande le contact à la radio ; le panier se déploie.",
+   "Approche à 2-3 kt de plus que le ravitailleur, pas davantage. <b>Ne regarde pas le panier</b> : prends un repère fixe sur le ravitailleur et vole ce repère.",
+   "Trim en permanence. Un avion non trimé rend l'exercice impossible.",
+   "Corrections minuscules, jamais combinées : tangage OU roulis OU poussée, pas les trois ensemble.",
+   "Au contact : légère poussée pour maintenir la perche enfoncée, formation stable jusqu'au plein.",
+   "Pour te détacher : réduis doucement et rentre la perche."]},
+  {t:"note", k:"", lbl:"Le secret", v:"Le calme. Si tu rates trois fois de suite et que tu sens la crispation monter, éloigne-toi, respire, reviens. La précision vient de la détente, jamais de la force."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission avec ravitailleur en palier, météo calme. Vise d'abord la tenue de formation en pré-contact pendant une minute entière.",
+   "Puis les tentatives de contact : compte-les, sans te juger. La moyenne des débutants se chiffre en dizaines.",
+   "Premier plein complet réussi : note tes repères visuels exacts sur le ravitailleur.",
+   "Ensuite seulement : ravitaillement en virage doux."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Un plein complet sans décrochage du panier. Deux, et tu ne le perdras plus jamais."},
+  {t:"src", v:["chuck8"]}
+]},
+
+{id:"g3", title:"La mission complète",
+ intro:"Tout converge ici. Une mission de bout en bout, du pont au pont, sans pause ni sauvegarde. C'est la seule leçon qui vérifie que les six sections tiennent ensemble sous charge réelle.",
+ body:[
+  {t:"h", v:"Le gabarit de mission"},
+  {t:"table", head:["Phase","Sections mobilisées"], rows:[
+   ["Préparation : route, cibles, armement, programmes ALE-47, carburant","B · E · F"],
+   ["Démarrage, alignement, catapultage","A · B · C"],
+   ["Navigation vers la zone, en OFLY","B"],
+   ["Frappe air-sol (JDAM ou LGB) sur objectif","F"],
+   ["Menace air-air en sortie de zone : engagement ou évasion","D · E"],
+   ["Retour, ravitaillement si nécessaire","G"],
+   ["Appontage","C"]]},
+  {t:"img", k:"checklisttool", c:"L'outil de checklist intégré au module — ton compagnon pour toute la mission."},
+  {t:"h", v:"Les règles du jeu"},
+  {t:"proc", v:[
+   "Pas de pause active, pas de rejouabilité en cours de vol : si tu rates, la mission continue avec la conséquence.",
+   "Prépare la mission par écrit avant de lancer : coordonnées saisies sur papier, fréquences TACAN, programmes de leurres, seuil carburant de retour (bingo).",
+   "Vole-la en entier, quoi qu'il arrive.",
+   "<b>Débriefe par écrit</b> : ce qui a marché, ce qui a coincé, et quelle section retravailler. Le débrief vaut la moitié de l'apprentissage.",
+   "Recommence jusqu'à deux missions complètes réussies d'affilée."]},
+  {t:"note", k:"", lbl:"Si ça coince", v:"Ne recommence pas la mission entière en boucle : identifie la phase qui casse, retourne à la section concernée, retravaille la leçon, puis reviens. La mission est un examen, pas un exercice."},
+  {t:"h", v:"Et après"},
+  {t:"p", v:"Deux missions complètes réussies, et tu maîtrises le F-14B(U) mieux que la grande majorité des pilotes du module. La suite naturelle : le multijoueur avec un vrai RIO humain — l'avion change complètement de dimension — et les campagnes. Ton carnet de notes, lui, reste ton meilleur instructeur : relis-le de temps en temps, il contient tout ce que tu as appris à la dure."},
+  {t:"note", k:"go", lbl:"Validation finale", v:"Deux missions complètes, du pont au pont, réussies d'affilée. Cursus terminé — bienvenue chez les pilotes de Tomcat."},
+  {t:"src", v:["manuel"]}
+]}
+];
+
+const KEY="f14bu-sectionG";
+let st={done:{},notes:{}}, cur=0;
+async function load(){ try{const r=await __sget(KEY); if(r&&r.value) st=Object.assign(st,JSON.parse(r.value));}catch(e){} }
+let tm=null;
+function save(){ clearTimeout(tm); tm=setTimeout(async()=>{ try{await __sset(KEY,JSON.stringify(st));}catch(e){} },400); }
+
+function fig(k,c){
+  const [fn,id]=IMG[k];
+  return `<figure><img src="${LOCAL}${fn}" alt="${c}" loading="lazy"
+      onerror="if(!this.dataset.f){this.dataset.f=1;this.src='${D(id)}';}else{this.closest('figure').classList.add('failed');}"
+      onclick="openLb(this.src)">
+    <div class="imgfail">Image non chargée — ouvre-la dans Drive via le lien ci-dessous.</div>
+    <figcaption><span>${c}</span><a href="${V(id)}" target="_blank" rel="noopener">Drive ↗</a></figcaption></figure>`;
+}
+function table(h,rows){
+  return `<table class="keytbl"><thead><tr>${h.map(x=>`<th>${x}</th>`).join("")}</tr></thead>
+    <tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+}
+function block(b){
+  if(b.t==="h")   return `<h3>${b.v}</h3>`;
+  if(b.t==="p")   return `<p>${b.v}</p>`;
+  if(b.t==="img") return fig(b.k,b.c);
+  if(b.t==="proc")return `<ol class="proc">${b.v.map(s=>`<li><span>${s}</span></li>`).join("")}</ol>`;
+  if(b.t==="table")return table(b.head,b.rows);
+  if(b.t==="note")return `<div class="note ${b.k||""}"><span class="lbl">${b.lbl}</span><p>${b.v}</p></div>`;
+  if(b.t==="src") return `<h3>Sources dans ton Drive</h3><div class="srcs">${
+      b.v.map(k=>`<a href="${V(DOC[k][1])}" target="_blank" rel="noopener">${DOC[k][0]} ↗</a>`).join("")}</div>`;
+  return "";
+}
+function render(){
+  const l=L[cur];
+  document.getElementById("main").innerHTML=`<div class="page">
+    <div class="eyebrow">Section G · leçon ${cur+1} sur ${L.length}</div>
+    <h2>${l.title}</h2>
+    <p class="intro">${l.intro}</p>
+    ${l.body.map(block).join("")}
+    <h3>Tes notes de vol</h3>
+    <textarea id="nt" placeholder="Seuils d'éjection, repères de ravitaillement, débriefs de mission…">${(st.notes[l.id]||"").replace(/</g,"&lt;")}</textarea>
+    <button class="doneline${st.done[l.id]?" on":""}" id="dn"><span class="box"></span>
+      <span>${st.done[l.id]?"Leçon validée":"Marquer cette leçon comme validée"}</span></button>
+    <div class="nav">
+      <button class="ghost" id="pv"${cur?"":" disabled style=opacity:.3"}>← Précédent</button>
+      <button class="ghost" id="nx"${cur<L.length-1?"":" disabled style=opacity:.3"}>Suivant →</button>
+    </div></div>`;
+  document.getElementById("nt").oninput=e=>{st.notes[l.id]=e.target.value;save();};
+  document.getElementById("dn").onclick=()=>{st.done[l.id]=!st.done[l.id];save();render();};
+  if(cur) document.getElementById("pv").onclick=()=>{cur--;render();window.scrollTo(0,0);};
+  if(cur<L.length-1) document.getElementById("nx").onclick=()=>{cur++;render();window.scrollTo(0,0);};
+  rail();
+}
+function rail(){
+  const r=document.getElementById("rail"); r.innerHTML="";
+  L.forEach((l,i)=>{
+    const b=document.createElement("button");
+    b.className="item"+(i===cur?" on":"")+(st.done[l.id]?" done":"");
+    b.innerHTML=`<span class="idx">${st.done[l.id]?"✓":String(i+1).padStart(2,"0")}</span><span class="nm">${l.title}</span>`;
+    b.onclick=()=>{cur=i;render();window.scrollTo(0,0);};
+    r.appendChild(b);
+  });
+  document.getElementById("foot").textContent=`${L.filter(l=>st.done[l.id]).length} / ${L.length} leçons validées`;
+}
+function openLb(src){document.getElementById("lbimg").src=src;document.getElementById("lb").classList.add("on");}
+document.getElementById("lb").onclick=()=>document.getElementById("lb").classList.remove("on");
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") document.getElementById("lb").classList.remove("on");
+  if(e.target.matches("textarea")) return;
+  if(e.key==="ArrowRight"&&cur<L.length-1){cur++;render();window.scrollTo(0,0);}
+  if(e.key==="ArrowLeft"&&cur>0){cur--;render();window.scrollTo(0,0);}
+});
+load().then(render);
+</script>

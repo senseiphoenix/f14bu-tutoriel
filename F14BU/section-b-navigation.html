@@ -1,0 +1,377 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+    --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+    --display:"Oswald","Arial Narrow",sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)}
+  .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+         color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;color:var(--ink);margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+     margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+  .imgfail{display:none;padding:22px 14px;font-size:13px;color:var(--dim);text-align:center}
+  figure.failed img{display:none} figure.failed .imgfail{display:block}
+
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+  code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:2px 6px;border:1px solid var(--line);color:var(--amber)}
+
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)}
+  .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .note p+p{margin-top:8px}
+
+  .keytbl{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  .keytbl th,.keytbl td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+  .keytbl th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--panel)}
+  .keytbl td:first-child{font-family:var(--mono);color:var(--ink);white-space:nowrap}
+
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+
+  .banner{background:var(--panel-2);border-bottom:1px solid var(--amber);padding:11px 20px;font-size:13px;color:var(--dim);display:flex;gap:14px;align-items:center;justify-content:space-between}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+
+<div id="banner" class="banner">
+  <span>Section B, la plus technique du module. Chaque procédure ci-dessous est tirée du chapitre navigation du manuel B(U) présent dans ton Drive.</span>
+  <button class="ghost" onclick="document.getElementById('banner').remove()">OK</button>
+</div>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <div class="tail">Section B · F-14B(U)</div>
+      <h1>Naviguer :<br>EGI &amp; CDNU</h1>
+      <p class="sub">Cinq leçons pour aligner, saisir des points et suivre une route sur le système modernisé.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const D = id => `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+const V = id => `https://drive.google.com/file/d/${id}/view`;
+const FN = {"1LSNf370Z76pfgLP3G2czpVpjV1FIW1_7": "f14bu_pilot_overview.jpg", "1yauTBGsEFR1cEUkcM-Ndlsx8bfwaQDDr": "f14bu_rio_overview.jpg", "1cRWJ_LuozK-F9PEuyrFNpO6YjG1dKAYG": "left_console_pilot-01.jpg", "1PBG842BX0rhlgg31DQmdGF2x956TnaDp": "left_instrument_panel-01.jpg", "1TMNAqLBvoD1N3zdWbrI4YbYM-sOEAnia": "left_instrument_panel_02-01.jpg", "1MJeyRSy0Xopj5r0Vy1EuXeVMbCWJ9ywh": "right_instrument_panel-01.jpg", "1iHXkN6fMCN5z0feGKcX2thLu3sE4ot7V": "left_console_cdnu-01.jpg", "1IJqaDS5W80PrrYzygxa8X84DqUNq711x": "overview_ptid.jpg", "1343TPem4GqbGhyWgmAadSdPBmD3gwPuj": "ptid_alignment_displays.jpg", "1Jf0BXSaEiddTTex3sjRWA92H_9RBuMkB": "throttle2.svg", "1btOScq6_6u7BDY4-JWTLuCDHL3zv_8hI": "left_vertical_console_landing_gear_control_panel.jpg", "1ckKAnQ42OHQlUoVfpwz43EghwIpEB3Qz": "left_console_arrestinghook-01.jpg", "10QucDurJZPC_VCxHu0r-KDezHt5LHc6w": "right_instrument_panel_wingsweep-01.jpg", "1D8RAKdjVRNsFb6o7xR7jJMBctNtcvVRq": "left_vertical_console_launch_bar_abort_switch.jpg", "1L-r0Hw4MSrXPKkACqWQRfjHGhNBbsXa-": "left_vertical_console_fuel_management_panel.jpg", "1Ios11Na-FMxu-OytIkKd29GWkTYN5vRh": "left_instrument_panel_left_engine-05.jpg", "1d69JHPEF-kG0jeqt-kXGclQ0UBZvEKbB": "right_instrument_panel_right_engine-01.jpg", "1OWx3BXaU7VuOdzGbJ2ojECuqg20P3duy": "left_knee_panel_oil_pressure_indicators.jpg", "1Bxye8blt540Y-K6onA6rtNWhpnNFLsLu": "left_knee_panel_hydraulic_pressure_indicator.jpg", "1Yx0il_HbxnUxZvmpWs3TaG0uTr_INVzh": "right_instrument_panel_checklist-06.jpg", "1gLKj-4lvCF8CB3NoH0aEbLMDKWfhkqlz": "left_instrument_panel_lndg_chklst-06.jpg", "1kaJNzj8rs69pQiSx5AH0zWbJ77L2PYg-": "left_instrument_panel_aoa_indexer-02.jpg", "1UJIDpo71d3Mqa2-LSJneG5sjUCjs6X2Q": "left_instrument_panel_airspeed_indicator-01.jpg", "1G5r5-i0Q3XRuZHqpT_fifsgS_pXDor9A": "left_instrument_panel_vvi-04.jpg", "13rHttpiCcdNSrf7agTSQnXaTIZFYR31-": "left_instrument_panel_baroalt-02.jpg", "1bK955HU9Sidlz_MZtQQPKrRtvbJxOIbq": "left_instrument_panel_radalt-01.jpg", "13k-UL5IKQnZ0QBo-OF7uoBMY2-z239p-": "left_instrument_panel_adi-02.jpg", "1qRAYprtHZ5NksPq4OKmLSl2LMzV7hStW": "left_vertical_console_control_surface_position_indicator.jpg", "1qn6aLQk6VesaiCnZMA4kKA3WNPGtzv0e": "vdigr_hud_cruise_manual.jpg", "1A5PAfefJPcyNiO_wJzHQGkR6Fgfo5UBs": "vdigr_vdi_cruise_manual.jpg", "1RzwhUjKozKvX7OSwt-AMnDhuvfix4I5O": "left_console_lcp-01.jpg", "18JLq9huWOJiKPSMt40iBQJ0XcO7ib3lw": "left_windshield_frame_caution_lights_left_windshield_frame.jpg", "1jzZXOauVEv9ozccCS1pukBAex6ojo2iX": "left_console_cap-01.jpg", "19rZHTKxwhB6jSAPFAfl0tn8swS3bk8is": "rio_overview_navigation_panels.jpg", "1rds13EirW0B-KSvLN6IYRXf7yPHRgIpx": "navigation_system_overview.jpg", "1KaA10yvEKk7f8BOnO1aQhIhKrwU9cjc1": "navigation_display_matrix.jpg", "1t0mGtJBNYeXfNdWT7N-aXZse9DtjdCcs": "rio_navigation_display.jpg", "1srqTn4tKvDn4r1XgWgQQNg6OYoMGK1EM": "egi_system_modes.jpg", "1Zzfri1WdBFf90IBoMZ58NSOJqmNcQFCZ": "egi_system_schematic.jpg", "1oMoElmBXaHDDC0-cEi2cOb6CUrXyVaQv": "egi_system_displays.jpg", "19G0SjnyxC30M-gSvdm2I8yWUGQhCoNpT": "ptid_system_displays.jpg", "1VHx7AfEbpn1QNnmk0bLd39ZPajQpQf5z": "pmdig_overview_hsd_pmdig.jpg", "11ytGklNKUzFZBvF3tkhSzbkBcqxUViAJ": "plt_pmdig_hsd_pmdig.jpg", "1Y5nJd_9MB_aqOnVKoqgowjNLNFEZtSco": "hsd_tidrepeat.jpg", "1CcyUvhC2u098w884Zk0LHFMT2yiGOV84": "right_instrument_panel_bdhi-04.jpg", "1enPBPfIrdQ8LR4JFTF4fiGrLNgiDhH63": "tacan-02.jpg", "1gO9FbnO6SMt2_Zf5C4xTJzSVQDn-LOhn": "instant_camera_example.jpg", "1Z7xBs_ilnQns6pv_l5MxuQwQQd0N0fcS": "instant_camera_keybinds.jpg", "1Xff5q-vh0U_1pI34rIJZzIqePuKTk3hk": "center_console_ptid.jpg", "1125vGfmaLxiHhkMkCEaDYUS8pNFgeyZY": "center_panel_ddd.jpg", "1AcyhMEECtkfS7WOn1wuSUKjrNflRYDdz": "vdigr_acm_manual.jpg", "1vSIGGY1nV0Z4oLnX4sDc0FCdY8VaXC64": "weapons_stores_overview_image.jpg", "1d43AjvVJvWjyrpZlXzuSEiyH80bDgcBj": "left_vertical_console_armament_control_panel.jpg", "1q4H10-mIpFHBNAU6yvqa4my94ltjXRVT": "stby_rdy_legend.jpg", "1XWPGKsRYuc6n6YVi-5PxIOw745ZC4qtD": "right_console_rwr-02.jpg"};
+
+
+const IMG = {
+  cdnu:        "1iHXkN6fMCN5z0feGKcX2thLu3sE4ot7V",
+  cap:         "1jzZXOauVEv9ozccCS1pukBAex6ojo2iX",
+  navpanels:   "19rZHTKxwhB6jSAPFAfl0tn8swS3bk8is",
+  navoverview: "1rds13EirW0B-KSvLN6IYRXf7yPHRgIpx",
+  navmatrix:   "1KaA10yvEKk7f8BOnO1aQhIhKrwU9cjc1",
+  navdisplay:  "1t0mGtJBNYeXfNdWT7N-aXZse9DtjdCcs",
+  egimodes:    "1srqTn4tKvDn4r1XgWgQQNg6OYoMGK1EM",
+  egischem:    "1Zzfri1WdBFf90IBoMZ58NSOJqmNcQFCZ",
+  egidisp:     "1oMoElmBXaHDDC0-cEi2cOb6CUrXyVaQv",
+  ptid:        "1IJqaDS5W80PrrYzygxa8X84DqUNq711x",
+  ptidalign:   "1343TPem4GqbGhyWgmAadSdPBmD3gwPuj",
+  ptidsys:     "19G0SjnyxC30M-gSvdm2I8yWUGQhCoNpT",
+  hsd:         "1VHx7AfEbpn1QNnmk0bLd39ZPajQpQf5z",
+  hsdplt:      "11ytGklNKUzFZBvF3tkhSzbkBcqxUViAJ",
+  hsdrepeat:   "1Y5nJd_9MB_aqOnVKoqgowjNLNFEZtSco",
+  hudcruise:   "1qn6aLQk6VesaiCnZMA4kKA3WNPGtzv0e",
+  vdicruise:   "1A5PAfefJPcyNiO_wJzHQGkR6Fgfo5UBs",
+  bdhi:        "1CcyUvhC2u098w884Zk0LHFMT2yiGOV84",
+  tacan:       "1enPBPfIrdQ8LR4JFTF4fiGrLNgiDhH63",
+  mark:        "1gO9FbnO6SMt2_Zf5C4xTJzSVQDn-LOhn",
+  markkeys:    "1Z7xBs_ilnQns6pv_l5MxuQwQQd0N0fcS"
+};
+
+const DOC = {
+  manuel: ["Manuel Heatblur (PDF)","16Xl1mYmujB2wQVBK5kjhMm4GuDRBXH49"],
+  chuck7: ["Chuck 7 · Navigation & ACLS","17VJ0irsI8iGmrUrgHhBtAmJiPMcgR1Uj"],
+  chuck3: ["Chuck 3 · Démarrage","1kn57knCUzVTAf4xBXslSOBooyUp0hvE0"]
+};
+
+const L = [
+
+{id:"b1", title:"Comprendre le système", isNew:true,
+ intro:"Avant de toucher au clavier, il faut comprendre ce qui a changé. Le B(U) ne modernise pas l'ancien système de navigation : il le remplace. Comprendre cette architecture t'évitera de chercher des commandes là où elles n'existent plus.",
+ body:[
+  {t:"h", v:"Du CAINS à l'EGI"},
+  {t:"p", v:"L'ancien Tomcat naviguait à la centrale inertielle seule (CAINS), qui dérivait sur les longs vols. Le B(U) repose sur l'EGI : une centrale à gyrolaser couplée à un récepteur GPS. Un filtre combine les deux et donne une position qui, avec le GPS, ne dérive pratiquement plus. C'est ce qui rend possibles les frappes sur coordonnées de la section F."},
+  {t:"img", k:"egischem", c:"Schéma du système EGI : centrale inertielle et GPS fusionnés."},
+  {t:"note", k:"warn", lbl:"Le piège qui piège tout le monde", v:"Sur l'ancien F-14, tu saisissais les coordonnées au clavier CAP, à droite du siège RIO. Sur le B(U), le CAP existe encore mais <b>ne sert plus à la navigation</b> : ses fonctions nav ont été retirées ou réaffectées. Toute la saisie passe désormais par le CDNU. Si un vieux tutoriel te fait taper des points dans le CAP, il décrit l'ancien avion."},
+  {t:"img", k:"cap", c:"Le CAP — toujours présent, mais retiré de la boucle de navigation sur le B(U)."},
+  {t:"h", v:"Le CDNU : le nouveau centre de commande"},
+  {t:"p", v:"Le CDNU (Control Display Navigation Unit) est sur la console gauche du RIO. C'est un petit écran à pages avec un clavier, exactement dans l'esprit d'une calculatrice de navigation d'avion de ligne. Tu y accèdes aux pages par des touches dédiées (FPLN, PROG, DIR, RNAV, IDX…) et tu valides tes saisies avec les touches latérales, les LSK, alignées de part et d'autre de l'écran."},
+  {t:"img", k:"cdnu", c:"Le CDNU. À gauche et à droite de l'écran : les touches de sélection de ligne (LSK). En bas : le scratchpad."},
+  {t:"note", k:"", lbl:"Le principe à retenir", v:"Tout se fait en deux temps. D'abord tu tapes ta donnée : elle apparaît dans le <b>scratchpad</b>, la ligne du bas entre crochets. Ensuite tu appuies sur la <b>LSK</b> en face du champ où tu veux la déposer. Taper puis déposer : c'est toute la logique du CDNU."},
+  {t:"h", v:"Où lire la navigation"},
+  {t:"p", v:"Le CDNU sert à saisir. Pour lire ta position dans le vol, tu as plusieurs écrans : le PTID côté tactique, le HSD (situation horizontale) et le HUD côté pilote, et le bon vieux BDHI à aiguilles. Le point actif de ta route apparaît sur le PTID sous forme d'un symbole en « os de chien »."},
+  {t:"img", k:"navoverview", c:"Vue d'ensemble du système de navigation du B(U)."},
+  {t:"img", k:"navpanels", c:"Les panneaux de navigation côté RIO."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Aucune manipulation. Cette leçon est de la lecture.",
+   "Ouvre le CDNU en jeu et repère physiquement : l'écran, les LSK, le clavier alphanumérique, le scratchpad, les touches dédiées FPLN / PROG / DIR / RNAV / IDX.",
+   "Appuie sur <code>MENU</code> pour voir la liste des fonctions, puis sur <code>IDX</code> pour voir la page d'index. Navigue sans rien saisir.",
+   "Note ci-dessous, dans tes mots, la différence entre une touche dédiée, une LSK et le scratchpad."]},
+  {t:"src", v:["manuel","chuck7"]}
+]},
+
+{id:"b2", title:"Aligner l'EGI", isNew:true,
+ intro:"L'alignement est ce qui bloque tout démarrage : tant qu'il n'est pas fini, l'avion ne sait pas où il est et rien de tactique ne fonctionne. Bonne nouvelle : sur le B(U), c'est plus simple qu'avant, parce que le système choisit lui-même son mode d'alignement.",
+ body:[
+  {t:"h", v:"Le sélecteur qui commande tout"},
+  {t:"p", v:"L'alignement se pilote avec le sélecteur NAV MODE sur le PTID. Dès que tu le sors de la position OFF, l'EGI démarre son alignement et choisit automatiquement le mode adapté selon ta situation : au sol frein serré, en mouvement, avec ou sans GPS. Tu n'as plus à sélectionner manuellement un mode d'alignement comme sur l'ancien avion."},
+  {t:"img", k:"ptidalign", c:"Suivi de l'alignement sur le PTID."},
+  {t:"table", head:["Position NAV MODE","Usage"], rows:[
+    ["GND","Alignement au sol, à terre, avion immobile."],
+    ["CV","Alignement sur porte-avions (tient compte du mouvement du pont)."],
+    ["NAV","Position de vol normale, une fois l'alignement terminé."],
+    ["OFF","Système éteint."]]},
+  {t:"note", k:"warn", lbl:"La contrainte physique", v:"L'alignement a besoin du système d'armes, qui a besoin d'air de refroidissement prélevé sur les moteurs. Conséquence concrète : <b>les deux moteurs doivent tourner et le sélecteur d'air être sur les deux moteurs</b> avant que l'alignement puisse aboutir. C'est pour ça qu'on démarre les moteurs tôt. Et l'avion doit rester immobile au sol pendant toute la durée."},
+  {t:"h", v:"Suivre la qualité"},
+  {t:"p", v:"Sur la page START du CDNU (via IDX puis LSK1, puis flèche bas pour la page 2/2), tu lis la qualité d'alignement en milles nautiques par heure de dérive, le nombre de satellites captés, et la solution de position active : GPS, mélangée, ou inertielle seule. Plus la valeur de dérive est basse, meilleur est l'alignement. Pour un vol d'entraînement, tu n'as pas besoin d'attendre la perfection."},
+  {t:"img", k:"egimodes", c:"Modes et états du système EGI."},
+  {t:"img", k:"egidisp", c:"Affichages EGI sur le CDNU."},
+  {t:"note", k:"", lbl:"Le raccourci JESTER", v:"Tu peux demander à JESTER de lancer et de gérer l'alignement, et choisir la qualité voulue. C'est parfait pour apprendre : tu le laisses faire une fois en observant la page START, puis tu refais toi-même."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission au sol, à terre. Démarre les moteurs (section A, leçon 4) et vérifie le sélecteur d'air sur les deux moteurs.",
+   "Mets le sélecteur NAV MODE du PTID sur <code>GND</code>. L'alignement démarre.",
+   "Ouvre la page START 2/2 du CDNU et <b>observe la dérive descendre</b> et les satellites se caler.",
+   "Une fois l'alignement suffisant, passe le sélecteur sur <code>NAV</code>.",
+   "Refais l'exercice sur un porte-avions avec la position <code>CV</code> et compare.",
+   "Note le temps d'alignement réel et les valeurs de dérive que tu obtiens."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu lances un alignement complet, tu le suis sur la page START, et tu passes en NAV sans aide extérieure."},
+  {t:"src", v:["manuel","chuck3"]}
+]},
+
+{id:"b3", title:"Saisir un waypoint", isNew:true,
+ intro:"Le cœur de la section. Une fois que tu sais créer un point proprement, tu peux construire n'importe quelle route et, plus tard, guider une JDAM. La procédure est précise, mais courte une fois comprise.",
+ body:[
+  {t:"h", v:"Le format des coordonnées"},
+  {t:"p", v:"Le CDNU attend des coordonnées en degrés et minutes décimales (DMM). Le format exact, sans aucun espace ni séparateur, est le suivant :"},
+  {t:"note", k:"", lbl:"Format DMM", v:"<code>Nddmm.mmm Wdddmm.mmm</code> — soit N ou S, quatre chiffres (deux de degrés, deux de minutes), puis E ou W, cinq chiffres (trois de degrés, deux de minutes). Les décimales de minute sont optionnelles. Exemple réel tiré du manuel : <code>N4358.257W10700.347</code>."},
+  {t:"note", k:"warn", lbl:"Les pièges de saisie", v:"<b>Zéros de tête obligatoires</b> : il n'y a pas de séparateur entre degrés et minutes, donc chaque chiffre compte. Pas d'espace, pas de « / », aucun caractère entre latitude et longitude. Une erreur d'un chiffre te déplace d'un kilomètre — ce qui, pour une JDAM, est un ratage complet."},
+  {t:"img", k:"cdnu", c:"Le CDNU. Tu vas taper dans le scratchpad, puis déposer avec une LSK."},
+  {t:"h", v:"Insérer le premier point d'une route vide"},
+  {t:"p", v:"Quand la route est vide, la page FPLN affiche « End of Flight Plan ». Le premier point que tu insères devient le point actif."},
+  {t:"proc", v:[
+   "Appuie sur la touche dédiée <code>FPLN</code> pour afficher la page du plan de vol.",
+   "Tape ta coordonnée au format DMM. Elle apparaît dans le <b>scratchpad</b> en bas.",
+   "Vérifie-la caractère par caractère. C'est le moment de corriger, avec <code>CLR</code>.",
+   "Appuie sur la <b>LSK gauche</b> en face de « End of Flight Plan ». Le point s'insère.",
+   "En vol, le système demande confirmation (« CONFIRM FLT PLN CHG ») : réappuie sur la même LSK pour valider."]},
+  {t:"img", k:"navmatrix", c:"Matrice des affichages de navigation : où ton point apparaît une fois saisi."},
+  {t:"h", v:"Insérer un point au milieu d'une route"},
+  {t:"proc", v:[
+   "Page <code>FPLN</code>, tape la nouvelle coordonnée dans le scratchpad.",
+   "Appuie sur la LSK du waypoint <b>devant lequel</b> tu veux insérer le nouveau. Il se glisse juste avant.",
+   "Pour supprimer un point : tape un tiret <code>-</code> dans le scratchpad, puis appuie sur la LSK du point à effacer. Les suivants remontent."]},
+  {t:"note", k:"", lbl:"Numérotation", v:"Les points préparés en mission portent les numéros 01 à 50. Ceux que tu crées en vol commencent à 51. Quand tu supprimes un point, les autres gardent leur numéro d'origine — l'ordre de vol, lui, est celui de la liste FPLN, pas celui des numéros."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Alignement fait, avion au sol. Ouvre la page <code>FPLN</code>.",
+   "Crée un premier waypoint de zéro, à partir de coordonnées lues sur la carte F10 ou le kneeboard.",
+   "Vérifie qu'il apparaît sur le PTID (symbole « os de chien ») et sur le HUD.",
+   "Crée-en deux autres, puis intercale-en un au milieu, puis supprime-en un.",
+   "Note ci-dessous la <b>séquence de touches exacte</b> — c'est le genre de chose qu'on oublie entre deux sessions, alors écris-la vraiment."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu crées un waypoint depuis une route vide en moins de 90 secondes, sans relire tes notes."},
+  {t:"src", v:["manuel","chuck7"]}
+]},
+
+{id:"b4", title:"Suivre une route", isNew:true,
+ intro:"Créer des points ne sert à rien si l'avion ne t'y emmène pas. Cette leçon relie ta route à ce que tu vois devant toi, et t'apprend à choisir comment l'avion enchaîne les points.",
+ body:[
+  {t:"h", v:"Les trois modes d'enchaînement"},
+  {t:"p", v:"Sur la page FPLN, une LSK bascule le mode de séquencement du point actif. C'est ce qui décide comment l'avion passe d'un waypoint au suivant."},
+  {t:"table", head:["Mode","Comportement"], rows:[
+    ["AUTO","L'avion anticipe le virage vers le point suivant, façon navigation aérienne classique. Pratique en croisière — mais déconseillé en vol basse altitude, car il coupe les virages."],
+    ["OFLY","L'avion vise le survol exact du point avant de séquencer. C'est le mode du vol tactique basse altitude, quand tu dois vraiment passer sur le point."],
+    ["MAN","Aucun enchaînement automatique. Le guidage reste sur le point actif jusqu'à ce que tu avances manuellement avec la fonction DIR."]]},
+  {t:"note", k:"warn", lbl:"À savoir", v:"Le mode AUTO « lisse » les virages pour rester dans un couloir aérien théorique. En basse altitude ou pour une frappe où le point compte vraiment, c'est OFLY qu'il te faut."},
+  {t:"h", v:"Lire la route en vol"},
+  {t:"p", v:"Le HSD, côté pilote, te donne la vue de dessus : cap commandé, écart de route, distance au point. La page PROG du CDNU, côté RIO, donne les chiffres : distance, temps au point, vitesse sol, dérive. Sur le HUD, le repère de direction t'amène au point actif."},
+  {t:"img", k:"hsd", c:"Le HSD — situation horizontale, la vue de dessus de ta route."},
+  {t:"img", k:"hudcruise", c:"Le HUD en croisière : suis le repère de direction vers le point actif."},
+  {t:"img", k:"navdisplay", c:"Affichage de navigation côté RIO."},
+  {t:"h", v:"Aller direct à un point"},
+  {t:"p", v:"La touche DIR permet de sauter directement à un point de ta route, en laissant les points précédents passer dans l'historique. C'est ta commande de secours quand le plan change : un détour, une menace, une nouvelle cible."},
+  {t:"proc", v:[
+   "Appuie sur <code>DIR</code>.",
+   "Fais défiler jusqu'au point voulu et sélectionne-le avec la LSK gauche.",
+   "Ce point devient le point actif ; l'avion t'y emmène directement. Les points sautés passent dans l'historique (les cinq derniers restent rappelables)."]},
+  {t:"h", v:"Marquer un point en vol"},
+  {t:"p", v:"La touche MARK enregistre ta position actuelle : utile pour noter un objectif que tu viens de survoler. Le point atterrit dans le scratchpad, tu le ranges ensuite dans la liste MARK via la page IDX."},
+  {t:"img", k:"mark", c:"Fonction MARK — enregistrer une position en vol."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Construis une route de quatre points (leçon B3).",
+   "Vole-la en <code>AUTO</code>, puis recommence en <code>OFLY</code> : sens la différence dans les virages.",
+   "En vol, survole un point d'intérêt et enregistre-le avec <code>MARK</code>.",
+   "Utilise <code>DIR</code> pour sauter directement au dernier point, puis reviens au marqué.",
+   "Exercice final : coupe le PTID et rentre au terrain au BDHI et au HSD seuls.",
+   "Note tes repères de lecture : où tu regardes pour quoi."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Navigation de quatre points et retour au terrain, sans jamais ouvrir la carte F10."},
+  {t:"src", v:["manuel","chuck7"]}
+]},
+
+{id:"b5", title:"TACAN et sources de guidage",
+ intro:"Dernière brique : comprendre que plusieurs systèmes peuvent te guider en même temps, et savoir lequel écoute ton HUD. C'est la source de confusion classique — « pourquoi mon HUD ne pointe pas où je veux ? »",
+ body:[
+  {t:"h", v:"Quatre sources, une seule écoutée à la fois"},
+  {t:"p", v:"Le B(U) a quatre sources de guidage : l'EGI (ta route CDNU), le calculateur de mission pour les modes d'attaque et de destination, le BDHI, et le TACAN. Le HUD et le HSD suivent l'une ou l'autre selon ce qui est sélectionné. La bascule principale se fait sur le panneau TACAN CMD, qui alterne entre <b>TACAN</b> et <b>EGI</b>."},
+  {t:"img", k:"navoverview", c:"Le système de navigation et ses sources de guidage."},
+  {t:"note", k:"", lbl:"La règle simple", v:"Si ton HUD ne t'emmène pas vers ton waypoint CDNU, vérifie d'abord le panneau TACAN CMD : il est probablement sur TACAN au lieu d'EGI. C'est l'explication dans neuf cas sur dix."},
+  {t:"h", v:"Le TACAN"},
+  {t:"p", v:"Le TACAN te guide vers une balise (une station sol, un porte-avions, un ravitailleur). Tu règles la fréquence sur le panneau TACAN, tu laisses chauffer, et le BDHI comme le HSD te donnent le cap et la distance vers la balise. C'est le même principe que sur l'ancien avion — cette partie n'a pas changé."},
+  {t:"img", k:"tacan", c:"Panneau TACAN."},
+  {t:"img", k:"bdhi", c:"Le BDHI — cap et distance, à aiguilles. Simple et increvable."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Règle un TACAN vers une balise sol et suis-la au BDHI jusqu'à la survoler.",
+   "Bascule le panneau TACAN CMD entre <code>TACAN</code> et <code>EGI</code> et observe comment le HUD change de source.",
+   "En fin de vol, règle le TACAN du porte-avions et sers-t'en pour rentrer vers le bateau — ça prépare la section C.",
+   "Note tes fréquences TACAN utiles et le réflexe de vérification EGI/TACAN."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu sais dire, à tout instant, quelle source guide ton HUD — et la changer. Tu es prêt pour la section C."},
+  {t:"src", v:["chuck7","manuel"]}
+]}
+];
+
+/* ---------- état ---------- */
+const KEY="f14bu-sectionB";
+let st={done:{},notes:{}}, cur=0;
+async function load(){ try{const r=await __sget(KEY); if(r&&r.value) st=Object.assign(st,JSON.parse(r.value));}catch(e){} }
+let tm=null;
+function save(){ clearTimeout(tm); tm=setTimeout(async()=>{ try{await __sset(KEY,JSON.stringify(st));}catch(e){} },400); }
+
+/* ---------- rendu ---------- */
+function fig(k,c){
+  const id=IMG[k];
+  const fn=FN[id]||id;
+  return `<figure><img src="img/${fn}" alt="${c}" loading="lazy"
+      onerror="if(!this.dataset.f){this.dataset.f=1;this.src='${D(id)}';}else{this.closest('figure').classList.add('failed');}"
+      onclick="openLb(this.src)">
+    <div class="imgfail">Image non chargée — ouvre-la directement dans Drive.</div>
+    <figcaption><span>${c}</span><a href="${V(id)}" target="_blank" rel="noopener">Drive ↗</a></figcaption></figure>`;
+}
+function table(h,rows){
+  return `<table class="keytbl"><thead><tr>${h.map(x=>`<th>${x}</th>`).join("")}</tr></thead>
+    <tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+}
+function block(b){
+  if(b.t==="h")   return `<h3>${b.v}</h3>`;
+  if(b.t==="p")   return `<p>${b.v}</p>`;
+  if(b.t==="img") return fig(b.k,b.c);
+  if(b.t==="proc")return `<ol class="proc">${b.v.map(s=>`<li><span>${s}</span></li>`).join("")}</ol>`;
+  if(b.t==="table")return table(b.head,b.rows);
+  if(b.t==="note")return `<div class="note ${b.k||""}"><span class="lbl">${b.lbl}</span><p>${b.v}</p></div>`;
+  if(b.t==="src") return `<h3>Sources dans ton Drive</h3><div class="srcs">${
+      b.v.map(k=>`<a href="${V(DOC[k][1])}" target="_blank" rel="noopener">${DOC[k][0]} ↗</a>`).join("")}</div>`;
+  return "";
+}
+function render(){
+  const l=L[cur];
+  document.getElementById("main").innerHTML=`<div class="page">
+    <div class="eyebrow">Section B · leçon ${cur+1} sur ${L.length}</div>
+    <h2>${l.title}${l.isNew?'<span class="badge">Nouveau sur le B(U)</span>':""}</h2>
+    <p class="intro">${l.intro}</p>
+    ${l.body.map(block).join("")}
+    <h3>Tes notes de vol</h3>
+    <textarea id="nt" placeholder="Séquences de touches exactes, fréquences, réglages, ce qui a coincé…">${(st.notes[l.id]||"").replace(/</g,"&lt;")}</textarea>
+    <button class="doneline${st.done[l.id]?" on":""}" id="dn"><span class="box"></span>
+      <span>${st.done[l.id]?"Leçon validée":"Marquer cette leçon comme validée"}</span></button>
+    <div class="nav">
+      <button class="ghost" id="pv"${cur?"":" disabled style=opacity:.3"}>← Précédent</button>
+      <button class="ghost" id="nx"${cur<L.length-1?"":" disabled style=opacity:.3"}>Suivant →</button>
+    </div></div>`;
+  document.getElementById("nt").oninput=e=>{st.notes[l.id]=e.target.value;save();};
+  document.getElementById("dn").onclick=()=>{st.done[l.id]=!st.done[l.id];save();render();};
+  if(cur) document.getElementById("pv").onclick=()=>{cur--;render();window.scrollTo(0,0);};
+  if(cur<L.length-1) document.getElementById("nx").onclick=()=>{cur++;render();window.scrollTo(0,0);};
+  rail();
+}
+function rail(){
+  const r=document.getElementById("rail"); r.innerHTML="";
+  L.forEach((l,i)=>{
+    const b=document.createElement("button");
+    b.className="item"+(i===cur?" on":"")+(st.done[l.id]?" done":"");
+    b.innerHTML=`<span class="idx">${st.done[l.id]?"✓":String(i+1).padStart(2,"0")}</span><span class="nm">${l.title}</span>`;
+    b.onclick=()=>{cur=i;render();window.scrollTo(0,0);};
+    r.appendChild(b);
+  });
+  const n=L.filter(l=>st.done[l.id]).length;
+  document.getElementById("foot").textContent=`${n} / ${L.length} leçons validées`;
+}
+function openLb(src){const lb=document.getElementById("lb");document.getElementById("lbimg").src=src;lb.classList.add("on");}
+document.getElementById("lb").onclick=()=>document.getElementById("lb").classList.remove("on");
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") document.getElementById("lb").classList.remove("on");
+  if(e.target.matches("textarea")) return;
+  if(e.key==="ArrowRight"&&cur<L.length-1){cur++;render();window.scrollTo(0,0);}
+  if(e.key==="ArrowLeft"&&cur>0){cur--;render();window.scrollTo(0,0);}
+});
+load().then(render);
+</script>

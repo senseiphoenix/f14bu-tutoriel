@@ -1,0 +1,38 @@
+CLAUDE — dossier local racine
+===============================
+
+Chemin : C:\Users\Scifo\Documents\Claude
+
+C'est le dossier ou rangent TOUS les artefacts et applis que Claude
+te cree, projet par projet. Un sous-dossier = un projet.
+
+STRUCTURE
+---------
+Documents/
+  Claude/               <- ce dossier, racine de tous les projets
+    F14BU/                <- tutoriel de pilotage F-14B(U)
+    [prochain-projet]/
+    index.html            <- page d'accueil, liens vers chaque projet
+    LISEZMOI.txt
+
+COMMENT CA MARCHE
+------------------
+1. Claude te livre un fichier ou un .zip a telecharger.
+2. Tu le places dans un sous-dossier de "Claude\", un par projet.
+3. Claude ajoute la ligne correspondante sur index.html pour garder
+   une vue d'ensemble.
+4. Les applis HTML gardent ta progression dans le navigateur ou tu
+   les ouvres (stockage local) : garde le meme navigateur.
+
+LIMITE A CONNAITRE
+-------------------
+Claude ne peut pas ecrire directement sur ton disque : il cree les
+fichiers dans son propre espace de travail temporaire, te les
+presente en telechargement, et c'est toi qui les deposes ici.
+
+A PROPOS DU DOSSIER "tutoriel F14BU" (Documents\tutoriel F14BU\)
+-------------------------------------------------------------------
+Un doublon de ce projet existe peut-etre encore a la racine de
+Documents, cree avant la mise en place de cette convention. Il peut
+etre supprime sans perte : la version de reference vit desormais
+ici, dans Claude\F14BU\.
