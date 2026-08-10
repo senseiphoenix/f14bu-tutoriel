@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F-14B(U) — Le cockpit</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;--warn:#d9695a;
+    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  .shell{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+  @media(max-width:900px){.rail{position:static;height:auto}}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px;min-width:18px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)} .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+
+  .page{padding:34px 44px 90px;max-width:920px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
+  .intro{font-size:16px;margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+  h3{font-family:var(--display);font-weight:600;font-size:22px;letter-spacing:.03em;text-transform:uppercase;
+     margin:44px 0 4px;padding-top:20px;border-top:1px solid var(--line)}
+  h4{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:28px 0 10px}
+  p{margin:12px 0} .lead{color:var(--dim);margin-top:2px}
+
+  figure{margin:18px 0 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in}
+  figcaption{font-size:12px;color:var(--dim);margin-top:8px;font-family:var(--mono);letter-spacing:.04em}
+
+  table{width:100%;border-collapse:collapse;margin:14px 0 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  th{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);background:var(--panel)}
+  td.n{font-family:var(--mono);color:var(--amber);text-align:center;width:44px;font-weight:600}
+  td.nm{font-weight:600}
+  tbody tr:nth-child(odd){background:rgba(30,42,51,.35)}
+  .pos{font-family:var(--mono);font-size:12.5px;color:var(--dim);display:block;margin-top:5px}
+  .pos b{color:var(--ink);font-weight:600}
+
+  .note{border:1px solid var(--line);background:var(--panel);padding:13px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn{border-color:var(--warn)} .note.warn .lbl{color:var(--warn)}
+  .note.go .lbl{color:var(--go)}
+  .note.old{border-color:#6b5a8a} .note.old .lbl{color:#b39ddb}
+  .note p{margin:0} .note p+p{margin-top:8px}
+
+  textarea{width:100%;min-height:120px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6;margin-top:8px}
+  textarea:focus{outline:none;border-color:var(--amber)}
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:22px;border:1px solid var(--line);padding:14px 16px;background:var(--panel);width:100%;text-align:left}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:30px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.95);display:none;align-items:center;justify-content:center;padding:22px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex} .lb img{max-width:100%;max-height:100%}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+  .vid{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  .vid iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
+  .vid figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .vid figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+  .vidlink{display:flex;gap:12px;align-items:center;border:1px solid var(--line);background:var(--panel);padding:13px 16px;margin:14px 0;text-decoration:none;color:var(--ink)}
+  .vidlink:hover{border-color:var(--amber)}
+  .vidlink .ic{font-family:var(--mono);color:var(--amber);font-size:18px}
+  .vidlink .tx{flex:1}
+  .vidlink .tt{font-weight:600;font-size:14px}
+  .vidlink .src{font-size:12px;color:var(--dim);margin-top:2px}
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <div class="tail">F-14B(U) · Poste pilote</div>
+      <h1>Le cockpit</h1>
+      <p class="sub">Chaque commande nommée, numérotée, expliquée. Les planches viennent du manuel Heatblur.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div class="lb" id="lb"><img id="lbi" alt=""></div>
+
+<script>
+async function sget(k){try{if(window.storage){const r=await window.storage.get(k);if(r)return r;}}catch(e){}
+  try{const v=localStorage.getItem(k);return v?{value:v}:null;}catch(e){return null;}}
+async function sset(k,v){try{if(window.storage){await window.storage.set(k,v);return;}}catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){}}
+
+const I = f => `img/${f}`;
+
+const L = [
+
+/* ---------- 0 · Vue d'ensemble ---------- */
+{id:"c0", title:"Situer les douze zones",
+ intro:"Le poste pilote se découpe en douze zones. Cette leçon te donne la carte : tu ne mémorises rien, tu apprends à te repérer.",
+ body:[
+  {t:"img", f:"f14bu_pilot_overview.jpg", c:"Poste pilote — les douze zones"},
+  {t:"tbl", head:["N°","Zone","Ce qu'on y trouve"], rows:[
+   ["1","Console latérale gauche","Manettes, DFCS, TACAN, radio UHF 1, interphone"],
+   ["2","Console verticale gauche","Train, carburant, anti-dérapage, frein de parking"],
+   ["3","Panneau genou gauche","Pressions huile et hydraulique, tuyère"],
+   ["4","Planche de bord gauche","Badin, altimètres, variomètre, incidence"],
+   ["5","Montant de pare-brise gauche","Voyants d'alerte"],
+   ["6","Panneau central","HUD, VDI, panneau ACM, HSD, manche"],
+   ["7","Montant de pare-brise droit","Voyants complémentaires"],
+   ["8","Planche de bord droite","Moteurs, balayage des ailes, RWR, BDHI"],
+   ["9","Panneau genou droit","Instruments de secours"],
+   ["10","Console verticale droite","Éclairage, oxygène"],
+   ["11","Console latérale droite","Électricité, radios, IFF, éclairage"],
+   ["12","Poignée de verrière","Ouverture et verrouillage"]]},
+  {t:"note", k:"", lbl:"Ce que tu touches vraiment", v:"Quatre zones concentrent 90 % de tes actions en vol : la <b>console gauche</b> (1), la <b>console verticale gauche</b> (2), la <b>planche de bord gauche</b> (4) et le <b>panneau central</b> (6). Ce sont les quatre leçons qui suivent."},
+  {t:"chk", v:"Tu situes les quatre zones principales sans regarder la carte."}
+]},
+
+/* ---------- 1 · Console latérale gauche ---------- */
+{id:"c1", title:"1 · Console latérale gauche",
+ intro:"Ta main gauche pendant tout le vol : les manettes, le pilote automatique, les radios. Onze ensembles.",
+ body:[
+  {t:"img", f:"left_console_pilot-01.jpg", c:"Console latérale gauche"},
+  {t:"tbl", head:["N°","Nom","Fonction"], rows:[
+   ["1","Bouton G-valve","Teste le gonflage de la combinaison anti-g."],
+   ["2","Oxygène / ventilation","Débit d'oxygène au masque et ventilation de la combinaison."],
+   ["3","Volumes / commande TACAN","Volumes audio du casque et attribution du TACAN."],
+   ["4","Panneau TACAN","Canal et mode TACAN."],
+   ["5","Panneau ICS","Interphone avec le RIO."],
+   ["6","Panneau DFCS","Commandes de vol numériques et pilote automatique."],
+   ["7","Radio UHF 1 (AN/ARC-159)","Radio du pilote, dite « AUX », pour la patrouille."],
+   ["8","Limiteur ASYM / mode moteur","Limiteur de poussée asymétrique en PC, mode de régulation moteur."],
+   ["9","Sélecteur de désignation","Désigne les cibles sol au HUD, parcourt les pistes TWS, commande les modes radar ACM."],
+   ["10","Rampes d'air / manettes","Mode manettes, rampes d'entrée d'air, lancement moteur, trim de direction."],
+   ["11","Manettes des gaz","Poussée et commandes HOTAS."]]},
+
+  {t:"h4", v:"3 · Volumes et commande TACAN"},
+  {t:"img", f:"tacan-02.jpg", c:"Panneau volumes / commande TACAN"},
+  {t:"tbl", head:["N°","Commande","Fonction"], rows:[
+   ["1","ALR-67","Volume des alertes du détecteur radar."],
+   ["2","SW","Volume de la tonalité Sidewinder — ce sifflement que tu attends avant de tirer un AIM-9."],
+   ["3","V/UHF 2","Volume de la radio AN/ARC-182."],
+   ["4","TACAN CMD","S'allume sur <b>TCN</b> ou <b>EGI</b> et indique la source qui guide le BDHI et le HSD."]]},
+  {t:"note", k:"warn", lbl:"Le réflexe qui évite une heure de confusion", v:"« Pourquoi mon HUD ne pointe pas vers mon waypoint ? » — neuf fois sur dix, c'est le sélecteur <b>4</b> resté sur TCN au lieu d'EGI."},
+
+  {t:"h4", v:"6 · Panneau DFCS"},
+  {t:"p", v:"Commandes de vol numériques et pilote automatique. Le panneau qui rend le Tomcat docile aux hautes incidences."},
+  {t:"img", f:"dfcs-01.jpg", c:"Panneau DFCS"},
+  {t:"tbl", head:["N°","Commande","Fonction et positions"], rows:[
+   ["1","PITCH","Stabilisation double canal en tangage."],
+   ["2","ROLL","Stabilisation double canal en roulis."],
+   ["3","YAW","Stabilisation double canal en lacet."],
+   ["4","VEC/PCD/ACL","Modes de pilotage à distance.<span class='pos'><b>VEC/PCD</b> — le datalink commande roulis et tangage.<br><b>OFF</b> — coupé.<br><b>ACL</b> — appontage automatique.<br>Les deux s'engagent par le bouton NWS du manche.</span>"],
+   ["5","ALT","Tenue d'altitude. S'engage par le bouton NWS du manche."],
+   ["6","HDG","<span class='pos'><b>HDG</b> — tenue de cap. &nbsp;·&nbsp; <b>OFF</b> — coupé.<br><b>GT</b> — route sol, engagé par le bouton NWS.</span>"],
+   ["7","ENGAGE","Engage le pilote automatique."],
+   ["8","DEC","Au sol : recule dans les codes de panne DFCS."],
+   ["9","INC","Au sol : avance dans les codes de panne DFCS."],
+   ["10","Afficheur de pannes","Au sol : <b>FAIL</b> (pannes présentes), <b>FLT</b> (détectées en vol), <b>IBIT</b> (détectées au test)."]]},
+  {t:"note", k:"", lbl:"À savoir", v:"Tous ces interrupteurs sont rappelés sur OFF par ressort mais tenus par électro-aimant : le système peut donc les décrocher tout seul quand il le faut."},
+
+  {t:"h4", v:"11 · Manettes des gaz"},
+  {t:"img", f:"throttle2.svg", c:"Manettes et commandes HOTAS"},
+  {t:"tbl", head:["N°","Commande","Fonction et positions"], rows:[
+   ["1","Aérofreins","<span class='pos'><b>EXT</b> — sortent progressivement tant que tu maintiens, se figent au relâchement.<br><b>RET</b> — rentrent.</span>"],
+   ["2","Balayage des ailes","En manuel, tu ne peux que <b>reculer</b> les ailes au-delà de la position commandée par le calculateur.<span class='pos'><b>AUTO</b> — géré par le CADC selon le Mach.<br><b>FWD / AFT</b> — à la main.<br><b>BOMB</b> — commande 55° si les ailes sont plus en avant ; sinon le CADC garde la main.</span>"],
+   ["3","PLM","Verrouillage radar commandé par le pilote. Déconnecte le pilote automatique en appontage automatique."],
+   ["4","CAGE/SEAM","Accrochage de l'AIM-9. Déconnecte la régulation automatique de vitesse."],
+   ["5","Feux extérieurs","<span class='pos'><b>OFF</b> — feux éteints, feux d'approche à pleine intensité.<br><b>ON</b> — feux allumés, feux d'approche atténués.</span>"],
+   ["6","Alternat ICS","<span class='pos'><b>ICS</b> — parle au RIO. &nbsp;·&nbsp; <b>BOTH</b> — les deux radios.<br><b>UHF1</b> / <b>UHF2</b> — une radio à la fois.</span>"]]},
+
+  {t:"h4", v:"Le quadrant de manettes"},
+  {t:"img", f:"cockpitthrottlequadrant-01.jpg", c:"Quadrant de manettes"},
+  {t:"p", v:"Les manettes ont des crans en <b>OFF</b>, <b>IDLE</b> et <b>MIL</b>. Passer de OFF à IDLE arme l'allumage et ouvre le carburant : c'est le geste du démarrage."},
+  {t:"p", v:"Détail qui compte au catapultage : les mouvements latéraux ne sont pas rappelés par ressort, ce qui te permet de <b>caler les manettes sur MIL</b> pendant le coup de catapulte sans qu'elles redescendent."},
+  {t:"p", v:"La manette de volets a une course continue plus deux positions de secours, atteintes en la déportant vers l'extérieur. Le secours « haut » force les volets rentrés ; le secours « bas » n'est pas fonctionnel."},
+  {t:"chk", v:"Tu poses le curseur sur le DFCS, le TACAN CMD et le balayage des ailes, et tu dis à quoi sert chacun."}
+]},
+
+/* ---------- 2 · Console verticale gauche ---------- */
+{id:"c2", title:"2 · Console verticale gauche",
+ intro:"Train, carburant, freins. Le panneau des phases sol et des configurations : tu y touches au démarrage, au décollage et à l'atterrissage.",
+ body:[
+  {t:"img", f:"left_vertical_console_overview.jpg", c:"Console verticale gauche"},
+  {t:"tbl", head:["N°","Nom","Fonction"], rows:[
+   ["1","Gestion carburant","Quantités, transferts, ravitaillement en vol, anti-dérapage."],
+   ["2","Position des gouvernes","Spoilers, dérives, empennages."],
+   ["3","Barre de lancement / abandon","Abandon de catapultage. <i>Non utilisé dans DCS.</i>"],
+   ["4","Commande de train","Train, volets, becs, aérofreins, frein de parking, largage d'urgence."]]},
+
+  {t:"h4", v:"1 · Gestion carburant"},
+  {t:"img", f:"left_vertical_console_fuel_management_panel.jpg", c:"Panneau de gestion carburant"},
+  {t:"tbl", head:["N°","Commande","Fonction et positions"], rows:[
+   ["1","QTY SEL","Choisit les réservoirs affichés sur les jauges. Rappelé sur FEED.<span class='pos'><b>FEED</b> — nourrices et fuselage. &nbsp;·&nbsp; <b>WING</b> — voilure. &nbsp;·&nbsp; <b>EXT</b> — bidons externes.</span>"],
+   ["2","FEED","Routage du carburant vers les moteurs. Verrouillé sur NORM par un cache."],
+   ["3","WING/EXT TRANS","Transfert depuis la voilure et les bidons.<span class='pos'><b>ORIDE</b> — force le transfert. &nbsp;·&nbsp; <b>AUTO</b> — normal. &nbsp;·&nbsp; <b>OFF</b> — coupé.</span>"],
+   ["4","Voyant perche","S'allume quand la perche de ravitaillement n'est ni sortie ni rentrée complètement."],
+   ["5","DUMP","Vidange carburant. Autorisée seulement aérofreins rentrés, sans postcombustion, en vol."],
+   ["6","REFUEL PROBE","<span class='pos'><b>ALL EXTD</b> — perche sortie, tous réservoirs. Remet aussi WING/EXT TRANS sur AUTO.<br><b>FUS EXTD</b> — perche sortie, fuselage seul.<br><b>RET</b> — perche rentrée.</span>"],
+   ["7","ANTI SKID / SPOILER BK","Freinage au sol.<span class='pos'><b>BOTH</b> — anti-dérapage et freinage par spoilers. &nbsp;·&nbsp; <b>OFF</b> — les deux coupés. &nbsp;·&nbsp; <b>SPOILER BK</b> — spoilers seuls.</span>"],
+   ["8","MASTER RESET","Réarme la détection de panne du calculateur d'air (CADC) et efface les alarmes associées."],
+   ["9","Position des gouvernes","Voir ci-dessous."]]},
+
+  {t:"h4", v:"2 · Position des gouvernes"},
+  {t:"img", f:"left_vertical_console_control_surface_position_indicator.jpg", c:"Indicateur de position des gouvernes"},
+  {t:"tbl", head:["N°","Indication","Lecture"], rows:[
+   ["1","Spoilers","<span class='pos'><b>DN</b> — rentrés, dans le profil de l'aile.<br><b>Flèche haute</b> — sortis au-dessus de l'aile.<br><b>Flèche basse</b> — braqués sous l'aile.</span>"],
+   ["2","Dérives","Positions gauche et droite, repérées L et R."],
+   ["3","Empennages","Positions gauche et droite, repérées L et R."]]},
+
+  {t:"h4", v:"4 · Commande de train"},
+  {t:"img", f:"left_vertical_console_landing_gear_control_panel.jpg", c:"Panneau de commande du train"},
+  {t:"tbl", head:["N°","Commande","Fonction et positions"], rows:[
+   ["1","Poignée LDG GEAR","Train haut ou bas.<span class='pos'>Sortie de secours, poignée sur DOWN : enfoncer, tourner dans le sens horaire, tirer. Une charge d'azote comprimé sort le train.</span>"],
+   ["2","DOWN LOCK ORIDE","Descend par électro-aimant pour signaler l'appui sur les roues. Peut être relevé pour forcer le signal."],
+   ["3","HYD ISOL","Isole train, direction de roue et freins du circuit hydraulique commun.<span class='pos'><b>FLT</b> — en vol, systèmes isolés.<br><b>T.O./LDG</b> — décollage et atterrissage, systèmes connectés.<br>Passe automatiquement sur T.O./LDG quand la poignée de train est basse.</span>"],
+   ["4","Voyant de transit","S'allume quand la position réelle du train ne correspond pas à celle de la poignée."],
+   ["5","Indicateur roues-volets","Positions des volets, becs, aérofreins et train.<span class='pos'>La course des volets va de UP à DOWN ; le premier segment marqué correspond aux volets de manœuvre.</span>"],
+   ["6","EMERG STORES","Largage d'urgence de tous les emports. S'illumine à l'activation."],
+   ["7","NOSE STRUT","Amortisseur avant.<span class='pos'><b>EXTD</b> — étend l'amortisseur, relève et verrouille la barre de lancement.<br><b>OFF</b> — position de repos (rappelée par ressort).<br><b>KNEEL</b> — rétracte l'amortisseur, agenouille l'avion et déverrouille la barre.</span>"],
+   ["8","BRAKE-PULL","Frein de parking. Tirer pour serrer, pousser pour desserrer."],
+   ["9","EJECT CMD","Logique d'éjection.<span class='pos'><b>PILOT</b> — le pilote éjecte les deux ; le RIO n'éjecte que lui.<br><b>MCO</b> — chacun éjecte les deux.</span>"]]},
+  {t:"chk", v:"Tu sais sortir le train en secours et dire ce que fait HYD ISOL, sans relire."}
+]},
+
+/* ---------- 4 · Planche de bord gauche ---------- */
+{id:"c4", title:"4 · Planche de bord gauche",
+ intro:"Tes instruments de vol. Ce sont eux qui te sauveront le jour où un écran tombe — et l'indicateur d'incidence est l'instrument le plus important du Tomcat.",
+ body:[
+  {t:"img", f:"left_instrument_panel_02-01.jpg", c:"Planche de bord gauche"},
+  {t:"tbl", head:["N°","Nom","Fonction"], rows:[
+   ["1","Radioaltimètre","Hauteur réelle au-dessus du sol, avec alerte de plancher."],
+   ["2","Altimètre servopneumatique","Altitude barométrique, avec mode de secours."],
+   ["3","Badin / machmètre","Vitesse indiquée et nombre de Mach."],
+   ["4","Variomètre","Vitesse verticale en milliers de pieds par minute."],
+   ["5","Coupe-feu moteur gauche","Coupe l'alimentation carburant du moteur gauche."],
+   ["6","Indicateur d'incidence","Incidence sur une échelle de 0 à 30 unités."],
+   ["7","Checklist atterrissage","Les points critiques avant de se poser."]]},
+
+  {t:"h4", v:"1 · Radioaltimètre"},
+  {t:"img", f:"left_instrument_panel_radalt-01.jpg", c:"Radioaltimètre"},
+  {t:"tbl", head:["N°","Élément","Fonction"], rows:[
+   ["1","Bouton de commande","Alimentation, réglage du seuil d'alerte, lancement du test.<span class='pos'>À fond à gauche : éteint. En tournant à droite : règle le seuil d'alerte. En appuyant : lance le test.</span>"],
+   ["2","Drapeau OFF","Apparaît si l'appareil est éteint, sans alimentation, ou s'il perd l'accrochage sol."],
+   ["3","Voyant d'alerte basse altitude","S'allume en rouge sous le seuil réglé."],
+   ["4","Voyant de test","Vert pendant le test. Le test doit afficher 100 pieds ±10."],
+   ["5","Index de seuil","Repère triangulaire sur le pourtour, marquant le seuil choisi."]]},
+  {t:"note", k:"warn", lbl:"Détail qui peut sauver", v:"Le mode « radio override » ne coupe <b>pas</b> l'alerte sonore de basse altitude. Elle passera toujours."},
+
+  {t:"h4", v:"2 · Altimètre barométrique"},
+  {t:"img", f:"left_instrument_panel_baroalt-02.jpg", c:"Altimètre servopneumatique"},
+  {t:"tbl", head:["N°","Élément","Fonction"], rows:[
+   ["1","Affichage","Trois tambours (10 000, 1 000, 100 pieds) plus une aiguille en centaines de pieds."],
+   ["2","Bouton de calage","Règle la pression locale en pouces de mercure.<span class='pos'>Ce calage n'affecte que cet altimètre : les affichages numériques pilotés par le CADC restent sur 29,92.</span>"],
+   ["3","Fenêtre de pression","Fenêtre de Kollsman : affiche le calage retenu."],
+   ["4","Sélecteur de mode","<span class='pos'><b>RESET</b> — maintenir 3 secondes pour revenir en mode asservi normal (si le CADC fournit ses données).<br><b>STBY</b> — mode de secours purement pneumatique.<br>Bascule automatiquement en secours après 3 secondes sans données ni courant.</span>"]]},
+  {t:"note", k:"", lbl:"Erreurs à connaître", v:"À grande vitesse sous 10 000 pieds, les effets de pression faussent la lecture : jusqu'à <b>1 200 pieds</b> en transsonique et <b>4 000 pieds</b> en supersonique."},
+
+  {t:"h4", v:"3 · Badin et machmètre"},
+  {t:"img", f:"left_instrument_panel_airspeed_indicator-01.jpg", c:"Badin / machmètre"},
+  {t:"tbl", head:["N°","Élément","Fonction"], rows:[
+   ["1","Cadran","Entraîne les trois échelles de vitesse et de Mach."],
+   ["2","Échelle extérieure","Vitesse indiquée jusqu'à 200 nœuds."],
+   ["3","Échelle intérieure","De 200 à 850 nœuds. Masquée par le cadran tant qu'elle ne s'applique pas."],
+   ["4","Échelle de Mach","Se décale par rapport à la vitesse indiquée pour donner le bon Mach."],
+   ["5","Index de vitesse","Repère réglable sur une vitesse voulue."],
+   ["6","Index de Mach","Repère réglable sur un Mach voulu."],
+   ["7","Index de Mach de sécurité","Mach limite calculé par le CADC."],
+   ["8","Bouton d'index","Tirer/pousser pour choisir lequel des deux index tu règles."]]},
+
+  {t:"h4", v:"6 · Indicateur d'incidence"},
+  {t:"img", f:"left_instrument_panel_aoa_indexer-02.jpg", c:"Indicateur d'incidence"},
+  {t:"p", v:"Échelle de 0 à 30 unités, correspondant à peu près à −10° / +40° de rotation de la sonde. C'est l'instrument central du Tomcat : à masse variable, la bonne vitesse change, la bonne incidence jamais."},
+  {t:"tbl", head:["Repère","Valeur","Usage"], rows:[
+   ["Montée","5 unités","Montée initiale."],
+   ["Croisière","8,5 unités","Vol de croisière."],
+   ["Approche","15 unités","<b>Barre de référence</b> — l'incidence d'approche, terrain comme bateau."],
+   ["Décrochage","29 unités","Limite haute."]]},
+  {t:"note", k:"go", lbl:"Le chiffre à retenir", v:"<b>15 unités.</b> C'est ton approche, quelle que soit ta masse carburant. Tout le travail d'appontage tient autour de ce nombre."},
+
+  {t:"h4", v:"4, 5 et 7 · Les autres instruments"},
+  {t:"img", f:"left_instrument_panel_vvi-04.jpg", c:"Variomètre"},
+  {t:"p", v:"<b>Variomètre</b> — vitesse verticale en milliers de pieds par minute. Une manœuvre brutale peut fausser momentanément l'indication, à cause des variations d'écoulement sur la prise statique."},
+  {t:"img", f:"left_instrument_panel_left_engine-05.jpg", c:"Poignée coupe-feu moteur gauche"},
+  {t:"p", v:"<b>Coupe-feu moteur gauche</b> — tirer coupe l'alimentation carburant, pousser la rétablit. Ce n'est pas la commande d'arrêt normale du moteur. Le bouton d'extincteur du moteur gauche est situé derrière la poignée, accessible une fois celle-ci tirée."},
+  {t:"img", f:"left_instrument_panel_lndg_chklst-06.jpg", c:"Carte de checklist atterrissage"},
+  {t:"chk", v:"Tu récites les quatre repères d'incidence — 5, 8.5, 15, 29 — et ce que chacun signifie."}
+]},
+
+/* ---------- 6 · Panneau central ---------- */
+{id:"c6", title:"6 · Panneau central",
+ intro:"Le cœur du B(U) : le HUD, l'écran vertical, le panneau d'armement et le manche. C'est ici que tu passeras l'essentiel de ton temps de regard.",
+ body:[
+  {t:"img", f:"centerpanel.jpg", c:"Panneau central"},
+  {t:"p", v:"L'ensemble VDIG-R regroupe le <b>HUD</b> (1), l'écran vertical <b>VDI</b> (2) et le panneau <b>ACM</b> (3), auxquels s'ajoute le <b>HSD</b> (4), le manche, l'altimètre cabine et l'indicateur de pression de freins de secours."},
+  {t:"note", k:"", lbl:"Rôle de chaque écran", v:"Le <b>HUD</b> est ta source principale d'informations de vol : vitesse, altitude et attitude y sont affichées dans tous les modes. Le <b>VDI</b> répète le HUD, ou affiche la vidéo du TCS ou du LANTIRN."},
+
+  {t:"h4", v:"Autour du HUD"},
+  {t:"img", f:"vdigr_hud_cruise_manual.jpg", c:"HUD en croisière"},
+  {t:"tbl", head:["N°","Élément","Fonction"], rows:[
+   ["1","HUD","Symbologie de décollage, croisière, air-air, air-sol et atterrissage."],
+   ["2","Capteur CTVS","Enregistre le HUD pour l'analyse des tirs. <i>Non implémenté dans DCS.</i>"],
+   ["3","MASTER CAUTION","Clignote au moindre changement d'état sur le panneau d'alertes. Appuyer pour acquitter."],
+   ["4","Indicateur virage-glissade","Taux de virage en haut (une déviation d'aiguille = 360° en 4 minutes), bille de glissade en bas."]]},
+
+  {t:"h4", v:"Écran vertical (VDI)"},
+  {t:"img", f:"vdigr_vdi_cruise_manual.jpg", c:"VDI en croisière"},
+  {t:"tbl", head:["N°","Commande","Fonction"], rows:[
+   ["1","HUD BRT / BARO SET","Molette haute : luminosité du HUD. Molette basse : calage barométrique HUD/VDI."],
+   ["2","VDI BRT / CONT","Molette haute : luminosité du VDI. Molette basse : contraste."],
+   ["3","Refroidissement Sidewinder","Commande manuelle du refroidissement de l'autodirecteur AIM-9.<span class='pos'>Passe automatiquement sur ON dès que le mode ACM est sélectionné.</span>"],
+   ["4","Préparation missiles","Commande la préparation des AIM-54 et AIM-7.<span class='pos'>Passe automatiquement sur ON en mode ACM.</span>"],
+   ["5","Mode missile","<span class='pos'><b>NORM</b> — tir normal. &nbsp;·&nbsp; <b>BRSIT</b> — tir en boresight.<br>Géré par le système d'armes en mode ACM.</span>"],
+   ["6","Voyants du VDI","Alertes datalink et appontage automatique — voir le tableau ci-dessous."],
+   ["7","Affichages spécifiques","État des emports et points de navigation."]]},
+
+  {t:"h4", v:"Les voyants du VDI"},
+  {t:"img", f:"vdigr_vdi_warninglights_manual.jpg", c:"Voyants d'alerte du VDI"},
+  {t:"tbl", head:["Voyant","Signification"], rows:[
+   ["ADJ A/C","Un autre appareil est proche de ton circuit."],
+   ["LANDING CHK","Le bateau a un canal prêt pour l'appontage automatique : prépare-toi."],
+   ["ACL READY","Le contrôle du bateau t'a acquis et transmet le plan de descente."],
+   ["A/P CPLR","Le contrôle est prêt à piloter l'avion."],
+   ["CMD CONTROL","L'avion est sous contrôle datalink pour l'appontage."],
+   ["10 SECONDS","10 secondes avant le point à survoler."],
+   ["TILT","Aucune commande datalink reçue depuis 2 secondes en appontage automatique (10 s hors appontage)."],
+   ["VOICE","Le contrôle n'est pas prêt : passe aux procédures voix classiques."],
+   ["A/P REF","Pilote automatique sélectionné mais pas engagé (sauf tenue d'altitude et de cap)."],
+   ["WAVEOFF","Remise de gaz commandée."],
+   ["WING SWEEP","Panne des deux canaux de balayage des ailes."],
+   ["REDUCE SPEED","Volets non rentrés au-dessus de 225 nœuds, ou Mach de sécurité dépassé."],
+   ["ALT LOW","Non fonctionnel — le voyant du radioaltimètre le remplace."]]},
+
+  {t:"h4", v:"États des emports"},
+  {t:"img", f:"vdigr_vdi_ssi_manual.jpg", c:"Affichages spécifiques du VDI"},
+  {t:"p", v:"Les indicateurs d'état des emports s'affichent en bas du VDI. Une station <b>encadrée</b> est sélectionnée ; une station <b>entre chevrons</b> ⟨⟩ est prête au tir."},
+  {t:"p", v:"L'indicateur de point à rallier affiche <code>BDHI FLYTO</code> (point EGI), <code>BDHI WP #</code> (waypoint du plan de vol), <code>BDHI PHUD</code> (synchronisé avec le HUD), <code>BDHI TGT #</code> ou <code>BDHI LP #</code> (cible ou point de largage d'une station) ou <code>BDHI TACAN</code>."},
+
+  {t:"h4", v:"3 · Panneau ACM — l'armement"},
+  {t:"img", f:"vdigr_acm_manual.jpg", c:"Panneau ACM"},
+  {t:"tbl", head:["N°","Commande","Fonction et positions"], rows:[
+   ["1","MASTER ARM","Autorise le tir et les largages sélectifs.<span class='pos'><b>OFF</b> — circuits de tir non alimentés.<br><b>ON</b> — circuits alimentés. Position verrouillée tant que le cache n'est pas relevé.<br><b>TNG</b> — mode entraînement en vol.</span>"],
+   ["2","HUD CAGE","Choisit le symbole affiché au HUD.<span class='pos'>Décagé : <b>vecteur vitesse</b> (FPM). &nbsp;·&nbsp; Cagé : <b>repère de montée/descente</b> (CDM).</span>"],
+   ["3","L FIRE / R FIRE","S'allument à la détection d'un feu dans le moteur correspondant."],
+   ["4","Cache ACM / ACM JETT","Relever le cache active le mode ACM et donne accès au bouton de largage ACM, qui largue les emports sélectionnés sur le panneau d'armement du RIO (les Sidewinder ne sont jamais largués)."],
+   ["5","SEAM LOCK","S'allume pendant la tentative d'accrochage Sidewinder (4,5 secondes) et reste allumé si l'autodirecteur accroche."],
+   ["6","COLLISION","Indique que le guidage en collision est sélectionné en poursuite ferme."],
+   ["7","HOT TRIG","S'allume quand les conditions de tir sont réunies : appuyer sur la détente tirera."]]},
+  {t:"note", k:"warn", lbl:"Deux verrouillages à connaître", v:"Le bus MASTER ARM est asservi à la poignée de train : <b>train sorti, aucun tir</b> n'est possible sauf largage d'urgence.</p><p>En sens inverse, le largage ACM et le largage d'urgence ne sont <b>pas</b> bloqués par MASTER ARM."},
+
+  {t:"h4", v:"4 · HSD — situation horizontale"},
+  {t:"img", f:"hsd_tidrepeat.jpg", c:"HSD"},
+  {t:"tbl", head:["N°","Commande","Fonction"], rows:[
+   ["1","BRT","Luminosité du HSD."],
+   ["2","HDG","Règle le repère de cap, en mode TACAN."],
+   ["3","CRS","Règle la route désirée, en modes manuel et TACAN."],
+   ["4","TEST","Réinitialise le HSD après une coupure de protection et affiche la mire de test."],
+   ["5","Indicateur BIT","Drapeaux blancs en cas de panne. Se réarme en tournant dans le sens horaire."]]},
+  {t:"p", v:"Le HSD affiche ta navigation et peut aussi répéter l'écran tactique du RIO."},
+
+  {t:"h4", v:"Le manche"},
+  {t:"img", f:"controlstick-01.jpg", c:"Manche pilote"},
+  {t:"tbl", head:["N°","Commande","Fonction et positions"], rows:[
+   ["1","Bouton de largage","Largage des armements air-sol (sauf roquettes) et des contre-mesures emportées en externe."],
+   ["2","Trim","Haut/bas : trim de tangage. Gauche/droite : trim de roulis."],
+   ["3","Sélecteur d'arme","<span class='pos'><b>SP / PH</b> — AIM-7 ou AIM-54 ; l'appui bascule de l'un à l'autre.<br><b>SW</b> — AIM-9 ; l'appui change de station.<br><b>GUN</b> — canon M61A1. &nbsp;·&nbsp; <b>OFF</b> — tir inhibé.</span>"],
+   ["4","Molette DLC / volets de manœuvre","<span class='pos'>DLC engagé : vers l'avant sort les spoilers, vers l'arrière les rentre.<br>Volets rentrés, DLC désengagé : commande les volets et becs de manœuvre.<br><b>Logique :</b> tirer la molette vers soi augmente la portance, la pousser la diminue.</span>"],
+   ["5","Engagement DLC / contre-mesures","Engage le DLC si les volets sont sortis, les manettes sous MIL et les spoilers sains.<span class='pos'>Volets rentrés, ce même bouton déclenche le <b>programme 8</b> de contre-mesures.<br>Le DLC se désengage par un nouvel appui, en rentrant les volets, ou en poussant une manette à MIL.</span>"],
+   ["6","NWS / référence pilote auto","Au sol : bascule la direction de roue avant. En vol : engage les modes de pilote automatique armés."],
+   ["7","Palonnier de déconnexion","Déconnecte tous les modes de pilote automatique et le DLC, et fait retomber les interrupteurs concernés sur OFF."],
+   ["8","Détente","Deux crans. Le premier active la caméra, le second tire l'arme sélectionnée."]]},
+  {t:"note", k:"go", lbl:"La commande à ne pas manquer", v:"La <b>molette DLC</b> (4) et son bouton (5). Le manuel recommande de faire toutes les approches DLC engagé : elle te fait monter ou descendre sur le plan sans changer d'assiette. C'est la commande signature du Tomcat à l'appontage."},
+  {t:"chk", v:"Tu expliques MASTER ARM, HUD CAGE et la molette DLC sans relire."}
+]},
+/* ---------- 3 · Panneau genou gauche ---------- */
+{id:"c3", title:"3 · Panneau genou gauche",
+ intro:"Les paramètres moteurs. Le panneau que tu surveilles au démarrage et que tu consultes dès qu'un voyant s'allume.",
+ body:[
+  {t:"h4", v:"Pression hydraulique"},
+  {t:"img", f:"left_knee_panel_hydraulic_pressure_indicator.jpg", c:"Pressions hydrauliques"},
+  {t:"p", v:"Affiche la pression des circuits <b>combiné</b> et <b>vol</b>. Deux drapeaux complètent la lecture : <b>SPOIL</b> indique la mise en pression du module de spoilers extérieurs, <b>EMER FLT HI</b> indique la pression du circuit de vol de secours selon le mode HI ou LOW retenu."},
+  {t:"h4", v:"Pression d'huile"},
+  {t:"img", f:"left_knee_panel_oil_pressure_indicators.jpg", c:"Pressions d'huile"},
+  {t:"p", v:"Une aiguille par moteur, sur une échelle de 0 à 100 psi. La <b>plage normale est 25 à 65 psi</b>, variable avec le régime. Sous 11 psi, le voyant OIL PRESS s'allume."},
+  {t:"h4", v:"Position des tuyères"},
+  {t:"img", f:"left_knee_panel_exhaust_nozzle_indicator.jpg", c:"Position des tuyères"},
+  {t:"p", v:"Échelle de 0 à 5, <b>5 étant la tuyère grande ouverte</b>. Utile pour confirmer visuellement l'allumage de la postcombustion."},
+  {t:"h4", v:"Groupe d'instruments électroniques"},
+  {t:"img", f:"left_knee_panel_electronic_instrument_group.jpg", c:"Régime, température, débit carburant"},
+  {t:"tbl", head:["Indication","Signification"], rows:[
+   ["RPM","Régime du compresseur haute pression (N2)."],
+   ["EGT","Température des gaz d'échappement."],
+   ["FF","Débit carburant."]]},
+  {t:"note", k:"", lbl:"À savoir", v:"Le débit carburant n'inclut <b>pas</b> le supplément consommé en postcombustion : ne te fie pas à cette valeur pour estimer ton autonomie en PC."},
+  {t:"chk", v:"Tu cites la plage normale de pression d'huile et tu sais lire la tuyère en PC."}
+]},
+
+/* ---------- 5 et 7 · Montants de pare-brise ---------- */
+{id:"c5", title:"5 et 7 · Montants de pare-brise",
+ intro:"De part et d'autre du HUD, les voyants qui te préviennent. À gauche l'avion, à droite les menaces.",
+ body:[
+  {t:"h4", v:"Montant gauche · Indexeur d'approche"},
+  {t:"p", v:"Trois feux qui te disent ton incidence d'approche <b>sans quitter le pare-brise des yeux</b>. C'est ce que tu regardes en finale, et c'est aussi ce que l'officier d'appontage voit depuis le bateau, répété sur l'amortisseur avant."},
+  {t:"tbl", head:["Feu","Signification"], rows:[
+   ["Vert","Trop lent — incidence trop forte."],
+   ["Orange","Sur le bon créneau — l'incidence d'approche."],
+   ["Rouge","Trop rapide — incidence trop faible."]]},
+  {t:"note", k:"warn", lbl:"L'alerte qui sauve un appontage", v:"Avec le sélecteur HOOK BYPASS sur <b>CARRIER</b> et le train sorti, les feux de l'indexeur <b>clignotent si la crosse n'est pas sortie</b>. Si ça clignote en approche du bateau, tu as oublié la crosse."},
+  {t:"h4", v:"Montant gauche · Voyants du HUD"},
+  {t:"img", f:"left_windshield_frame_caution_lights_left_windshield_frame.jpg", c:"Voyants du montant gauche"},
+  {t:"tbl", head:["Voyant","Signification"], rows:[
+   ["WHEELS","Clignote si le train n'est pas sorti et verrouillé, volets sous 10° et une manette sous 85 %."],
+   ["BRAKES","Panne d'anti-dérapage ou de freins. S'allume aussi quand le frein de parking est serré."],
+   ["ACLS/AP","L'appontage automatique ou le pilote automatique est déconnecté."],
+   ["NWS ENGA","Direction de roue avant engagée."],
+   ["AUTO THROT","La régulation automatique de vitesse s'est déconnectée autrement que par son sélecteur."]]},
+  {t:"h4", v:"Montant droit · Voyants de menace"},
+  {t:"p", v:"Reliés au détecteur d'alerte radar. Le comportement du voyant — fixe ou clignotant — porte l'information la plus importante."},
+  {t:"tbl", head:["Voyant","Fixe","Clignotant"], rows:[
+   ["SAM","Verrouillage par un radar de conduite de tir sol-air.","<b>Départ missile détecté.</b>"],
+   ["AAA","Verrouillage par un radar d'artillerie anti-aérienne.","Tir d'artillerie détecté."],
+   ["AI","Verrouillage par le radar d'un chasseur.","—"]]},
+  {t:"p", v:"Le montant droit porte également le <b>compas de secours</b>, classique et sans alimentation."},
+  {t:"chk", v:"Tu dis ce que signifient les trois couleurs de l'indexeur, et ce qu'un SAM clignotant veut dire."}
+]},
+
+/* ---------- 8 · Planche de bord droite ---------- */
+{id:"c8", title:"8 · Planche de bord droite",
+ intro:"Le balayage des ailes, les instruments de secours, le détecteur de menaces. Huit ensembles que tu consultes du coin de l'œil.",
+ body:[
+  {t:"img", f:"right_instrument_panel_01-01.jpg", c:"Planche de bord droite"},
+  {t:"tbl", head:["N°","Nom","Fonction"], rows:[
+   ["1","Indicateur de balayage des ailes","Position programmée, commandée et réelle des ailes."],
+   ["2","Coupe-feu moteur droit","Coupe l'alimentation carburant du moteur droit."],
+   ["3","Horizon de secours","Attitude, indépendant des systèmes principaux."],
+   ["4","Répétiteurs radio","Fréquences ou canaux des deux radios."],
+   ["5","BDHI","Gisement, distance et cap."],
+   ["6","Indicateur ALR-67","Les émetteurs radar détectés."],
+   ["7","Poignée de largage de verrière","Largage manuel de la verrière."],
+   ["8","Checklist décollage","Les points critiques avant de partir."]]},
+
+  {t:"h4", v:"1 · Balayage des ailes"},
+  {t:"img", f:"right_instrument_panel_wingsweep-01.jpg", c:"Indicateur de balayage des ailes"},
+  {t:"tbl", head:["Élément","Lecture"], rows:[
+   ["Aiguille de gauche","Position programmée — c'est aussi <b>l'angle maximal vers l'avant</b> autorisé à ta vitesse et ton altitude du moment."],
+   ["Bande centrale","Position <b>commandée</b>."],
+   ["Bande de droite","Position <b>réelle</b>."],
+   ["Cinq fenêtres","Mode de fonctionnement en cours."]]},
+  {t:"note", k:"", lbl:"Comment le lire", v:"Si la bande commandée et la bande réelle divergent, le système est en train de bouger les ailes — ou il a un problème. L'aiguille de gauche te dit jusqu'où tu peux les avancer sans danger."},
+
+  {t:"h4", v:"3 · Horizon de secours"},
+  {t:"img", f:"right_instrument_panel_adi-02.jpg", c:"Horizon de secours"},
+  {t:"p", v:"Un drapeau OFF apparaît à gauche quand l'instrument est cagé ou sans alimentation. Le bouton en bas à droite le cage ou le décage : <b>tiré</b>, l'instrument est cagé ; <b>enfoncé</b>, il est libre et le bouton permet alors de trimer l'assiette en le tournant."},
+
+  {t:"h4", v:"5 · BDHI"},
+  {t:"img", f:"right_instrument_panel_bdhi-04.jpg", c:"BDHI"},
+  {t:"tbl", head:["N°","Élément","Lecture"], rows:[
+   ["1","Aiguille n° 2","Cap magnétique vers la station TACAN accordée."],
+   ["2","Rose des caps","Cap magnétique actuel de l'avion."],
+   ["3","Aiguille n° 1","Gisement de la station UHF/ADF accordée."],
+   ["4","Compteur de distance","Distance oblique à la station TACAN, en nautiques."]]},
+
+  {t:"h4", v:"6 · Indicateur ALR-67"},
+  {t:"img", f:"right_instrument_panel_rwr-05.jpg", c:"Indicateur ALR-67"},
+  {t:"p", v:"L'écran est organisé en <b>trois bandes concentriques</b> qui classent les menaces par dangerosité, pas par distance."},
+  {t:"tbl", head:["N°","Bande","Ce qu'elle contient"], rows:[
+   ["2","Critique","Menaces directes : un système capable de t'engager <b>et</b> qui montre son intention de le faire."],
+   ["3","Létale","Systèmes capables de t'engager mais qui ne le font pas actuellement."],
+   ["4","Non létale","Émetteurs sans menace immédiate, par distance ou absence d'armement."]]},
+  {t:"h4", v:"Le cercle d'état du RWR"},
+  {t:"p", v:"Le cercle central (repère 1) se lit en trois parties."},
+  {t:"tbl", head:["Zone","Symbole","Signification"], rows:[
+   ["I — quart supérieur gauche","N","Priorisation normale."],
+   ["","I","Chasseurs prioritaires."],
+   ["","A","Artillerie anti-aérienne prioritaire."],
+   ["","U","Émetteurs inconnus prioritaires."],
+   ["","F","Les émetteurs amis sont affichés en plus des menaces."],
+   ["II — quart supérieur droit","(vide)","Mode limité non sélectionné."],
+   ["","L","Mode limité : seules les six menaces prioritaires sont affichées."],
+   ["III — moitié basse","(vide)","Fonctionnement normal."],
+   ["","B","Échec du test intégré."],
+   ["","T","Surchauffe."],
+   ["","O","Affichage décalé : les menaces superposées sont séparées pour être lisibles, au prix d'une précision de gisement dégradée."]]},
+  {t:"p", v:"Le bouton <b>INT</b> (repère 5) règle la luminosité."},
+
+  {t:"h4", v:"4, 7 et 8 · Les autres éléments"},
+  {t:"img", f:"right_instrument_panel_radios-03.jpg", c:"Répétiteurs radio"},
+  {t:"p", v:"<b>Répétiteurs radio</b> — affichent la fréquence ou le canal actif des deux radios. Chacun a ses molettes DIM et BRT et un bouton TEST : un test correct affiche <code>888.888</code>."},
+  {t:"img", f:"right_instrument_panel_canopy_jettison-02.jpg", c:"Coupe-feu moteur droit et largage de verrière"},
+  {t:"p", v:"<b>Coupe-feu moteur droit</b> — tirer coupe le carburant, pousser le rétablit. Ce n'est pas la commande d'arrêt normale. L'extincteur du moteur droit est derrière la poignée, accessible une fois celle-ci tirée."},
+  {t:"p", v:"<b>Poignée de largage de verrière</b> — largage manuel pour une évacuation d'urgence."},
+  {t:"img", f:"right_instrument_panel_checklist-06.jpg", c:"Checklist décollage"},
+  {t:"chk", v:"Tu lis les trois bandes du RWR et tu expliques la différence entre critique et létale."}
+]},
+
+/* ---------- 9 · Panneau genou droit ---------- */
+{id:"c9", title:"9 · Panneau genou droit",
+ intro:"Le carburant, le facteur de charge et la montre. Trois instruments simples mais que tu consulteras à chaque vol.",
+ body:[
+  {t:"h4", v:"Jauge carburant"},
+  {t:"tbl", head:["N°","Élément","Lecture"], rows:[
+   ["1","BINGO","La quantité de retour que tu as réglée."],
+   ["2","TOTAL","Carburant total, tous réservoirs."],
+   ["3","Compteurs L et R","Quantité des réservoirs gauche et droit du groupe sélectionné.<span class='pos'>Le groupe affiché — nourrices, voilure ou bidons — se choisit avec le sélecteur QTY SEL du panneau carburant (zone 2).</span>"],
+   ["4","Bandes FUS et FEED","Bande gauche : nourrice gauche et fuselage arrière. Bande droite : nourrice droite et fuselage avant."],
+   ["5","Bouton SET","Règle la valeur de BINGO."]]},
+  {t:"note", k:"go", lbl:"À faire avant chaque mission", v:"Règle ton <b>BINGO</b> au sol, en fonction de la distance de retour. Le voyant BINGO du panneau d'alertes s'allumera tout seul le moment venu — c'est ta sécurité contre la panne sèche."},
+  {t:"h4", v:"Accéléromètre"},
+  {t:"p", v:"Gradué de <b>−5 g à +10 g</b>. Une aiguille indique le facteur de charge instantané, les deux autres mémorisent les maxima atteints en positif et en négatif. Le bouton <b>PUSH TO SET</b>, en bas à gauche, remet les aiguilles de mémoire à zéro."},
+  {t:"h4", v:"Montre"},
+  {t:"p", v:"Montre mécanique à remontage. Le bouton en bas à gauche remonte le mouvement en tournant dans le sens horaire ; tiré puis tourné, il règle les aiguilles. Le bouton en haut à droite commande un chronomètre d'une heure — départ, arrêt, remise à zéro."},
+  {t:"chk", v:"Tu as réglé un BINGO et tu sais remettre l'accéléromètre à zéro."}
+]},
+
+/* ---------- 10 · Console verticale droite ---------- */
+{id:"c10", title:"10 · Console verticale droite",
+ intro:"La crosse d'appontage et surtout le PDCP — le panneau qui décide de ce que tes écrans affichent. C'est l'un des panneaux les plus importants du B(U).",
+ body:[
+  {t:"tbl", head:["N°","Nom","Fonction"], rows:[
+   ["1","Panneau de crosse","Crosse d'appontage et munitions restantes."],
+   ["2","PDCP","Configure le HUD, le VDI et le HSD."],
+   ["3","Panneau de correction canon","Réglage du site du canon."]]},
+
+  {t:"h4", v:"1 · Panneau de crosse"},
+  {t:"img", f:"left_console_arrestinghook-01.jpg", c:"Panneau de crosse d'appontage"},
+  {t:"tbl", head:["N°","Commande","Fonction et positions"], rows:[
+   ["1","Poignée HOOK","<span class='pos'><b>UP</b> — rentre la crosse hydrauliquement et la verrouille en haut.<br><b>DOWN</b> — relâche la pression, la crosse descend par gravité et pression d'amortisseur.<br><b>EMERG DOWN</b> — poignée tirée puis tournée dans le sens antihoraire : largage mécanique de secours.</span>"],
+   ["2","Voyant de transit","S'allume quand la crosse n'est pas dans la position commandée.<span class='pos'>Il ne s'éteint qu'une fois la crosse complètement sortie, et peut rester allumé à grande vitesse à cause du soulèvement aérodynamique de la crosse.</span>"],
+   ["3","Munitions restantes","Décompte du canon M61A1. Part normalement de <b>676 obus</b> et se règle à la main avec le bouton latéral."]]},
+
+  {t:"h4", v:"2 · PDCP — configuration des écrans"},
+  {t:"img", f:"left_console_pdcp-01.jpg", c:"Pilot Display Control Panel"},
+  {t:"p", v:"Deux rangées de sélecteurs exclusifs commandent l'essentiel : la <b>source de guidage</b> et le <b>mode d'affichage</b>."},
+  {t:"tbl", head:["N°","Commande","Positions"], rows:[
+   ["1","STEERING CMD — source de guidage","<span class='pos'><b>TACAN</b> — guidage TACAN et écart au radial, ou To/From du waypoint CDNU.<br><b>DEST</b> — route vers le point de destination.<br><b>AWL/PCD</b> — plan de descente à l'atterrissage, ou guidage de précision en air-sol.<br><b>VEC</b> — guidage par datalink.<br><b>MAN</b> — cap et route réglés à la main.</span>"],
+   ["2","MODE — symbologie","<span class='pos'><b>T.O.</b> — décollage. &nbsp;·&nbsp; <b>CRUISE</b> — croisière.<br><b>A/A</b> — air-air. &nbsp;·&nbsp; <b>A/G</b> — air-sol.<br><b>LDG</b> — atterrissage et appontage.</span>"],
+   ["3","Format HUD","<b>ANLG</b> analogique ou <b>DGTL</b> numérique pour la vitesse et l'altitude au HUD."],
+   ["4","HUD BARO","<b>RDR</b> altitude radar ou <b>BARO</b> altitude barométrique.<span class='pos'>Au-dessus de 5 000 pieds, le HUD repasse automatiquement en barométrique.</span>"],
+   ["5","Mode VDI","<b>TV</b> affiche la vidéo du TCS ou du LANTIRN. <b>NORM</b> répète le HUD."],
+   ["6","HUD jour/nuit","Bascule le HUD en mode jour ou nuit."],
+   ["7","Mode HSD","<span class='pos'><b>NAV</b> — navigation selon la source de guidage choisie.<br><b>TID</b> — répète l'écran tactique du RIO.<br><b>ECM</b> — page des menaces ALR-67.</span>"],
+   ["8","POWER","Alimentation du VDI, du HUD et du HSD/ECMD."],
+   ["9","TEST STEP","Affiche l'état des emports sur le VDI (vers le haut) ou l'efface (vers le bas)."],
+   ["10","HSD ECM ORIDE","<b>ORIDE</b> autorise une menace détectée à prendre le dessus sur l'affichage du HSD. <b>OFF</b> l'en empêche."]]},
+  {t:"note", k:"go", lbl:"Le panneau à connaître par cœur", v:"Ces deux rangées commandent tout ce que tu vois. Un HUD qui n'affiche pas ce que tu attends vient presque toujours d'un <b>MODE</b> ou d'un <b>STEERING CMD</b> mal placé. C'est le premier endroit à vérifier."},
+  {t:"h4", v:"3 · Correction de site canon"},
+  {t:"p", v:"Règle le site du canon en millièmes pour les modes de tir manuels, air-air comme air-sol. La plage va de <b>−263 à +87 millièmes</b>."},
+  {t:"chk", v:"Tu configures le PDCP pour une approche : MODE sur LDG, STEERING CMD sur AWL/PCD."}
+]},
+
+/* ---------- 11 et 12 · Console latérale droite ---------- */
+{id:"c11", title:"11 et 12 · Console latérale droite",
+ intro:"Électricité, éclairage, conditionnement d'air, tests. Le panneau du démarrage : tu y passes cinq minutes au sol, puis tu l'oublies pour tout le vol.",
+ body:[
+  {t:"img", f:"right_console_right_side_console.jpg", c:"Console latérale droite"},
+  {t:"tbl", head:["N°","Nom","Fonction"], rows:[
+   ["1","Jauge d'oxygène liquide","Quantité restante, en litres."],
+   ["2","Panneau de compas","Configure la référence de cap de la centrale d'attitude."],
+   ["3","Panneau ARA-63","Système d'appontage aux instruments."],
+   ["4","Panneau d'alertes","Le tableau des voyants d'alerte et d'information."],
+   ["5","Génération électrique","Alternateurs principaux et alternateur de secours."],
+   ["6","Éclairage","Tout l'éclairage intérieur et extérieur."],
+   ["7","Conditionnement d'air","Température, pression cabine, source d'air."],
+   ["8","Panneau de tests","Tests intégrés des systèmes."],
+   ["9","Environnement extérieur","Chauffage du pare-brise et antigivrage."],
+   ["10","Pompe de transfert hydraulique","Équilibre les deux circuits hydrauliques."],
+   ["11","Levier de désembuage","Répartit l'air entre cabine et verrière."]]},
+
+  {t:"h4", v:"5 · Génération électrique"},
+  {t:"img", f:"right_console_master_generator_panel.jpg", c:"Panneau des alternateurs"},
+  {t:"tbl", head:["N°","Commande","Positions"], rows:[
+   ["1","MASTER GEN (gauche et droit)","À relever pour quitter OFF/RESET.<span class='pos'><b>NORM</b> — alternateur actif et connecté aux barres principales.<br><b>OFF/RESET</b> — déconnecté, protections réarmées.<br><b>TEST</b> — alternateur actif mais non connecté.</span>"],
+   ["2","EMERG","Sous cache.<span class='pos'><b>NORM</b> — l'alternateur de secours se connecte automatiquement si les deux principaux tombent.<br><b>OFF/RESET</b> — déconnecté, protections réarmées.</span>"]]},
+
+  {t:"h4", v:"6 · Éclairage"},
+  {t:"img", f:"right_console_master_light_control_panel.jpg", c:"Panneau d'éclairage"},
+  {t:"tbl", head:["N°","Commande","Fonction"], rows:[
+   ["1","Anti-collision","Feux anticollision."],
+   ["2","Mode feux de position","Fixes ou clignotants. Au sol, les feux d'appoint restent fixes quoi qu'il arrive."],
+   ["3","Feux de dérive","DIM ou BRT."],
+   ["4","Feux de voilure","DIM ou BRT."],
+   ["5","Éclairage panneau ACM","Molette, 0 à 14."],
+   ["6","Éclairage indexeur d'incidence","Molette, 0 à 14."],
+   ["7","HOOK BYPASS","<b>FIELD</b> ou <b>CARRIER</b>.<span class='pos'>Sur CARRIER, train sorti, les feux d'incidence clignotent si la crosse n'est pas sortie.</span>"],
+   ["8","Feux de roulage","Marche/arrêt."],
+   ["9","Éclairage instruments","Molette, 0 à 14."],
+   ["10","Éclairage blanc","DIM ou BRT. Verrouillé sur OFF sauf si on tire l'interrupteur."],
+   ["11","Éclairage consoles","Molette : 0 éteint, 1 à 14 croissant. Commande aussi l'éclairage rouge."],
+   ["12","Éclairage vert JVN","Molette d'intensité pour l'éclairage compatible jumelles."],
+   ["13","Feux de formation","Molette, 0 à 14."]]},
+  {t:"note", k:"warn", lbl:"Le réglage à ne pas oublier", v:"Le <b>HOOK BYPASS</b> (7) doit être sur <b>CARRIER</b> pour aller au bateau et sur <b>FIELD</b> pour un terrain. C'est ce qui active l'alerte de crosse oubliée."},
+
+  {t:"h4", v:"7 · Conditionnement d'air"},
+  {t:"img", f:"right_console_air_condition_panel.jpg", c:"Panneau de conditionnement d'air"},
+  {t:"tbl", head:["N°","Commande","Positions"], rows:[
+   ["1","Température","<b>AUTO</b> — régulée automatiquement selon la molette, quelles que soient vitesse et altitude. <b>MAN</b> — manuelle, à réajuster à chaque changement de vitesse ou d'altitude."],
+   ["2","Pression cabine","Verrouillé sur NORM.<span class='pos'><b>NORM</b> — cabine tenue à environ 8 000 pieds jusqu'à 23 000 pieds avion, puis différentiel constant de 5 psi.<br><b>DUMP</b> — dépressurise la cabine.</span>"],
+   ["3","RAM AIR","<b>INCR</b> ouvre la trappe d'air dynamique et refroidit ; <b>DECR</b> la ferme et réchauffe. Rappelé au centre."],
+   ["4","Source d'air","Cinq positions exclusives.<span class='pos'><b>RAM</b> — air dynamique seul. <b>Tir canon inhibé.</b><br><b>L ENG</b> / <b>R ENG</b> — prélèvement sur un moteur.<br><b>BOTH ENG</b> — les deux moteurs. <b>Position normale.</b><br><b>OFF</b> — tout fermé, pas de pressurisation ni de climatisation. <b>Tir canon inhibé.</b></span>"],
+   ["5","Molette TEMP","0 à 14, de COOL à WARM. En AUTO, la position 7 correspond à environ 21 °C."]]},
+  {t:"note", k:"warn", lbl:"Piège vicieux", v:"Les positions <b>RAM</b> et <b>OFF</b> de la source d'air <b>inhibent le tir canon</b>. Si ton canon refuse de tirer sans raison apparente, vérifie ce sélecteur."},
+
+  {t:"h4", v:"8 · Panneau de tests"},
+  {t:"img", f:"right_console_master_test_panel.jpg", c:"Panneau de tests"},
+  {t:"p", v:"Le sélecteur <b>MASTER TEST</b> (1) se tire pour choisir, puis s'enfonce sur la position voulue pour lancer le test. Les voyants <b>GO / NO-GO</b> (2) donnent le résultat."},
+  {t:"tbl", head:["Position","Test"], rows:[
+   ["OFF","Aucun test."],
+   ["LTS","Éclairage du cockpit."],
+   ["FIRE DET/EXT","Détection et extinction incendie."],
+   ["INST","Instruments du cockpit."],
+   ["OBC","Vérification générale embarquée."],
+   ["EMERG GEN","Alternateur de secours."],
+   ["WG SWP","Balayage des ailes."],
+   ["FLT GR DN","Verrouillages de la régulation automatique de vitesse, au sol."],
+   ["FLT GR UP","Pressurisation des bidons externes."],
+   ["D/L RAD","Convertisseur datalink."],
+   ["DFCS IBIT","Test intégré des commandes de vol numériques."],
+   ["STICK SW","Manche et symétrie des spoilers."]]},
+  {t:"p", v:"L'interrupteur <b>EMERG FLT HYD</b> (3), sous cache en position AUTO (LOW), commande le circuit hydraulique de vol de secours : <b>HIGH</b> active le module en grande vitesse, <b>LOW</b> le module de secours, <b>AUTO (LOW)</b> l'enclenche tout seul quand les deux circuits passent sous 2 100 psi."},
+
+  {t:"h4", v:"2, 3 et 9 · Compas, ICLS, antigivrage"},
+  {t:"img", f:"right_console_control_panel.jpg", c:"Panneau de compas"},
+  {t:"p", v:"<b>Panneau de compas</b> — le sélecteur de mode (4) choisit la source de cap : <b>SLAVED</b> est le mode normal (détecteur magnétique stabilisé par le gyro), <b>DG</b> n'utilise que le gyro, <b>COMP</b> est un secours qui prend le détecteur magnétique seul. Le sélecteur d'hémisphère (2) et la molette de latitude (3) doivent être justes, sinon la correction de rotation terrestre est fausse."},
+  {t:"img", f:"right_console_ara63_control_panel.jpg", c:"Panneau ARA-63"},
+  {t:"p", v:"<b>ARA-63</b> — l'appontage aux instruments. Le sélecteur (1) choisit un des 20 canaux, le bouton BIT (2) lance un test qui affiche la symbologie d'atterrissage au HUD et au VDI. L'interrupteur de puissance (3) doit être <b>tiré</b> pour aller sur OFF."},
+  {t:"img", f:"right_console_ext_environemental_control_panel.jpg", c:"Environnement extérieur"},
+  {t:"p", v:"<b>Antigivrage</b> — le sélecteur ENG/PROBE ANTI-ICE a trois positions : <b>ORIDE/ON</b> force l'antigivrage moteurs et sondes, <b>AUTO/OFF</b> le laisse se déclencher tout seul si nécessaire, <b>OFF/OFF</b> coupe tout."},
+  {t:"img", f:"right_console_liquid_oxygen_quantity_indicator.jpg", c:"Jauge d'oxygène liquide"},
+  {t:"p", v:"<b>Oxygène liquide</b> — graduée au litre, avec un drapeau OFF en cas de coupure d'alimentation. Le test par la position INST du panneau de tests doit afficher <b>2 litres</b>."},
+
+  {t:"h4", v:"10 et 11 · Hydraulique et désembuage"},
+  {t:"p", v:"<b>Pompe de transfert hydraulique</b> — deux positions, NORMAL sous cache (position standard) et SHUTOFF. En NORMAL, la pompe met sous pression un circuit défaillant à partir de l'autre dès qu'il descend sous 2 100 psi. On passe sur SHUTOFF si la pompe n'arrive pas à alimenter le circuit en panne : sinon elle risquerait d'entraîner aussi le circuit encore sain."},
+  {t:"p", v:"<b>Levier de désembuage</b> — en position <b>CABIN AIR</b> (normale), 70 % de l'air conditionné va au cockpit et 30 % à la verrière. En <b>CANOPY DEFOG</b>, tout l'air va à la verrière pour la désembuer."},
+
+  {t:"h4", v:"12 · Poignée de verrière"},
+  {t:"p", v:"Sur la paroi droite du cockpit, poignée montée vers le bas sous son boîtier. Elle est doublée dans le poste RIO."},
+  {t:"tbl", head:["Position","Fonction"], rows:[
+   ["BOOST","Ferme la verrière avec assistance — par temps froid ou vent de face fort."],
+   ["CLOSE","Ferme la verrière. Position normale en vol."],
+   ["HOLD","Fige la verrière à sa position actuelle, sauf si elle est fermée."],
+   ["OPEN","Ouvre la verrière."],
+   ["AUX OPEN","Ouverture manuelle si la pression du système est insuffisante."]]},
+
+  {t:"h4", v:"4 · Le panneau d'alertes"},
+  {t:"img", f:"right_console_caution_advisory_indicator.jpg", c:"Panneau d'alertes et d'information"},
+  {t:"p", v:"Le tableau principal des voyants. Tu n'as pas à le mémoriser : le voyant MASTER CAUTION du HUD clignote dès qu'un élément change ici, et c'est à ce moment que tu viens lire lequel. Voici les plus fréquents et ceux qui appellent une action immédiate."},
+  {t:"tbl", head:["Voyant","Signification"], rows:[
+   ["BINGO","Carburant au niveau de retour que tu as réglé. <b>Rentre.</b>"],
+   ["OIL PRESS","Pression d'huile d'un moteur sous 11 psi."],
+   ["HYD PRESS","Pression d'une pompe hydraulique moteur sous 2 100 psi."],
+   ["L / R FUEL LOW","Moins de 1 000 livres dans un groupe de nourrices."],
+   ["L / R FUEL PRESS","Pression de gaveur carburant sous 9 psi."],
+   ["L / R GEN","Alternateur moteur inopérant."],
+   ["L / R OIL HOT","Huile moteur trop chaude."],
+   ["CANOPY","Verrière non fermée et verrouillée."],
+   ["FLAP","Panne de volets, ou volets sortis au-delà de 225 nœuds."],
+   ["INLET ICE","Givre détecté à l'entrée d'air gauche."],
+   ["BLEED DUCT","Fuite d'air chaud dans un compartiment moteur."],
+   ["SPOILERS","Panne de spoilers, plusieurs ou tous bloqués rentrés."],
+   ["AUTO PILOT","Panne du pilote automatique."],
+   ["PITCH / ROLL / YAW STAB","Canaux de stabilisation hors service."],
+   ["CADC","Panne du calculateur d'air."],
+   ["AHRS","Attitude ou cap non fiables."],
+   ["WING SWEEP","Panne d'un seul canal de balayage des ailes."],
+   ["LAUNCH BAR","Barre de lancement non verrouillée en haut, ou mal centrée, ou amortisseur avant non étendu."],
+   ["EMERG JETT","Le bouton de largage d'urgence a été actionné."],
+   ["LADDER","Échelle d'accès mal rangée."],
+   ["ENG FIRE EXT","Pression basse dans la bouteille d'extincteur."]]},
+  {t:"chk", v:"Tu configures le HOOK BYPASS pour un vol bateau et tu sais où regarder quand MASTER CAUTION clignote."}
+]},
+{id:"c12", title:"Ressources vidéo",
+ intro:"Pour prolonger cette section cockpit, deux vidéos complémentaires : l'une centrée sur ce qui change pour un pilote, l'autre en vue d'ensemble de tous les nouveaux systèmes.",
+ body:[
+  {t:"video", id:"h9gieCO6uzs", c:"F-14B(U): Changes (U) Need To Know — ce qui change concrètement dans le cockpit pilote."},
+  {t:"video", id:"6rmzbgYudiw", c:"F-14B(U): Overview — HUD, A2A, PTID, ECMD, CMDS, JDAM — vue d'ensemble de tous les systèmes du cockpit modernisé."},
+  {t:"vidlink", url:"https://f14.manuals.heatblur.se/f14bu/cockpit/pilot/overview.html", c:"Chapitre cockpit pilote du manuel en ligne Heatblur", src:"Référence texte officielle, navigable en click-to-explain aussi en jeu"}
+]}
+
+];
+
+/* ---------- état ---------- */
+const KEY="f14bu-cockpit";
+let st={done:{},notes:{}}, cur=0;
+async function load(){const r=await sget(KEY); if(r&&r.value){try{st=Object.assign(st,JSON.parse(r.value));}catch(e){}}}
+let tm=null;
+function save(){clearTimeout(tm);tm=setTimeout(()=>sset(KEY,JSON.stringify(st)),400);}
+
+/* ---------- rendu ---------- */
+function fig(f,c){
+  return `<figure><img src="${I(f)}" alt="${c}" loading="lazy" onclick="zoom(this.src)">
+    <figcaption>${c}</figcaption></figure>`;
+}
+function tbl(h,rows){
+  return `<table><thead><tr>${h.map(x=>`<th>${x}</th>`).join("")}</tr></thead><tbody>${
+    rows.map(r=>`<tr>${r.map((c,i)=>i===0&&/^\d+$/.test(c)?`<td class="n">${c}</td>`:(i===1?`<td class="nm">${c}</td>`:`<td>${c}</td>`)).join("")}</tr>`).join("")}</tbody></table>`;
+}
+function block(b){
+  if(b.t==="video"){
+    return `<figure class="vid"><iframe src="https://www.youtube.com/embed/${b.id}" title="${b.c}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+      <figcaption><span>${b.c}</span><a href="https://www.youtube.com/watch?v=${b.id}" target="_blank" rel="noopener">YouTube ↗</a></figcaption></figure>`;
+  }
+  if(b.t==="vidlink"){
+    return `<a class="vidlink" href="${b.url}" target="_blank" rel="noopener"><span class="ic">▶</span><span class="tx"><span class="tt">${b.c}</span><span class="src">${b.src||""}</span></span></a>`;
+  }
+  if(b.t==="p")   return `<p>${b.v}</p>`;
+  if(b.t==="h4")  return `<h4>${b.v}</h4>`;
+  if(b.t==="img") return fig(b.f,b.c);
+  if(b.t==="tbl") return tbl(b.head,b.rows);
+  if(b.t==="note")return `<div class="note ${b.k||""}"><span class="lbl">${b.lbl}</span><p>${b.v}</p></div>`;
+  if(b.t==="chk") return `<div class="note go"><span class="lbl">Validation</span><p>${b.v}</p></div>`;
+  return "";
+}
+function render(){
+  const l=L[cur];
+  document.getElementById("main").innerHTML=`<div class="page">
+    <div class="eyebrow">Cockpit · leçon ${cur+1} sur ${L.length}</div>
+    <h2>${l.title}</h2>
+    <p class="intro">${l.intro}</p>
+    ${l.body.map(block).join("")}
+    <h4>Tes notes</h4>
+    <textarea id="nt" placeholder="Ce que tu veux retenir, tes bindings, ce qui t'a surpris…">${(st.notes[l.id]||"").replace(/</g,"&lt;")}</textarea>
+    <button class="doneline${st.done[l.id]?" on":""}" id="dn"><span class="box"></span>
+      <span>${st.done[l.id]?"Leçon validée":"Marquer cette leçon comme validée"}</span></button>
+    <div class="nav">
+      <button class="ghost" id="pv"${cur?"":" disabled style=opacity:.3"}>← Précédent</button>
+      <button class="ghost" id="nx"${cur<L.length-1?"":" disabled style=opacity:.3"}>Suivant →</button>
+    </div></div>`;
+  document.getElementById("nt").oninput=e=>{st.notes[l.id]=e.target.value;save();};
+  document.getElementById("dn").onclick=()=>{st.done[l.id]=!st.done[l.id];save();render();};
+  if(cur)document.getElementById("pv").onclick=()=>{cur--;render();window.scrollTo(0,0);};
+  if(cur<L.length-1)document.getElementById("nx").onclick=()=>{cur++;render();window.scrollTo(0,0);};
+  rail();
+}
+function rail(){
+  const r=document.getElementById("rail");r.innerHTML="";
+  L.forEach((l,i)=>{
+    const b=document.createElement("button");
+    b.className="item"+(i===cur?" on":"")+(st.done[l.id]?" done":"");
+    b.innerHTML=`<span class="idx">${st.done[l.id]?"✓":String(i+1).padStart(2,"0")}</span><span class="nm">${l.title}</span>`;
+    b.onclick=()=>{cur=i;render();window.scrollTo(0,0);};
+    r.appendChild(b);
+  });
+  document.getElementById("foot").textContent=`${L.filter(l=>st.done[l.id]).length} / ${L.length} leçons validées`;
+}
+function zoom(s){document.getElementById('lbi').src=s;document.getElementById('lb').classList.add('on');}
+document.getElementById('lb').onclick=()=>document.getElementById('lb').classList.remove('on');
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape")document.getElementById('lb').classList.remove('on');
+  if(e.target.matches("textarea"))return;
+  if(e.key==="ArrowRight"&&cur<L.length-1){cur++;render();window.scrollTo(0,0);}
+  if(e.key==="ArrowLeft"&&cur>0){cur--;render();window.scrollTo(0,0);}
+});
+load().then(render);
+</script>
+</body>
+</html>

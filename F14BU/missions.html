@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F-14B(U) — Les missions du module</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;--warn:#d9695a;
+    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  a{color:var(--amber)}
+  .page{max-width:880px;margin:0 auto;padding:40px 26px 90px}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber)}
+  h1{font-family:var(--display);font-weight:600;font-size:40px;letter-spacing:.03em;line-height:1.04;margin:10px 0 6px;text-transform:uppercase}
+  .intro{font-size:16px;margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+  h2{font-family:var(--display);font-weight:600;font-size:25px;letter-spacing:.03em;text-transform:uppercase;
+     margin:46px 0 4px;padding-top:22px;border-top:1px solid var(--line)}
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:30px 0 10px}
+  p{margin:12px 0} .lead{color:var(--dim);margin-top:2px}
+  code{font-family:var(--mono);font-size:.9em;background:var(--panel-2);padding:2px 6px;border:1px solid var(--line);color:var(--amber)}
+  table{width:100%;border-collapse:collapse;margin:14px 0 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  th{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);background:var(--panel)}
+  tbody tr:nth-child(odd){background:rgba(30,42,51,.35)}
+  td.w{white-space:nowrap;font-weight:600}
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:20px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn{border-color:var(--warn)} .note.warn .lbl{color:var(--warn)}
+  .note.go .lbl{color:var(--go)}
+  .note p{margin:0} .note p+p{margin-top:8px}
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:14px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:9px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  .back{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+        color:var(--dim);border:1px solid var(--line);padding:8px 12px;text-decoration:none;margin-top:34px}
+  .back:hover{color:var(--ink);border-color:var(--amber)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="tail">F-14B(U) · Contenu livré avec le module</div>
+  <h1>Les missions<br>du module</h1>
+  <p class="intro">Heatblur livre des missions d'entraînement avec le B(U). Elles sont faites par les gens qui ont codé l'avion — autant les utiliser plutôt que de tout découvrir seul. Cette page te dit où les trouver et dans quel ordre les voler.</p>
+
+  <h2>Où les trouver dans DCS</h2>
+  <p class="lead">Trois endroits différents, trois usages différents.</p>
+
+  <table>
+    <thead><tr><th>Menu</th><th>Ce que tu y trouves</th><th>Quand l'utiliser</th></tr></thead>
+    <tbody>
+      <tr><td class="w">Entraînement<br><small style="font-weight:400;color:var(--dim)">Training</small></td>
+          <td>Missions guidées avec instructions à l'écran, centrées sur les systèmes propres au B(U).</td>
+          <td><b>En premier.</b> C'est de la pédagogie pure, pas du combat.</td></tr>
+      <tr><td class="w">Action instantanée<br><small style="font-weight:400;color:var(--dim)">Instant Action</small></td>
+          <td>Situations prêtes à voler : décollage, appontage, interception, frappe. Un jeu complet et neuf pour le B(U).</td>
+          <td>Pour t'exercer sans rien préparer, une fois les bases acquises.</td></tr>
+      <tr><td class="w">Campagnes</td>
+          <td><b>Operation Reforger III</b> (Allemagne, guerre froide), livrée avec le module. Plus une campagne dédiée B(U) de Baltic Dragon, ajoutée après la sortie.</td>
+          <td>Quand tu tiens l'avion. C'est la récompense.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <span class="lbl">Comment y accéder</span>
+    <p>Menu principal de DCS → <code>MISSIONS</code>, puis l'onglet voulu. Filtre par appareil sur <b>F-14B(U)</b> pour ne voir que ce qui te concerne : les missions de l'ancien Tomcat apparaissent aussi dans la liste si tu ne filtres pas.</p>
+  </div>
+
+  <h2>Dans quel ordre les voler</h2>
+  <p class="lead">Voici comment intercaler les missions du module dans le tutoriel. Les sections renvoient aux leçons que tu as déjà.</p>
+
+  <table>
+    <thead><tr><th>Après cette section</th><th>Vole ceci</th><th>Pourquoi</th></tr></thead>
+    <tbody>
+      <tr><td class="w">Cockpit</td><td>N'importe quelle mission au parking, <b>moteurs coupés</b>.</td>
+          <td>Tu n'as rien à réussir : tu ouvres le click-to-explain et tu retrouves les commandes de la section Cockpit dans le vrai poste.</td></tr>
+      <tr><td class="w">A — Reprendre l'avion en main</td><td>Entraînement au <b>démarrage</b>, puis Action instantanée <b>décollage</b> et <b>vol libre</b>.</td>
+          <td>Le démarrage guidé te donne la séquence exacte sans que tu aies à la chercher.</td></tr>
+      <tr><td class="w">B — Navigation EGI/CDNU</td><td>Entraînement <b>navigation</b> et <b>alignement</b> si présent.</td>
+          <td>C'est là que les missions du module valent le plus : la saisie CDNU au clavier s'apprend mal dans un texte.</td></tr>
+      <tr><td class="w">C — Le porte-avions</td><td>Action instantanée <b>départ catapulte</b> puis <b>appontage</b>.</td>
+          <td>L'appontage en action instantanée te place directement en approche : tu enchaînes les passages sans perdre de temps.</td></tr>
+      <tr><td class="w">D — Air-air</td><td>Action instantanée <b>interception</b> et <b>combat</b>.</td>
+          <td>Des cibles fournies, pas de mission à construire.</td></tr>
+      <tr><td class="w">E — Survivre</td><td>Toute mission avec défense sol-air.</td>
+          <td>Pour éprouver tes programmes ALE-47 en conditions réelles.</td></tr>
+      <tr><td class="w">F — Air-sol</td><td>Entraînement <b>JDAM</b> — c'est le morceau de résistance.</td>
+          <td>Voir ci-dessous : c'est la mission d'entraînement la plus utile du lot.</td></tr>
+      <tr><td class="w">G — Mission complète</td><td><b>Operation Reforger III</b>.</td>
+          <td>Une vraie campagne, avec un fil narratif et une difficulté croissante.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>L'entraînement JDAM : les deux cas</h2>
+  <p>C'est la formation la plus précieuse du module, parce qu'elle couvre <b>deux façons différentes</b> de frapper avec une JDAM, et que la seconde est contre-intuitive sur cet avion.</p>
+
+  <h3>Cas 1 · Mission pré-planifiée</h3>
+  <p>Tu prépares les coordonnées avant le vol dans l'éditeur de mission, elles arrivent dans l'avion par la cartouche de données. Le PTID a une page mission JDAM qui te permet de relire et de corriger jusqu'à <b>huit missions pré-planifiées par station</b>. Les coordonnées de cible peuvent être modifiées en vol depuis le CDNU ; en revanche le point de largage, lui, se fige à la planification.</p>
+
+  <h3>Cas 2 · Cible d'opportunité</h3>
+  <div class="note warn">
+    <span class="lbl">Le point à comprendre absolument</span>
+    <p>Contrairement aux chasseurs modernes, le B(U) <b>n'a pas de mode « cible d'opportunité » dédié</b>. Frapper une cible non planifiée se fait donc par un détour : tu passes par une mission pré-planifiée existante et tu réécris ses coordonnées en vol.</p>
+    <p>C'est exactement le genre de chose qu'un tutoriel écrit explique mal et qu'une mission guidée montre bien. Vole-la.</p>
+  </div>
+
+  <h3>Deux réflexes que l'entraînement te fera acquérir</h3>
+  <ol class="proc">
+    <li>Après avoir chargé la cartouche de données <b>ou modifié des coordonnées en vol</b>, il faut valider avec le bouton <code>UPDATE</code>. Sans ça, la bombe garde les anciennes coordonnées.</li>
+    <li>La mise sous tension des JDAM lance un compte à rebours de <b>huit minutes</b>, affiché jusqu'à ce qu'il tombe à cinq. Anticipe : une bombe pas prête est une bombe qui ne part pas.</li>
+  </ol>
+
+  <div class="note go">
+    <span class="lbl">Ce que tu notes après chaque mission</span>
+    <p>Ouvre la leçon correspondante de ton tutoriel et écris dans <b>Tes notes</b> la séquence exacte que la mission t'a fait faire. Une mission d'entraînement, ça se vole une fois puis ça s'oublie ; tes notes, elles, restent.</p>
+  </div>
+
+  <h2>Une réserve honnête</h2>
+  <p>Je n'ai pas la liste nominative des missions d'entraînement livrées avec le module : je sais qu'elles existent, je sais qu'elles couvrent les systèmes propres au B(U) et notamment la JDAM dans ses deux cas, mais je ne connais pas leurs titres exacts.</p>
+  <p>Le tableau d'ordre ci-dessus reste donc valable en tant que <b>méthode</b>, mais les intitulés que tu verras dans DCS peuvent différer de ceux que j'emploie. Ouvre le menu <code>MISSIONS</code>, filtre sur F-14B(U), et note ci-dessous ou dans tes leçons ce que tu trouves vraiment. Le contenu peut aussi s'enrichir avec les mises à jour du module.</p>
+
+  <a class="back" href="index.html">← Retour au tutoriel</a>
+</div>
+</body>
+</html>

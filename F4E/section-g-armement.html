@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Section G — Armement &amp; capteurs — F-4E</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+    --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+    --display:"Oswald","Arial Narrow",sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)}
+  .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+  .page{padding:34px 44px 90px;max-width:920px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+         color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;color:var(--ink);margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+     margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin:24px 0 10px}
+  p{margin:14px 0}
+  .lead{color:var(--dim)}
+  table.pins{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
+  table.pins td.n{font-family:var(--mono);color:var(--amber);width:70px}
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%}
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+  .tag-p{display:inline-block;font-family:var(--mono);font-size:9.5px;color:var(--deck);background:var(--go);padding:1px 5px;margin-right:6px;vertical-align:1px}
+  .tag-w{display:inline-block;font-family:var(--mono);font-size:9.5px;color:var(--deck);background:var(--amber);padding:1px 5px;margin-right:6px;vertical-align:1px}
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)}
+  .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .note p+p{margin-top:8px}
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+  .banner{background:var(--panel-2);border-bottom:1px solid var(--amber);padding:11px 20px;font-size:13px;color:var(--dim);display:flex;gap:14px;align-items:center;justify-content:space-between}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+
+<div id="banner" class="banner">
+  <span>Contenu issu du manuel officiel Heatblur et du guide complet de Chuck (pages 275 à 800) — radar, Pave Spike, armement air-air/air-sol, RWR/contre-mesures, IFF, radio, autopilote.</span>
+  <button class="ghost" onclick="document.getElementById('banner').remove()">OK</button>
+</div>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <a href="index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:6px">&larr; Cursus F-4E</a><br>
+      <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px">&larr; Accueil</a>
+      <div class="tail">Section G · F-4E Phantom II</div>
+      <h1>Armement<br>&amp; capteurs</h1>
+      <p class="sub">Six leçons : radar, canon/Sidewinder, Sparrow, air-sol/Pave Spike, RWR/contre-mesures/IFF, radio/autopilote.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const IMG = {
+  radarscreen: "radar_screen.jpg",
+  ase: "radar_ase_circle.jpg",
+  aimdot: "radar_aim_dot.jpg",
+  cage: "radar_cage_mode.jpg",
+  search: "radar_search.jpg",
+  track: "radar_track.jpg",
+  pavepod: "pave_spike_pod.jpg",
+  pavesym: "pave_spike_symbology.jpg",
+  pavescreen: "pave_spike_screen_example.jpg",
+  rwrscope: "rwr_with_contacts.jpg",
+  rwrind: "pilot_rwr_indicator.jpg",
+  iffpanel: "pilot_iff_panel.jpg",
+  ifffriend: "radar_iff_friendly.jpg",
+  ale40: "pilot_an_ale_40_switch.jpg",
+  alq131: "ext_alq_131_ecm_pod.jpg",
+  jesterui: "jester_wheel_ui.jpg"
+};
+const LESSONS = [
+{
+  id: "g1", idx:"G1", nm:"Radar AN/APQ-120", badge:"WSO",
+  intro: "Un radar à impulsions « brut » qui capte tout, air et sol, sans filtrage automatique — c'est au WSO de trier. Trois façons d'entrer en lock : recherche classique, Cage/CAA au combat rapproché, et ranging air-sol.",
+  body: `
+    <h3>Mise en route</h3>
+    <ol class="proc">
+      <li><span class="tag-w">WSO</span> Vérifier : moteurs tournants, générateurs ON, INS aligné, Instrument Ground Power Test Switch sur NORM.</li>
+      <li><span class="tag-w">WSO</span> Radar Power Selector — STBY. Le magnétron n'est alimenté qu'après 3 min, le klystron après 100 sec.</li>
+      <li><span class="tag-w">WSO</span> Une fois la chauffe terminée <b>et en vol uniquement</b> : Radar Power Selector — OPR (jamais au sol, pour la sécurité du personnel).</li>
+      <li><span class="tag-w">WSO</span> DSCG Mode Selector — RDR. <span class="tag-p">P</span> DSCG Screen Mode Switch — RADAR pour voir le répétiteur.</li>
+    </ol>
+    <h3>Recherche &amp; verrouillage longue distance (BVR)</h3>
+    <figure><img data-src="search" alt="Radar en recherche"><figcaption><span>Écran radar en phase de recherche</span></figcaption></figure>
+    <figure><img data-src="track" alt="Radar en poursuite"><figcaption><span>Cible verrouillée, mode poursuite</span></figcaption></figure>
+    <ol class="proc">
+      <li><span class="tag-w">WSO</span> Mode radar — RDR (avec nutation) ou MAP (sans nutation, faisceau plus étroit).</li>
+      <li><span class="tag-w">WSO</span> Display Selector — B NAR/WIDE (le mode B-Scope permet le verrouillage ; le mode PPI non).</li>
+      <li><span class="tag-w">WSO</span> Portée conseillée : 25 ou 50 nm. Stab Switch — NORMAL, Polarization — LINEAR, Maneuver — HI G, Track — AUTO, Pulse — AUTO.</li>
+      <li><span class="tag-w">WSO</span> Ajuster le gain pour distinguer les échos parasites des contacts réels.</li>
+      <li><span class="tag-w">WSO</span> Glisser le curseur radar sur la cible avec l'Antenna Hand Control, presser la détente en second cran (Full-Action) pour tenter l'accrochage.</li>
+      <li><span class="tag-w">WSO</span> Accrochage confirmé : voyants SKIN TRK et « T » allumés, cercle ASE et point de visée (Aim Dot) affichés.</li>
+    </ol>
+    <div class="note go">
+      <span class="lbl">Calcul rapide d'altitude cible</span>
+      <p>Différence d'altitude (centaines de ft) = angle d'élévation (deg) × distance (nm). Exemple : cible à 10 nm, 5° au-dessus → 50 centaines de ft = 5000 ft au-dessus de toi.</p>
+    </div>
+    <h3>Combat rapproché — Cage &amp; CAA</h3>
+    <figure><img data-src="cage" alt="Mode Cage"><figcaption><span>Radar en mode Cage/Boresight</span></figcaption></figure>
+    <ol class="proc">
+      <li><span class="tag-p">P</span> Presser le bouton Cage sur la manette — passe en mode Boresight, limite la portée à 5 nm.</li>
+      <li><span class="tag-p">P</span> Presser le bouton de direction roulette avant (touche N) pour entrer en CAA (Computer Automatic Acquisition) — le radar balaie une zone verticale de 78° de haut sur 15° de large.</li>
+      <li><span class="tag-p">P</span> Le Pinky Switch déplace la zone de balayage : AFT = 15° à gauche, CENTER = centré, FWD = 15° à droite. Je recommande de le laisser sur CENTER (HEAT) pour aligner simplement le viseur optique sur la cible.</li>
+      <li><span class="tag-p">P</span> Toute cible détectée dans le volume balayé, dans les 5 nm, est automatiquement verrouillée.</li>
+    </ol>
+    <div class="note warn">
+      <span class="lbl">Piège classique</span>
+      <p>Ne pas confondre Cage Mode (fixe l'antenne sur la ligne de visée) et CAA Mode (balayage automatique déclenché depuis Cage) — CAA se sélectionne en pressant le bouton de direction roulette avant une fois en Cage.</p>
+    </div>
+    <h3>Ranging air-sol</h3>
+    <p class="lead">Mode AIR-GRD (portée 5 ou 10 nm uniquement) : l'antenne reste fixe sur la ligne de visée radar, stabilisée en dérive, et ne piste qu'en distance (pas en angle). Utilisé pour le Dive Toss — voir Leçon G4.</p>
+  `
+},
+{
+  id: "g2", idx:"G2", nm:"Canon &amp; AIM-9 Sidewinder", badge:"Emploi",
+  intro: "Le canon Vulcan et le Sidewinder partagent le même viseur optique LCOSS — la lecture change selon qu'un lock radar existe ou non.",
+  body: `
+    <h3>M61A1 Vulcan (20 mm)</h3>
+    <figure><img data-src="radarscreen" alt="Écran radar"><figcaption><span>Écran radar avec repère de portée</span></figcaption></figure>
+    <p class="lead">639 obus, cadence sélectionnable 4000 ou 6000 coups/min. Le viseur LCOSS projette un réticule de 2 mils (pipper), un anneau intérieur de 25 mils et un anneau extérieur de 50 mils.</p>
+    <div class="note go">
+      <span class="lbl">Règle pratique de distance</span>
+      <p>Diamètre en mils = 1000 × envergure cible (ft) / distance (ft). Un MiG-21 (23 ft d'envergure) qui remplit l'anneau intérieur (25 mils) = environ 1000 ft, la distance de tir optimale.</p>
+    </div>
+    <ol class="proc">
+      <li><span class="tag-p">P</span> Gun/Missile Pinky Switch — GUN (arrière).</li>
+      <li><span class="tag-p">P</span> Weapon Selector Knob — toute position sauf TV ou ARM. Air-to-Ground Delivery Mode — OFF.</li>
+      <li><span class="tag-p">P</span> Master Arm — ARMED. Vérifier voyants ARM et GUN allumés.</li>
+      <li><span class="tag-p">P</span> Sight Mode Selector — A/A.</li>
+      <li><span class="tag-p">P</span> Sans lock radar : le réticule vise à une distance par défaut de 1000 ft. Avec lock : la barre de distance s'étend de 1000 ft (6h) à 6700 ft (1h).</li>
+      <li><span class="tag-p">P</span> Le bouton Cage « fige » le réticule sur la ligne de visée radar — utile en forte G quand le pipper sort du champ visuel.</li>
+      <li><span class="tag-p">P</span> Aligner le pipper sur la cible, presser la détente en second cran pour tirer.</li>
+    </ol>
+    <div class="note">
+      <span class="lbl">À savoir</span>
+      <p>La trappe de purge des gaz s'ouvre automatiquement pendant le tir et se referme 10 sec à 1 min après, selon la durée de la rafale.</p>
+    </div>
+    <h3>AIM-9 Sidewinder — guidage infrarouge</h3>
+    <p class="lead">Le radar n'est jamais nécessaire pour guider le Sidewinder — il ne sert qu'à obtenir une solution de tir. Le missile s'autoguide sur la chaleur, quel que soit le mode d'emploi.</p>
+    <h4>Sans radar</h4>
+    <ol class="proc">
+      <li><span class="tag-p">P</span> Pinky Switch — HEAT (centre). Master Arm — ARMED. Sight Mode — A/A.</li>
+      <li><span class="tag-p">P</span> Aligner le viseur sur la cible — grognement grave = pas d'accrochage thermique, tonalité aiguë = cible détectée.</li>
+      <li><span class="tag-p">P</span> Maintenir le bouton Air Refueling Release pour « découvrir » (uncage) le chercheur du missile et suivre la cible en manœuvrant.</li>
+      <li><span class="tag-p">P</span> Tonalité aiguë maintenue, dans la portée efficace : presser la détente en second cran pour tirer.</li>
+    </ol>
+    <h4>Avec radar (Cage/CAA)</h4>
+    <figure><img data-src="aimdot" alt="Point de visée"><figcaption><span>Point de visée (Aim Dot) et cercle ASE</span></figcaption></figure>
+    <p class="lead">Même séquence Cage/CAA que pour le canon (voir G1). Une fois verrouillé : Pinky Switch sur HEAT, cercle ASE et point de visée affichés, deux repères de portée (Rmin/Rmax) apparaissent. Quand IN RANGE et SHOOT s'allument, la cible est dans l'enveloppe de tir.</p>
+    <div class="note warn">
+      <span class="lbl">Piège classique</span>
+      <p>Les voyants IN RANGE/SHOOT indiquent une solution de tir valide — ils ne garantissent pas que le Sidewinder accrochera la cible. Vérifie toujours la tonalité aiguë du chercheur avant de tirer.</p>
+    </div>
+  `
+},
+{
+  id: "g3", idx:"G3", nm:"AIM-7 Sparrow", badge:"Équipage",
+  intro: "Guidage radar semi-actif : le radar doit rester verrouillé jusqu'à l'impact. Portée maximale ~26 nm, mais vise plutôt 10 nm pour une probabilité de tir correcte.",
+  body: `
+    <h3>Préparation du missile</h3>
+    <figure><img data-src="ase" alt="Cercle ASE"><figcaption><span>Cercle ASE (Allowable Steering Error)</span></figcaption></figure>
+    <ol class="proc">
+      <li><span class="tag-p">P</span> Missile Power Switch — CW ON. Démarre la mise en fréquence du klystron.</li>
+      <li><span class="tag-p">P</span> Attendre la fin de la mise en fréquence : 4 min pour l'AIM-7E, 1 min pour l'AIM-7F.</li>
+      <li><span class="tag-p">P</span> Vérifier les voyants RDR allumés. Interlock Switch — IN (bride le tir hors solution valide) ou OUT (outrepasse les limites).</li>
+      <li><span class="tag-p">P</span> Master Arm — ARMED. Pinky Switch — RADAR (avant). Sight Mode — A/A.</li>
+    </ol>
+    <h3>Séquence de tir (équipage humain, longue distance)</h3>
+    <ol class="proc">
+      <li><span class="tag-w">WSO</span> Effectuer le lock radar (voir G1 — procédure BVR).</li>
+      <li><span class="tag-w">WSO</span> Compter 4 secondes à voix haute (AIM-7E) ou 2 secondes (AIM-7F) après le lock, pour laisser le temps au verrouillage Doppler du missile — « 1 Mississippi... Shoot ».</li>
+      <li><span class="tag-p">P</span> Centrer le point de visée (Aim Dot) dans le cercle ASE.</li>
+      <li><span class="tag-p">P</span> Voyants IN RANGE et SHOOT allumés → presser la détente en second cran.</li>
+      <li><span class="tag-p">P</span> Après le tir, maintenir le lock radar — le missile est guidé par ton radar jusqu'à l'impact.</li>
+    </ol>
+    <div class="note warn">
+      <span class="lbl">Piège classique</span>
+      <p>Ne pas respecter le délai de mise en phase Doppler (4 sec / 2 sec) peut faire échouer le guidage — le missile n'aura pas reçu l'injection correcte de vitesse de fermeture.</p>
+    </div>
+    <h3>Avec Jester</h3>
+    <p class="lead">Jester gère automatiquement le compte à rebours de mise en phase et l'annonce vocalement. Utilise l'action contextuelle (touche V) : appui court pour sélectionner une cible, appui long pour verrouiller/déverrouiller.</p>
+    <div class="note go">
+      <span class="lbl">Restriction de tir</span>
+      <p>Si l'aspect de la cible est de 90° ±9° et qu'elle vole sous 5° au-dessus de l'horizon, les voyants SHOOT sont inhibés — pour éviter un tir dans le lobe principal du clutter au sol.</p>
+    </div>
+  `
+},
+{
+  id: "g4", idx:"G4", nm:"Armement air-sol &amp; Pave Spike", badge:"Précision",
+  intro: "Le Dive Toss reste le mode le plus flexible pour les cibles d'opportunité ; le Pave Spike ajoute la désignation laser pour les bombes guidées.",
+  body: `
+    <h3>Modes de largage — vue d'ensemble</h3>
+    <figure><img data-src="pavepod" alt="Nacelle Pave Spike"><figcaption><span>Nacelle AN/AVQ-23 Pave Spike</span></figcaption></figure>
+    <table class="pins">
+      <tr><td class="n">DT (Dive Toss)</td><td>Précis, cible d'opportunité — le WSO obtient la distance radar, le pilote tient le pipper et largue en tirant sur le manche.</td></tr>
+      <tr><td class="n">DIRECT</td><td>Visée manuelle classique, sans WRCS ni ARBCS — profil de secours si le Dive Toss échoue.</td></tr>
+      <tr><td class="n">TGT FIND</td><td>Comme le Dive Toss mais désignation via le Pave Spike au lieu du radar.</td></tr>
+      <tr><td class="n">OFFSET</td><td>Largage « à l'aveugle » via un point de référence (IP) connu, quand la cible n'est pas visible directement.</td></tr>
+      <tr><td class="n">L / DL (Laydown)</td><td>Basse altitude, en palier — bombes à traînée élevée ou munitions à sous-munitions.</td></tr>
+      <tr><td class="n">LOFT / O/S</td><td>Conçu à l'origine pour l'arme nucléaire — permet de larguer à distance de sécurité en ressource.</td></tr>
+    </table>
+    <div class="note go">
+      <span class="lbl">Outil indispensable</span>
+      <p>La calculatrice de bombardement (RCTRL+B) calcule automatiquement le coefficient de traînée, la portée de largage, la dépression de visée et l'avance de largage — évite de fouiller les tables papier.</p>
+    </div>
+    <h3>Dive Toss — procédure complète</h3>
+    <ol class="proc">
+      <li>Vérifier la pression barométrique (QNH) correcte pour la zone cible.</li>
+      <li>Remplir la calculatrice (RCTRL+B) : mode DT, type de bombe, vitesse d'approche, altitude cible/largage, angle de piqué → obtenir coefficient de traînée et avance de largage.</li>
+      <li><span class="tag-p">P</span> Sélectionner la station, Weapon Selector — BOMBS, Delivery Mode — DT, régler l'AWRU (quantité, intervalle), Fuzing — NOSE &amp; TAIL, Master Arm — ARMED.</li>
+      <li><span class="tag-p">P</span> Sight Mode — A/G. Piquer sur la cible à la vitesse et l'angle planifiés.</li>
+      <li><span class="tag-w">WSO</span> Radar en mode AIR-GRD, portée 5 ou 10 nm, glisser le curseur sur le retour radar au sol, verrouiller (Full-Action) — appeler « Captured » une fois le lock confirmé.</li>
+      <li><span class="tag-p">P</span> Stabiliser le pipper sur la cible, presser et maintenir le bouton de largage (insère la distance radar dans le WRCS), puis débuter la ressource en palier.</li>
+      <li>Une tonalité confirme l'acceptation de la distance par le WRCS ; les bombes larguent automatiquement au bon moment de la trajectoire.</li>
+    </ol>
+    <div class="note go">
+      <span class="lbl">Bon réflexe</span>
+      <p>Toujours préparer un profil Direct en secours, 5° plus plat que le Dive Toss prévu — si le radar ou le WRCS tombe en panne, tu peux basculer sans replanifier entièrement.</p>
+    </div>
+    <h3>Pave Spike — mise en route et désignation laser</h3>
+    <figure><img data-src="pavesym" alt="Symbologie Pave Spike"><figcaption><span>Symbologie du réticule Pave Spike</span></figcaption></figure>
+    <figure><img data-src="pavescreen" alt="Écran Pave Spike"><figcaption><span>Écran DSCG en mode TV — vue Pave Spike</span></figcaption></figure>
+    <ol class="proc">
+      <li><span class="tag-w">WSO</span> Target Designation Power — ON, vérifier BIT = 1, Stow Button — ON (tête stockée).</li>
+      <li><span class="tag-w">WSO</span> Régler le code laser désiré, presser Laser Code Enter — le voyant NO GO doit s'éteindre.</li>
+      <li><span class="tag-w">WSO</span> Stow Button — OFF (dé-stockage, ~5 sec), presser Laser Ready — voyant LASER READY allumé.</li>
+      <li><span class="tag-p">P</span> Delivery Mode — TGT FIND, Weapon Release Mode — WRCS.</li>
+      <li><span class="tag-w">WSO</span> Acquisition Mode — 12-VIS (ligne de visée au 12h, légèrement piquée) pour repérer visuellement, puis Video Select — ASQ-153, DSCG Mode — TV.</li>
+      <li><span class="tag-p">P</span> Amener le réticule sur la cible, annoncer « Tracking ».</li>
+      <li><span class="tag-w">WSO</span> Demi-course de la détente pour entrer en mode Track, puis pleine course pour tirer le laser — annoncer « Capture » une fois stabilisé, puis « Acceptance » une fois la solution acquise.</li>
+    </ol>
+    <div class="note warn">
+      <span class="lbl">Piège classique</span>
+      <p>Le laser a une portée max d'environ 11 nm et ne doit pas être utilisé plus de 15 min sans pause refroidissement (30 min max en vol lent et bas). Si la distance mesurée au laser diffère de plus de 20% de la distance calculée par l'INS/WRCS, elle est rejetée — presser Reject/Override pour forcer la valeur laser, plus précise en pratique.</p>
+    </div>
+  `
+},
+{
+  id: "g5", idx:"G5", nm:"RWR, contre-mesures &amp; IFF", badge:"Défense",
+  intro: "Le RWR indique qui te vise et comment ; chaff, flares et brouilleur actif répondent chacun à une menace différente ; l'IFF évite le tir fratricide.",
+  body: `
+    <h3>AN/ALR-46 RWR — mise en route et lecture</h3>
+    <figure><img data-src="rwrscope" alt="Écran RWR"><figcaption><span>Écran RWR avec plusieurs contacts</span></figcaption></figure>
+    <figure><img data-src="rwrind" alt="Indicateur RWR"><figcaption><span>Indicateur RWR, poste pilote</span></figcaption></figure>
+    <ol class="proc">
+      <li>Presser System Power — BIT de 9 secondes.</li>
+      <li>Activer le mode SEARCH pour voir aussi les radars de veille longue portée (symbole « S »).</li>
+      <li>La menace prioritaire est entourée d'un losange ; un cercle autour d'un symbole signale un guidage de missile actif.</li>
+    </ol>
+    <table class="pins">
+      <tr><td class="n">MODE</td><td>OPEN (jusqu'à 16 menaces) ou PRIORITY (les 5 plus dangereuses seulement).</td></tr>
+      <tr><td class="n">ACTIVITY</td><td>Commande de guidage SAM détectée — cercle autour de l'émetteur.</td></tr>
+      <tr><td class="n">LAUNCH</td><td>Lancement de missile détecté — tonalité de 7 bips.</td></tr>
+      <tr><td class="n">HANDOFF</td><td>Maintenu : fait défiler manuellement la priorité entre émetteurs (verrouille sur un choix).</td></tr>
+      <tr><td class="n">ALTITUDE</td><td>LOW ALT réintègre les menaces basse altitude normalement écartées par l'estimation d'enveloppe.</td></tr>
+      <tr><td class="n">UNKNOWN</td><td>Signale un émetteur sans entrée catalogue mais jugé menaçant (symbole « U »).</td></tr>
+    </table>
+    <div class="note go">
+      <span class="lbl">Tonalité « new guy »</span>
+      <p>Trois bips rapides signalent l'apparition d'un nouvel émetteur ou un changement de fréquence — un signal pour vérifier l'écran RWR immédiatement.</p>
+    </div>
+    <h3>AN/ALE-40 — chaff &amp; flares</h3>
+    <p class="lead">Flares contre menace infrarouge, chaff contre menace radar (brouillage passif). Le largage nécessite volets et aérofreins rentrés.</p>
+    <ol class="proc">
+      <li>Mode SGL (chaff/flare unique par pression), MULT (rafale selon réglage), ou PROG (plusieurs salves programmées).</li>
+      <li>Régler nombre/intervalle de rafales (chaff) et de salves, ainsi que l'intervalle des flares sur le panneau programmateur.</li>
+      <li>Larguer via le bouton de la manette (pilote) ou le CCU (WSO).</li>
+    </ol>
+    <h3>AN/ALQ-131 — brouilleur actif</h3>
+    <figure><img data-src="ale40" alt="Panneau ALE-40"><figcaption><span>Sélecteurs chaff/flares AN/ALE-40</span></figcaption></figure>
+    <ol class="proc">
+      <li><span class="tag-w">WSO</span> Jamais d'activation au sol (risque pour le personnel).</li>
+      <li><span class="tag-w">WSO</span> En vol : sélecteur — STBY, chauffe d'environ 3 minutes (voyants STBY confirment la fin de chauffe).</li>
+      <li><span class="tag-w">WSO</span> XMIT 1, XMIT 2 ou BOTH pour brouiller. Voyant AI (Air Intercept) confirme un brouillage actif contre un radar ennemi.</li>
+      <li><span class="tag-w">WSO</span> Ne pas dépasser 20 minutes de transmission continue sans pause refroidissement — un voyant de défaut clignotant signale une surchauffe, repasser immédiatement en STBY.</li>
+    </ol>
+    <h3>IFF — Identify Friend or Foe</h3>
+    <figure><img data-src="alq131" alt="Nacelle brouilleur"><figcaption><span>Nacelle brouilleur AN/ALQ-131</span></figcaption></figure>
+    <p class="lead">Le Mode 4 est le seul sécurisé (chiffré) — les modes 1, 2 et 3 peuvent être copiés par l'adversaire et trahir ta position à chaque réponse.</p>
+    <div class="note warn">
+      <span class="lbl">Piège classique</span>
+      <p>L'absence de réponse IFF ne garantit <b>pas</b> qu'un contact est hostile — un allié peut avoir un transpondeur endommagé, un mauvais code, ou simplement l'IFF éteint. Toujours croiser avec une identification visuelle ou les instructions d'un contrôleur avant d'engager.</p>
+    </div>
+    <ol class="proc">
+      <li><span class="tag-p">P</span> IFF Master Selector — STANDBY, attendre ~80 sec de chauffe, puis NORM.</li>
+      <li><span class="tag-p">P</span> Régler le code Mode 3/A demandé par la mission.</li>
+      <li><span class="tag-w">WSO</span> Pour interroger : radar allumé, presser le bouton Challenge sur l'Antenna Hand Control. Deux lignes au-dessus/en dessous du retour radar = ami confirmé ; une seule ligne = mode compatible mais code différent ; aucune ligne = pas de réponse.</li>
+    </ol>
+  `
+},
+{
+  id: "g6", idx:"G6", nm:"Radio, autopilote &amp; Jester", badge:"Systèmes",
+  intro: "Deux radios UHF (COMM émission/réception, AUX réception seule), un intercom, et un AFCS qui peut tenir cap et altitude — plus Jester qui peut gérer tout ça pour toi.",
+  body: `
+    <h3>Radio UHF</h3>
+    <figure><img data-src="iffpanel" alt="Panneau IFF"><figcaption><span>Panneau de contrôle IFF</span></figcaption></figure>
+    <figure><img data-src="ifffriend" alt="Réponse IFF amie"><figcaption><span>Symbologie radar — réponse IFF amie confirmée</span></figcaption></figure>
+    <ol class="proc">
+      <li>Mode Selector — T/R+G (émission/réception + fréquence de garde).</li>
+      <li>Preset (canal pré-réglé, non modifiable en vol) ou Manual (fréquence libre).</li>
+      <li>Squelch — ON, régler le volume, vérifier le voyant COMM CMD allumé (sinon presser le bouton de bascule de commande).</li>
+      <li>Émettre en maintenant le Mic Switch en position UHF (avant).</li>
+    </ol>
+    <p class="lead">La radio AUX ne fait que recevoir — utile pour surveiller une deuxième fréquence sans quitter la principale. Le chiffrement KY-28 (mode Cipher) protège les communications sensibles, au prix d'un léger délai de synchronisation à chaque transmission.</p>
+    <h3>AFCS — pilote automatique</h3>
+    <ol class="proc">
+      <li>Engager le Stab Aug (Yaw/Roll/Pitch) — ON.</li>
+      <li>Trimmer l'avion en vol stabilisé avant d'engager l'AFCS.</li>
+      <li>AFCS Mode Switch — ENGAGE : tient l'assiette et le cap dans une plage de ±70° de tangage et de roulis.</li>
+      <li>Pour Altitude Hold : engager d'abord l'AFCS, trimmer en palier, puis Altitude Hold Switch — ENGAGE.</li>
+    </ol>
+    <div class="note warn">
+      <span class="lbl">Piège classique</span>
+      <p>Ne jamais tenter de corriger l'assiette depuis le poste arrière en mode AFCS — sans capteur de force sur le manche WSO, toute pression fait dériver le trim et peut provoquer des oscillations violentes si le pilote reprend la main brutalement ensuite.</p>
+    </div>
+    <p class="lead">Le système se désengage automatiquement au-delà de +4G ou -1G (dispositif de sécurité), et complètement si la palette d'urgence (Emergency Quick Release) est pressée.</p>
+    <h3>Jester WSO — recentrage</h3>
+    <figure><img data-src="jesterui" alt="Roue Jester"><figcaption><span>Interface de la roue de commandes Jester</span></figcaption></figure>
+    <p class="lead">Si tu voles seul, Jester gère l'alignement INS, le radar (recherche, lock, CAA), le Pave Spike, les contre-mesures, la radio et la navigation par leapfrogging entre les points de route. La roue de commandes s'ouvre par une pression courte sur A, se referme par une pression longue. L'action contextuelle (touche V, à mapper) s'adapte au contexte : sélection de cible en phase de recherche, verrouillage/déverrouillage en phase de tracking, sélection d'aspect en Cage/Boresight.</p>
+    <div class="srcs">
+      <a href="index.html">Retour au sommaire</a>
+    </div>
+  `
+}
+];
+
+let progress = {}, notes = {};
+const K_PROG = "f4e_g_progress", K_NOTES = "f4e_g_notes";
+
+function renderRail(){
+  const rail = document.getElementById('rail');
+  rail.innerHTML = LESSONS.map(l => `
+    <button class="item ${progress[l.id]?'done':''} ${l.id===current?'on':''}" onclick="goTo('${l.id}')">
+      <span class="idx">${l.idx}</span><span class="nm">${l.nm.replace(/&amp;/g,'&')}</span>
+    </button>`).join('');
+  const done = Object.values(progress).filter(Boolean).length;
+  document.getElementById('foot').textContent = `${done} / ${LESSONS.length} leçons terminées`;
+}
+function esc(s){ return (s||"").replace(/[&<>]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+async function renderMain(){
+  const l = LESSONS.find(x=>x.id===current);
+  const i = LESSONS.indexOf(l);
+  const prev = LESSONS[i-1], next = LESSONS[i+1];
+  const noteVal = notes[l.id] || "";
+  document.getElementById('main').innerHTML = `
+    <div class="page">
+      <div class="eyebrow">Leçon ${l.idx} · Section G</div>
+      <h2>${l.nm.replace(/&amp;/g,'&')}<span class="badge">${l.badge}</span></h2>
+      <p class="intro">${l.intro}</p>
+      ${l.body}
+      <h3>Notes personnelles</h3>
+      <textarea id="notes" placeholder="Tes remarques, réglages, pièges rencontrés...">${esc(noteVal)}</textarea>
+      <div class="doneline ${progress[l.id]?'on':''}" id="doneline" onclick="toggleDone('${l.id}')">
+        <div class="box"></div><span>${progress[l.id] ? 'Leçon marquée comme terminée' : 'Marquer cette leçon comme terminée'}</span>
+      </div>
+      <div class="nav">
+        ${prev ? `<button class="ghost" onclick="goTo('${prev.id}')">&larr; ${prev.nm.replace(/&amp;/g,'&')}</button>` : `<a class="ghost" href="index.html">&larr; Sommaire</a>`}
+        ${next ? `<button class="ghost" onclick="goTo('${next.id}')">${next.nm.replace(/&amp;/g,'&')} &rarr;</button>` : `<a class="ghost" href="index.html">Sommaire &rarr;</a>`}
+      </div>
+    </div>`;
+  document.querySelectorAll('img[data-src]').forEach(img=>{
+    img.src = "img/" + IMG[img.dataset.src];
+    img.onclick = () => openLb(img.src);
+  });
+  const ta = document.getElementById('notes');
+  ta.addEventListener('input', async () => { notes[l.id] = ta.value; await __sset(K_NOTES, JSON.stringify(notes)); });
+}
+async function toggleDone(id){
+  progress[id] = !progress[id];
+  await __sset(K_PROG, JSON.stringify(progress));
+  renderRail(); renderMain();
+}
+function openLb(src){ document.getElementById('lbimg').src = src; document.getElementById('lb').classList.add('on'); }
+document.getElementById('lb').onclick = () => document.getElementById('lb').classList.remove('on');
+let current = LESSONS[0].id;
+function goTo(id){ current = id; renderRail(); renderMain(); window.scrollTo(0,0); }
+(async function init(){
+  const p = await __sget(K_PROG); if (p && p.value) { try { progress = JSON.parse(p.value); } catch(e){} }
+  const n = await __sget(K_NOTES); if (n && n.value) { try { notes = JSON.parse(n.value); } catch(e){} }
+  renderRail(); renderMain();
+})();
+</script>
+</html>

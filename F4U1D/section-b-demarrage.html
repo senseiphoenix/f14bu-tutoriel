@@ -1,0 +1,409 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+    --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+    --display:"Oswald","Arial Narrow",sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)}
+  .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+         color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;color:var(--ink);margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+     margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+  .lead{color:var(--dim)}
+
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+
+  table.pins{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  table.pins td{border-bottom:1px solid rgba(44,59,69,.6);padding:7px 6px;vertical-align:top}
+  table.pins td.n{font-family:var(--mono);color:var(--amber);width:26px}
+
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)}
+  .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .note p+p{margin-top:8px}
+
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+
+  .banner{background:var(--panel-2);border-bottom:1px solid var(--amber);padding:11px 20px;font-size:13px;color:var(--dim);display:flex;gap:14px;align-items:center;justify-content:space-between}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+
+<div id="banner" class="banner">
+  <span>Planches issues directement du manuel officiel Magnitude 3 (AN-01-45MAG-3) — hébergées dans <code>img/</code>, aucune dépendance externe.</span>
+  <button class="ghost" onclick="document.getElementById('banner').remove()">OK</button>
+</div>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:14px">&larr; Accueil</a>
+      <div class="tail">Section B · F4U-1D</div>
+      <h1>Démarrage<br>&amp; roulage</h1>
+      <p class="sub">Sept leçons illustrées, du parking froid jusqu'au seuil de piste.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const IMG = {
+  cgdiag:     "weight_cg_diagram.jpg",
+  startpanel: "engine_start_panel.jpg",
+  startok:    "engine_start_success.jpg",
+  wingflever: "prep_wingfold_lever.jpg",
+  warnhorn:   "prep_warning_horn.jpg",
+  flapsext:   "prep_flaps_extend.jpg",
+  cowltrim:   "prep_cowlflaps_trim.jpg",
+  tailwheel:  "taxi_tailwheel_lock.jpg",
+  hooklever:  "taxi_arrestor_hook.jpg",
+  ecu:        "engine_control_unit.jpg",
+  cfwd:       "cockpit_forward.jpg",
+};
+
+const DOC = {
+  manuel:    ["Manuel officiel (PDF)","docs/manuel-f4u1d.pdf"],
+  checklist: ["Checklist procédurale V5 (ED Forums)","https://www.digitalcombatsimulator.com/en/files/3345416/"],
+  kneeboard: ["Kneeboards à jour (ED Forums)","https://www.digitalcombatsimulator.com/en/files/3345803/"],
+  videos:    ["Playlist tutoriels vidéo","https://www.youtube.com/playlist?list=PLODX_e0mlZ2UvjOjEvgd0Pflyci7JARkm"],
+};
+
+const L = [
+{id:"b1", title:"Avant de monter à bord",
+ intro:"Deux choses à vérifier avant même d'ouvrir la verrière : les limitations de vitesse de l'appareil, et ta masse/centrage. Le Corsair n'est pas rancunier sur ce point tant que tu restes dans l'enveloppe, mais autant prendre le réflexe tout de suite.",
+ body:[
+  {t:"h", v:"Limitations de vitesse à connaître"},
+  {t:"table", cols:["Élément","Limite"], rows:[
+    ["Train ou aérofrein (sortie/rentrée)","200 nœuds"],
+    ["Volets — plein débattement 0° à 50°","200 nœuds"],
+    ["Volets à 50°","130 nœuds"],
+    ["Verrière ouverte","300 nœuds"],
+    ["Ailerons plein débattement","300 nœuds"],
+    ["Réservoir largable central en piqué","375 nœuds"],
+    ["Réservoirs largables sous pylônes en piqué","375 nœuds"]]},
+  {t:"note", k:"", lbl:"Masse à vide", v:"Un F4U-1D armé de canons .50 cal, plein d'essence et de munitions, sans charge externe : environ 9 475 livres (≈ 4 300 kg). Le manuel calcule automatiquement la masse et le centrage réels dans l'éditeur de mission — tu n'as rien à faire, juste à savoir que ça existe."},
+  {t:"img", k:"cgdiag", c:"Diagramme de centrage et de masse au décollage (poids brut recommandé)."},
+  {t:"h", v:"Démarrage automatique ou manuel ?"},
+  {t:"p", v:"Le module propose une procédure de démarrage et d'extinction automatiques, pratique pour tes premiers vols ou pour aller vite en mission. Une fois la procédure manuelle maîtrisée (leçon B3), privilégie le manuel : c'est plus proche du pilotage réel et ça évite les mauvaises surprises si l'auto-start est interrompu par une action au sol."},
+  {t:"table", cols:["Action","Combinaison"], rows:[
+    ["Démarrage automatique","Windows gauche + Origine (Home)"],
+    ["Extinction automatique","Windows gauche + Fin (End)"]]},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Charge une mission avec le Corsair au parking, moteur froid.",
+   "Repère les sept limitations de vitesse ci-dessus — tu n'as pas besoin de les retenir par cœur tout de suite, juste de savoir où les retrouver.",
+   "Lance un démarrage automatique une première fois pour observer la séquence complète sans stress.",
+   "Éteins le moteur avec la combinaison d'extinction automatique et observe la remise en configuration parking."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu as vu une séquence de démarrage et d'extinction complète, et tu sais où sont les limites de vitesse si besoin de les revérifier en vol."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"b2", title:"Checklist avant vol",
+ intro:"Neuf points avant tout vol, trois de plus pour un vol de nuit. Rien de sorcier, mais l'ordre compte : la mixture doit être coupée avant la batterie, sous peine de noyer les cylindres inférieurs.",
+ body:[
+  {t:"h", v:"Avant tous les vols"},
+  {t:"proc", v:[
+   "Règle la position du siège si besoin.",
+   "Vérifie le bon débattement des commandes de vol.",
+   "<b>Mixture sur IDLE CUT-OFF</b>, puis batterie sur <b>ON</b> — jamais l'inverse.",
+   "Commutateur d'instruments sur <b>ON</b>.",
+   "Vérifie la quantité de carburant, ajuste si besoin via la fenêtre « équipe au sol ».",
+   "Décage l'horizon gyroscopique et le gyro directionnel.",
+   "Règle l'altimètre sur la pression barométrique du terrain.",
+   "Teste le circuit d'oxygène.",
+   "Vérifie que tous les interrupteurs d'armement sont sur <b>OFF</b> et les boutons de chargement des canons sur <b>SAFE</b>."]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Batterie sur ON alors que la mixture n'est pas sur IDLE CUT-OFF, avec la pompe carburant déjà active : les cylindres inférieurs se noient de carburant brut, ce qui peut endommager le moteur au démarrage suivant. Toujours mixture d'abord."},
+  {t:"h", v:"En plus, pour un vol de nuit"},
+  {t:"proc", v:[
+   "Éclairage cockpit : teste chaque interrupteur du boîtier de distribution pilote.",
+   "Éclairage planche d'instruments : même boîtier.",
+   "Feux extérieurs : formation, section, reconnaissance, feux d'aile, et l'interrupteur maître des feux extérieurs."]},
+  {t:"img", k:"cfwd", c:"Planche avant — c'est ici que tu vérifies l'essentiel des points de la checklist."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Reprends la checklist des neuf points dans l'ordre exact, sans sauter d'étape, avion froid.",
+   "Recommence une deuxième fois en ajoutant les trois points de vol de nuit.",
+   "Chronomètre-toi : l'objectif n'est pas la vitesse mais la régularité — vise le même temps à chaque passage."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu enchaînes la checklist des neuf points sans notes, dans le bon ordre."},
+  {t:"src", v:["manuel","checklist"]}
+]},
+
+{id:"b3", title:"Démarrage moteur pas à pas",
+ intro:"Dix-sept étapes pour un radial 18 cylindres à froid. La procédure manuelle demande de la rigueur, mais chaque étape a une raison précise — ce n'est pas arbitraire.",
+ body:[
+  {t:"h", v:"La procédure complète"},
+  {t:"proc", v:[
+   "Volets de capot — grand ouverts.",
+   "Manette de richesse — <b>IDLE CUT-OFF</b>.",
+   "Sélecteur carburant — <b>RESERVE</b>.",
+   "Suralimentation — <b>NEUTRAL</b>.",
+   "Régulateur RPM — plein régime <b>HIGH</b>.",
+   "Manette des gaz — un pouce en avant.",
+   "Batterie — <b>ON</b>.",
+   "Pompe carburant auxiliaire — <b>ON</b>.",
+   "Maintiens l'amorceur (primer) enfoncé 7 à 10 secondes.",
+   "Magnétos — sur <b>BOTH</b>.",
+   "Maintiens les freins.",
+   "Soulève le cache du démarreur.",
+   "Maintiens le démarreur enfoncé — le moteur commence à tourner ; après 5-6 secondes, passe la richesse en <b>AUTO RICH</b>. Relâche le démarreur une fois le régime supérieur à 500 RPM.",
+   "Place la manette des gaz pour ne pas dépasser 800-900 RPM.",
+   "Monte à 1000 RPM une fois la pression d'huile commencée à chuter.",
+   "Ouvre les volets de capot à environ un tiers, surveille températures et pression d'huile.",
+   "Allume l'éclairage intérieur si besoin."]},
+  {t:"img", k:"startpanel", c:"Bloc moteur — configuration avant la mise en route."},
+  {t:"img", k:"startok", c:"Apparence normale du cockpit juste après un démarrage réussi."},
+  {t:"note", k:"warn", lbl:"Piège : moteur noyé", v:"Si l'amorçage est excessif, le démarrage prend beaucoup plus longtemps — les cylindres doivent évacuer le surplus de carburant, soit en attendant quelques minutes, soit en faisant tourner le moteur au démarreur 15 à 20 secondes sans allumage."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Avion froid, exécute la procédure manuelle complète dans l'ordre exact, sans regarder tes notes après le troisième essai.",
+   "Provoque volontairement un moteur noyé (amorceur trop longtemps) pour observer le symptôme et la récupération.",
+   "Compare ton résultat final au repère visuel de la planche « startok » — températures et pression d'huile qui montent normalement."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu démarres le moteur manuellement, dix-sept étapes, sans notes et sans caler."},
+  {t:"src", v:["manuel","videos"]}
+]},
+
+{id:"b4", title:"Préparation au roulage",
+ intro:"Le moteur tourne, mais l'avion n'est pas encore prêt à bouger : ailes à déployer, volets à sortir, trims à régler, capot à ajuster. Cinq minutes bien utilisées pendant que le moteur chauffe.",
+ body:[
+  {t:"h", v:"Déploiement des ailes"},
+  {t:"p", v:"Si les ailes sont repliées, déverrouille les broches (levier en position basse) puis passe le levier de repliage sur <b>SPREAD</b>. Durant les 7 derniers degrés de mouvement, le klaxon d'avertissement sonne — c'est normal, il s'arrête une fois les broches reverrouillées en position haute."},
+  {t:"img", k:"wingflever", c:"Levier de repliage des ailes, en position de déploiement."},
+  {t:"img", k:"warnhorn", c:"Repère du klaxon d'avertissement pendant le mouvement des ailes."},
+  {t:"h", v:"Volets pour le décollage"},
+  {t:"table", cols:["Contexte","Volets"], rows:[
+    ["Terrain","20°"],
+    ["Porte-avions","30°"],
+    ["Distance de roulage minimale","jusqu'à 50° selon expérience"]]},
+  {t:"img", k:"flapsext", c:"Extension des volets avant roulage."},
+  {t:"h", v:"Trims et volets de capot"},
+  {t:"table", cols:["Compensateur","Position décollage"], rows:[
+    ["Latéral (bank)","6° à droite"],
+    ["Directionnel (lacet)","6° à droite"],
+    ["Profondeur (tangage)","1° à cabrer"]]},
+  {t:"p", v:"Ouvre les volets de capot entre 1/3 et 2/3 selon la température, le radiateur d'huile à 1/3, l'intercooler à 1/4 — ces réglages s'estiment visuellement, il n'y a pas d'indicateur chiffré."},
+  {t:"img", k:"cowltrim", c:"Volets de capot et molettes de compensateur."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Déploie les ailes si repliées, vérifie que le klaxon s'arrête bien à la fin du mouvement.",
+   "Sors les volets à 20° pour un départ terrain.",
+   "Règle les trois trims aux valeurs de décollage.",
+   "Ouvre les volets de capot, radiateur d'huile et intercooler aux valeurs recommandées."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Ailes déployées et verrouillées, volets et trims réglés, capot ajusté — tout ça en moins de deux minutes."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"b5", title:"Chauffe et tests moteur au sol",
+ intro:"Avant de bouger, le moteur doit chauffer et passer une série de contrôles courts. C'est ce qui évite les mauvaises surprises pendant le décollage — un magnéto faible ou un mélange mal réglé se détectent ici, pas en piste.",
+ body:[
+  {t:"h", v:"Chauffe moteur"},
+  {t:"p", v:"Au ralenti 1000 RPM jusqu'à ce que l'huile atteigne 40°C et la culasse 120°C. La pression d'huile peut dépasser 200 PSI tant que l'huile est froide — c'est normal, elle redescend en chauffant."},
+  {t:"h", v:"Contrôles moteur et accessoires"},
+  {t:"table", cols:["Test","Ce qu'on vérifie"], rows:[
+    ["Contrôle initial (2200 RPM, 30 in/Hg)","Pression d'huile 85-90 PSI, pression carburant 16-18 PSI, chute RPM magnétos ≤ 100"],
+    ["Richesse au ralenti","600 RPM, passage en IDLE CUT-OFF : une hausse de 5 à 10 RPM avant la coupure est le réglage correct"],
+    ["Suralimentation","Alterne NEUTRAL → LOW → HIGH → NEUTRAL, 30 à 60 s par position, pour éviter l'encrassement des embrayages"],
+    ["Générateur","Au-dessus de 1300 RPM, tension attendue 27,5 à 28,5 V"],
+    ["Pression hydraulique","900 à 1150 PSI attendus"],
+    ["Régulateur d'hélice","2000 RPM, cycle INCREASE→DECREASE, le régime doit chuter vers 1200 RPM puis remonter"],
+    ["Contrôles finaux","Volets et repliage des ailes, un cycle complet chacun"]]},
+  {t:"note", k:"warn", lbl:"Piège", v:"N'ouvre jamais les gaz brutalement depuis le ralenti — retour de flamme possible, en vol comme au sol. Monte en puissance progressivement, y compris pour ces tests."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Laisse chauffer le moteur jusqu'aux seuils indiqués (huile 40°C, culasse 120°C).",
+   "Exécute le contrôle initial à 2200 RPM et note les trois valeurs relevées.",
+   "Fais le cycle complet de suralimentation NEUTRAL/LOW/HIGH/NEUTRAL.",
+   "Vérifie générateur, pression hydraulique et régulateur d'hélice un par un."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu sais exécuter les six contrôles dans l'ordre et dire ce que chacun vérifie."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"b6", title:"Roulage",
+ intro:"Le nez du Corsair masque presque toute la piste devant toi — impossible de rouler tout droit sans technique. La solution historique : le S de roulage.",
+ body:[
+  {t:"h", v:"Avant de bouger"},
+  {t:"proc", v:[
+   "Freins serrés.",
+   "Injection d'eau (WEP) — interrupteur maître sur <b>OFF</b>.",
+   "Crosse d'appontage — <b>UP</b> (levier en position arrière si doute).",
+   "Roulette de queue — <b>déverrouillée</b> (levier en position haute), sinon les virages seront très difficiles.",
+   "Régulateur RPM — <b>HIGH</b> (position basse).",
+   "Gaz — 1000 à 1500 RPM, puis relâche les freins."]},
+  {t:"img", k:"tailwheel", c:"Verrouillage de la roulette de queue."},
+  {t:"img", k:"hooklever", c:"Commande de la crosse d'appontage — vérifier UP avant roulage."},
+  {t:"h", v:"La technique du S"},
+  {t:"p", v:"Le nez masque la vue droit devant. Roule en zigzag léger, en alternant les virages gauche/droite avec le palonnier et les freins, pour dégager la vue sur la piste devant toi par intermittence."},
+  {t:"table", cols:["Repère","Valeur"], rows:[
+    ["Vitesse de roulage optimale","≈ 850 RPM"],
+    ["Vitesse maximale au sol","10 nœuds (≈ 20 km/h) — réduis à 700 RPM ou ralenti si besoin"],
+    ["Technique de freinage","Tapote les freins, jamais de pression brutale continue"]]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Un freinage brutal en roulant peut provoquer un capotage sur le nez (basculement avant), avec dégâts moteur et hélice quasi certains. Tapote toujours les freins, ne les serre jamais d'un coup."},
+  {t:"h", v:"Roulage par vent de travers"},
+  {t:"p", v:"Verrouille la roulette de queue pour réduire le freinage nécessaire à la tenue de cap."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Fais la checklist avant roulage, vérifie roulette de queue déverrouillée et crosse UP.",
+   "Roule en S sur une centaine de mètres, alterne les virages, garde une vitesse sous 10 nœuds.",
+   "Provoque volontairement un freinage brutal à vitesse modérée pour observer le risque de capotage (sans aller jusqu'au bout du geste si tu veux garder l'avion intact).",
+   "Amène l'avion au seuil de piste, aligné, freins serrés, prêt pour la Section C."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu roules en S sans perdre la piste de vue, à vitesse contrôlée, sans jamais serrer les freins d'un coup."},
+  {t:"src", v:["manuel","videos"]}
+]},
+
+{id:"b7", title:"Auto-start/auto-shutdown & routine perso",
+ intro:"Dernière leçon : construire ta propre routine, celle que tu répéteras à chaque vol. Le but n'est pas de tout refaire de mémoire à chaque fois, mais d'avoir un enchaînement fiable.",
+ body:[
+  {t:"h", v:"Récapitulatif des deux méthodes"},
+  {t:"table", cols:["Méthode","Quand l'utiliser"], rows:[
+    ["Manuelle (leçon B3)","Entraînement, immersion, préparation aux pannes de démarreur"],
+    ["Automatique (LWIN+Home / LWIN+End)","Missions rapides, tests, quand la procédure n'est pas le sujet du vol"]]},
+  {t:"img", k:"ecu", c:"Le bloc moteur au complet — le cœur de toute checklist Corsair, qu'elle soit manuelle ou automatique."},
+  {t:"h", v:"Construire ta checklist perso"},
+  {t:"p", v:"Les kneeboards communautaires (lien en source) reprennent l'ensemble des procédures normales et d'urgence sous forme de fiches consultables en vol, en jeu, sans quitter le cockpit — pratique pour ne plus avoir à ouvrir un PDF externe pendant un vol."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Enchaîne, sans t'arrêter, les leçons B1 à B6 dans l'ordre — du parking froid jusqu'au seuil de piste.",
+   "Chronomètre l'ensemble une première fois, puis recommence en visant plus de régularité que de vitesse.",
+   "Installe le kneeboard communautaire si tu veux une fiche consultable en vol plutôt que de repasser par ce tutoriel à chaque fois."],},
+  {t:"note", k:"go", lbl:"Validation", v:"Du parking froid au seuil de piste, sans notes, en moins de dix minutes. Tu es prêt pour la Section C : décollage."},
+  {t:"src", v:["manuel","checklist","kneeboard"]}
+]}
+];
+
+/* ---------- état ---------- */
+const KEY="f4u1d-sectionB";
+let st={done:{},notes:{}}, cur=0;
+async function load(){ try{const r=await __sget(KEY); if(r&&r.value) st=Object.assign(st,JSON.parse(r.value));}catch(e){} }
+let tm=null;
+function save(){ clearTimeout(tm); tm=setTimeout(async()=>{ try{await __sset(KEY,JSON.stringify(st));}catch(e){} },400); }
+
+/* ---------- rendu ---------- */
+function fig(k,c){
+  const fn=IMG[k];
+  return `<figure><img src="img/${fn}" alt="${c}" loading="lazy" onclick="openLb(this.src)">
+    <figcaption><span>${c}</span><a href="img/${fn}" target="_blank" rel="noopener">Original &#8599;</a></figcaption></figure>`;
+}
+function table(cols, rows){
+  return `<table class="pins"><tbody>${rows.map(r=>`<tr><td class="n">${r[0]}</td><td>${r[1]}</td></tr>`).join("")}</tbody></table>`;
+}
+function block(b){
+  if(b.t==="h")   return `<h3>${b.v}${b.badge?'<span class="badge" style="margin-left:8px;vertical-align:0">Nouveau</span>':''}</h3>`;
+  if(b.t==="p")   return `<p>${b.v}</p>`;
+  if(b.t==="img") return fig(b.k,b.c);
+  if(b.t==="table")return table(b.cols,b.rows);
+  if(b.t==="proc")return `<ol class="proc">${b.v.map(s=>`<li><span>${s}</span></li>`).join("")}</ol>`;
+  if(b.t==="note")return `<div class="note ${b.k||""}"><span class="lbl">${b.lbl}</span><p>${b.v}</p></div>`;
+  if(b.t==="src") return `<h3>Sources</h3><div class="srcs">${
+      b.v.map(k=>`<a href="${DOC[k][1]}" target="_blank" rel="noopener">${DOC[k][0]} &#8599;</a>`).join("")}</div>`;
+  return "";
+}
+function render(){
+  const l=L[cur];
+  document.getElementById("main").innerHTML=`<div class="page">
+    <div class="eyebrow">Section B · leçon ${cur+1} sur ${L.length}</div>
+    <h2>${l.title}${l.isNew?'<span class="badge">Nouveau module</span>':""}</h2>
+    <p class="intro">${l.intro}</p>
+    ${l.body.map(block).join("")}
+    <h3>Tes notes de vol</h3>
+    <textarea id="nt" placeholder="Procédures exactes, séquences de touches, ce qui a coincé…">${(st.notes[l.id]||"").replace(/</g,"&lt;")}</textarea>
+    <button class="doneline${st.done[l.id]?" on":""}" id="dn"><span class="box"></span>
+      <span>${st.done[l.id]?"Leçon validée":"Marquer cette leçon comme validée"}</span></button>
+    <div class="nav">
+      <button class="ghost" id="pv"${cur?"":" disabled style=opacity:.3"}>&larr; Précédent</button>
+      <button class="ghost" id="nx"${cur<L.length-1?"":" disabled style=opacity:.3"}>Suivant &rarr;</button>
+    </div></div>`;
+  document.getElementById("nt").oninput=e=>{st.notes[l.id]=e.target.value;save();};
+  document.getElementById("dn").onclick=()=>{st.done[l.id]=!st.done[l.id];save();render();};
+  if(cur) document.getElementById("pv").onclick=()=>{cur--;render();window.scrollTo(0,0);};
+  if(cur<L.length-1) document.getElementById("nx").onclick=()=>{cur++;render();window.scrollTo(0,0);};
+  rail();
+}
+function rail(){
+  const r=document.getElementById("rail"); r.innerHTML="";
+  L.forEach((l,i)=>{
+    const b=document.createElement("button");
+    b.className="item"+(i===cur?" on":"")+(st.done[l.id]?" done":"");
+    b.innerHTML=`<span class="idx">${st.done[l.id]?"&check;":String(i+1).padStart(2,"0")}</span><span class="nm">${l.title}</span>`;
+    b.onclick=()=>{cur=i;render();window.scrollTo(0,0);};
+    r.appendChild(b);
+  });
+  const n=L.filter(l=>st.done[l.id]).length;
+  document.getElementById("foot").textContent=`${n} / ${L.length} leçons validées`;
+}
+function openLb(src){const lb=document.getElementById("lb");document.getElementById("lbimg").src=src;lb.classList.add("on");}
+document.getElementById("lb").onclick=()=>document.getElementById("lb").classList.remove("on");
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") document.getElementById("lb").classList.remove("on");
+  if(e.target.matches("textarea")) return;
+  if(e.key==="ArrowRight"&&cur<L.length-1){cur++;render();window.scrollTo(0,0);}
+  if(e.key==="ArrowLeft"&&cur>0){cur--;render();window.scrollTo(0,0);}
+});
+load().then(render);
+</script>

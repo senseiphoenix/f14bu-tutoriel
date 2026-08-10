@@ -1,0 +1,364 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;--warn:#d9695a;
+    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)} .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+  .imgfail{display:none;padding:22px 14px;font-size:13px;color:var(--dim);text-align:center}
+  figure.failed img{display:none} figure.failed .imgfail{display:block}
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+  code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:2px 6px;border:1px solid var(--line);color:var(--amber)}
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)} .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .keytbl{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  .keytbl th,.keytbl td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+  .keytbl th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--panel)}
+  .keytbl td:first-child{font-family:var(--mono);white-space:nowrap}
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex} .lb img{max-width:100%;max-height:100%}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+  .vid{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  .vid iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
+  .vid figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .vid figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+  .vidlink{display:flex;gap:12px;align-items:center;border:1px solid var(--line);background:var(--panel);padding:13px 16px;margin:14px 0;text-decoration:none;color:var(--ink)}
+  .vidlink:hover{border-color:var(--amber)}
+  .vidlink .ic{font-family:var(--mono);color:var(--amber);font-size:18px}
+  .vidlink .tx{flex:1}
+  .vidlink .tt{font-weight:600;font-size:14px}
+  .vidlink .src{font-size:12px;color:var(--dim);margin-top:2px}
+</style>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <div class="tail">Section F · F-14B(U)</div>
+      <h1>Air-sol :<br>frapper</h1>
+      <p class="sub">Des bombes lisses à la JDAM. La section où ton travail sur l'EGI paie enfin.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const LOCAL = "img/";
+const D = id => `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+const V = id => `https://drive.google.com/file/d/${id}/view`;
+
+const IMG = {
+  stores: ["weapons_stores_overview_image.jpg","1vSIGGY1nV0Z4oLnX4sDc0FCdY8VaXC64"],
+  acp: ["left_vertical_console_armament_control_panel.jpg","1d43AjvVJvWjyrpZlXzuSEiyH80bDgcBj"],
+  gbu31: ["gbu31_overview.jpg","1C8BlsyrpJEek-DggC9XaJzN1oaJ6a54t"],
+  gbu24: ["gbu24eb_testflight.jpg","1IGb_jljh-lTL5gyCTUzkMxPMOkBX42gQ"],
+  lgbcues: ["typical_lgb_lts_cues.jpg","1kOiUlf4ldmWcWX2mwCue2-wdE_BOnE7-"],
+  ggwcues: ["typical_ggw_lts_cues.jpg","15Yl8TnfjMv1lLQq9JSqloY54yE9g7aVo"],
+  pplanner: ["pplar_jdam_planner.jpg","1dW3z__aNnXp1SbJDrYd-M8ooyqltmbuv"],
+  plarplan: ["pplar_jdam_lar_planner.jpg","1B92FZwNgGkmpsamljKOeBVsTIu7FoOAY"],
+  radalt: ["left_instrument_panel_radalt-01.jpg","1bK955HU9Sidlz_MZtQQPKrRtvbJxOIbq"],
+  jdam_pp_plt_tmax: ["jdam_pp_plt_tmax.jpg","1ZdB3rzKPkDjVD3id5klWaCoDguzXUulJ"]
+};
+
+const DOC = {
+  manuel: ["Manuel Heatblur (PDF)","16Xl1mYmujB2wQVBK5kjhMm4GuDRBXH49"]
+};
+
+const L = [
+
+{id:"f1", title:"Ce qu'on emporte, et une étape à ne pas oublier",
+ intro:"Avant de parler de largage, deux choses à connaître : ce que le B(U) peut emporter, et une étape de préparation invisible mais bloquante si on l'oublie.",
+ body:[
+  {t:"h", v:"Le loadout air-sol"},
+  {t:"p", v:"Le B(U) emporte tout ce que les Tomcat précédents pouvaient déjà porter, plus trois armes guidées par GPS propres à cette version : le <b>GBU-31</b> (2000 livres, version pénétrante BLU-109 ou explosive BLU-117), le <b>GBU-38</b> (500 livres, BLU-111), et le <b>GBU-24E/B</b>, une bombe à double guidage GPS et laser."},
+  {t:"img", k:"stores", c:"Vue d'ensemble des emports du B(U)."},
+  {t:"h", v:"La bande magnétique air-sol"},
+  {t:"p", v:"Le calculateur d'armement du Tomcat charge ses programmes depuis des bandes magnétiques. Le programme tactique principal est toujours actif, mais les programmes spéciaux — air-sol, TID AVIA, entraînement — doivent être chargés depuis la bande, et un seul peut être actif à la fois."},
+  {t:"note", k:"warn", lbl:"À faire avant toute mission air-sol", v:"Charge le programme air-sol depuis le <b>menu du PTID</b>, dès le démarrage. <b>Sans ce chargement, le radar AWG-9 ne peut tout simplement pas fonctionner en télémétrie air-sol</b> — aucun mode air-sol assisté par radar ne sera disponible, quoi que tu fasses ensuite."},
+  {t:"note", k:"", lbl:"Le mode qui contourne cette contrainte", v:"Une fois le programme air-sol chargé, sélectionner <b>MANUAL</b> sur l'ACP désactive juste la télémétrie air-sol du radar — le programme reste chargé, et l'AWG-9 redevient disponible pour tous ses modes air-air. C'est ce qui permet de rester vigilant au-dessus d'une cible sans perdre ta capacité de largage."},
+  {t:"h", v:"Le panneau qui commande tout : l'ACP"},
+  {t:"img", k:"acp", c:"Panneau d'armement (ACP), console verticale gauche"},
+  {t:"tbl", head:["Réglage","Ce qu'il commande"], rows:[
+   ["Sélection de station","Quelle(s) station(s) d'emport sont armées."],
+   ["Type d'arme","La famille d'arme employée — conditionne la symbologie du HUD."],
+   ["ATTK MODE","Le mode d'attaque : CMPTR TGT, CMPTR IP, CMPTR PLT ou MAN (voir leçon suivante)."],
+   ["Fusée électrique","INST (instantanée), DLY 1 / DLY 2 (retard), VT (aérienne), SAFE."],
+   ["Fusée mécanique","Nose ou Nose-Tail."],
+   ["Mode de largage","Step ou Ripple, en Single ou Pairs."],
+   ["Intervalle de rafale","Espacement des largages en millisecondes, par pas de 10."],
+   ["Quantité","Nombre de bombes larguées à chaque commande de tir."]]},
+  {t:"note", k:"", lbl:"Le raccourci qui fait gagner du temps", v:"L'outil de bombardement intégré (<b>RCtrl+B</b>) permet au pilote de transmettre directement ces réglages à JESTER, sans passer par les menus. Pour le B(U), il inclut aussi un calculateur de largage manuel JDAM (portée maximale et temps de vol selon les paramètres de largage)."},
+  {t:"p", v:"C'est le RIO qui règle presque tout depuis l'ACP : sélection de station, type d'arme, mode d'attaque, fusée. Le pilote hérite du résultat sur son HUD."},
+  {t:"chk", v:"Tu sais où charger le programme air-sol et pourquoi MANUAL sur l'ACP ne le décharge pas."}
+]},
+
+{id:"f2", title:"Bombes lisses : les quatre modes d'attaque",
+ intro:"Le sélecteur ATTK MODE du RIO propose quatre logiques différentes pour placer une bombe non guidée. Comprendre les quatre te permet de choisir la bonne plutôt que de toujours utiliser la même.",
+ body:[
+  {t:"h", v:"Les quatre modes"},
+  {t:"tbl", head:["Mode","Nom complet","Principe"], rows:[
+   ["CMPTR TGT","Computer Target","Mode semi-automatique guidé par calculateur, l'équivalent d'un CCRP moderne."],
+   ["CMPTR IP","Computer Initial Point","Comme CMPTR TGT, mais référencé à un point initial connu plutôt qu'à la cible — utile quand la cible réelle est difficile à repérer visuellement mais se trouve près d'un repère identifiable."],
+   ["CMPTR PLT","Computer Pilot","Mode manuel assisté : le calculateur affiche en continu le point d'impact au HUD, l'équivalent d'un CCIP moderne."],
+   ["MAN","Manuel","Secours pur : un réticule fixe à une dépression réglée à l'avance, sans aucune assistance du calculateur."]]},
+
+  {t:"h", v:"CMPTR PLT — le mode qu'on apprend en premier"},
+  {t:"p", v:"C'est le plus direct : le calculateur affiche en temps réel, sous forme de réticule, où tomberait la bombe si tu larguais maintenant. Tu voles ce réticule sur la cible et tu presses la détente."},
+  {t:"img", k:"stores", c:"Symbologie HUD en CMPTR PLT (repère générique)."},
+  {t:"note", k:"", lbl:"Le losange qui prévient", v:"Si l'arme configurée est une roquette et qu'elle est hors de portée, un losange de désignation recouvre le réticule. Le losange disparaît une fois la cible à portée — c'est le signal pour tirer."},
+
+  {t:"h", v:"MAN — le mode de secours"},
+  {t:"p", v:"Fonctionne comme CMPTR PLT dans l'esprit — tu voles le réticule sur la cible — mais le réticule n'est <b>pas</b> mis à jour par le calculateur. Il reste fixe, à une dépression sous l'axe de l'avion que tu règles toi-même au panneau de correction de site, sur la base des tables de largage ou de ton estimation d'altitude, d'angle de piqué et de vitesse."},
+  {t:"note", k:"warn", lbl:"Quand l'utiliser", v:"MAN est un mode de secours pur, à réserver à une panne du calculateur ou à une situation où tu ne veux aucune télémétrie radar. Sinon, préfère CMPTR PLT."},
+
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Programme air-sol chargé, cible non défendue. Sélectionne CMPTR PLT à l'ACP.",
+   "Passe en piqué à 30° environ, amène le réticule sur la cible, largue, ressource franche.",
+   "Cinq passes, en notant ton altitude de largage et ta hauteur de ressource au radioaltimètre.",
+   "Une passe en MAN : règle une dépression au panneau de correction de site, et compare la précision au mode CMPTR PLT.",
+   "Note tes réglages de passe qui fonctionnent."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Trois bombes sur cinq à moins de 50 m de la cible en CMPTR PLT."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"f3", title:"Bombes guidées laser et GBU-24E/B",
+ intro:"Le LANTIRN désigne une cible au laser, ton RIO fait le plus gros du travail. Le B(U) ajoute une arme unique à cette famille : une bombe qui n'a même pas besoin du laser pour toucher.",
+ body:[
+  {t:"h", v:"Le principe du guidage laser"},
+  {t:"p", v:"Le RIO pointe la nacelle LANTIRN, cherche, accroche et illumine la cible. La bombe suit le point laser réfléchi. Ta part : voler un profil stable qui garde la cible dans le champ de la nacelle jusqu'à l'impact."},
+  {t:"img", k:"lgbcues", c:"Symbologie typique de largage LGB : temps avant largage, temps avant impact, distance oblique."},
+  {t:"note", k:"warn", lbl:"Piège classique", v:"Illuminer trop tôt épuise l'énergie de la bombe avant l'impact. Manœuvrer fort juste après le largage peut masquer la ligne de vue de la nacelle vers la cible — dans les deux cas, la bombe rate."},
+
+  {t:"h", v:"Le GBU-24E/B : une bombe à double guidage"},
+  {t:"img", k:"gbu24", c:"GBU-24E/B — Paveway III amélioré, guidage GPS et laser combiné."},
+  {t:"p", v:"C'est une arme <b>propre au B(U)</b> parmi les Tomcat. Elle combine un GPS et une centrale inertielle à gyrolaser au corps d'une GBU-24 Paveway III classique, en plus de son guidage laser existant."},
+  {t:"note", k:"go", lbl:"Ce que le double guidage change concrètement", v:"Si aucune énergie laser n'est détectée, la bombe se dirige quand même vers son point d'impact préplanifié et explose comme prévu, grâce au GPS seul. La précision augmente si une désignation laser est fournie en plus. Elle peut même être larguée à travers une couche nuageuse épaisse, puis accrocher un laser au sol une fois la couche traversée."},
+  {t:"p", v:"Conséquence pratique : le GBU-24E/B pardonne un manque de désignation là où une LGB classique rate complètement sans laser. Deux stations seulement — 3 et 5 — peuvent la porter, à cause de sa taille. Elle s'emploie aussi bien en cible d'opportunité qu'en mission préplanifiée, exactement comme la JDAM des deux leçons suivantes."},
+
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Attaque complète à la LGB classique sur cible fixe, laisse JESTER gérer la nacelle.",
+   "Deuxième attaque sur cible mobile.",
+   "Si tu as un GBU-24E/B en soute : largue-le sans désignation laser et observe qu'il touche quand même son point préplanifié.",
+   "Note ton enchaînement JESTER exact pour la désignation."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Deux cibles détruites en une passe chacune, dont une mobile."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"f4", title:"JDAM : mission préplanifiée",
+ intro:"La JDAM est une arme GPS pure — aucun laser, aucun visuel requis. Premier des deux cas d'emploi que couvre le manuel : la mission préparée avant le vol.",
+ body:[
+  {t:"h", v:"Le principe"},
+  {t:"p", v:"Coordonnées de cible et paramètres terminaux sont préparés dans l'éditeur de mission, puis transférés dans l'avion par la cartouche de données (MDL) au démarrage. Le calculateur peut stocker <b>jusqu'à huit missions préplanifiées par station</b>, chacune avec sa cible, sa zone de tir autorisée (LAR) et son point de largage."},
+  {t:"img", k:"pplanner", c:"Planification d'une mission JDAM dans l'éditeur — coordonnées, cap d'attaque, altitude et vitesse de largage."},
+  {t:"img", k:"plarplan", c:"Zone de tir autorisée (LAR) construite autour du point de largage."},
+  {t:"note", k:"", lbl:"Ordre de largage par défaut", v:"Quand toutes les stations compatibles sont sélectionnées, la séquence de tir par défaut est <b>4 - 5 - 3 - 6</b>. En préparant plusieurs missions, place tes points de largage dans cet ordre."},
+
+  {t:"h", v:"Les deux logiques de guidage"},
+  {t:"p", v:"Le sélecteur de mode d'attaque de l'ACP change ce que ton HUD t'affiche."},
+  {t:"tbl", head:["Sélection ACP","Guidage","Repères temporels HUD"], rows:[
+   ["MANUAL — Target Steering","Vers la <b>cible</b>, référencé à la ligne de tir optimale (ROPT).","TMAX (portée maximale), TOPT (portée optimale), TMIN (portée minimale)."],
+   ["CPTR PLT — Launch Point Steering","Vers le <b>point de largage préplanifié</b>, référencé à la zone de tir (LAR).","TMAX (limite de zone), TREL (point de largage), TMIN (portée minimale)."]]},
+  {t:"img", k:"jdam_pp_plt_tmax", c:"HUD en Launch Point Steering — TMAX, avant d'entrer dans la zone de tir."},
+
+  {t:"h", v:"La page JMSN du PTID"},
+  {t:"p", v:"C'est ta page de vérification. Le RIO y relit et corrige les missions préplanifiées : coordonnées de cible, altitude, cap et vitesse d'impact souhaités."},
+  {t:"tbl", head:["Élément","Fonction"], rows:[
+   ["Station et arme sélectionnées","Quelle bombe, sur quelle station, et son état."],
+   ["Coordonnées et altitude de la cible","Le point de référence — modifiable en vol depuis le CDNU."],
+   ["Défilement des missions préplanifiées","Bascule entre les huit missions stockées pour cette station."],
+   ["Bouton UPDATE","<b>À presser après tout chargement de cartouche ou toute modification de coordonnées</b> — sinon la bombe garde ses anciennes données."],
+   ["Alimentation JDAM","Encadrée une fois sous tension. Lance un compte à rebours de <b>8 minutes</b> qui disparaît en atteignant 5 — la bombe n'est prête qu'à ce moment."],
+   ["Point de largage et altitude","Fixés à la planification, non modifiables en vol."]]},
+  {t:"note", k:"warn", lbl:"Le réflexe à ne jamais sauter", v:"Après chargement de la cartouche de données <b>ou</b> toute modification de coordonnées en vol : presse <b>UPDATE</b>. C'est l'erreur la plus fréquente et la plus silencieuse — la bombe part avec les mauvaises données sans le moindre message d'erreur."},
+
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Dans l'éditeur de mission, prépare une mission préplanifiée JDAM : cible, cap d'attaque, altitude et vitesse de largage.",
+   "En vol, vérifie la page JMSN et presse UPDATE dès que la cartouche est chargée.",
+   "Mets les JDAM sous tension tôt — anticipe les 8 minutes du compte à rebours.",
+   "Vole la mission en Launch Point Steering (CPTR PLT), guidé par TMAX / TREL / TMIN.",
+   "Recommence en Target Steering (MANUAL) et compare les deux modes de guidage.",
+   "Note ta procédure complète : c'est la plus longue du tutoriel."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Une mission préplanifiée larguée avec succès, dans les deux modes de guidage."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"f5", title:"JDAM : cible d'opportunité",
+ intro:"Contrairement aux chasseurs modernes, le B(U) n'a pas de mode dédié pour une cible non planifiée. La solution : détourner une mission préplanifiée existante en lui donnant de nouvelles coordonnées en vol. Voici la procédure complète du manuel, étape par étape.",
+ body:[
+  {t:"h", v:"Pourquoi cette méthode et pas une autre"},
+  {t:"p", v:"L'emploi sur cible d'opportunité reste possible, mais il passe par une reprogrammation : n'importe quel point du plan de vol stocké dans le CDNU peut voir ses coordonnées copiées vers la page JMSN. C'est le détour que le manuel documente."},
+
+  {t:"h", v:"La procédure complète"},
+  {t:"proc", v:[
+   "Sélectionne <b>A/G</b> sur le PDCP.",
+   "Accroche le mode A/G sur le menu complet du PTID — JESTER le fait automatiquement si tu le lui demandes.",
+   "Configure l'ACP normalement : station, fusée, type d'arme.",
+   "Sélectionne <b>MANUAL</b> dans les options d'attaque de l'ACP — le pilote reçoit alors les temporisations TMAX / TOPT / TMIN.",
+   "Désigne la cible avec le LANTIRN.",
+   "Maintiens le bouton S-7 (FOV) du LANTIRN pendant 2 secondes : un nouveau waypoint (numéro 51 ou suivant) se crée dans le plan de vol.",
+   "Sélectionne ce nouveau waypoint sur le CDNU.",
+   "Fais défiler horizontalement jusqu'à la page d'édition de waypoint 2/2.",
+   "Ouvre la page JMSN depuis la page tactique du PTID.",
+   "Choisis la station et la mission préplanifiée que tu veux réutiliser pour cette cible.",
+   "Vérifie l'altitude et les coordonnées sur le CDNU, puis presse la <b>LSK 7</b> pour transférer les coordonnées vers la page JMSN.",
+   "Presse <b>UPDATE</b> sur la page JMSN pour mettre à jour la bombe.",
+   "Sélectionne le guidage vers la cible : PB9 sur le PTID, ou la touche F4 (BDHI) du CDNU."]},
+
+  {t:"img", k:"ggwcues", c:"Repères HUD typiques pour une cible d'opportunité sans point de largage préplanifié."},
+  {t:"note", k:"", lbl:"Un détail qui a son importance", v:"Le transfert de coordonnées via la LSK 7 du CDNU envoie toujours les données vers la mission préplanifiée <b>actuellement sélectionnée</b> pour la station choisie sur le CDNU. Ouvre la page JMSN et confirme la bonne mission <b>avant</b> de lancer le transfert, pas après."},
+
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Vole une mission avec une cible non planifiée à l'avance.",
+   "Déroule les treize étapes ci-dessus dans l'ordre, sans regarder tes notes la deuxième fois.",
+   "Largue et vérifie l'impact.",
+   "Note la séquence dans tes mots — c'est la procédure la plus dense du module, elle mérite ses propres mots."]},
+  {t:"note", k:"warn", lbl:"Pièges", v:"Une erreur d'un chiffre dans les coordonnées : un kilomètre d'écart. Oublier UPDATE : la bombe garde les anciennes données. Larguer hors zone de tir autorisée : la bombe tombe court, proprement, inutilement."},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu désignes une cible non planifiée avec le LANTIRN et tu la détruis à la JDAM, sans relire la procédure. Le B(U) n'a plus de secret offensif pour toi."},
+  {t:"src", v:["manuel"]}
+]},
+{id:"f6", title:"Ressources vidéo",
+ intro:"La JDAM est le système le mieux documenté en vidéo, et pour cause : Heatblur met lui-même en avant ce tutoriel de Baltic Dragon, qui a participé à la conception des missions d'entraînement du module.",
+ body:[
+  {t:"video", id:"ESqfmpumaTw", c:"DCS: F14B(U) JDAM training: pre-planned mode — par Baltic Dragon, mis en avant par Heatblur lui-même comme référence pour l'emploi JDAM."},
+  {t:"video", id:"ZbV8J47WP1k", c:"Tomcat GAME CHANGER! DCS F-14B(U) Basic DTC Tutorial — couvre aussi la préparation JDAM préplanifiée via le DTC."},
+  {t:"vidlink", url:"https://f14.manuals.heatblur.se/f14bu/weapons/air_to_ground/gps_guided_weapons/ggw_employment.html", c:"Chapitre emploi GGW/JDAM du manuel en ligne Heatblur", src:"Référence texte officielle, la plus précise disponible"}
+]}
+
+];
+
+const KEY="f14bu-sectionF";
+let st={done:{},notes:{}}, cur=0;
+async function load(){ try{const r=await __sget(KEY); if(r&&r.value) st=Object.assign(st,JSON.parse(r.value));}catch(e){} }
+let tm=null;
+function save(){ clearTimeout(tm); tm=setTimeout(async()=>{ try{await __sset(KEY,JSON.stringify(st));}catch(e){} },400); }
+
+function fig(k,c){
+  const [fn,id]=IMG[k];
+  return `<figure><img src="${LOCAL}${fn}" alt="${c}" loading="lazy"
+      onerror="if(!this.dataset.f){this.dataset.f=1;this.src='${D(id)}';}else{this.closest('figure').classList.add('failed');}"
+      onclick="openLb(this.src)">
+    <div class="imgfail">Image non chargée — ouvre-la dans Drive via le lien ci-dessous.</div>
+    <figcaption><span>${c}</span><a href="${V(id)}" target="_blank" rel="noopener">Drive ↗</a></figcaption></figure>`;
+}
+function table(h,rows){
+  return `<table class="keytbl"><thead><tr>${h.map(x=>`<th>${x}</th>`).join("")}</tr></thead>
+    <tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+}
+function block(b){
+  if(b.t==="video"){
+    return `<figure class="vid"><iframe src="https://www.youtube.com/embed/${b.id}" title="${b.c}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+      <figcaption><span>${b.c}</span><a href="https://www.youtube.com/watch?v=${b.id}" target="_blank" rel="noopener">YouTube ↗</a></figcaption></figure>`;
+  }
+  if(b.t==="vidlink"){
+    return `<a class="vidlink" href="${b.url}" target="_blank" rel="noopener"><span class="ic">▶</span><span class="tx"><span class="tt">${b.c}</span><span class="src">${b.src||""}</span></span></a>`;
+  }
+  if(b.t==="h")   return `<h3>${b.v}</h3>`;
+  if(b.t==="p")   return `<p>${b.v}</p>`;
+  if(b.t==="img") return fig(b.k,b.c);
+  if(b.t==="proc")return `<ol class="proc">${b.v.map(s=>`<li><span>${s}</span></li>`).join("")}</ol>`;
+  if(b.t==="table")return table(b.head,b.rows);
+  if(b.t==="note")return `<div class="note ${b.k||""}"><span class="lbl">${b.lbl}</span><p>${b.v}</p></div>`;
+  if(b.t==="src") return `<h3>Sources dans ton Drive</h3><div class="srcs">${
+      b.v.map(k=>`<a href="${V(DOC[k][1])}" target="_blank" rel="noopener">${DOC[k][0]} ↗</a>`).join("")}</div>`;
+  return "";
+}
+function render(){
+  const l=L[cur];
+  document.getElementById("main").innerHTML=`<div class="page">
+    <div class="eyebrow">Section F · leçon ${cur+1} sur ${L.length}</div>
+    <h2>${l.title}${l.isNew?'<span class="badge">Nouveau sur le B(U)</span>':""}</h2>
+    <p class="intro">${l.intro}</p>
+    ${l.body.map(block).join("")}
+    <h3>Tes notes de vol</h3>
+    <textarea id="nt" placeholder="Paramètres de passe, procédure JDAM complète, enchaînements JESTER…">${(st.notes[l.id]||"").replace(/</g,"&lt;")}</textarea>
+    <button class="doneline${st.done[l.id]?" on":""}" id="dn"><span class="box"></span>
+      <span>${st.done[l.id]?"Leçon validée":"Marquer cette leçon comme validée"}</span></button>
+    <div class="nav">
+      <button class="ghost" id="pv"${cur?"":" disabled style=opacity:.3"}>← Précédent</button>
+      <button class="ghost" id="nx"${cur<L.length-1?"":" disabled style=opacity:.3"}>Suivant →</button>
+    </div></div>`;
+  document.getElementById("nt").oninput=e=>{st.notes[l.id]=e.target.value;save();};
+  document.getElementById("dn").onclick=()=>{st.done[l.id]=!st.done[l.id];save();render();};
+  if(cur) document.getElementById("pv").onclick=()=>{cur--;render();window.scrollTo(0,0);};
+  if(cur<L.length-1) document.getElementById("nx").onclick=()=>{cur++;render();window.scrollTo(0,0);};
+  rail();
+}
+function rail(){
+  const r=document.getElementById("rail"); r.innerHTML="";
+  L.forEach((l,i)=>{
+    const b=document.createElement("button");
+    b.className="item"+(i===cur?" on":"")+(st.done[l.id]?" done":"");
+    b.innerHTML=`<span class="idx">${st.done[l.id]?"✓":String(i+1).padStart(2,"0")}</span><span class="nm">${l.title}</span>`;
+    b.onclick=()=>{cur=i;render();window.scrollTo(0,0);};
+    r.appendChild(b);
+  });
+  document.getElementById("foot").textContent=`${L.filter(l=>st.done[l.id]).length} / ${L.length} leçons validées`;
+}
+function openLb(src){document.getElementById("lbimg").src=src;document.getElementById("lb").classList.add("on");}
+document.getElementById("lb").onclick=()=>document.getElementById("lb").classList.remove("on");
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") document.getElementById("lb").classList.remove("on");
+  if(e.target.matches("textarea")) return;
+  if(e.key==="ArrowRight"&&cur<L.length-1){cur++;render();window.scrollTo(0,0);}
+  if(e.key==="ArrowLeft"&&cur>0){cur--;render();window.scrollTo(0,0);}
+});
+load().then(render);
+</script>

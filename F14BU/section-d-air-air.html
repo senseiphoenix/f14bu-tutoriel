@@ -1,0 +1,471 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+    --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+    --display:"Oswald","Arial Narrow",sans-serif;
+    --body:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+  a{color:var(--amber)}
+  .shell{display:grid;grid-template-columns:290px 1fr;min-height:100vh}
+  @media(max-width:900px){.shell{grid-template-columns:1fr}}
+
+  .rail{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column}
+  .rail-head{padding:20px;border-bottom:1px solid var(--line)}
+  .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:26px;letter-spacing:.05em;line-height:1.05;margin:8px 0 6px;text-transform:uppercase}
+  .sub{font-size:12.5px;color:var(--dim);margin:0}
+  .rail-list{overflow-y:auto;flex:1;padding:8px 0 20px}
+  .item{display:flex;gap:11px;align-items:flex-start;width:100%;text-align:left;padding:10px 20px;border-left:2px solid transparent}
+  .item:hover{background:var(--panel-2)}
+  .item.on{background:var(--panel-2);border-left-color:var(--amber)}
+  .item .idx{font-family:var(--mono);font-size:11px;color:var(--dim);padding-top:3px}
+  .item .nm{flex:1;font-size:14px}
+  .item.done .nm{color:var(--dim)}
+  .item.done .idx{color:var(--go)}
+  .rail-foot{border-top:1px solid var(--line);padding:12px 20px;font-size:12px;color:var(--dim)}
+
+  .page{padding:34px 44px 90px;max-width:900px}
+  @media(max-width:700px){.page{padding:22px 18px 70px}}
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+  h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
+  .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+         color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
+  .intro{font-size:16px;color:var(--ink);margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+
+  h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+     margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  p{margin:14px 0}
+
+  figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px}
+  figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;align-items:baseline}
+  figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+  .imgfail{display:none;padding:22px 14px;font-size:13px;color:var(--dim);text-align:center}
+  figure.failed img{display:none} figure.failed .imgfail{display:block}
+
+  ol.proc{list-style:none;counter-reset:s;padding:0;margin:16px 0}
+  ol.proc li{counter-increment:s;display:flex;gap:14px;padding:10px 0;border-bottom:1px solid rgba(44,59,69,.5)}
+  ol.proc li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:11px;color:var(--amber);padding-top:4px;min-width:22px}
+  ol.proc b{color:var(--ink)}
+  code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:2px 6px;border:1px solid var(--line);color:var(--amber)}
+
+  .note{border:1px solid var(--line);background:var(--panel);padding:14px 16px;margin:18px 0}
+  .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
+  .note.warn .lbl{color:var(--warn)}
+  .note.go .lbl{color:var(--go)}
+  .note p{margin:0}
+  .note p+p{margin-top:8px}
+
+  .keytbl{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  .keytbl th,.keytbl td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+  .keytbl th{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--panel)}
+  .keytbl td:first-child{font-family:var(--mono);color:var(--ink);white-space:nowrap}
+
+  .srcs{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .srcs a{font-family:var(--mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--line);padding:7px 11px;text-decoration:none;color:var(--dim)}
+  .srcs a:hover{color:var(--amber);border-color:var(--amber)}
+
+  textarea{width:100%;min-height:130px;background:var(--panel);border:1px solid var(--line);color:var(--ink);padding:13px 15px;resize:vertical;font:inherit;line-height:1.6}
+  textarea:focus{outline:none;border-color:var(--amber)}
+
+  .doneline{display:flex;align-items:center;gap:12px;margin-top:26px;border:1px solid var(--line);padding:14px 16px;background:var(--panel)}
+  .doneline .box{width:18px;height:18px;border:1px solid var(--line);position:relative;flex:none}
+  .doneline.on .box{background:var(--go);border-color:var(--go)}
+  .doneline.on .box::after{content:"";position:absolute;left:6px;top:2px;width:4px;height:10px;border:solid var(--deck);border-width:0 2px 2px 0;transform:rotate(42deg)}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .ghost{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:8px 12px}
+  .ghost:hover{color:var(--ink);border-color:var(--amber)}
+
+  .banner{background:var(--panel-2);border-bottom:1px solid var(--amber);padding:11px 20px;font-size:13px;color:var(--dim);display:flex;gap:14px;align-items:center;justify-content:space-between}
+  .lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:20;cursor:zoom-out}
+  .lb.on{display:flex}
+  .lb img{max-width:100%;max-height:100%}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+  .vid{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
+  .vid iframe{width:100%;aspect-ratio:16/9;border:0;display:block}
+  .vid figcaption{font-size:12.5px;color:var(--dim);margin-top:9px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .vid figcaption a{font-family:var(--mono);font-size:11px;white-space:nowrap}
+  .vidlink{display:flex;gap:12px;align-items:center;border:1px solid var(--line);background:var(--panel);padding:13px 16px;margin:14px 0;text-decoration:none;color:var(--ink)}
+  .vidlink:hover{border-color:var(--amber)}
+  .vidlink .ic{font-family:var(--mono);color:var(--amber);font-size:18px}
+  .vidlink .tx{flex:1}
+  .vidlink .tt{font-weight:600;font-size:14px}
+  .vidlink .src{font-size:12px;color:var(--dim);margin-top:2px}
+</style>
+
+<div id="banner" class="banner">
+  <span>Section D. Le radar et les procédures d'armement viennent du manuel Heatblur ; comme le module vient de sortir, vérifie les symboles exacts en jeu avec le click-to-explain.</span>
+  <button class="ghost" onclick="document.getElementById('banner').remove()">OK</button>
+</div>
+
+<div class="shell">
+  <aside class="rail">
+    <div class="rail-head">
+      <div class="tail">Section D · F-14B(U)</div>
+      <h1>Air-air :<br>chasser</h1>
+      <p class="sub">Sept leçons, du radar au combat tournoyant. Le Tomcat redevient l'intercepteur qu'il a toujours été.</p>
+    </div>
+    <nav class="rail-list" id="rail"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <main id="main"></main>
+</div>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+
+<script>
+async function __sget(k){ try{ if(window.storage){const r=await window.storage.get(k); if(r) return r;} }catch(e){}
+  try{const v=localStorage.getItem(k); return v?{value:v}:null;}catch(e){return null;} }
+async function __sset(k,v){ try{ if(window.storage){await window.storage.set(k,v); return;} }catch(e){}
+  try{localStorage.setItem(k,v);}catch(e){} }
+
+const D = id => `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+const V = id => `https://drive.google.com/file/d/${id}/view`;
+const FN = {"1LSNf370Z76pfgLP3G2czpVpjV1FIW1_7": "f14bu_pilot_overview.jpg", "1yauTBGsEFR1cEUkcM-Ndlsx8bfwaQDDr": "f14bu_rio_overview.jpg", "1cRWJ_LuozK-F9PEuyrFNpO6YjG1dKAYG": "left_console_pilot-01.jpg", "1PBG842BX0rhlgg31DQmdGF2x956TnaDp": "left_instrument_panel-01.jpg", "1TMNAqLBvoD1N3zdWbrI4YbYM-sOEAnia": "left_instrument_panel_02-01.jpg", "1MJeyRSy0Xopj5r0Vy1EuXeVMbCWJ9ywh": "right_instrument_panel-01.jpg", "1iHXkN6fMCN5z0feGKcX2thLu3sE4ot7V": "left_console_cdnu-01.jpg", "1IJqaDS5W80PrrYzygxa8X84DqUNq711x": "overview_ptid.jpg", "1343TPem4GqbGhyWgmAadSdPBmD3gwPuj": "ptid_alignment_displays.jpg", "1Jf0BXSaEiddTTex3sjRWA92H_9RBuMkB": "throttle2.svg", "1btOScq6_6u7BDY4-JWTLuCDHL3zv_8hI": "left_vertical_console_landing_gear_control_panel.jpg", "1ckKAnQ42OHQlUoVfpwz43EghwIpEB3Qz": "left_console_arrestinghook-01.jpg", "10QucDurJZPC_VCxHu0r-KDezHt5LHc6w": "right_instrument_panel_wingsweep-01.jpg", "1D8RAKdjVRNsFb6o7xR7jJMBctNtcvVRq": "left_vertical_console_launch_bar_abort_switch.jpg", "1L-r0Hw4MSrXPKkACqWQRfjHGhNBbsXa-": "left_vertical_console_fuel_management_panel.jpg", "1Ios11Na-FMxu-OytIkKd29GWkTYN5vRh": "left_instrument_panel_left_engine-05.jpg", "1d69JHPEF-kG0jeqt-kXGclQ0UBZvEKbB": "right_instrument_panel_right_engine-01.jpg", "1OWx3BXaU7VuOdzGbJ2ojECuqg20P3duy": "left_knee_panel_oil_pressure_indicators.jpg", "1Bxye8blt540Y-K6onA6rtNWhpnNFLsLu": "left_knee_panel_hydraulic_pressure_indicator.jpg", "1Yx0il_HbxnUxZvmpWs3TaG0uTr_INVzh": "right_instrument_panel_checklist-06.jpg", "1gLKj-4lvCF8CB3NoH0aEbLMDKWfhkqlz": "left_instrument_panel_lndg_chklst-06.jpg", "1kaJNzj8rs69pQiSx5AH0zWbJ77L2PYg-": "left_instrument_panel_aoa_indexer-02.jpg", "1UJIDpo71d3Mqa2-LSJneG5sjUCjs6X2Q": "left_instrument_panel_airspeed_indicator-01.jpg", "1G5r5-i0Q3XRuZHqpT_fifsgS_pXDor9A": "left_instrument_panel_vvi-04.jpg", "13rHttpiCcdNSrf7agTSQnXaTIZFYR31-": "left_instrument_panel_baroalt-02.jpg", "1bK955HU9Sidlz_MZtQQPKrRtvbJxOIbq": "left_instrument_panel_radalt-01.jpg", "13k-UL5IKQnZ0QBo-OF7uoBMY2-z239p-": "left_instrument_panel_adi-02.jpg", "1qRAYprtHZ5NksPq4OKmLSl2LMzV7hStW": "left_vertical_console_control_surface_position_indicator.jpg", "1qn6aLQk6VesaiCnZMA4kKA3WNPGtzv0e": "vdigr_hud_cruise_manual.jpg", "1A5PAfefJPcyNiO_wJzHQGkR6Fgfo5UBs": "vdigr_vdi_cruise_manual.jpg", "1RzwhUjKozKvX7OSwt-AMnDhuvfix4I5O": "left_console_lcp-01.jpg", "18JLq9huWOJiKPSMt40iBQJ0XcO7ib3lw": "left_windshield_frame_caution_lights_left_windshield_frame.jpg", "1jzZXOauVEv9ozccCS1pukBAex6ojo2iX": "left_console_cap-01.jpg", "19rZHTKxwhB6jSAPFAfl0tn8swS3bk8is": "rio_overview_navigation_panels.jpg", "1rds13EirW0B-KSvLN6IYRXf7yPHRgIpx": "navigation_system_overview.jpg", "1KaA10yvEKk7f8BOnO1aQhIhKrwU9cjc1": "navigation_display_matrix.jpg", "1t0mGtJBNYeXfNdWT7N-aXZse9DtjdCcs": "rio_navigation_display.jpg", "1srqTn4tKvDn4r1XgWgQQNg6OYoMGK1EM": "egi_system_modes.jpg", "1Zzfri1WdBFf90IBoMZ58NSOJqmNcQFCZ": "egi_system_schematic.jpg", "1oMoElmBXaHDDC0-cEi2cOb6CUrXyVaQv": "egi_system_displays.jpg", "19G0SjnyxC30M-gSvdm2I8yWUGQhCoNpT": "ptid_system_displays.jpg", "1VHx7AfEbpn1QNnmk0bLd39ZPajQpQf5z": "pmdig_overview_hsd_pmdig.jpg", "11ytGklNKUzFZBvF3tkhSzbkBcqxUViAJ": "plt_pmdig_hsd_pmdig.jpg", "1Y5nJd_9MB_aqOnVKoqgowjNLNFEZtSco": "hsd_tidrepeat.jpg", "1CcyUvhC2u098w884Zk0LHFMT2yiGOV84": "right_instrument_panel_bdhi-04.jpg", "1enPBPfIrdQ8LR4JFTF4fiGrLNgiDhH63": "tacan-02.jpg", "1gO9FbnO6SMt2_Zf5C4xTJzSVQDn-LOhn": "instant_camera_example.jpg", "1Z7xBs_ilnQns6pv_l5MxuQwQQd0N0fcS": "instant_camera_keybinds.jpg", "1Xff5q-vh0U_1pI34rIJZzIqePuKTk3hk": "center_console_ptid.jpg", "1125vGfmaLxiHhkMkCEaDYUS8pNFgeyZY": "center_panel_ddd.jpg", "1AcyhMEECtkfS7WOn1wuSUKjrNflRYDdz": "vdigr_acm_manual.jpg", "1vSIGGY1nV0Z4oLnX4sDc0FCdY8VaXC64": "weapons_stores_overview_image.jpg", "1d43AjvVJvWjyrpZlXzuSEiyH80bDgcBj": "left_vertical_console_armament_control_panel.jpg", "1q4H10-mIpFHBNAU6yvqa4my94ltjXRVT": "stby_rdy_legend.jpg", "1XWPGKsRYuc6n6YVi-5PxIOw745ZC4qtD": "right_console_rwr-02.jpg"};
+
+
+const IMG = {
+  ptid:       "1IJqaDS5W80PrrYzygxa8X84DqUNq711x",
+  ptidsys:    "19G0SjnyxC30M-gSvdm2I8yWUGQhCoNpT",
+  ptidcenter: "1Xff5q-vh0U_1pI34rIJZzIqePuKTk3hk",
+  ddd:        "1125vGfmaLxiHhkMkCEaDYUS8pNFgeyZY",
+  acm:        "1AcyhMEECtkfS7WOn1wuSUKjrNflRYDdz",
+  hudcruise:  "1qn6aLQk6VesaiCnZMA4kKA3WNPGtzv0e",
+  vdicruise:  "1A5PAfefJPcyNiO_wJzHQGkR6Fgfo5UBs",
+  weapons:    "1vSIGGY1nV0Z4oLnX4sDc0FCdY8VaXC64",
+  armpanel:   "1d43AjvVJvWjyrpZlXzuSEiyH80bDgcBj",
+  stbyrdy:    "1q4H10-mIpFHBNAU6yvqa4my94ltjXRVT",
+  rwr:        "1XWPGKsRYuc6n6YVi-5PxIOw745ZC4qtD",
+  aoa:        "1kaJNzj8rs69pQiSx5AH0zWbJ77L2PYg-",
+  csurf:      "1qRAYprtHZ5NksPq4OKmLSl2LMzV7hStW"
+};
+
+const DOC = {
+  manuel: ["Manuel Heatblur (PDF)","16Xl1mYmujB2wQVBK5kjhMm4GuDRBXH49"]
+};
+
+const L = [
+
+{id:"d1", title:"Le radar : modes et vocabulaire",
+ intro:"Le Tomcat est un intercepteur avant d'être un chasseur : le radar est l'arme principale, le missile n'est que la conséquence. Cette leçon te donne le vocabulaire qui te servira dans toutes les suivantes.",
+ body:[
+  {t:"h", v:"Deux familles, un compromis"},
+  {t:"p", v:"L'AN/AWG-9 fonctionne en pulse ou en pulse doppler. Le pulse voit dans toutes les directions, même une cible qui te fait face à vitesse nulle relative, mais il se noie dans le fouillis au sol et porte moins loin. Le pulse doppler porte beaucoup plus loin en se filtrant sur la vitesse relative de la cible — au prix d'un angle mort sur les cibles qui n'ont presque pas de vitesse de rapprochement (le fameux « notch »)."},
+  {t:"table", head:["Mode","Fonction","Portée typique"], rows:[
+   ["Recherche pulse","Recherche moyenne portée, secondaire air-sol.","60 nm"],
+   ["Poursuite pulse (P-STT)","Poursuite ferme courte-moyenne portée.","50 nm"],
+   ["Recherche pulse doppler","Recherche longue portée.","110 nm"],
+   ["Recherche avec télémétrie","Recherche longue portée avec distance.","90 nm"],
+   ["Poursuite sur passage (TWS)","Longue portée, plusieurs pistes, guidage AIM-54.","90 nm"],
+   ["Poursuite doppler (PD STT)","Poursuite ferme longue portée, tous les missiles.","90 nm"]]},
+  {t:"note", k:"", lbl:"Ce que ça veut dire pour toi", v:"En pratique tu vivras surtout dans deux modes : <b>TWS</b> pour surveiller et engager plusieurs pistes à la fois avec le Phoenix, et <b>PD STT</b> quand tu dois verrouiller fermement une cible pour un Sparrow, un Sidewinder guidé, ou un tir canon assisté."},
+  {t:"h", v:"Le panneau qui commande tout"},
+  {t:"p", v:"Le DDD, côté RIO, concentre les réglages : taille de cible attendue (petite/normale/grande — ça change la portée d'activation du missile), filtrage du fouillis, gain, et surtout les <b>voyants de poursuite</b> : ANT TRK (l'antenne suit l'angle), RDROT (la cible est dans la porte de distance), qui te disent si ton verrouillage est solide ou fragile."},
+  {t:"img", k:"ddd", c:"Le DDD — panneau de contrôle radar principal côté RIO."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Mission d'entraînement avec quelques appareils neutres à détecter, sans tirer.",
+   "Passe en recherche pulse doppler, repère un contact, note son comportement sur le DDD.",
+   "Fais-le passer en poursuite (STT) et observe les voyants ANT TRK et RDROT s'allumer.",
+   "Repasse en TWS et regarde plusieurs pistes coexister.",
+   "Note le vocabulaire dans tes mots : recherche, poursuite, TWS, STT."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu détectes, poursuis et identifies un contact à 40 nm sans stress, et tu sais dire dans quel mode tu es."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"d2", title:"Lire le PTID",
+ intro:"Le PTID est ton centre de conscience tactique pour tout le reste de la section. Il porte trois pages principales et une page tactique dense en informations — cette leçon te donne les repères pour t'y retrouver sans t'y perdre.",
+ body:[
+  {t:"h", v:"Trois pages, un seul écran"},
+  {t:"p", v:"Le PTID s'organise autour de trois pages : la <b>page tactique</b> pour le combat, la <b>page navigation en ligne</b> (NVD PLT) pour tracer des zones d'intérêt, et la <b>page navigation par point</b> (NVD WP) pour consulter le détail d'un waypoint. Vingt boutons-poussoirs numérotés entourent l'écran ; leur fonction change selon la page affichée."},
+  {t:"img", k:"ptid", c:"Vue d'ensemble du PTID."},
+  {t:"h", v:"La page tactique, ce qui compte vraiment"},
+  {t:"p", v:"C'est la page que tu vois le plus souvent en vol. Voici les éléments qui orientent réellement tes décisions, pas la totalité des vingt-six repères du manuel."},
+  {t:"tbl", head:["Élément","Ce qu'il te dit"], rows:[
+   ["Source de donnée (SNSR / OWN A/C / TGT 1)","Quelles données tu regardes : capteur brut, ton propre avion, ou une piste précise."],
+   ["Mode PTID (ASTB / GSTB / ATTK)","L'état général d'affichage — attaque, stabilisé air ou stabilisé sol."],
+   ["Échelle de portée","Le rayon réellement couvert par l'écran. Change ce que tu vois radicalement."],
+   ["Mode de guidage (case en bas)","DEST, TACAN ou MAN — la source qui pilote ton HUD. Le premier endroit à vérifier si le cap affiché te surprend."],
+   ["Mode radar affiché","Le mode radar actuellement commandé par le RIO."],
+   ["BT / BA","Distance du Bullseye à la cible (BT) et à ton propre avion (BA) — la référence commune de toute la patrouille."],
+   ["Point EGI (« Hot-Dog »)","Le point vers lequel l'EGI te guide en ce moment — reconnaissable à son symbole particulier."]]},
+  {t:"note", k:"", lbl:"Piste brute et piste ferme", v:"Une piste <b>brute</b> est un simple contact détecté — pas assez de données pour un tir guidé. Une piste <b>ferme</b>, en poursuite radar établie, porte le vecteur et la distance nécessaires au calcul de la zone de tir. C'est cette distinction qui décide si tu peux tirer."},
+
+  {t:"h", v:"Le guidage : quatre sources, un seul sélecteur"},
+  {t:"p", v:"Le bouton-poussoir 9 fait défiler les sources de guidage disponibles, dans cet ordre : les options EGI (<b>AUTO / MAN / OFLY / CDNU</b> — une seule est proposée selon ce qui est réglé sur la page plan de vol du CDNU), puis <b>DEST</b> (le point de destination), puis <b>LP / TGT</b> (guidage vers une arme guidée par GPS — LP si le mode Computer Pilot est choisi sur l'ACP, TGT si Manuel l'est)."},
+  {t:"tbl", head:["Sélection","Comportement"], rows:[
+   ["AUTO","Réglé sur le CDNU. Le guidage s'active dès sélection sur le PTID ; l'enchaînement des points se poursuit quoi que tu affiches."],
+   ["OFLY","Même logique qu'AUTO mais avec survol exact du point avant d'enchaîner."],
+   ["MAN","Le guidage s'active à la sélection, mais rien n'enchaîne automatiquement."],
+   ["TGT / LP","Cible ou point de largage d'une arme GPS, selon le mode choisi sur l'ACP. La station de la prochaine arme à tirer s'affiche."]]},
+
+  {t:"h", v:"La page AWL — atterrissage tous temps"},
+  {t:"p", v:"Cette page affiche l'incidence, la vitesse verticale, et les aiguilles ILS ou ACLS selon ce que tu accroches. C'est la page que tu ouvres en approche du bateau — elle sert de base à la section C."},
+  {t:"note", k:"warn", lbl:"Effet de bord à connaître", v:"L'AWL est chargée depuis la bande magnétique, exactement comme le programme air-sol. <b>Charger l'AWL décharge automatiquement le programme air-sol</b>, et réciproquement. Tu ne peux pas avoir les deux en mémoire en même temps."},
+
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Ouvre le PTID en vol, avec des contacts présents.",
+   "Change l'échelle de portée et observe l'effet sur ce qui s'affiche.",
+   "Fais défiler les sources de guidage avec PB9 et observe le HUD changer en même temps.",
+   "Identifie une piste brute puis fais-la passer en piste ferme.",
+   "Note ce que tu vois réellement dans ton cockpit, avec tes propres mots."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu énonces la situation tactique du PTID en cinq secondes de lecture, et tu sais faire défiler les sources de guidage sans hésiter."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"d3", title:"Le HUD en air-air",
+ intro:"Le HUD te permet de rester tête haute pendant tout l'engagement. Chaque arme sélectionnée change la symbologie affichée — cette leçon te montre les trois versions que tu croiseras le plus.",
+ body:[
+  {t:"h", v:"Ce qui ne change jamais"},
+  {t:"p", v:"Quel que soit le mode, tu retrouves toujours : le repère de trajectoire (FPM, qui indique où l'avion va réellement, pas où il pointe), l'échelle de cap, l'incidence, le Mach et le facteur de charge, et en bas à droite la donnée de navigation vers ton point actif."},
+  {t:"note", k:"", lbl:"FPM contre repère de montée", v:"En manœuvre dynamique, le repère de trajectoire (FPM) peut sortir du champ visible du HUD et disparaître un instant. Le <b>repère de montée/descente (CDM)</b> reste alors ta seule référence de trajectoire — c'est pour ça qu'il existe. Le bouton HUD CAGE bascule entre les deux."},
+
+  {t:"h", v:"Air-air contre Phoenix ou Sparrow — poursuite sur passage"},
+  {t:"p", v:"En TWS avec un Phoenix sélectionné, chaque piste porte un numéro d'ordre de tir. Une piste accrochée affiche des moustaches et l'indication <b>SHOOT</b> quand la solution est valide."},
+  {t:"tbl", head:["Repère","Signification"], rows:[
+   ["Boîte de désignation, avec numéro d'ordre","Chaque cible suivie en TWS, dans l'ordre où tu les engageras."],
+   ["BT / BA","Distance du Bullseye à la cible accrochée et à toi-même."],
+   ["VC / VR","Vitesse de rapprochement et vitesse radiale de la cible."],
+   ["BRG / RNG / ALT","Relèvement, distance et altitude de la cible accrochée."],
+   ["Repère de zone de tir (LRD)","La zone où le missile sélectionné peut être tiré efficacement."],
+   ["Légende d'armement","L'arme sélectionnée (PH pour Phoenix, SP pour Sparrow). Barrée d'une croix si MASTER ARM est sur OFF ou TNG."]]},
+
+  {t:"h", v:"Air-air Sidewinder — poursuite ferme"},
+  {t:"p", v:"Avec un AIM-9 sélectionné, un cercle apparaît au centre de la boîte de désignation : c'est la position du viseur infrarouge du missile. Un cercle <b>plein</b> indique que le mode d'accrochage étendu (SEAM) est activé."},
+  {t:"h", v:"Le canon — viseur directeur"},
+  {t:"p", v:"Sélectionner GUN au manche avec le mode A/A actif affiche une croix de tir. Sans accrochage radar, le viseur bascule sur un mode manuel classique (LCOS). Un repère t'indique quand la cible entre dans la portée du canon."},
+
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Verrouille un contact ami en poursuite ferme et observe la boîte de désignation apparaître au HUD.",
+   "Passe en TWS avec un Phoenix sélectionné et observe les numéros d'ordre de tir sur plusieurs pistes.",
+   "Sélectionne l'AIM-9 et repère le cercle de position du viseur infrarouge.",
+   "Vole une interception complète en ne regardant que le HUD, du contact radar jusqu'au passage."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Interception complète tête haute, sans regarder la planche de bord, en sachant nommer chaque repère selon l'arme sélectionnée."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"d4", title:"Sidewinder et canon",
+ intro:"On commence par les armes les plus simples : autonomes après le déclenchement, sans guidage à tenir. C'est là qu'on apprend les bases de la solution de tir avant de compliquer avec les missiles radar.",
+ body:[
+  {t:"h", v:"Préparer l'AIM-9"},
+  {t:"p", v:"Le refroidissement du viseur infrarouge doit être activé avant tir — il devient prêt immédiatement mais met environ 60 secondes à atteindre sa pleine performance. Une fois prêt, le mode normal (SEAM) laisse le viseur balayer autour de ta ligne de visée ou de ta cible verrouillée, dans un champ de 40° ; le mode boresight le fige strictement sur l'axe de l'avion, en 2,5° seulement."},
+  {t:"img", k:"armpanel", c:"Panneau d'armement (ACP), console verticale gauche du RIO"},
+  {t:"tbl", head:["N°","Commande","Fonction"], rows:[
+   ["1","WPN TYPE","Type d'arme employée — configure le calculateur d'armes pour les calculs balistiques air-sol."],
+   ["2","ATTK MODE","Mode d'attaque air-sol : TGT, CMPTR/IP, CMPTR/PLT, MAN, D/L BOMB."],
+   ["3","ELEC FUZE","Fusée électrique : SAFE, VT (air-burst), INST, DLY 1, DLY 2."],
+   ["4","A/G GUN","<span class='pos'><b>OFF</b> — canon désactivé. &nbsp;·&nbsp; <b>MIXED</b> — canon disponible en plus de l'arme air-sol sélectionnée.</span>"],
+   ["5","QTY","Quantité de munitions larguées à chaque commande de tir, roquettes comprises."],
+   ["6","INTERVAL","Intervalle entre largages successifs en mode rafale (ripple), en millisecondes."],
+   ["7","STA SEL 6","Sélectionne la station 6 pour largage ou jettison."],
+   ["8","A/A LAUNCH","Permet au RIO de commander le tir d'un AIM-7 ou AIM-54. S'illumine quand les conditions de tir (hot-trigger) sont réunies."],
+   ["9","MSL SPD GATE","Règle la porte de vitesse missile utilisée par le calculateur d'armes."],
+   ["10","STA SEL 8","<span class='pos'><b>B</b> — pylône inférieur. &nbsp;·&nbsp; <b>SW</b> — non fonctionnel.</span>"],
+   ["11","MSL OPTIONS","Active le mode pulse-doppler pour l'AIM-7, ou le mode de tir actif pour l'AIM-54."],
+   ["12","STA SEL 5","Sélectionne la station 5 pour largage ou jettison."],
+   ["13","NEXT LAUNCH","Désigne la cible actuellement accrochée comme prochaine cible de tir, en TWS."],
+   ["14","STA SEL 4","Sélectionne la station 4 pour largage ou jettison."],
+   ["15","STA SEL 1","<span class='pos'><b>B</b> — pylône inférieur. &nbsp;·&nbsp; <b>SW</b> — non fonctionnel.</span>"],
+   ["16","TANK JETT 7","Sélectionne le bidon externe de la station 7 pour largage."],
+   ["17","TANK JETT 2","Sélectionne le bidon externe de la station 2 pour largage."],
+   ["18","STA SEL 3","Sélectionne la station 3 pour largage ou jettison."],
+   ["19","JETT OPTIONS","<span class='pos'><b>WPNS</b> — largue les armes seules. &nbsp;·&nbsp; <b>MER/TER</b> — largue aussi les râteliers. Non fonctionnel dans le module.</span>"],
+   ["20","SEL JETT","<span class='pos'><b>JETT</b> — mode de largage normal. &nbsp;·&nbsp; <b>AUX</b> — mode de secours, sous cache.</span>"],
+   ["21","MECH FUZE","<span class='pos'><b>NOSE</b> — arme la fusée de nez. &nbsp;·&nbsp; <b>SAFE</b> — inhibe l'armement. &nbsp;·&nbsp; <b>NOSE/TAIL</b> — arme les deux fusées.</span>"],
+   ["22","DLVY MODE","Deux sélecteurs combinés : <b>SGL/PRS</b> (simple ou paire d'armes) et <b>STP/RPL</b> (pas à pas ou rafale selon QTY et INTERVAL)."]]},
+  {t:"note", k:"", lbl:"Les combinaisons DLVY MODE", v:"<b>STP+SGL</b> : une arme par pression de la détente. <b>STP+PRS</b> : une paire par pression — uniquement pour les stations jumelées (1↔8, 3↔6, 4↔5). <b>RPL+SGL</b> : une rafale de QTY armes espacées d'INTERVAL. <b>RPL+PRS</b> : la même rafale, par paires."},
+  {t:"note", k:"", lbl:"Le son qui te guide", v:"Un grondement grave signifie que le viseur balaie sans trouver de source infrarouge. Un sifflement aigu signifie qu'il regarde une source chaude. C'est ce sifflement que tu attends avant de presser la détente."},
+  {t:"h", v:"Le canon"},
+  {t:"p", v:"Sans verrouillage radar, tu n'as que le réticule brut : pas de portée, seulement une solution de tête. Avec un verrouillage — même bref — tu obtiens portée, vitesse de rapprochement et solution complète. Rafales courtes : les munitions sont limitées."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Active le refroidissement AIM-9, attends la pleine performance.",
+   "Trois tirs sur cible non manœuvrante en mode SEAM, à courte distance.",
+   "Trois tirs sur cible manœuvrante — sens la différence de fenêtre de tir.",
+   "Passe au canon : un engagement sans verrouillage radar, un autre avec.",
+   "Note tes distances de tir réussies pour chaque arme."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Trois cibles abattues consécutivement, au moins une au canon."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"d5", title:"Sparrow",
+ intro:"Le Sparrow t'oblige à tenir ton verrouillage pendant tout le vol du missile. C'est l'école de la discipline de tir : rien n'est automatique après le départ.",
+ body:[
+  {t:"h", v:"Le principe du guidage semi-actif"},
+  {t:"p", v:"Le Sparrow ne « voit » pas sa cible : il suit l'énergie radar que ton avion réfléchit dessus. Concrètement, ça veut dire que <b>ton radar doit rester verrouillé sur la cible jusqu'à l'impact</b>. Si tu romps le lock, le missile perd son guidage et devient inutile."},
+  {t:"h", v:"Deux modes"},
+  {t:"p", v:"En mode normal, avec un verrouillage ferme (STT), le WCS peut guider en continu ou en pulse doppler selon le modèle de missile. En mode boresight, le radar illumine simplement tout ce qui se trouve dans l'axe — utile en dernier recours si le verrouillage se perd, car le radar bascule automatiquement sur ce mode quand la cible est perdue, te laissant une chance de repêcher le tir."},
+  {t:"img", k:"acm", c:"Panneau ACM, au panneau central"},
+  {t:"tbl", head:["N°","Commande","Fonction et positions"], rows:[
+   ["1","MASTER ARM","Autorise le tir et les largages sélectifs.<span class='pos'><b>OFF</b> — circuits de tir non alimentés.<br><b>ON</b> — circuits alimentés, cache à relever.<br><b>TNG</b> — mode entraînement en vol.</span>"],
+   ["2","HUD CAGE","Choisit le symbole affiché au HUD.<span class='pos'>Décagé : <b>vecteur vitesse</b> (FPM). &nbsp;·&nbsp; Cagé : <b>repère de montée/descente</b> (CDM).</span>"],
+   ["3","L FIRE / R FIRE","S'allument à la détection d'un feu dans le moteur correspondant."],
+   ["4","Cache ACM / ACM JETT","Relever le cache active le mode ACM et donne accès au largage ACM des emports sélectionnés (jamais les Sidewinder)."],
+   ["5","SEAM LOCK","S'allume pendant la tentative d'accrochage Sidewinder (4,5 s) et reste allumé si l'autodirecteur accroche."],
+   ["6","COLLISION","Indique que le guidage en collision est sélectionné en poursuite ferme."],
+   ["7","HOT TRIG","S'allume quand les conditions de tir sont réunies : appuyer sur la détente tirera."]]},
+  {t:"note", k:"warn", lbl:"Deux verrouillages à connaître", v:"Le bus MASTER ARM est asservi à la poignée de train : <b>train sorti, aucun tir</b> sauf largage d'urgence. En sens inverse, le largage ACM et le largage d'urgence ne sont <b>pas</b> bloqués par MASTER ARM."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Verrouillage ferme sur une cible, vérifie le domaine de tir affiché au HUD (Rmin/Rmax).",
+   "Tire, et <b>maintiens le verrouillage</b> pendant tout le vol du missile — ne romps rien, ne désengage rien.",
+   "Recommence sur une cible manœuvrante : sens à quel point il est facile de perdre le lock en la suivant.",
+   "Exercice : deux tirs successifs sur deux cibles séparées, en changeant de verrouillage entre les deux.",
+   "Note ta portée de tir réussie et ce qui t'a fait perdre le lock, le cas échéant."]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Manœuvrer trop fort juste après le tir : tu perds l'antenne sur la cible et le missile part pour rien."},
+  {t:"note", k:"go", lbl:"Validation", v:"Deux tirs sur trois au but, sur cible manœuvrante."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"d6", title:"Phoenix et tir multi-cibles",
+ intro:"L'arme qui rend le Tomcat unique : tirer loin, sur plusieurs cibles, avant même d'être vu. C'est aussi l'arme la plus longue à préparer et la plus facile à gâcher si on la tire trop tôt.",
+ body:[
+  {t:"h", v:"Portées réelles"},
+  {t:"p", v:"Contre une cible de la taille d'un chasseur, en altitude et en poursuite doppler ferme, compte au moins 60 nm de portée. En TWS contre plusieurs cibles à la fois, ça descend vers 50 nm. Si tu tires en mode actif d'entrée (le missile cherchant seul dès le départ), la portée s'effondre à environ 10 nm — c'est un mode de dernier recours, pas une tactique standard."},
+  {t:"h", v:"Préparation"},
+  {t:"p", v:"Comme le Sparrow, le Phoenix doit être préparé et accordé avant tir — environ deux minutes pour que les voyants de statut passent à « prêt ». Ne néglige pas ce délai dans ta planification d'engagement."},
+  {t:"img", k:"weapons", c:"Vue d'ensemble de l'armement — les Phoenix sur leurs rails fuselage."},
+  {t:"h", v:"Le principe du guidage"},
+  {t:"p", v:"En TWS, jusqu'à six Phoenix peuvent être guidés simultanément vers six cibles différentes. Le missile part semi-actif — guidé par ton radar — puis bascule en <b>autonome</b> (guidage radar actif embarqué) une fois assez proche de sa cible. Ce basculement n'est pas automatique dans l'absolu : c'est ton radar qui commande le passage en mode actif. Si ce signal n'arrive jamais, le missile continue en semi-actif jusqu'au bout — ce qui veut dire qu'il n'est <b>pas vraiment « tire et oublie »</b> tant qu'il n'a pas basculé."},
+  {t:"note", k:"", lbl:"Ce que ça implique pour toi", v:"Tu dois garder ta piste TWS active jusqu'à ce que le missile devienne autonome, pas juste jusqu'au moment du tir. Rompre le suivi trop tôt prive le missile de ses mises à jour de trajectoire."},
+  {t:"h", v:"Tir multi-cibles"},
+  {t:"p", v:"En TWS, tu assignes un missile à chaque piste voulue, tu tires en séquence, et tu maintiens le tableau de pistes actif pendant que les missiles convergent. C'est la manœuvre signature du Tomcat : rester en dehors de portée adverse tout en engageant plusieurs appareils."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Prépare tes Phoenix (deux minutes d'avance sur ton engagement prévu).",
+   "Tir sur cible unique à longue distance, en gardant le suivi radar actif jusqu'à l'impact.",
+   "Passe en TWS avec deux ou trois cibles, assigne et tire en séquence.",
+   "Note tes portées réelles observées — elles varient nettement avec l'altitude, la vitesse de tir et la manœuvre de la cible."]},
+  {t:"note", k:"warn", lbl:"Piège", v:"Tirer au maximum théorique sur une cible manœuvrante : elle a largement le temps de se dérober avant l'impact. Réserve les longues portées aux cibles qui ne savent pas qu'elles sont visées."},
+  {t:"note", k:"go", lbl:"Validation", v:"Deux cibles engagées simultanément en TWS, au moins une abattue."},
+  {t:"src", v:["manuel"]}
+]},
+
+{id:"d7", title:"BFM : le Tomcat au manche",
+ intro:"Dernière leçon de la section : le combat tournoyant. Le Tomcat est lourd mais ses ailes immenses le rendent redoutable à basse vitesse — à condition de ne pas gaspiller son énergie dans le premier virage.",
+ body:[
+  {t:"h", v:"Gérer l'énergie"},
+  {t:"p", v:"Chaque virage soutenu coûte de la vitesse. La question permanente en combat tournoyant n'est pas « puis-je tourner plus fort » mais « ai-je les moyens de le faire maintenant ». Le DFCS (section A) t'aide à sentir la limite, mais l'énergie, elle, ne se récupère qu'en ligne droite ou en piqué."},
+  {t:"img", k:"csurf", c:"Position des gouvernes — utile pour voir tes propres entrées en combat."},
+  {t:"img", k:"aoa", c:"L'indexeur d'incidence — ton limiteur de virage en combat serré, comme en approche."},
+  {t:"h", v:"Manœuvres de base"},
+  {t:"p", v:"Le virage soutenu à facteur de charge constant est ta manœuvre par défaut. Le tonneau barriqué casse une poursuite en te déplaçant latéralement sans perdre trop d'énergie. La mise en travers extrême réduit ta vitesse brutalement pour faire dépasser un poursuivant — dangereux si mal jugé, redoutable sinon."},
+  {t:"h", v:"Défensif"},
+  {t:"p", v:"En défensif, ton premier travail est de détecter la menace le plus tôt possible — c'est pour ça que le RWR (section E) et le fait de regarder dehors comptent autant que le pilotage. Une fois la menace identifiée, casse la solution de tir adverse par un virage franc vers elle, pas en t'éloignant."},
+  {t:"img", k:"rwr", c:"Indicateur ALR-67 — ta première ligne de défense en combat"},
+  {t:"tbl", head:["Bande","Contenu"], rows:[
+   ["Critique (intérieure)","Menaces directes : capables de t'engager <b>et</b> montrant l'intention de le faire."],
+   ["Létale","Systèmes capables de t'engager, mais qui ne le font pas actuellement."],
+   ["Non létale (extérieure)","Émetteurs sans menace immédiate — par distance ou absence d'armement."]]},
+  {t:"p", v:"Le détail du cercle d'état central et des codes de priorisation est traité en section Survivre."},
+  {t:"h", v:"Ce que tu fais maintenant"},
+  {t:"proc", v:[
+   "Combat contre un adversaire de niveau facile, en offensif : garde l'énergie, ne tire pas sur le manche au premier virage.",
+   "Même exercice en défensif : détecte, réagis, casse la solution.",
+   "Combat contre un adversaire plus manœuvrant : accepte de perdre longtemps avant de trouver ton ouverture.",
+   "Note ce qui t'a coûté le plus d'énergie, et à quel moment tu aurais dû rompre plutôt qu'insister."]},
+  {t:"note", k:"go", lbl:"Validation", v:"Tu tiens deux minutes en défensif face à un adversaire plus manœuvrant sans être abattu. Tu es prêt pour la section E."},
+  {t:"src", v:["manuel"]}
+]},
+{id:"d8", title:"Ressources vidéo",
+ intro:"Le combat air-air du B(U) a déjà sa vidéo dédiée, centrée sur ce que le nouveau HUD change vraiment en engagement.",
+ body:[
+  {t:"video", id:"8G2atd69R7k", c:"DCS F-14B(U) Beyond Visual Range Combat — le nouveau HUD appliqué à un engagement BVR réel."},
+  {t:"vidlink", url:"https://f14.manuals.heatblur.se/f14bu/weapons/air_to_air/overview.html", c:"Chapitre emploi air-air du manuel en ligne Heatblur", src:"Référence texte officielle"}
+]}
+
+];
+
+/* ---------- état ---------- */
+const KEY="f14bu-sectionD";
+let st={done:{},notes:{}}, cur=0;
+async function load(){ try{const r=await __sget(KEY); if(r&&r.value) st=Object.assign(st,JSON.parse(r.value));}catch(e){} }
+let tm=null;
+function save(){ clearTimeout(tm); tm=setTimeout(async()=>{ try{await __sset(KEY,JSON.stringify(st));}catch(e){} },400); }
+
+/* ---------- rendu ---------- */
+function fig(k,c){
+  const id=IMG[k];
+  const fn=FN[id]||id;
+  return `<figure><img src="img/${fn}" alt="${c}" loading="lazy"
+      onerror="if(!this.dataset.f){this.dataset.f=1;this.src='${D(id)}';}else{this.closest('figure').classList.add('failed');}"
+      onclick="openLb(this.src)">
+    <div class="imgfail">Image non chargée — ouvre-la directement dans Drive.</div>
+    <figcaption><span>${c}</span><a href="${V(id)}" target="_blank" rel="noopener">Drive ↗</a></figcaption></figure>`;
+}
+function table(h,rows){
+  return `<table class="keytbl"><thead><tr>${h.map(x=>`<th>${x}</th>`).join("")}</tr></thead>
+    <tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
+}
+function block(b){
+  if(b.t==="video"){
+    return `<figure class="vid"><iframe src="https://www.youtube.com/embed/${b.id}" title="${b.c}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+      <figcaption><span>${b.c}</span><a href="https://www.youtube.com/watch?v=${b.id}" target="_blank" rel="noopener">YouTube ↗</a></figcaption></figure>`;
+  }
+  if(b.t==="vidlink"){
+    return `<a class="vidlink" href="${b.url}" target="_blank" rel="noopener"><span class="ic">▶</span><span class="tx"><span class="tt">${b.c}</span><span class="src">${b.src||""}</span></span></a>`;
+  }
+  if(b.t==="h")   return `<h3>${b.v}${b.badge?'<span class="badge" style="margin-left:8px;vertical-align:0">Nouveau</span>':''}</h3>`;
+  if(b.t==="p")   return `<p>${b.v}</p>`;
+  if(b.t==="img") return fig(b.k,b.c);
+  if(b.t==="proc")return `<ol class="proc">${b.v.map(s=>`<li><span>${s}</span></li>`).join("")}</ol>`;
+  if(b.t==="table")return table(b.head,b.rows);
+  if(b.t==="note")return `<div class="note ${b.k||""}"><span class="lbl">${b.lbl}</span><p>${b.v}</p></div>`;
+  if(b.t==="src") return `<h3>Sources dans ton Drive</h3><div class="srcs">${
+      b.v.map(k=>`<a href="${V(DOC[k][1])}" target="_blank" rel="noopener">${DOC[k][0]} ↗</a>`).join("")}</div>`;
+  return "";
+}
+function render(){
+  const l=L[cur];
+  document.getElementById("main").innerHTML=`<div class="page">
+    <div class="eyebrow">Section D · leçon ${cur+1} sur ${L.length}</div>
+    <h2>${l.title}${l.isNew?'<span class="badge">Nouveau sur le B(U)</span>':""}</h2>
+    <p class="intro">${l.intro}</p>
+    ${l.body.map(block).join("")}
+    <h3>Tes notes de vol</h3>
+    <textarea id="nt" placeholder="Portées de tir observées, réglages radar, ce qui a coincé…">${(st.notes[l.id]||"").replace(/</g,"&lt;")}</textarea>
+    <button class="doneline${st.done[l.id]?" on":""}" id="dn"><span class="box"></span>
+      <span>${st.done[l.id]?"Leçon validée":"Marquer cette leçon comme validée"}</span></button>
+    <div class="nav">
+      <button class="ghost" id="pv"${cur?"":" disabled style=opacity:.3"}>← Précédent</button>
+      <button class="ghost" id="nx"${cur<L.length-1?"":" disabled style=opacity:.3"}>Suivant →</button>
+    </div></div>`;
+  document.getElementById("nt").oninput=e=>{st.notes[l.id]=e.target.value;save();};
+  document.getElementById("dn").onclick=()=>{st.done[l.id]=!st.done[l.id];save();render();};
+  if(cur) document.getElementById("pv").onclick=()=>{cur--;render();window.scrollTo(0,0);};
+  if(cur<L.length-1) document.getElementById("nx").onclick=()=>{cur++;render();window.scrollTo(0,0);};
+  rail();
+}
+function rail(){
+  const r=document.getElementById("rail"); r.innerHTML="";
+  L.forEach((l,i)=>{
+    const b=document.createElement("button");
+    b.className="item"+(i===cur?" on":"")+(st.done[l.id]?" done":"");
+    b.innerHTML=`<span class="idx">${st.done[l.id]?"✓":String(i+1).padStart(2,"0")}</span><span class="nm">${l.title}</span>`;
+    b.onclick=()=>{cur=i;render();window.scrollTo(0,0);};
+    r.appendChild(b);
+  });
+  const n=L.filter(l=>st.done[l.id]).length;
+  document.getElementById("foot").textContent=`${n} / ${L.length} leçons validées`;
+}
+function openLb(src){const lb=document.getElementById("lb");document.getElementById("lbimg").src=src;lb.classList.add("on");}
+document.getElementById("lb").onclick=()=>document.getElementById("lb").classList.remove("on");
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape") document.getElementById("lb").classList.remove("on");
+  if(e.target.matches("textarea")) return;
+  if(e.key==="ArrowRight"&&cur<L.length-1){cur++;render();window.scrollTo(0,0);}
+  if(e.key==="ArrowLeft"&&cur>0){cur--;render();window.scrollTo(0,0);}
+});
+load().then(render);
+</script>
