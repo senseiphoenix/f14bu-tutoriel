@@ -1,0 +1,45 @@
+{
+"version": 1,
+"aircraft": "Générique — tous avions",
+"inputFolder": "<dossier de chaque avion>",
+"statusLegend": {
+  "ok": "Commande du profil de base DCS, hash vérifié identique sur tous vos avions.",
+  "check": "Commande de base mais avec réserve : modules hors standard ou comportement à confirmer.",
+  "none": "Pas d'équivalent générique : cette fonction dépend de chaque module."
+},
+"bindings": [
+
+{"device":"stick","n":"1","commands":["Weapon Fire"],"status":"ok","note":"Tir/largage de l'arme sélectionnée — la commande universelle des avions FC3 et de la plupart des modules."},
+{"device":"stick","n":"5","commands":["Cannon"],"status":"check","note":"Sélectionne le canon ; le tir lui-même passe par « Weapon Fire » (repère 1)."},
+{"device":"stick","n":"15","commands":["Trim: Nose Down"],"status":"check","note":"Hors standard sur A-10C : ce module redéclare son trim."},
+{"device":"stick","n":"16","commands":["Trim: Left Wing Down"],"status":"ok"},
+{"device":"stick","n":"17","commands":["Trim: Nose Up"],"status":"check","note":"Hors standard sur A-10C."},
+{"device":"stick","n":"18","commands":["Trim: Right Wing Down"],"status":"ok"},
+{"device":"stick","n":"21","commands":["Zoom in"],"status":"ok"},
+{"device":"stick","n":"22","commands":["Zoom out"],"status":"ok"},
+{"device":"stick","n":"23","commands":["All missiles padlock"],"status":"check","note":"Padlock missiles ; le padlock cible classique n'a pas de hash récolté."},
+{"device":"stick","n":"24","commands":["F2 Aircraft view"],"status":"ok"},
+{"device":"stick","n":"25","commands":["Camera snap view left"],"status":"ok"},
+{"device":"stick","n":"26","commands":["F1 Cockpit view"],"status":"ok"},
+{"device":"stick","n":"27","commands":["Camera snap view right"],"status":"ok"},
+{"device":"stick","n":"31","commands":["Airbrake On"],"status":"check","note":"Sortie seule : prévoir « Airbrake Off » ailleurs, ou préférer la bascule « Airbrake » (jamais bindée chez vous, hash inconnu). Hors standard sur MiG-15 easy."},
+
+{"device":"throttle","n":"X","commands":["Thrust Left"],"status":"ok","note":"Hash identique au « Throttle Left » du F-14 : votre axe fonctionne déjà partout."},
+{"device":"throttle","n":"Y","commands":["Thrust Right"],"status":"ok","note":"Hash identique au « Throttle Right » du F-14."},
+{"device":"throttle","n":"1","commands":["Communication menu"],"status":"check","note":"Le menu radio universel remplace le PTT Jester sur les avions sans RIO."},
+{"device":"throttle","n":"16","commands":["Weapon Change"],"status":"ok","note":"Cycle des armes — l'équivalent universel du sélecteur F-14."},
+{"device":"throttle","n":"28","commands":["Camera snap view down"],"status":"ok"},
+{"device":"throttle","n":"29","commands":["Camera snap view left"],"status":"ok"},
+{"device":"throttle","n":"30","commands":["Camera snap view up"],"status":"ok"},
+{"device":"throttle","n":"31","commands":["Camera snap view right"],"status":"ok"},
+{"device":"throttle","n":"38","commands":["Landing Gear Up"],"status":"ok"},
+{"device":"throttle","n":"39","commands":["Landing Gear Down"],"status":"ok"},
+{"device":"throttle","n":"40","commands":["Flaps Up"],"status":"check","note":"Hors standard sur F-86 : signature différente."},
+{"device":"throttle","n":"41","commands":["Flaps Landing Position"],"status":"check","note":"Position atterrissage. Hors standard sur L-39 et MiG-19."},
+
+{"device":"pedals","n":"1","commands":["Aircraft Rudder Left"],"status":"ok"},
+{"device":"pedals","n":"2","commands":["Aircraft Rudder Right"],"status":"ok"},
+{"device":"pedals","n":"3","commands":["Rudder"],"status":"check","note":"Hors standard sur C-101 et Mirage F1 : ces modules utilisent leur propre axe (a8036)."}
+
+]
+}

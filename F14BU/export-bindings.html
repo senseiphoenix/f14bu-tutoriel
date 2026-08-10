@@ -132,6 +132,8 @@ section.device.visible{display:block}
 </header>
 
 <div class="toolbar">
+  <span class="flt-label">Profil</span>
+  <div class="tabs" id="profile-tabs"></div>
   <div class="tabs" id="tabs"></div>
   <span class="spacer"></span>
   <span class="flt-label">Statut</span>
@@ -197,14 +199,26 @@ const DEVICE_META = {
              eg:'MFG Crosswind V2 {E5F6A7B8-…}'},
 };
 const CAT_COLOR = {arm:'#e0705f',vol:'#6aa6e0',sens:'#6fd08c',comm:'#f2a93b',misc:'#8b9aa3'};
-const STORE_KEY = 'f14bu-export-bindings-v1';
+const HW_STORE_KEY = 'dcs-export-hardware-v1';
 
-let CATALOG = null;   // {commands:[{name,kind,hash,resolved,...}]}
-let HOTAS   = null;   // {device:[{id,labels:[...]}]}
-let BINDINGS = null;  // {bindings:[{device,n,commands,status,note,axis}]}
+// Deux profils : le F-14B(U) complet, et le sous-ensemble générique dont les
+// hash sont vérifiés identiques sur tous les avions (base_joystick_binding).
+const PROFILES = {
+  f14:     {label:'F-14B(U)', storeKey:'f14bu-export-bindings-v1',
+            catalogUrl:'data/f14bu-commands.json', bindingsUrl:'data/f14bu-bindings.json',
+            emptyNote:''},
+  generic: {label:'Tous avions', storeKey:'dcs-generic-export-v1',
+            catalogUrl:'../data/dcs-generic-commands.json', bindingsUrl:'../data/generic-bindings.json',
+            emptyNote:'Pas de commande générique pour ce repère : fonction propre à chaque module.'},
+};
+let activeProfile = 'f14';
+
+let HOTAS   = null;   // {device:[{id,labels:[...]}]} — commun aux deux profils
+let CATALOG = null;   // catalogue du profil actif
+let BINDINGS = null;  // appariement du profil actif
 let byName = new Map();       // nom de commande -> entrée du catalogue
 let state = {};               // "device|n" -> {commands:[], keys:[]}
-let hardware = {};            // device -> nom de fichier DCS
+let hardware = {};            // device -> nom de fichier DCS (commun aux profils)
 let activeDevice = 'stick';
 const hiddenStatus = new Set();
 
@@ -241,15 +255,23 @@ function deriveKeys(n, commandCount) {
 /* =========================================================================
    Chargement
    ========================================================================= */
+async function loadProfile(id) {
+  const p = PROFILES[id];
+  const [cat, bnd] = await Promise.all([
+    fetch(p.catalogUrl).then(r => r.json()),
+    fetch(p.bindingsUrl).then(r => r.json()),
+  ]);
+  p.catalog = cat; p.bindings = bnd;
+}
+
 async function boot() {
   const boot = document.getElementById('boot');
   try {
-    const [cat, hot, bnd] = await Promise.all([
-      fetch('data/f14bu-commands.json').then(r => r.json()),
-      fetch('data/f14bu-hotas.json').then(r => r.json()),
-      fetch('data/f14bu-bindings.json').then(r => r.json()),
-    ]);
-    CATALOG = cat; HOTAS = hot; BINDINGS = bnd;
+    HOTAS = await fetch('data/f14bu-hotas.json').then(r => r.json());
+    await loadProfile('f14');
+    // Le profil générique est optionnel : son absence ne bloque pas la page.
+    try { await loadProfile('generic'); } catch (e) { delete PROFILES.generic; }
+    CATALOG = PROFILES.f14.catalog; BINDINGS = PROFILES.f14.bindings;
   } catch (err) {
     boot.innerHTML = `<div class="msg err"><h3>Données inaccessibles</h3>
       <p>Cette page lit trois fichiers JSON du dossier <code>data/</code>. Ouverte directement
@@ -260,18 +282,52 @@ async function boot() {
     return;
   }
 
-  for (const c of CATALOG.commands) if (c.resolved) byName.set(c.name, c);
-  buildCommandList();
-  restore();
+  restoreHardware();
+  applyProfile('f14');
+  buildProfileTabs();
   buildHardware();
   buildTabs();
-  buildDevices();
   document.getElementById('app').hidden = false;
+}
+
+// Bascule tout l'état de la page sur un profil : catalogue, appariement,
+// corrections sauvegardées, liste de recherche, tableau.
+function applyProfile(id) {
+  activeProfile = id;
+  CATALOG = PROFILES[id].catalog;
+  BINDINGS = PROFILES[id].bindings;
+  byName = new Map();
+  for (const c of CATALOG.commands) {
+    // Catalogue F-14 : champ resolved. Catalogue générique : hash présent.
+    if (c.resolved || (c.hash && c.resolved === undefined)) byName.set(c.name, c);
+  }
+  buildCommandList();
+  restore();
+  buildDevices();
   refreshTail();
+}
+
+function buildProfileTabs() {
+  const host = document.getElementById('profile-tabs');
+  host.innerHTML = '';
+  for (const [id, p] of Object.entries(PROFILES)) {
+    const btn = document.createElement('button');
+    btn.className = 'tab' + (id === activeProfile ? ' active' : '');
+    btn.dataset.profile = id;
+    btn.textContent = p.label;
+    btn.addEventListener('click', () => {
+      if (id === activeProfile) return;
+      applyProfile(id);
+      host.querySelectorAll('.tab').forEach(t =>
+        t.classList.toggle('active', t.dataset.profile === id));
+    });
+    host.appendChild(btn);
+  }
 }
 
 function buildCommandList() {
   const list = document.getElementById('cmd-list');
+  list.innerHTML = '';
   const frag = document.createDocumentFragment();
   const names = [...byName.keys()].sort((a, b) => a.localeCompare(b, 'en'));
   for (const name of names) {
@@ -289,34 +345,49 @@ function buildCommandList() {
    État : proposition d'origine + corrections de l'utilisateur
    ========================================================================= */
 function defaultState() {
+  const byKey = {};
+  for (const b of BINDINGS.bindings) byKey[b.device + '|' + b.n] = b;
   const out = {};
-  for (const b of BINDINGS.bindings) {
-    const key = b.device + '|' + b.n;
-    out[key] = {
-      commands: [...b.commands],
-      keys: deriveKeys(b.n, b.commands.length),
-    };
+  // Toutes les étiquettes de la planche, même sans appariement dans ce
+  // profil : la touche est prédéduite pour qu'ajouter une commande suffise.
+  for (const dev of HOTAS.device) {
+    for (const label of dev.labels) {
+      const key = dev.id + '|' + label.n;
+      const binding = byKey[key];
+      const commands = binding ? [...binding.commands] : [];
+      const keys = deriveKeys(label.n, commands.length);
+      // Un repère numérique donne JOY_BTNn — faux pour une commande d'axe
+      // (le « 3 » des palonniers est l'axe de lacet, pas un bouton).
+      // On laisse le champ vide : l'utilisateur saisit JOY_Z, JOY_X…
+      commands.forEach((name, i) => {
+        const cmd = byName.get(name);
+        if (cmd && cmd.kind === 'axis' && /^JOY_BTN/.test(keys[i] || '')) keys[i] = '';
+      });
+      out[key] = {commands, keys};
+    }
   }
   return out;
 }
 
 function restore() {
   state = defaultState();
-  hardware = {};
   let saved = null;
-  try { saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null'); } catch (e) { saved = null; }
-  if (!saved) return;
-  if (saved.hardware) hardware = saved.hardware;
-  if (saved.state) {
-    for (const [key, value] of Object.entries(saved.state)) {
-      if (state[key] && value && Array.isArray(value.commands)) state[key] = value;
-    }
+  try { saved = JSON.parse(localStorage.getItem(PROFILES[activeProfile].storeKey) || 'null'); } catch (e) { saved = null; }
+  if (!saved || !saved.state) return;
+  for (const [key, value] of Object.entries(saved.state)) {
+    if (state[key] && value && Array.isArray(value.commands)) state[key] = value;
   }
+}
+
+function restoreHardware() {
+  hardware = {};
+  try { hardware = JSON.parse(localStorage.getItem(HW_STORE_KEY) || '{}'); } catch (e) { hardware = {}; }
 }
 
 function persist() {
   try {
-    localStorage.setItem(STORE_KEY, JSON.stringify({state, hardware}));
+    localStorage.setItem(PROFILES[activeProfile].storeKey, JSON.stringify({state}));
+    localStorage.setItem(HW_STORE_KEY, JSON.stringify(hardware));
   } catch (e) { /* quota ou navigation privée : l'export reste possible */ }
 }
 
@@ -399,7 +470,8 @@ function buildDevices() {
 }
 
 function buildRow(deviceId, label) {
-  const binding = bindingFor(deviceId, label.n) || {status: 'check', note: '', commands: []};
+  const binding = bindingFor(deviceId, label.n)
+    || {status: 'none', note: PROFILES[activeProfile].emptyNote, commands: []};
   const key = deviceId + '|' + label.n;
   const entry = state[key] || {commands: [], keys: []};
 
@@ -528,6 +600,10 @@ function buildDiff(deviceId) {
       if (!command) { problems.push(`${label.n} : commande inconnue « ${name} »`); return; }
       const joyKey = entry.keys[i];
       if (!joyKey) { problems.push(`${label.n} : pas de touche pour « ${name} »`); return; }
+      if (command.kind === 'axis' && /^JOY_BTN/i.test(joyKey)) {
+        problems.push(`${label.n} : « ${name} » est un axe, ${joyKey} est un bouton`);
+        return;
+      }
       (command.kind === 'axis' ? axisDiffs : keyDiffs).push({hash: command.hash, name: command.name, joyKey});
     });
   }
@@ -621,6 +697,11 @@ function showFile() {
   if (!file) { ta.value = 'Aucun binding à exporter.'; return; }
   const header = [];
   header.push('-- ' + (file.filename || '⚠ nom de fichier non renseigné pour ce périphérique'));
+  if (activeProfile === 'generic') {
+    header.push('-- Profil générique : hash vérifiés identiques sur tous vos avions.');
+    header.push('-- Copiez ce fichier dans le dossier joystick de CHAQUE avion visé.');
+    header.push('-- Hors standard : C-101 et Mirage F1 (axes), A-10C (trim), F-86 (volets).');
+  }
   if (file.problems.length) {
     header.push('--');
     header.push('-- Lignes ignorées :');
@@ -688,14 +769,16 @@ document.getElementById('dl-json-btn').addEventListener('click', () => {
       });
     }
   }
-  download('f14bu-bindings-valides.json', JSON.stringify(out, null, 2));
+  download(activeProfile === 'generic' ? 'dcs-generic-bindings-valides.json'
+                                       : 'f14bu-bindings-valides.json',
+           JSON.stringify(out, null, 2));
 });
 
 document.getElementById('reset-btn').addEventListener('click', () => {
-  if (!confirm('Abandonner vos corrections et revenir aux propositions d\'origine ?')) return;
-  localStorage.removeItem(STORE_KEY);
-  state = defaultState(); hardware = {};
-  buildHardware(); buildDevices(); refreshTail();
+  if (!confirm('Abandonner vos corrections de ce profil et revenir aux propositions d\'origine ?')) return;
+  localStorage.removeItem(PROFILES[activeProfile].storeKey);
+  state = defaultState();
+  buildDevices(); refreshTail();
 });
 
 boot();

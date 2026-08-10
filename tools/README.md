@@ -88,6 +88,23 @@ langue de l'interface, il lit aussi les catalogues gettext du jeu
 
 Sortie : `tools/game-commands-cache.lua`. À relancer avant `extract-commands.lua`.
 
+### `extract-generic-commands.lua`
+
+Extrait de `Config/Input/Aircrafts/base_joystick_binding.lua` les commandes
+communes à tous les avions (tangage, roulis, lacet, gaz, trims, vues…), puis
+vérifie empiriquement que chaque nom correspond au même hash dans les profils
+de tous les avions du joueur. Sortie : `data/dcs-generic-commands.json`, avec
+pour chaque commande son statut :
+
+- `verified` — hash identique partout où la commande a été observée ;
+- `majority` — quelques modules hors standard (C-101 et Mirage F1 pour les
+  axes de vol, A-10C pour le trim, F-86 pour les volets, L-39/MiG-19 pour la
+  position atterrissage), listés dans `excluded` ;
+- `unseen` — jamais bindée chez le joueur, hash inconnu à ce jour.
+
+Ce catalogue alimente le profil « Tous avions » de la page d'export : un même
+fichier `.diff.lua` copiable dans le dossier joystick de chaque avion.
+
 ### `validate-hash.lua`
 
 Filet de sécurité. Recalcule les hash du profil F-14 Heatblur et vérifie qu'ils
