@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — Export des bindings DCS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--body);background:var(--deck);color:var(--ink);line-height:1.5}
+
+header{background:var(--panel);border-bottom:1px solid var(--line);padding:18px 28px 16px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(26px,4vw,38px);letter-spacing:.04em;line-height:1.05;margin:4px 0 6px;text-transform:uppercase}
+.sub{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-top:12px}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;padding:11px 28px;background:var(--panel-2);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
+.tabs{display:flex;gap:5px;flex-wrap:wrap}
+.tab{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--line);background:transparent;color:var(--dim);padding:7px 14px;cursor:pointer;transition:.15s}
+.tab:hover{color:var(--ink);border-color:var(--dim)}
+.tab.active{background:var(--amber);border-color:var(--amber);color:#10161a;font-weight:600}
+.tab .cnt{opacity:.7;margin-left:6px}
+.spacer{flex:1}
+.flt-label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:6px 11px 6px 23px;border:1px solid var(--line);background:transparent;color:var(--dim);cursor:pointer;position:relative;transition:.15s}
+.chip::before{content:'';position:absolute;left:8px;top:50%;transform:translateY(-50%);width:8px;height:8px;background:var(--c,#999);border-radius:1px}
+.chip:hover{color:var(--ink)}
+.chip.off{opacity:.32}
+.btn{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);background:transparent;color:var(--dim);padding:7px 13px;cursor:pointer;transition:.15s}
+.btn:hover{color:var(--ink);border-color:var(--dim)}
+.btn.primary{border-color:var(--amber);color:var(--amber)}
+.btn.primary:hover{background:var(--amber);color:#10161a}
+.tab:focus-visible,.chip:focus-visible,.btn:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+main{max-width:1500px;margin:0 auto;padding:26px 22px 70px}
+
+.msg{border:1px solid var(--line);background:var(--panel);padding:16px 18px;margin-bottom:22px;font-size:13.5px}
+.msg.err{border-color:var(--warn)}
+.msg h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.msg.err h3{color:var(--warn)}
+.msg code{font-family:var(--mono);font-size:12px;background:var(--deck);padding:2px 6px;border:1px solid var(--line)}
+.msg p{margin-bottom:7px;color:var(--dim)}
+.msg p:last-child{margin-bottom:0}
+
+/* ---------- Configuration du matériel ---------- */
+.hw{background:var(--panel);border:1px solid var(--line);padding:18px;margin-bottom:24px}
+.hw h2{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.hw .hint{font-size:12.5px;color:var(--dim);margin-bottom:14px;max-width:900px}
+.hw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:12px}
+.hw-row label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:5px}
+.hw-row input{width:100%;font-family:var(--mono);font-size:11.5px;background:var(--deck);color:var(--ink);border:1px solid var(--line);padding:8px 10px}
+.hw-row input:focus{outline:none;border-color:var(--amber)}
+.hw-row .bad{border-color:var(--warn)}
+
+/* ---------- Titre de section ---------- */
+.fig-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:18px}
+.fig-num{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px}
+.fig-title{font-family:var(--display);font-weight:600;font-size:22px;letter-spacing:.04em;text-transform:uppercase}
+.fig-sub{font-family:var(--mono);font-size:11px;color:var(--dim)}
+
+section.device{display:none}
+section.device.visible{display:block}
+
+/* ---------- Table d'appariement ---------- */
+.legend-wrap{background:var(--panel);border:1px solid var(--line);overflow-x:auto}
+.dtable{width:100%;border-collapse:collapse;font-size:13.5px}
+/* Pas de thead collant : la barre d'outils l'est déjà et passe sur deux
+   lignes en fenêtre étroite, ce qui ferait chevaucher les deux. */
+.dtable th{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;text-align:left;color:var(--dim);border-bottom:1px solid var(--line);padding:11px 12px;background:var(--panel-2)}
+.dtable td{border-bottom:1px solid var(--line);padding:9px 12px;vertical-align:top}
+.dtable tr:last-child td{border-bottom:none}
+.dtable tbody tr:hover{background:var(--panel-2)}
+.dtable tr.hidden{display:none}
+.num-badge{display:inline-block;min-width:30px;text-align:center;font-family:var(--mono);font-size:10.5px;font-weight:600;color:#10161a;background:var(--c,#8b9aa3);padding:3px 6px;border-radius:1px}
+.c-label b{display:block;font-weight:600}
+.c-label span{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.06em}
+.c-note{font-size:12px;color:var(--dim);max-width:330px}
+.c-key input{width:118px;font-family:var(--mono);font-size:11px;background:var(--deck);color:var(--ink);border:1px solid var(--line);padding:5px 7px}
+.c-key input:focus{outline:none;border-color:var(--amber)}
+.c-key input.warn{border-color:var(--amber)}
+.cmd-row{display:flex;gap:6px;margin-bottom:5px;align-items:center}
+.cmd-row:last-child{margin-bottom:0}
+.cmd-row input{flex:1;min-width:230px;font-family:var(--mono);font-size:11px;background:var(--deck);color:var(--ink);border:1px solid var(--line);padding:5px 7px}
+.cmd-row input:focus{outline:none;border-color:var(--amber)}
+.cmd-row input.bad{border-color:var(--warn);color:var(--warn)}
+.mini{font-family:var(--mono);font-size:10px;border:1px solid var(--line);background:transparent;color:var(--dim);padding:4px 7px;cursor:pointer}
+.mini:hover{color:var(--ink);border-color:var(--dim)}
+.st{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border:1px solid;white-space:nowrap}
+.st-ok{color:var(--go);border-color:var(--go)}
+.st-check{color:var(--amber);border-color:var(--amber)}
+.st-none{color:var(--dim);border-color:var(--line)}
+
+/* ---------- Modale ---------- */
+.modal{display:none;position:fixed;inset:0;background:rgba(9,12,15,.85);z-index:100;align-items:center;justify-content:center;padding:20px}
+.modal.open{display:flex}
+.modal-box{background:var(--panel);border:1px solid var(--line);max-width:860px;width:100%;padding:22px;max-height:90vh;overflow-y:auto}
+.modal-box h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:10px}
+.modal-box p{font-size:13px;color:var(--dim);margin-bottom:10px}
+.modal-box textarea{width:100%;height:280px;font-family:var(--mono);font-size:11px;background:var(--deck);color:var(--ink);border:1px solid var(--line);padding:10px;resize:vertical}
+.modal-box .row{display:flex;gap:8px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
+.file-tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+
+.foot{max-width:1500px;margin:0 auto;padding:0 22px 50px;font-family:var(--mono);font-size:10.5px;color:var(--dim);line-height:1.9}
+.foot b{color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="crumbs">
+    <a href="../index.html">Accueil</a> ›
+    <a href="index.html">F-14B(U)</a> ›
+    <a href="mapping-hotas.html">Mapping HOTAS</a> ›
+    <span>Export DCS</span>
+  </nav>
+  <h1>Export des bindings DCS</h1>
+  <p class="sub">Transforme le mapping HOTAS en fichiers <code>.diff.lua</code> installables — profil F-14B(U) Pilote</p>
+  <p class="tail" id="tail">Chargement…</p>
+</header>
+
+<div class="toolbar">
+  <div class="tabs" id="tabs"></div>
+  <span class="spacer"></span>
+  <span class="flt-label">Statut</span>
+  <button class="chip" data-st="ok"    style="--c:#6fd08c">Sûr</button>
+  <button class="chip" data-st="check" style="--c:#f2a93b">À vérifier</button>
+  <button class="chip" data-st="none"  style="--c:#5c5f66">Sans équivalent</button>
+  <button class="btn" id="reset-btn">Réinitialiser</button>
+  <button class="btn primary" id="export-btn">Générer les fichiers</button>
+</div>
+
+<main>
+  <div id="boot"></div>
+  <div id="app" hidden>
+    <div class="hw">
+      <h2>Vos périphériques</h2>
+      <p class="hint">
+        DCS nomme chaque fichier de bindings d'après le périphérique <em>et</em> son identifiant matériel,
+        qui est propre à votre machine. Ouvrez
+        <code>%USERPROFILE%\Saved Games\DCS\Config\Input\F-14BU\joystick\</code>
+        et recopiez ci-dessous le nom exact d'un fichier existant, sans le suffixe <code>.diff.lua</code>.
+        Si le dossier est vide, assignez n'importe quelle commande dans DCS et sauvegardez : le fichier apparaîtra.
+      </p>
+      <div class="hw-grid" id="hw-grid"></div>
+    </div>
+    <div id="devices"></div>
+  </div>
+</main>
+
+<datalist id="cmd-list"></datalist>
+
+<div class="modal" id="export-modal">
+  <div class="modal-box">
+    <h3>Fichiers générés</h3>
+    <p id="export-summary"></p>
+    <div class="file-tabs" id="file-tabs"></div>
+    <textarea id="export-ta" readonly spellcheck="false"></textarea>
+    <div class="row">
+      <button class="btn" id="copy-btn">Copier</button>
+      <button class="btn" id="dl-btn">Télécharger ce fichier</button>
+      <button class="btn" id="dl-json-btn">Exporter l'appariement (JSON)</button>
+      <button class="btn primary" id="close-btn">Fermer</button>
+    </div>
+  </div>
+</div>
+
+<div class="foot">
+  <p><b>Installation</b> — copiez chaque fichier dans <code>%USERPROFILE%\Saved Games\DCS\Config\Input\F-14BU\joystick\</code>, DCS fermé. Sauvegardez d'abord les fichiers existants : le nouveau les remplace.</p>
+  <p><b>Périmètre</b> — profil Pilote uniquement. Les commandes radar, TCS et contre-mesures du F-14 appartiennent au poste RIO et ne peuvent pas être bindées ici.</p>
+</div>
+
+<script>
+/* =========================================================================
+   Données
+   ========================================================================= */
+const DEVICE_META = {
+  stick:    {title:'Manche',       sub:'VPC MT-50CM3 ou équivalent',
+             eg:'RIGHT VPC Stick MT-50CM3 {0B435C50-3DF1-11ed-8003-444553540000}'},
+  throttle: {title:'Manette',      sub:'throttle HOTAS',
+             eg:'LEFT VPC Throttle MT-50CM3 {762D4250-40D6-11ed-8001-444553540000}'},
+  pto2:     {title:'Panneau PTO2', sub:'boîtier de commutateurs',
+             eg:'VPC Panel PTO2 {A1B2C3D4-…}'},
+  pedals:   {title:'Palonniers',   sub:'axes de lacet et freins',
+             eg:'MFG Crosswind V2 {E5F6A7B8-…}'},
+};
+const CAT_COLOR = {arm:'#e0705f',vol:'#6aa6e0',sens:'#6fd08c',comm:'#f2a93b',misc:'#8b9aa3'};
+const STORE_KEY = 'f14bu-export-bindings-v1';
+
+let CATALOG = null;   // {commands:[{name,kind,hash,resolved,...}]}
+let HOTAS   = null;   // {device:[{id,labels:[...]}]}
+let BINDINGS = null;  // {bindings:[{device,n,commands,status,note,axis}]}
+let byName = new Map();       // nom de commande -> entrée du catalogue
+let state = {};               // "device|n" -> {commands:[], keys:[]}
+let hardware = {};            // device -> nom de fichier DCS
+let activeDevice = 'stick';
+const hiddenStatus = new Set();
+
+/* =========================================================================
+   Déduction de la touche DCS à partir du repère de la planche
+   ========================================================================= */
+const AXIS_KEYS = {X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+
+// Les repères « 1 », « rY », « SLDR » se traduisent mécaniquement. « 35-37 »
+// désigne une plage de boutons et « M1 » une position de rotacteur : dans ces
+// cas la touche ne peut pas être devinée, l'utilisateur la renseigne.
+function deriveKeys(n, commandCount) {
+  const upper = String(n).toUpperCase();
+  const slots = Math.max(commandCount, 1);
+
+  // Un même repère physique peut porter plusieurs commandes DCS : un curseur
+  // de frein pilote à la fois « Wheel Brake Left » et « Wheel Brake Right ».
+  if (AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if (upper === 'SLDR')  return new Array(slots).fill('JOY_SLIDER1');
+  if (/^\d+$/.test(n))   return new Array(slots).fill('JOY_BTN' + n);
+
+  const range = n.match(/^(\d+)-(\d+)$/);
+  if (range) {
+    const first = parseInt(range[1], 10), last = parseInt(range[2], 10);
+    const keys = [];
+    for (let b = first; b <= last && keys.length < Math.max(commandCount, 1); b++) {
+      keys.push('JOY_BTN' + b);
+    }
+    return keys;
+  }
+  return new Array(Math.max(commandCount, 1)).fill('');
+}
+
+/* =========================================================================
+   Chargement
+   ========================================================================= */
+async function boot() {
+  const boot = document.getElementById('boot');
+  try {
+    const [cat, hot, bnd] = await Promise.all([
+      fetch('data/f14bu-commands.json').then(r => r.json()),
+      fetch('data/f14bu-hotas.json').then(r => r.json()),
+      fetch('data/f14bu-bindings.json').then(r => r.json()),
+    ]);
+    CATALOG = cat; HOTAS = hot; BINDINGS = bnd;
+  } catch (err) {
+    boot.innerHTML = `<div class="msg err"><h3>Données inaccessibles</h3>
+      <p>Cette page lit trois fichiers JSON du dossier <code>data/</code>. Ouverte directement
+      depuis le disque (<code>file://</code>), le navigateur bloque cette lecture.</p>
+      <p>Consultez-la depuis le site en ligne, ou servez le dossier via un serveur HTTP local.</p>
+      <p style="color:var(--warn)">${err}</p></div>`;
+    document.getElementById('tail').textContent = 'Échec du chargement';
+    return;
+  }
+
+  for (const c of CATALOG.commands) if (c.resolved) byName.set(c.name, c);
+  buildCommandList();
+  restore();
+  buildHardware();
+  buildTabs();
+  buildDevices();
+  document.getElementById('app').hidden = false;
+  refreshTail();
+}
+
+function buildCommandList() {
+  const list = document.getElementById('cmd-list');
+  const frag = document.createDocumentFragment();
+  const names = [...byName.keys()].sort((a, b) => a.localeCompare(b, 'en'));
+  for (const name of names) {
+    const opt = document.createElement('option');
+    opt.value = name;
+    const entry = byName.get(name);
+    const cats = (entry.categories || []).join(' / ');
+    opt.label = cats ? `${cats} · ${entry.kind}` : entry.kind;
+    frag.appendChild(opt);
+  }
+  list.appendChild(frag);
+}
+
+/* =========================================================================
+   État : proposition d'origine + corrections de l'utilisateur
+   ========================================================================= */
+function defaultState() {
+  const out = {};
+  for (const b of BINDINGS.bindings) {
+    const key = b.device + '|' + b.n;
+    out[key] = {
+      commands: [...b.commands],
+      keys: deriveKeys(b.n, b.commands.length),
+    };
+  }
+  return out;
+}
+
+function restore() {
+  state = defaultState();
+  hardware = {};
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(STORE_KEY) || 'null'); } catch (e) { saved = null; }
+  if (!saved) return;
+  if (saved.hardware) hardware = saved.hardware;
+  if (saved.state) {
+    for (const [key, value] of Object.entries(saved.state)) {
+      if (state[key] && value && Array.isArray(value.commands)) state[key] = value;
+    }
+  }
+}
+
+function persist() {
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify({state, hardware}));
+  } catch (e) { /* quota ou navigation privée : l'export reste possible */ }
+}
+
+/* =========================================================================
+   Rendu
+   ========================================================================= */
+function buildHardware() {
+  const grid = document.getElementById('hw-grid');
+  grid.innerHTML = '';
+  for (const dev of HOTAS.device) {
+    const meta = DEVICE_META[dev.id] || {title: dev.id, sub: ''};
+    const row = document.createElement('div');
+    row.className = 'hw-row';
+    row.innerHTML = `<label for="hw-${dev.id}">${meta.title}</label>
+      <input id="hw-${dev.id}" type="text" spellcheck="false"
+             placeholder="${escapeAttr(meta.eg || 'Nom du périphérique {GUID}')}"
+             value="${escapeAttr(hardware[dev.id] || '')}">`;
+    const input = row.querySelector('input');
+    input.addEventListener('input', () => {
+      hardware[dev.id] = input.value.trim();
+      persist();
+    });
+    grid.appendChild(row);
+  }
+}
+
+function buildTabs() {
+  const tabs = document.getElementById('tabs');
+  tabs.innerHTML = '';
+  for (const dev of HOTAS.device) {
+    const meta = DEVICE_META[dev.id] || {title: dev.id};
+    const btn = document.createElement('button');
+    btn.className = 'tab' + (dev.id === activeDevice ? ' active' : '');
+    btn.dataset.dev = dev.id;
+    btn.innerHTML = `${meta.title}<span class="cnt">${dev.labels.length}</span>`;
+    btn.addEventListener('click', () => {
+      activeDevice = dev.id;
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.dev === dev.id));
+      document.querySelectorAll('section.device').forEach(s => s.classList.toggle('visible', s.dataset.dev === dev.id));
+    });
+    tabs.appendChild(btn);
+  }
+}
+
+function bindingFor(device, n) {
+  return BINDINGS.bindings.find(b => b.device === device && b.n === n);
+}
+
+function buildDevices() {
+  const host = document.getElementById('devices');
+  host.innerHTML = '';
+  HOTAS.device.forEach((dev, index) => {
+    const meta = DEVICE_META[dev.id] || {title: dev.id, sub: ''};
+    const section = document.createElement('section');
+    section.className = 'device' + (dev.id === activeDevice ? ' visible' : '');
+    section.dataset.dev = dev.id;
+    section.innerHTML = `
+      <div class="fig-head">
+        <span class="fig-num">${String(index + 1).padStart(2, '0')}</span>
+        <span class="fig-title">${meta.title}</span>
+        <span class="fig-sub">${meta.sub} — ${dev.labels.length} repères</span>
+      </div>
+      <div class="legend-wrap">
+        <table class="dtable">
+          <thead><tr>
+            <th style="width:64px">Repère</th>
+            <th style="width:200px">Étiquette</th>
+            <th style="width:130px">Touche DCS</th>
+            <th>Commande DCS</th>
+            <th style="width:120px">Statut</th>
+            <th style="width:280px">Remarque</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>`;
+    const tbody = section.querySelector('tbody');
+    for (const label of dev.labels) tbody.appendChild(buildRow(dev.id, label));
+    host.appendChild(section);
+  });
+}
+
+function buildRow(deviceId, label) {
+  const binding = bindingFor(deviceId, label.n) || {status: 'check', note: '', commands: []};
+  const key = deviceId + '|' + label.n;
+  const entry = state[key] || {commands: [], keys: []};
+
+  const tr = document.createElement('tr');
+  tr.dataset.status = binding.status;
+  tr.classList.toggle('hidden', hiddenStatus.has(binding.status));
+
+  const color = CAT_COLOR[label.cat] || '#8b9aa3';
+  const stClass = {ok: 'st-ok', check: 'st-check', none: 'st-none'}[binding.status] || 'st-check';
+  const stText  = {ok: 'Sûr', check: 'À vérifier', none: 'Sans équiv.'}[binding.status] || binding.status;
+
+  tr.innerHTML = `
+    <td><span class="num-badge" style="--c:${color}">${escapeHtml(label.n)}</span></td>
+    <td class="c-label"><b>${escapeHtml(label.text)}</b><span>${escapeHtml(label.lesson.toUpperCase())}</span></td>
+    <td class="c-key"></td>
+    <td class="c-cmd"></td>
+    <td><span class="st ${stClass}">${stText}</span></td>
+    <td class="c-note">${escapeHtml(binding.note || '')}</td>`;
+
+  const keyCell = tr.querySelector('.c-key');
+  const cmdCell = tr.querySelector('.c-cmd');
+
+  function render() {
+    keyCell.innerHTML = '';
+    cmdCell.innerHTML = '';
+    const count = Math.max(entry.commands.length, 1);
+
+    for (let i = 0; i < count; i++) {
+      const keyInput = document.createElement('input');
+      keyInput.type = 'text';
+      keyInput.spellcheck = false;
+      keyInput.placeholder = 'JOY_BTN…';
+      keyInput.value = entry.keys[i] || '';
+      keyInput.classList.toggle('warn', !!entry.commands[i] && !entry.keys[i]);
+      keyInput.style.marginBottom = '5px';
+      keyInput.addEventListener('input', () => {
+        entry.keys[i] = keyInput.value.trim();
+        keyInput.classList.toggle('warn', !!entry.commands[i] && !entry.keys[i]);
+        persist(); refreshTail();
+      });
+      keyCell.appendChild(keyInput);
+
+      const row = document.createElement('div');
+      row.className = 'cmd-row';
+      const cmdInput = document.createElement('input');
+      cmdInput.type = 'text';
+      cmdInput.spellcheck = false;
+      cmdInput.setAttribute('list', 'cmd-list');
+      cmdInput.placeholder = 'aucune — chercher une commande…';
+      cmdInput.value = entry.commands[i] || '';
+      cmdInput.classList.toggle('bad', !!entry.commands[i] && !byName.has(entry.commands[i]));
+      cmdInput.addEventListener('input', () => {
+        entry.commands[i] = cmdInput.value.trim();
+        cmdInput.classList.toggle('bad', !!entry.commands[i] && !byName.has(entry.commands[i]));
+        persist(); refreshTail();
+      });
+      row.appendChild(cmdInput);
+
+      const del = document.createElement('button');
+      del.className = 'mini';
+      del.textContent = '×';
+      del.title = 'Retirer cette ligne';
+      del.addEventListener('click', () => {
+        entry.commands.splice(i, 1);
+        entry.keys.splice(i, 1);
+        persist(); render(); refreshTail();
+      });
+      row.appendChild(del);
+      cmdCell.appendChild(row);
+    }
+
+    const add = document.createElement('button');
+    add.className = 'mini';
+    add.textContent = '+ commande';
+    add.addEventListener('click', () => {
+      entry.commands.push('');
+      entry.keys.push('');
+      persist(); render();
+    });
+    cmdCell.appendChild(add);
+  }
+
+  render();
+  return tr;
+}
+
+function refreshTail() {
+  let bound = 0, missingKey = 0, unknown = 0;
+  for (const entry of Object.values(state)) {
+    entry.commands.forEach((name, i) => {
+      if (!name) return;
+      if (!byName.has(name)) { unknown++; return; }
+      if (!entry.keys[i]) { missingKey++; return; }
+      bound++;
+    });
+  }
+  const parts = [`${bound} bindings prêts`];
+  if (missingKey) parts.push(`${missingKey} sans touche`);
+  if (unknown) parts.push(`${unknown} commandes inconnues`);
+  document.getElementById('tail').textContent = parts.join(' · ');
+}
+
+/* =========================================================================
+   Génération des fichiers .diff.lua
+   ========================================================================= */
+
+// DCS écrit du Lua indenté à la tabulation, avec une virgule finale partout.
+function luaQuote(text) {
+  return '"' + String(text).replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"';
+}
+
+function buildDiff(deviceId) {
+  const keyDiffs = [], axisDiffs = [];
+  const problems = [];
+
+  for (const label of HOTAS.device.find(d => d.id === deviceId).labels) {
+    const entry = state[deviceId + '|' + label.n];
+    if (!entry) continue;
+    entry.commands.forEach((name, i) => {
+      if (!name) return;
+      const command = byName.get(name);
+      if (!command) { problems.push(`${label.n} : commande inconnue « ${name} »`); return; }
+      const joyKey = entry.keys[i];
+      if (!joyKey) { problems.push(`${label.n} : pas de touche pour « ${name} »`); return; }
+      (command.kind === 'axis' ? axisDiffs : keyDiffs).push({hash: command.hash, name: command.name, joyKey});
+    });
+  }
+
+  const lines = ['local diff = {'];
+
+  if (axisDiffs.length) {
+    lines.push('\t["axisDiffs"] = {');
+    for (const d of axisDiffs) {
+      lines.push(`\t\t[${luaQuote(d.hash)}] = {`);
+      lines.push('\t\t\t["added"] = {');
+      lines.push('\t\t\t\t[1] = {');
+      lines.push(`\t\t\t\t\t["key"] = ${luaQuote(d.joyKey)},`);
+      lines.push('\t\t\t\t},');
+      lines.push('\t\t\t},');
+      lines.push(`\t\t\t["name"] = ${luaQuote(d.name)},`);
+      lines.push('\t\t},');
+    }
+    lines.push('\t},');
+  }
+
+  if (keyDiffs.length) {
+    lines.push('\t["keyDiffs"] = {');
+    for (const d of keyDiffs) {
+      lines.push(`\t\t[${luaQuote(d.hash)}] = {`);
+      lines.push('\t\t\t["added"] = {');
+      lines.push('\t\t\t\t[1] = {');
+      lines.push(`\t\t\t\t\t["key"] = ${luaQuote(d.joyKey)},`);
+      lines.push('\t\t\t\t},');
+      lines.push('\t\t\t},');
+      lines.push(`\t\t\t["name"] = ${luaQuote(d.name)},`);
+      lines.push('\t\t},');
+    }
+    lines.push('\t},');
+  }
+
+  lines.push('}');
+  lines.push('return diff');
+  return {text: lines.join('\n') + '\n', count: keyDiffs.length + axisDiffs.length, problems};
+}
+
+/* =========================================================================
+   Modale d'export
+   ========================================================================= */
+let generated = [];
+let shownFile = 0;
+
+function openExport() {
+  generated = HOTAS.device.map(dev => {
+    const built = buildDiff(dev.id);
+    const name = (hardware[dev.id] || '').replace(/\.diff\.lua$/i, '').trim();
+    return {
+      device: dev.id,
+      filename: name ? name + '.diff.lua' : null,
+      ...built,
+    };
+  }).filter(f => f.count > 0 || f.problems.length);
+
+  const totalBinds = generated.reduce((n, f) => n + f.count, 0);
+  const totalIssues = generated.reduce((n, f) => n + f.problems.length, 0);
+  const unnamed = generated.filter(f => !f.filename).length;
+
+  const summary = [`${totalBinds} bindings répartis sur ${generated.length} fichiers.`];
+  if (unnamed) summary.push(`${unnamed} périphérique(s) sans nom de fichier : renseignez-les en haut de page.`);
+  if (totalIssues) summary.push(`${totalIssues} ligne(s) ignorée(s).`);
+  document.getElementById('export-summary').textContent = summary.join(' ');
+
+  const tabs = document.getElementById('file-tabs');
+  tabs.innerHTML = '';
+  generated.forEach((file, i) => {
+    const meta = DEVICE_META[file.device] || {title: file.device};
+    const btn = document.createElement('button');
+    btn.className = 'tab' + (i === 0 ? ' active' : '');
+    btn.innerHTML = `${meta.title}<span class="cnt">${file.count}</span>`;
+    btn.addEventListener('click', () => {
+      shownFile = i;
+      tabs.querySelectorAll('.tab').forEach((t, j) => t.classList.toggle('active', i === j));
+      showFile();
+    });
+    tabs.appendChild(btn);
+  });
+
+  shownFile = 0;
+  showFile();
+  document.getElementById('export-modal').classList.add('open');
+}
+
+function showFile() {
+  const file = generated[shownFile];
+  const ta = document.getElementById('export-ta');
+  if (!file) { ta.value = 'Aucun binding à exporter.'; return; }
+  const header = [];
+  header.push('-- ' + (file.filename || '⚠ nom de fichier non renseigné pour ce périphérique'));
+  if (file.problems.length) {
+    header.push('--');
+    header.push('-- Lignes ignorées :');
+    for (const p of file.problems) header.push('--   ' + p);
+  }
+  ta.value = header.join('\n') + '\n\n' + file.text;
+}
+
+function download(filename, text) {
+  const blob = new Blob([text], {type: 'text/plain;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+/* =========================================================================
+   Utilitaires et branchements
+   ========================================================================= */
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function escapeAttr(s) { return escapeHtml(s); }
+
+document.querySelectorAll('.chip').forEach(chip => chip.addEventListener('click', () => {
+  const st = chip.dataset.st;
+  if (hiddenStatus.has(st)) { hiddenStatus.delete(st); chip.classList.remove('off'); }
+  else { hiddenStatus.add(st); chip.classList.add('off'); }
+  document.querySelectorAll('.dtable tr[data-status]').forEach(tr => {
+    tr.classList.toggle('hidden', hiddenStatus.has(tr.dataset.status));
+  });
+}));
+
+document.getElementById('export-btn').addEventListener('click', openExport);
+document.getElementById('close-btn').addEventListener('click',
+  () => document.getElementById('export-modal').classList.remove('open'));
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.getElementById('export-modal').classList.remove('open');
+});
+
+document.getElementById('copy-btn').addEventListener('click', () => {
+  const ta = document.getElementById('export-ta');
+  ta.select();
+  navigator.clipboard?.writeText(ta.value).catch(() => document.execCommand('copy'));
+});
+
+document.getElementById('dl-btn').addEventListener('click', () => {
+  const file = generated[shownFile];
+  if (!file) return;
+  download(file.filename || `${file.device}.diff.lua`, file.text);
+});
+
+document.getElementById('dl-json-btn').addEventListener('click', () => {
+  const out = {version: 1, aircraft: BINDINGS.aircraft, hardware, bindings: []};
+  for (const dev of HOTAS.device) {
+    for (const label of dev.labels) {
+      const entry = state[dev.id + '|' + label.n];
+      const binding = bindingFor(dev.id, label.n);
+      out.bindings.push({
+        device: dev.id, n: label.n, label: label.text,
+        commands: entry ? entry.commands.filter(Boolean) : [],
+        keys: entry ? entry.keys : [],
+        status: binding ? binding.status : 'check',
+      });
+    }
+  }
+  download('f14bu-bindings-valides.json', JSON.stringify(out, null, 2));
+});
+
+document.getElementById('reset-btn').addEventListener('click', () => {
+  if (!confirm('Abandonner vos corrections et revenir aux propositions d\'origine ?')) return;
+  localStorage.removeItem(STORE_KEY);
+  state = defaultState(); hardware = {};
+  buildHardware(); buildDevices(); refreshTail();
+});
+
+boot();
+</script>
+</body>
+</html>

@@ -143,7 +143,9 @@ local function collect(commands, kind, hashFn)
   for _, cmd in ipairs(commands) do
     if cmd.name then
       local constant = engineConstant(cmd)
-      local hash = (constant == nil) and hashFn(cmd) or gameHashes[cmd.name]
+      -- Le cache est indexé par type : un même nom peut désigner une commande
+      -- touche et une commande axe, dont les hash ne sont pas interchangeables.
+      local hash = (constant == nil) and hashFn(cmd) or gameHashes[kind .. "|" .. cmd.name]
       out[#out + 1] = {
         name       = cmd.name,
         kind       = kind,

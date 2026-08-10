@@ -115,14 +115,16 @@ for _, path in ipairs(files) do
     local ok, diff = pcall(chunk)
     if ok and type(diff) == "table" then
       for _, section in ipairs({"keyDiffs", "axisDiffs"}) do
+        local kind = (section == "axisDiffs") and "axis" or "key"
         for hash, entry in pairs(diff[section] or {}) do
           if entry.name and isGameHash(hash) then
             entries = entries + 1
-            -- On enregistre le libellé tel quel et, si c'est une traduction,
-            -- son original anglais : le catalogue est en anglais.
-            byName[entry.name] = hash
+            -- La clé porte le type : « Wheel Brake both » désigne à la fois
+            -- une commande touche et une commande axe, avec deux hash
+            -- incompatibles. Les confondre produirait un fichier invalide.
+            byName[kind .. "|" .. entry.name] = hash
             local english = toEnglish[entry.name]
-            if english then byName[english] = hash end
+            if english then byName[kind .. "|" .. english] = hash end
           end
         end
       end
@@ -140,7 +142,7 @@ table.sort(names)
 
 local out = assert(io.open(CONFIG.output, "w"))
 out:write("-- Généré par tools/harvest-game-commands.lua — ne pas éditer à la main.\n")
-out:write("-- Nom de commande (anglais et libellé local) -> hash DCS.\n")
+out:write("-- Clé « type|nom » (anglais et libellé local) -> hash DCS.\n")
 out:write("return {\n")
 for _, name in ipairs(names) do
   out:write(string.format("  [%q] = %q,\n", name, byName[name]))
