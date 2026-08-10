@@ -131,6 +131,9 @@ for deviceIndex, device in ipairs(DEVICE_ORDER) do
       '"text":'  .. jsonString(label.t),
       '"detail":' .. jsonString(detail.det or ""),
       '"lesson":' .. jsonString(detail.lec or ""),
+      -- Le drapeau v de la planche affiche un « ? » : l'étiquette elle-même
+      -- est incertaine, indépendamment de la commande qu'on lui associe.
+      '"verify":' .. tostring(label.v and true or false),
     }
     lines[#lines + 1] = "  {" .. table.concat(fields, ",") .. "}"
                         .. (i < #labels and "," or "")

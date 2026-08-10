@@ -123,10 +123,10 @@
 {"device":"pto2","n":"14-16","commands":["Refuel Probe extend, Refuel All","Refuel Probe Retract"],"status":"check","note":"La position secours n'a pas de commande dédiée."},
 {"device":"pto2","n":"17-22","commands":["Emergency Jettison","ACM Jettison"],"status":"check","note":"Le rotacteur de sélection n'a pas d'équivalent bindable."},
 {"device":"pto2","n":"23-27","commands":[],"status":"check","note":"Sélection de stations : voir la catégorie PDCP."},
-{"device":"pto2","n":"28-31","commands":["Wing Sweep Auto Mode","Wing Sweep Forward","Wing Sweep Aft"],"status":"ok"},
+{"device":"pto2","n":"28-31","commands":["Wing Sweep Auto Mode","Wing Sweep Forward","Wing Sweep Aft"],"status":"check","note":"Il n'existe pas de commande Oversweep 75° : la quatrième position du sélecteur reste sans équivalent."},
 {"device":"pto2","n":"32-34","commands":["Hook Extend","Hook Retract"],"status":"ok"},
 {"device":"pto2","n":"35-37","commands":["Gears Up","Gears Down"],"status":"ok"},
-{"device":"pto2","n":"38-41","commands":["Parking brake pull","Parking brake stow"],"status":"ok"},
+{"device":"pto2","n":"38-41","commands":["Parking brake pull","Parking brake stow"],"status":"check","note":"Seul le frein de parking est couvert : le freinage de secours pneumatique n'a pas de commande dédiée."},
 
 {"device":"pedals","n":"1","commands":["Aircraft Rudder Left"],"status":"check","note":"À n'utiliser que si vous pilotez le lacet au clavier : l'axe 3 le remplace."},
 {"device":"pedals","n":"2","commands":["Aircraft Rudder Right"],"status":"check","note":"Voir l'étiquette 1."},
