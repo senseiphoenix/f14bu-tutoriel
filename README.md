@@ -17,7 +17,7 @@ Chaque module de tutoriel est une page HTML statique. La progression de l'utilis
 
 ## Origine
 
-Les fichiers de ce dépôt sont générés et mis à jour avec l'aide de Claude, puis déployés ici pour être consultés via GitHub Pages plutôt qu'en local. Une copie miroir est également conservée en local dans `C:\Users\Scifo\Documents\Claude`.
+Les fichiers de ce dépôt sont générés et mis à jour avec l'aide de Claude, puis déployés ici pour être consultés via GitHub Pages plutôt qu'en local.
 
 ## Licence
 
