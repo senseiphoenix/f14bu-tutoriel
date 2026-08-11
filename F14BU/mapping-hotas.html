@@ -47,6 +47,15 @@ h1{font-family:var(--display);font-weight:600;font-size:clamp(26px,4vw,38px);let
 .btn.primary{border-color:var(--amber);color:var(--amber)}
 .btn.primary:hover{background:var(--amber);color:#10161a}
 .tab:focus-visible,.chip:focus-visible,.btn:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+/* Écran tactile : une cible au doigt fait ~44px. Les onglets/chips/boutons
+   faisaient 28-31px de haut — on complète par le bas sans changer la
+   typographie, via inline-flex pour que le texte reste centré. */
+.tab,.chip,.btn{min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+.crumbs a{display:inline-flex;align-items:center;min-height:28px}
+.board-pin.nopin{position:static}
+/* Le glissement d'étiquette en mode édition est piloté par pointermove : sans
+   touch-action le navigateur fait défiler la page au lieu de déplacer. */
+.board.editing .lbl{touch-action:none}
 
 main{max-width:1500px;margin:0 auto;padding:26px 22px 70px}
 section.device{display:none}
@@ -65,16 +74,27 @@ section.device.visible{display:block}
 .board{position:relative;margin:0 auto;background:#f4f2ec;border:1px solid var(--line);border-radius:2px;container-type:inline-size;user-select:none;box-shadow:0 2px 18px rgba(0,0,0,.35)}
 .board img{width:100%;height:auto;display:block;pointer-events:none}
 .board svg{width:100%;height:auto;display:block}
+/* Tailles STRICTEMENT proportionnelles à la planche (cqw) : un plancher en px
+   casse la proportionnalité et fait chevaucher les étiquettes dès que la
+   planche rétrécit (portrait). Pour gagner en lisibilité on joue donc sur le
+   contraste et la graisse, pas sur un forçage en pixels. */
 .lbl{
   position:absolute;transform:translate(0,-50%);
-  font-family:var(--mono);font-weight:600;font-size:1.02cqw;line-height:1.18;
+  font-family:var(--mono);font-weight:600;font-size:1.02cqw;line-height:1.06;
   color:#fff;background:var(--c,#666);padding:.26cqw .45cqw;
   border:1px solid rgba(255,255,255,.55);box-shadow:0 1px 3px rgba(0,0,0,.4);
   max-width:11.5cqw;text-align:center;border-radius:.2cqw;overflow:hidden;
 }
-.lbl small{display:block;font-weight:400;font-size:.78cqw;opacity:.88}
+/* Numéro de touche : c'est l'info qu'on cherche en configurant DCS, elle doit
+   se lire d'un coup d'œil — pastille contrastée plutôt que texte atténué. */
+.lbl small{
+  display:block;width:fit-content;margin:.04cqw auto 0;
+  font-weight:700;font-size:.9cqw;line-height:1.08;
+  letter-spacing:.04em;opacity:1;
+  background:rgba(0,0,0,.45);border-radius:.22cqw;padding:0 .3cqw;
+}
 .lbl .q{color:var(--amber);font-weight:600}
-.lbl.sm{font-size:.92cqw;padding:.2cqw .38cqw}
+.lbl.sm{font-size:.92cqw;padding:.16cqw .38cqw}
 .lbl.dim{opacity:.12}
 .lbl.chk{box-shadow:0 0 0 2px var(--amber),0 1px 3px rgba(0,0,0,.4)}
 .lbl.snap{outline:2px solid var(--go)}
@@ -602,9 +622,11 @@ if(document.getElementById('board-throttle'))setThrottlePage('OFF');
 let hov=null;
 function mark(dev,i,on){
   const l=document.querySelector('#board-'+dev+' .lbl[data-i="'+i+'"]');
-  const r=document.querySelector('#dtbl-'+dev+' tbody tr[data-i="'+i+'"]');
   if(l)l.classList.toggle('hl',on);
-  if(r)r.classList.toggle('hl',on);
+  // B1-B6 du throttle : un même repère a 5 lignes (une par page) — on les
+  // surligne toutes, sinon seule la première réagirait.
+  document.querySelectorAll('#dtbl-'+dev+' tbody tr[data-i="'+i+'"]')
+    .forEach(r=>r.classList.toggle('hl',on));
 }
 function setHov(dev,i){
   const k=dev==null?null:dev+'|'+i;
@@ -613,30 +635,41 @@ function setHov(dev,i){
   hov=k;
   if(k)mark(dev,i,true);
 }
+function targetOf(e){
+  return e.target instanceof Element ? e.target.closest('tr[data-i],.lbl[data-i]') : null;
+}
 document.addEventListener('mouseover',e=>{
-  const t=e.target instanceof Element ? e.target.closest('tr[data-i],.lbl[data-i]') : null;
+  const t=targetOf(e);
   if(!t){setHov(null);return;}
   setHov(t.dataset.dev,t.dataset.i);
 });
+/* Écran tactile : il n'y a pas de survol. Le même lien étiquette ↔ ligne est
+   donc accessible au toucher — on touche l'un ou l'autre et la paire reste
+   surlignée jusqu'au toucher suivant. */
+document.addEventListener('click',e=>{
+  const t=targetOf(e);
+  if(!t){setHov(null);return;}
+  if(hov===t.dataset.dev+'|'+t.dataset.i) setHov(null); else setHov(t.dataset.dev,t.dataset.i);
+});
 
 /* ---------- Planche épinglée ----------
-   La planche reste à l'écran pendant qu'on parcourt le tableau, sinon le
-   surlignage se produit hors champ. À taille native elle occupe ~78% de la
-   hauteur : on la plafonne, sans quoi il ne resterait rien pour le tableau.
-   Le plafond passe par la largeur — les étiquettes sont posées en % de la
-   planche et dimensionnées en cqw, donc elles suivent l'échelle sans décaler. */
-const PIN_VH=.55;
-function ratioOf(m){
-  if(m.tagName==='IMG') return m.naturalWidth&&m.naturalHeight ? m.naturalWidth/m.naturalHeight : 0;
-  const vb=m.viewBox&&m.viewBox.baseVal;
-  return vb&&vb.height ? vb.width/vb.height : 0;
-}
+   La planche garde sa LARGEUR NATURELLE (celle de la colonne) : on ne la
+   rétrécit jamais pour la faire tenir en hauteur. Un plafond en vh rendait
+   les étiquettes illisibles sur un écran peu haut, et empêchait la page de
+   prendre la hauteur dont elle a besoin — en portrait notamment.
+   L'épinglage devient donc conditionnel : il ne s'applique que si la planche
+   tient déjà dans MAX_VH (cas du portrait, où elle est large mais l'écran est
+   haut). Sinon on laisse la page défiler normalement, ce qui vaut mieux
+   qu'une planche écrasée. */
+const MAX_VH=.8;
 function fitBoards(){
-  const h=Math.max(260,Math.round(innerHeight*PIN_VH));
+  const hMax=Math.round(innerHeight*MAX_VH);
   document.querySelectorAll('.board').forEach(b=>{
-    const m=b.querySelector('img,svg'); if(!m)return;
-    const r=ratioOf(m); if(!r)return;
-    b.style.maxWidth=Math.round(h*r)+'px';
+    b.style.maxWidth='';
+    const pin=b.parentElement;
+    if(!pin.classList.contains('board-pin')) return;
+    pin.classList.remove('nopin');
+    if(b.getBoundingClientRect().height>hMax) pin.classList.add('nopin');
   });
 }
 document.querySelectorAll('.board').forEach(b=>{
