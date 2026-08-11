@@ -1,4 +1,14 @@
-# Outils d'export de bindings DCS
+# Outils de bindings
+
+Deux chaînes indépendantes :
+
+- **DCS World** — transforme le mapping HOTAS défini dans le site en fichiers
+  `.diff.lua` installables (scripts Lua, exécutés par l'interpréteur de DCS).
+- **Star Citizen** — lit les profils `layout_*.xml` exportés par le jeu et
+  produit les JSON du dossier `SC/data/` (script PowerShell, aucune
+  dépendance). Voir [Star Citizen](#star-citizen) en fin de fichier.
+
+## Outils d'export de bindings DCS
 
 Chaîne qui transforme le mapping HOTAS défini dans le site en fichiers
 `.diff.lua` installables dans DCS World.
@@ -132,3 +142,82 @@ Control*). Le nom seul n'est pas une clé — toujours le coupler à la catégor
 **Deux graphies.** Le moteur expose ses constantes en `iCommandXxx` *et*
 `ICommandXxx` (`ICommandSwitchDialog`). Filtrer sur la seule minuscule en rate
 une partie.
+
+---
+
+# Star Citizen
+
+## `parse-sc-layout.ps1`
+
+Lit un profil exporté par le jeu et écrit les données consommées par les pages
+du dossier `SC/`.
+
+```bash
+powershell -ExecutionPolicy Bypass -File tools\parse-sc-layout.ps1
+```
+
+Sans argument, le script prend le fichier le plus récent de
+`<install SC>\LIVE\user\client\0\Controls\Mappings\`. Arguments utiles :
+`-ScRoot`, `-Channel LIVE|PTU`, `-Layout <nom.xml>`, `-OutDir`.
+
+Sorties, **régénérées à chaque exécution** :
+
+| Fichier | Contenu |
+| --- | --- |
+| `SC/data/sc-bindings.json` | le profil courant : périphériques (nom, GUID, courbes, zones mortes), binds (actionmap, action, axe ou bouton, couche de modificateur, mode d'activation) |
+| `SC/data/sc-actions.json` | catalogue des noms d'action rencontrés dans tous les layouts balayés, avec leur actionmap et les fichiers d'origine |
+
+`SC/data/sc-labels-fr.json` (libellés et descriptions françaises) est écrit à
+la main et **n'est jamais touché** par le script.
+
+## Le format de profil Star Citizen
+
+Le jeu exporte un XML unique par profil :
+
+```xml
+<ActionMaps version="1" profileName="BK_TriplePrime_4-8">
+  <options type="joystick" instance="1" Product="RIGHT VPC Stick WarBRD-D  {43F53344-…}">
+    <flight_move_pitch exponent="1.2"/>
+  </options>
+  <deviceoptions name="LEFT VPC Stick WarBRD-D  {83F43344-…}">
+    <option input="rotx" deadzone="0.198"/>
+  </deviceoptions>
+  <actionmap name="spaceship_movement">
+    <action name="v_space_brake"><rebind input="js1_button4"/></action>
+  </actionmap>
+</ActionMaps>
+```
+
+Ce qu'il faut en retenir :
+
+- L'entrée s'écrit `js<instance>_<contrôle>` : `js2_button31`, `js3_rotz`,
+  `js1_slider1`. Un modificateur se préfixe : `js1_rctrl+button31` — le profil
+  du rig s'en sert comme couche secondaire.
+- `Product` porte le nom **et** le GUID du périphérique, exactement comme le
+  nom de fichier `.diff.lua` de DCS. **Ces GUID dérivent** : entre deux exports
+  du même rig, le GUID du manche droit est devenu celui du gauche. Toujours
+  relire le fichier réel plutôt qu'un ancien profil.
+- `input=" "` (une espace) n'est pas un bind : c'est une commande *effacée*
+  dans les options du jeu.
+- L'export ne contient que ce que le joueur a modifié. Un axe laissé au réglage
+  d'usine n'y figure pas — le manche droit peut piloter le tangage sans qu'aucun
+  `<rebind>` ne le mentionne, seule la courbe (`exponent`) trahit son usage. Un
+  fichier généré de zéro doit donc déclarer explicitement tous les axes voulus.
+- Une même entrée physique portant plusieurs actions n'est pas forcément un
+  conflit : Star Citizen définit les appuis court / long / double dans son
+  profil par défaut, que l'export ne reproduit que s'ils ont été modifiés. Le
+  script les signale sous `sharedInputs`, à relire au cas par cas.
+
+Installation d'un profil : déposer le XML dans le dossier `Mappings`, puis dans
+la console du jeu (touche `²` / `~`) :
+
+```
+pp_rebindkeys <nom_du_layout_sans_extension>
+```
+
+## Piège d'environnement
+
+Sur ce poste, PowerShell 5.1 lève `Les types des arguments ne correspondent
+pas` sur `@($liste)` quand l'objet est une `System.Collections.Generic.List[T]`
+— `[object[]]`, `.ToArray()` et le pipeline fonctionnent. Le script n'utilise
+donc que des tableaux natifs.

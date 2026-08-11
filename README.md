@@ -7,9 +7,10 @@ Ce dépôt regroupe des tutoriels HTML interactifs, un par module, pour apprendr
 
 ## Contenu
 
-- **`index.html`** — page d'accueil, liste et renvoie vers chaque tutoriel disponible.
+- **`index.html`** — page d'accueil, une catégorie par simulateur (DCS World, Star Citizen).
 - **`F14BU/`** — tutoriel de pilotage du **F-14B(U)** (mod Heatblur), 7 sections : navigation, appontage sur porte-avions, combat air-air, survie, air-sol, gestion de mission, plus une section illustrée et un mapping HOTAS.
 - **`F4U1D/`** — tutoriel de pilotage du **F4U-1D Corsair**, 7 sections : cockpit, démarrage, décollage, vol, appontage, urgences, armement.
+- **`SC/`** — **Star Citizen** : aide au pilotage de vaisseau et mapping du rig HOSAS (deux Virpil, throttle CM3, WinWing PTO2, pédalier Fanatec). En construction ; les données de binds sont générées depuis les profils exportés par le jeu, voir `tools/README.md`.
 
 ## Fonctionnement
 

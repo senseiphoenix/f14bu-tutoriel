@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Star Citizen — Pilotage et mapping HOSAS</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;
+    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  .wrap{max-width:880px;margin:0 auto;padding:48px 24px 80px}
+  .tail{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:44px;letter-spacing:.04em;line-height:1.02;margin:10px 0 8px;text-transform:uppercase}
+  .sub{color:var(--dim);max-width:62ch;margin:0 0 36px}
+  a.card,.card{display:flex;gap:18px;align-items:baseline;border:1px solid var(--line);background:var(--panel);
+         padding:18px 20px;margin:10px 0;text-decoration:none;color:var(--ink);transition:border-color .12s}
+  a.card:hover{border-color:var(--amber)}
+  .card.soon{border-style:dashed;background:transparent;color:var(--dim)}
+  .card.soon .nm{color:#5f6d76}
+  .idx{font-family:var(--mono);font-size:13px;color:var(--amber);min-width:26px}
+  .card.soon .idx{color:#4a5a64}
+  .nm{font-family:var(--display);font-size:19px;letter-spacing:.04em;text-transform:uppercase}
+  .ds{color:var(--dim);font-size:13.5px;margin-left:auto;text-align:right;max-width:46%}
+  .hr{border-top:1px solid var(--line);margin:34px 0 22px}
+  h2{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:0 0 12px}
+  p{margin:12px 0;color:var(--dim)}
+  code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:2px 6px;border:1px solid var(--line);color:var(--amber)}
+  .ok{color:var(--go)}
+  table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0}
+  th,td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+  th{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:400}
+  td.mono{font-family:var(--mono);font-size:11.5px;color:var(--dim)}
+  ul{color:var(--dim)}
+  li{margin:6px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:16px">&larr; Accueil</a>
+  <div class="tail">Star Citizen · RSI · Rig HOSAS</div>
+  <h1>Pilotage<br>de vaisseau</h1>
+  <p class="sub">Aide au pilotage et, surtout, mapping complet du rig : deux Virpil en HOSAS — le gauche monté sur coude, tenu comme un guidon de moto — plus le throttle CM3, le panneau WinWing PTO2 et le pédalier Fanatec.
+  Chaque commande est expliquée par ce qu'elle fait sur le vaisseau, pas seulement par son nom technique.</p>
+
+  <h2>Planches et outils</h2>
+  <div class="card soon"><span class="idx">&#9998;</span><span class="nm">Mapping HOSAS</span><span class="ds">Chaque bouton annoté sur photo, couches NAV / SCM / MOD, tableau lié au survol</span></div>
+  <div class="card soon"><span class="idx">&#8681;</span><span class="nm">Export des binds</span><span class="ds">Génère le <code>layout_*.xml</code> à déposer dans le dossier Mappings du jeu</span></div>
+
+  <div class="hr"></div>
+  <h2>Cursus de pilotage — 7 sections</h2>
+  <div class="card soon"><span class="idx">A</span><span class="nm">Prise en main</span><span class="ds">Le rig, les axes, les modes maîtres NAV et SCM, ESP et sécurité G</span></div>
+  <div class="card soon"><span class="idx">B</span><span class="nm">Décoller et naviguer</span><span class="ds">Mise en route, contrôle du trafic, saut quantique, points de saut</span></div>
+  <div class="card soon"><span class="idx">C</span><span class="nm">Se poser et s'amarrer</span><span class="ds">Approche, VTOL, atterrissage automatique, amarrage</span></div>
+  <div class="card soon"><span class="idx">D</span><span class="nm">Combattre</span><span class="ds">Ciblage, gimbals, missiles, contre-mesures, triangle d'énergie</span></div>
+  <div class="card soon"><span class="idx">E</span><span class="nm">Les métiers</span><span class="ds">Minage, récupération, rayon tracteur, fret</span></div>
+  <div class="card soon"><span class="idx">F</span><span class="nm">Hors du siège</span><span class="ds">EVA, à pied, véhicules terrestres</span></div>
+  <div class="card soon"><span class="idx">G</span><span class="nm">Équipage</span><span class="ds">Tourelles, postes distants, communication</span></div>
+
+  <div class="hr"></div>
+  <h2>Le rig lu dans le jeu</h2>
+  <p>Relevé automatiquement dans le profil exporté par Star Citizen — jamais saisi à la main.
+  Les GUID et l'ordre <code>js1/js2/js3</code> dérivent au fil des changements de port USB et de firmware : la source de vérité reste le fichier du jeu, régénéré par <code>tools/parse-sc-layout.ps1</code>.</p>
+  <table>
+    <thead><tr><th>Repère</th><th>Périphérique</th><th>Rôle prévu</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">js1</td><td>VPC Stick — droit</td><td>Rotation : tangage, lacet, roulis</td></tr>
+      <tr><td class="mono">js2</td><td>VPC Stick — gauche, sur coude</td><td>Translation : latéral, avant/arrière, vertical</td></tr>
+      <tr><td class="mono">js3</td><td>VPC Throttle MT-50CM3</td><td>Limiteur de vitesse, énergie, modes opérateur</td></tr>
+      <tr><td class="mono">js4 ?</td><td>WinWing PTO2</td><td>À définir — train, feux, portes, ATC</td></tr>
+      <tr><td class="mono">js5 ?</td><td>Pédalier Fanatec CSL Elite V2</td><td>À définir — 3 axes, aucun bouton</td></tr>
+    </tbody>
+  </table>
+
+  <div class="hr"></div>
+  <h2>État du projet</h2>
+  <ul>
+    <li><span class="ok">Fait</span> — chaîne de données : <code>tools/parse-sc-layout.ps1</code> lit le profil exporté et produit <code>data/sc-bindings.json</code> (périphériques, axes, boutons, couches, courbes) et <code>data/sc-actions.json</code> (catalogue des noms d'action rencontrés).</li>
+    <li><span class="ok">Fait</span> — <code>data/sc-labels-fr.json</code> : libellés et descriptions françaises, écrits à la main, jamais écrasés par le script.</li>
+    <li>À faire — relevé matériel : brancher les cinq périphériques, binder une commande sur le PTO2 et les pédales, puis exporter depuis le jeu pour figer l'ordre <code>jsN</code> réel.</li>
+    <li>À faire — photos du manche gauche avec son coude, pour placer les étiquettes sur l'image.</li>
+    <li>À faire — conception du mapping, planches interactives, cursus, export XML.</li>
+  </ul>
+
+  <p>Régénérer les données après chaque export depuis le jeu :</p>
+  <p><code>powershell -ExecutionPolicy Bypass -File tools\parse-sc-layout.ps1</code></p>
+</div>
+</body>
+</html>

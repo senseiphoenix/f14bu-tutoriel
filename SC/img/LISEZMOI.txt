@@ -1,0 +1,59 @@
+Images sources des planches Star Citizen
+=======================================
+
+PTO 2 Panel of Take Off.svg
+  Gabarit Joystick Diagrams (github.com/Rexeh/joystick-diagrams), fait sous
+  draw.io. 1157 x 807 px. Contient 41 emplacements Button_1 a Button_41, chacun
+  a des coordonnees exactes dans le SVG : positions ET numeros de boutons sont
+  donc lisibles par script, rien a placer a la main.
+  -> substrat de la planche PTO2. Numeros a confirmer sur deux ou trois boutons
+     contre un relevé reel avant de s'y fier completement.
+
+nOHbWwB.png
+  "Dual VPC Constellation-alpha", par leonardmh, version blank v2. 3840 x 2160.
+  Les deux grips avec, pour chaque commande, une boite vide deja dessinee et le
+  detail des directions (up / down / left / right / press).
+  ATTENTION : c'est le grip Constellation ALPHA, pas l'ALPHA Prime du rig. Son
+  inventaire de commandes (pyramid hat, castle hat, thumb hat, mini stick,
+  thumb wheel...) ne correspond pas aux 32 commandes numerotees du Prime.
+  -> ne pas s'en servir comme planche : il decrirait un manche qu'on n'a pas.
+
+Yogidragon Dual Alpha Template.png
+  Gabarit aux couleurs de Star Citizen, 11000 x 6160. Les deux grips vus de
+  dessus et de cote, commandes nommees par fonction (BUTTON L1, 4-WAY HAT L2,
+  ANALOG STICK L...), lignes de rappel deja tracees, aucun numero.
+  Meme reserve : grip Constellation ALPHA, pas Prime.
+  -> decoratif seulement.
+
+throttle.png
+  Gabarit officiel Virpil "VPC MongoosT-50CM3 Throttle" : boites vides
+  numerotees 1 a 55, axes X, Y, Z, rX, rY, rZ, et les cinq crans du rotacteur
+  MODE en bas (OFF, bleu, vert, rouge, jaune).
+  -> substrat de la planche throttle. Les cinq crans se traitent comme les
+     pages MODE de la planche F-14 : toutes affichees en permanence.
+
+A utiliser a la place, pour les manches
+  images/alphra prime right.png (racine du depot) : le gabarit officiel Virpil
+  "VPC Alpha Prime Grip - R", boites vides numerotees 1 a 32 plus les axes rX,
+  rY, Z et SLDR. C'est le bon modele, et F14BU/mapping-hotas.html porte deja
+  les coordonnees en % de chacune de ces boites (tableau LABELS, entrees
+  "stick"), verifiees a l'ecran.
+  Manque l'equivalent gauche : gabarit officiel "VPC Alpha Prime Grip - L",
+  ou a defaut la version R retournee, numeros confirmes sur deux ou trois
+  boutons.
+
+Virpil Alpha Dual Fillable.pdf
+Virpil Mongoose T-50CM2+3 Fillable.pdf
+  Fiches PDF a remplir (80 champs nommes 01..40 et a..nn pour la premiere,
+  sans aucun sens semantique). Utiles a imprimer, pas exploitables pour le web.
+
+Manque encore
+  - une photo du manche gauche avec son coude, pour illustrer la prise en
+    guidon de moto (l'inventaire des commandes, lui, est deja couvert) ;
+  - les numeros DirectInput des deux manches et du throttle, tels que Star
+    Citizen les voit dans l'ordre js1 / js2 / js3.
+
+Reutilisable depuis le tutoriel DCS
+  F14BU/mapping-hotas.html embarque deja des photos du throttle MongoosT-50CM3
+  et du PTO2 (webp en base64), et F14BU/img/pedals_fanatec_csl_elite_v2.webp
+  couvre le pedalier.

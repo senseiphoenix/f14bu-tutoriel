@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>F14BU Tutoriel — Accueil</title>
+<title>Tutoriels de pilotage — Accueil</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root{--deck:#10161a;--panel:#18222a;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;
@@ -34,13 +34,20 @@
   .tag{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
        color:var(--deck);background:var(--amber);padding:2px 7px;margin-bottom:8px}
 
+  h2.cat{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+         margin:0 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:10px}
+  h2.cat .cat-sub{font-family:var(--body);letter-spacing:0;text-transform:none;font-size:12px;color:#5f6d76}
+  .cat-block{margin-bottom:44px}
+
   .foot-note{margin-top:40px;font-size:13px}
 </style></head><body>
 <div class="wrap">
-  <div class="tail">Pilotage · DCS World</div>
-  <h1>Tutoriels<br>DCS World</h1>
-  <p class="sub">Tutoriels de pilotage interactifs, un par avion. Progression sauvegardée localement dans le navigateur.</p>
+  <div class="tail">Pilotage · Simulation</div>
+  <h1>Tutoriels<br>de pilotage</h1>
+  <p class="sub">Tutoriels interactifs et planches de mapping HOTAS, un dossier par machine. Progression sauvegardée localement dans le navigateur.</p>
 
+  <div class="cat-block">
+  <h2 class="cat">DCS World <span class="cat-sub">Simulation de combat aérien — un tutoriel par avion</span></h2>
   <div class="grid">
     <a class="card" href="F14BU/index.html" style="background-image:url('img/home/f14bu-hero.jpg')">
       <div class="card-content">
@@ -63,6 +70,20 @@
         <span class="ds">Tutoriel de pilotage — cursus complet Heatblur</span>
       </div>
     </a>
+  </div>
+  </div>
+
+  <div class="cat-block">
+  <h2 class="cat">Star Citizen <span class="cat-sub">Pilotage de vaisseau — mapping du rig HOSAS</span></h2>
+  <div class="grid">
+    <a class="card" href="SC/index.html" style="background-image:url('img/home/sc-hero.jpg')">
+      <div class="card-content">
+        <span class="tag">En construction</span>
+        <span class="nm">Star Citizen</span>
+        <span class="ds">Pilotage de vaisseau et mapping HOSAS — 2 Virpil, throttle CM3, PTO2, pédales</span>
+      </div>
+    </a>
+  </div>
   </div>
 
   <p class="foot-note">Nouveau projet ? Demande à Claude de le ranger ici, dans un sous-dossier dédié — il ajoutera aussi le bloc correspondant sur cette page.</p>
