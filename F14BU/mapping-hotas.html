@@ -91,6 +91,23 @@ section.device.visible{display:block}
   border-radius:50%;background:var(--pgc,#888);border:.13cqw solid #14181b;
   pointer-events:none;
 }
+/* B1-B6 du throttle : les 5 pages empilées en permanence dans la même boîte
+   (au lieu d'une seule page affichée à la fois) — la boîte est donc taille
+   fixe et volontairement plus grande, prévue pour ça dès le départ plutôt
+   que de grandir au clic (c'est ce dernier cas qui provoque les
+   chevauchements, pas une boîte grande par construction). */
+.lbl.pgstack{
+  text-align:left;max-width:none;padding:.16cqw .26cqw;
+  display:flex;flex-direction:column;gap:.045cqw;
+}
+.pgrow{
+  display:flex;align-items:center;gap:.26cqw;
+  font-size:.7cqw;line-height:1.15;padding:.045cqw .12cqw;border-radius:.14cqw;
+}
+.pgrow .dot{width:.52cqw;height:.52cqw;border-radius:50%;flex:none;background:var(--pc,#888)}
+.pgrow .rtxt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.pgrow .rnum{opacity:.6;font-size:.85em;flex:none}
+.pgrow.active{background:rgba(255,255,255,.16);font-weight:700}
 .lbl.pgsel{cursor:pointer;box-shadow:inset 0 0 0 999px rgba(0,0,0,0)}
 .lbl.pgsel:hover{filter:brightness(1.25)}
 .lbl.pgsel.active{
@@ -385,14 +402,14 @@ throttle:[
  {n:"45", cat:'misc', t:"T5↓ Feux anticol", x:5.19, y:72.07, bw:8.58, sm:1},
  {n:"47", cat:'vol', t:"T6↓ Pitot heat OFF", x:15.94, y:72.07, bw:8.58, sm:1},
  {n:"37", cat:'arm', t:"JT4 : Master Arm OFF", x:26.71, y:72.07, bw:8.55, sm:1, chk:1},
- {n:"38", cat:'vol', t:"B1 Train UP", x:66.72, y:78.58, bw:8.55, sm:1},
- {n:"39", cat:'vol', t:"B2 Train DOWN", x:77.41, y:78.58, bw:8.58, sm:1, chk:1},
- {n:"40", cat:'vol', t:"B3 Volets UP", x:88.24, y:78.58, bw:8.58, sm:1, chk:1},
+ {n:"38", cat:'vol', t:"B1 Train UP", x:66.72, y:77.4, bw:8.55, sm:1},
+ {n:"39", cat:'vol', t:"B2 Train DOWN", x:77.41, y:77.4, bw:8.58, sm:1, chk:1},
+ {n:"40", cat:'vol', t:"B3 Volets UP", x:88.24, y:77.4, bw:8.58, sm:1, chk:1},
  {n:"52", cat:'misc', t:"E1 + Lum. instr.", x:10.32, y:82.22, bw:8.58, sm:1},
  {n:"55", cat:'comm', t:"E2 + Canal préréglé", x:21.1, y:82.22, bw:8.58, sm:1},
- {n:"41", cat:'vol', t:"B4 Volets DOWN", x:66.72, y:84.18, bw:8.58, sm:1},
- {n:"42", cat:'vol', t:"B5 Ailes AUTO", x:77.41, y:84.18, bw:8.58, sm:1},
- {n:"43", cat:'vol', t:"B6 Ailes MAN 68°", x:88.27, y:84.18, bw:8.55, sm:1, chk:1},
+ {n:"41", cat:'vol', t:"B4 Volets DOWN", x:66.72, y:85.4, bw:8.58, sm:1},
+ {n:"42", cat:'vol', t:"B5 Ailes AUTO", x:77.41, y:85.4, bw:8.58, sm:1},
+ {n:"43", cat:'vol', t:"B6 Ailes MAN 68°", x:88.27, y:85.4, bw:8.55, sm:1, chk:1},
  {n:"50", cat:'misc', t:"E1 push Jour/Nuit", x:10.32, y:87.83, bw:8.58, sm:1},
  {n:"53", cat:'comm', t:"E2 push Valider", x:21.1, y:87.83, bw:8.58, sm:1},
  {n:"OFF", cat:'misc', t:"Page Blanc : Train/Volets/Ailes", x:34.63, y:93.37, bw:8.58, sm:1},
@@ -488,38 +505,26 @@ const THROTTLE_PAGE_BTN={
 };
 let activeThrottlePage='OFF';
 
+/* Les 5 pages sont maintenant affichées en permanence dans chaque boîte
+   B1-B6 (voir render()) : cliquer une pastille de page ne réécrit plus le
+   contenu, ça met juste en évidence la ligne correspondante partout —
+   dans les 6 boîtes de l'image ET dans les 30 lignes du tableau. */
 function setThrottlePage(page){
   activeThrottlePage=page;
   const board=document.getElementById('board-throttle');
   const funcs=THROTTLE_PAGE_BTN[page];
-  Object.keys(funcs).forEach(n=>{
-    const el=board.querySelector('.lbl[data-n="'+n+'"]');
-    if(!el)return;
-    el.classList.toggle('paged',page!=='OFF');
-    el.style.setProperty('--pgc',PAGE_COLOR[page]);
-    const tag=page==='OFF'?'':`<span class="pgtag" title="Page ${PAGE_NAME[page]}"></span>`;
-    el.innerHTML=`${funcs[n].s}${tag}<small>${funcs[n].real}</small>`;
-    const tr=document.querySelector('#dtbl-throttle tbody tr[data-n="'+n+'"]');
-    if(tr){
-      const badge=tr.querySelector('.c1 .num-badge');
-      if(badge)badge.textContent=funcs[n].real;
-      const c3=tr.querySelector('.c3');
-      c3.innerHTML = page==='OFF'
-        ? c3.dataset.orig
-        : `<span style="color:${PAGE_COLOR[page]};font-family:var(--mono);font-size:10px;letter-spacing:.06em">PAGE ${PAGE_NAME[page].toUpperCase()} · BTN ${funcs[n].real}</span><br>${funcs[n].f||funcs[n].s}`;
-    }
-  });
+  board.querySelectorAll('.pgrow').forEach(r=>r.classList.toggle('active', r.dataset.pg===page));
+  document.querySelectorAll('#dtbl-throttle tbody tr[data-pg]').forEach(tr=>
+    tr.classList.toggle('pgsel-row', tr.dataset.pg===page));
   PAGE_ORDER.forEach(p=>{
     const sel=board.querySelector('.lbl[data-n="'+p+'"]');
     if(sel)sel.classList.toggle('active',p===page);
-    const tr=document.querySelector('#dtbl-throttle tbody tr[data-n="'+p+'"]');
-    if(tr)tr.classList.toggle('pgsel-row',p===page);
   });
   const note=document.getElementById('pgnote-throttle');
   if(note){
     note.style.setProperty('--pgc',PAGE_COLOR[page]);
     const range=Object.values(funcs).map(f=>f.real);
-    note.innerHTML=`<b>Rotacteur MODE — page ${PAGE_NAME[page]} active (boutons ${Math.min(...range)}-${Math.max(...range)}).</b> ${PAGE_THEME[page]}. Cliquez une autre pastille (Blanc/Bleu/Vert/Rouge/Jaune) pour prévisualiser sa page — B1 à B6 sont les 6 mêmes boutons physiques, mais chaque page leur fait émettre une autre plage de numéros DirectInput, comme le fait le rotacteur physique.`;
+    note.innerHTML=`<b>Rotacteur MODE — page ${PAGE_NAME[page]} en surbrillance (boutons ${Math.min(...range)}-${Math.max(...range)}).</b> ${PAGE_THEME[page]}. Les 5 pages sont affichées en permanence dans chaque boîte B1-B6 et dans le tableau ; cliquer une pastille met juste en évidence celle-ci — B1 à B6 sont les 6 mêmes boutons physiques, mais chaque page leur fait émettre une autre plage de numéros DirectInput, comme le fait le rotacteur physique.`;
   }
 }
 
@@ -534,7 +539,18 @@ function render(dev){
     el.style.left=d.x+'%'; el.style.top=d.y+'%';
     if(d.bw){ el.style.width=d.bw+'%'; el.style.maxWidth='none'; }
     el.dataset.cat=d.cat; el.dataset.dev=dev; el.dataset.i=i; el.dataset.n=d.n;
-    el.innerHTML=`${d.t}${d.v?' <span class="q">?</span>':''}<small>${d.n}</small>`;
+    if(dev==='throttle' && THROTTLE_PAGE_BTN.OFF[d.n]){
+      // B1-B6 : les 5 pages empilées en permanence, pas une seule à la fois.
+      el.classList.add('pgstack');
+      el.innerHTML = PAGE_ORDER.map(p=>{
+        const f = THROTTLE_PAGE_BTN[p][d.n];
+        return `<div class="pgrow" data-pg="${p}" style="--pc:${PAGE_COLOR[p]}" title="${PAGE_NAME[p]}${f.f?' — '+f.f:''}">
+          <span class="dot"></span><span class="rtxt">${f.s}</span><span class="rnum">${f.real}</span>
+        </div>`;
+      }).join('');
+    } else {
+      el.innerHTML=`${d.t}${d.v?' <span class="q">?</span>':''}<small>${d.n}</small>`;
+    }
     if(dev==='throttle' && PAGE_ORDER.includes(d.n)){
       el.classList.add('pgsel');
       el.addEventListener('click',ev=>{ev.stopPropagation();setThrottlePage(d.n);});
@@ -548,6 +564,22 @@ Object.keys(LABELS).forEach(render);
 function renderTable(dev){
   const tb=document.querySelector('#dtbl-'+dev+' tbody'); if(!tb)return; tb.innerHTML='';
   LABELS[dev].forEach((d,i)=>{
+    if(dev==='throttle' && THROTTLE_PAGE_BTN.OFF[d.n]){
+      // B1-B6 : une ligne par page (5), au lieu d'une ligne unique dont le
+      // contenu changeait au clic.
+      PAGE_ORDER.forEach(p=>{
+        const f=THROTTLE_PAGE_BTN[p][d.n];
+        const tr=document.createElement('tr'); tr.dataset.cat=d.cat;
+        tr.dataset.dev=dev; tr.dataset.i=i; tr.dataset.n=d.n; tr.dataset.pg=p;
+        tr.style.setProperty('--c',PAGE_COLOR[p]);
+        tr.innerHTML=`<td class="c1"><span class="num-badge" style="--c:${PAGE_COLOR[p]}">${f.real}</span></td>
+          <td class="c2"><b>${f.s}</b><span>Repère ${d.n} · Page ${PAGE_NAME[p]}</span></td>
+          <td class="c3">${f.f||f.s}${p==='OFF'?'':` <span style="color:${PAGE_COLOR[p]};font-family:var(--mono);font-size:10px;letter-spacing:.06em">— PAGE ${PAGE_NAME[p].toUpperCase()}</span>`}</td>
+          <td>—</td>`;
+        tb.appendChild(tr);
+      });
+      return;
+    }
     const key=dev+'|'+d.n, x=DETAILS[key]||{};
     const c=CAT_COLOR_L[d.cat], lec=x.lec, lt=lec?LESSONS[lec]:'';
     const tr=document.createElement('tr'); tr.dataset.cat=d.cat;
