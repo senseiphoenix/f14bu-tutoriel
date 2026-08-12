@@ -6,7 +6,7 @@
   {"n":"6","cat":"sens","text":"Désignation TDC","detail":"Verrouille le contact sous le curseur : le radar passe en poursuite (STT) ou hook TWS selon le mode.","lesson":"d1","verify":false},
   {"n":"7","cat":"vol","text":"PA désengagé","detail":"Coupe instantanément le pilote automatique (paddle NOGO) — réflexe avant toute manœuvre brutale.","lesson":"a6","verify":false},
   {"n":"10","cat":"sens","text":"Senseur : TCS","detail":"Bascule sur la caméra TCS : identification visuelle longue distance, asservie au radar.","lesson":"d2","verify":false},
-  {"n":"8","cat":"sens","text":"Undesignate","detail":"Relâche le verrouillage en cours et rend la main au balayage radar normal.","lesson":"d1","verify":false},
+  {"n":"8","cat":"sens","text":"Undesignate","short":"Undesig.","detail":"Relâche le verrouillage en cours et rend la main au balayage radar normal.","lesson":"d1","verify":false},
   {"n":"12","cat":"sens","text":"Senseur : Auto","detail":"Mode d'acquisition automatique : le système choisit le meilleur senseur disponible.","lesson":"d1","verify":false},
   {"n":"rX","cat":"sens","text":"Slew TDC ←→","detail":"Déplace horizontalement le curseur d'acquisition sur l'affichage radar.","lesson":"d1","verify":false},
   {"n":"11","cat":"sens","text":"Senseur : IRST","detail":"Sélectionne l'IRST/pointage alternatif (selon configuration B(U)).","lesson":"d1","verify":false},
