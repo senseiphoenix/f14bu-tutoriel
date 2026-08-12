@@ -32,6 +32,15 @@
   h2{font-family:var(--display);font-weight:600;font-size:33px;letter-spacing:.03em;line-height:1.1;margin:6px 0 0;text-transform:uppercase}
   .badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
   .intro{font-size:16px;margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
+
+  table{width:100%;border-collapse:collapse;margin:14px 0 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  th{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);background:var(--panel)}
+  td.n{font-family:var(--mono);color:var(--amber);text-align:center;width:44px;font-weight:600}
+  td.nm{font-weight:600}
+  tbody tr:nth-child(odd){background:rgba(30,42,51,.35)}
+  .bindtag{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;padding:1px 6px;white-space:nowrap}
+  .bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
   h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
   p{margin:14px 0}
   figure{margin:20px 0;border:1px solid var(--line);background:#0b1114;padding:10px}
@@ -145,6 +154,45 @@ const PATTERN_SVG = `<svg viewBox="0 0 640 340" xmlns="http://www.w3.org/2000/sv
   <text x="440" y="165" fill="#8b9aa3" font-family="monospace" font-size="9">15-18 s dans l'axe</text>
 </svg>`;
 const SECTIONS = [
+{letter:"0", title:"Avant de commencer", IMG:{}, L:[
+{id:"gen0", title:"Commandes génériques DCS",
+ intro:"Des touches qui existent sur tous les modules, pas seulement le F-14 — utiles dès le premier vol, quel que soit l'avion. Section provisoire : le contenu est correct, mais le rapprochement avec ton HOTAS (comme sur le reste du cursus) n'est pas encore fait.",
+ body:[
+  {t:"note", k:"old", lbl:"Section à terminer", v:"Cette page liste les commandes, pas encore leurs touches HOTAS. Le badge de bind viendra dans un second temps, une fois le référentiel générique consolidé — comme pour le reste du cursus."},
+
+  {t:"h", v:"Vues caméra"},
+  {t:"tbl", head:["Commande DCS", "Ce que ça fait"], rows:[
+   ["F1 Cockpit view","Vue cockpit — la vue par défaut au démarrage."],
+   ["F2 Aircraft view","Vue extérieure libre autour de ton appareil."],
+   ["F3 — vue de proximité","Caméra qui suit un autre appareil ou une unité proche."],
+   ["F4 — vue poursuite","Caméra qui suit ton propre appareil depuis l'extérieur."],
+   ["F5 à F8","Vues sur d'autres unités, armes en vol, drapeau, caméra d'action selon la mission."],
+   ["F10 — carte","Carte tactique, plan de vol, position des unités connues."],
+   ["F11 — caméra libre","Caméra totalement libre, indépendante de tout appareil."],
+   ["Zoom in / Zoom out","Zoom de la vue active — déjà bindé sur le manche (voir le cursus principal)."],
+   ["Camera snap view (gauche/droite/haut/bas)","Regards rapides prédéfinis — déjà bindés sur manche et manette."]]},
+
+  {t:"h", v:"Affichage et interface"},
+  {t:"tbl", head:["Commande DCS", "Ce que ça fait"], rows:[
+   ["Pause","Met la simulation en pause — solo uniquement, sans effet en multijoueur."],
+   ["Kneeboard","Ouvre/ferme le carnet de vol virtuel (cartes, fiches, notes de mission)."],
+   ["Info bar view toggle","Affiche ou masque la barre d'information en bas d'écran."],
+   ["Score window","Ouvre la fenêtre de résultats/score de la mission."],
+   ["Recenter VR","Recentre la vue en réalité virtuelle sur la position actuelle de la tête."]]},
+
+  {t:"h", v:"Communication"},
+  {t:"tbl", head:["Commande DCS", "Ce que ça fait"], rows:[
+   ["Communication menu","Ouvre le menu radio universel — équivalent générique du menu JESTER pour les avions sans RIO."],
+   ["Chat","Ouvre la messagerie texte multijoueur."]]},
+
+  {t:"h", v:"Ce qui reste à faire sur cette page"},
+  {t:"proc", v:[
+   "Vérifier les intitulés exacts et les touches par défaut de chaque commande ci-dessus dans le catalogue DCS.",
+   "Décider, pour chacune, si elle mérite un bind HOTAS dédié ou si le clavier suffit.",
+   "Une fois décidé, ajouter la 4ᵉ colonne de badge comme pour le reste du cursus."]}
+]}
+]},
+
 {letter:"A", title:"Reprendre l'avion en main",
 IMG: {
   pilot:      "1LSNf370Z76pfgLP3G2czpVpjV1FIW1_7",
@@ -1625,7 +1673,21 @@ function table(h,rows){
   return `<table class="keytbl"><thead><tr>${h.map(x=>`<th>${x}</th>`).join("")}</tr></thead>
     <tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table>`;
 }
+function bindCell(cmd){
+  if(cmd===undefined) return '<td></td>';
+  if(cmd==='—rio') return '<td><span class="bindtag unbound" title="Commande RIO, absente du profil pilote">RIO</span></td>';
+  if(cmd==='—click') return '<td><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit">Clic cockpit</span></td>';
+  return `<td><span class="bindtag" data-bind-cmd="${cmd}"></span></td>`;
+}
+function tbl(h,rows){
+  const nCols = h.length;
+  const hasBind = rows.some(r=>r.length>nCols);
+  const head = hasBind ? [...h,'HOTAS'] : h;
+  return `<table><thead><tr>${head.map(x=>`<th>${x}</th>`).join("")}</tr></thead><tbody>${
+    rows.map(r=>`<tr>${r.slice(0,nCols).map((c,i)=>i===0&&/^\d+$/.test(c)?`<td class="n">${c}</td>`:(i===1?`<td class="nm">${c}</td>`:`<td>${c}</td>`)).join("")}${hasBind?bindCell(r[nCols]):''}</tr>`).join("")}</tbody></table>`;
+}
 function block(b){
+  if(b.t==="tbl") return tbl(b.head,b.rows);
   if(b.t==="video"){
     return `<figure class="vid"><iframe src="https://www.youtube.com/embed/${b.id}" title="${b.c}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
       <figcaption><span>${b.c}</span><a href="https://www.youtube.com/watch?v=${b.id}" target="_blank" rel="noopener">YouTube ↗</a></figcaption></figure>`;
@@ -1674,6 +1736,7 @@ function render(){
   if(!first) document.getElementById("pv").onclick=()=>{ if(lIdx>0)lIdx--; else {sIdx--;lIdx=SECTIONS[sIdx].L.length-1;} render(); window.scrollTo(0,0); };
   if(!last)  document.getElementById("nx").onclick=()=>{ if(lIdx<SEC.L.length-1)lIdx++; else {sIdx++;lIdx=0;} render(); window.scrollTo(0,0); };
   rail();
+  paintBindBadges();
 }
 function rail(){
   const r=document.getElementById("rail"); r.innerHTML="";
@@ -1695,6 +1758,57 @@ function rail(){
   document.getElementById("gcnt").textContent=`${d} / ${t} leçons`;
   document.getElementById("foot").textContent=`Section en cours : ${SECTIONS[sIdx].letter} — ${SECTIONS[sIdx].title}`;
 }
+/* ---------- badges de bind dynamiques ----------
+   Lit data/f14bu-bindings.json, corrigé par le localStorage qu'écrit déjà
+   export-bindings.html : si l'utilisateur y change un bind, le badge le
+   reflète dès la prochaine visite de cette page — ou en direct si les deux
+   pages sont ouvertes ensemble, via l'événement storage. */
+const BIND_STORE_KEY = 'f14bu-export-bindings-v1';
+const AXIS_KEYS = {X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL = {stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS = null;
+async function loadBindings(){
+  try { BINDINGS = await fetch('data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS = null; }
+}
+function deriveKeys(n, count){
+  const upper = String(n).toUpperCase(), slots = Math.max(count,1);
+  if (AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if (upper === 'SLDR')  return new Array(slots).fill('JOY_SLIDER1');
+  if (/^\d+$/.test(n))   return new Array(slots).fill('JOY_BTN'+n);
+  const range = n.match(/^(\d+)-(\d+)$/);
+  if (range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides = (saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry = overrides[b.device+'|'+b.n];
+    const commands = (entry&&Array.isArray(entry.commands)) ? entry.commands : b.commands;
+    const keys = (entry&&Array.isArray(entry.keys)) ? entry.keys : deriveKeys(b.n, commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i]}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('[data-bind-cmd]').forEach(el=>{
+    const hits = bindingsFor(el.dataset.bindCmd);
+    el.textContent = hits.length
+      ? hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ')
+      : 'non affecté';
+    el.classList.toggle('unbound', hits.length===0);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
+
 function openLb(src){document.getElementById("lbimg").src=src;document.getElementById("lb").classList.add("on");}
 document.getElementById("lb").onclick=()=>document.getElementById("lb").classList.remove("on");
 document.addEventListener("keydown",e=>{
@@ -1704,6 +1818,6 @@ document.addEventListener("keydown",e=>{
   if(e.key==="ArrowRight"&&!(sIdx===SECTIONS.length-1&&lIdx===SEC.L.length-1)){ if(lIdx<SEC.L.length-1)lIdx++; else {sIdx++;lIdx=0;} render(); }
   if(e.key==="ArrowLeft"&&!(sIdx===0&&lIdx===0)){ if(lIdx>0)lIdx--; else {sIdx--;lIdx=SECTIONS[sIdx].L.length-1;} render(); }
 });
-load().then(render);
+Promise.all([load(), loadBindings()]).then(render);
 </script>
 </body></html>

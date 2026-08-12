@@ -42,6 +42,17 @@
          color:var(--deck);background:var(--amber);padding:3px 7px;vertical-align:6px;margin-left:10px}
   .intro{font-size:16px;color:var(--ink);margin:18px 0 0;border-left:2px solid var(--amber);padding-left:16px}
 
+  table{width:100%;border-collapse:collapse;margin:14px 0 0;font-size:14px}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  th{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);background:var(--panel)}
+  td.n{font-family:var(--mono);color:var(--amber);text-align:center;width:44px;font-weight:600}
+  td.nm{font-weight:600}
+  tbody tr:nth-child(odd){background:rgba(30,42,51,.35)}
+  .bindtag{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--go);
+    background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+    padding:1px 6px;white-space:nowrap}
+  .bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+
   h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
      margin:38px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
   p{margin:14px 0}
@@ -282,30 +293,30 @@ const L = [
   {t:"p", v:"Sur Tomcat, la manette des gaz porte bien plus que la poussée. C'est la pièce à cartographier en priorité sur ton HOTAS."},
   {t:"img", k:"throttle", c:"Manettes et commandes HOTAS"},
   {t:"tbl", head:["N°","Commande","Fonction et positions"], rows:[
-   ["1","Aérofreins","<span class='pos'><b>EXT</b> — sortent progressivement tant que tu maintiens, se figent au relâchement.<br><b>RET</b> — rentrent.</span>"],
-   ["2","Balayage des ailes","En manuel, tu ne peux que <b>reculer</b> les ailes au-delà de la position commandée par le calculateur.<span class='pos'><b>AUTO</b> — géré par le CADC selon le Mach.<br><b>FWD / AFT</b> — à la main.<br><b>BOMB</b> — commande 55° si les ailes sont plus en avant.</span>"],
-   ["3","PLM","Verrouillage radar commandé par le pilote. Déconnecte le pilote automatique en appontage automatique."],
-   ["4","CAGE/SEAM","Accrochage de l'AIM-9. Déconnecte la régulation automatique de vitesse."],
-   ["5","Feux extérieurs","<span class='pos'><b>OFF</b> — feux éteints, feux d'approche à pleine intensité.<br><b>ON</b> — feux allumés, feux d'approche atténués.</span>"],
-   ["6","Alternat ICS","<span class='pos'><b>ICS</b> — parle au RIO. &nbsp;·&nbsp; <b>BOTH</b> — les deux radios.<br><b>UHF1</b> / <b>UHF2</b> — une radio à la fois.</span>"]]},
+   ["1","Aérofreins","<span class='pos'><b>EXT</b> — sortent progressivement tant que tu maintiens, se figent au relâchement.<br><b>RET</b> — rentrent.</span>","Speed brake extend"],
+   ["2","Balayage des ailes","En manuel, tu ne peux que <b>reculer</b> les ailes au-delà de la position commandée par le calculateur.<span class='pos'><b>AUTO</b> — géré par le CADC selon le Mach.<br><b>FWD / AFT</b> — à la main.<br><b>BOMB</b> — commande 55° si les ailes sont plus en avant.</span>","Wing Sweep Auto Mode"],
+   ["3","PLM","Verrouillage radar commandé par le pilote. Déconnecte le pilote automatique en appontage automatique.","—click"],
+   ["4","CAGE/SEAM","Accrochage de l'AIM-9. Déconnecte la régulation automatique de vitesse.","CAGE-SEAM button"],
+   ["5","Feux extérieurs","<span class='pos'><b>OFF</b> — feux éteints, feux d'approche à pleine intensité.<br><b>ON</b> — feux allumés, feux d'approche atténués.</span>","—click"],
+   ["6","Alternat ICS","<span class='pos'><b>ICS</b> — parle au RIO. &nbsp;·&nbsp; <b>BOTH</b> — les deux radios.<br><b>UHF1</b> / <b>UHF2</b> — une radio à la fois.</span>","—click"]]},
 
   {t:"h", v:"Train, volets et freins"},
   {t:"img", k:"gear", c:"Panneau de commande du train"},
   {t:"tbl", head:["N°","Commande","Fonction et positions"], rows:[
-   ["1","Poignée LDG GEAR","Train haut ou bas.<span class='pos'>Sortie de secours, poignée sur DOWN : enfoncer, tourner dans le sens horaire, tirer.</span>"],
-   ["2","DOWN LOCK ORIDE","Signale l'appui sur les roues. Peut être relevé pour forcer le signal."],
-   ["3","HYD ISOL","Isole train, direction de roue et freins du circuit commun.<span class='pos'><b>FLT</b> — en vol, isolés. &nbsp;·&nbsp; <b>T.O./LDG</b> — connectés.<br>Passe automatiquement sur T.O./LDG quand la poignée de train est basse.</span>"],
+   ["1","Poignée LDG GEAR","Train haut ou bas.<span class='pos'>Sortie de secours, poignée sur DOWN : enfoncer, tourner dans le sens horaire, tirer.</span>","Gears Up"],
+   ["2","DOWN LOCK ORIDE","Signale l'appui sur les roues. Peut être relevé pour forcer le signal.","—click"],
+   ["3","HYD ISOL","Isole train, direction de roue et freins du circuit commun.<span class='pos'><b>FLT</b> — en vol, isolés. &nbsp;·&nbsp; <b>T.O./LDG</b> — connectés.<br>Passe automatiquement sur T.O./LDG quand la poignée de train est basse.</span>","—click"],
    ["4","Voyant de transit","S'allume quand la position réelle du train ne correspond pas à la poignée."],
    ["5","Indicateur roues-volets","Positions des volets, becs, aérofreins et train."],
-   ["6","EMERG STORES","Largage d'urgence de tous les emports."],
-   ["7","NOSE STRUT","<span class='pos'><b>EXTD</b> — étend l'amortisseur avant, verrouille la barre de lancement.<br><b>OFF</b> — repos. &nbsp;·&nbsp; <b>KNEEL</b> — agenouille l'avion.</span>"],
-   ["8","BRAKE-PULL","Frein de parking. Tirer pour serrer."],
-   ["9","EJECT CMD","<span class='pos'><b>PILOT</b> — le pilote éjecte les deux. &nbsp;·&nbsp; <b>MCO</b> — chacun éjecte les deux.</span>"]]},
+   ["6","EMERG STORES","Largage d'urgence de tous les emports.","—click"],
+   ["7","NOSE STRUT","<span class='pos'><b>EXTD</b> — étend l'amortisseur avant, verrouille la barre de lancement.<br><b>OFF</b> — repos. &nbsp;·&nbsp; <b>KNEEL</b> — agenouille l'avion.</span>","—click"],
+   ["8","BRAKE-PULL","Frein de parking. Tirer pour serrer.","Parking brake enabled, else disabed"],
+   ["9","EJECT CMD","<span class='pos'><b>PILOT</b> — le pilote éjecte les deux. &nbsp;·&nbsp; <b>MCO</b> — chacun éjecte les deux.</span>","—click"]]},
 
   {t:"h", v:"Crosse d'appontage"},
   {t:"img", k:"hook", c:"Panneau de crosse"},
   {t:"tbl", head:["N°","Commande","Fonction"], rows:[
-   ["1","Poignée HOOK","<span class='pos'><b>UP</b> — rentre et verrouille. &nbsp;·&nbsp; <b>DOWN</b> — descend par gravité.<br><b>EMERG DOWN</b> — tirer puis tourner en sens antihoraire : largage mécanique.</span>"],
+   ["1","Poignée HOOK","<span class='pos'><b>UP</b> — rentre et verrouille. &nbsp;·&nbsp; <b>DOWN</b> — descend par gravité.<br><b>EMERG DOWN</b> — tirer puis tourner en sens antihoraire : largage mécanique.</span>","Hook Extend"],
    ["2","Voyant de transit","S'allume tant que la crosse n'est pas dans la position commandée."],
    ["3","Munitions restantes","Décompte du canon M61A1, normalement 676 obus au départ."]]},
 
@@ -339,7 +350,7 @@ const L = [
   {t:"h", v:"Ce que JESTER fait pour toi"},
   {t:"p", v:"Il gère le radar (modes, portée, verrouillages), l'alignement de la navigation, la saisie des points, la nacelle de désignation, le datalink et les contre-mesures. Sur les tâches longues comme l'alignement ou le démarrage, il peut travailler pendant que tu observes — une excellente façon d'apprendre une procédure avant de la faire soi-même."},
   {t:"h", v:"Le mécanisme réel du menu"},
-  {t:"p", v:"Une seule touche commande tout, en trois pressions successives."},
+  {t:"p", v:"Une seule touche <span class='bindtag' data-bind-cmd='Toggle Menu'></span> commande tout, en trois pressions successives."},
   {t:"tbl", head:["Pression","Résultat"], rows:[
    ["1ʳᵉ","Ouvre le menu <b>contextuel</b> : ce que JESTER propose selon la situation du moment."],
    ["2ᵉ","Ouvre le <b>menu principal</b> complet."],
@@ -375,10 +386,10 @@ const L = [
    ["2","FEED","Routage du carburant vers les moteurs. Verrouillé sur NORM par un cache."],
    ["3","WING/EXT TRANS","<span class='pos'><b>ORIDE</b> — force le transfert. &nbsp;·&nbsp; <b>AUTO</b> — normal. &nbsp;·&nbsp; <b>OFF</b> — coupé.</span>"],
    ["4","Voyant perche","S'allume quand la perche de ravitaillement n'est ni sortie ni rentrée complètement."],
-   ["5","DUMP","Vidange carburant. Autorisée aérofreins rentrés, sans postcombustion, en vol."],
-   ["6","REFUEL PROBE","<span class='pos'><b>ALL EXTD</b> — perche sortie, tous réservoirs.<br><b>FUS EXTD</b> — fuselage seul. &nbsp;·&nbsp; <b>RET</b> — rentrée.</span>"],
-   ["7","ANTI SKID / SPOILER BK","<span class='pos'><b>BOTH</b> — anti-dérapage et freinage par spoilers. &nbsp;·&nbsp; <b>OFF</b> — coupés. &nbsp;·&nbsp; <b>SPOILER BK</b> — spoilers seuls.</span>"],
-   ["8","MASTER RESET","Réarme la détection de panne du calculateur d'air (CADC)."],
+   ["5","DUMP","Vidange carburant. Autorisée aérofreins rentrés, sans postcombustion, en vol.","Fueldump Dump"],
+   ["6","REFUEL PROBE","<span class='pos'><b>ALL EXTD</b> — perche sortie, tous réservoirs.<br><b>FUS EXTD</b> — fuselage seul. &nbsp;·&nbsp; <b>RET</b> — rentrée.</span>","Refuel Probe extend & Refuel All, else Retract Probe"],
+   ["7","ANTI SKID / SPOILER BK","<span class='pos'><b>BOTH</b> — anti-dérapage et freinage par spoilers. &nbsp;·&nbsp; <b>OFF</b> — coupés. &nbsp;·&nbsp; <b>SPOILER BK</b> — spoilers seuls.</span>","Antiskid & Spoiler BK - Both"],
+   ["8","MASTER RESET","Réarme la détection de panne du calculateur d'air (CADC).","—click"],
    ["9","Position des gouvernes","Indicateur des spoilers, dérives et empennages."]]},
 
   {t:"h", v:"Surveiller les moteurs"},
@@ -420,9 +431,9 @@ const L = [
  body:[
   {t:"h", v:"Avant de rouler"},
   {t:"tbl", head:["Réglage","Position"], rows:[
-   ["Anti-dérapage / frein aérodynamique","Position terrain (BOTH)."],
-   ["HOOK BYPASS (console droite)","FIELD — pas CARRIER."],
-   ["MODE du PDCP","T.O. — bascule la symbologie du HUD sur le format décollage."]]},
+   ["Anti-dérapage / frein aérodynamique","Position terrain (BOTH).","Antiskid & Spoiler BK - Both"],
+   ["HOOK BYPASS (console droite)","FIELD — pas CARRIER.","Lights Hook Bypass FIELD"],
+   ["MODE du PDCP","T.O. — bascule la symbologie du HUD sur le format décollage.","—click"]]},
   {t:"p", v:"La roulette avant se braque avec un bouton au manche ; un témoin te confirme qu'elle est engagée."},
   {t:"img", k:"procov", c:"Vue d'ensemble des checklists normales — les points de roulage y figurent"},
   {t:"h", v:"Rouler"},
@@ -435,7 +446,7 @@ const L = [
   {t:"tbl", head:["N°","Élément","Fonction"], rows:[
    ["1","HUD","Symbologie de décollage, croisière, air-air, air-sol et atterrissage."],
    ["2","Capteur CTVS","Enregistre le HUD pour l'analyse des tirs."],
-   ["3","MASTER CAUTION","Clignote au moindre changement sur le panneau d'alertes. Appuyer pour acquitter."],
+   ["3","MASTER CAUTION","Clignote au moindre changement sur le panneau d'alertes. Appuyer pour acquitter.","Master Caution Reset"],
    ["4","Indicateur virage-glissade","Taux de virage en haut, bille de glissade en bas."]]},
   {t:"note", k:"warn", lbl:"Pièges", v:"Cabrer trop tôt ou trop fort : le Tomcat frotte facilement la queue. Rentrer les volets trop bas ou trop lent."},
   {t:"h", v:"Ce que tu fais maintenant"},
@@ -476,13 +487,13 @@ const L = [
   {t:"img", k:"baroalt", c:"Altimètre servopneumatique"},
   {t:"tbl", head:["N°","Élément","Fonction"], rows:[
    ["1","Affichage","Trois tambours (10 000, 1 000, 100 pieds) plus une aiguille en centaines de pieds."],
-   ["2","Bouton de calage","Règle la pression locale.<span class='pos'>Ce calage n'affecte que cet altimètre : les affichages pilotés par le CADC restent sur 29,92.</span>"],
+   ["2","Bouton de calage","Règle la pression locale.<span class='pos'>Ce calage n'affecte que cet altimètre : les affichages pilotés par le CADC restent sur 29,92.</span>","—click"],
    ["3","Fenêtre de pression","Fenêtre de Kollsman : affiche le calage retenu."],
    ["4","Sélecteur de mode","<span class='pos'><b>RESET</b> — maintenir 3 s pour revenir en mode asservi.<br><b>STBY</b> — secours purement pneumatique.</span>"]]},
   {t:"note", k:"", lbl:"Erreurs à connaître", v:"À grande vitesse sous 10 000 pieds, les effets de pression faussent la lecture : jusqu'à <b>1 200 pieds</b> en transsonique et <b>4 000 pieds</b> en supersonique."},
   {t:"img", k:"radalt", c:"Radioaltimètre"},
   {t:"tbl", head:["N°","Élément","Fonction"], rows:[
-   ["1","Bouton de commande","Alimentation, réglage du seuil d'alerte, lancement du test."],
+   ["1","Bouton de commande","Alimentation, réglage du seuil d'alerte, lancement du test.","—click"],
    ["2","Drapeau OFF","Apparaît si l'appareil est éteint, sans alimentation, ou s'il perd l'accrochage sol."],
    ["3","Voyant d'alerte basse altitude","S'allume en rouge sous le seuil réglé."],
    ["4","Voyant de test","Vert pendant le test. Le test doit afficher 100 pieds ±10."],
@@ -501,11 +512,11 @@ const L = [
   {t:"p", v:"Le Tomcat est un avion lourd aux ailes immenses, taillé pour tourner à basse vitesse. Les commandes de vol numériques le rendent prévisible aux hautes incidences : l'avion prévient avant de décrocher, et décroche proprement. Ce n'est pas une protection absolue : c'est une marge, pas un filet."},
   {t:"img", k:"vdicruise", c:"L'écran vertical (VDI) en croisière"},
   {t:"tbl", head:["N°","Commande","Fonction"], rows:[
-   ["1","HUD BRT / BARO SET","Luminosité du HUD et calage barométrique HUD/VDI."],
-   ["2","VDI BRT / CONT","Luminosité et contraste du VDI."],
-   ["3","Refroidissement Sidewinder","Commande manuelle du refroidissement de l'autodirecteur AIM-9."],
-   ["4","Préparation missiles","Commande la préparation des AIM-54 et AIM-7."],
-   ["5","Mode missile","<span class='pos'><b>NORM</b> — tir normal. &nbsp;·&nbsp; <b>BRSIT</b> — tir en boresight.</span>"],
+   ["1","HUD BRT / BARO SET","Luminosité du HUD et calage barométrique HUD/VDI.","—click"],
+   ["2","VDI BRT / CONT","Luminosité et contraste du VDI.","—click"],
+   ["3","Refroidissement Sidewinder","Commande manuelle du refroidissement de l'autodirecteur AIM-9.","—click"],
+   ["4","Préparation missiles","Commande la préparation des AIM-54 et AIM-7.","—click"],
+   ["5","Mode missile","<span class='pos'><b>NORM</b> — tir normal. &nbsp;·&nbsp; <b>BRSIT</b> — tir en boresight.</span>","—click"],
    ["6","Voyants du VDI","Alertes datalink et appontage automatique."],
    ["7","Affichages spécifiques","État des emports et points de navigation."]]},
 
@@ -579,7 +590,27 @@ function fig(k,c){
     <div class="imgfail">Image non chargée — ouvre-la directement dans Drive.</div>
     <figcaption><span>${c}</span><a href="${V(id)}" target="_blank" rel="noopener">Drive ↗</a></figcaption></figure>`;
 }
+/* 4e élément optionnel par ligne = commande HOTAS associée à ce contrôle :
+   - nom de commande DCS exact -> badge dynamique (touche actuelle, voir
+     bindingsFor()) ; - "—rio" -> badge "RIO" (commande du RIO, pas du
+   pilote) ; - "—click" -> badge "Clic cockpit" (pas de bind HOTAS,
+   action à la souris/VR). Ligne sans 4e élément = pas de colonne HOTAS
+   pour elle (jauge/afficheur passif, pas un bouton). */
+function bindCell(cmd){
+  if(cmd===undefined) return '<td></td>';
+  if(cmd==='—rio') return '<td><span class="bindtag unbound" title="Commande RIO, absente du profil pilote">RIO</span></td>';
+  if(cmd==='—click') return '<td><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit">Clic cockpit</span></td>';
+  return `<td><span class="bindtag" data-bind-cmd="${cmd}"></span></td>`;
+}
+function tbl(h,rows){
+  const nCols = h.length;
+  const hasBind = rows.some(r=>r.length>nCols);
+  const head = hasBind ? [...h,'HOTAS'] : h;
+  return `<table><thead><tr>${head.map(x=>`<th>${x}</th>`).join("")}</tr></thead><tbody>${
+    rows.map(r=>`<tr>${r.slice(0,nCols).map((c,i)=>i===0&&/^\d+$/.test(c)?`<td class="n">${c}</td>`:(i===1?`<td class="nm">${c}</td>`:`<td>${c}</td>`)).join("")}${hasBind?bindCell(r[nCols]):''}</tr>`).join("")}</tbody></table>`;
+}
 function block(b){
+  if(b.t==="tbl") return tbl(b.head,b.rows);
   if(b.t==="video"){
     return `<figure class="vid"><iframe src="https://www.youtube.com/embed/${b.id}" title="${b.c}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
       <figcaption><span>${b.c}</span><a href="https://www.youtube.com/watch?v=${b.id}" target="_blank" rel="noopener">YouTube ↗</a></figcaption></figure>`;
@@ -616,6 +647,7 @@ function render(){
   if(cur) document.getElementById("pv").onclick=()=>{cur--;render();window.scrollTo(0,0);};
   if(cur<L.length-1) document.getElementById("nx").onclick=()=>{cur++;render();window.scrollTo(0,0);};
   rail();
+  paintBindBadges();
 }
 function rail(){
   const r=document.getElementById("rail"); r.innerHTML="";
@@ -629,6 +661,57 @@ function rail(){
   const n=L.filter(l=>st.done[l.id]).length;
   document.getElementById("foot").textContent=`${n} / ${L.length} leçons validées`;
 }
+/* ---------- badges de bind dynamiques ----------
+   Lit data/f14bu-bindings.json, corrigé par le localStorage qu'écrit déjà
+   export-bindings.html : si l'utilisateur y change un bind, le badge le
+   reflète dès la prochaine visite de cette page — ou en direct si les deux
+   pages sont ouvertes ensemble, via l'événement storage. */
+const BIND_STORE_KEY = 'f14bu-export-bindings-v1';
+const AXIS_KEYS = {X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL = {stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS = null;
+async function loadBindings(){
+  try { BINDINGS = await fetch('data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS = null; }
+}
+function deriveKeys(n, count){
+  const upper = String(n).toUpperCase(), slots = Math.max(count,1);
+  if (AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if (upper === 'SLDR')  return new Array(slots).fill('JOY_SLIDER1');
+  if (/^\d+$/.test(n))   return new Array(slots).fill('JOY_BTN'+n);
+  const range = n.match(/^(\d+)-(\d+)$/);
+  if (range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides = (saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry = overrides[b.device+'|'+b.n];
+    const commands = (entry&&Array.isArray(entry.commands)) ? entry.commands : b.commands;
+    const keys = (entry&&Array.isArray(entry.keys)) ? entry.keys : deriveKeys(b.n, commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i]}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('[data-bind-cmd]').forEach(el=>{
+    const hits = bindingsFor(el.dataset.bindCmd);
+    el.textContent = hits.length
+      ? hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ')
+      : 'non affecté';
+    el.classList.toggle('unbound', hits.length===0);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
+
 function openLb(src){const lb=document.getElementById("lb");document.getElementById("lbimg").src=src;lb.classList.add("on");}
 document.getElementById("lb").onclick=()=>document.getElementById("lb").classList.remove("on");
 document.addEventListener("keydown",e=>{
@@ -637,5 +720,5 @@ document.addEventListener("keydown",e=>{
   if(e.key==="ArrowRight"&&cur<L.length-1){cur++;render();window.scrollTo(0,0);}
   if(e.key==="ArrowLeft"&&cur>0){cur--;render();window.scrollTo(0,0);}
 });
-load().then(render);
+Promise.all([load(), loadBindings()]).then(render);
 </script>
