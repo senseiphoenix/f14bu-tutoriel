@@ -48,6 +48,7 @@ h1{font-family:var(--display);font-weight:600;font-size:clamp(26px,4vw,38px);let
 .sr-item:last-child{border-bottom:none}
 .sr-item:hover,.sr-item.sel{background:var(--panel)}
 .sr-dev{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);flex:0 0 auto;min-width:58px}
+.sr-dev-alert{color:var(--warn);min-width:92px}
 .sr-name{font-family:var(--body);font-size:13px;color:var(--ink)}
 .sr-num{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-left:auto;flex:0 0 auto}
 .sr-empty{padding:12px;font-family:var(--mono);font-size:12px;color:var(--dim)}
@@ -263,6 +264,7 @@ section.device.visible{display:block}
 
 <div class="toolbar">
   <div class="tabs" role="tablist">
+    <button class="tab" data-dev="kb" role="tab">Clavier / Souris</button>
     <button class="tab active" data-dev="stick" role="tab">Manche</button>
     <button class="tab" data-dev="throttle" role="tab">Throttle</button>
     <button class="tab" data-dev="pto2" role="tab">PTO2</button>
@@ -281,6 +283,17 @@ section.device.visible{display:block}
 </div>
 
 <main>
+
+<section class="device" id="dev-kb">
+  <div class="fig-head">
+    <span class="fig-num">FIG. 0</span>
+    <span class="fig-title">Clavier / Souris — fonctions non bindées sur le HOTAS</span>
+    <span class="fig-sub" id="kb-count">Chargement…</span>
+  </div>
+  <div class="note">Ces commandes existent dans le module F-14B(U) mais ne sont assignées à aucun bouton du manche, du throttle, du PTO2 ou des pédales : elles restent accessibles au clavier/souris (bind par défaut de DCS), ou sont libres à binder vous-même sur un contact inutilisé. Une commande déjà présente sur le HOTAS n'apparaît pas ici deux fois — cherchez-la, elle vous amènera directement sur son onglet.</div>
+  <div class="legend-wrap"><table class="dtable" id="dtbl-kb">
+    <thead><tr><th>Catégorie</th><th>Commande DCS</th><th></th><th></th></tr></thead><tbody></tbody></table></div>
+</section>
 
 <section class="device visible" id="dev-stick">
   <div class="fig-head">
@@ -710,20 +723,73 @@ async function mountSvgDevice(cfg, hotas){
    Index construit sur les lignes de tableau déjà rendues (data-dev/data-i
    posés par render Table() et mountSvgDevice() de la même façon). Reconstruit
    après le montage async manche/PTO2 pour les inclure. */
-const DEV_NAMES={stick:'Manche', throttle:'Throttle', pto2:'PTO2', pedals:'Pédales'};
+const DEV_NAMES={stick:'Manche', throttle:'Throttle', pto2:'PTO2', pedals:'Pédales', kb:'⚠ Non bindé'};
 let searchIndex=[];
 /* Commandes DCS réelles (anglais) par périphérique+repère, pour que la
    recherche marche autant sur le nom affiché (français) que sur le nom de
    commande DCS (souvent anglais) — les deux se disent tant que DCS n'a pas
    de traduction. */
 let bindingsIndex=new Map();
+const boundCommandNames=new Set();
 function loadBindingsIndex(){
   return fetch('data/f14bu-bindings.json').then(r=>r.ok?r.json():null).then(data=>{
     if(!data) return;
     (data.bindings||[]).forEach(b=>{
       bindingsIndex.set(b.device+'|'+b.n, (b.commands||[]).join(' '));
+      (b.commands||[]).forEach(c=>boundCommandNames.add(c));
     });
   }).catch(()=>{});
+}
+
+/* ---------- Clavier / Souris : tout ce que DCS propose et qui n'est sur
+   AUCUN bouton du HOTAS ----------
+   Sert deux buts : (1) l'onglet lui-même, navigable/filtrable comme les
+   autres ; (2) alimenter la recherche globale en exhaustivité — une commande
+   qui existe dans le module mais n'est nulle part bindée doit quand même
+   apparaître (marquée "reste au clavier"), pas disparaître silencieusement. */
+const DCS_CAT_TO_UI={
+  Weapons:'arm', 'Bombing Tool Controls':'arm', 'ACM Panel':'arm', 'IR Laser Designator':'arm',
+  'Flight Control':'vol', 'Gears, brakes, and hook':'vol', Instruments:'vol', Lights:'vol',
+  Throttle:'vol', 'DFCS Control Panel':'vol', 'Engine Control Panel':'vol', Electrical:'vol',
+  'Fuelsystem Control Panel':'vol', Stick:'vol',
+  TACAN:'sens', HSD:'sens', Compass:'sens', RWR:'sens', ILS:'sens', Navigation:'sens', TARPS:'sens',
+  Radio:'comm', Communications:'comm', 'Jester AI':'comm',
+};
+function mapDcsCategory(cats){ return DCS_CAT_TO_UI[(cats&&cats[0])||''] || 'misc'; }
+
+let kbLoaded=false;
+function loadKbCommands(){
+  return fetch('data/f14bu-commands.json').then(r=>r.ok?r.json():null).then(data=>{
+    if(!data) return;
+    const seen=new Set();
+    const rows=[];
+    (data.commands||[]).forEach(c=>{
+      if(!c.resolved || !c.name) return;
+      if(boundCommandNames.has(c.name)) return;
+      if(seen.has(c.name)) return;
+      seen.add(c.name);
+      rows.push({name:c.name, cat:(c.categories&&c.categories[0])||'Autre', uiCat:mapDcsCategory(c.categories)});
+    });
+    rows.sort((a,b)=> a.cat.localeCompare(b.cat) || a.name.localeCompare(b.name));
+    const tbody=document.querySelector('#dtbl-kb tbody');
+    tbody.innerHTML='';
+    rows.forEach((r,i)=>{
+      const tr=document.createElement('tr');
+      tr.dataset.dev='kb'; tr.dataset.i=String(i); tr.dataset.n=String(i); tr.dataset.cat=r.uiCat;
+      tr.style.setProperty('--c',CAT_COLOR_L[r.uiCat]);
+      tr.innerHTML=`<td class="c1"><span class="num-badge" style="--c:${CAT_COLOR_L[r.uiCat]}">${r.cat}</span></td>
+        <td class="c2"><b>${r.name}</b></td>
+        <td class="c3">Reste au clavier/souris — non assigné sur le HOTAS.</td>
+        <td>—</td>`;
+      tbody.appendChild(tr);
+    });
+    const countEl=document.getElementById('kb-count');
+    if(countEl) countEl.textContent=rows.length+' commandes non bindées sur '+(data.commands||[]).filter(c=>c.resolved).length+' au total dans le module';
+    kbLoaded=true;
+  }).catch(err=>{
+    const countEl=document.getElementById('kb-count');
+    if(countEl) countEl.textContent='Erreur de chargement : '+err.message;
+  });
 }
 function refreshSearchIndex(){
   searchIndex=[...document.querySelectorAll('.dtable tbody tr[data-dev]')].map(tr=>{
@@ -751,7 +817,7 @@ function renderSearchResults(matches){
   matches.slice(0,25).forEach(m=>{
     const row=document.createElement('div');
     row.className='sr-item';
-    row.innerHTML=`<span class="sr-dev">${DEV_NAMES[m.dev]||m.dev}</span><span class="sr-name">${m.name}</span><span class="sr-num">${m.num}</span>`;
+    row.innerHTML=`<span class="sr-dev${m.dev==='kb'?' sr-dev-alert':''}">${DEV_NAMES[m.dev]||m.dev}</span><span class="sr-name">${m.name}</span><span class="sr-num">${m.num}</span>`;
     row.addEventListener('click',()=>goToSearchResult(m));
     searchResultsEl.appendChild(row);
   });
@@ -794,7 +860,7 @@ searchInput.addEventListener('keydown',e=>{
 document.addEventListener('click',e=>{
   if(!e.target.closest('.search-wrap')) searchResultsEl.classList.remove('open');
 });
-loadBindingsIndex().then(refreshSearchIndex);
+loadBindingsIndex().then(()=>loadKbCommands()).then(refreshSearchIndex);
 
 fetch('data/f14bu-hotas.json').then(r=>{if(!r.ok)throw new Error('data/f14bu-hotas.json: '+r.status);return r.json()}).then(hotas=>{
   return Promise.all(SVG_DEVICES.map(cfg=>mountSvgDevice(cfg,hotas).catch(err=>{
