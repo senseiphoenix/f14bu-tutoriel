@@ -29,6 +29,33 @@ header{background:var(--panel);border-bottom:1px solid var(--line);padding:18px 
 h1{font-family:var(--display);font-weight:600;font-size:clamp(26px,4vw,38px);letter-spacing:.04em;line-height:1.05;margin:4px 0 6px;text-transform:uppercase}
 .sub{font-family:var(--mono);font-size:12px;color:var(--dim)}
 
+/* ---------- Recherche globale ---------- */
+.search-wrap{position:relative;max-width:480px;margin-top:14px}
+#cmd-search{
+  width:100%;font-family:var(--mono);font-size:13px;color:var(--ink);
+  background:var(--panel-2);border:1px solid var(--line);border-radius:2px;
+  padding:10px 12px;min-height:44px;
+}
+#cmd-search::placeholder{color:var(--dim)}
+#cmd-search:focus{outline:2px solid var(--amber);outline-offset:1px;border-color:var(--amber)}
+.search-results{
+  display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:40;
+  background:var(--panel-2);border:1px solid var(--line);border-radius:2px;
+  max-height:360px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.5);
+}
+.search-results.open{display:block}
+.sr-item{display:flex;align-items:baseline;gap:10px;padding:9px 12px;cursor:pointer;border-bottom:1px solid var(--line)}
+.sr-item:last-child{border-bottom:none}
+.sr-item:hover,.sr-item.sel{background:var(--panel)}
+.sr-dev{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);flex:0 0 auto;min-width:58px}
+.sr-name{font-family:var(--body);font-size:13px;color:var(--ink)}
+.sr-num{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-left:auto;flex:0 0 auto}
+.sr-empty{padding:12px;font-family:var(--mono);font-size:12px;color:var(--dim)}
+
+@keyframes searchPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.6)}}
+.dtable tbody tr.search-hit{background:var(--panel-2)!important;box-shadow:inset 3px 0 0 var(--amber);animation:searchPulse 1s ease-in-out 3}
+.lbl.search-hit,.board svg .jd-lbl.search-hit{outline:3px solid var(--amber)!important;z-index:6;animation:searchPulse 1s ease-in-out 3}
+
 /* ---------- Barre d'outils ---------- */
 .toolbar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;padding:11px 28px;background:var(--panel-2);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
 .tabs{display:flex;gap:5px;flex-wrap:wrap}
@@ -228,6 +255,10 @@ section.device.visible{display:block}
   <div class="tail">DCS · F-14B(U) Tomcat</div>
   <h1>Mapping HOTAS</h1>
   <div class="sub">MongoosT-50CM3 + Alpha Prime [R] · VPC Throttle CM3 · WinWing PTO2 · CSL Elite V2 (vJoy)</div>
+  <div class="search-wrap">
+    <input type="search" id="cmd-search" placeholder="Rechercher une commande sur tous les périphériques…" autocomplete="off">
+    <div class="search-results" id="search-results"></div>
+  </div>
 </header>
 
 <div class="toolbar">
@@ -664,7 +695,7 @@ async function mountSvgDevice(cfg, hotas){
   for(const [,l] of byKey){
     const c=CAT_COLOR_L[l.cat];
     const tr=document.createElement('tr'); tr.dataset.cat=l.cat;
-    tr.dataset.dev=cfg.id; tr.dataset.i=l.i; tr.style.setProperty('--c',c);
+    tr.dataset.dev=cfg.id; tr.dataset.i=l.i; tr.dataset.n=l.n; tr.style.setProperty('--c',c);
     const ctl=(l.showHeader? l.short+' — ' : '')+l.boardText+(l.isProposed?' <span style="color:var(--amber);font-size:.85em">— proposé, à binder</span>':'');
     tr.innerHTML=`<td class="c1"><span class="num-badge" style="--c:${c}">${l.boardNum}</span></td>
       <td class="c2"><b>${ctl}</b><span>${l.boardNum}</span></td>
@@ -675,11 +706,101 @@ async function mountSvgDevice(cfg, hotas){
   fitBoards();
 }
 
+/* ---------- Recherche globale ----------
+   Index construit sur les lignes de tableau déjà rendues (data-dev/data-i
+   posés par render Table() et mountSvgDevice() de la même façon). Reconstruit
+   après le montage async manche/PTO2 pour les inclure. */
+const DEV_NAMES={stick:'Manche', throttle:'Throttle', pto2:'PTO2', pedals:'Pédales'};
+let searchIndex=[];
+/* Commandes DCS réelles (anglais) par périphérique+repère, pour que la
+   recherche marche autant sur le nom affiché (français) que sur le nom de
+   commande DCS (souvent anglais) — les deux se disent tant que DCS n'a pas
+   de traduction. */
+let bindingsIndex=new Map();
+function loadBindingsIndex(){
+  return fetch('data/f14bu-bindings.json').then(r=>r.ok?r.json():null).then(data=>{
+    if(!data) return;
+    (data.bindings||[]).forEach(b=>{
+      bindingsIndex.set(b.device+'|'+b.n, (b.commands||[]).join(' '));
+    });
+  }).catch(()=>{});
+}
+function refreshSearchIndex(){
+  searchIndex=[...document.querySelectorAll('.dtable tbody tr[data-dev]')].map(tr=>{
+    const c1=tr.querySelector('.c1'), c2=tr.querySelector('.c2'), c3=tr.querySelector('.c3');
+    const cmds=bindingsIndex.get(tr.dataset.dev+'|'+(tr.dataset.n||''))||'';
+    return {
+      dev:tr.dataset.dev, i:tr.dataset.i, pg:tr.dataset.pg||null,
+      num:c1?c1.textContent.trim():'', name:c2?c2.textContent.trim():'',
+      detail:c3?c3.textContent.trim():'', commands:cmds
+    };
+  });
+}
+function normSearch(s){ return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
+
+const searchInput=document.getElementById('cmd-search');
+const searchResultsEl=document.getElementById('search-results');
+
+function renderSearchResults(matches){
+  searchResultsEl.innerHTML='';
+  if(!matches.length){
+    searchResultsEl.innerHTML='<div class="sr-empty">Aucune commande trouvée</div>';
+    searchResultsEl.classList.add('open');
+    return;
+  }
+  matches.slice(0,25).forEach(m=>{
+    const row=document.createElement('div');
+    row.className='sr-item';
+    row.innerHTML=`<span class="sr-dev">${DEV_NAMES[m.dev]||m.dev}</span><span class="sr-name">${m.name}</span><span class="sr-num">${m.num}</span>`;
+    row.addEventListener('click',()=>goToSearchResult(m));
+    searchResultsEl.appendChild(row);
+  });
+  searchResultsEl.classList.add('open');
+}
+
+function runSearch(q){
+  q=normSearch(q.trim());
+  if(!q){ searchResultsEl.classList.remove('open'); return; }
+  const matches=searchIndex.filter(it=>normSearch(it.name).includes(q)||normSearch(it.detail).includes(q)||normSearch(it.num).includes(q)||normSearch(it.commands).includes(q));
+  renderSearchResults(matches);
+}
+
+function goToSearchResult(m){
+  searchResultsEl.classList.remove('open');
+  searchInput.value='';
+  document.querySelector('.tab[data-dev="'+m.dev+'"]')?.click();
+  if(m.dev==='throttle' && m.pg) setThrottlePage(m.pg);
+  setTimeout(()=>{
+    document.querySelectorAll('.search-hit').forEach(e=>e.classList.remove('search-hit'));
+    const trSel='#dtbl-'+m.dev+' tbody tr[data-i="'+m.i+'"]'+(m.pg?'[data-pg="'+m.pg+'"]':'');
+    const tr=document.querySelector(trSel);
+    const lbls=document.querySelectorAll('#board-'+m.dev+' .lbl[data-i="'+m.i+'"], #board-'+m.dev+' .jd-lbl[data-i="'+m.i+'"]');
+    (tr||lbls[0])?.scrollIntoView({behavior:'smooth',block:'center'});
+    if(tr) tr.classList.add('search-hit');
+    lbls.forEach(l=>l.classList.add('search-hit'));
+    setTimeout(()=>{
+      if(tr) tr.classList.remove('search-hit');
+      lbls.forEach(l=>l.classList.remove('search-hit'));
+    },3000);
+  },80);
+}
+
+searchInput.addEventListener('input',()=>runSearch(searchInput.value));
+searchInput.addEventListener('focus',()=>{ if(searchInput.value.trim()) runSearch(searchInput.value); });
+searchInput.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){ searchResultsEl.classList.remove('open'); searchInput.blur(); }
+  else if(e.key==='Enter'){ e.preventDefault(); searchResultsEl.querySelector('.sr-item')?.click(); }
+});
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.search-wrap')) searchResultsEl.classList.remove('open');
+});
+loadBindingsIndex().then(refreshSearchIndex);
+
 fetch('data/f14bu-hotas.json').then(r=>{if(!r.ok)throw new Error('data/f14bu-hotas.json: '+r.status);return r.json()}).then(hotas=>{
   return Promise.all(SVG_DEVICES.map(cfg=>mountSvgDevice(cfg,hotas).catch(err=>{
     const b=document.getElementById('board-'+cfg.id);
     if(b) b.innerHTML='<div class="board-loading" style="color:#c0392b">Erreur de chargement : '+err.message+' — cette page doit être servie en HTTP (voir tools/serve.ps1), pas ouverte en file://.</div>';
-  })));
+  }))).then(refreshSearchIndex);
 }).catch(err=>{
   document.querySelectorAll('#board-stick, #board-pto2').forEach(b=>{
     b.innerHTML='<div class="board-loading" style="color:#c0392b">Erreur de chargement des données : '+err.message+'</div>';
