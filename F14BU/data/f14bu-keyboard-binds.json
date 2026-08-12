@@ -1,0 +1,2288 @@
+{
+"aircraft":"F-14B(U) Pilot",
+"source":"Mods/aircraft/F14BU/Input/F-14BU-Pilot/keyboard/default.lua",
+"binds":{
+"Toggle Console":"LAlt+`"
+,
+"Score window":"'"
+,
+"Info bar view toggle":"LCtrl+Y"
+,
+"Get new plane - respawn":"RCtrl+RShift+Tab"
+,
+"Jump into selected aircraft":"RAlt+J"
+,
+"Info bar coordinate units toggle":"LAlt+Y"
+,
+"Clickable mouse cockpit mode On/Off":"LAlt+C"
+,
+"Sound On/Off":"LCtrl+S"
+,
+"Rearming and Refueling Window":"LAlt+'"
+,
+"View briefing on/off":"LAlt+B"
+,
+"Show controls indicator":"RCtrl+Enter"
+,
+"Flight - Complete mission and RTB":"LWin+E"
+,
+"Flight - RTB":null
+,
+"Flight - Complete mission and rejoin":"LWin+R"
+,
+"Toggle Formation":"LWin+T"
+,
+"Join Up Formation":"LWin+Y"
+,
+"Attack My Target":"LWin+Q"
+,
+"Cover Me":"LWin+W"
+,
+"Request AWACS Home Airbase":"LWin+U"
+,
+"Request AWACS Bogey Dope":"LWin+O"
+,
+"Flight - Attack ground targets":"LWin+G"
+,
+"Flight - Attack air defenses":"LWin+D"
+,
+"Flight - Engage Bandits":"LWin+B"
+,
+"Communication menu":null
+,
+"Switch dialog":"LShift+\\"
+,
+"Switch to main menu":"LCtrl+\\"
+,
+"View Left slow":"Num4"
+,
+"View Right slow":"Num6"
+,
+"View Up slow":"Num8"
+,
+"View Down slow":"Num2"
+,
+"View Up Right slow":"Num9"
+,
+"View Down Right slow":"Num3"
+,
+"View Down Left slow":"Num1"
+,
+"View Up Left slow":"Num7"
+,
+"View Center":"Num5"
+,
+"Return Camera":"RCtrl+Num5"
+,
+"Return Camera Base":"RAlt+Num5"
+,
+"Center Camera View":"RShift+Num5"
+,
+"Zoom in slow":"Num*"
+,
+"Zoom out slow":"Num/"
+,
+"Zoom normal":"NumEnter"
+,
+"Zoom external in":"RCtrl+Num*"
+,
+"Zoom external out":"RCtrl+Num/"
+,
+"Zoom external normal":"RCtrl+NumEnter"
+,
+"F11 Camera moving forward":"LAlt+Num*"
+,
+"F11 Camera moving backward":"LAlt+Num/"
+,
+"F1 Cockpit view":"F1"
+,
+"F1 Natural head movement view":"LCtrl+F1"
+,
+"F1 HUD only view switch":"LAlt+F1"
+,
+"F2 Aircraft view":"F2"
+,
+"F2 View own aircraft":"LCtrl+F2"
+,
+"F2 Toggle camera position":"RAlt+F2"
+,
+"F2 Toggle local camera control":"LAlt+F2"
+,
+"F3 Fly-By view":"F3"
+,
+"F3 Fly-By jump view":"LCtrl+F3"
+,
+"F4 Camera mounted on object":"F4"
+,
+"F4 Chase view":"LCtrl+F4"
+,
+"F4 Arcade Chase view":"LShift+F4"
+,
+"F5 nearest AC view":"F5"
+,
+"F5 Ground hostile view":"LCtrl+F5"
+,
+"F6 Released weapon view":"F6"
+,
+"F6 Weapon to target view":"LCtrl+F6"
+,
+"F7 Ground unit view":"F7"
+,
+"F9 Ship view":"F9"
+,
+"F9 Landing signal officer view":"LAlt+F9"
+,
+"F10 Theater map view":"F10"
+,
+"F10 Jump to theater map view over current point":"LCtrl+F10"
+,
+"Theater map dialog on/off":"RShift+F10"
+,
+"F11 Airport free camera":"F11"
+,
+"F11 Jump to free camera":"LCtrl+F11"
+,
+"Camera local input layer toggle":"RAlt+RCtrl+RShift+F11"
+,
+"F12 Static object view":"F12"
+,
+"F12 Civil traffic view":"LCtrl+F12"
+,
+"F12 Trains/cars toggle":"LShift+F12"
+,
+"F1 Head shift movement on / off":"LWin+F1"
+,
+"Camera alternative up slow":"RAlt+RCtrl+Num8"
+,
+"Camera alternative down slow":"RAlt+RCtrl+Num2"
+,
+"Camera alternative left slow":"RAlt+RCtrl+Num4"
+,
+"Camera alternative right slow":"RAlt+RCtrl+Num6"
+,
+"Camera alternative up right slow":"RAlt+RCtrl+Num9"
+,
+"Camera alternative down right slow":"RAlt+RCtrl+Num3"
+,
+"Camera alternative down left slow":"RAlt+RCtrl+Num1"
+,
+"Camera alternative up left slow":"RAlt+RCtrl+Num7"
+,
+"Camera alternative forward slow":"RAlt+RCtrl+Num*"
+,
+"Camera alternative backward slow":"RAlt+RCtrl+Num/"
+,
+"Camera alternative center":"RAlt+RCtrl+Num5"
+,
+"Camera alternative up":"RAlt+RCtrl+RShift+Num8"
+,
+"Camera alternative down":"RAlt+RCtrl+RShift+Num2"
+,
+"Camera alternative left":"RAlt+RCtrl+RShift+Num4"
+,
+"Camera alternative right":"RAlt+RCtrl+RShift+Num6"
+,
+"Camera alternative up right":"RAlt+RCtrl+RShift+Num9"
+,
+"Camera alternative down right":"RAlt+RCtrl+RShift+Num3"
+,
+"Camera alternative down left":"RAlt+RCtrl+RShift+Num1"
+,
+"Camera alternative up left":"RAlt+RCtrl+RShift+Num7"
+,
+"Camera alternative forward":"RAlt+RCtrl+RShift+Num*"
+,
+"Camera alternative backward":"RAlt+RCtrl+RShift+Num/"
+,
+"Object local camera":"RCtrl+F2"
+,
+"Object camera with position inheritance":"RCtrl+RShift+F2"
+,
+"Camera bookmarks editor":"RCtrl+RAlt+RShift+="
+,
+"Camera bookmarks menu bar":"RCtrl+RAlt+RShift+-"
+,
+"Pie menu":"RCtrl+RAlt+RShift+O"
+,
+"Wingman camera":"LAlt+F4"
+,
+"Supercarrier camera":"RAlt+RCtrl+RShift+F9"
+,
+"Jump to Supercarrier view":"LCtrl+F9"
+,
+"Aircraft carrier catapult camera":"RCtrl+F9"
+,
+"Aircraft carrier catapult crew camera":"RCtrl+RAlt+F9"
+,
+"Unload camera position to clipboard":"RAlt+RCtrl+,"
+,
+"Load camera position from clipboard":"RAlt+RCtrl+."
+,
+"Keyboard Rate Fast":"LShift+]"
+,
+"Keyboard Rate Slow":"LCtrl+]"
+,
+"Keyboard Rate Normal":"LAlt+]"
+,
+"Mouse Rate Fast":"LShift+["
+,
+"Mouse Rate Slow":"LCtrl+["
+,
+"Mouse Rate Normal":"LAlt+["
+,
+"Flashlight":"LAlt+L"
+,
+"Cockpit panel view in":"Num0"
+,
+"Cockpit panel view toggle":"RCtrl+Num0"
+,
+"Save Cockpit Angles":"RAlt+Num0"
+,
+"View up":"RShift+Num8"
+,
+"View down":"RShift+Num2"
+,
+"View left":"RShift+Num4"
+,
+"View right":"RShift+Num6"
+,
+"View up right":"RShift+Num9"
+,
+"View down right":"RShift+Num3"
+,
+"View down left":"RShift+Num1"
+,
+"View up left":"RShift+Num7"
+,
+"Cockpit Camera Move Up":"RCtrl+RShift+Num8"
+,
+"Cockpit Camera Move Down":"RCtrl+RShift+Num2"
+,
+"Cockpit Camera Move Left":"RCtrl+RShift+Num4"
+,
+"Cockpit Camera Move Right":"RCtrl+RShift+Num6"
+,
+"Cockpit Camera Move Forward":"RCtrl+RShift+Num*"
+,
+"Cockpit Camera Move Back":"RCtrl+RShift+Num/ ou RCtrl+RShift+Num-"
+,
+"Cockpit Camera Move Center":"RCtrl+RShift+Num5"
+,
+"Camera transpose mode (press and hold)":"LShift+F1"
+,
+"Glance up":"RCtrl+Num8"
+,
+"Glance down":"RCtrl+Num2"
+,
+"Glance left":"RCtrl+Num4"
+,
+"Glance right":"RCtrl+Num6"
+,
+"Glance up-left":"RCtrl+Num7"
+,
+"Glance down-left":"RCtrl+Num1"
+,
+"Glance up-right":"RCtrl+Num9"
+,
+"Glance down-right":"RCtrl+Num3"
+,
+"Camera pan mode toggle":"LAlt+LShift+Z"
+,
+"Camera snap view up":"RAlt+Num8"
+,
+"Camera snap view down":"RAlt+Num2"
+,
+"Camera snap view left":"RAlt+Num4"
+,
+"Camera snap view right":"RAlt+Num6"
+,
+"Camera snap view up-left":"RAlt+Num7"
+,
+"Camera snap view down-left":"RAlt+Num1"
+,
+"Camera snap view up-right":"RAlt+Num9"
+,
+"Camera snap view down-right":"RAlt+Num3"
+,
+"Custom Snap View  0":"LWin+Num0"
+,
+"Custom Snap View  1":"LWin+Num1"
+,
+"Custom Snap View  2":"LWin+Num2"
+,
+"Custom Snap View  3":"LWin+Num3"
+,
+"Custom Snap View  4":"LWin+Num4"
+,
+"Custom Snap View  5":"LWin+Num5"
+,
+"Custom Snap View  6":"LWin+Num6"
+,
+"Custom Snap View  7":"LWin+Num7"
+,
+"Custom Snap View  8":"LWin+Num8"
+,
+"Custom Snap View  9":"LWin+Num9"
+,
+"Zoom in":"RShift+Num*"
+,
+"Zoom out":"RShift+Num/"
+,
+"Camera jiggle toggle":"LShift+J"
+,
+"Keep terrain camera altitude":"LAlt+K"
+,
+"View friends mode":"RCtrl+RShift+Home"
+,
+"View enemies mode":"RCtrl+RShift+End"
+,
+"View all mode":"RCtrl+Delete"
+,
+"Toggle tracking launched weapon":"RCtrl+Num+"
+,
+"Objects switching direction forward ":"LCtrl+PageDown"
+,
+"Objects switching direction reverse ":"LCtrl+PageUp"
+,
+"Object exclude ":"LAlt+Delete"
+,
+"Objects all excluded - include":"LAlt+Insert"
+,
+"Lock View (cycle padlock)":"Num."
+,
+"Unlock view (stop padlock)":"NumLock"
+,
+"All missiles padlock":"RShift+Num."
+,
+"Threat missile padlock":"RAlt+Num."
+,
+"Lock terrain view":"RCtrl+Num."
+,
+"All Labels":"LShift+F10"
+,
+"Aircraft Labels":"LShift+F2"
+,
+"Missile Labels":"LShift+F6"
+,
+"Vehicle & Ship Labels":"LShift+F9"
+,
+"Kneeboard ON/OFF":"RShift+K"
+,
+"Kneeboard glance view":"K"
+,
+"Kneeboard Next Page":"]"
+,
+"Kneeboard Previous Page":"["
+,
+"Kneeboard current position mark point":"RCtrl+K"
+,
+"Kneeboard Make Shortcut":null
+,
+"Kneeboard Next Shortcut":null
+,
+"Kneeboard Previous Shortcut":null
+,
+"Kneeboard Jump To Shortcut  1":null
+,
+"Kneeboard Jump To Shortcut  2":null
+,
+"Kneeboard Jump To Shortcut  3":null
+,
+"Kneeboard Jump To Shortcut  4":null
+,
+"Kneeboard Jump To Shortcut  5":null
+,
+"Kneeboard Jump To Shortcut  6":null
+,
+"Kneeboard Jump To Shortcut  7":null
+,
+"Kneeboard Jump To Shortcut  8":null
+,
+"Kneeboard Jump To Shortcut  9":null
+,
+"Kneeboard Jump To Shortcut 10":null
+,
+"Aircraft carrier Air Boss camera":"RAlt+F9"
+,
+"Aircraft carrier hangar camera":"RShift+F9"
+,
+"Carrier Briefing Room camera":"RCtrl+RShift+F9"
+,
+"Map Route Tool toggle":"RAlt+RCtrl+RShift+R"
+,
+"Toggle Canopy":"LCtrl+C"
+,
+"Filmmaker Tools - Open":null
+,
+"Filmmaker Tools - Close":null
+,
+"Show pilot body":"RShift+P"
+,
+"Change datalink addr 4th digit":"RShift+RAlt+1"
+,
+"Change datalink addr 3rd digit":"RShift+RAlt+2"
+,
+"Revert to auto ground crew 3rd+4th digits":"RShift+RAlt+3"
+,
+"Change gun burst mode":"RShift+RAlt+4"
+,
+"Inc KY-28 encryption key":"RShift+RAlt+="
+,
+"Dec KY-28 encryption key":"RShift+RAlt+-"
+,
+"Carrier Parking Menu":"LShift+LCtrl+LAlt+P"
+,
+"Carrier Teleport To Parking":"LShift+LCtrl+LAlt+T"
+,
+"Carrier Helpers Toggle":"LShift+LCtrl+LAlt+H"
+,
+"Carrier Messages Toggle":"LShift+LCtrl+LAlt+M"
+,
+"Night Vision Goggles":"RShift+H"
+,
+"Night Vision Goggles Gain Up":"RCtrl+H"
+,
+"Night Vision Goggles Gain Down":"RAlt+RShift+H"
+,
+"Play":"LShift+M"
+,
+"Stop":"LShift+N"
+,
+"Fast Forward":"LCtrl+M"
+,
+"Fast Backward":"LCtrl+N"
+,
+"Volume Up":null
+,
+"Volume Down":null
+,
+"Switch Side":null
+,
+"Instant Camera - Close":null
+,
+"Instant Camera - Open":null
+,
+"Instant Camera - [Toggle]":null
+,
+"Instant Camera - Shutter":null
+,
+"VHS Camera - Record [Toggle]":null
+,
+"VHS Camera - Record Start":null
+,
+"VHS Camera - Record Stop":null
+,
+"Eject (3 times)":"LCtrl+E"
+,
+"Record of mouse cursor in track On/Off":"RShift+RCtrl+Scroll"
+,
+"Subtitle recording begin":"RShift+Scroll"
+,
+"Subtitle recording end":"RCtrl+Scroll"
+,
+"Occupy Pilot Seat":"1"
+,
+"Occupy WSO Seat":"2"
+,
+"Seat Adjustment Up":"LShift+S"
+,
+"Seat Adjustment Down":"LShift+LAlt+S"
+,
+"Mirror View":"RWin+Num8"
+,
+"Mirror Left On":null
+,
+"Mirror Right On":null
+,
+"Toggle Mirrors":null
+,
+"Tomcat Ball":null
+,
+"Tanker: Pre-Contact (ARC-159)":null
+,
+"Tanker: Pre-Contact (ARC-182)":null
+,
+"Tanker: Intent To Refuel (ARC-159)":null
+,
+"Tanker: Intent To Refuel (ARC-182)":null
+,
+"Auto Start":"LWin+Home"
+,
+"Toggle Auto Throttle":"LCtrl+T"
+,
+"Throttle Mode MAN":null
+,
+"Throttle Mode BOOST":null
+,
+"Throttle Mode AUTO":null
+,
+"Throttle Mode MAN else BOOST":null
+,
+"Throttle Mode AUTO else BOOST":null
+,
+"Afterburner Gate":null
+,
+"Mid Compression Bypass CB Pull - TF30 only":null
+,
+"Left Engine Fire Agent Discharge":null
+,
+"Right Engine Fire Agent Discharge":null
+,
+"Crank Left Engine":null
+,
+"Crank Right Engine":null
+,
+"Wing/External Transfer Oride, else Auto":null
+,
+"Wing/External Transfer Off, else Auto":null
+,
+"Wing/External Transfer Oride":null
+,
+"Wing/External Transfer Auto":null
+,
+"Wing/External Transfer Off":null
+,
+"Fueldump Dump, else Off":null
+,
+"Fueldump Off, else Dump":null
+,
+"Fueldump Off":null
+,
+"Fueldump Dump":null
+,
+"Refuel Probe extend & Refuel All, else Retract Probe":null
+,
+"Refuel Probe extend & Refuel Fuselage, else Retract Probe":null
+,
+"Refuel Probe extend & Refuel All, else Refuel Fuselage":null
+,
+"Refuel Probe retract, else extend & Refuel Fuselage":null
+,
+"Refuel Probe extend, Refuel All":null
+,
+"Refuel Probe extend, Refuel Fuselage":null
+,
+"Refuel Probe Retract":null
+,
+"QTY Select Wing, else Feed":null
+,
+"QTY select External, else Feed":null
+,
+"MASTER RESET":null
+,
+"Nose strut extend":"LCtrl+Q"
+,
+"Nose strut kneel":"LCtrl+A"
+,
+"Nose strut off":null
+,
+"Pilot Oxygen OFF":null
+,
+"Pilot Oxygen ON":null
+,
+"Pilot Oxygen ON, else OFF":null
+,
+"Pilot Oxygen Toggle":null
+,
+"Emergency Wing Sweep Handle Cover CLOSE":null
+,
+"Emergency Wing Sweep Handle Cover OPEN":null
+,
+"Emergency Wing Sweep Handle Cover OPEN else CLOSED":null
+,
+"Emergency Wing Sweep Handle Cover Toggle":null
+,
+"Emergency Wing Sweep Handle move Fwd":null
+,
+"Emergency Wing Sweep Handle move Aft":null
+,
+"Emergency Wing Sweep Handle Pull":null
+,
+"Emergency Wing Sweep Handle Push":null
+,
+"Emergency Wing Sweep Handle Pulled else Pushed":null
+,
+"Emergency Wing Sweep Handle Pushed else Pulled":null
+,
+"Emergency Wing Sweep Handle Pushed/ Pulled toggle":null
+,
+"Eng/Probe Anti Ice OFF":null
+,
+"Eng/Probe Anti Ice AUTO":null
+,
+"Eng/Probe Anti Ice ORIDE":null
+,
+"Eng/Probe Anti Ice OFF, else AUTO":null
+,
+"Eng/Probe Anti Ice ORIDE, else AUTO":null
+,
+"Eng/Probe Anti Ice Toggle":null
+,
+"Asymmetric Thrust Limiter Cover CLOSE":null
+,
+"Asymmetric Thrust Limiter Cover OPEN":null
+,
+"Asymmetric Thrust Limiter Cover OPEN else CLOSED":null
+,
+"Asymmetric Thrust Limiter Cover Toggle":null
+,
+"Asymmetric Thrust Limiter ON":null
+,
+"Asymmetric Thrust Limiter OFF":null
+,
+"Asymmetric Thrust Limiter OFF else ON":null
+,
+"Asymmetric Thrust Limiter Toggle":null
+,
+"Hydraulic Transfer Pump Switch NORMAL":null
+,
+"Hydraulic Transfer Pump Switch SHUTOFF":null
+,
+"Hydraulic Transfer Pump Switch SHUTOFF else NORMAL":null
+,
+"Hydraulic Transfer Pump Switch Toggle":null
+,
+"Hydraulic Hand Pump":null
+,
+"Hydraulic Transfer Pump Switch Cover CLOSE":null
+,
+"Hydraulic Transfer Pump Switch Cover OPEN":null
+,
+"Hydraulic Transfer Pump Switch Cover OPEN else CLOSE":null
+,
+"Hydraulic Transfer Pump Switch Cover Toggle":null
+,
+"Master Test Selector CW":null
+,
+"Master Test Selector CCW":null
+,
+"Master Test Selector: OFF":null
+,
+"Master Test Selector: LTS":null
+,
+"Master Test Selector: FIRE DET/EXT":null
+,
+"Master Test Selector: INST":null
+,
+"Master Test Selector: OBC":null
+,
+"Master Test Selector: EMERG GEN":null
+,
+"Master Test Selector: WG SWP":null
+,
+"Master Test Selector: FLTGR DW":null
+,
+"Master Test Selector: FLTGR UP":null
+,
+"Master Test Selector: D/L RAD":null
+,
+"Master Test Selector: STICK SW":null
+,
+"Master Test Selector PULLED else PUSHED":null
+,
+"Master Test Selector push/pull toggle":null
+,
+"Fuel Feed Cover CLOSE":null
+,
+"Fuel Feed Cover OPEN":null
+,
+"Fuel Feed Cover OPEN else CLOSE":null
+,
+"Fuel Feed Cover Toggle":null
+,
+"Fuel Feed AFT":null
+,
+"Fuel Feed NORM":null
+,
+"Fuel Feed FWD":null
+,
+"Fuel Feed FWD else NORM":null
+,
+"Fuel Feed AFT else NORM":null
+,
+"Fuel Feed Toggle":null
+,
+"BINGO Fuel Level Knob Inc":null
+,
+"BINGO Fuel Level Knob Dec":null
+,
+"Aircraft Pitch Down":"Up"
+,
+"Aircraft Pitch Up":"Down"
+,
+"Aircraft Bank Left":"Left"
+,
+"Aircraft Bank Right":"Right"
+,
+"Aircraft Rudder Left":"Z"
+,
+"Aircraft Rudder Right":"X"
+,
+"Catapult Hook up":"U"
+,
+"Catapult Salute":"LShift+U"
+,
+"Throttle Lever - UP":"Num+"
+,
+"Throttle Lever - DOWN":"Num-"
+,
+"Throttle Lever - UP (Slow)":null
+,
+"Throttle Lever - DOWN (Slow)":null
+,
+"Trim Pitch Up":"RCtrl+;"
+,
+"Trim Pitch Down":"RCtrl+."
+,
+"Trim Roll Left Wing Down":"RCtrl+,"
+,
+"Trim Roll Right Wing Down":"RCtrl+/"
+,
+"Trim Rudder Left":"RCtrl+Z"
+,
+"Trim Rudder Right":"RCtrl+X"
+,
+"Store Release":"RAlt+Space"
+,
+"Trigger First Detent":null
+,
+"Trigger":"Space"
+,
+"Weapon Selector up":null
+,
+"Weapon Selector down":null
+,
+"Weapon Selector press":null
+,
+"Weapon Selector Gun":null
+,
+"Weapon Selector Sparrow or Phoenix Missiles":null
+,
+"Weapon Selector Sidewinder Missiles":null
+,
+"Weapon Selector Off":null
+,
+"DLC Thumbwheel Forward":null
+,
+"DLC Thumbwheel Aft":null
+,
+"DLC Toggle / Countermeasure Dispense":null
+,
+"Autopilot Emergency Disconnect Paddle":null
+,
+"Autopilot Reference / Nosewheel Steering Toggle":"N"
+,
+"CAGE-SEAM button":null
+,
+"PLM button":null
+,
+"Exterior Lights Master Switch OFF":null
+,
+"Exterior Lights Master Switch ON":null
+,
+"Exterior Lights Master Switch Toggle":null
+,
+"Exterior Lights Master Switch ON (pressed) / OFF (released)":null
+,
+"Wing Sweep Auto Mode":null
+,
+"Wing Sweep Forward":null
+,
+"Wing Sweep Aft":null
+,
+"Wing Sweep Bomb Mode":null
+,
+"Left Engine Cutoff":null
+,
+"Right Engine Cutoff":null
+,
+"Display mode takeoff":"LShift+1"
+,
+"Display mode cruise":"LShift+2"
+,
+"Display mode air to air":"LShift+3"
+,
+"Display mode air to ground":"LShift+4"
+,
+"Display mode landing":"LShift+5"
+,
+"Display mode next":null
+,
+"Display mode previous":null
+,
+"VDI Power On, else Off":null
+,
+"VDI Power Off, else On":null
+,
+"VDI Power On":null
+,
+"VDI Power Off":null
+,
+"VDI Power Toggle":null
+,
+"VDI Filter toggle":null
+,
+"VDI Mode TV, else Norm":null
+,
+"VDI Mode Norm, else TV":null
+,
+"VDI Mode TV":null
+,
+"VDI Mode Norm":null
+,
+"VDI Mode Toggle":null
+,
+"VDI Screen Brightness Knob Inc":null
+,
+"VDI Screen Brightness Knob Dec":null
+,
+"VDI Screen Contrast Inc":null
+,
+"VDI Screen Contrast Dec":null
+,
+"VDI Trim Inc":null
+,
+"VDI Trim Dec":null
+,
+"HUD Power On, else Off":null
+,
+"HUD Power Off, else On":null
+,
+"HUD Power On":null
+,
+"HUD Power Off":null
+,
+"HUD Power Toggle":null
+,
+"HUD Brightness Knob Inc":null
+,
+"HUD Brightness Knob Dec":null
+,
+"HUD Trim Inc":null
+,
+"HUD Trim Dec":null
+,
+"HSD/ECM Power On, else Off":null
+,
+"HSD/ECM Power Off, else On":null
+,
+"HSD/ECM Power On":null
+,
+"HSD/ECM Power Off":null
+,
+"HSD/ECM Power Toggle":null
+,
+"HSD Mode NAV, else TID":null
+,
+"HSD Mode TID, else NAV":null
+,
+"HSD Mode ECM, else NAV":null
+,
+"HSD Mode NAV":null
+,
+"HSD Mode TID":null
+,
+"HSD Mode ECM":null
+,
+"HSD mode Toggle":null
+,
+"HSD Course Knob Inc":null
+,
+"HSD Course Knob Dec":null
+,
+"HSD Heading Knob Inc":null
+,
+"HSD Heading Knob Dec":null
+,
+"HSD Brightness Knob Inc":null
+,
+"HSD Brightness Knob Dec":null
+,
+"HSD ECM Override On, else Off":null
+,
+"HSD ECM Override Off, else On":null
+,
+"HSD ECM Override On":null
+,
+"HSD ECM Override Off":null
+,
+"HSD ECM Override Toggle":null
+,
+"HSD Test Button":null
+,
+"STEER CMD TACAN":null
+,
+"STEER CMD Destination":null
+,
+"STEER CMD AWL/PCD":null
+,
+"STEER CMD VEC":null
+,
+"STEER CMD MAN":null
+,
+"Master Caution Reset":"LAlt+M"
+,
+"ACM cover toggle":null
+,
+"ACM cover open":null
+,
+"ACM cover close":null
+,
+"Speed brake extend":"LCtrl+B"
+,
+"Speed brake retract":"LShift+B"
+,
+"Speed brake toggle":"B"
+,
+"Parking brake enabled, else disabed":null
+,
+"Parking brake pull":"RCtrl+P"
+,
+"Parking brake stow":"RAlt+P"
+,
+"Flaps Down":"F"
+,
+"Flaps Up":"LShift+F"
+,
+"Emergency Flaps Down":"LCtrl+F"
+,
+"Emergency Flaps Up":"LCtrl+LShift+F"
+,
+"Master arm cover toggle":null
+,
+"Master arm cover open":null
+,
+"Master arm cover close":null
+,
+"Master arm on and cover open":null
+,
+"Master arm off and cover close":null
+,
+"Master Arm On and Cover Open, else Safe and Closed":null
+,
+"Master Arm Safe and Cover Closed, else Open and Armed":null
+,
+"ACM Cover Open, else Closed":null
+,
+"ACM Cover Closed, else Open":null
+,
+"Emergency Jettison":"LCtrl+W"
+,
+"ACM Jettison":null
+,
+"Missile mode toggle":null
+,
+"AIM-9 cooling toggle":null
+,
+"Missile prepare toggle":null
+,
+"Master arm on":null
+,
+"Master arm off":null
+,
+"Master arm training":null
+,
+"Target designate up / VSL HI":null
+,
+"Target designate fwd / PAL":null
+,
+"Target designate down / VSL LO":null
+,
+"Toggle Menu":"A"
+,
+"Command 1":"LCtrl+1"
+,
+"Command 2":"LCtrl+2"
+,
+"Command 3":"LCtrl+3"
+,
+"Command 4":"LCtrl+4"
+,
+"Command 5":"LCtrl+5"
+,
+"Command 6":"LCtrl+6"
+,
+"Command 7":"LCtrl+7"
+,
+"Command 8":"LCtrl+8"
+,
+"Jester Menu Left":null
+,
+"Jester Menu Right":null
+,
+"Jester Menu Up":null
+,
+"Jester Menu Down":null
+,
+"Jester Menu Down Left":null
+,
+"Jester Menu Up Right":null
+,
+"Jester Menu Down Right":null
+,
+"Jester Menu Up Left":null
+,
+"Check":null
+,
+"Loud and Clear":null
+,
+"Close Menu":"LShift+A"
+,
+"Nav - Set Steerpoint SP 1":null
+,
+"Nav - Set Steerpoint SP 2":null
+,
+"Nav - Set Steerpoint SP 3":null
+,
+"Nav - Set Steerpoint Fixed Point":null
+,
+"Nav - Set Steerpoint Initial Point":null
+,
+"Nav - Set Steerpoint Surface Target":null
+,
+"Nav - Set Steerpoint Home Base":null
+,
+"Nav - Set Steerpoint Man":null
+,
+"Radar - VSL High":null
+,
+"Radar - VSL Low":null
+,
+"Radar - Toggle PD-STT or P-STT":null
+,
+"Radar - Break Lock":null
+,
+"Radar - Range Auto":null
+,
+"Radar - Range 25":null
+,
+"Radar - Range 50":null
+,
+"Radar - Range 100":null
+,
+"Radar - Range 200":null
+,
+"Radar - Range 400":null
+,
+"Radar - STT Lock Ahead":null
+,
+"Radar - STT Lock Enemy Ahead":null
+,
+"Radar - STT Lock Friendly Ahead":null
+,
+"Radar - Ground Stabilize":null
+,
+"Radar - Aircraft Stabilize":null
+,
+"Radar - TWS Mode":null
+,
+"Radar - RWS Mode":null
+,
+"Radar - Collision Steering (CLSN)":null
+,
+"Gears Down":"LCtrl+G"
+,
+"Gears Up":"LShift+G"
+,
+"Gear Emergency Extend":"LCtrl+LShift+G"
+,
+"Gears Toggle":"G"
+,
+"Gear Down, else Up":null
+,
+"Gear Up, else Down":null
+,
+"Hook Extend":"LCtrl+H"
+,
+"Hook Retract":"LShift+H"
+,
+"Hook Toggle":"H"
+,
+"Hook Extend, else Retract":null
+,
+"Hook Retract, else Extend":null
+,
+"Wheel Brake both":"W"
+,
+"Wheel Brake Left":null
+,
+"Wheel Brake Right":null
+,
+"Antiskid & Spoiler BK - Both":null
+,
+"Antiskid & Spoiler BK - Off":null
+,
+"Antiskid & Spoiler BK - Spoiler Only":null
+,
+"Anti Skid Spoiler BK Switch Spoiler BK, else OFF":null
+,
+"Anti Skid Spoiler BK Switch BOTH, else OFF":null
+,
+"Antiskid & Spoiler BK - Toggle":null
+,
+"Wheel Brake both (Gradual)":null
+,
+"RWR Brightness Pilot Inc":null
+,
+"RWR Brightness Pilot Dec":null
+,
+"Next Waypoint":"LCtrl+`"
+,
+"Previous Waypoint":"LShift+`"
+,
+"Toggle Arm Ejection Seat":"LShift+E"
+,
+"Control Stick Show/Hide":"Back"
+,
+"Control Stick Show":null
+,
+"Control Stick Hide":null
+,
+"Control Stick Show, else Hide":null
+,
+"Lights Position Wing OFF":null
+,
+"Lights Position Wing BRT":null
+,
+"Lights Position Wing DIM":null
+,
+"Lights Position Wing Toggle":null
+,
+"Lights Position Tail OFF":null
+,
+"Lights Position Tail BRT":null
+,
+"Lights Position Tail DIM":null
+,
+"Lights Position Tail Toggle":null
+,
+"Lights Position STEADY":null
+,
+"Lights Position FLASH":null
+,
+"Lights Position FLASH/STEADY Toggle":null
+,
+"Lights Anti Collision OFF":null
+,
+"Lights Anti Collision ON":null
+,
+"Lights Anti Collision Toggle":null
+,
+"Lights Hook Bypass CARRIER":null
+,
+"Lights Hook Bypass FIELD":null
+,
+"Lights Hook Bypass Toggle":null
+,
+"Lights Taxi OFF":null
+,
+"Lights Taxi ON":null
+,
+"Lights Taxi Toggle":null
+,
+"Lights White Flood OFF":null
+,
+"Lights White Flood BRT":null
+,
+"Lights White Flood DIM":null
+,
+"Lights White Flood Toggle":null
+,
+"Lights ACM Brightnes Up":null
+,
+"Lights ACM Brightnes Down":null
+,
+"Lights Indexer Brightnes Up":null
+,
+"Lights Indexer Brightnes Down":null
+,
+"Lights Instrument Brightnes Up":null
+,
+"Lights Instrument Brightnes Down":null
+,
+"Lights Console Brightnes Up":null
+,
+"Lights Console Brightnes Down":null
+,
+"Lights Formation Brightnes Up":null
+,
+"Lights Formation Brightnes Down":null
+,
+"Mic Button UHF1 (ARC-159)":"RAlt+\\"
+,
+"Mic Button UHF2 (ARC-182)":"RCtrl+\\"
+,
+"Mic Button ICS":"RShift+\\"
+,
+"Mic Button UHF1 (ARC-159) - SRS or VoIP Only / No Menu":null
+,
+"Mic Button UHF2 (ARC-182) - SRS or VoIP Only / No Menu":null
+,
+"Mic Button ICS - SRS or VoIP Only / No Menu":null
+,
+"UHF ARC-159 Volume Pilot Inc":null
+,
+"UHF ARC-159 Volume Pilot Dec":null
+,
+"UHF ARC-159 Squelch Toggle":null
+,
+"UHF ARC-159 Squelch SQL":null
+,
+"UHF ARC-159 Squelch OFF":null
+,
+"UHF ARC-159 10 MHz Switch Up":null
+,
+"UHF ARC-159 10 MHz Switch Down":null
+,
+"UHF ARC-159 1 MHz Switch Up":null
+,
+"UHF ARC-159 1 MHz Switch Down":null
+,
+"UHF ARC-159 0.1 MHz Switch Up":null
+,
+"UHF ARC-159 0.1 MHz Switch Down":null
+,
+"UHF ARC-159 0.025 MHz Switch Up":null
+,
+"UHF ARC-159 0.025 MHz Switch Down":null
+,
+"UHF ARC-159 BRT Inc":null
+,
+"UHF ARC-159 BRT Dec":null
+,
+"UHF ARC-159 Remote BRT Inc":null
+,
+"UHF ARC-159 Remote BRT Dec":null
+,
+"UHF ARC-159 Remote TEST":null
+,
+"UHF ARC-159 Function OFF":null
+,
+"UHF ARC-159 Function MAIN":null
+,
+"UHF ARC-159 Function BOTH":null
+,
+"UHF ARC-159 Function ADF":null
+,
+"UHF ARC-159 Function Inc":null
+,
+"UHF ARC-159 Function Dec":null
+,
+"UHF ARC-159 Mode GUARD":null
+,
+"UHF ARC-159 Mode MANUAL":null
+,
+"UHF ARC-159 Mode PRESET":null
+,
+"UHF ARC-159 READ":null
+,
+"UHF ARC-159 LOAD":null
+,
+"UHF ARC-159 TONE":null
+,
+"UHF ARC-159 Mode Inc":null
+,
+"UHF ARC-159 Mode Dec":null
+,
+"UHF ARC-159 CHAN SEL Inc":null
+,
+"UHF ARC-159 CHAN SEL Dec":null
+,
+"VHF/UHF ARC-182 Volume Pilot Inc":null
+,
+"VHF/UHF ARC-182 Volume Pilot Dec":null
+,
+"VHF/UHF ARC-182 Remote BRT Inc":null
+,
+"VHF/UHF ARC-182 Remote BRT Dec":null
+,
+"VHF/UHF ARC-182 Remote TEST":null
+,
+"ICS Volume Inc":null
+,
+"ICS Volume Dec":null
+,
+"ICS Amplifier B/U":null
+,
+"ICS Amplifier NORM":null
+,
+"ICS Amplifier EMER":null
+,
+"ICS Function COLD MIC":null
+,
+"ICS Function HOT MIC":null
+,
+"ICS Function RADIO OVERRIDE":null
+,
+"ALR-67 Volume Inc":null
+,
+"ALR-67 Volume Dec":null
+,
+"Sidewinder Volume Inc":null
+,
+"Sidewinder Volume Dec":null
+,
+"TACAN Function OFF":null
+,
+"TACAN Function REC":null
+,
+"TACAN Function T/R":null
+,
+"TACAN Function A/A":null
+,
+"TACAN Function BCN":null
+,
+"TACAN Function Inc":null
+,
+"TACAN Function Dec":null
+,
+"TACAN Channel 10 Inc":null
+,
+"TACAN Channel 10 Dec":null
+,
+"TACAN Channel 1 Inc":null
+,
+"TACAN Channel 1 Dec":null
+,
+"TACAN MODE X":null
+,
+"TACAN MODE Y":null
+,
+"TACAN MODE X/Y Toggle":null
+,
+"TACAN BIT Button":null
+,
+"TACAN Volume Inc":null
+,
+"TACAN Volume Dec":null
+,
+"ILS Power ON":null
+,
+"ILS Power OFF":null
+,
+"ILS Power Toggle":null
+,
+"ILS BIT pushbutton":null
+,
+"ILS Channel Inc":null
+,
+"ILS Channel Dec":null
+,
+"Compas HDG pushbutton":null
+,
+"Compass Mode DG":null
+,
+"Compass Mode SLAVED":null
+,
+"Compass Mode COMP":null
+,
+"Compass Mode Inc":null
+,
+"Compass Mode Dec":null
+,
+"Compass N-S Hemisphere Switch Toggle":null
+,
+"Compass N-S Hemisphere Switch: South":null
+,
+"Compass N-S Hemisphere Switch: North":null
+,
+"Compass LAT Correction Inc":null
+,
+"Compass LAT Correction Dec":null
+,
+"Radar Altimeter Control Knob +":null
+,
+"Radar Altimeter Control Knob -":null
+,
+"Radar Altimeter Test":null
+,
+"Video Export Toggle":null
+,
+"Virtual Browser - Close":null
+,
+"Virtual Browser - Open":null
+,
+"Virtual Browser - [Toggle]":"RCtrl+V"
+,
+"Manual - Close":"RCtrl+M"
+,
+"Manual - Open":"RShift+M"
+,
+"Manual - [Toggle]":"RAlt+M"
+,
+"Explain (hold and click on something)":"M"
+,
+"Grease Pencil Left - Close":null
+,
+"Grease Pencil Left - Open":null
+,
+"Grease Pencil Left - [Toggle]":null
+,
+"Grease Pencil Right - Close":null
+,
+"Grease Pencil Right - Open":null
+,
+"Grease Pencil Right - [Toggle]":null
+,
+"Bombing Tool - Close":null
+,
+"Bombing Tool - Open":null
+,
+"Bombing Tool - [Toggle]":"RCtrl+B"
+,
+"Checklist Tool - Close":null
+,
+"Checklist Tool - Open":null
+,
+"Checklist Tool - [Toggle]":"RCtrl+C"
+,
+"Character: Headgear - [NEXT]":null
+,
+"Character: Body - [NEXT]":null
+,
+"Character Customization - Enter":null
+,
+"Character Customization - Exit":null
+,
+"Character Customization - [Toggle]":null
+,
+"Helmet Visor - Down":null
+,
+"Helmet Visor - Up":null
+,
+"Helmet Visor - [Toggle]":null
+,
+"Helmet Visor - Down else Up (2-way Switch)":null
+,
+"Helmet Visor - Up else Down (2-way Switch)":null
+,
+"Helmet Visor Tint Effect - [Toggle]":null
+,
+"Pilot Throw Horns Right":null
+,
+"Pilot Throw Horns Left":null
+,
+"But I am le tired..":null
+,
+"Oxygen Mask - Off":null
+,
+"Oxygen Mask - On":null
+,
+"Oxygen Mask - [Toggle]":null
+,
+"Oxygen Mask - Off else On (2-way Switch)":null
+,
+"Oxygen Mask - On else Off (2-way Switch)":null
+,
+"Selfie Mode - Exit":null
+,
+"Selfie Mode - Enter":null
+,
+"Selfie Mode - [Toggle]":null
+,
+"Selfie Mode - Enter else Exit (2-way Switch)":null
+,
+"Selfie Body Movement - Unfreeze":null
+,
+"Selfie Body Movement - Freeze":null
+,
+"Selfie Body Movement - [Toggle]":null
+,
+"Selfie Body Movement - Freeze else Unfreeze (2-way Switch)":null
+,
+"Jester Context Action (short, hold, double click)":"V"
+,
+"Jester Context Action SHORT (button, direct bind)":null
+,
+"Jester Context Action HOLD (button, direct bind)":null
+,
+"Jester Context Action DOUBLE (button, direct bind)":null
+,
+"Hydraulic Transfer Pump Switch - NORMAL else SHUTOFF (2-way Switch)":null
+,
+"Hydraulic Transfer Pump Switch Cover - CLOSE else OPEN (2-way Switch)":null
+,
+"Hydraulic Isolation Switch - TO/LDG":null
+,
+"Hydraulic Isolation Switch - FLT":null
+,
+"Hydraulic Isolation Switch - TO/LDG else FLT (2-way Switch)":null
+,
+"Hydraulic Isolation Switch - FLT else TO/LDG (2-way Switch)":null
+,
+"Hydraulic Emergency Flight Control Switch - AUTO":null
+,
+"Hydraulic Emergency Flight Control Switch - LOW":null
+,
+"Hydraulic Emergency Flight Control Switch - HIGH":null
+,
+"Hydraulic Emergency Flight Control Switch - AUTO else LOW (3-way Switch Down)":null
+,
+"Hydraulic Emergency Flight Control Switch - HIGH else LOW (3-way Switch Up)":null
+,
+"Hydraulic Emergency Flight Control Switch Cover - CLOSE":null
+,
+"Hydraulic Emergency Flight Control Switch Cover - OPEN":null
+,
+"Hydraulic Emergency Flight Control Switch Cover - CLOSE else OPEN (2-way Switch)":null
+,
+"Hydraulic Emergency Flight Control Switch Cover - OPEN else CLOSE (2-way Switch)":null
+,
+"Stow Inlet Ramps Left Switch - AUTO":null
+,
+"Stow Inlet Ramps Left Switch - STOW":null
+,
+"Stow Inlet Ramps Left Switch - AUTO else STOW (2-way Switch)":null
+,
+"Stow Inlet Ramps Left Switch - STOW else AUTO (2-way Switch)":null
+,
+"Stow Inlet Ramps Right Switch - AUTO":null
+,
+"Stow Inlet Ramps Right Switch - STOW":null
+,
+"Stow Inlet Ramps Right Switch - AUTO else STOW (2-way Switch)":null
+,
+"Stow Inlet Ramps Right Switch - STOW else AUTO (2-way Switch)":null
+,
+"Emergency Wing Sweep Handle Cover - CLOSE else OPEN (2-way Switch)":null
+,
+"Emergency Wing Sweep Handle move Aft (Slow)":null
+,
+"Emergency Wing Sweep Handle move Fwd (Slow)":null
+,
+"Emergency Wing Sweep Handle move Aft (Fast)":null
+,
+"Emergency Wing Sweep Handle move Fwd (Fast)":null
+,
+"Radar Altimeter Control Knob - (Slow)":null
+,
+"Radar Altimeter Control Knob + (Slow)":null
+,
+"Radar Altimeter Control Knob - (Fast)":null
+,
+"Radar Altimeter Control Knob + (Fast)":null
+,
+"Airspeed Indicator Knob - DECREASE (Slow)":null
+,
+"Airspeed Indicator Knob - INCREASE (Slow)":null
+,
+"Airspeed Indicator Knob - DECREASE":null
+,
+"Airspeed Indicator Knob - INCREASE":null
+,
+"Airspeed Indicator Knob - DECREASE (Fast)":null
+,
+"Airspeed Indicator Knob - INCREASE (Fast)":null
+,
+"Airspeed Indicator Knob - PULL":null
+,
+"Airspeed Indicator Knob - PUSH":null
+,
+"Airspeed Indicator Knob - PULL else PUSH (2-way Switch)":null
+,
+"Airspeed Indicator Knob - PUSH else PULL (2-way Switch)":null
+,
+"Altimeter Mode Switch - STANDBY":null
+,
+"Altimeter Mode Switch - NEUTRAL":null
+,
+"Altimeter Mode Switch - RESET":null
+,
+"Altimeter Mode Switch - STANDBY else NEUTRAL (3-way Switch Up)":null
+,
+"Altimeter Mode Switch - RESET else NEUTRAL (3-way Switch Down)":null
+,
+"Altimeter Knob - INCREASE (Slow)":null
+,
+"Altimeter Knob - DECREASE (Slow)":null
+,
+"Altimeter Knob - INCREASE":null
+,
+"Altimeter Knob - DECREASE":null
+,
+"Altimeter Knob - INCREASE (Fast)":null
+,
+"Altimeter Knob - DECREASE (Fast)":null
+,
+"Nose strut - KNEEL else OFF (3-way Switch Down)":null
+,
+"Nose strut - EXTEND else OFF (3-way Switch Up)":null
+,
+"Launch Bar Abort Switch - AUTO":null
+,
+"Launch Bar Abort Switch - ABORT":null
+,
+"Launch Bar Abort Switch - AUTO else ABORT (2-way Switch)":null
+,
+"Launch Bar Abort Switch - ABORT else AUTO (2-way Switch)":null
+,
+"Launch Bar Abort Switch Cover - CLOSE":null
+,
+"Launch Bar Abort Switch Cover - OPEN":null
+,
+"Launch Bar Abort Switch Cover - CLOSE else OPEN (2-way Switch)":null
+,
+"Launch Bar Abort Switch Cover - OPEN else CLOSE (2-way Switch)":null
+,
+"Gear Down Lock Override":null
+,
+"Flaps - 75%":null
+,
+"Flaps - 66%":null
+,
+"Flaps - 50%":null
+,
+"Flaps - 33%":null
+,
+"Flaps - 25%":null
+,
+"Flaps - 10%":null
+,
+"Flaps - DOWN else TENTH (3-way Switch Down)":null
+,
+"Flaps - UP else TENTH (3-way Switch Up)":null
+,
+"Flaps - DOWN else QUARTER (3-way Switch Down)":null
+,
+"Flaps - UP else QUARTER (3-way Switch Up)":null
+,
+"Flaps - DOWN else HALF (3-way Switch Down)":null
+,
+"Flaps - UP else HALF (3-way Switch Up)":null
+,
+"Flaps - DOWN else UP (2-way Switch)":null
+,
+"Flaps - UP else DOWN (2-way Switch)":null
+,
+"Left Engine Cutoff - ON":null
+,
+"Left Engine Cutoff - OFF":null
+,
+"Right Engine Cutoff - ON":null
+,
+"Right Engine Cutoff - OFF":null
+,
+"Throttle Temp - COLD":null
+,
+"Throttle Temp - NORM":null
+,
+"Throttle Temp - HOT":null
+,
+"Throttle Temp - COLD else NORM (3-way Switch Down)":null
+,
+"Throttle Temp - HOT else NORM (3-way Switch Up)":null
+,
+"Engine Airstart - NORM":null
+,
+"Engine Airstart - ON":null
+,
+"Engine Airstart - NORM else ON (2-way Switch)":null
+,
+"Engine Airstart - ON else NORM (2-way Switch)":null
+,
+"Crank Engine - OFF":null
+,
+"Crank Engine - RIGHT else OFF (3-way Switch Up)":null
+,
+"Crank Engine - LEFT else OFF (3-way Switch Down)":null
+,
+"Left Engine Mode - PRI":null
+,
+"Left Engine Mode - SEC":null
+,
+"Left Engine Mode - PRI else SEC (2-way Switch)":null
+,
+"Left Engine Mode - SEC else PRI (2-way Switch)":null
+,
+"Right Engine Mode - PRI":null
+,
+"Right Engine Mode - SEC":null
+,
+"Right Engine Mode - PRI else SEC (2-way Switch)":null
+,
+"Right Engine Mode - SEC else PRI (2-way Switch)":null
+,
+"Asymmetric Thrust Limiter Cover - CLOSE else OPEN (2-way Switch)":null
+,
+"Asymmetric Thrust Limiter - ON else OFF (2-way Switch)":null
+,
+"Fuel Shutoff - Right - OFF":null
+,
+"Fuel Shutoff - Right - PULL":null
+,
+"Fuel Shutoff - Right - OFF else PULL (2-way Switch)":null
+,
+"Fuel Shutoff - Right - PULL else OFF (2-way Switch)":null
+,
+"Fuel Shutoff - Left - OFF":null
+,
+"Fuel Shutoff - Left - PULL":null
+,
+"Fuel Shutoff - Left - OFF else PULL (2-way Switch)":null
+,
+"Fuel Shutoff - Left - PULL else OFF (2-way Switch)":null
+,
+"Fuel Feed Cover - CLOSE else OPEN (2-way Switch)":null
+,
+"BINGO Fuel Level Knob Dec (Slow)":null
+,
+"BINGO Fuel Level Knob Inc (Slow)":null
+,
+"BINGO Fuel Level Knob Dec (Fast)":null
+,
+"BINGO Fuel Level Knob Inc (Fast)":null
+,
+"BINGO Fuel Level Knob Dec (Very Fast)":null
+,
+"BINGO Fuel Level Knob Inc (Very Fast)":null
+,
+"Left Generator Switch - TEST":null
+,
+"Left Generator Switch - OFF/RESET":null
+,
+"Left Generator Switch - NORM":null
+,
+"Left Generator Switch - TEST else OFF/RESET (3-way Switch Down)":null
+,
+"Left Generator Switch - NORM else OFF/RESET (3-way Switch Up)":null
+,
+"Right Generator Switch - TEST":null
+,
+"Right Generator Switch - OFF/RESET":null
+,
+"Right Generator Switch - NORM":null
+,
+"Right Generator Switch - TEST else OFF/RESET (3-way Switch Down)":null
+,
+"Right Generator Switch - NORM else OFF/RESET (3-way Switch Up)":null
+,
+"Emergency Generator Switch Cover - CLOSE":null
+,
+"Emergency Generator Switch Cover - OPEN":null
+,
+"Emergency Generator Switch Cover - CLOSE else OPEN (2-way Switch)":null
+,
+"Emergency Generator Switch Cover - OPEN else CLOSE (2-way Switch)":null
+,
+"Emergency Generator Switch - NORM":null
+,
+"Emergency Generator Switch - OFF/RESET":null
+,
+"Emergency Generator Switch - NORM else OFF/RESET (2-way Switch)":null
+,
+"Emergency Generator Switch - OFF/RESET else NORM (2-way Switch)":null
+,
+"Canopy - CLOSE":null
+,
+"Canopy - HOLD":null
+,
+"Canopy - OPEN":null
+,
+"Canopy - CLOSE else HOLD (2-way Switch)":null
+,
+"Canopy - OPEN else HOLD (2-way Switch)":null
+,
+"Canopy Jettison - OFF":null
+,
+"Canopy Jettison - PULL":null
+,
+"Canopy Jettison - OFF else PULL (2-way Switch)":null
+,
+"Canopy Jettison - PULL else OFF (2-way Switch)":null
+,
+"Ejection Seat Safety - OFF":null
+,
+"Ejection Seat Safety - ARMED":null
+,
+"Ejection Seat Safety - OFF else ARMED (2-way Switch)":null
+,
+"Ejection Seat Safety - ARMED else OFF (2-way Switch)":null
+,
+"Cabin Pressure Dump - NORM":null
+,
+"Cabin Pressure Dump - DUMP":null
+,
+"Cabin Pressure Dump - NORM else DUMP (2-way Switch)":null
+,
+"Cabin Pressure Dump - DUMP else NORM (2-way Switch)":null
+,
+"Air Source - RAM":null
+,
+"Air Source - OFF":null
+,
+"Air Source - L ENG":null
+,
+"Air Source - R ENG":null
+,
+"Air Source - BOTH ENG":null
+,
+"Wind Shield Air - OFF":null
+,
+"Wind Shield Air - AIR":null
+,
+"Wind Shield Air - RAIN":null
+,
+"Wind Shield Air - OFF else AIR (3-way Switch Down)":null
+,
+"Wind Shield Air - RAIN else AIR (3-way Switch Up)":null
+,
+"Temperature - 1":null
+,
+"Temperature - 2":null
+,
+"Temperature - 3":null
+,
+"Temperature - 4":null
+,
+"Temperature - 5":null
+,
+"Temperature - 6":null
+,
+"Temperature - 7":null
+,
+"Temperature - 8":null
+,
+"Temperature - 9":null
+,
+"Temperature - 10":null
+,
+"Temp Auto / Man - AUTO":null
+,
+"Temp Auto / Man - MAN":null
+,
+"Temp Auto / Man - AUTO else MAN (2-way Switch)":null
+,
+"Temp Auto / Man - MAN else AUTO (2-way Switch)":null
+,
+"Ram Air - DECREASE":null
+,
+"Ram Air - INCREASE":null
+,
+"Ram Air - DECREASE else INCREASE (2-way Switch)":null
+,
+"Ram Air - INCREASE else DECREASE (2-way Switch)":null
+,
+"Lights Hook Bypass - CARRIER else FIELD (2-way Switch)":null
+,
+"Lights Hook Bypass - FIELD else CARRIER (2-way Switch)":null
+,
+"Lights Taxi - OFF else ON (2-way Switch)":null
+,
+"Lights Taxi - ON else OFF (2-way Switch)":null
+,
+"Lights White Flood - DIM else OFF (3-way Switch Down)":null
+,
+"Lights White Flood - BRT else OFF (3-way Switch Up)":null
+,
+"Lights Position Wing - DIM else OFF (3-way Switch Down)":null
+,
+"Lights Position Wing - BRT else OFF (3-way Switch Up)":null
+,
+"Lights Position Tail - DIM else OFF (3-way Switch Down)":null
+,
+"Lights Position Tail - BRT else OFF (3-way Switch Up)":null
+,
+"Lights Position - STEADY else FLASH (2-way Switch)":null
+,
+"Lights Position - FLASH else STEADY (2-way Switch)":null
+,
+"Lights Anti Collision - OFF else ON (2-way Switch)":null
+,
+"Lights Anti Collision - ON else OFF (2-way Switch)":null
+,
+"HSD Heading Knob - DECREASE (Very Slow)":null
+,
+"HSD Heading Knob - INCREASE (Very Slow)":null
+,
+"HSD Heading Knob - DECREASE (Slow)":null
+,
+"HSD Heading Knob - INCREASE (Slow)":null
+,
+"HSD Heading Knob - DECREASE (Fast)":null
+,
+"HSD Heading Knob - INCREASE (Fast)":null
+,
+"HSD Heading Knob - DECREASE (-1°)":null
+,
+"HSD Heading Knob - INCREASE (+1°)":null
+,
+"HSD Course Knob - DECREASE (Very Slow)":null
+,
+"HSD Course Knob - INCREASE (Very Slow)":null
+,
+"HSD Course Knob - DECREASE (Slow)":null
+,
+"HSD Course Knob - INCREASE (Slow)":null
+,
+"HSD Course Knob - DECREASE (Fast)":null
+,
+"HSD Course Knob - INCREASE (Fast)":null
+,
+"HSD Course Knob - DECREASE (-1°)":null
+,
+"HSD Course Knob - INCREASE (+1°)":null
+,
+"HSD Brightness Knob Dec (Slow)":null
+,
+"HSD Brightness Knob Inc (Slow)":null
+,
+"HSD Brightness Knob Dec (Fast)":null
+,
+"HSD Brightness Knob Inc (Fast)":null
+,
+"TACAN Volume - DECREASE (Slow)":null
+,
+"TACAN Volume - INCREASE (Slow)":null
+,
+"TACAN Volume - DECREASE (Fast)":null
+,
+"TACAN Volume - INCREASE (Fast)":null
+,
+"TACAN MODE - INVERSE":null
+,
+"TACAN MODE - NORMAL":null
+,
+"TACAN MODE - INVERSE else NORMAL (2-way Switch)":null
+,
+"TACAN MODE - NORMAL else INVERSE (2-way Switch)":null
+,
+"TACAN MODE X/Y - X else Y (2-way Switch)":null
+,
+"TACAN MODE X/Y - Y else X (2-way Switch)":null
+,
+"ILS Power Switch - OFF else ON (2-way Switch)":null
+,
+"ILS Power Switch - ON else OFF (2-way Switch)":null
+,
+"ALR-67 Volume - DECREASE (Slow)":null
+,
+"ALR-67 Volume - INCREASE (Slow)":null
+,
+"ALR-67 Volume - DECREASE (Fast)":null
+,
+"ALR-67 Volume - INCREASE (Fast)":null
+,
+"Sidewinder Volume - DECREASE (Slow)":null
+,
+"Sidewinder Volume - INCREASE (Slow)":null
+,
+"Sidewinder Volume - DECREASE (Fast)":null
+,
+"Sidewinder Volume - INCREASE (Fast)":null
+,
+"ICS Volume - DECREASE (Slow)":null
+,
+"ICS Volume - INCREASE (Slow)":null
+,
+"ICS Volume - DECREASE (Fast)":null
+,
+"ICS Volume - INCREASE (Fast)":null
+,
+"ICS Amplifier - B/U else NORM (3-way Switch Down)":null
+,
+"ICS Amplifier - EMER else NORM (3-way Switch Up)":null
+,
+"ICS Function - COLD MIC else HOT MIC (3-way Switch Down)":null
+,
+"ICS Function - RADIO OVERRIDE else HOT MIC (3-way Switch Up)":null
+,
+"UHF ARC-159 Mode - PRESET else MANUAL (3-way Switch Down)":null
+,
+"UHF ARC-159 Mode - GUARD else MANUAL (3-way Switch Up)":null
+,
+"UHF ARC-159 Mode - OFF else MAIN (3-way Switch Down)":null
+,
+"UHF ARC-159 Mode - OFF else BOTH (3-way Switch Down)":null
+,
+"UHF ARC-159 Mode - ADF else MAIN (3-way Switch Up)":null
+,
+"UHF ARC-159 Mode - ADF else BOTH (3-way Switch Up)":null
+,
+"UHF ARC-159 Squelch - OFF else SQL (2-way Switch)":null
+,
+"UHF ARC-159 Squelch - SQL else OFF (2-way Switch)":null
+,
+"UHF ARC-159 Volume - DECREASE (Slow)":null
+,
+"UHF ARC-159 Volume - INCREASE (Slow)":null
+,
+"UHF ARC-159 Volume - DECREASE (Fast)":null
+,
+"UHF ARC-159 Volume - INCREASE (Fast)":null
+,
+"UHF ARC-159 BRT - DECREASE (Slow)":null
+,
+"UHF ARC-159 BRT - INCREASE (Slow)":null
+,
+"UHF ARC-159 BRT - DECREASE (Fast)":null
+,
+"UHF ARC-159 BRT - INCREASE (Fast)":null
+,
+"VHF/UHF ARC-182 Volume - DECREASE (Slow)":null
+,
+"VHF/UHF ARC-182 Volume - INCREASE (Slow)":null
+,
+"VHF/UHF ARC-182 Volume - DECREASE (Fast)":null
+,
+"VHF/UHF ARC-182 Volume - INCREASE (Fast)":null
+,
+"UHF ARC-159 Remote BRT - DECREASE (Slow)":null
+,
+"UHF ARC-159 Remote BRT - INCREASE (Slow)":null
+,
+"UHF ARC-159 Remote BRT - DECREASE (Fast)":null
+,
+"UHF ARC-159 Remote BRT - INCREASE (Fast)":null
+,
+"VHF/UHF ARC-182 Remote BRT - DECREASE (Slow)":null
+,
+"VHF/UHF ARC-182 Remote BRT - INCREASE (Slow)":null
+,
+"VHF/UHF ARC-182 Remote BRT - DECREASE (Fast)":null
+,
+"VHF/UHF ARC-182 Remote BRT - INCREASE (Fast)":null
+,
+"RWR Brightness - DECREASE (Slow)":null
+,
+"RWR Brightness - INCREASE (Slow)":null
+,
+"RWR Brightness - DECREASE (Fast)":null
+,
+"RWR Brightness - INCREASE (Fast)":null
+,
+"Compass Mode - COMP else SLAVED (3-way Switch Down)":null
+,
+"Compass Mode - DG else SLAVED (3-way Switch Up)":null
+,
+"Compass N-S Hemisphere Switch - NORTH else SOUTH (2-way Switch)":null
+,
+"Compass LAT Correction - DECREASE (Slow)":null
+,
+"Compass LAT Correction - INCREASE (Slow)":null
+,
+"Compass LAT Correction - DECREASE (Fast)":null
+,
+"Compass LAT Correction - INCREASE (Fast)":null
+,
+"Gun Elevation Lead Adjustment - DECREASE (Slow)":null
+,
+"Gun Elevation Lead Adjustment - INCREASE (Slow)":null
+,
+"Gun Elevation Lead Adjustment - DECREASE":null
+,
+"Gun Elevation Lead Adjustment - INCREASE":null
+,
+"Gun Elevation Lead Adjustment - DECREASE (Fast)":null
+,
+"Gun Elevation Lead Adjustment - INCREASE (Fast)":null
+,
+"Gun Ammunition Counter Adjustment - DECREASE (Slow)":null
+,
+"Gun Ammunition Counter Adjustment - INCREASE (Slow)":null
+,
+"Gun Ammunition Counter Adjustment - DECREASE":null
+,
+"Gun Ammunition Counter Adjustment - INCREASE":null
+,
+"Gun Ammunition Counter Adjustment - DECREASE (Fast)":null
+,
+"Gun Ammunition Counter Adjustment - INCREASE (Fast)":null
+,
+"HUD Pitch Ladder Brightness - 0%":null
+,
+"HUD Pitch Ladder Brightness - 5%":null
+,
+"HUD Pitch Ladder Brightness - 10%":null
+,
+"HUD Pitch Ladder Brightness - 25%":null
+,
+"HUD Pitch Ladder Brightness - 33%":null
+,
+"HUD Pitch Ladder Brightness - 50%":null
+,
+"HUD Pitch Ladder Brightness - 66%":null
+,
+"HUD Pitch Ladder Brightness - 75%":null
+,
+"HUD Pitch Ladder Brightness - 100%":null
+,
+"Standby ADI Knob - DECREASE (Slow)":null
+,
+"Standby ADI Knob - INCREASE (Slow)":null
+,
+"Standby ADI Knob - DECREASE":null
+,
+"Standby ADI Knob - INCREASE":null
+,
+"Standby ADI Knob - DECREASE (Fast)":null
+,
+"Standby ADI Knob - INCREASE (Fast)":null
+,
+"Standby ADI Knob - UNCAGE":null
+,
+"Standby ADI Knob - CAGE":null
+,
+"Standby ADI Knob - UNCAGE else CAGE (2-way Switch)":null
+,
+"Standby ADI Knob - CAGE else UNCAGE (2-way Switch)":null
+,
+"Accelerometer Reset":null
+,
+"VDI Screen Contrast Knob Dec (Slow)":null
+,
+"VDI Screen Contrast Knob Inc (Slow)":null
+,
+"VDI Screen Contrast Knob Dec (Fast)":null
+,
+"VDI Screen Contrast Knob Inc (Fast)":null
+,
+"VDI Screen Brightness Knob Dec (Slow)":null
+,
+"VDI Screen Brightness Knob Inc (Slow)":null
+,
+"VDI Screen Brightness Knob Dec (Fast)":null
+,
+"VDI Screen Brightness Knob Inc (Fast)":null
+,
+"HUD Brightness Knob Dec (Slow)":null
+,
+"HUD Brightness Knob Inc (Slow)":null
+,
+"HUD Brightness Knob Dec (Fast)":null
+,
+"HUD Brightness Knob Inc (Fast)":null
+,
+"Master arm cover - CLOSE else OPEN (2-way Switch)":null
+,
+"Clock Wind - DECREASE (Slow)":null
+,
+"Clock Wind - INCREASE (Slow)":null
+,
+"Clock Wind - DECREASE":null
+,
+"Clock Wind - INCREASE":null
+,
+"Clock Wind - DECREASE (Fast)":null
+,
+"Clock Wind - INCREASE (Fast)":null
+,
+"Clock Push":null
+,
+"A/A Refueling - Ready Precontact":null
+,
+"TARPS - Toggle Filming":null
+,
+"HUD Analog, else Digital":null
+,
+"HUD Digital, else Analog":null
+,
+"HUD Analog":null
+,
+"HUD Digital":null
+,
+"HUD Analog/Digital Toggle":null
+,
+"HUD Altimeter Baro, else Radar":null
+,
+"HUD Altimeter Radar, else Baro":null
+,
+"HUD Baro Altimeter":null
+,
+"HUD Radar Altimeter":null
+,
+"HUD Baro / Radar Altimeter Toggle":null
+,
+"HUD Mode Day, else Night":null
+,
+"HUD Mode Night, else Day":null
+,
+"HUD Mode Day":null
+,
+"HUD Mode Night":null
+,
+"HUD Mode Day/Night Toggle":null
+,
+"HUD Cage":null
+,
+"DFCS Pitch Stabilisation On, else Off":null
+,
+"DFCS Pitch Stabilisation Off, else On":null
+,
+"DFCS Pitch Stabilisation On":null
+,
+"DFCS Pitch Stabilisation Off":null
+,
+"DFCS Pitch Stabilisation Toggle":null
+,
+"DFCS Roll Stabilisation On, else Off":null
+,
+"DFCS Roll Stabilisation Off, else On":null
+,
+"DFCS Roll Stabilisation On":null
+,
+"DFCS Roll Stabilisation Off":null
+,
+"DFCS Roll Stabilisation Toggle":null
+,
+"DFCS Yaw Stabilisation On, else Off":null
+,
+"DFCS Yaw Stabilisation Off, else On":null
+,
+"DFCS Yaw Stabilisation On":null
+,
+"DFCS Yaw Stabilisation Off":null
+,
+"DFCS Yaw Stabilisation Toggle":null
+,
+"Autopilot Vector VEC/PCD, else Off":null
+,
+"Autopilot Vector ACL, else Off":null
+,
+"Autopilot Vector VEC/PCD":null
+,
+"Autopilot Vector Off":null
+,
+"Autopilot Vector ACL":null
+,
+"Autopilot Vector Toggle VEC/PCD":null
+,
+"Autopilot Vector Toggle ACL":null
+,
+"Altitude Hold On, else Off":null
+,
+"Altitude Hold Off, else On":null
+,
+"Altitude Hold On":null
+,
+"Altitude Hold Off":null
+,
+"Altitude Hold Toggle":null
+,
+"Heading Hold On, else Off":null
+,
+"Heading Hold GT, else Off":null
+,
+"Heading Hold On":null
+,
+"Heading Hold Off":null
+,
+"Heading Hold GT":null
+,
+"Autopilot Heading Toggle On":null
+,
+"Autopilot On, else Off":null
+,
+"Autopilot Off, else On":null
+,
+"Autopilot On":null
+,
+"Autopilot Off":null
+,
+"Autopilot toggle":"LAlt+A"
+,
+"TACAN / EGI Toggle Button":null
+,
+"Toggle Pointer Visibility":"LCtrl+LShift+L"
+,
+"Toggle Pointer On/Off":"LCtrl+LShift+L"
+}}

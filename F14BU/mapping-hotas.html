@@ -188,7 +188,7 @@ section.device.visible{display:block}
 .board svg .jd-lbl{cursor:default;border-radius:2px;transition:opacity .12s ease}
 .board svg .jd-lbl.hl{outline:2px solid var(--amber)}
 .board svg .jd-lbl.dim{opacity:.12}
-#board-stick{max-width:900px}
+#board-stick{max-width:1200px}
 #board-pto2{max-width:1550px}
 #board-pto2 svg .jd-lbl{font-size:11px!important;line-height:1.1!important}
 #board-stick svg .jd-lbl{font-size:8px!important;line-height:1.05!important}
@@ -290,9 +290,9 @@ section.device.visible{display:block}
     <span class="fig-title">Clavier / Souris — fonctions non bindées sur le HOTAS</span>
     <span class="fig-sub" id="kb-count">Chargement…</span>
   </div>
-  <div class="note">Ces commandes existent dans le module F-14B(U) mais ne sont assignées à aucun bouton du manche, du throttle, du PTO2 ou des pédales : elles restent accessibles au clavier/souris (bind par défaut de DCS), ou sont libres à binder vous-même sur un contact inutilisé. Une commande déjà présente sur le HOTAS n'apparaît pas ici deux fois — cherchez-la, elle vous amènera directement sur son onglet.</div>
+  <div class="note">Ces commandes existent dans le module F-14B(U) mais ne sont assignées à aucun bouton du manche, du throttle, du PTO2 ou des pédales. La touche affichée est le bind clavier par défaut de DCS (extrait de la vraie cascade de profils F14BU → F14 → commandes communes à tous les avions → commandes communes au jeu) — si aucune touche n'apparaît, la commande n'a pas de raccourci par défaut non plus. Une commande déjà présente sur le HOTAS n'apparaît pas ici deux fois — cherchez-la, elle vous amènera directement sur son onglet.</div>
   <div class="legend-wrap"><table class="dtable" id="dtbl-kb">
-    <thead><tr><th>Catégorie</th><th>Commande DCS</th><th></th><th></th></tr></thead><tbody></tbody></table></div>
+    <thead><tr><th>Catégorie</th><th>Commande DCS</th><th>Touche par défaut</th><th></th></tr></thead><tbody></tbody></table></div>
 </section>
 
 <section class="device visible" id="dev-stick">
@@ -759,8 +759,12 @@ function mapDcsCategory(cats){ return DCS_CAT_TO_UI[(cats&&cats[0])||''] || 'mis
 
 let kbLoaded=false;
 function loadKbCommands(){
-  return fetch('data/f14bu-commands.json').then(r=>r.ok?r.json():null).then(data=>{
+  return Promise.all([
+    fetch('data/f14bu-commands.json').then(r=>r.ok?r.json():null),
+    fetch('data/f14bu-keyboard-binds.json').then(r=>r.ok?r.json():null).catch(()=>null)
+  ]).then(([data, kbBinds])=>{
     if(!data) return;
+    const keyOf=(kbBinds&&kbBinds.binds)||{};
     const seen=new Set();
     const rows=[];
     (data.commands||[]).forEach(c=>{
@@ -768,23 +772,30 @@ function loadKbCommands(){
       if(boundCommandNames.has(c.name)) return;
       if(seen.has(c.name)) return;
       seen.add(c.name);
-      rows.push({name:c.name, cat:(c.categories&&c.categories[0])||'Autre', uiCat:mapDcsCategory(c.categories)});
+      rows.push({name:c.name, cat:(c.categories&&c.categories[0])||'Autre', uiCat:mapDcsCategory(c.categories), key:keyOf[c.name]||null});
     });
-    rows.sort((a,b)=> a.cat.localeCompare(b.cat) || a.name.localeCompare(b.name));
+    // Les touches clavier connues remontent en premier : c'est l'information
+    // actionnable, celles sans touche par défaut sont surtout du remplissage.
+    rows.sort((a,b)=> (!!b.key-!!a.key) || a.cat.localeCompare(b.cat) || a.name.localeCompare(b.name));
     const tbody=document.querySelector('#dtbl-kb tbody');
     tbody.innerHTML='';
+    let withKey=0;
     rows.forEach((r,i)=>{
+      if(r.key) withKey++;
       const tr=document.createElement('tr');
       tr.dataset.dev='kb'; tr.dataset.i=String(i); tr.dataset.n=String(i); tr.dataset.cat=r.uiCat;
       tr.style.setProperty('--c',CAT_COLOR_L[r.uiCat]);
+      const keyCell=r.key
+        ? `<span class="num-badge" style="--c:var(--go)">${r.key}</span>`
+        : `<span style="color:var(--dim);font-family:var(--mono);font-size:11px">aucune touche par défaut</span>`;
       tr.innerHTML=`<td class="c1"><span class="num-badge" style="--c:${CAT_COLOR_L[r.uiCat]}">${r.cat}</span></td>
         <td class="c2"><b>${r.name}</b></td>
-        <td class="c3">Reste au clavier/souris — non assigné sur le HOTAS.</td>
+        <td class="c3">${keyCell}</td>
         <td>—</td>`;
       tbody.appendChild(tr);
     });
     const countEl=document.getElementById('kb-count');
-    if(countEl) countEl.textContent=rows.length+' commandes non bindées sur '+(data.commands||[]).filter(c=>c.resolved).length+' au total dans le module';
+    if(countEl) countEl.textContent=rows.length+' commandes non bindées sur '+(data.commands||[]).filter(c=>c.resolved).length+' au total — '+withKey+' ont une touche clavier par défaut connue';
     kbLoaded=true;
   }).catch(err=>{
     const countEl=document.getElementById('kb-count');
