@@ -51,6 +51,12 @@
   tbody tr:nth-child(odd){background:rgba(30,42,51,.35)}
   .pos{font-family:var(--mono);font-size:12.5px;color:var(--dim);display:block;margin-top:5px}
   .pos b{color:var(--ink);font-weight:600}
+  .jl{font:inherit;color:var(--amber);background:none;border:none;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px;display:inline}
+  .jl:hover{color:var(--ink)}
+  .bindtag{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--go);
+    background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+    padding:1px 6px;margin-left:4px;vertical-align:1px;white-space:nowrap}
+  .bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
 
   .note{border:1px solid var(--line);background:var(--panel);padding:13px 16px;margin:18px 0}
   .note .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);display:block;margin-bottom:5px}
@@ -683,6 +689,33 @@ const L = [
    ["ENG FIRE EXT","Pression basse dans la bouteille d'extincteur."]]},
   {t:"chk", v:"Tu configures le HOOK BYPASS pour un vol bateau et tu sais où regarder quand MASTER CAUTION clignote."}
 ]},
+{id:"c13", title:"Démarrage à froid et décollage catapulte",
+ intro:"Les douze zones prennent tout leur sens une fois enchaînées dans l'ordre réel d'une mise en route jusqu'au shuttle. Cette leçon suit pas à pas un décollage catapulte porte-avions, du groupe de parc à la rentrée du train en sortie de pont.",
+ body:[
+  {t:"note", k:"old", lbl:"Timecodes indicatifs", v:"Les repères de temps ci-dessous sont des estimations proportionnelles, non extraites image par image de la vidéo — recale-les au premier visionnage si besoin."},
+
+  {t:"h4", v:"1 · Alimentation au sol"},
+  {t:"p", v:"<b>Vidéo — env. 00:00 à 01:30.</b> Connecte le groupe de parc (GPU) et l'alimentation air au sol avant tout démarrage moteur : c'est l'air comprimé au sol, pas les moteurs, qui lance la mise en route. Allume l'éclairage cockpit si besoin, puis règle l'intercom sur <button class='jl' onclick='jump(\"c1\")' title='Voir : 1 · Console latérale gauche'><b>Hot Mic</b></button> (panneau ICS) si tu voles avec un RIO humain — la liaison reste ouverte en permanence, sans avoir à tenir un bouton."},
+
+  {t:"h4", v:"2 · Configuration DTC et mise en route de Jester"},
+  {t:"p", v:"<b>Vidéo — env. 01:30 à 04:00.</b> Bascule en place arrière pour charger le DTC (Data Transfer Cartridge) : un clic gauche charge les paramètres par défaut. Reviens en place avant, puis donne l'ordre de démarrage à Jester via le menu radial (<b>Jester → Startup</b>). Teste le micro, arme le <button class='jl' onclick='jump(\"c2\")' title='Voir : 2 · Console verticale gauche'>siège éjectable</button>, et laisse Jester fermer la <button class='jl' onclick='jump(\"c11\")' title='Voir : 11 et 12 · Console latérale droite'>verrière</button>. <button class='jl' onclick='jump(\"c1\")' title='Voir : 1 · Console latérale gauche'>Oxygène</button> sur <b>ON</b> avant de rouler."},
+
+  {t:"h4", v:"3 · Démarrage des moteurs"},
+  {t:"p", v:"<b>Vidéo — env. 04:00 à 06:30.</b> Lance le <button class='jl' onclick='jump(\"c1\")' title='Voir : 1 · Console latérale gauche'>commutateur de démarrage</button> du moteur <b>droit</b> en premier, puis le <b>gauche</b>. Attends <b>20 % RPM</b> avant de désenclencher la manette hors de la position OFF, puis laisse le moteur se stabiliser vers <b>70 %</b>. Passe l'<button class='jl' onclick='jump(\"c11\")' title='Voir : 11 et 12 · Console latérale droite'>Air Source</button> sur <b>Both Engines</b> une fois les deux moteurs lancés, puis déconnecte le groupe de parc et l'air au sol — l'avion est maintenant autonome."},
+
+  {t:"h4", v:"4 · Alignement et mise en route des systèmes"},
+  {t:"p", v:"<b>Vidéo — env. 06:30 à 10:30.</b> Lance l'alignement de la centrale inertielle par Jester : compte environ <b>6 minutes</b>, à suivre sur le <button class='jl' onclick='jump(\"c6\")' title='Voir : 6 · Panneau central'>HSD</button>/TID pendant que tu configures le reste du cockpit. Allume le <button class='jl' onclick='jump(\"c10\")' title='Voir : 10 · Console verticale droite'>HUD et les écrans</button> — c'est le PDCP qui décide de ce qu'ils affichent —, coupe l'<b>ECM</b>, règle la radio (<b>Both</b>, mode Manual ou Preset selon le canal), puis le <button class='jl' onclick='jump(\"c1\")' title='Voir : 1 · Console latérale gauche'>TACAN</button> (<b>T/R</b> + canal du porte-avions). Passe en revue les interrupteurs <button class='jl' onclick='jump(\"c1\")' title='Voir : 1 · Console latérale gauche'>DFCS</button>, règle l'<button class='jl' onclick='jump(\"c4\")' title='Voir : 4 · Planche de bord gauche'>alerte radalt</button>, cale l'<button class='jl' onclick='jump(\"c4\")' title='Voir : 4 · Planche de bord gauche'>altimètre</button> — un clic droit prolongé déverrouille la molette de calage — et recale l'<button class='jl' onclick='jump(\"c8\")' title='Voir : 8 · Planche de bord droite'>horizon de secours</button> (clic gauche puis molette). Allume les <button class='jl' onclick='jump(\"c1\")' title='Voir : 1 · Console latérale gauche'>lumières extérieures</button> via le Master Switch, règle l'<button class='jl' onclick='jump(\"c11\")' title='Voir : 11 et 12 · Console latérale droite'>ILS</button> (panneau ARA-63), et termine par un reset du <button class='jl' onclick='jump(\"c6\")' title='Voir : 6 · Panneau central'>Master Caution</button><span class='bindtag' data-bind-cmd='Master Caution Reset'></span>."},
+  {t:"note", k:"go", lbl:"Avant de quitter le point fixe", v:"Vérifie que le <b>Master Caution</b> est bien réinitialisé après la mise en route des systèmes — un voyant resté allumé masque une vraie panne survenant plus tard."},
+
+  {t:"h4", v:"5 · Roulage et catapultage"},
+  {t:"p", v:"<b>Vidéo — env. 10:30 à 13:30.</b> Relâche le <button class='jl' onclick='jump(\"c2\")' title='Voir : 2 · Console verticale gauche'>frein de parc</button><span class='bindtag' data-bind-cmd='Parking brake enabled, else disabed'></span>, coupe l'<button class='jl' onclick='jump(\"c2\")' title='Voir : 2 · Console verticale gauche'>anti-skid</button><span class='bindtag' data-bind-cmd='Antiskid &amp; Spoiler BK - Both'></span>, puis suis les gestes du « chien jaune » (Catapult Salute) pour le guidage au sol jusqu'au shuttle. Déploie les <button class='jl' onclick='jump(\"c1\")' title='Voir : 1 · Console latérale gauche'>ailes</button><span class='bindtag' data-bind-cmd='Wing Sweep Auto Mode'></span> — <b>Emergency Wing Sweep</b> puis retour en mode <b>AUTO</b> — sors les <button class='jl' onclick='jump(\"c1\")' title='Voir : 1 · Console latérale gauche'>volets</button><span class='bindtag' data-bind-cmd='Flaps Up'></span>, et mets le train avant en <b>kneel</b> via le <button class='jl' onclick='jump(\"c2\")' title='Voir : 2 · Console verticale gauche'>Nose Strut Switch</button> pour l'accrochage à la barre de catapultage. Règle le <button class='jl' onclick='jump(\"c6\")' title='Voir : 6 · Panneau central'>trim</button><span class='bindtag' data-bind-cmd='Trim Pitch Down'></span> entre <b>3 et 5</b>, puis pousse à pleine puissance sèche (<b>Military Power</b>)."},
+  {t:"note", k:"warn", lbl:"Jamais de post-combustion au catapultage", v:"Le F-14 catapulte toujours en <b>Military Power</b>, sans post-combustion : en cas de panne moteur pendant la poussée, la perte de post-combustion déséquilibrerait brutalement la poussée restante. C'est une règle de sécurité, pas une option de style."},
+  {t:"p", v:"Salue militairement de jour, ou bascule le <button class='jl' onclick='jump(\"c1\")' title='Voir : 1 · Console latérale gauche'>Master Light Switch</button> de nuit, pour signaler que tu es prêt — c'est ce geste qui déclenche le catapultage. Dès la sortie du pont, rentre immédiatement le train et les volets."},
+
+  {t:"video", id:"GWG3c1XW3Ig", c:"F-14B(U) — Démarrage à froid et décollage catapulte sur porte-avions, du groupe de parc à la sortie de pont."},
+  {t:"chk", v:"Tu peux enchaîner de mémoire les cinq phases, de l'alimentation au sol à la rentrée du train en sortie de pont."}
+]},
+
 {id:"c12", title:"Ressources vidéo",
  intro:"Pour prolonger cette section cockpit, deux vidéos complémentaires : l'une centrée sur ce qui change pour un pilote, l'autre en vue d'ensemble de tous les nouveaux systèmes.",
  body:[
@@ -745,6 +778,7 @@ function render(){
   if(cur)document.getElementById("pv").onclick=()=>{cur--;render();window.scrollTo(0,0);};
   if(cur<L.length-1)document.getElementById("nx").onclick=()=>{cur++;render();window.scrollTo(0,0);};
   rail();
+  paintBindBadges();
 }
 function rail(){
   const r=document.getElementById("rail");r.innerHTML="";
@@ -758,6 +792,62 @@ function rail(){
   document.getElementById("foot").textContent=`${L.filter(l=>st.done[l.id]).length} / ${L.length} leçons validées`;
 }
 function zoom(s){document.getElementById('lbi').src=s;document.getElementById('lb').classList.add('on');}
+// Renvoie vers la leçon-zone qui montre la commande citée en procédure.
+function jump(id){const i=L.findIndex(x=>x.id===id);if(i<0)return;cur=i;render();window.scrollTo(0,0);}
+
+/* ---------- badges de bind dynamiques ----------
+   Lit le même stockage que export-bindings.html (data/f14bu-bindings.json
+   comme base, corrigé par la clé localStorage que cette page écrit). Si
+   l'utilisateur y change un bind, le badge affiche la nouvelle touche dès
+   la prochaine visite de cette leçon — immédiatement si les deux pages
+   sont ouvertes dans deux onglets, via l'événement storage. Conçu pour
+   être repris tel quel dans n'importe quelle autre leçon ou tutoriel qui
+   partage le même dossier data/ et le même profil de binds. */
+const BIND_STORE_KEY = 'f14bu-export-bindings-v1';
+const AXIS_KEYS = {X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL = {stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS = null;
+async function loadBindings(){
+  try { BINDINGS = await fetch('../data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS = null; }
+}
+function deriveKeys(n, count){
+  const upper = String(n).toUpperCase(), slots = Math.max(count,1);
+  if (AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if (upper === 'SLDR')  return new Array(slots).fill('JOY_SLIDER1');
+  if (/^\d+$/.test(n))   return new Array(slots).fill('JOY_BTN'+n);
+  const range = n.match(/^(\d+)-(\d+)$/);
+  if (range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides = (saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry = overrides[b.device+'|'+b.n];
+    const commands = (entry&&Array.isArray(entry.commands)) ? entry.commands : b.commands;
+    const keys = (entry&&Array.isArray(entry.keys)) ? entry.keys : deriveKeys(b.n, commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i]}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('#main [data-bind-cmd]').forEach(el=>{
+    const hits = bindingsFor(el.dataset.bindCmd);
+    el.textContent = hits.length
+      ? hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ')
+      : 'non affecté';
+    el.classList.toggle('unbound', hits.length===0);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
 document.getElementById('lb').onclick=()=>document.getElementById('lb').classList.remove('on');
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape")document.getElementById('lb').classList.remove('on');
@@ -765,7 +855,7 @@ document.addEventListener("keydown",e=>{
   if(e.key==="ArrowRight"&&cur<L.length-1){cur++;render();window.scrollTo(0,0);}
   if(e.key==="ArrowLeft"&&cur>0){cur--;render();window.scrollTo(0,0);}
 });
-load().then(render);
+Promise.all([load(), loadBindings()]).then(render);
 </script>
 </body>
 </html>
