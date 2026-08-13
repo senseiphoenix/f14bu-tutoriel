@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — Travailler avec JESTER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-detail table{width:100%;border-collapse:collapse;margin-top:8px;font-size:12.5px}
+.step-detail th,.step-detail td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+.step-detail th{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--panel)}
+.step-bind{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
+.bindtag .ic{opacity:.7;font-size:.9em}
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Travailler avec JESTER</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — ton RIO virtuel</div>
+<h1>Travailler<br>avec JESTER</h1>
+<p class="sub">Le Tomcat est un avion à deux : radar, navigation, désignation, contre-mesures passent presque tous par ton RIO. JESTER n'est pas un gadget — c'est ton deuxième poste de pilotage, commandé par un seul menu.</p>
+
+<div class="intro-box">
+  <p><b>Une seule touche commande tout,</b> avec un comportement différent selon le nombre de pressions et selon ta situation du moment. C'est tout le mécanisme à comprendre — le reste n'est que du vocabulaire à apprendre au fil des autres tutos (radar en D, navigation en B, contre-mesures en E).</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Comprends le mécanisme du menu</span></div>
+  <p class="phase-why">Une seule touche, trois comportements selon le nombre de pressions successives — pas de menu séparé à chercher.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Ouvre le menu JESTER</p>
+    <p class="step-detail">
+      <table>
+        <tr><th>Pression</th><th>Résultat</th></tr>
+        <tr><td>1ʳᵉ</td><td>Menu <b>contextuel</b> : ce que JESTER propose selon ta situation du moment.</td></tr>
+        <tr><td>2ᵉ</td><td>Menu <b>principal</b>, complet.</td></tr>
+        <tr><td>3ᵉ</td><td>Ferme le menu.</td></tr>
+      </table>
+    </p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Toggle Menu" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item">Navigue dans le menu ouvert</p>
+    <p class="step-detail">Une fois le menu affiché, quatre directions déplacent la sélection dans l'arborescence — utile pour parcourir les sous-menus sans les ouvrir au hasard.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Jester Menu Up" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Jester Menu Down" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Jester Menu Left" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Jester Menu Right" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item">Comprends pourquoi le menu <b>change de contenu</b> selon ta situation</p>
+    <p class="step-detail">La 1ʳᵉ pression n'affiche jamais la même chose : elle sait si tu es en mode air-air ou air-sol, au décollage ou en croisière, et te propose directement ce qui est pertinent <b>maintenant</b>. C'est pour ça que tu n'as presque jamais besoin du menu principal complet en vol.</p>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Parcours l'arborescence sans rien déclencher</span></div>
+  <p class="phase-why">Avion au parking, moteurs coupés : c'est le moment sans risque pour explorer chaque branche sans crainte de lancer une action en vol par erreur.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Ouvre le menu <b>principal</b> (2 pressions) et parcours-le en entier</p>
+    <p class="step-detail">Ne clique sur rien qui ressemble à une action irréversible — regarde juste ce qui existe. Repère les branches radar, navigation, contre-mesures, communications : ce sont celles que tu utiliseras le plus souvent.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item">Note les trois ou quatre branches que tu utiliseras vraiment</p>
+    <p class="step-detail">Pas besoin de mémoriser tout le menu — repère juste où se trouvent les quelques commandes que tu redemanderas à chaque vol (lancer l'alignement, changer de mode radar, régler une radio).</p>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Teste la 1ʳᵉ pression dans plusieurs situations</span></div>
+  <p class="phase-why">Le meilleur moyen de comprendre le menu contextuel, c'est de l'observer changer sous tes yeux.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Au parking, moteurs coupés : une pression, regarde ce qui s'affiche</p>
+    <p class="step-detail">Attends-toi à des propositions liées au démarrage et à la préparation — pas au combat.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Moteurs tournants, prêt à rouler : une pression, compare</p>
+    <p class="step-detail">Le menu a changé, même si tu n'as presque pas bougé physiquement — c'est le signal que JESTER lit ta situation, pas juste ta position dans un script fixe.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item">En vol, mode air-air puis air-sol : une pression, compare encore</p>
+    <p class="step-detail">Tu devrais voir le menu radar/BVR d'un côté, le menu armement air-sol de l'autre. C'est exactement ce qui te fera gagner du temps en combat : pas besoin de fouiller, la première pression propose déjà le bon menu.</p>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Construis ton lexique JESTER</span></div>
+  <p class="phase-why">Le but final n'est pas de connaître le menu par cœur, mais de savoir instantanément quelle branche ouvrir pour un besoin donné.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item">Demande-lui de faire le <b>démarrage complet</b> à ta place</p>
+    <p class="step-detail">Regarde les interrupteurs bouger tout seuls dans le cockpit — c'est ta première leçon de démarrage, gratuite, avant même de faire <a href="demarrage-a-froid.html" style="color:var(--amber)">Démarrage à froid, pas à pas</a> toi-même.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item">Écris, pour chaque besoin fréquent, le chemin exact dans le menu</p>
+    <p class="step-detail">Pas besoin d'un document formel — même une ligne griffonnée sur ton propre pense-bête (<a href="checklists-personnalisees.html" style="color:var(--amber)">Construire ses checklists personnalisées</a>) suffit : « lancer l'alignement → branche Navigation → Align INS », par exemple.</p>
+  </div></div>
+
+  <div class="note warn"><b>Piège</b>Croire que JESTER anticipe. Il est compétent mais il attend des ordres : si tu ne demandes rien, il ne fait rien d'utile au moment critique.</div>
+</section>
+
+<div class="note go"><b>Tu es prêt</b>Le mécanisme du menu (1/2/3 pressions) est clair, tu sais qu'il s'adapte à ta situation, et tu as commencé ton propre lexique. Le vocabulaire précis (radar, navigation, armement) s'apprend dans les tutos suivants — chacun te dira quelle branche JESTER utiliser.</div>
+
+<div class="footlinks">
+  <a href="pas-a-pas.html">&larr; Retour au sommaire Pas à pas</a>
+  <a href="section-a-illustree.html#a3">Approfondir : leçon A3, Travailler avec JESTER →</a>
+</div>
+
+<p class="src">Source : leçon <a href="section-a-illustree.html#a3" style="color:var(--dim)">A3 · Travailler avec JESTER</a> de ce site. Les badges de bouton sont lus en direct dans <code>data/f14bu-bindings.json</code> (mêmes données que <a href="mapping-hotas.html" style="color:var(--dim)">le mapping HOTAS</a>).</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-jester-progress';
+function load(){ try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; } }
+function save(state){ try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){} }
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+
+const BIND_STORE_KEY='f14bu-export-bindings-v1';
+const AXIS_KEYS={X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL={stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS=null;
+async function loadBindings(){
+  try{ BINDINGS=await fetch('data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS=null; }
+}
+function deriveKeys(n,count){
+  const upper=String(n).toUpperCase(), slots=Math.max(count,1);
+  if(AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if(upper==='SLDR') return new Array(slots).fill('JOY_SLIDER1');
+  if(/^\d+$/.test(n)) return new Array(slots).fill('JOY_BTN'+n);
+  const range=n.match(/^(\d+)-(\d+)$/);
+  if(range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides=(saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry=overrides[b.device+'|'+b.n];
+    const commands=(entry&&Array.isArray(entry.commands))?entry.commands:b.commands;
+    const keys=(entry&&Array.isArray(entry.keys))?entry.keys:deriveKeys(b.n,commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i], n:b.n}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('a[data-bind-cmd]').forEach(el=>{
+    const hits=bindingsFor(el.dataset.bindCmd);
+    el.target='_blank'; el.rel='noopener';
+    if(!hits.length){
+      el.textContent='non affecté';
+      el.classList.add('unbound');
+      el.title='Pas de bind confirmé dans le profil actuel — ouvre le mapping pour vérifier ou en poser un';
+      el.href='mapping-hotas.html';
+      return;
+    }
+    el.textContent=hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ');
+    el.classList.remove('unbound');
+    const h=hits[0];
+    el.title='Ouvrir le mapping sur ce contrôle';
+    el.href='mapping-hotas.html?dev='+h.device+'&n='+encodeURIComponent(h.n);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
+loadBindings().then(paintBindBadges);
+</script>
+</body>
+</html>

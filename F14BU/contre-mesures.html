@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — Contre-mesures : chaff, flares, ECM, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-bind{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
+.bindtag .ic{opacity:.7;font-size:.9em}
+
+figure{margin:14px 0;border:1px solid var(--line);background:#0b1114;padding:9px}
+figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px;border-radius:1px}
+figcaption{font-size:12px;color:var(--dim);margin-top:8px;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+figcaption a{font-family:var(--mono);font-size:10.5px;white-space:nowrap;display:inline-flex;align-items:center;min-height:22px;padding:0 4px;color:var(--dim);text-decoration:none}
+figcaption a:hover{color:var(--amber)}
+.imgfail{display:none;padding:20px 12px;font-size:12.5px;color:var(--dim);text-align:center}
+figure.failed img{display:none} figure.failed .imgfail{display:block}
+.lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:100%}
+
+.watch{background:var(--panel-2);border:1px solid var(--line);border-radius:2px;padding:10px 14px;margin:8px 0 0;font-family:var(--mono);font-size:12px;color:var(--dim)}
+.watch b{color:var(--ink)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.jester{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--amber)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Contre-mesures : chaff, flares, ECM</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — pilote solo</div>
+<h1>Contre-mesures : chaff, flares, ECM<br>pas à pas</h1>
+<p class="sub">Le geste qui te garde en vie quand un radar passe en poursuite ou qu'un missile part dans ta direction. Ce tuto part de ce que tu vois et entends au RWR, jusqu'au bouton que tu presses réellement — <b>sans inventer un bouton chaff ou un bouton flare séparés qui n'existent pas sur ce profil pilote</b>. Chaque étape dit <b>quoi faire</b>, <b>où</b>, et <b>pourquoi</b>.</p>
+
+<div class="intro-box">
+  <p><b>Avant de commencer :</b> pas besoin d'une vraie mission de combat — un exercice avec un ou deux sites sol-air actifs (ou un adversaire air-air qui te verrouille) suffit pour t'entraîner à reconnaître les signaux et à réagir.</p>
+  <p><b>La règle à retenir sur ce profil :</b> côté pilote, tu n'as qu'<b>un seul bouton</b> de largage de leurres, <a class="bindtag" data-bind-cmd="DLC Toggle / Countermeasure Dispense" href="#" style="vertical-align:middle"></a> — sans distinction chaff/flare. Les vrais programmes ALE-39 (combien de paillettes ou de fusées, à quelle cadence, sur quelle durée) sont préparés et sélectionnés par le RIO, et sur ce profil solo c'est <span class="jester">JESTER</span> qui s'en charge. Le brouilleur ECM/DECM est lui aussi une tâche RIO de bout en bout, sans bouton pilote. Ne cherche donc jamais un « chaff button » ou un « flare button » séparé sur ton HOTAS : il n'existe pas ici, et ce n'est pas un oubli.</p>
+  <p>Ta part du travail est simple : lire le RWR, savoir quand presser, et savoir quoi demander à JESTER pour que le largage soit le bon.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée sur cette page porte son bouton HOTAS entre parenthèses (ou une pastille <b style="color:var(--dim)">RIO · JESTER</b> quand c'est une tâche de ton équipier) — clique dessus pour ouvrir le mapping complet directement sur ce contrôle.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Lire le RWR et reconnaître une menace</span></div>
+  <p class="phase-why">Le détecteur d'alerte radar (ALR-67) est ta première ligne de défense : il te dit qui t'illumine, d'où, et avec quelle intention — avant même que tu voies quoi que ce soit dehors. Savoir le lire en un coup d'œil vaut tous les leurres du monde.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Repère le <span class="switchname">répétiteur RWR</span> côté pilote</p>
+    <p class="step-detail">Petit écran circulaire devant toi, qui reprend l'essentiel de l'écran RWR complet du RIO. Tu n'as rien à régler dessus (volume, filtres de priorité) — c'est un affichage seul, à lire, pas à manipuler.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Affichage seul : rien à régler côté pilote"><span class="ic">🖱</span>Affichage seul</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item">Comprends les <span class="switchname">trois bandes</span> de l'écran : critique, létale, non létale</p>
+    <p class="step-detail">Ce qui sépare les trois bandes concentriques n'est <b>pas</b> la distance réelle de l'émetteur, mais son niveau de menace : critique (au centre) = capable de t'engager <b>et</b> le fait maintenant ; létale = capable de t'engager mais ne le fait pas encore ; non létale (à l'extérieur) = pas de menace immédiate. Un symbole en bande critique passe toujours avant un symbole plus proche visuellement mais relégué en bande non létale. La lecture fine (codes, priorisation détaillée) se fait sur l'écran complet du RIO — c'est JESTER qui la surveille pour toi et qui t'annonce ce qui compte.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item">Écoute les <span class="switchname">trois niveaux d'urgence</span> au son</p>
+    <p class="step-detail">Recherche : un radar balaie ta zone sans te suivre — tu notes la direction et tu continues. Poursuite : un radar te suit spécifiquement — tu prépares ta réaction (cap, altitude, programme de leurres). Tir/guidage : un missile est probablement en vol vers toi — tu réagis <b>immédiatement</b>, c'est le signal qui déclenche la phase 2.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Affichage/audio seul : rien à régler côté pilote"><span class="ic">🖱</span>Affichage seul</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-4"><div class="step-body">
+    <p class="step-item">En cas de doute, demande directement à <span class="jester">JESTER</span> ce qu'il voit</p>
+    <p class="step-detail">Ouvre son menu et demande une mise à jour sur la menace : il te donne le type, l'azimut et parfois la distance sans que tu aies besoin de déchiffrer les codes toi-même.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Toggle Menu" href="#"></a></div>
+  </div></div>
+
+  <div class="note go"><b>Le réflexe à retenir</b>Réagis à la priorité affichée (la bande), pas à la position visuelle du symbole sur l'écran. Un point proche de toi en bande non létale attend ; un point en bande critique, même loin visuellement, ne l'a pas.</div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Réagir : le bouton de largage pilote</span></div>
+  <p class="phase-why">Sur ce profil, le pilote n'a qu'un seul geste possible face à une menace immédiate : presser le bouton de largage. Comprendre exactement ce qu'il fait — et ce qu'il ne fait pas — t'évite de chercher un réglage chaff/flare qui n'est pas là.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Trouve le bouton <span class="switchname">DLC Toggle / Countermeasure Dispense</span> sur le manche</p>
+    <p class="step-detail">C'est ton unique commande pilote de largage de contre-mesures. Un seul appui déclenche une salve du programme actuellement chargé par JESTER — le bouton lui-même ne fait pas la distinction entre chaff et flare, cette distinction est décidée en amont côté RIO.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="DLC Toggle / Countermeasure Dispense" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item">Sache que ce même bouton a une <span class="switchname">double fonction</span> selon la configuration</p>
+    <p class="step-detail">Le F-14 partage ce bouton entre deux rôles : bascule du DLC (Direct Lift Control, une aide au pilotage fin en approche/appontage) et largage de leurres. Le jeu choisit le rôle actif selon la configuration de l'avion — retiens surtout que si tu le presses en situation de menace, c'est bien un largage que tu déclenches.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="DLC Toggle / Countermeasure Dispense" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item">Presse-le dès que tu entends <span class="setting">tir/guidage</span> ou que tu vois un départ missile</p>
+    <p class="step-detail">Ne réfléchis pas — presse en même temps que tu commences ta manœuvre (phase 4). Chaque seconde d'avance compte double : un leurre lancé pendant la manœuvre vaut bien plus que le même leurre lancé une seconde après.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="DLC Toggle / Countermeasure Dispense" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-4"><div class="step-body">
+    <p class="step-item">Retiens que le <span class="switchname">choix chaff vs flare</span> n'est pas de ton ressort ici</p>
+    <p class="step-detail">Le contenu réel de la salve (paillettes, fusées, ou un mélange) dépend entièrement du programme que JESTER a chargé au moment où tu presses. C'est pour ça que la phase 3 — demander le bon programme <b>avant</b> d'en avoir besoin — compte autant que le bouton lui-même.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="note warn"><b>Piège à éviter</b>Ne perds pas de temps à chercher un deuxième bouton « flare » ou « chaff » sur ton HOTAS avant de presser : sur ce profil pilote, il n'y en a qu'un. Le bon réflexe est de presser <i>ce</i> bouton tout de suite, pas de chercher le bon parmi plusieurs.</div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Demander à JESTER un programme ALE-39 / le brouilleur ECM</span></div>
+  <p class="phase-why">La philosophie du système de contre-mesures du Tomcat est claire : tu ne largues pas au hasard sous le stress, tu déclenches un programme préparé à froid. Préparer ce programme — et activer le brouilleur — est une tâche RIO que JESTER assure pour toi.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Ouvre le <span class="jester">menu JESTER</span></p>
+    <p class="step-detail">Le point d'entrée pour toutes les demandes qui suivent — RWR détaillé, programme de leurres, brouilleur.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Toggle Menu" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Demande un <span class="switchname">programme adapté</span> à la menace : radar ou infrarouge</p>
+    <p class="step-detail">Contre un missile radar : paillettes en salve, cadence rapide. Contre un missile infrarouge : fusées espacées sur plusieurs secondes, le temps de casser l'accrochage pendant que tu changes de vecteur. Demande le bon type dès que tu identifies la menace en phase 1 — pas après avoir déjà pressé le bouton.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item">Demande l'activation du <span class="switchname">brouilleur ECM/DECM</span> en complément</p>
+    <p class="step-detail">Le brouilleur électronique n'a aucun bouton côté pilote sur ce profil — c'est une tâche RIO de bout en bout, comme la sélection du programme. Demande-le en même temps que le programme de leurres face à une menace radar continue, il agit en fond pendant que tu manœuvres et que tu largues.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-4"><div class="step-body">
+    <p class="step-item">Prépare mentalement <span class="setting">trois programmes types</span> avant d'en avoir besoin</p>
+    <p class="step-detail">Missile radar (paillettes rapides), missile infrarouge (fusées espacées), dégagement (programme mixte plus long pour sortir d'une zone défendue). Les demander à froid, avant l'alerte, t'évite de réfléchir au pire moment.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-5"><div class="step-body">
+    <p class="step-item">Si tu presses sans avoir rien demandé, tu largues quand même — juste au hasard</p>
+    <p class="step-detail">Le bouton pilote <a class="bindtag" data-bind-cmd="DLC Toggle / Countermeasure Dispense" href="#"></a> fonctionne même sans consigne préalable : il déclenche le programme actuellement chargé, qui peut ne pas être adapté à la menace du moment. Mieux vaut ça que rien, mais un programme demandé au bon moment reste largement plus efficace.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="DLC Toggle / Countermeasure Dispense" href="#"></a></div>
+  </div></div>
+
+  <div class="note"><b>Le principe qui rend tout efficace</b>Un leurre sans manœuvre ne sauve presque jamais. Le programme donne au missile un faux choix ; c'est ta manœuvre (phase 4) qui rend ce mauvais choix crédible. Les deux ensemble, toujours.</div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Manœuvre défensive de base, en complément des leurres</span></div>
+  <p class="phase-why">Détecter, décider, manœuvrer, leurrer — dans cet ordre, en quelques secondes. Le leurre gagne du temps ; c'est la manœuvre qui transforme ce temps gagné en survie réelle.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item">Vire franc pour mettre la menace sur le <span class="setting">travers</span> (radar) ou casser la <span class="setting">ligne de vue</span> (infrarouge)</p>
+    <p class="step-detail">Contre un missile radar, réduire ta vitesse relative vue du radar (le mettre sur le travers) aide les paillettes à offrir une cible alternative crédible. Contre un missile infrarouge, tout est dans la ligne de vue : un changement de plan brutal combiné aux fusées pour sortir du champ du chercheur. Joue l'altitude et le terrain si la situation le permet.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pilotage manche/palonnier standard, pas une commande dédiée"><span class="ic">🕹</span>Pilotage standard</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item">Utilise <span class="switchname">Radar - Break Lock</span> pour aider à casser un verrouillage radar</p>
+    <p class="step-detail">Commande qui aide JESTER à rompre un verrouillage radar ennemi actif sur toi — à combiner avec la manœuvre et le largage, pas à sa place.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Radar - Break Lock" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-3"><div class="step-body">
+    <p class="step-item">Largue <span class="setting">pendant</span> la manœuvre, pas après</p>
+    <p class="step-detail">Un leurre lancé en ligne droite, avant ou après le virage, n'offre pas de choix crédible au missile. Le timing correct est : virage engagé + <a class="bindtag" data-bind-cmd="DLC Toggle / Countermeasure Dispense" href="#"></a> pressé au même moment.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="DLC Toggle / Countermeasure Dispense" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-4"><div class="step-body">
+    <p class="step-item">Réévalue : la menace a-t-elle décroché ?</p>
+    <p class="step-detail">Regarde le RWR et demande confirmation à JESTER. Si le symbole reste en poursuite ou en tir, recommence la séquence manœuvre + largage — ne t'arrête pas après une seule tentative.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-5"><div class="step-body">
+    <p class="step-item">Une fois la menace neutralisée, <span class="switchname">sors de la zone</span></p>
+    <p class="step-detail">Ne retourne pas voir « juste pour vérifier ». Une menace décrochée peut se reverrouiller si tu repasses dans son enveloppe — poursuis ta route de sortie.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pilotage manche/palonnier standard, pas une commande dédiée"><span class="ic">🕹</span>Pilotage standard</span></div>
+  </div></div>
+
+  <div class="note warn"><b>Piège</b>Larguer sans manœuvrer, ou manœuvrer sans larguer. Les deux gestes n'ont de valeur que faits ensemble — l'un sans l'autre laisse au missile un choix bien trop facile.</div>
+</section>
+
+<!-- ============ PHASE 5 ============ -->
+<section class="phase" data-phase="5">
+  <div class="phase-head"><span class="phase-num">PHASE 5</span><span class="phase-title">Erreurs fréquentes de débutant</span></div>
+  <p class="phase-why">Les mêmes pièges reviennent presque toujours chez qui découvre les contre-mesures du Tomcat. Les connaître à l'avance en évite la moitié.</p>
+
+  <div class="step"><input type="checkbox" data-id="p5-1"><div class="step-body">
+    <p class="step-item">Chercher un bouton chaff <span class="setting">séparé</span> d'un bouton flare</p>
+    <p class="step-detail">Ça n'existe pas sur ce profil pilote : un seul bouton, <a class="bindtag" data-bind-cmd="DLC Toggle / Countermeasure Dispense" href="#"></a>, sert aux deux. La distinction se joue côté programme, avec JESTER, pas côté bouton.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="DLC Toggle / Countermeasure Dispense" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-2"><div class="step-body">
+    <p class="step-item">Vider tout son stock sur la première alerte</p>
+    <p class="step-detail">Les leurres sont une ressource de mission limitée. Un programme adapté en consomme peu et t'en garde pour un deuxième engagement, ou pour le retour.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-3"><div class="step-body">
+    <p class="step-item">Larguer en vol rectiligne, sans manœuvrer</p>
+    <p class="step-detail">Revoir la phase 4 : le leurre seul ne convainc presque jamais un missile moderne. C'est la combinaison manœuvre + leurre qui fonctionne.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="DLC Toggle / Countermeasure Dispense" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-4"><div class="step-body">
+    <p class="step-item">Oublier de vérifier les voyants après un engagement</p>
+    <p class="step-detail">Après avoir décroché une menace, un coup d'œil au panneau d'alarmes du pare-brise pour t'assurer que l'avion n'a rien pris, puis acquitte si un voyant Master Caution est resté allumé.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Master Caution Reset" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-5"><div class="step-body">
+    <p class="step-item">Réagir à la position visuelle du symbole plutôt qu'à sa bande de danger</p>
+    <p class="step-detail">Revoir la phase 1 : un symbole proche visuellement mais en bande non létale attend ; un symbole en bande critique, même loin sur l'écran, ne l'a pas. C'est la bande qui compte, pas la distance apparente.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Affichage seul : rien à régler côté pilote"><span class="ic">🖱</span>Affichage seul</span></div>
+  </div></div>
+</section>
+
+<div class="note go"><b>Tu es prêt</b>Tu sais lire le RWR par bande et par son, tu sais qu'un seul bouton pilote suffit à larguer, tu sais quoi demander à JESTER avant l'alerte, et tu manœuvres en même temps que tu largues. La suite logique : appliquer la même séquence détecter/décider/manœuvrer/leurrer dans un engagement complet, avec des munitions air-air en face.</div>
+
+<div class="footlinks">
+  <a href="pas-a-pas.html">&larr; Retour au sommaire Pas à pas</a>
+  <a href="bombes-ccip.html">Étape suivante : Bombes lisses en CCIP →</a>
+</div>
+
+<p class="src">Sources : matière technique des leçons E1 à E3 du <a href="cursus-complet.html">cursus complet</a> (lecture du RWR, ALE-47, survivre à un engagement), remise en format checklist actionnable pour un pilote solo assisté par JESTER. Le profil pilote de ce tuto n'a qu'un bouton de largage de contre-mesures, sans distinction chaff/flare — les programmes ALE-39 et le brouilleur ECM/DECM restent des tâches RIO. Les badges de bouton sont lus en direct dans <code>data/f14bu-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — pas de numéro figé dans le texte.</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-cm-progress';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function save(state){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+
+/* ---------- Badges de bind dynamiques ----------
+   Chaque fonction citée sur cette page porte son bouton HOTAS entre
+   parenthèses, lu en direct dans data/f14bu-bindings.json (corrigé par
+   l'export de binds si l'utilisateur en a un) — jamais un numéro figé dans
+   le texte, pour ne pas répéter l'erreur du 13/08 (bind changé, texte pas
+   mis à jour). Lien direct vers le mapping, sur le bon contrôle : voir
+   gotoDevNum() dans mapping-hotas.html. */
+const BIND_STORE_KEY='f14bu-export-bindings-v1';
+const AXIS_KEYS={X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL={stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS=null;
+async function loadBindings(){
+  try{ BINDINGS=await fetch('data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS=null; }
+}
+function deriveKeys(n,count){
+  const upper=String(n).toUpperCase(), slots=Math.max(count,1);
+  if(AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if(upper==='SLDR') return new Array(slots).fill('JOY_SLIDER1');
+  if(/^\d+$/.test(n)) return new Array(slots).fill('JOY_BTN'+n);
+  const range=n.match(/^(\d+)-(\d+)$/);
+  if(range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides=(saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry=overrides[b.device+'|'+b.n];
+    const commands=(entry&&Array.isArray(entry.commands))?entry.commands:b.commands;
+    const keys=(entry&&Array.isArray(entry.keys))?entry.keys:deriveKeys(b.n,commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i], n:b.n}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('a[data-bind-cmd]').forEach(el=>{
+    const hits=bindingsFor(el.dataset.bindCmd);
+    el.target='_blank'; el.rel='noopener';
+    if(!hits.length){
+      el.textContent='non affecté';
+      el.classList.add('unbound');
+      el.title='Pas de bind confirmé dans le profil actuel — ouvre le mapping pour vérifier ou en poser un';
+      el.href='mapping-hotas.html';
+      return;
+    }
+    el.textContent=hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ');
+    el.classList.remove('unbound');
+    const h=hits[0];
+    el.title='Ouvrir le mapping sur ce contrôle';
+    el.href='mapping-hotas.html?dev='+h.device+'&n='+encodeURIComponent(h.n);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
+loadBindings().then(paintBindBadges);
+</script>
+</body>
+</html>

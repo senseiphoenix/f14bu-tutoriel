@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — JDAM : préplanifié et cible d'opportunité, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-bind{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
+.bindtag .ic{opacity:.7;font-size:.9em}
+
+figure{margin:14px 0;border:1px solid var(--line);background:#0b1114;padding:9px}
+figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px;border-radius:1px}
+figcaption{font-size:12px;color:var(--dim);margin-top:8px;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+figcaption a{font-family:var(--mono);font-size:10.5px;white-space:nowrap;display:inline-flex;align-items:center;min-height:22px;padding:0 4px;color:var(--dim);text-decoration:none}
+figcaption a:hover{color:var(--amber)}
+.imgfail{display:none;padding:20px 12px;font-size:12.5px;color:var(--dim);text-align:center}
+figure.failed img{display:none} figure.failed .imgfail{display:block}
+.lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:100%}
+
+.watch{background:var(--panel-2);border:1px solid var(--line);border-radius:2px;padding:10px 14px;margin:8px 0 0;font-family:var(--mono);font-size:12px;color:var(--dim)}
+.watch b{color:var(--ink)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.jester{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--amber)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>JDAM : préplanifié et cible d'opportunité</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — pilote solo</div>
+<h1>JDAM : préplanifié et cible d'opportunité<br>pas à pas</h1>
+<p class="sub">La JDAM est une arme <b>GPS pure</b> — aucun laser, aucun visuel requis pour la guider. Deux façons de l'employer : une mission <b>préparée avant le vol</b> (PP), ou une cible <b>découverte en vol</b> (TOO, Target Of Opportunity) désignée au LANTIRN. Chaque étape dit <b>quoi faire</b>, <b>où</b>, et <b>pourquoi</b>.</p>
+
+<div class="intro-box">
+  <p><b>Avant de commencer :</b> connais déjà les bases air-sol du B(U) (bombes lisses, principe du HUD air-sol) et sache utiliser le menu de JESTER — voir la leçon <a href="travailler-avec-jester.html" style="color:var(--amber)">Travailler avec JESTER</a> si ce n'est pas encore fait.</p>
+  <p><b>Important sur le F-14BU solo :</b> la saisie de coordonnées, la lecture des pages JMSN/CDNU et la désignation TOO sont des tâches <b>RIO</b>, donc pilotées par JESTER — pas par toi. Ton travail de pilote : mettre l'avion sur le bon profil d'attaque, armer, et larguer au bon moment. Ouvre son menu <a class="bindtag" data-bind-cmd="Toggle Menu" href="#" style="vertical-align:middle"></a> chaque fois qu'il faut lui demander une de ces actions.</p>
+  <p>Cette page couvre les <b>deux modes</b> dans l'ordre : d'abord la mission préplanifiée (la plus simple, tout est prêt avant le décollage), puis la cible d'opportunité (plus dense — le manuel réel documente treize étapes pour détourner une mission existante vers une nouvelle cible).</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée sur cette page porte son bouton HOTAS entre parenthèses (ou une étiquette <b style="color:var(--dim)">RIO · JESTER</b> quand c'est une tâche de ton équipier) — clique sur un badge de bouton pour ouvrir le mapping complet directement sur ce contrôle.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Ce qui est pareil dans les deux modes</span></div>
+  <p class="phase-why">Avant de choisir entre mission préplanifiée et cible d'opportunité, quelques réglages sont communs aux deux : le mode d'affichage air-sol, la configuration de l'armement, et la répartition des tâches avec JESTER.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Rappelle-toi qui fait quoi</p>
+    <p class="step-detail">Sur le F-14BU solo, c'est JESTER qui lit et modifie les pages JMSN et CDNU, qui règle l'ACP, et qui désigne une cible au LANTIRN. Toi, tu voles le profil d'attaque, tu armes, et tu largues au bon repère HUD. Aucune des étapes « RIO » ci-dessous ne se fait au clavier par toi-même.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item">Sélecteur du PDCP sur <span class="switchname">A/G</span> (air-sol)</p>
+    <p class="step-detail">Panneau de contrôle d'affichage (PDCP), en bas du tableau de bord. C'est ce mode qui fait apparaître les repères de largage sur le HUD — sans lui, aucune information JDAM ne s'affiche devant toi.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Display mode air to ground" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item">Demande à <span class="jester">JESTER</span> d'accrocher le mode A/G sur le menu complet du PTID</p>
+    <p class="step-detail">Ouvre son menu et demande-lui de le faire — c'est automatique de son côté. Le PTID (l'écran tactique du RIO) doit afficher le mode air-sol pour que la suite (page JMSN, waypoints) soit accessible.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Toggle Menu" href="#"></a>
+      <span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-4"><div class="step-body">
+    <p class="step-item">Fais configurer l'armement par <span class="jester">JESTER</span> : station, fusée, type d'arme</p>
+    <p class="step-detail">C'est un réglage de l'ACP (panneau de contrôle armement), côté RIO. Précise-lui la station chargée en JDAM si tu en as plusieurs types à bord.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-5"><div class="step-body">
+    <p class="step-item"><span class="switchname">Master Arm</span> <span class="setting">ON</span>, capot ouvert</p>
+    <p class="step-detail">Sans ça, rien ne part au largage même si tout le reste est prêt. À faire quand tu es proche du passage, pas dès le décollage — c'est une sécurité, pas un réglage à oublier ouvert toute la mission.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Master arm on and cover open" href="#"></a></div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Mode PP : vérifie les coordonnées avant le vol</span></div>
+  <p class="phase-why">Le mode préplanifié (PP) part d'une mission préparée <b>avant</b> le décollage dans l'éditeur de mission, puis transférée dans l'avion par la cartouche de données (MDL) au démarrage. Le calculateur peut stocker jusqu'à huit missions préplanifiées par station.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Dans l'éditeur de mission, prépare ta cible : coordonnées, cap d'attaque, altitude et vitesse de largage</p>
+    <p class="step-detail">Ça se fait avant même de décoller, hors du cockpit. Si toutes les stations compatibles sont sélectionnées, l'ordre de largage par défaut est <span class="setting">4-5-3-6</span> — place tes points de largage dans cet ordre si tu prépares plusieurs cibles.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item">Une fois en vol, demande à <span class="jester">JESTER</span> d'ouvrir la page <span class="switchname">JMSN</span> du PTID</p>
+    <p class="step-detail">C'est la page de vérification : station et arme sélectionnées, coordonnées et altitude de la cible, défilement entre les huit missions préplanifiées de la station. Fais-la relire avant d'aller plus loin.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Toggle Menu" href="#"></a>
+      <span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item">Fais confirmer par <span class="jester">JESTER</span> que la cartouche de données a bien été chargée, puis presse <span class="switchname">UPDATE</span></p>
+    <p class="step-detail">Sans ce bouton, la bombe garde ses anciennes données de mission, sans le moindre message d'erreur — c'est l'erreur la plus fréquente et la plus silencieuse de toute la procédure.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+  <div class="note warn"><b>Le réflexe à ne jamais sauter</b>Après tout chargement de cartouche <b>ou</b> toute modification de coordonnées : UPDATE. Toujours.</div>
+
+  <div class="step"><input type="checkbox" data-id="p2-4"><div class="step-body">
+    <p class="step-item">Fais mettre les JDAM sous tension tôt par <span class="jester">JESTER</span></p>
+    <p class="step-detail">La mise sous tension lance un compte à rebours de <span class="setting">8 minutes</span> qui disparaît en atteignant 5 — la bombe n'est prête qu'à ce moment. Anticipe : ne demande pas ça au dernier moment avant le passage.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-5"><div class="step-body">
+    <p class="step-item">Choisis avec <span class="jester">JESTER</span> le mode de guidage pour ce passage sur l'ACP</p>
+    <p class="step-detail">Deux logiques possibles : <span class="setting">MANUAL — Target Steering</span> (guidage vers la cible, référencé à la ligne de tir optimale) ou <span class="setting">CPTR PLT — Launch Point Steering</span> (guidage vers le point de largage préplanifié, référencé à la zone de tir autorisée, la LAR). Demande-lui de régler celui que tu veux voler.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Mode PP : le passage et le largage</span></div>
+  <p class="phase-why">Tout est déjà réglé — il ne reste qu'à voler le profil et surveiller les repères qui défilent sur le HUD, propres au mode de guidage choisi en phase 2.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Vole vers la zone en suivant les repères HUD</p>
+    <p class="step-detail">En <span class="setting">Target Steering</span> : TMAX (portée maximale), TOPT (portée optimale), TMIN (portée minimale). En <span class="setting">Launch Point Steering</span> : TMAX (limite de la zone de tir), TREL (point de largage), TMIN (portée minimale). Garde le repère courant en vue, il défile tout seul à mesure que tu approches.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Vérifie que le compte à rebours JDAM est bien descendu sous <span class="setting">5 minutes</span> avant d'entrer dans la zone de tir</p>
+    <p class="step-detail">Si ce n'est pas encore le cas, la bombe n'est pas prête — demande l'état à JESTER plutôt que de larguer à l'aveugle.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item">Confirme <span class="switchname">Master Arm</span> toujours <span class="setting">ON</span></p>
+    <p class="step-detail">Réglé en phase 1 — un dernier coup d'œil avant le passage ne coûte rien, et évite un largage à blanc.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Master arm on and cover open" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-4"><div class="step-body">
+    <p class="step-item">Largue au repère <span class="setting">TREL</span> (ou <span class="setting">TOPT</span> selon le mode choisi)</p>
+    <p class="step-detail">Une pression, une bombe. La JDAM continue seule vers ses coordonnées GPS/INS une fois séparée — pas besoin de garder l'avion pointé dessus après le largage, contrairement à une arme laser.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Store Release" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-5"><div class="step-body">
+    <p class="step-item">Vérifie l'impact avec <span class="jester">JESTER</span></p>
+    <p class="step-detail">Il te confirme le résultat du largage. Si tu as plusieurs cibles préplanifiées, reviens en phase 2 pour la suivante en respectant l'ordre 4-5-3-6.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="note go"><b>Validation</b>Une mission préplanifiée larguée avec succès, en suivant les repères HUD du mode de guidage choisi.</div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Mode TOO : désigne une cible d'opportunité avec JESTER</span></div>
+  <p class="phase-why">Contrairement aux chasseurs modernes, le B(U) n'a pas de mode dédié pour une cible non planifiée. La solution : détourner une mission préplanifiée existante en lui donnant de nouvelles coordonnées en vol, via le LANTIRN. C'est la procédure la plus dense du module — entièrement pilotée par JESTER.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item">Sélecteur du PDCP toujours sur <span class="switchname">A/G</span></p>
+    <p class="step-detail">Revérifie-le si tu changes de mission en cours de vol — même réglage qu'en phase 1.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Display mode air to ground" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item">Configure l'ACP avec <span class="jester">JESTER</span> : station, fusée, type d'arme, puis <span class="setting">MANUAL</span></p>
+    <p class="step-detail">Sélectionner MANUAL sur les options d'attaque de l'ACP fait basculer les temporisations HUD vers TMAX/TOPT/TMIN, comme en Target Steering.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-3"><div class="step-body">
+    <p class="step-item">Fais désigner la cible par <span class="jester">JESTER</span> avec le LANTIRN</p>
+    <p class="step-detail">Il pointe la nacelle sur la cible réelle repérée en vol — c'est ce point qui va devenir un nouveau waypoint dans le plan de vol à l'étape suivante.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-4"><div class="step-body">
+    <p class="step-item">Fais-lui maintenir le bouton <span class="switchname">S-7 (FOV)</span> du LANTIRN pendant 2 secondes</p>
+    <p class="step-detail">Un nouveau waypoint (numéro <span class="setting">51</span> ou suivant) se crée automatiquement dans le plan de vol, avec les coordonnées désignées.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-5"><div class="step-body">
+    <p class="step-item">Fais sélectionner ce waypoint sur le <span class="switchname">CDNU</span>, page d'édition 2/2</p>
+    <p class="step-detail">Il défile horizontalement jusqu'à la deuxième page d'édition du waypoint — c'est là que se trouvent les champs utiles pour la suite.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-6"><div class="step-body">
+    <p class="step-item">Fais ouvrir la page <span class="switchname">JMSN</span> et choisir la station + mission préplanifiée à réutiliser</p>
+    <p class="step-detail">Depuis la page tactique du PTID. C'est cette mission « détournée » qui va recevoir les nouvelles coordonnées de la cible désignée.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="note"><b>Un détail qui a son importance</b>Le transfert de coordonnées envoie toujours les données vers la mission préplanifiée <b>actuellement sélectionnée</b> sur le CDNU. Fais confirmer par JESTER la bonne mission <b>avant</b> le transfert, pas après.</div>
+
+  <div class="step"><input type="checkbox" data-id="p4-7"><div class="step-body">
+    <p class="step-item">Fais vérifier altitude/coordonnées sur le CDNU, transférer via <span class="switchname">LSK 7</span>, puis presser <span class="switchname">UPDATE</span> sur la page JMSN</p>
+    <p class="step-detail">Trois gestes à la suite, tous côté RIO. Sans UPDATE à la fin, la bombe repart avec les anciennes données malgré le transfert.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+  <div class="note warn"><b>Le réflexe à ne jamais sauter</b>Après le transfert LSK 7 : UPDATE. C'est la même règle qu'en mode PP, encore plus facile à oublier ici vu le nombre d'étapes qui précèdent.</div>
+</section>
+
+<!-- ============ PHASE 5 ============ -->
+<section class="phase" data-phase="5">
+  <div class="phase-head"><span class="phase-num">PHASE 5</span><span class="phase-title">Mode TOO : le passage et le largage</span></div>
+  <p class="phase-why">Les coordonnées sont transférées et confirmées — la suite ressemble beaucoup au mode PP, à ceci près que la cible vient d'être créée en vol.</p>
+
+  <div class="step"><input type="checkbox" data-id="p5-1"><div class="step-body">
+    <p class="step-item">Fais sélectionner le guidage vers la cible par <span class="jester">JESTER</span></p>
+    <p class="step-detail">Soit PB9 sur le PTID, soit la touche F4 (BDHI) du CDNU — les deux amènent le même résultat : les repères HUD se calent sur la nouvelle cible.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-2"><div class="step-body">
+    <p class="step-item">Confirme <span class="switchname">Master Arm</span> <span class="setting">ON</span></p>
+    <p class="step-detail">Même vérification qu'en mode PP — un dernier coup d'œil avant le passage.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Master arm on and cover open" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-3"><div class="step-body">
+    <p class="step-item">Suis les repères HUD jusqu'au point de largage</p>
+    <p class="step-detail">Sans point de largage préplanifié pour cette cible improvisée, les repères qui s'affichent sont ceux du Target Steering (TMAX/TOPT/TMIN) — reste dans l'axe et laisse le compte défiler.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-4"><div class="step-body">
+    <p class="step-item">Largue</p>
+    <p class="step-detail">Même geste qu'en mode PP — une pression, une bombe, qui rejoint seule ses coordonnées GPS/INS.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Store Release" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-5"><div class="step-body">
+    <p class="step-item">Vérifie l'impact avec <span class="jester">JESTER</span>, puis remets <span class="switchname">Master Arm</span> <span class="setting">OFF</span> si la mission est finie</p>
+    <p class="step-detail">Capot fermé — évite un largage accidentel plus tard dans la mission si tu n'as plus de cible à traiter.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Master arm off and cover close" href="#"></a></div>
+  </div></div>
+
+  <div class="note go"><b>Validation</b>Tu désignes une cible non planifiée avec le LANTIRN (via JESTER) et tu la détruis à la JDAM, sans relire la procédure une deuxième fois.</div>
+</section>
+
+<!-- ============ PHASE 6 ============ -->
+<section class="phase" data-phase="6">
+  <div class="phase-head"><span class="phase-num">PHASE 6</span><span class="phase-title">Erreurs fréquentes de débutant</span></div>
+  <p class="phase-why">Une dernière relecture avant de voler pour de vrai — les pièges les plus courants ne préviennent jamais : la bombe part simplement avec les mauvaises données, sans message d'erreur.</p>
+
+  <div class="step"><input type="checkbox" data-id="p6-1"><div class="step-body">
+    <p class="step-item">As-tu pressé <span class="switchname">UPDATE</span> après chaque chargement de cartouche ou changement de coordonnées ?</p>
+    <p class="step-detail">C'est l'erreur la plus fréquente et la plus silencieuse : sans UPDATE, la bombe garde ses anciennes données, en mode PP comme en mode TOO.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-2"><div class="step-body">
+    <p class="step-item">As-tu fait confirmer par JESTER la mission préplanifiée sélectionnée sur le CDNU <b>avant</b> de transférer via LSK 7 ?</p>
+    <p class="step-detail">Le transfert envoie toujours les coordonnées vers la mission actuellement sélectionnée pour la station — vérifie avant, pas après, ou tu écrases la mauvaise mission.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-3"><div class="step-body">
+    <p class="step-item">As-tu laissé au moins <span class="setting">8 minutes</span> de préchauffe aux JDAM avant le passage ?</p>
+    <p class="step-detail">Le compte à rebours démarre à la mise sous tension et la bombe n'est prête qu'en dessous de 5 minutes — anticipe, ne demande pas ça au dernier virage avant la cible.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-4"><div class="step-body">
+    <p class="step-item">Le largage se fait-il bien à l'intérieur de la zone de tir autorisée (LAR) ?</p>
+    <p class="step-detail">Hors zone, la bombe tombe court, proprement, inutilement — aucun message ne te prévient, elle rate simplement sa cible.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-5"><div class="step-body">
+    <p class="step-item"><span class="switchname">Master Arm</span> est-il remis en sécurité après le dernier largage ?</p>
+    <p class="step-detail">Capot fermé une fois la mission air-sol terminée, pour éviter tout largage accidentel plus tard dans le vol.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Master arm off and cover close" href="#"></a></div>
+  </div></div>
+
+  <div class="note warn"><b>Le piège le plus coûteux</b>Une erreur d'un seul chiffre dans les coordonnées, saisies par JESTER sur ta demande : un kilomètre d'écart au sol. Fais toujours relire les coordonnées affichées avant UPDATE, surtout en mode TOO où elles viennent d'être créées à la volée.</div>
+</section>
+
+<div class="footlinks">
+  <a href="pas-a-pas.html">&larr; Retour au sommaire Pas à pas</a>
+  <a href="carburant-pannes-retour.html">Étape suivante : Carburant, pannes simples et retour →</a>
+</div>
+
+<p class="src">Sources : manuel réel Heatblur (procédures JDAM mission préplanifiée et cible d'opportunité), simplifiées pour un pilote solo assisté par JESTER — les tâches strictement RIO (pages JMSN/CDNU, désignation LANTIRN, saisie de coordonnées) sont volontairement décrites comme des demandes à JESTER plutôt que des gestes du pilote. Les badges de bouton sont lus en direct dans <code>data/f14bu-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — pas de numéro figé dans le texte.</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-jdam-progress';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function save(state){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+
+/* ---------- Badges de bind dynamiques ----------
+   Chaque fonction citée sur cette page porte son bouton HOTAS entre
+   parenthèses, lu en direct dans data/f14bu-bindings.json (corrigé par
+   l'export de binds si l'utilisateur en a un) — jamais un numéro figé dans
+   le texte, pour ne pas répéter l'erreur du 13/08 (bind changé, texte pas
+   mis à jour). Lien direct vers le mapping, sur le bon contrôle : voir
+   gotoDevNum() dans mapping-hotas.html. */
+const BIND_STORE_KEY='f14bu-export-bindings-v1';
+const AXIS_KEYS={X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL={stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS=null;
+async function loadBindings(){
+  try{ BINDINGS=await fetch('data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS=null; }
+}
+function deriveKeys(n,count){
+  const upper=String(n).toUpperCase(), slots=Math.max(count,1);
+  if(AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if(upper==='SLDR') return new Array(slots).fill('JOY_SLIDER1');
+  if(/^\d+$/.test(n)) return new Array(slots).fill('JOY_BTN'+n);
+  const range=n.match(/^(\d+)-(\d+)$/);
+  if(range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides=(saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry=overrides[b.device+'|'+b.n];
+    const commands=(entry&&Array.isArray(entry.commands))?entry.commands:b.commands;
+    const keys=(entry&&Array.isArray(entry.keys))?entry.keys:deriveKeys(b.n,commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i], n:b.n}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('a[data-bind-cmd]').forEach(el=>{
+    const hits=bindingsFor(el.dataset.bindCmd);
+    el.target='_blank'; el.rel='noopener';
+    if(!hits.length){
+      el.textContent='non affecté';
+      el.classList.add('unbound');
+      el.title='Pas de bind confirmé dans le profil actuel — ouvre le mapping pour vérifier ou en poser un';
+      el.href='mapping-hotas.html';
+      return;
+    }
+    el.textContent=hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ');
+    el.classList.remove('unbound');
+    const h=hits[0];
+    el.title='Ouvrir le mapping sur ce contrôle';
+    el.href='mapping-hotas.html?dev='+h.device+'&n='+encodeURIComponent(h.n);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
+loadBindings().then(paintBindBadges);
+</script>
+</body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — Combat courte portée : AIM-9 et canon, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-bind{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
+.bindtag .ic{opacity:.7;font-size:.9em}
+
+figure{margin:14px 0;border:1px solid var(--line);background:#0b1114;padding:9px}
+figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px;border-radius:1px}
+figcaption{font-size:12px;color:var(--dim);margin-top:8px;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+figcaption a{font-family:var(--mono);font-size:10.5px;white-space:nowrap;display:inline-flex;align-items:center;min-height:22px;padding:0 4px;color:var(--dim);text-decoration:none}
+figcaption a:hover{color:var(--amber)}
+.imgfail{display:none;padding:20px 12px;font-size:12.5px;color:var(--dim);text-align:center}
+figure.failed img{display:none} figure.failed .imgfail{display:block}
+.lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:100%}
+
+.watch{background:var(--panel-2);border:1px solid var(--line);border-radius:2px;padding:10px 14px;margin:8px 0 0;font-family:var(--mono);font-size:12px;color:var(--dim)}
+.watch b{color:var(--ink)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.jester{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--amber)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Combat courte portée : AIM-9 et canon</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — pilote solo</div>
+<h1>Combat courte portée<br>AIM-9 et canon, pas à pas</h1>
+<p class="sub">Le dogfight, l'engagement rapproché où tu vois l'adversaire à l'œil nu. Tu vas apprendre à préparer l'avion pour le combat, reconnaître le ton de verrouillage infrarouge, tirer un AIM-9 Sidewinder puis basculer au canon M61A1 — et gérer ton énergie pour ne pas devenir une cible facile. Chaque étape dit <b>quoi faire</b>, <b>où</b>, et <b>pourquoi</b>.</p>
+
+<div class="intro-box">
+  <p><b>Avant de commencer :</b> ce tuto suppose que tu sais déjà décoller, voler en palier et manœuvrer le F-14BU (trim, AoA de base). Prévois un adversaire simple en mission d'entraînement — un avion qui vole droit au début, puis manœuvre — pour t'exercer sur les deux armes dans le calme.</p>
+  <p><b>Tu n'es pas seul.</b> Le refroidissement du viseur infrarouge et l'armement fin se pilotent depuis le panneau d'armement (ACP) du RIO — sur le F-14BU solo, c'est <span class="jester">JESTER</span> qui s'en occupe via son menu <a class="bindtag" data-bind-cmd="Toggle Menu" href="#" style="vertical-align:middle"></a>. Toi, tu gères le sélecteur d'armes, la sécurité (MASTER ARM) et la détente.</p>
+  <p>Cette page couvre les deux armes les plus simples du Tomcat : autonomes une fois tirées, sans guidage à tenir après le lâcher. C'est la porte d'entrée du combat aérien, avant les missiles radar (AIM-7, AIM-54) qui demandent de maintenir un verrouillage.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée sur cette page porte son bouton HOTAS entre parenthèses (ou <b style="color:var(--dim)">Clic cockpit</b> quand elle n'est pas sur le HOTAS) — clique dessus pour ouvrir le mapping complet directement sur ce contrôle.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Prépare l'avion pour le combat rapproché</span></div>
+  <p class="phase-why">Avant tout engagement, il faut que l'armement soit électriquement prêt et le bon type de munition sélectionné — sinon la détente ne fera strictement rien, au pire moment.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item"><span class="switchname">MASTER ARM</span> <span class="setting">ON, cache ouvert</span></p>
+    <p class="step-detail">Interrupteur à cache sur la manette des gaz, panneau armement. Sans ça, aucune arme ne part — c'est la sécurité principale contre un tir accidentel. Repasse-le sur OFF dès que l'engagement est terminé : réflexe de sécurité de base, comme dans le vrai avion.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Master arm on and cover open" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Master arm off and cover close" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item">Sélecteur d'armes sur <span class="switchname">SIDEWINDER</span></p>
+    <p class="step-detail">Petit sélecteur rotatif sur le manche. Trois positions utiles pour ce tuto : OFF (rien de sélectionné), GUN (canon) et SIDEWINDER (AIM-9). Mets-le sur SIDEWINDER pour commencer — tu basculeras sur GUN plus tard, en phase 4.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Weapon Selector Sidewinder Missiles" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Weapon Selector Off" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item">Demande à <span class="jester">JESTER</span> d'activer le <span class="switchname">refroidissement du viseur infrarouge</span></p>
+    <p class="step-detail">C'est une tâche RIO, pilotée depuis le panneau d'armement (ACP) — sur le F-14BU solo, JESTER s'en charge via son menu. Le viseur du AIM-9 devient utilisable tout de suite, mais met environ <b>60 secondes</b> à atteindre sa pleine performance : lance-le tôt, avant le merge, pas au dernier moment.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-4"><div class="step-body">
+    <p class="step-item">Vérifie ton chargement : combien de <span class="switchname">AIM-9</span> et de munitions <span class="switchname">canon</span> tu emportes</p>
+    <p class="step-detail">Regarde ton chargement dans le briefing de mission ou l'écran de chargement avant le vol. Le canon a un stock limité (quelques secondes de tir cumulées) — sache dès le départ combien de coups francs tu peux te permettre.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Information de briefing, aucune commande à envoyer"><span class="ic">🖱</span>Rien à appuyer</span></div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Lis le HUD en air-air et le ton de verrouillage IR</span></div>
+  <p class="phase-why">Avant de presser quoi que ce soit, apprends à reconnaître les repères qui te disent que tu es prêt à tirer : un cercle sur le HUD et un son dans le casque. Rien de plus n'est nécessaire pour un premier tir Sidewinder.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Repère le <span class="switchname">cercle de position du viseur infrarouge</span>, au centre de la boîte de désignation du HUD</p>
+    <p class="step-detail">Avec le AIM-9 sélectionné (phase 1), ce cercle apparaît dès que le viseur est refroidi. Un cercle <b>plein</b> veut dire que le mode d'accrochage étendu (SEAM) est actif : le viseur balaie 40° autour de ta ligne de visée. Le bouton CAGE-SEAM au manche bascule vers le mode boresight, qui fige le viseur strictement sur l'axe de l'avion (2,5° seulement) — utile pour éviter d'accrocher la mauvaise source de chaleur en combat rapproché.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="CAGE-SEAM button" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item">Écoute le son du viseur : c'est ton vrai indicateur de tir</p>
+    <p class="step-detail">Un <b>grondement grave</b> veut dire que le viseur balaie sans trouver de source infrarouge exploitable. Un <b>sifflement aigu et franc</b> veut dire qu'il regarde une source chaude — un réacteur, typiquement. C'est ce sifflement clair que tu attends avant de presser la détente, pas seulement le cercle visible au HUD.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Repère audio, aucune commande à envoyer"><span class="ic">🖱</span>Rien à appuyer</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item">Pose un <span class="switchname">verrouillage radar</span> bref sur la cible visuelle si tu en as l'occasion</p>
+    <p class="step-detail">Même un accrochage court améliore la solution : le viseur IR reçoit une cue de position et, si tu passes au canon ensuite, tu gagnes portée et vitesse de rapprochement affichées. Pas obligatoire pour tirer un Sidewinder au son seul, mais ça aide beaucoup.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Radar - Toggle PD-STT or P-STT" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-4"><div class="step-body">
+    <p class="step-item">Garde l'œil sur la cible pendant les manœuvres avec le <span class="switchname">padlock visuel</span></p>
+    <p class="step-detail">En dogfight, ton regard décroche vite du bandit dès que l'un de vous deux manœuvre fort. Le padlock aide ta caméra à rester rivée sur la cible désignée — un vrai filet de sécurité pour un débutant qui apprend encore à ne pas perdre le contact visuel.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="All missiles padlock" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-5"><div class="step-body">
+    <p class="step-item">Si le verrouillage devient gênant ou faux, lâche-le</p>
+    <p class="step-detail">Mauvaise cible accrochée, contact perdu dans les manœuvres, ou tu veux juste repartir d'un radar propre : casse le lock plutôt que de te battre avec une donnée fausse à l'écran.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Radar - Break Lock" href="#"></a></div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Tire un AIM-9 Sidewinder</span></div>
+  <p class="phase-why">Une fois le ton entendu et l'arme sélectionnée, le tir Sidewinder est le plus simple du Tomcat — le missile se guide tout seul après le lâcher. L'essentiel est de ne pas tirer trop tôt, ni trop loin.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Reconfirme le sélecteur d'armes sur <span class="switchname">SIDEWINDER</span></p>
+    <p class="step-detail">Un réflexe à prendre avant chaque tir : en plein combat, il est facile d'avoir changé de sélection sans s'en rendre compte, ou d'avoir été repositionné par JESTER.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Weapon Selector Sidewinder Missiles" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Attends le <span class="switchname">sifflement franc</span>, dans l'enveloppe de tir</p>
+    <p class="step-detail">Reste à courte-moyenne distance, à peu près dans l'axe de la cible (pas un angle extrême) — le HUD affiche un repère de zone de tir (LRD) qui te montre la fenêtre où le missile a une vraie chance de suivre la cible. Tirer hors enveloppe gaspille un missile pour rien.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Repère HUD, aucune commande à envoyer"><span class="ic">🖱</span>Rien à appuyer</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item">Presse la détente au <span class="switchname">premier cran</span></p>
+    <p class="step-detail">Le AIM-9 part sur le premier cran de la détente au manche — pas besoin d'enfoncer à fond, ce cran complet est réservé au canon (phase 4). MASTER ARM doit être ON (phase 1), sinon rien ne part.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Trigger First Detent" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-4"><div class="step-body">
+    <p class="step-item">Ne fixe pas le missile après le tir — reprends ta manœuvre</p>
+    <p class="step-detail">Le AIM-9 se guide tout seul une fois parti. Rester en ligne droite à le regarder voler te rend vulnérable si un deuxième adversaire est dans le coin. Garde le padlock actif pour suivre le résultat sans arrêter de piloter.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="All missiles padlock" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-5"><div class="step-body">
+    <p class="step-item">Si le tir rate ou que le verrouillage se perd, repars d'un radar propre avant de retenter</p>
+    <p class="step-detail">Casse le lock, refais le point sur la position de la cible, réécoute le son avant un second tir — plutôt que d'enchaîner un tir désespéré sans nouvelle tonalité franche.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Radar - Break Lock" href="#"></a></div>
+  </div></div>
+</section>
+
+<div class="note warn"><b>Piège n°1</b>Deux Sidewinder tirés coup sur coup sur la même cible sans réécouter le son entre les deux : le second part souvent hors enveloppe et se perd, alors qu'il aurait pu servir sur un deuxième adversaire.</div>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Passe au canon</span></div>
+  <p class="phase-why">Le canon M61A1 est ta dernière carte quand tu es trop près pour un missile ou à court de Sidewinder — mais les munitions sont limitées, chaque rafale compte, contrairement à un missile qu'on ne peut tirer qu'une fois de toute façon.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item">Sélecteur d'armes sur <span class="switchname">GUN</span></p>
+    <p class="step-detail">Même sélecteur rotatif au manche que pour le Sidewinder — bascule-le sur GUN. Le HUD change de symbologie : une croix de tir remplace la boîte de désignation Sidewinder.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Weapon Selector Gun" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item">Sans verrouillage radar : réticule brut, solution de tête seulement</p>
+    <p class="step-detail">C'est le mode LCOS (viseur calculé classique) : tu dois placer le réticule devant la cible à la main, sans donnée de portée ni de vitesse de rapprochement. Ça marche, mais demande plus d'entraînement à l'œil.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Mode par défaut sans lock, aucune commande à envoyer"><span class="ic">🖱</span>Rien à appuyer</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-3"><div class="step-body">
+    <p class="step-item">Avec un <span class="switchname">verrouillage radar</span> — même bref — tu obtiens une solution complète</p>
+    <p class="step-detail">Portée, vitesse de rapprochement et solution de tir calculée s'affichent au HUD dès qu'un lock est posé, même très court. Beaucoup plus facile pour toucher qu'au jugé pur.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Radar - Toggle PD-STT or P-STT" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-4"><div class="step-body">
+    <p class="step-item">Tire par <span class="switchname">rafales courtes</span>, détente au <span class="setting">cran complet</span></p>
+    <p class="step-detail">Le canon utilise le second cran de la détente, celui qui va jusqu'en butée (contrairement au Sidewinder qui n'utilise que le premier cran). Des rafales courtes et répétées touchent mieux et économisent tes munitions qu'une seule rafale interminable.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Trigger" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-5"><div class="step-body">
+    <p class="step-item">Surveille ce qu'il te reste en munitions</p>
+    <p class="step-detail">Contrairement aux missiles, le canon peut se vider en quelques secondes de tir cumulées. Une fois à sec, tu n'as plus que les Sidewinder restants — pense à revérifier ton sélecteur d'armes (phase 1) si tu dois y revenir.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Information de jauge, aucune commande à envoyer"><span class="ic">🖱</span>Rien à appuyer</span></div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 5 ============ -->
+<section class="phase" data-phase="5">
+  <div class="phase-head"><span class="phase-num">PHASE 5</span><span class="phase-title">Gestion d'énergie de base en dogfight</span></div>
+  <p class="phase-why">Un Tomcat qui perd toute sa vitesse en tournant devient une cible facile, même avec le meilleur missile ou le meilleur tir canon du monde. Ces réflexes simples valent pour toute la durée de l'engagement, pas seulement au moment de tirer.</p>
+
+  <div class="step"><input type="checkbox" data-id="p5-1"><div class="step-body">
+    <p class="step-item">N'utilise la <span class="switchname">post-combustion</span> que quand tu as vraiment besoin d'un gain d'énergie</p>
+    <p class="step-detail">Accélérer pour reprendre l'avantage, sortir en vertical, refermer une distance qui s'ouvre — pas en continu dès le merge. La post-combustion consomme vite le carburant et n'aide pas à tourner plus serré.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Afterburner Gate" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-2"><div class="step-body">
+    <p class="step-item">Utilise l'<span class="switchname">aérofrein</span> avec parcimonie pour casser ta trajectoire ou forcer un dépassement adverse</p>
+    <p class="step-detail">Un coup bref d'aérofrein peut faire déborder un adversaire qui te suit de trop près, ou serrer un virage sans perdre autant d'énergie qu'en tirant sur le manche à fond. À utiliser au bon moment, pas en continu — ça reste de la vitesse perdue.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Speed brake extend" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-3"><div class="step-body">
+    <p class="step-item">Regarde l'<span class="switchname">incidence (AoA)</span> plutôt que de tirer sur le manche à angle max</p>
+    <p class="step-detail">Rester dans la fenêtre d'incidence efficace fait tourner l'avion mieux qu'un virage à angle d'attaque maximal, qui bleed (fait perdre) beaucoup de vitesse pour un gain de rayon de virage minime.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Lecture d'instrument, aucune commande à envoyer"><span class="ic">🖱</span>Rien à appuyer</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-4"><div class="step-body">
+    <p class="step-item">Garde le contact visuel en priorité sur l'instrumentation</p>
+    <p class="step-detail">En dogfight, savoir où est le bandit compte plus que lire chaque chiffre au HUD. Le padlock visuel t'aide à ne pas le perdre pendant que tu gères énergie et trajectoire.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="All missiles padlock" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-5"><div class="step-body">
+    <p class="step-item">Sache reconnaître quand décrocher d'un virage plat perdant</p>
+    <p class="step-detail">Vitesse trop basse, énergie épuisée, virage qui ne se resserre plus : c'est le signal pour dégager (extension) ou basculer en combat vertical plutôt que de continuer à forcer un virage à plat que tu es en train de perdre.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Décision de pilotage, aucune commande à envoyer"><span class="ic">🖱</span>Rien à appuyer</span></div>
+  </div></div>
+</section>
+
+<div class="note warn"><b>Piège n°2</b>Suivre l'adversaire dans un virage à angle d'attaque maximal pour ne pas le perdre de vue : c'est souvent lui qui gagne, parce que tu perds plus d'énergie que lui à chaque tour.</div>
+
+<!-- ============ PHASE 6 ============ -->
+<section class="phase" data-phase="6">
+  <div class="phase-head"><span class="phase-num">PHASE 6</span><span class="phase-title">Erreurs fréquentes de débutant</span></div>
+  <p class="phase-why">Les mêmes pièges reviennent presque à chaque premier dogfight. Les connaître à l'avance évite de les répéter en plein combat, quand tu n'as plus le temps de réfléchir.</p>
+
+  <div class="step"><input type="checkbox" data-id="p6-1"><div class="step-body">
+    <p class="step-item">Oublier <span class="switchname">MASTER ARM</span> avant le merge</p>
+    <p class="step-detail">Détente pressée, rien ne part, et tu comprends trop tard pourquoi. Vérifie-le systématiquement dès que tu sais qu'un engagement approche — pas au moment de tirer.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Master arm on and cover open" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-2"><div class="step-body">
+    <p class="step-item">Tirer un Sidewinder sans avoir entendu le sifflement franc</p>
+    <p class="step-detail">Un tir « à l'espoir » sur un grondement grave part quasi toujours dans le décor. Reviens à la phase 2 : le son avant la détente, toujours.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Trigger First Detent" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-3"><div class="step-body">
+    <p class="step-item">Rester sur le sélecteur SIDEWINDER après avoir épuisé tes missiles</p>
+    <p class="step-detail">Presser la détente sur un sélecteur vide ne fait rien, en plein combat rapproché où chaque seconde compte. Si tu n'as plus de Sidewinder, repasse sur GUN tout de suite.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Weapon Selector Gun" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-4"><div class="step-body">
+    <p class="step-item">Fixer le HUD ou le viseur IR en oubliant de scanner le ciel</p>
+    <p class="step-detail">Un dogfight se joue rarement à un contre un jusqu'au bout. Relève la tête régulièrement pour vérifier qu'un second adversaire n'arrive pas pendant que tu es concentré sur ta cible.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Habitude de pilotage, aucune commande à envoyer"><span class="ic">🖱</span>Rien à appuyer</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-5"><div class="step-body">
+    <p class="step-item">Continuer à tourner serré après avoir perdu toute son énergie</p>
+    <p class="step-detail">Le réflexe naturel est de tirer encore plus fort sur le manche pour ne pas décrocher la cible. C'est l'inverse qu'il faut faire : dégage, reprends de l'énergie, reviens. Voir phase 5.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Habitude de pilotage, aucune commande à envoyer"><span class="ic">🖱</span>Rien à appuyer</span></div>
+  </div></div>
+</section>
+
+<div class="note go"><b>Tu es prêt</b>MASTER ARM géré, ton IR reconnu à l'oreille, un Sidewinder et une rafale canon posés proprement, et les réflexes d'énergie de base en tête. La suite logique : les missiles radar, qui demandent de maintenir un verrouillage jusqu'à l'impact — c'est le sujet de la leçon <b>AIM-7 Sparrow</b>.</div>
+
+<div class="footlinks">
+  <a href="pas-a-pas.html">&larr; Retour au sommaire Pas à pas</a>
+  <a href="aim7-sparrow.html">Étape suivante : AIM-7 Sparrow →</a>
+</div>
+
+<p class="src">Sources : symbologie HUD air-air et procédures Sidewinder/canon du manuel Heatblur F-14 v2.0, simplifiées pour un pilote solo assisté par JESTER — les réglages fins du panneau d'armement (ACP) restent volontairement une tâche RIO ici. Les badges de bouton sont lus en direct dans <code>data/f14bu-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) et suivent tout changement que tu enregistres via <a href="export-bindings.html">l'export de binds</a> — pas de numéro figé dans le texte.</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-combat9-progress';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function save(state){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+
+/* ---------- Badges de bind dynamiques ----------
+   Chaque fonction citée sur cette page porte son bouton HOTAS entre
+   parenthèses, lu en direct dans data/f14bu-bindings.json (corrigé par
+   l'export de binds si l'utilisateur en a un) — jamais un numéro figé dans
+   le texte, pour ne pas répéter l'erreur du 13/08 (bind changé, texte pas
+   mis à jour). Lien direct vers le mapping, sur le bon contrôle : voir
+   gotoDevNum() dans mapping-hotas.html. */
+const BIND_STORE_KEY='f14bu-export-bindings-v1';
+const AXIS_KEYS={X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL={stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS=null;
+async function loadBindings(){
+  try{ BINDINGS=await fetch('data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS=null; }
+}
+function deriveKeys(n,count){
+  const upper=String(n).toUpperCase(), slots=Math.max(count,1);
+  if(AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if(upper==='SLDR') return new Array(slots).fill('JOY_SLIDER1');
+  if(/^\d+$/.test(n)) return new Array(slots).fill('JOY_BTN'+n);
+  const range=n.match(/^(\d+)-(\d+)$/);
+  if(range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides=(saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry=overrides[b.device+'|'+b.n];
+    const commands=(entry&&Array.isArray(entry.commands))?entry.commands:b.commands;
+    const keys=(entry&&Array.isArray(entry.keys))?entry.keys:deriveKeys(b.n,commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i], n:b.n}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('a[data-bind-cmd]').forEach(el=>{
+    const hits=bindingsFor(el.dataset.bindCmd);
+    el.target='_blank'; el.rel='noopener';
+    if(!hits.length){
+      el.textContent='non affecté';
+      el.classList.add('unbound');
+      el.title='Pas de bind confirmé dans le profil actuel — ouvre le mapping pour vérifier ou en poser un';
+      el.href='mapping-hotas.html';
+      return;
+    }
+    el.textContent=hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ');
+    el.classList.remove('unbound');
+    const h=hits[0];
+    el.title='Ouvrir le mapping sur ce contrôle';
+    el.href='mapping-hotas.html?dev='+h.device+'&n='+encodeURIComponent(h.n);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
+loadBindings().then(paintBindBadges);
+</script>
+</body>
+</html>

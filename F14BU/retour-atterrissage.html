@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — Retour terrain et atterrissage, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-bind{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
+.bindtag .ic{opacity:.7;font-size:.9em}
+
+figure{margin:14px 0;border:1px solid var(--line);background:#0b1114;padding:9px}
+figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px;border-radius:1px}
+figcaption{font-size:12px;color:var(--dim);margin-top:8px;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+figcaption a{font-family:var(--mono);font-size:10.5px;white-space:nowrap;display:inline-flex;align-items:center;min-height:22px;padding:0 4px;color:var(--dim);text-decoration:none}
+figcaption a:hover{color:var(--amber)}
+.imgfail{display:none;padding:20px 12px;font-size:12.5px;color:var(--dim);text-align:center}
+figure.failed img{display:none} figure.failed .imgfail{display:block}
+.lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:100%}
+
+.watch{background:var(--panel-2);border:1px solid var(--line);border-radius:2px;padding:10px 14px;margin:8px 0 0;font-family:var(--mono);font-size:12px;color:var(--dim)}
+.watch b{color:var(--ink)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.jester{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--amber)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Retour terrain et atterrissage</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — pilote solo</div>
+<h1>Retour terrain<br>et atterrissage</h1>
+<p class="sub">L'atterrissage sur un <b>aérodrome classique</b> — pas le porte-avions, ça c'est une autre leçon. Tu descends vers le terrain, tu voles un circuit standard, tu te configures, et tu poses sur une piste bien large, sans pression de temps. Chaque étape dit <b>quoi faire</b>, <b>où</b>, et <b>pourquoi</b> — et tout ce que tu apprends ici se réutilise tel quel à l'appontage.</p>
+
+<div class="intro-box">
+  <p><b>Avant de commencer :</b> décolle avec cette leçon en tête, ou reprends un vol déjà en l'air (ravitaillé, moteurs sains) que tu ramènes vers un aérodrome. Tu dois connaître le terrain de retour et sa piste active — demande-le à la tour ou à JESTER si tu ne l'as pas déjà.</p>
+  <p><b>Tu n'es pas seul.</b> JESTER gère les communications radio et peut te donner cap et distance vers le terrain. La configuration de l'avion (train, volets) et le pilotage de l'approche restent entièrement à toi.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée sur cette page porte son bouton HOTAS entre parenthèses (ou <b style="color:var(--dim)">Clic cockpit</b> quand elle n'est pas sur le HOTAS) — clique dessus pour ouvrir le mapping complet directement sur ce contrôle.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Prépare ton retour en descente</span></div>
+  <p class="phase-why">Le circuit d'atterrissage se prépare avant d'arriver au-dessus du terrain, pas une fois dedans. Récupérer piste et pression maintenant t'évite d'être surchargé près du sol, au moment où tu dois surtout piloter.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Demande à <span class="jester">JESTER</span> la <span class="switchname">piste active</span> et le <span class="switchname">QNH</span> du terrain</p>
+    <p class="step-detail">Ouvre son menu <a class="bindtag" data-bind-cmd="Toggle Menu" href="#" style="vertical-align:middle"></a> — c'est lui qui contacte la tour pour toi et te ramène l'information. Sans piste connue à l'avance, tu risques d'arriver du mauvais côté du terrain et de devoir improviser un circuit entier.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item">Recale l'<span class="switchname">altimètre</span> sur le QNH reçu</p>
+    <p class="step-detail">Molette de calage (Kollsman) en bas à droite de l'instrument, panneau instruments gauche — la même qu'au démarrage, mais le QNH a pu changer depuis. Une altitude affichée fausse fausse tout ton circuit, en particulier ton altitude de vent arrière.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item">Réduis progressivement en descente vers le terrain</p>
+    <p class="step-detail">Ramène doucement les deux manettes, sans couper le régime brutalement — tu veux arriver au niveau du circuit à une vitesse raisonnable, pas plonger et devoir tout ressortir en catastrophe. Si tu perds de l'altitude plus vite que la vitesse, sors l'aérofrein le temps qu'il faut.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Throttle Left" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Throttle Right" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Speed brake extend" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-4"><div class="step-body">
+    <p class="step-item">Rentre l'aérofrein avant d'entrer dans le circuit</p>
+    <p class="step-detail">Une fois ta vitesse et ton altitude d'arrivée atteintes, referme-le — tu ne veux pas garder de la traînée parasite pendant que tu commences à te configurer pour l'atterrissage. Vise une arrivée en vent arrière déjà stabilisée, ni trop rapide ni trop haute.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Speed brake retract" href="#"></a></div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Entrée dans le circuit et configuration</span></div>
+  <p class="phase-why">Le circuit standard se vole en configuration stabilisée <b>avant</b> le dernier virage vers la finale : train, volets et anti-dérapage se règlent en vent arrière, jamais improvisés à quelques secondes du seuil de piste.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Sous la vitesse limite de sortie, <span class="switchname">train d'atterrissage</span> <span class="setting">DOWN</span></p>
+    <p class="step-detail">Poignée LDG GEAR, console verticale gauche. Sors-le tôt en vent arrière plutôt qu'au dernier moment — s'il refuse de sortir ou de se verrouiller, tu veux le temps de réagir loin du sol, pas en courte finale.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Gears Down" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item"><span class="switchname">Volets</span> sortis, un cran</p>
+    <p class="step-detail">Position intermédiaire (maneuver flaps), pas la position d'urgence. Ça réduit ta vitesse de décrochage et te fait tenir une incidence plus confortable en approche — c'est la configuration atterrissage normale du Tomcat sur terrain comme au bateau.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Volets - 1 cran" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item"><span class="switchname">HOOK BYPASS</span> sur <span class="setting">FIELD</span></p>
+    <p class="step-detail">Sélecteur sur le panneau train/crosse, console verticale gauche. C'est l'inverse exact de ce que tu feras au porte-avions (position CARRIER) : sur terrain, la crosse reste rentrée et ne sert à rien en approche normale.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Lights Hook Bypass FIELD" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-4"><div class="step-body">
+    <p class="step-item">Vérifie la <span class="switchname">crosse</span> rentrée</p>
+    <p class="step-detail">Elle l'est déjà par défaut si tu ne l'as jamais sortie de tout le vol — confirme simplement, tu ne t'en sers pas sur une piste sauf urgence (voir l'encadré plus bas).</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Hook Retract" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-5"><div class="step-body">
+    <p class="step-item"><span class="switchname">ANTI SKID / SPOILER BK</span> sur <span class="setting">BOTH</span></p>
+    <p class="step-detail">Même panneau qu'au démarrage. Confirme qu'il est resté sur BOTH — c'est ce qui te donne un freinage anti-dérapage efficace au toucher des roues, indispensable sur piste classique (à l'inverse du porte-avions, où on le coupe).</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Antiskid & Spoiler BK - Both" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-6"><div class="step-body">
+    <p class="step-item">Coupe l'<span class="switchname">auto-manette</span> si tu l'utilisais en croisière</p>
+    <p class="step-detail">Facultatif selon tes habitudes, mais en débutant il est plus simple de piloter les manettes toi-même en approche pour bien sentir le lien entre poussée et taux de descente. Tu peux aussi la garder active si tu es à l'aise avec.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Toggle Auto Throttle" href="#"></a></div>
+  </div></div>
+
+  <div class="watch">👀 Une fois train, volets et manettes en configuration : le voyant <b>WHEELS</b> (montant de pare-brise gauche) doit s'éteindre. S'il clignote encore, un des trois n'est pas dans la bonne position — vérifie avant de continuer vers la finale.</div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Finale : tenue de vitesse et d'incidence</span></div>
+  <p class="phase-why">Deux règles suffisent en finale : l'assiette vise le point de toucher, la poussée règle le taux de descente. Et tu arrives déjà stabilisé en incidence <b>avant</b> le dernier virage — ce que tu n'as pas stabilisé en amont, tu ne le rattraperas pas dans les dix dernières secondes.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Stabilise ton <span class="switchname">incidence</span> avant le virage vent arrière → base</p>
+    <p class="step-detail">Regarde l'indexeur d'incidence (à côté du HUD) plutôt que le badin : c'est ton instrument principal en approche. Ajuste l'assiette pour tenir le repère central avant même d'entamer le virage vers la finale.</p>
+    <div class="watch">👀 Indexeur d'incidence : chevron haut = trop rapide, cercle central = incidence correcte, chevron bas = trop lent. Vise le cercle, pas les extrêmes.</div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Pilote l'<span class="switchname">assiette</span> vers le point de toucher, la <span class="switchname">poussée</span> vers le taux de descente</p>
+    <p class="step-detail">Ne mélange pas les deux commandes : le manche vise un point fixe sur la piste, les manettes corrigent si tu descends trop vite ou pas assez. C'est la technique qui se transpose telle quelle à l'appontage.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Throttle Left" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Throttle Right" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item">Soulage les efforts au manche avec le <span class="switchname">trim</span></p>
+    <p class="step-detail">Un avion mal trimmé te fatigue et rend les micro-corrections imprécises pile quand tu en as le plus besoin. Trimme dès que tu sens une force constante dans une direction, pas seulement une fois posé au sol.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Trim Pitch Down" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Trim Pitch Up" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Trim Roll Left Wing Down" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Trim Roll Right Wing Down" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-4"><div class="step-body">
+    <p class="step-item">Corrections fines optionnelles au <span class="switchname">DLC</span></p>
+    <p class="step-detail">L'axe de contrôle direct de portance (Direct Lift Control), sur la molette de la manette droite, ajuste le taux de descente sans changer l'assiette ni le régime moteur — un outil de précision surtout utile au porte-avions, mais que tu peux commencer à sentir dès maintenant sur terrain, où l'erreur pardonne davantage.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="DLC / Maneuver Flaps" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-5"><div class="step-body">
+    <p class="step-item">Si l'approche n'est pas stabilisée, <span class="switchname">remets les gaz</span> sans hésiter</p>
+    <p class="step-detail">Décision franche, plein gaz aux deux manettes, éventuellement la post-combustion si tu as besoin de puissance immédiate — pas de demi-mesure. Une remise de gaz coûte deux minutes ; une approche forcée peut coûter l'avion.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Throttle Left" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Throttle Right" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Afterburner Gate" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="watch">👀 Garde un œil sur les voyants du montant de pare-brise gauche : <b>BRAKES</b> (panne d'anti-dérapage ou de freins), <b>NWS ENGA</b> (direction de roue avant engagée), <b>AUTO THROT</b> (régulation auto de vitesse déconnectée). Rien d'alarmant en soi, mais bon à savoir avant de poser.</div>
+
+  <div class="note warn"><b>Piège</b>Approcher trop vite. C'est l'erreur la plus courante — une vitesse excessive allonge ton point de toucher, réduit ta marge de freinage, et rend l'avion moins prévisible juste avant le contact.</div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Poser et vitesse de roulage</span></div>
+  <p class="phase-why">Le toucher des roues n'est pas la fin du travail : le train principal doit se poser en premier, et tu gardes le contrôle de l'axe de piste pendant que tu ralentis, pas après.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item">Réduis les <span class="switchname">manettes</span> vers le ralenti juste avant le toucher</p>
+    <p class="step-detail">Ne coupe pas brutalement en plein palier — laisse la poussée s'effacer progressivement en gardant ton incidence, jusqu'au contact des roues principales.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Throttle Left" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Throttle Right" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item">Pose le <span class="switchname">train principal</span> d'abord, garde le nez levé un instant</p>
+    <p class="step-detail">Ne pousse pas le manche pour plaquer la roue avant tout de suite — laisser le nez légèrement haut quelques secondes après le toucher freine l'avion par traînée aérodynamique (aérofreinage), avant même d'utiliser les freins de roue.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-3"><div class="step-body">
+    <p class="step-item">Repose doucement le <span class="switchname">nez</span>, puis freine progressivement</p>
+    <p class="step-detail">Une fois le nez posé, applique les freins de roue par pression progressive sur le haut des palonniers — jamais un coup sec, l'anti-dérapage travaille mais ne remplace pas un pilotage propre.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Wheel Brake Left" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Wheel Brake Right" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-4"><div class="step-body">
+    <p class="step-item">Tiens l'<span class="switchname">axe de piste</span> au palonnier</p>
+    <p class="step-detail">L'axe rudder des pédales pilote la roue avant une fois au sol (direction de roue avant) en plus de la gouverne de direction en vol — de petites corrections suffisent, ne zigzague pas.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Rudder" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-5"><div class="step-body">
+    <p class="step-item">Corrige au différentiel si l'avion dérive d'un côté</p>
+    <p class="step-detail">En complément du palonnier, les commandes de lacet gauche/droite dédiées peuvent aider à recentrer l'avion si une rafale ou un pneu inégalement freiné te fait dériver — à utiliser avec parcimonie, l'axe rudder suffit dans l'immense majorité des cas.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Aircraft Rudder Left" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Aircraft Rudder Right" href="#"></a>
+    </div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 5 ============ -->
+<section class="phase" data-phase="5">
+  <div class="phase-head"><span class="phase-num">PHASE 5</span><span class="phase-title">Sortie de piste et arrêt</span></div>
+  <p class="phase-why">Une fois ralenti à vitesse de roulage sûre, dégage la piste au plus vite pour libérer la place à ceux qui suivent, puis range l'avion en configuration propre.</p>
+
+  <div class="step"><input type="checkbox" data-id="p5-1"><div class="step-body">
+    <p class="step-item">Dégage la piste par la première bretelle utilisable</p>
+    <p class="step-detail">Continue à freiner progressivement en roulant vers la sortie — ne t'arrête pas sur la piste elle-même sauf nécessité, un avion derrière toi peut déjà être en courte finale.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Wheel Brake Left" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Wheel Brake Right" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-2"><div class="step-body">
+    <p class="step-item">Une fois hors piste, <span class="switchname">volets</span> rentrés</p>
+    <p class="step-detail">Plus besoin de portance supplémentaire au roulage — les rentrer évite de les user ou de les abîmer inutilement en roulant.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Volets rentrés" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-3"><div class="step-body">
+    <p class="step-item">Vérifie l'<span class="switchname">aérofrein</span> rentré</p>
+    <p class="step-detail">Confirme sur l'indicateur SPD BRK qu'il affiche « IN » — pas de traînée parasite à traîner jusqu'au parking.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Speed brake retract" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-4"><div class="step-body">
+    <p class="step-item">À l'arrêt complet, <span class="switchname">frein de parking</span> serré</p>
+    <p class="step-detail">Poignée jaune/noire « BRAKE-PULL », panneau train, console verticale gauche — la même qu'au démarrage. Serre-le dès que tu es immobile, avant même de couper les moteurs.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Parking brake pull" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-5"><div class="step-body">
+    <p class="step-item">Préviens la <span class="switchname">tour</span> que tu as dégagé la piste</p>
+    <p class="step-detail">Par le menu radio ou en le demandant à JESTER — utile en multijoueur pour que les autres pilotes sachent la piste libre, et bonne habitude à prendre même en solo.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Action via le menu radio F10, pas un bouton du cockpit"><span class="ic">☰</span>Menu F10 / JESTER</span></div>
+  </div></div>
+
+  <div class="note">Le <b>crochet d'appontage</b> (<a class="bindtag" data-bind-cmd="Hook Extend" href="#"></a> / <a class="bindtag" data-bind-cmd="Hook Retract" href="#"></a>) ne sert à rien sur un atterrissage piste normal — il reste rentré du début à la fin de cette leçon. Il n'a d'utilité sur terrain qu'en cas de <b>barrière d'arrêt d'urgence</b> (panne totale de freins, piste courte, moteur en feu) : la crosse accroche alors un filin tendu en travers de la piste, exactement comme au porte-avions. Une situation de secours, pas une manœuvre de routine.</div>
+</section>
+
+<div class="note go"><b>Tu es prêt</b>Roues au sol, freins tenus, avion immobile hors piste, frein de parking serré. Cinq circuits complets et cinq approches d'affilée à l'incidence de référence, et cette séquence deviendra un réflexe — exactement ce qu'il te faut avant d'attaquer le circuit CASE I au porte-avions.</div>
+
+<div class="footlinks">
+  <a href="pas-a-pas.html">&larr; Retour au sommaire Pas à pas</a>
+  <a href="navigation-hud-tacan.html">Étape suivante : Navigation : HUD, HSD/TID, TACAN →</a>
+</div>
+
+<p class="src">Sources : checklist et procédures réelles Heatblur pour l'atterrissage terrain (section A7 du cursus complet), simplifiées en séquence actionnable pour un pilote solo assisté par JESTER. Les badges de bouton sont lus en direct dans <code>data/f14bu-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) et suivent tout changement que tu enregistres via <a href="export-bindings.html">l'export de binds</a> — pas de numéro figé dans le texte.</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-retour-progress';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function save(state){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+
+/* ---------- Badges de bind dynamiques ----------
+   Chaque fonction citée sur cette page porte son bouton HOTAS entre
+   parenthèses, lu en direct dans data/f14bu-bindings.json (corrigé par
+   l'export de binds si l'utilisateur en a un) — jamais un numéro figé dans
+   le texte, pour ne pas répéter l'erreur du 13/08 (bind changé, texte pas
+   mis à jour). Lien direct vers le mapping, sur le bon contrôle : voir
+   gotoDevNum() dans mapping-hotas.html. */
+const BIND_STORE_KEY='f14bu-export-bindings-v1';
+const AXIS_KEYS={X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL={stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS=null;
+async function loadBindings(){
+  try{ BINDINGS=await fetch('data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS=null; }
+}
+function deriveKeys(n,count){
+  const upper=String(n).toUpperCase(), slots=Math.max(count,1);
+  if(AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if(upper==='SLDR') return new Array(slots).fill('JOY_SLIDER1');
+  if(/^\d+$/.test(n)) return new Array(slots).fill('JOY_BTN'+n);
+  const range=n.match(/^(\d+)-(\d+)$/);
+  if(range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides=(saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry=overrides[b.device+'|'+b.n];
+    const commands=(entry&&Array.isArray(entry.commands))?entry.commands:b.commands;
+    const keys=(entry&&Array.isArray(entry.keys))?entry.keys:deriveKeys(b.n,commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i], n:b.n}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('a[data-bind-cmd]').forEach(el=>{
+    const hits=bindingsFor(el.dataset.bindCmd);
+    el.target='_blank'; el.rel='noopener';
+    if(!hits.length){
+      el.textContent='non affecté';
+      el.classList.add('unbound');
+      el.title='Pas de bind confirmé dans le profil actuel — ouvre le mapping pour vérifier ou en poser un';
+      el.href='mapping-hotas.html';
+      return;
+    }
+    el.textContent=hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ');
+    el.classList.remove('unbound');
+    const h=hits[0];
+    el.title='Ouvrir le mapping sur ce contrôle';
+    el.href='mapping-hotas.html?dev='+h.device+'&n='+encodeURIComponent(h.n);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
+loadBindings().then(paintBindBadges);
+</script>
+</body>
+</html>

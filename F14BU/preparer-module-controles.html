@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — Préparer le module et les contrôles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-bind{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
+.bindtag .ic{opacity:.7;font-size:.9em}
+
+.watch{background:var(--panel-2);border:1px solid var(--line);border-radius:2px;padding:10px 14px;margin:8px 0 0;font-family:var(--mono);font-size:12px;color:var(--dim)}
+.watch b{color:var(--ink)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Préparer le module et les contrôles</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — avant le premier vol</div>
+<h1>Préparer le module<br>et les contrôles</h1>
+<p class="sub">Le tuto à faire <b>avant même</b> « Démarrage à froid » : vérifier que le mod est bien chargé, régler tes axes pour un pilotage doux, et activer deux ou trois aides qui rendent l'apprentissage moins frustrant. Vingt minutes ici t'en épargnent des heures plus tard.</p>
+
+<div class="intro-box">
+  <p><b>Ce que cette page couvre :</b> vérifier l'installation du mod, régler les <b>courbes</b> de tes axes (douceur, zone morte), et les aides d'apprentissage (repères visuels, pistes de vol).</p>
+  <p><b>Ce que cette page ne couvre PAS :</b> quel bouton assigner à quelle fonction — c'est le sujet de la leçon <a href="section-a-illustree.html#a2" style="color:var(--amber)">A2 · Commandes et bindings</a> et de la page <a href="mapping-hotas.html" style="color:var(--amber)">Mapping HOTAS</a>. Fais cette page-ci en premier : des axes mal réglés (zone morte trop grande, courbe absente) rendent n'importe quel bind difficile à juger correctement.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Vérifie que le F-14B(U) est bien chargé</span></div>
+  <p class="phase-why">Le B(U) est un mod communautaire qui vient se poser sur le F-14 de base d'Heatblur. S'il n'est pas au bon endroit, DCS lance quand même un F-14 — juste pas celui pour lequel ce site est écrit, avec un cockpit et des commandes différents.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Vérifie que DCS propose bien <span class="switchname">deux</span> F-14 distincts</p>
+    <p class="step-detail">Dans l'écran de sélection d'avion (encyclopédie ou éditeur de mission), tu dois voir le <b>F-14A/B</b> classique d'Heatblur <b>et</b> une entrée séparée pour le <b>F-14B(U)</b>. Si tu n'en vois qu'un seul, le mod BU n'est pas chargé — revérifie son installation avant de continuer.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item">Repère le dossier d'entrées séparé <span class="switchname">F-14BU</span></p>
+    <p class="step-detail">Preuve la plus fiable que DCS traite bien le B(U) comme un avion à part (et pas juste une livrée) : un dossier <code>Saved Games\DCS\Config\Input\F-14BU\</code> doit apparaître dès que tu as ouvert l'écran Contrôles une première fois avec le B(U) sélectionné — distinct du dossier <code>F-14</code> du Tomcat classique. C'est ce dossier que toutes les pages de ce site lisent pour connaître tes vrais binds.</p>
+    <div class="watch">⚠️ Si tu as <b>DCS stable</b> et <b>DCS Open Beta</b> installés en parallèle, chacun a son propre dossier <code>Saved Games</code> (<code>Saved Games\DCS</code> vs <code>Saved Games\DCS.openbeta</code>). Vérifie que tu configures la même instance que celle que tu lances pour jouer.</div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item">Vérifie que le mod correspond à ta version de DCS</p>
+    <p class="step-detail">Le B(U) suit ses propres mises à jour, pas toujours synchronisées avec celles de DCS. Après une mise à jour de DCS, si le B(U) disparaît de la liste des avions ou plante au chargement, c'est généralement signe qu'une nouvelle version du mod doit être réinstallée par-dessus.</p>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Décide qui fait quoi, avant de brancher les binds</span></div>
+  <p class="phase-why">Assigner les boutons dans le vif du sujet, sans plan, c'est se retrouver à devoir tout refaire une fois qu'on a compris comment le grip est organisé. Deux minutes de réflexion ici t'évitent ça.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Repère quel périphérique physique porte quel axe <b>avant</b> d'assigner quoi que ce soit</p>
+    <p class="step-detail">Manche = roulis/tangage (+ lacet si tu utilises le twist). Manette des gaz = poussée gauche/droite, souvent sur un axe secondaire (RX/RY) plutôt que l'axe principal — vérifie le tien, ça varie d'un modèle à l'autre. Pédales = lacet et/ou freins selon ton pédalier.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item">Traque les axes par défaut qui traînent sur le <b>mauvais</b> périphérique</p>
+    <p class="step-detail">DCS assigne roulis→X, tangage→Y, lacet→RZ et gaz→Z <b>par défaut sur chaque périphérique détecté</b> — pas seulement sur le manche. Si tu ne les retires pas explicitement de ta manette des gaz et de tes pédales, ils restent actifs et entrent en concurrence silencieuse avec le manche : l'avion « tire » légèrement sans raison apparente. Dans l'écran Contrôles, filtre par catégorie « Axes » et vérifie chaque périphérique un par un.</p>
+    <div class="note warn"><b>Piège classique</b>C'est l'erreur la plus fréquente et la plus difficile à diagnostiquer pour un débutant : l'avion tire légèrement sans qu'aucun bind ne semble fautif, parce que le coupable est un axe par défaut sur un <em>autre</em> périphérique que celui qu'on regarde.</div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item">Assigne les boutons essentiels via la leçon dédiée</p>
+    <p class="step-detail">Le détail bouton par bouton (train, frein de parking, sélecteur d'armes, menu Jester, etc.) est couvert en profondeur dans <a href="section-a-illustree.html#a2" style="color:var(--amber)">A2 · Commandes et bindings</a>, avec le plan complet sur <a href="mapping-hotas.html" style="color:var(--amber)">Mapping HOTAS</a>. Reviens sur cette page-ci seulement si tes axes se comportent bizarrement.</p>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Règle les courbes d'axes pour un pilotage doux</span></div>
+  <p class="phase-why">Assigner un axe ne suffit pas : sans réglage, le centre du manche est souvent trop sensible (le moindre mouvement de poignet fait tanguer l'avion) pendant que les grands débattements manquent de punch. Les courbes corrigent ça sans changer le matériel.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Ouvre <span class="switchname">Réglages → Contrôles</span>, sélectionne ton périphérique, puis <span class="switchname">Réglage des axes</span></p>
+    <p class="step-detail">Cet écran existe pour chaque axe assigné : une courbe (ligne diagonale modifiable), une zone morte (deadzone) au centre, et une saturation en bout de course. La structure est stable depuis des années dans DCS, même si l'habillage visuel peut varier légèrement selon la version.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Roulis et tangage (manche) : ajoute de la <span class="switchname">courbure</span>, garde une <span class="switchname">zone morte</span> minimale</p>
+    <p class="step-detail">Une courbure positive (typiquement <b>15 à 25</b>) adoucit la zone centrale sans toucher aux extrêmes — utile en croisière et en approche, sans perdre en réactivité pour les manœuvres franches. Une petite zone morte (<b>2 à 5 %</b>) absorbe le bruit mécanique du manche sans le rendre mou.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item">Palonnier (pédales) : zone morte plus large si le pédalier est nerveux</p>
+    <p class="step-detail">Beaucoup de pédaliers sont plus sensibles que nécessaire au centre. Si l'avion louvoie tout seul au roulage, monte la zone morte du lacet à <b>5-10 %</b> avant de chercher ailleurs.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-4"><div class="step-body">
+    <p class="step-item">Manettes des gaz : vérifie que <span class="switchname">OFF</span> correspond bien à 0 % et <span class="switchname">MIL</span> à 100 %</p>
+    <p class="step-detail">Certains potentiomètres dérivent avec l'âge : la butée arrière physique n'atteint plus tout à fait 0 %, ou la butée avant plafonne avant 100 %. Ajuste la saturation en bas et en haut de la courbe pour que la manette virtuelle couvre bien toute la plage — sinon tu ne pourras jamais couper complètement les moteurs, ou jamais atteindre pleine poussée militaire.</p>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Active les aides utiles pour apprendre</span></div>
+  <p class="phase-why">Rien ici n'est obligatoire ni « facile mode » au sens honteux du terme — ce sont des outils de travail. Sache ce qu'ils font pour décider toi-même de les garder ou de les couper une fois à l'aise.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item">Repères visuels (<span class="switchname">Labels</span>) — <span class="setting">optionnel</span></p>
+    <p class="step-detail">Dans les options de difficulté (onglet Gameplay), les labels affichent le type et parfois la distance des appareils visibles. Utile au tout début pour apprendre à repérer un ailier ou une cible en formation sans les perdre visuellement — beaucoup de pilotes les coupent ensuite une fois l'œil entraîné.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item">Sais où trouver tes <span class="switchname">pistes de vol</span> (Tracks) pour te relire</p>
+    <p class="step-detail">DCS enregistre automatiquement chaque vol dans <code>Saved Games\DCS\Tracks\</code> (ou <code>DCS.openbeta\Tracks\</code> selon ton instance). Après un vol qui t'a semblé bizarre, rejoue la piste depuis l'écran de debrief ou le menu principal — tu peux accélérer, ralentir, et changer de caméra pour voir ce qui a cloché, y compris depuis l'extérieur de l'avion.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-3"><div class="step-body">
+    <p class="step-item">Retiens la <span class="switchname">pause active</span> et la vue extérieure libre</p>
+    <p class="step-detail">Pendant un vol d'entraînement solo (pas en multijoueur), tu peux mettre en pause pour observer tranquillement une position d'interrupteur ou relire une checklist, puis reprendre. Combine ça avec la vue extérieure libre pour vérifier visuellement une configuration (train sorti, ailes en flèche, aérofrein) plutôt que de deviner.</p>
+  </div></div>
+</section>
+
+<div class="note go"><b>Tu es prêt</b>Le mod est identifié, tes axes ont une plage propre et des courbes qui ne fatiguent pas le poignet, et tu sais où revoir un vol qui a mal tourné. Prochaine étape : le tout premier vol, moteurs coupés jusqu'à prêt à rouler — c'est le sujet de <b>Démarrage à froid, pas à pas</b>.</div>
+
+<div class="footlinks">
+  <a href="pas-a-pas.html">&larr; Retour au sommaire Pas à pas</a>
+  <a href="demarrage-a-froid.html">Étape suivante : Démarrage à froid, pas à pas →</a>
+</div>
+
+<p class="src">Sources : structure des écrans Réglages/Contrôles de DCS World (stable depuis plusieurs versions — les libellés exacts peuvent varier légèrement selon la langue et la version installée), et pièges d'axes par défaut documentés en configurant le matériel de ce site (voir <a href="section-a-illustree.html#a2" style="color:var(--dim)">A2 · Commandes et bindings</a>).</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-preparemodule-progress';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function save(state){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+</script>
+</body>
+</html>

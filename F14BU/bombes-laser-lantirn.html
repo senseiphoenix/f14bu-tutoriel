@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — Bombes guidées laser et LANTIRN, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-bind{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
+.bindtag .ic{opacity:.7;font-size:.9em}
+
+figure{margin:14px 0;border:1px solid var(--line);background:#0b1114;padding:9px}
+figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px;border-radius:1px}
+figcaption{font-size:12px;color:var(--dim);margin-top:8px;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+figcaption a{font-family:var(--mono);font-size:10.5px;white-space:nowrap;display:inline-flex;align-items:center;min-height:22px;padding:0 4px;color:var(--dim);text-decoration:none}
+figcaption a:hover{color:var(--amber)}
+.imgfail{display:none;padding:20px 12px;font-size:12.5px;color:var(--dim);text-align:center}
+figure.failed img{display:none} figure.failed .imgfail{display:block}
+.lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:100%}
+
+.watch{background:var(--panel-2);border:1px solid var(--line);border-radius:2px;padding:10px 14px;margin:8px 0 0;font-family:var(--mono);font-size:12px;color:var(--dim)}
+.watch b{color:var(--ink)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.jester{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--amber)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Bombes guidées laser et LANTIRN</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — pilote solo</div>
+<h1>Bombes guidées laser<br>et LANTIRN, pas à pas</h1>
+<p class="sub">Désignation, illumination, largage — <b>avec JESTER</b>. Chaque étape dit <b>quoi faire</b>, <b>où</b>, et <b>pourquoi</b>.</p>
+
+<div class="intro-box">
+  <p><b>C'est un travail d'équipe, pas une action solo au HUD.</b> Sur le B(U) piloté seul, c'est <b>JESTER</b> qui tient la nacelle LANTIRN de bout en bout : il cherche la cible, l'accroche, l'illumine au laser et tient l'illumination jusqu'à l'impact. Toi, tu ne touches jamais la désignation laser toi-même — ton travail est de voler un profil d'attaque stable qui garde la cible dans le champ de la nacelle, d'armer, et de larguer au bon moment sur instruction de JESTER.</p>
+  <p>C'est très différent d'une bombe lisse en <b>CCIP</b> : là, tout se passe au HUD, en solo, réticule sur cible. Ici, la moitié du travail se passe dans le menu JESTER, et rien n'apparaît au HUD tant que JESTER n'a pas accroché et illuminé la cible.</p>
+  <p><b>Avant de commencer :</b> fais d'abord <a href="travailler-avec-jester.html" style="color:var(--amber)">Travailler avec JESTER</a> si ce n'est pas déjà fait — tu dois être à l'aise avec le menu (1/2/3 pressions) avant d'attaquer cette leçon. Prévois une mission avec au moins une LGB (bombe guidée laser classique) chargée, cible fixe non défendue pour ton premier essai.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée sur cette page porte son bouton HOTAS entre parenthèses (ou <b style="color:var(--dim)">RIO · JESTER</b> quand c'est une tâche de ton équipier, pas une commande pilote) — clique dessus pour ouvrir le mapping complet directement sur ce contrôle.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Préparation avant l'attaque</span></div>
+  <p class="phase-why">Tout se joue à distance de la cible : armement sélectionné, mode air-sol affiché, et surtout JESTER briefé sur ce qu'il doit désigner. Une fois en approche finale, tu n'as plus le temps de régler ça.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Confirme que ta LGB (bombe guidée laser) est bien sélectionnée</p>
+    <p class="step-detail">Le choix de la station et de l'arme se fait normalement en amont, à l'ACP (panneau de commande armement), tâche RIO gérée par JESTER. Vérifie simplement au HUD/PTID qu'une station chargée en LGB est bien celle qui sortira au largage — sinon demande à JESTER de la sélectionner avant de continuer.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item">Affiche le <span class="switchname">mode air-sol</span> sur le PTID</p>
+    <p class="step-detail">Sélecteur de mode d'affichage sur le panneau PTO2 — bascule sur le mode air-sol pour voir les repères de largage et le retour de la nacelle LANTIRN une fois que JESTER l'aura pointée sur la cible.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Display mode air to ground" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item"><span class="switchname">Master arm</span> <span class="setting">ON</span>, volet ouvert</p>
+    <p class="step-detail">Tant que le master arm est éteint, aucune arme ne part — c'est volontairement la dernière étape avant d'entrer dans le profil d'attaque, jamais faite au parking ou en transit.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Master arm on and cover open" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-4"><div class="step-body">
+    <p class="step-item">Ouvre le menu et briefe <span class="jester">JESTER</span> sur la cible à désigner</p>
+    <p class="step-detail">Ouvre son menu et donne-lui la cible (contact visuel, coordonnées ou repère au sol selon la mission) avant d'entrer dans le profil d'attaque — pas pendant. C'est cette instruction qui déclenche sa recherche à la nacelle un peu plus tard.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Toggle Menu" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-5"><div class="step-body">
+    <p class="step-item">Vérifie que la cible n'est pas défendue, pour ton premier essai</p>
+    <p class="step-detail">Choisis un scénario d'entraînement sans DCA active : le but ici est de comprendre l'enchaînement JESTER, pas d'éviter des tirs en même temps. Tu ajouteras la défense une fois le geste acquis.</p>
+  </div></div>
+
+  <div class="note"><b>Pourquoi si tôt</b>Le briefing de la cible à JESTER doit être fait avant d'entamer le profil d'attaque : il lui faut du temps pour chercher, accrocher et confirmer avant que tu n'aies besoin de l'illumination.</div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Le profil d'attaque en approche</span></div>
+  <p class="phase-why">Ton unique rôle pendant cette phase : voler un profil stable et prévisible. La nacelle de JESTER doit garder la cible dans son champ de vue pendant toute l'approche — un avion qui zigzague le lui rend impossible.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Établis une trajectoire stable vers la cible, cap et altitude constants</p>
+    <p class="step-detail">Pas besoin de piqué prononcé comme en CCIP : une LGB peut être larguée à plat ou en léger piqué, du moment que la cible reste devant et visible de la nacelle. Évite les virages serrés dans les dernières miles.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item">Laisse <span class="jester">JESTER</span> chercher et accrocher la cible au LANTIRN</p>
+    <p class="step-detail">C'est lui qui pointe la nacelle, règle la vidéo, et cherche visuellement la cible que tu lui as donnée en phase 1. Tu n'as rien à faire ici sinon continuer à voler droit — il te signalera l'accroche.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item">Surveille les repères temporels qui apparaissent au HUD</p>
+    <p class="step-detail">Une fois dans l'enveloppe de tir, le HUD affiche des repères de temps avant largage et avant impact, ainsi que la distance oblique à la cible — c'est ce qui te dit si tu es en position pour larguer, pas besoin de calcul mental.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-4"><div class="step-body">
+    <p class="step-item">Confirme verbalement avec JESTER que la cible est bien accrochée avant de continuer</p>
+    <p class="step-detail">S'il ne confirme pas l'accroche à l'approche de l'enveloppe de tir, n'entre pas en largage : redemande-lui via son menu plutôt que de larguer à l'aveugle.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Demande la désignation laser à JESTER</span></div>
+  <p class="phase-why">L'accroche seule ne suffit pas : il faut que JESTER passe à l'illumination active au bon moment, ni trop tôt ni trop tard, pour que la bombe ait un point laser à suivre pendant sa descente.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Ouvre le menu JESTER et demande l'<span class="switchname">illumination laser</span></p>
+    <p class="step-detail">Dans son menu contextuel, une fois la cible accrochée, la branche de désignation laser propose de lancer l'illumination — c'est un ordre explicite, il ne la déclenche pas tout seul.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Toggle Menu" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Ne demande pas l'illumination trop tôt</p>
+    <p class="step-detail">Le laser a une durée d'illumination limitée par vol : le déclencher bien avant d'être en position de tir gaspille cette réserve pour rien, au risque de manquer d'énergie laser pile au moment où la bombe en a besoin.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item">Attends la confirmation de <span class="jester">JESTER</span> que l'illumination est active</p>
+    <p class="step-detail">Il te le signale une fois le laser réellement sur la cible. C'est seulement à partir de là que la bombe, une fois larguée, pourra suivre le point réfléchi.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="note warn"><b>Cas particulier — GBU-24E/B</b>Si ton arme est une GBU-24E/B (propre au B(U)), elle a un guidage GPS en plus du laser : sans illumination, elle rejoint quand même son point préplanifié au GPS seul. La précision augmente si JESTER fournit une désignation laser en plus, mais l'absence de laser ne fait pas complètement rater le tir comme avec une LGB classique.</div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Le largage et tenir l'illumination jusqu'à l'impact</span></div>
+  <p class="phase-why">Le largage n'est que la moitié du travail : la bombe a besoin du point laser jusqu'au dernier instant. Le vol après le largage compte autant que le largage lui-même.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item">Presse la détente pour <span class="switchname">larguer</span>, une fois dans l'enveloppe de tir</p>
+    <p class="step-detail">Guide-toi sur les repères temporels HUD vus en phase 2 (temps avant largage, avant impact, distance oblique) — largue une fois le repère de largage atteint, avec l'illumination confirmée active.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Store Release" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item">Garde un vol stable juste après le largage — pas de manœuvre brusque</p>
+    <p class="step-detail">Une ressource franche ou un virage serré tout de suite après le lâcher peut masquer la ligne de vue de la nacelle LANTIRN vers la cible : si JESTER perd le contact visuel, la bombe perd son point laser en plein vol.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-3"><div class="step-body">
+    <p class="step-item">Laisse <span class="jester">JESTER</span> tenir l'illumination en continu jusqu'à l'impact</p>
+    <p class="step-detail">Il maintient le laser sur la cible pendant toute la descente de la bombe — c'est ce qui la corrige en temps réel jusqu'au dernier mètre. N'interromps pas la séquence en lui redonnant un autre ordre entre-temps.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-4"><div class="step-body">
+    <p class="step-item">Confirme l'impact, puis dégage</p>
+    <p class="step-detail">Une fois l'explosion confirmée (visuellement ou par JESTER), reprends une trajectoire de dégagement classique — virage, montée, ou sortie de zone selon le reste de la mission.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-5"><div class="step-body">
+    <p class="step-item"><span class="switchname">Sélecteur d'armement</span> sur <span class="setting">OFF</span> une fois la passe terminée</p>
+    <p class="step-detail">Repasse le sélecteur d'armes en position neutre après le tir — bonne habitude de sécurité entre deux passes, pour ne pas larguer par erreur en repositionnant l'avion.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Weapon Selector Off" href="#"></a></div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 5 ============ -->
+<section class="phase" data-phase="5">
+  <div class="phase-head"><span class="phase-num">PHASE 5</span><span class="phase-title">Erreurs fréquentes de débutant</span></div>
+  <p class="phase-why">Un petit debrief à cocher après chaque passe d'entraînement : ce sont les pièges qui font le plus souvent rater une attaque laser, même une fois le geste globalement compris.</p>
+
+  <div class="step"><input type="checkbox" data-id="p5-1"><div class="step-body">
+    <p class="step-item">Je n'ai pas demandé l'illumination trop tôt</p>
+    <p class="step-detail">Revois la phase 3 : illuminer bien avant d'être en position de tir épuise l'énergie laser disponible pour rien, et il peut ne plus en rester assez à l'approche de l'impact.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-2"><div class="step-body">
+    <p class="step-item">Je n'ai pas manœuvré fort juste après le largage</p>
+    <p class="step-detail">Une ressource ou un virage serré immédiat masque la ligne de vue de la nacelle — revois la phase 4 : vol stable jusqu'à confirmation d'impact.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-3"><div class="step-body">
+    <p class="step-item">J'ai briefé JESTER sur la cible avant d'entrer dans le profil d'attaque, pas pendant</p>
+    <p class="step-detail">Lui donner la cible en pleine approche finale ne lui laisse pas le temps de chercher et d'accrocher avant que tu ne sois en position de tir.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-4"><div class="step-body">
+    <p class="step-item">Je n'ai pas essayé de désigner moi-même la cible au laser</p>
+    <p class="step-detail">Sur le B(U) solo, la désignation laser n'est pas une action pilote — il n'y a rien à chercher au HUD ou à un panneau pour « faire le laser » toi-même. Si l'attaque rate, le problème est toujours dans la coordination avec JESTER (cible mal briefée, illumination mal demandée), jamais dans un geste pilote manquant.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-5"><div class="step-body">
+    <p class="step-item">J'ai vérifié le master arm avant d'entrer dans le profil d'attaque</p>
+    <p class="step-detail">Un oubli classique : arriver en position de tir, presser la détente, et ne rien voir partir parce que le volet du master arm est resté fermé.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Master arm on and cover open" href="#"></a></div>
+  </div></div>
+
+  <div class="note warn"><b>Piège n°1</b>Illuminer trop tôt épuise l'énergie de la bombe avant l'impact.</div>
+  <div class="note warn"><b>Piège n°2</b>Manœuvrer fort juste après le largage peut masquer la ligne de vue de la nacelle vers la cible — dans les deux cas, la bombe rate.</div>
+</section>
+
+<div class="note go"><b>Tu es prêt</b>Tu sais briefer JESTER sur une cible, voler un profil stable pendant qu'il accroche et illumine, larguer au bon moment et tenir ton cap jusqu'à l'impact. La suite logique : la JDAM, une arme purement GPS qui ne dépend d'aucune désignation laser — c'est le sujet de la leçon suivante.</div>
+
+<div class="footlinks">
+  <a href="pas-a-pas.html">&larr; Retour au sommaire Pas à pas</a>
+  <a href="jdam.html">Étape suivante : JDAM : préplanifié et cible d'opportunité →</a>
+</div>
+
+<p class="src">Source : leçon <a href="cursus-complet.html#f3" style="color:var(--dim)">f3 · Bombes guidées laser et GBU-24E/B</a> de ce site, développée en checklist actionnable pour un débutant total. Les badges de bouton sont lus en direct dans <code>data/f14bu-bindings.json</code> (mêmes données que <a href="mapping-hotas.html" style="color:var(--dim)">le mapping HOTAS</a>).</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-laser-progress';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function save(state){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+
+/* ---------- Badges de bind dynamiques ----------
+   Chaque fonction citée sur cette page porte son bouton HOTAS entre
+   parenthèses, lu en direct dans data/f14bu-bindings.json (corrigé par
+   l'export de binds si l'utilisateur en a un) — jamais un numéro figé dans
+   le texte, pour ne pas répéter l'erreur du 13/08 (bind changé, texte pas
+   mis à jour). Lien direct vers le mapping, sur le bon contrôle : voir
+   gotoDevNum() dans mapping-hotas.html. */
+const BIND_STORE_KEY='f14bu-export-bindings-v1';
+const AXIS_KEYS={X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL={stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS=null;
+async function loadBindings(){
+  try{ BINDINGS=await fetch('data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS=null; }
+}
+function deriveKeys(n,count){
+  const upper=String(n).toUpperCase(), slots=Math.max(count,1);
+  if(AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if(upper==='SLDR') return new Array(slots).fill('JOY_SLIDER1');
+  if(/^\d+$/.test(n)) return new Array(slots).fill('JOY_BTN'+n);
+  const range=n.match(/^(\d+)-(\d+)$/);
+  if(range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides=(saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry=overrides[b.device+'|'+b.n];
+    const commands=(entry&&Array.isArray(entry.commands))?entry.commands:b.commands;
+    const keys=(entry&&Array.isArray(entry.keys))?entry.keys:deriveKeys(b.n,commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i], n:b.n}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('a[data-bind-cmd]').forEach(el=>{
+    const hits=bindingsFor(el.dataset.bindCmd);
+    el.target='_blank'; el.rel='noopener';
+    if(!hits.length){
+      el.textContent='non affecté';
+      el.classList.add('unbound');
+      el.title='Pas de bind confirmé dans le profil actuel — ouvre le mapping pour vérifier ou en poser un';
+      el.href='mapping-hotas.html';
+      return;
+    }
+    el.textContent=hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ');
+    el.classList.remove('unbound');
+    const h=hits[0];
+    el.title='Ouvrir le mapping sur ce contrôle';
+    el.href='mapping-hotas.html?dev='+h.device+'&n='+encodeURIComponent(h.n);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
+loadBindings().then(paintBindBadges);
+</script>
+</body>
+</html>

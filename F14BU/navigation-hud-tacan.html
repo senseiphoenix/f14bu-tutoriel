@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — Navigation : HUD, HSD/TID, TACAN, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-bind{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
+.bindtag .ic{opacity:.7;font-size:.9em}
+
+figure{margin:14px 0;border:1px solid var(--line);background:#0b1114;padding:9px}
+figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px;border-radius:1px}
+figcaption{font-size:12px;color:var(--dim);margin-top:8px;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+figcaption a{font-family:var(--mono);font-size:10.5px;white-space:nowrap;display:inline-flex;align-items:center;min-height:22px;padding:0 4px;color:var(--dim);text-decoration:none}
+figcaption a:hover{color:var(--amber)}
+.imgfail{display:none;padding:20px 12px;font-size:12.5px;color:var(--dim);text-align:center}
+figure.failed img{display:none} figure.failed .imgfail{display:block}
+.lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:100%}
+
+.watch{background:var(--panel-2);border:1px solid var(--line);border-radius:2px;padding:10px 14px;margin:8px 0 0;font-family:var(--mono);font-size:12px;color:var(--dim)}
+.watch b{color:var(--ink)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.jester{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--amber)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Navigation : HUD, HSD/TID, TACAN</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — pilote solo</div>
+<h1>Navigation : HUD, HSD/TID, TACAN<br>pas à pas</h1>
+<p class="sub">Tu sais démarrer, rouler et décoller. Cette page t'apprend à <b>te situer et à suivre une route</b> une fois en l'air : lire le HUD, lire les instruments de position côté pilote, faire poser un waypoint par JESTER, et te guider au TACAN quand tu n'as plus de route programmée. Chaque étape dit <b>quoi faire</b>, <b>où</b>, et <b>pourquoi</b>.</p>
+
+<div class="intro-box">
+  <p><b>Avant de commencer :</b> sois en vol stable, moteurs et EGI déjà alignés (voir <b>Démarrage à froid</b>), avec au moins un waypoint déjà connu — même juste ton terrain de départ. Pas besoin d'être en mission de nav pour t'entraîner : un simple vol libre suffit.</p>
+  <p><b>Un point de vocabulaire qui piège tout le monde :</b> le F-14B(U) a un écran tactique appelé <b>PTID</b>, mais il est sur la console du <b>RIO</b>, pas devant toi. En solo, c'est JESTER qui le lit et le manipule à ta demande. Toi, côté pilote, tu as le <b>HUD</b>, le <b>HSD</b> (panneau central) et le <b>BDHI</b> (planche de bord droite) — c'est sur ces trois-là que porte cette page.</p>
+  <p>Comme pour le démarrage, le plus simple pour commencer est de <b>regarder JESTER faire</b> : ouvre son menu <a class="bindtag" data-bind-cmd="Toggle Menu" href="#" style="vertical-align:middle"></a>, demande-lui de créer un point, et observe ce qui bouge au HUD et au HSD avant de refaire la lecture toi-même.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée sur cette page porte son bouton HOTAS entre parenthèses (ou <b style="color:var(--dim)">Clic cockpit</b> / <b style="color:var(--dim)">RIO · JESTER</b> quand elle n'est pas sur le HOTAS) — clique dessus pour ouvrir le mapping complet directement sur ce contrôle.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Lire le HUD en navigation</span></div>
+  <p class="phase-why">Le HUD est ta première source d'information en vol : tu y lis ton cap, la direction à suivre et la distance qui te sépare de ton point, sans jamais baisser les yeux vers le cockpit.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Repère la <span class="switchname">réglette de cap</span> en haut du HUD</p>
+    <p class="step-detail">Bande graduée horizontale, tout en haut de la verrière dans ton champ de vision. Elle défile avec les mouvements de l'avion et te donne ton cap magnétique actuel en un coup d'œil, sans regarder l'horizon de secours.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item">Trouve le <span class="switchname">repère de direction</span> (steering cue) vers le point actif</p>
+    <p class="step-detail">Petit symbole (souvent un cercle ou un diamant) qui se déplace dans le HUD pour t'indiquer où pointer le nez de l'avion. Le but est simple : garde ton vecteur vitesse superposé à ce repère, et l'avion t'emmène droit vers le point actif de ta route.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item">Lis la <span class="switchname">distance</span> et le <span class="switchname">temps estimé</span> jusqu'au point actif</p>
+    <p class="step-detail">Affichés en chiffres sur le HUD, généralement dans le coin bas ou latéral. C'est ce qui te permet d'estimer ton heure d'arrivée sans ouvrir de calculette — utile pour tenir un horaire de rendez-vous ou de ravitaillement.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-4"><div class="step-body">
+    <p class="step-item">Zoome pour lire les chiffres de loin si besoin</p>
+    <p class="step-detail">En début d'apprentissage, les symboles du HUD peuvent être petits à l'écran. Utilise le zoom de la vue cockpit pour t'en approcher visuellement, le temps de mémoriser où chaque information se trouve.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Zoom in" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Zoom out" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-5"><div class="step-body">
+    <p class="step-item">Identifie <span class="switchname">quelle source</span> alimente ton HUD en ce moment</p>
+    <p class="step-detail">Le repère de direction du HUD peut suivre soit ta route EGI/CDNU, soit une balise TACAN — jamais les deux en même temps. Si le HUD ne pointe pas où tu l'attends, ce n'est presque jamais un bug : c'est la mauvaise source qui est sélectionnée. On règle ce réflexe en détail à la phase 4.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Le HSD et le BDHI côté pilote</span></div>
+  <p class="phase-why">Le HUD te dit où pointer le nez ; le HSD te montre <b>toute ta route vue de dessus</b>, et le BDHI te donne un cap et une distance de secours à l'ancienne, à aiguilles. Le vrai écran tactique (le PTID) reste sur la console du RIO — c'est JESTER qui s'en sert pour toi.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Repère le <span class="switchname">HSD</span> (Horizontal Situation Display) sur le panneau central</p>
+    <p class="step-detail">Écran rond au centre du tableau de bord, entre le HUD et le VDI. C'est ta vue de dessus : il montre ton cap commandé, ton écart de route latéral, et la distance au point actif — l'équivalent d'un GPS de voiture vu du ciel.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item"><span class="switchname">BRT</span> : règle la luminosité du HSD</p>
+    <p class="step-detail">Molette sur le cadre du HSD. En plein jour l'écran peut être difficile à lire — monte la luminosité plutôt que de plisser les yeux vers un affichage trop sombre.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item">Lis l'<span class="switchname">écart de route</span> et la <span class="switchname">distance</span> au point actif sur le HSD</p>
+    <p class="step-detail">L'aiguille de route te montre si tu es à gauche ou à droite du trait direct vers ton point — recentre-la doucement plutôt que de corriger en virage serré. La distance affichée recoupe celle du HUD ; si les deux ne correspondent plus, vérifie ta source de guidage (phase 4).</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-4"><div class="step-body">
+    <p class="step-item">Repère le <span class="switchname">BDHI</span> sur la planche de bord droite</p>
+    <p class="step-detail">Cadran à deux aiguilles et rose des caps, planche de bord droite. L'aiguille n°2 pointe vers la station TACAN accordée, l'aiguille n°1 vers la station UHF/ADF, et un petit compteur donne la distance oblique en milles nautiques. C'est ton secours si le HSD ou le HUD tombent en panne.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-5"><div class="step-body">
+    <p class="step-item">Demande à <span class="jester">JESTER</span> un point de situation si tu es perdu</p>
+    <p class="step-detail">JESTER voit le PTID en continu et peut te donner ta position, ton cap et la distance à un point sans que tu aies à tout déchiffrer toi-même — utile le temps que ta lecture du HSD devienne un réflexe. Ouvre son menu et demande une mise au point.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Toggle Menu" href="#"></a>
+      <span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span>
+    </div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Saisir et basculer un waypoint</span></div>
+  <p class="phase-why">La saisie fine de coordonnées se fait au CDNU, un clavier sur la console du RIO — en solo, c'est une tâche que <b>JESTER exécute à ta demande</b>. Ce qui compte pour toi, c'est de savoir quoi lui demander et de vérifier que ça a marché.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Ouvre le <span class="jester">menu JESTER</span></p>
+    <p class="step-detail">C'est le point d'entrée pour toute demande de navigation. Une pression ouvre le menu, les pressions suivantes naviguent dans les catégories (navigation, radar, contre-mesures…).</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Toggle Menu" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Demande-lui de <span class="switchname">créer un waypoint</span> à une coordonnée donnée</p>
+    <p class="step-detail">Donne-lui une coordonnée lue sur la carte F10 ou le kneeboard. JESTER la tape lui-même au CDNU, au format degrés/minutes décimales (DMM) attendu par l'avion — tu n'as jamais à taper ce format toi-même en solo.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Toggle Menu" href="#"></a>
+      <span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item">Vérifie que le nouveau point est bien <span class="switchname">actif</span></p>
+    <p class="step-detail">Regarde le HUD (phase 1) et le HSD (phase 2) : le repère de direction et la distance affichée doivent changer pour pointer vers ce nouveau point. Si rien ne bouge, redemande à JESTER de confirmer — un point mal déposé reste inactif tant qu'on ne l'a pas sélectionné.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-4"><div class="step-body">
+    <p class="step-item">Fais-le <span class="switchname">basculer</span> vers le point suivant ou un point direct</p>
+    <p class="step-detail">Demande à JESTER de passer au point suivant de la route, ou d'aller « direct » vers un point précis si le plan change — un détour, une menace, une nouvelle consigne. C'est l'équivalent de la fonction <code>DIR</code> du CDNU, exécutée pour toi.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Toggle Menu" href="#"></a>
+      <span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-5"><div class="step-body">
+    <p class="step-item">Comprends les <span class="switchname">trois modes d'enchaînement</span> de la route</p>
+    <p class="step-detail">AUTO anticipe le virage vers le point suivant (pratique en croisière, mais coupe les virages) ; OFLY vise le survol exact du point (le mode du vol tactique basse altitude) ; MAN ne bascule jamais tout seul. Demande à JESTER de te dire quel mode est actif si le comportement en virage te surprend.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="note warn"><b>Piège de format</b>Les coordonnées DMM n'ont ni espace ni séparateur : un chiffre de travers déplace le point de plusieurs kilomètres. Comme c'est JESTER qui tape, relis-lui simplement la coordonnée que tu lui donnes avant de valider.</div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Se guider au TACAN</span></div>
+  <p class="phase-why">Le TACAN te guide vers une balise réelle — un terrain, un porte-avions, un ravitailleur — plutôt que vers un point programmé. Contrairement au CDNU, régler le TACAN est une tâche <b>pilote</b>, au panneau TACAN de ta console gauche.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item">Règle le <span class="switchname">canal TACAN</span> de la balise voulue</p>
+    <p class="step-detail">Panneau TACAN, console latérale gauche. Chaque terrain et chaque porte-avions publie un canal TACAN dans le briefing de mission ou le kneeboard — note-le avant de partir plutôt que de le chercher en vol.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item">Choisis le <span class="switchname">mode</span> T/R ou A/A selon la cible</p>
+    <p class="step-detail">Même panneau TACAN. T/R (Transmit/Receive) sert à te guider vers une balise sol ou un navire ; A/A (Air-to-Air) sert à mesurer la distance vers un autre avion équipé TACAN, par exemple un ravitailleur. Pour rentrer au terrain ou au porte-avions, c'est T/R qu'il te faut.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-3"><div class="step-body">
+    <p class="step-item">Laisse quelques secondes au récepteur pour <span class="setting">accrocher</span></p>
+    <p class="step-detail">Pas d'action ici : le TACAN prend un court instant pour se caler sur la balise. Le compteur de distance du BDHI passe de tirets à une vraie valeur une fois l'accroche faite — c'est ton signal que ça a marché.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-4"><div class="step-body">
+    <p class="step-item">Bascule le panneau <span class="switchname">TACAN CMD</span> entre <span class="setting">TACAN</span> et <span class="setting">EGI</span></p>
+    <p class="step-detail">C'est ce sélecteur qui décide quelle source alimente ton HUD et ton HSD — jamais les deux en même temps (voir phase 1, dernière étape). Sur TACAN, le repère de direction du HUD t'emmène vers la balise ; sur EGI, il t'emmène vers ton waypoint CDNU.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-5"><div class="step-body">
+    <p class="step-item">Lis <span class="switchname">cap</span> et <span class="switchname">distance</span> à la balise au BDHI</p>
+    <p class="step-detail">Aiguille n°2 pour le cap magnétique vers la station accordée, compteur pour la distance oblique en milles nautiques (phase 2). C'est la lecture la plus stable et la plus simple de tout ce tuto : régler la fréquence, laisser chauffer, lire cap et distance.</p>
+  </div></div>
+
+  <div class="note warn"><b>Le piège classique</b>« Mon HUD ne pointe pas vers mon waypoint ! » — dans neuf cas sur dix, le panneau TACAN CMD est resté sur TACAN au lieu d'EGI (ou l'inverse). Vérifie-le en premier avant de chercher plus loin.</div>
+</section>
+
+<!-- ============ PHASE 5 ============ -->
+<section class="phase" data-phase="5">
+  <div class="phase-head"><span class="phase-num">PHASE 5</span><span class="phase-title">Exercice pratique : suivre une route complète</span></div>
+  <p class="phase-why">Mets tout bout à bout, en vol libre : construire une route, la suivre à l'instrument, changer de plan, puis rentrer au TACAN. C'est l'exercice qui transforme les quatre phases précédentes en réflexe.</p>
+
+  <div class="step"><input type="checkbox" data-id="p5-1"><div class="step-body">
+    <p class="step-item">Demande à <span class="jester">JESTER</span> de créer une route de <span class="setting">3 à 4 points</span></p>
+    <p class="step-detail">Choisis des points faciles à repérer visuellement au sol (un village, un carrefour, un lac) pour pouvoir vérifier que tu survoles vraiment ce que tu crois survoler.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Toggle Menu" href="#"></a>
+      <span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-2"><div class="step-body">
+    <p class="step-item">Enclenche le <span class="switchname">pilote automatique</span> pour te concentrer sur la lecture</p>
+    <p class="step-detail">Optionnel mais utile la première fois : ça te libère les mains pour observer le HUD, le HSD et le BDHI sans avoir à piloter en même temps. Débraye-le dès que tu es à l'aise.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Autopilot On" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-3"><div class="step-body">
+    <p class="step-item">Suis le <span class="switchname">repère de direction</span> jusqu'au premier point, en <span class="setting">AUTO</span></p>
+    <p class="step-detail">Observe comment l'avion anticipe le virage vers le point suivant avant même d'arriver sur le premier. Note le moment où le point actif change tout seul sur le HUD et le HSD.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-4"><div class="step-body">
+    <p class="step-item">Refais le même trajet en <span class="setting">OFLY</span>, sens la différence</p>
+    <p class="step-detail">Demande à JESTER de repasser le mode d'enchaînement sur OFLY, puis recommence la route. Cette fois l'avion vise le survol exact de chaque point avant de basculer — les virages sont plus tardifs et plus marqués.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-5"><div class="step-body">
+    <p class="step-item">Simule un changement de plan : bascule <span class="switchname">direct</span> vers un point plus loin</p>
+    <p class="step-detail">Demande à JESTER un « direct » vers le dernier point de la route, en sautant les intermédiaires — la manœuvre de secours à connaître pour un détour, une menace ou une consigne de dernière minute.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-6"><div class="step-body">
+    <p class="step-item">Règle le <span class="switchname">TACAN</span> de ton terrain de retour et rentre au BDHI seul</p>
+    <p class="step-detail">Bascule le panneau TACAN CMD sur TACAN (phase 4), coupe mentalement le HSD/HUD, et guide-toi uniquement aux deux aiguilles du BDHI jusqu'à survoler le terrain. C'est l'exercice qui prépare directement la leçon suivante, l'appontage.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+
+  <div class="note go"><b>Tu es prêt</b>Tu sais lire ton cap, ta direction et ta distance au HUD, au HSD et au BDHI ; tu sais faire poser et basculer un waypoint par JESTER ; et tu sais rentrer au TACAN seul si tout le reste tombe en panne. La suite logique : appliquer tout ça dans un circuit de porte-avions complet.</div>
+</section>
+
+<div class="footlinks">
+  <a href="pas-a-pas.html">&larr; Retour au sommaire Pas à pas</a>
+  <a href="case-i-appontage.html">Étape suivante : Circuit CASE I et appontage →</a>
+</div>
+
+<p class="src">Sources : leçons B3 « Saisir un waypoint », B4 « Suivre une route » et B5 « TACAN et sources de guidage » du <a href="cursus-complet.html">cursus complet</a>, simplifiées pour un pilote solo assisté par JESTER — la saisie fine au CDNU et la lecture du PTID restent des tâches RIO volontairement déléguées ici. Les badges de bouton sont lus en direct dans <code>data/f14bu-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — pas de numéro figé dans le texte.</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-nav-progress';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function save(state){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+
+/* ---------- Badges de bind dynamiques ----------
+   Chaque fonction citée sur cette page porte son bouton HOTAS entre
+   parenthèses, lu en direct dans data/f14bu-bindings.json (corrigé par
+   l'export de binds si l'utilisateur en a un) — jamais un numéro figé dans
+   le texte, pour ne pas répéter l'erreur du 13/08 (bind changé, texte pas
+   mis à jour). Lien direct vers le mapping, sur le bon contrôle : voir
+   gotoDevNum() dans mapping-hotas.html. */
+const BIND_STORE_KEY='f14bu-export-bindings-v1';
+const AXIS_KEYS={X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL={stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS=null;
+async function loadBindings(){
+  try{ BINDINGS=await fetch('data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS=null; }
+}
+function deriveKeys(n,count){
+  const upper=String(n).toUpperCase(), slots=Math.max(count,1);
+  if(AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if(upper==='SLDR') return new Array(slots).fill('JOY_SLIDER1');
+  if(/^\d+$/.test(n)) return new Array(slots).fill('JOY_BTN'+n);
+  const range=n.match(/^(\d+)-(\d+)$/);
+  if(range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides=(saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry=overrides[b.device+'|'+b.n];
+    const commands=(entry&&Array.isArray(entry.commands))?entry.commands:b.commands;
+    const keys=(entry&&Array.isArray(entry.keys))?entry.keys:deriveKeys(b.n,commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i], n:b.n}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('a[data-bind-cmd]').forEach(el=>{
+    const hits=bindingsFor(el.dataset.bindCmd);
+    el.target='_blank'; el.rel='noopener';
+    if(!hits.length){
+      el.textContent='non affecté';
+      el.classList.add('unbound');
+      el.title='Pas de bind confirmé dans le profil actuel — ouvre le mapping pour vérifier ou en poser un';
+      el.href='mapping-hotas.html';
+      return;
+    }
+    el.textContent=hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ');
+    el.classList.remove('unbound');
+    const h=hits[0];
+    el.title='Ouvrir le mapping sur ce contrôle';
+    el.href='mapping-hotas.html?dev='+h.device+'&n='+encodeURIComponent(h.n);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
+loadBindings().then(paintBindBadges);
+</script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — Carburant, pannes simples et retour</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-bind{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
+.bindtag .ic{opacity:.7;font-size:.9em}
+
+figure{margin:14px 0;border:1px solid var(--line);background:#0b1114;padding:9px}
+figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px;border-radius:1px}
+figcaption{font-size:12px;color:var(--dim);margin-top:8px;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+figcaption a{font-family:var(--mono);font-size:10.5px;white-space:nowrap;display:inline-flex;align-items:center;min-height:22px;padding:0 4px;color:var(--dim);text-decoration:none}
+figcaption a:hover{color:var(--amber)}
+.imgfail{display:none;padding:20px 12px;font-size:12.5px;color:var(--dim);text-align:center}
+figure.failed img{display:none} figure.failed .imgfail{display:block}
+.lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:100%}
+
+.watch{background:var(--panel-2);border:1px solid var(--line);border-radius:2px;padding:10px 14px;margin:8px 0 0;font-family:var(--mono);font-size:12px;color:var(--dim)}
+.watch b{color:var(--ink)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Carburant, pannes et retour</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — gestion carburant et urgences de base</div>
+<h1>Carburant, pannes<br>et retour</h1>
+<p class="sub">Pas une leçon de théorie : une checklist mentale à rejouer <b>pendant</b> tes vols, pour décider vite si tout va bien, si tu dois dérouter, ou si tu dois gérer une panne simple sans paniquer.</p>
+
+<div class="intro-box">
+  <p><b>Complément, pas remplacement :</b> la leçon <a href="section-g-mission.html#g1" style="color:var(--amber)">G1 · Urgences</a> explique en détail chaque voyant, chaque panne et le raisonnement complet — lis-la si une panne te surprend. Cette page-ci est le <b>réflexe court</b> à avoir en tête pendant que tu voles, avant même qu'un problème n'arrive.</p>
+  <p><b>Sur les chiffres de consommation :</b> cette page ne te donne pas de débit horaire précis (il varie trop avec l'altitude, la vitesse et l'emport pour qu'un chiffre unique soit honnête) — elle te donne la <b>méthode</b> pour le calculer toi-même en vol, à partir de ce que tu observes.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Sache lire ton carburant</span></div>
+  <p class="phase-why">Le F-14 a plusieurs réservoirs (nourrices/fuselage, voilure, bidons externes) et un seul jeu de jauges qui affiche l'un ou l'autre selon un sélecteur — si tu ne sais pas ce que tu regardes, le chiffre ne te dit rien.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Repère le panneau de gestion carburant, console gauche</p>
+    <p class="step-detail">Le sélecteur <span class="switchname">QTY SEL</span> choisit ce que les jauges affichent : <b>FEED</b> (nourrices + fuselage — ce qui alimente réellement les moteurs), <b>WING</b> (voilure), <b>EXT</b> (bidons externes si tu en emportes). Cycle dessus pour voir chaque groupe l'un après l'autre — les jauges ne montrent jamais tout en même temps.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+
+  <figure>
+    <img data-imgkey="fuelpanel" alt="Panneau de gestion carburant, console gauche" loading="lazy">
+    <div class="imgfail">Image non chargée — ouvre-la directement dans Drive.</div>
+    <figcaption><span>Panneau carburant complet — QTY SEL (1), FEED (2), WING/EXT TRANS (3), REFUEL PROBE (6), DUMP (5).</span><span class="figdrive"></span></figcaption>
+  </figure>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item">Comprends que <span class="switchname">FEED</span> est le seul chiffre qui compte vraiment en urgence</p>
+    <p class="step-detail">WING et EXT alimentent FEED automatiquement en <span class="switchname">WING/EXT TRANS</span> <span class="setting">AUTO</span> — tu n'as normalement rien à faire. Mais si ce transfert s'arrête (panne, position ORIDE/OFF mal réglée), FEED peut se vider même si WING affiche encore du carburant. En cas de doute, vérifie les trois, pas seulement un.</p>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Calcule ton autonomie, en vol</span></div>
+  <p class="phase-why">Pas besoin d'un chiffre officiel : deux lectures espacées de quelques minutes suffisent à connaître ta vraie consommation du moment, avec ta config et ton régime actuels.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Note ta quantité FEED, puis renote-la 5 ou 10 minutes plus tard</p>
+    <p class="step-detail">La différence divisée par le temps écoulé te donne ta consommation <b>réelle</b>, pour ta vitesse et ton altitude actuelles — bien plus fiable qu'un chiffre générique trouvé en ligne, qui suppose une config que tu n'as peut-être pas.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item">Fixe-toi trois seuils avant d'en avoir besoin : <span class="switchname">bingo</span>, <span class="switchname">joker</span>, <span class="switchname">minimum</span></p>
+    <p class="step-detail"><b>Bingo</b> — le niveau auquel tu dois déjà être en route vers un terrain, mission ou pas. <b>Joker</b> — le niveau auquel tu abandonnes définitivement l'objectif en cours, même en plein engagement. <b>Minimum</b> — ta réserve de sécurité incompressible, jamais entamée sciemment. Écris ces trois chiffres avant de décoller, pas pendant que l'aiguille descend.</p>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Décide : continuer, dérouter, ou rentrer</span></div>
+  <p class="phase-why">La décision se prend avec de la marge, pas au dernier moment — un déroutement décidé tôt est un non-événement, décidé tard c'est une urgence.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Compare ton carburant restant à la distance du terrain/porte-avions le plus proche</p>
+    <p class="step-detail">Utilise le TACAN ou l'HSD pour ta distance, ta consommation calculée en phase 2 pour ton temps de vol restant. Si les deux nombres sont proches, tu es déjà en retard sur la décision — dérouter tout de suite coûte moins cher que d'attendre.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Surveille le voyant de la perche de ravitaillement</p>
+    <p class="step-detail">S'il reste allumé, la perche n'est ni sortie ni rentrée complètement — de la traînée inutile qui aggrave ta consommation sans que tu t'en rendes forcément compte. Vérifie-la si ta conso semble anormalement haute.</p>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Panne moteur — les réflexes immédiats</span></div>
+  <p class="phase-why">Le Tomcat vole très bien sur un seul moteur. Le vrai danger n'est pas la perte de poussée : c'est le lacet violent que la poussée asymétrique peut provoquer à basse vitesse et forte incidence.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item"><b>Piloter</b> d'abord : réduis l'incidence, compense au palonnier</p>
+    <p class="step-detail">Avant même d'identifier quoi que ce soit, garde l'avion en vol contrôlé. C'est l'erreur la plus fréquente : se jeter sur les interrupteurs pendant que l'avion part en lacet.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item"><b>Identifier</b> ensuite : quel moteur, via RPM/EGT/pression d'huile</p>
+    <p class="step-detail">Les paramètres du moteur en panne décrochent visiblement des repères normaux (62-78 % RPM, ~500 °C EGT, 25-35 psi huile au ralenti) — compare les deux moteurs côte à côte pour être sûr avant d'agir.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-3"><div class="step-body">
+    <p class="step-item"><b>Agir</b> enfin : sécurise le moteur mort, gère le vol en énergie limitée</p>
+    <p class="step-detail">Manette du moteur en panne coupée. Ne jamais essayer de rallumer un moteur qui a pris feu. Le reste du vol se pilote en économisant l'énergie : évite les manœuvres qui demandent beaucoup de poussée des deux côtés.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 5 ============ -->
+<section class="phase" data-phase="5">
+  <div class="phase-head"><span class="phase-num">PHASE 5</span><span class="phase-title">Hydraulique et incendie — les réflexes immédiats</span></div>
+  <p class="phase-why">Deux circuits hydrauliques distincts : tant qu'il en reste un, l'avion se pilote. L'incendie, lui, ne pardonne pas l'hésitation.</p>
+
+  <div class="step"><input type="checkbox" data-id="p5-1"><div class="step-body">
+    <p class="step-item">Perte hydraulique : surveille le circuit restant, anticipe des commandes dégradées</p>
+    <p class="step-detail">Les indicateurs de pression (deux aiguilles, une par circuit) et les drapeaux SPOIL/EMER FLT HI te disent lequel a lâché. Prépare-toi à un train de secours et des réactions plus lourdes aux commandes.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-2"><div class="step-body">
+    <p class="step-item">Incendie moteur : manette coupée, carburant fermé, extincteur</p>
+    <p class="step-detail">Même séquence que pour une panne simple, en plus définitif : une fois l'agent extincteur utilisé sur un moteur, ce moteur reste coupé pour le reste du vol, sans exception.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+
+  <div class="note warn"><b>Piège</b>S'acharner à ramener un avion condamné par fierté. Un déroutement décidé tôt, ou une éjection décidée à temps, coûte toujours moins cher qu'un pari perdu.</div>
+</section>
+
+<!-- ============ PHASE 6 ============ -->
+<section class="phase" data-phase="6">
+  <div class="phase-head"><span class="phase-num">PHASE 6</span><span class="phase-title">Dernières vérifs avant le retour</span></div>
+  <p class="phase-why">Que tu reviennes après une panne ou simplement en fin de mission normale, le réflexe est le même.</p>
+
+  <div class="step"><input type="checkbox" data-id="p6-1"><div class="step-body">
+    <p class="step-item">Vérifie qu'aucun voyant <span class="switchname">Master Caution</span> n'est resté allumé</p>
+    <p class="step-detail">Un dernier coup d'œil au panneau d'alarmes avant l'approche — mieux vaut découvrir un problème en croisière stabilisée qu'en finale.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Master Caution Reset" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-2"><div class="step-body">
+    <p class="step-item">Reconfirme ton carburant restant contre la procédure d'arrivée choisie</p>
+    <p class="step-detail">Un circuit complet (terrain) ou un CASE I (porte-avions) prennent du temps — vérifie que ton seuil « joker » de la phase 2 couvre bien le circuit d'arrivée, pas seulement le trajet direct.</p>
+  </div></div>
+</section>
+
+<div class="note go"><b>Tu es prêt</b>Trois seuils carburant en tête, réflexes moteur/hydraulique/incendie clairs, plus besoin de paniquer sur un voyant inconnu. Pour l'atterrissage lui-même — terrain ou porte-avions — voir <a href="pas-a-pas.html" style="color:var(--go)">le sommaire Pas à pas</a> ou les leçons <b>A7</b> et <b>C2-C4</b> du cursus complet.</div>
+
+<div class="footlinks">
+  <a href="pas-a-pas.html">&larr; Retour au sommaire Pas à pas</a>
+  <a href="section-g-mission.html#g1">Approfondir : leçon G1, Urgences →</a>
+</div>
+
+<p class="src">Sources : checklist réelle Heatblur (urgences moteur/hydraulique/incendie du manuel F-14 v2.0), et la leçon <a href="section-g-mission.html#g1" style="color:var(--dim)">G1 · Urgences</a> de ce site. Les badges de bouton sont lus en direct dans <code>data/f14bu-bindings.json</code> (mêmes données que <a href="mapping-hotas.html" style="color:var(--dim)">le mapping HOTAS</a>).</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-fuelfailures-progress';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function save(state){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+
+/* ---------- Planches du manuel Heatblur v2.0 (Drive), avec repli local ---------- */
+const D_ID = id => `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+const V_ID = id => `https://drive.google.com/file/d/${id}/view`;
+const IMG = {
+  fuelpanel:  "1L-r0Hw4MSrXPKkACqWQRfjHGhNBbsXa-",
+};
+const FN = {
+  "1L-r0Hw4MSrXPKkACqWQRfjHGhNBbsXa-": "left_vertical_console_fuel_management_panel.jpg",
+};
+document.querySelectorAll('img[data-imgkey]').forEach(img=>{
+  const id=IMG[img.dataset.imgkey];
+  if(!id) return;
+  const fig=img.closest('figure');
+  img.src='img/'+(FN[id]||id);
+  img.addEventListener('error',()=>{
+    if(!img.dataset.f){ img.dataset.f='1'; img.src=D_ID(id); }
+    else { fig.classList.add('failed'); }
+  });
+  img.addEventListener('click',()=>openLb(img.src));
+  const dl=fig.querySelector('.figdrive');
+  if(dl) dl.innerHTML=`<a href="${V_ID(id)}" target="_blank" rel="noopener">Drive ↗</a>`;
+});
+function openLb(src){ document.getElementById('lbimg').src=src; document.getElementById('lb').classList.add('on'); }
+document.getElementById('lb').addEventListener('click',()=>document.getElementById('lb').classList.remove('on'));
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.getElementById('lb').classList.remove('on'); });
+
+/* ---------- Badges de bind dynamiques (voir demarrage-a-froid.html pour le détail) ---------- */
+const BIND_STORE_KEY='f14bu-export-bindings-v1';
+const AXIS_KEYS={X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL={stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS=null;
+async function loadBindings(){
+  try{ BINDINGS=await fetch('data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS=null; }
+}
+function deriveKeys(n,count){
+  const upper=String(n).toUpperCase(), slots=Math.max(count,1);
+  if(AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if(upper==='SLDR') return new Array(slots).fill('JOY_SLIDER1');
+  if(/^\d+$/.test(n)) return new Array(slots).fill('JOY_BTN'+n);
+  const range=n.match(/^(\d+)-(\d+)$/);
+  if(range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides=(saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry=overrides[b.device+'|'+b.n];
+    const commands=(entry&&Array.isArray(entry.commands))?entry.commands:b.commands;
+    const keys=(entry&&Array.isArray(entry.keys))?entry.keys:deriveKeys(b.n,commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i], n:b.n}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('a[data-bind-cmd]').forEach(el=>{
+    const hits=bindingsFor(el.dataset.bindCmd);
+    el.target='_blank'; el.rel='noopener';
+    if(!hits.length){
+      el.textContent='non affecté';
+      el.classList.add('unbound');
+      el.title='Pas de bind confirmé dans le profil actuel — ouvre le mapping pour vérifier ou en poser un';
+      el.href='mapping-hotas.html';
+      return;
+    }
+    el.textContent=hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ');
+    el.classList.remove('unbound');
+    const h=hits[0];
+    el.title='Ouvrir le mapping sur ce contrôle';
+    el.href='mapping-hotas.html?dev='+h.device+'&n='+encodeURIComponent(h.n);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
+loadBindings().then(paintBindBadges);
+</script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — Construire ses checklists personnalisées</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-bind{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
+.bindtag .ic{opacity:.7;font-size:.9em}
+
+figure{margin:14px 0;border:1px solid var(--line);background:#0b1114;padding:9px}
+figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px;border-radius:1px}
+figcaption{font-size:12px;color:var(--dim);margin-top:8px;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+figcaption a{font-family:var(--mono);font-size:10.5px;white-space:nowrap;display:inline-flex;align-items:center;min-height:22px;padding:0 4px;color:var(--dim);text-decoration:none}
+figcaption a:hover{color:var(--amber)}
+.imgfail{display:none;padding:20px 12px;font-size:12.5px;color:var(--dim);text-align:center}
+figure.failed img{display:none} figure.failed .imgfail{display:block}
+.lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:100%}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Checklists personnalisées</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — construire tes propres outils</div>
+<h1>Construire ses<br>checklists personnalisées</h1>
+<p class="sub">Le dernier tuto « pas à pas » de cette série, et le plus court : transformer ce que tu as appris dans les pages précédentes en outils que tu gardes sous la main en vol, plus de bonnes habitudes d'entraînement pour la suite.</p>
+
+<div class="intro-box">
+  <p><b>Bonne nouvelle :</b> le B(U) embarque déjà une checklist complète, en cockpit, page par page — tu n'as rien à construire pour ça. Ce qui vaut la peine d'être construit toi-même, c'est un <b>pense-bête condensé</b> : tes seuils carburant, tes numéros de bouton HOTAS, tes fréquences radio du jour — tout ce qui est spécifique à toi ou à la mission, pas au manuel.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Découvre la checklist déjà intégrée au cockpit</span></div>
+  <p class="phase-why">Avant de construire quoi que ce soit, sache que le manuel de vol réel du Tomcat (NAVAIR 01-F14AAP-1B) est reproduit tel quel, en 3D, sur le genou du pilote virtuel.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Repère le porte-bloc sur ta cuisse gauche, en jeu</p>
+    <p class="step-detail">C'est un vrai clipboard cliquable dans le cockpit, pas un menu à part : flèches gauche/droite en bas pour tourner les pages, un compteur de page (ex. « 10/37 ») pour savoir où tu en es.</p>
+  </div></div>
+
+  <figure>
+    <img data-imgkey="checklist" alt="Checklist intégrée au cockpit, clipboard sur la cuisse du pilote" loading="lazy">
+    <div class="imgfail">Image non chargée — ouvre-la directement dans Drive.</div>
+    <figcaption><span>Checklist réelle du manuel Heatblur, colonnes Pilote et RIO côte à côte, avec pagination en bas.</span><span class="figdrive"></span></figcaption>
+  </figure>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item">Repère la colonne <span class="switchname">PILOT</span> — ignore la colonne RIO</p>
+    <p class="step-detail">Chaque page est divisée en deux : à gauche ce que <b>toi</b> tu fais, à droite ce que JESTER fait pour toi. Sur le F-14BU solo, la colonne RIO te sert seulement à comprendre ce que ton équipier IA est en train de faire pendant que tu pilotes.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item">Retrouve les pages qui correspondent aux tutos que tu as déjà faits</p>
+    <p class="step-detail">Feuillette jusqu'aux pages de démarrage, roulage, décollage et atterrissage — tu reconnaîtras la plupart des étapes vues dans les autres pages « pas à pas ». C'est la version officielle, condensée, que les vrais équipages emportent.</p>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Construis ton propre pense-bête</span></div>
+  <p class="phase-why">La checklist intégrée couvre l'avion. Elle ne couvre pas ton matériel à toi, ni la mission du jour — c'est ce vide que ton propre kneeboard comble.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Trouve le dossier <span class="switchname">Kneeboard</span> de DCS</p>
+    <p class="step-detail">DCS lit des images perso dans <code>Saved Games\DCS\Kneeboard\&lt;nom du module&gt;\</code> (ou <code>DCS.openbeta\Kneeboard\...</code> selon ton instance) et te les affiche en vol via la vue kneeboard du jeu, tournables comme un vrai carnet. Le nom exact du sous-dossier attendu peut varier ; essaie d'abord avec <code>F-14BU</code> (le même nom que ton dossier de binds), et vérifie en jeu que les images apparaissent.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item">Choisis ce qui mérite vraiment d'y être — pas tout</p>
+    <p class="step-detail">Un bon pense-bête tient sur une ou deux pages, pas trente. Priorité à ce que tu oublies encore régulièrement : tes seuils carburant (bingo/joker/mini, voir <a href="carburant-pannes-retour.html" style="color:var(--amber)">Carburant, pannes et retour</a>), les quelques numéros de bouton HOTAS que tu confonds encore, et les fréquences radio ou canaux TACAN spécifiques à la mission du jour.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item">Garde-le à jour, pas figé</p>
+    <p class="step-detail">Si tu rebindes un bouton (via <a href="mapping-hotas.html" style="color:var(--amber)">le mapping HOTAS</a> ou l'export de binds), ton pense-bête doit suivre — un kneeboard obsolète est pire qu'aucun kneeboard, parce que tu lui fais confiance sans vérifier.</p>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">De bonnes habitudes d'entraînement</span></div>
+  <p class="phase-why">Les outils ne remplacent pas la méthode. Trois habitudes simples font plus de différence que n'importe quel kneeboard.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Un vol court, <b>un seul</b> objectif</p>
+    <p class="step-detail">Un vol qui mélange démarrage, navigation et combat en une seule session dilue l'apprentissage de chaque partie. Isole ce que tu travailles : aujourd'hui le démarrage chronométré, demain le circuit d'atterrissage — pas les deux en même temps si l'un des deux n'est pas encore fluide.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Débriefe systématiquement, même un vol réussi</p>
+    <p class="step-detail">DCS enregistre chaque vol en piste (Tracks) — voir <a href="preparer-module-controles.html" style="color:var(--amber)">Préparer le module et les contrôles</a>, phase 4. Deux minutes à repasser mentalement ce qui a coincé valent plus que le vol suivant fait dans la foulée sans y repenser.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item">Reviens sur cette série « Pas à pas » quand un point précis te manque</p>
+    <p class="step-detail">Tu n'as pas besoin de tout retenir par cœur en sortant de ces pages — c'est justement pour ça qu'elles existent. Reviens consulter la bonne page le jour où tu en as besoin, plutôt que d'essayer de tout mémoriser d'avance.</p>
+  </div></div>
+</section>
+
+<div class="note go"><b>Cursus « Pas à pas » terminé</b>Module et contrôles prêts, démarrage à froid aérodrome et porte-avions maîtrisés, réflexes carburant/pannes en tête, et un pense-bête qui te suit en vol. La suite se joue dans le <a href="cursus-complet.html" style="color:var(--go)">cursus complet</a> — navigation, air-air, air-sol — au rythme que tu veux.</div>
+
+<div class="footlinks">
+  <a href="pas-a-pas.html">&larr; Retour au sommaire Pas à pas</a>
+  <a href="cursus-complet.html">Continuer avec le cursus complet →</a>
+</div>
+
+<p class="src">Sources : checklist embarquée réelle du F-14 (NAVAIR 01-F14AAP-1B, reproduite en 3D par Heatblur dans le cockpit), et convention standard du dossier <code>Saved Games\DCS\Kneeboard\</code> pour les images personnelles.</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-checklists-progress';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function save(state){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+
+/* ---------- Planches du manuel Heatblur v2.0 (Drive), avec repli local ---------- */
+const D_ID = id => `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+const V_ID = id => `https://drive.google.com/file/d/${id}/view`;
+const IMG = {
+  checklist:  "1Yx0il_HbxnUxZvmpWs3TaG0uTr_INVzh",
+};
+const FN = {
+  "1Yx0il_HbxnUxZvmpWs3TaG0uTr_INVzh": "checklist_tool_example.jpg",
+};
+document.querySelectorAll('img[data-imgkey]').forEach(img=>{
+  const id=IMG[img.dataset.imgkey];
+  if(!id) return;
+  const fig=img.closest('figure');
+  img.src='img/'+(FN[id]||id);
+  img.addEventListener('error',()=>{
+    if(!img.dataset.f){ img.dataset.f='1'; img.src=D_ID(id); }
+    else { fig.classList.add('failed'); }
+  });
+  img.addEventListener('click',()=>openLb(img.src));
+  const dl=fig.querySelector('.figdrive');
+  if(dl) dl.innerHTML=`<a href="${V_ID(id)}" target="_blank" rel="noopener">Drive ↗</a>`;
+});
+function openLb(src){ document.getElementById('lbimg').src=src; document.getElementById('lb').classList.add('on'); }
+document.getElementById('lb').addEventListener('click',()=>document.getElementById('lb').classList.remove('on'));
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.getElementById('lb').classList.remove('on'); });
+</script>
+</body>
+</html>

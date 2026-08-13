@@ -867,6 +867,47 @@ function goToSearchResult(m){
   },80);
 }
 
+/* ---------- Lien profond depuis un autre tuto ----------
+   ?dev=pto2&n=38[&pg=M3] : bascule sur l'onglet, sélectionne la page
+   throttle si besoin, scrolle jusqu'à la ligne/étiquette et la surligne —
+   même mécanique que goToSearchResult(), sans passer par la recherche
+   textuelle puisqu'on connaît déjà dev+n. */
+function findBindRow(dev,n,pg){
+  const rows=[...document.querySelectorAll('#dtbl-'+dev+' tbody tr[data-n]'+(pg?'[data-pg="'+pg+'"]':''))];
+  let tr=rows.find(r=>r.dataset.n===String(n));
+  if(tr) return tr;
+  const num=parseInt(n,10);
+  if(!isNaN(num)){
+    tr=rows.find(r=>{
+      const m=r.dataset.n.match(/^(\d+)-(\d+)$/);
+      return m && num>=+m[1] && num<=+m[2];
+    });
+  }
+  return tr;
+}
+function gotoDevNum(dev,n,pg){
+  document.querySelector('.tab[data-dev="'+dev+'"]')?.click();
+  if(dev==='throttle' && pg) setThrottlePage(pg);
+  setTimeout(()=>{
+    const tr=findBindRow(dev,n,pg);
+    const i=tr?tr.dataset.i:null;
+    document.querySelectorAll('.search-hit').forEach(e=>e.classList.remove('search-hit'));
+    const lbls=i!=null?document.querySelectorAll('#board-'+dev+' .lbl[data-i="'+i+'"], #board-'+dev+' .jd-lbl[data-i="'+i+'"]'):[];
+    (tr||lbls[0])?.scrollIntoView({behavior:'smooth',block:'center'});
+    if(tr) tr.classList.add('search-hit');
+    lbls.forEach(l=>l.classList.add('search-hit'));
+    setTimeout(()=>{
+      if(tr) tr.classList.remove('search-hit');
+      lbls.forEach(l=>l.classList.remove('search-hit'));
+    },3000);
+  },120);
+}
+function handleDeepLink(){
+  const p=new URLSearchParams(location.search);
+  const dev=p.get('dev'), n=p.get('n');
+  if(dev && n) gotoDevNum(dev,n,p.get('pg'));
+}
+
 searchInput.addEventListener('input',()=>runSearch(searchInput.value));
 searchInput.addEventListener('focus',()=>{ if(searchInput.value.trim()) runSearch(searchInput.value); });
 searchInput.addEventListener('keydown',e=>{
@@ -876,9 +917,9 @@ searchInput.addEventListener('keydown',e=>{
 document.addEventListener('click',e=>{
   if(!e.target.closest('.search-wrap')) searchResultsEl.classList.remove('open');
 });
-loadBindingsIndex().then(()=>loadKbCommands()).then(refreshSearchIndex);
+const p1=loadBindingsIndex().then(()=>loadKbCommands()).then(refreshSearchIndex);
 
-fetch('data/f14bu-hotas.json').then(r=>{if(!r.ok)throw new Error('data/f14bu-hotas.json: '+r.status);return r.json()}).then(hotas=>{
+const p2=fetch('data/f14bu-hotas.json').then(r=>{if(!r.ok)throw new Error('data/f14bu-hotas.json: '+r.status);return r.json()}).then(hotas=>{
   return Promise.all(SVG_DEVICES.map(cfg=>mountSvgDevice(cfg,hotas).catch(err=>{
     const b=document.getElementById('board-'+cfg.id);
     if(b) b.innerHTML='<div class="board-loading" style="color:#c0392b">Erreur de chargement : '+err.message+' — cette page doit être servie en HTTP (voir tools/serve.ps1), pas ouverte en file://.</div>';
@@ -888,6 +929,8 @@ fetch('data/f14bu-hotas.json').then(r=>{if(!r.ok)throw new Error('data/f14bu-hot
     b.innerHTML='<div class="board-loading" style="color:#c0392b">Erreur de chargement des données : '+err.message+'</div>';
   });
 });
+
+Promise.all([p1,p2]).then(handleDeepLink);
 
 /* ---------- Survol : étiquette ↔ ligne ----------
    L'index data-i est commun aux deux rendus, qui parcourent LABELS[dev] dans

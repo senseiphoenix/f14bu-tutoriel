@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — Démarrage et catapultage, porte-avions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-bind{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
+.bindtag .ic{opacity:.7;font-size:.9em}
+
+figure{margin:14px 0;border:1px solid var(--line);background:#0b1114;padding:9px}
+figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px;border-radius:1px}
+figcaption{font-size:12px;color:var(--dim);margin-top:8px;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+figcaption a{font-family:var(--mono);font-size:10.5px;white-space:nowrap;display:inline-flex;align-items:center;min-height:22px;padding:0 4px;color:var(--dim);text-decoration:none}
+figcaption a:hover{color:var(--amber)}
+.imgfail{display:none;padding:20px 12px;font-size:12.5px;color:var(--dim);text-align:center}
+figure.failed img{display:none} figure.failed .imgfail{display:block}
+.lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:100%}
+
+.watch{background:var(--panel-2);border:1px solid var(--line);border-radius:2px;padding:10px 14px;margin:8px 0 0;font-family:var(--mono);font-size:12px;color:var(--dim)}
+.watch b{color:var(--ink)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.jester{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--amber)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Démarrage porte-avions</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — départ porte-avions</div>
+<h1>Démarrage à froid<br>et catapultage</h1>
+<p class="sub">Le porte-avions n'est pas un aérodrome exotique : c'est le milieu naturel du Tomcat. La séquence moteur est <b>identique</b> à celle d'un parking classique — ce qui change, c'est tout ce qui entoure : espace compté, ailes en sur-balayage, et une catapulte au bout du chemin.</p>
+
+<div class="intro-box">
+  <p><b>Déjà fait « Démarrage à froid » sur aérodrome ?</b> Cette page va plus vite sur l'allumage moteur (même geste, mêmes repères) et beaucoup plus loin sur ce qui est spécifique au bateau : configuration du pont, mise en place catapulte, et le coup de catapulte lui-même. Si tu n'as jamais démarré le Tomcat, fais d'abord <a href="demarrage-a-froid.html" style="color:var(--amber)">Démarrage à froid, pas à pas</a> — les repères RPM/EGT/huile ne sont pas répétés ici.</p>
+  <p><b>Tu n'es pas seul.</b> JESTER gère l'alignement de la centrale comme à l'aérodrome. Le pont, lui, est géré par les <b>directeurs</b> (marshallers) — suis leurs gestes, ils savent où tu dois aller mieux que n'importe quelle carte.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Sous tension et moteurs — comme à l'aérodrome</span></div>
+  <p class="phase-why">Rien ne change dans l'ordre : électricité, air, moteur droit, moteur gauche. Le porte-avions fournit les mêmes prestations au sol qu'un aérodrome, juste via son équipage de pont plutôt que le ground crew d'un terrain.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Alimentation électrique et air de démarrage, <span class="switchname">OXYGEN</span> <span class="setting">ON</span>, siège éjectable <span class="setting">ARMÉ</span></p>
+    <p class="step-detail">Identique à l'aérodrome : sur la plupart des missions embarquées, tout est déjà connecté au parking. Sinon, menu <b>F10 → Ground Crew</b> ou demande à JESTER — l'équipage de pont répond aux mêmes commandes.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Action via le menu radio F10, pas un bouton du cockpit"><span class="ic">☰</span>Menu F10 / JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item">Manettes des gaz <span class="setting">OFF</span>, frein de parking <span class="setting">tiré</span></p>
+    <p class="step-detail">Butée arrière pour les manettes. Le frein de parking est encore plus important ici : le pont bouge (vent relatif, roulis du bateau), et un avion qui roule tout seul sur un pont bondé est un vrai danger.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Throttle Left" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Throttle Right" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Parking brake pull" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item">Lance le moteur droit, puis le gauche — mêmes repères qu'à l'aérodrome</p>
+    <p class="step-detail">ENG CRANK sur R, manette droite sur IDLE vers 20 % RPM, laisse stabiliser (62-78 % RPM, ~500 °C EGT, 25-35 psi huile), puis recommence à gauche une fois la pression hydraulique à ~3000 psi et l'alimentation extérieure coupée. Le détail complet, avec ce qu'il faut surveiller à chaque seconde, est dans <a href="demarrage-a-froid.html" style="color:var(--amber)">Démarrage à froid, pas à pas</a> (phases 3 et 4).</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-4"><div class="step-body">
+    <p class="step-item">Lance l'<span class="switchname">alignement de la centrale</span> tout de suite — encore plus vrai qu'à terre</p>
+    <p class="step-detail">Demande à JESTER de lancer l'alignement dès que les moteurs tournent. Sur le pont, l'attente au point de catapultage coûte cher : d'autres appareils roulent et décollent derrière toi, et immobiliser la file pour finir un alignement oublié est un mauvais moment à passer.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Configure l'avion pour le pont</span></div>
+  <p class="phase-why">C'est ici que ça diverge vraiment de l'aérodrome : sur un pont encombré, un avion aux ailes déployées est un avion qui accroche son voisin. Deux réglages changent, et un troisième s'inverse carrément par rapport à la version terrestre.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Ailes en <span class="switchname">sur-balayage</span> (Oversweep, 75°) dès que tu bouges au parking</p>
+    <p class="step-detail">Contrairement à l'aérodrome (où le sélecteur reste simplement sur MAN jusqu'au décollage), sur le pont tu passes en position <b>Oversweep 75°</b> — l'angle le plus fermé, spécifiquement prévu pour le stationnement serré. Tu la gardes tant que tu manœuvres au parking, jusqu'à la mise en place sur la catapulte.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Wing Sweep Bomb Mode" href="#"></a></div>
+  </div></div>
+
+  <figure>
+    <img data-imgkey="wingsweep" alt="Indicateur de flèche d'aile (SWEEP)" loading="lazy">
+    <div class="imgfail">Image non chargée — ouvre-la directement dans Drive.</div>
+    <figcaption><span>Indicateur SWEEP — l'aiguille doit être en butée à 75° pendant toute manœuvre au parking sur le pont.</span><span class="figdrive"></span></figcaption>
+  </figure>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item"><span class="switchname">ANTI SKID / SPOILER BK</span> sur <span class="setting">OFF</span> — l'inverse de l'aérodrome</p>
+    <p class="step-detail">Sur piste classique tu veux l'anti-dérapage actif (position BOTH). Sur porte-avions, coupe-le : le pont est trop court et trop particulier (câbles d'arrêt, mouvement du bateau) pour que l'anti-dérapage terrestre y soit pertinent — le manuel est explicite là-dessus.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Antiskid &amp; Spoiler BK - Off" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item">Contournement de crosse sur <span class="setting">CARRIER</span></p>
+    <p class="step-detail">Pas pour le décollage (la crosse ne sert qu'à l'appontage), mais autant le régler maintenant pendant que tu es dans le bon panneau — tu n'y reviendras pas avant le retour.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Lights Hook Bypass CARRIER" href="#"></a></div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Roule jusqu'à la catapulte</span></div>
+  <p class="phase-why">Le pont est encombré et se termine dans l'eau des deux côtés. Ici, ce n'est pas la carte qui te guide : ce sont les directeurs.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Relâche le frein de parking seulement quand un directeur te fait signe</p>
+    <p class="step-detail">Ne roule jamais de ta propre initiative sur le pont. Les directeurs (marshallers) connaissent la position de tous les autres appareils et savent quand c'est ton tour — suis leurs gestes au ralenti, en gardant les ailes en sur-balayage.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Aligne-toi sur la catapulte désignée</p>
+    <p class="step-detail">Un dernier directeur (le « shooter » ou son équipe) te positionne précisément sur la piste de catapultage — attends son signal avant d'avancer davantage.</p>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Mets-toi en configuration de lancement</span></div>
+  <p class="phase-why">Une fois aligné sur la catapulte, tu repasses en configuration décollage — ce n'est plus le moment de rester replié.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item">Ailes repassées en <span class="setting">AUTO</span> (se stabilise vers 20° à basse vitesse), volets sur <span class="setting">1 cran</span>, trim réglé</p>
+    <p class="step-detail">Tu quittes le sur-balayage 75° : repasse en AUTO, le CADC amène et tient l'angle optimal pour ta vitesse — à l'arrêt sur catapulte, ça se stabilise autour de 20°, la même position que pour un décollage piste classique. Volets en position intermédiaire (« 1 cran »), pas complètement rentrés : c'est la configuration de portance utilisée au décollage.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Wing Sweep Auto Mode" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Volets - 1 cran" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item">Déploie la <span class="switchname">barre de lancement</span></p>
+    <p class="step-detail">Levier dédié sur la console gauche (positions LAUNCH BAR / NORM / ABORT, photo ci-dessous) — c'est elle qui s'accroche à la catapulte. Le sélecteur ABORT/AUTO du même ensemble gère l'abandon de catapultage si besoin.</p>
+    <div class="step-bind">
+      <span class="bindtag unbound" title="Levier physique, action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span>
+      <a class="bindtag" data-bind-cmd="Launch Bar Abort Switch - AUTO" href="#"></a>
+    </div>
+  </div></div>
+
+  <figure>
+    <img data-imgkey="launchbar" alt="Levier de la barre de lancement (LAUNCH BAR / ABORT / NORM)" loading="lazy">
+    <div class="imgfail">Image non chargée — ouvre-la directement dans Drive.</div>
+    <figcaption><span>Levier LAUNCH BAR — console gauche, juste devant le panneau moteur.</span><span class="figdrive"></span></figcaption>
+  </figure>
+</section>
+
+<!-- ============ PHASE 5 ============ -->
+<section class="phase" data-phase="5">
+  <div class="phase-head"><span class="phase-num">PHASE 5</span><span class="phase-title">Le coup de catapulte</span></div>
+  <p class="phase-why">Quelques secondes qui font toute la réputation du Tomcat embarqué. La règle la plus importante de cette page : ne touche pas au manche pendant le lancement.</p>
+
+  <div class="step"><input type="checkbox" data-id="p5-1"><div class="step-body">
+    <p class="step-item">Manettes plein gaz, voire <span class="setting">postcombustion</span> selon la masse et le vent sur le pont</p>
+    <p class="step-detail">Plus tu es lourd (plein d'emport) et moins il y a de vent relatif sur le pont, plus la postcombustion devient nécessaire pour décoller dans la longueur de catapulte disponible.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-2"><div class="step-body">
+    <p class="step-item">Passe rapidement les commandes en revue, puis salue le directeur</p>
+    <p class="step-detail">Gouvernes libres, paramètres moteurs verts — un dernier coup d'œil avant que ça ne bouge. Le salut au directeur signale que tu es prêt à partir ; à partir de là, ce n'est plus toi qui décides du moment exact.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-3"><div class="step-body">
+    <p class="step-item"><b>Mains à l'écart du manche</b> pendant le lancement</p>
+    <p class="step-detail">Le Tomcat rote pratiquement tout seul sous l'effet de la catapulte. Toucher le manche à cet instant induit une oscillation dangereuse à très basse hauteur, juste après le bord de piste — l'erreur classique du débutant, et la plus punie.</p>
+    <div class="note warn"><b>Le piège n°1 de cette page</b>Tenir le manche par réflexe pendant le lancement. L'avion est conçu pour partir seul — laisse-le faire, garde juste les mains prêtes à reprendre une fois en l'air.</div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 6 ============ -->
+<section class="phase" data-phase="6">
+  <div class="phase-head"><span class="phase-num">PHASE 6</span><span class="phase-title">Après le catapultage</span></div>
+  <p class="phase-why">Tu es en l'air, mais l'avion est encore en configuration de lancement. Range-la avant de penser à autre chose.</p>
+
+  <div class="step"><input type="checkbox" data-id="p6-1"><div class="step-body">
+    <p class="step-item">Rotation naturelle, train rentré dès taux de montée positif</p>
+    <p class="step-detail">Laisse l'avion prendre son assiette de montée tout seul. Une fois que le variomètre confirme une montée franche, rentre le train.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Gears Up" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-2"><div class="step-body">
+    <p class="step-item">Nettoie la configuration : volets <span class="setting">rentrés</span></p>
+    <p class="step-detail">Une fois le train rentré et une vitesse de montée établie, rentre les volets — les ailes, elles, sont déjà en AUTO depuis la mise en place sur catapulte (phase 4), rien à refaire de ce côté.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Volets rentrés" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-3"><div class="step-body">
+    <p class="step-item">Vérifie qu'aucun voyant <span class="switchname">Master Caution</span> n'est resté allumé</p>
+    <p class="step-detail">Même réflexe qu'à l'aérodrome : un coup d'œil au panneau d'alarmes avant de te concentrer sur la suite de la mission.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Master Caution Reset" href="#"></a></div>
+  </div></div>
+</section>
+
+<div class="note go"><b>Tu es en vol</b>Moteurs stables, configuration nettoyée, alignement lancé ou terminé. Pour l'atterrissage sur le pont au retour — bien plus exigeant que le décollage — voir <b>C2 à C4 · La théorie de l'appontage, voler le circuit, poser sur le pont</b>.</div>
+
+<div class="footlinks">
+  <a href="pas-a-pas.html">&larr; Retour au sommaire Pas à pas</a>
+  <a href="section-c-porte-avions.html#c1">Approfondir : leçon C1, Départ catapulte →</a>
+</div>
+
+<p class="src">Sources : checklists réelles Heatblur (<code>pre_start.md</code>, <code>startup.md</code>, <code>post_start.md</code>, catapult launch du manuel F-14 v2.0), et la leçon <a href="section-c-porte-avions.html#c1" style="color:var(--dim)">C1 · Départ catapulte</a> de ce site pour la partie pont/catapulte. Les badges de bouton sont lus en direct dans <code>data/f14bu-bindings.json</code> (mêmes données que <a href="mapping-hotas.html" style="color:var(--dim)">le mapping HOTAS</a>) — vérifiés contre le profil réel <code>.diff.lua</code> du PTO2 pendant la rédaction de cette page.</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-carrierstart-progress';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function save(state){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+
+/* ---------- Planches du manuel Heatblur v2.0 (Drive), avec repli local ---------- */
+const D_ID = id => `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
+const V_ID = id => `https://drive.google.com/file/d/${id}/view`;
+const IMG = {
+  wingsweep:  "10QucDurJZPC_VCxHu0r-KDezHt5LHc6w",
+  launchbar:  "1D8RAKdjVRNsFb6o7xR7jJMBctNtcvVRq",
+};
+const FN = {
+  "10QucDurJZPC_VCxHu0r-KDezHt5LHc6w": "right_instrument_panel_wingsweep-01.jpg",
+  "1D8RAKdjVRNsFb6o7xR7jJMBctNtcvVRq": "left_vertical_console_launch_bar_abort_switch.jpg",
+};
+document.querySelectorAll('img[data-imgkey]').forEach(img=>{
+  const id=IMG[img.dataset.imgkey];
+  if(!id) return;
+  const fig=img.closest('figure');
+  img.src='img/'+(FN[id]||id);
+  img.addEventListener('error',()=>{
+    if(!img.dataset.f){ img.dataset.f='1'; img.src=D_ID(id); }
+    else { fig.classList.add('failed'); }
+  });
+  img.addEventListener('click',()=>openLb(img.src));
+  const dl=fig.querySelector('.figdrive');
+  if(dl) dl.innerHTML=`<a href="${V_ID(id)}" target="_blank" rel="noopener">Drive ↗</a>`;
+});
+function openLb(src){ document.getElementById('lbimg').src=src; document.getElementById('lb').classList.add('on'); }
+document.getElementById('lb').addEventListener('click',()=>document.getElementById('lb').classList.remove('on'));
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.getElementById('lb').classList.remove('on'); });
+
+/* ---------- Badges de bind dynamiques (voir demarrage-a-froid.html pour le détail) ---------- */
+const BIND_STORE_KEY='f14bu-export-bindings-v1';
+const AXIS_KEYS={X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL={stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS=null;
+async function loadBindings(){
+  try{ BINDINGS=await fetch('data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS=null; }
+}
+function deriveKeys(n,count){
+  const upper=String(n).toUpperCase(), slots=Math.max(count,1);
+  if(AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if(upper==='SLDR') return new Array(slots).fill('JOY_SLIDER1');
+  if(/^\d+$/.test(n)) return new Array(slots).fill('JOY_BTN'+n);
+  const range=n.match(/^(\d+)-(\d+)$/);
+  if(range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides=(saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry=overrides[b.device+'|'+b.n];
+    const commands=(entry&&Array.isArray(entry.commands))?entry.commands:b.commands;
+    const keys=(entry&&Array.isArray(entry.keys))?entry.keys:deriveKeys(b.n,commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i], n:b.n}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('a[data-bind-cmd]').forEach(el=>{
+    const hits=bindingsFor(el.dataset.bindCmd);
+    el.target='_blank'; el.rel='noopener';
+    if(!hits.length){
+      el.textContent='non affecté';
+      el.classList.add('unbound');
+      el.title='Pas de bind confirmé dans le profil actuel — ouvre le mapping pour vérifier ou en poser un';
+      el.href='mapping-hotas.html';
+      return;
+    }
+    el.textContent=hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ');
+    el.classList.remove('unbound');
+    const h=hits[0];
+    el.title='Ouvrir le mapping sur ce contrôle';
+    el.href='mapping-hotas.html?dev='+h.device+'&n='+encodeURIComponent(h.n);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
+loadBindings().then(paintBindBadges);
+</script>
+</body>
+</html>

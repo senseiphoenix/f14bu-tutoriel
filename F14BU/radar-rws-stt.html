@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — Radar air-air : RWS et STT, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-detail table{width:100%;border-collapse:collapse;margin-top:8px;font-size:12.5px}
+.step-detail th,.step-detail td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+.step-detail th{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--panel)}
+.step-bind{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
+.bindtag .ic{opacity:.7;font-size:.9em}
+
+figure{margin:14px 0;border:1px solid var(--line);background:#0b1114;padding:9px}
+figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px;border-radius:1px}
+figcaption{font-size:12px;color:var(--dim);margin-top:8px;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+figcaption a{font-family:var(--mono);font-size:10.5px;white-space:nowrap;display:inline-flex;align-items:center;min-height:22px;padding:0 4px;color:var(--dim);text-decoration:none}
+figcaption a:hover{color:var(--amber)}
+.imgfail{display:none;padding:20px 12px;font-size:12.5px;color:var(--dim);text-align:center}
+figure.failed img{display:none} figure.failed .imgfail{display:block}
+.lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:100%}
+
+.watch{background:var(--panel-2);border:1px solid var(--line);border-radius:2px;padding:10px 14px;margin:8px 0 0;font-family:var(--mono);font-size:12px;color:var(--dim)}
+.watch b{color:var(--ink)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.jester{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--amber)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Radar air-air : RWS et STT</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — pilote solo</div>
+<h1>Radar air-air<br>RWS et STT, pas à pas</h1>
+<p class="sub">Chercher un contact, régler ce qui reste à ta charge, puis verrouiller fermement une cible. Chaque étape dit <b>quoi demander</b>, <b>à qui</b>, et <b>quoi lire</b> une fois que ça arrive sur ton écran.</p>
+
+<div class="intro-box">
+  <p><b>Le radar AWG-9 n'est pas une commande pilote.</b> Sur le F-14BU solo, c'est <span class="jester">JESTER</span> qui tient le manche du RIO : lui qui choisit le mode radar (recherche, poursuite, TWS), règle le gain, filtre le fouillis, et déclenche le verrouillage. Toi, tu <b>diriges</b> — tu demandes, tu donnes la priorité, tu lis le résultat sur ton PTID et ton HUD.</p>
+  <p>Le pilote garde quand même une poignée de commandes radar bien réelles sur le HOTAS : les deux préréglages de portée <span class="setting">25</span>/<span class="setting">100</span> nm, la rupture de verrouillage, la bascule entre les deux types de poursuite ferme (PD-STT/P-STT), et la désignation automatique PAL. Ce sont des boutons physiques sur ton manche et ta manette — mais ce qu'ils déclenchent reste une action du RIO. Cette page les traite exactement comme les autres commandes HOTAS de ce site : badge vert, lien direct vers le mapping.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Vocabulaire de base déjà posé dans le cursus complet, leçons <b style="color:var(--dim)">D1 · Le radar : modes et vocabulaire</b> et <b style="color:var(--dim)">D2 · Lire le PTID</b> — cette page les reprend en version « quoi faire, maintenant ».</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Demande une recherche à JESTER et lis le PTID</span></div>
+  <p class="phase-why">Rien n'apparaît sur ton écran tant que personne n'a demandé au radar de chercher. C'est toujours la première chose à faire en entrant en zone de patrouille.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Ouvre le menu <span class="jester">JESTER</span> et demande une <span class="switchname">recherche radar</span></p>
+    <p class="step-detail">En vol air-air, la 1ʳᵉ pression sur la touche menu affiche déjà les propositions de recherche — pas besoin d'aller chercher dans le menu complet. C'est ce mode que la leçon D1 appelle <b>RWS</b> (Range While Search) : une recherche pulse doppler longue portée, jusqu'à 110 nm, qui filtre le fouillis au sol en se basant sur la vitesse relative des cibles.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Toggle Menu" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item">Laisse <span class="jester">JESTER</span> confirmer verbalement qu'il a lancé la recherche</p>
+    <p class="step-detail">C'est lui qui choisit concrètement le mode radar exact et les réglages fins (gain, filtrage) — toi tu n'as qu'à demander « radar, recherche » et attendre son retour. S'il ne répond rien après quelques secondes, rouvre le menu et redemande.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item">Ouvre le <span class="switchname">PTID</span> sur sa <span class="setting">page tactique</span></p>
+    <p class="step-detail">C'est ta fenêtre sur ce que voit le radar. Vingt boutons-poussoirs entourent l'écran ; sur la page tactique, ce sont surtout la source de donnée affichée (SNSR / OWN A/C / une piste précise) et l'échelle de portée qui t'intéressent pour l'instant.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-4"><div class="step-body">
+    <p class="step-item">Repère une <span class="switchname">piste brute</span> quand un contact apparaît</p>
+    <p class="step-detail">Une piste brute est un simple contact détecté par le balayage : pas encore assez de données pour un tir guidé, juste une position approximative qui se met à jour à chaque passage d'antenne. C'est le tout premier stade, avant toute poursuite.</p>
+    <div class="watch">👀 À ce stade : le contact clignote ou saute un peu à chaque balayage — normal, le radar ne le suit pas encore individuellement.</div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Règle la portée et laisse JESTER gérer l'élévation</span></div>
+  <p class="phase-why">Deux réglages comptent avant de penser à verrouiller : la <b>portée</b> que tu affiches (pilote) et l'<b>élévation</b> du faisceau radar (RIO). Ne confonds pas les deux — l'un est sur ton HOTAS, l'autre non.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Utilise les préréglages pilote <span class="setting">25 nm</span> / <span class="setting">100 nm</span> pour cadrer l'échelle</p>
+    <p class="step-detail">Deux boutons sur ta manette, directement sur le HOTAS — les seuls réglages de portée que le pilote déclenche lui-même sans passer par JESTER. 100 nm pour balayer large en surveillance longue distance, 25 nm dès qu'un contact se rapproche et que tu veux plus de détail.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Radar - Range 100" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Radar - Range 25" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item">Demande à <span class="jester">JESTER</span> de régler l'<span class="switchname">élévation</span> du balayage</p>
+    <p class="step-detail">L'antenne doit pointer vers l'altitude probable de la cible pour la voir — trop haute ou trop basse, elle passe à côté sans rien détecter. C'est un réglage fin du RIO, pas un axe ni un bouton pilote : donne-lui l'info que tu as (« cible haute », « cible basse ») et laisse-le ajuster.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item">Si tu dois surveiller plusieurs contacts à la fois, demande le passage en <span class="switchname">TWS</span></p>
+    <p class="step-detail">TWS (poursuite sur passage) garde plusieurs pistes actives en même temps, jusqu'à 90 nm — c'est le mode qui prépare un tir Phoenix multi-cibles. Contre un seul contact que tu veux engager fermement, tu n'en as pas besoin : passe directement en poursuite (phase 3).</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-4"><div class="step-body">
+    <p class="step-item">Vérifie que l'<span class="switchname">échelle du PTID</span> correspond bien à la distance réelle du contact</p>
+    <p class="step-detail">L'échelle affichée à l'écran n'est pas automatiquement la portée de détection du radar — c'est juste ce que couvre ton écran en ce moment. Un contact peut très bien exister hors de l'échelle actuelle sans que tu le voies. Resserre l'échelle au clic si un contact se rapproche et devient difficile à lire.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Passe en STT et lis ce qui change au HUD</span></div>
+  <p class="phase-why">STT (Single Target Track) est une poursuite ferme sur une seule cible — le préalable à tout tir guidé. C'est le moment où le radar arrête de balayer large pour se concentrer sur un seul contact.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Désigne la piste prioritaire et demande à <span class="jester">JESTER</span> de <span class="switchname">verrouiller</span></p>
+    <p class="step-detail">Une fois la piste choisie sur le PTID, demande le verrouillage par le menu contextuel. La piste brute devient une <b>piste ferme</b> : elle porte maintenant assez de données (vecteur, distance) pour un calcul de zone de tir.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Utilise <span class="switchname">PAL</span> pour verrouiller directement un contact déjà visible</p>
+    <p class="step-detail">Le pilote du Tomcat n'a pas de TDC pour pointer une cible à l'écran — PAL (désignation automatique) est l'équivalent : elle demande au radar de verrouiller le contact le plus proche de l'axe de ton avion ou déjà accroché visuellement/HUD. Pratique en combat rapproché, quand tu n'as pas le temps de passer par le menu JESTER.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Target designate fwd / PAL" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item">Choisis le bon type de poursuite ferme : <span class="switchname">PD-STT</span> ou <span class="switchname">P-STT</span></p>
+    <p class="step-detail">PD-STT (poursuite doppler) porte loin — jusqu'à 90 nm — et couvre tous les missiles, mais peut perdre une cible qui n'a presque plus de vitesse de rapprochement (le « notch »). P-STT (poursuite pulse) porte moins loin — 50 nm — mais ne connaît pas ce trou : elle voit une cible même presque immobile relativement à toi. Un seul bouton bascule entre les deux.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Radar - Toggle PD-STT or P-STT" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-4"><div class="step-body">
+    <p class="step-item">Repère le changement au <span class="switchname">HUD</span> une fois verrouillé</p>
+    <p class="step-detail">Un cercle ou une boîte de poursuite (TD box) apparaît sur la cible, avec sa portée et sa vitesse de rapprochement affichées. C'est ton indicateur visuel principal : tant qu'il reste stable sur la cible, le verrouillage tient.</p>
+    <div class="watch">👀 Voyants de poursuite à surveiller (relayés par JESTER, sur son panneau DDD) : <b>ANT TRK</b> — l'antenne suit l'angle de la cible — et <b>RDROT</b> — la cible reste dans la porte de distance. Les deux allumés en continu = verrouillage solide.</div>
+  </div></div>
+
+  <div class="note go"><b>Repère</b>Piste ferme + TD box stable au HUD + ANT TRK/RDROT allumés = tu es en poursuite ferme exploitable pour un tir. C'est l'état que tu veux avant d'engager avec un Sparrow ou un Sidewinder guidé.</div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Casse le verrouillage et reviens en recherche</span></div>
+  <p class="phase-why">Un verrouillage ne dure pas toujours jusqu'au tir : cible amie, ordre annulé, ou simplement besoin de revenir surveiller plus large. Savoir revenir en arrière proprement évite de rester aveugle après.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item">Casse le <span class="switchname">verrouillage</span> manuellement si besoin</p>
+    <p class="step-detail">Bouton dédié sur le manche, disponible à tout instant — pas besoin de passer par le menu JESTER pour cette action précise. Utile en cas de doute sur l'identité de la cible, ou si l'ordre d'engagement change en plein vol.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Radar - Break Lock" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item">Redemande à <span class="jester">JESTER</span> une <span class="switchname">recherche</span> pour balayer à nouveau</p>
+    <p class="step-detail">Casser le verrouillage ne relance pas automatiquement une recherche large — le radar reste concentré sur la dernière zone tant que tu ne redemandes rien. Redemande « radar, recherche » dès que tu veux retrouver une vue d'ensemble de la zone.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-3"><div class="step-body">
+    <p class="step-item">Vérifie que le PTID repasse en piste brute ou perd le contact</p>
+    <p class="step-detail">Une fois le verrouillage cassé, la piste redevient une simple détection de balayage — ou disparaît si le contact sort de portée pendant la manœuvre. C'est normal : tu as volontairement rendu la donnée moins précise en échange de la vue d'ensemble.</p>
+  </div></div>
+
+  <div class="note warn"><b>À savoir</b>Casser le verrouillage n'éteint pas le radar. JESTER continue de chercher automatiquement sauf ordre contraire de ta part — mais il ne relance une recherche large que si tu la lui redemandes explicitement.</div>
+</section>
+
+<!-- ============ PHASE 5 ============ -->
+<section class="phase" data-phase="5">
+  <div class="phase-head"><span class="phase-num">PHASE 5</span><span class="phase-title">Erreurs fréquentes de débutant</span></div>
+  <p class="phase-why">Les mêmes pièges reviennent presque toujours au début. Les connaître à l'avance évite de perdre un contact au pire moment.</p>
+
+  <div class="step"><input type="checkbox" data-id="p5-1"><div class="step-body">
+    <p class="step-item">Confondre l'<span class="switchname">échelle du PTID</span> et la <span class="switchname">portée réelle</span> de détection</p>
+    <p class="step-detail">L'échelle est juste ce que ton écran affiche en ce moment — pas la limite du radar. Un contact peut exister au-delà sans apparaître, simplement parce que l'écran est réglé trop serré (voir phase 2, étape 4).</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-2"><div class="step-body">
+    <p class="step-item">Oublier de redemander une recherche après une manœuvre défensive</p>
+    <p class="step-detail">Après un virage serré ou une descente rapide, JESTER peut avoir perdu le contact sans forcément le signaler avec insistance. Reprends l'habitude de redemander « radar, recherche » dès que tu reviens à une trajectoire stable.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-3"><div class="step-body">
+    <p class="step-item">Verrouiller trop tôt, bien avant la portée d'armement</p>
+    <p class="step-detail">Un verrouillage STT loin de la zone de tir n'apporte rien de plus qu'une piste ferme bien suivie, et prévient l'adversaire (alerte radar) plus tôt que nécessaire. Garde la poursuite ferme prête, mais réserve le tir pour la leçon suivante et son enveloppe de tir.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-4"><div class="step-body">
+    <p class="step-item">Confondre <span class="switchname">STT</span> et <span class="switchname">TWS</span></p>
+    <p class="step-detail">STT = un seul contact suivi fermement, le mode qu'il te faut pour tirer un Sparrow ou un Sidewinder guidé. TWS = plusieurs pistes surveillées en parallèle, pensé pour le Phoenix longue portée. Le pilote ne choisit pas ce mode fin lui-même — mais savoir lequel demander à JESTER évite les allers-retours inutiles.</p>
+  </div></div>
+</section>
+
+<div class="note go"><b>Tu es prêt</b>Tu sais demander une recherche, cadrer la portée, distinguer ce qui reste à ta charge de ce qui appartient à JESTER, verrouiller en STT et lire le résultat au HUD, puis revenir en arrière proprement. La suite logique : engager la cible verrouillée — c'est le sujet de la leçon <b>Combat courte portée : AIM-9 et canon</b>.</div>
+
+<div class="footlinks">
+  <a href="pas-a-pas.html">&larr; Retour au sommaire Pas à pas</a>
+  <a href="combat-courte-portee.html">Étape suivante : Combat courte portée : AIM-9 et canon →</a>
+</div>
+
+<p class="src">Sources : leçons <b>D1 · Le radar : modes et vocabulaire</b> et <b>D2 · Lire le PTID</b> du <a href="cursus-complet.html">cursus complet</a> de ce site, simplifiées pour un pilote solo assisté par JESTER — les réglages fins du RIO (gain, filtrage, élévation précise) sont volontairement omis ici. Les badges de bouton sont lus en direct dans <code>data/f14bu-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — pas de numéro figé dans le texte.</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-radar-progress';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function save(state){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+
+/* ---------- Badges de bind dynamiques ----------
+   Chaque fonction citée sur cette page porte son bouton HOTAS entre
+   parenthèses, lu en direct dans data/f14bu-bindings.json (corrigé par
+   l'export de binds si l'utilisateur en a un) — jamais un numéro figé dans
+   le texte. Lien direct vers le mapping, sur le bon contrôle : voir
+   gotoDevNum() dans mapping-hotas.html. */
+const BIND_STORE_KEY='f14bu-export-bindings-v1';
+const AXIS_KEYS={X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL={stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS=null;
+async function loadBindings(){
+  try{ BINDINGS=await fetch('data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS=null; }
+}
+function deriveKeys(n,count){
+  const upper=String(n).toUpperCase(), slots=Math.max(count,1);
+  if(AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if(upper==='SLDR') return new Array(slots).fill('JOY_SLIDER1');
+  if(/^\d+$/.test(n)) return new Array(slots).fill('JOY_BTN'+n);
+  const range=n.match(/^(\d+)-(\d+)$/);
+  if(range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides=(saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry=overrides[b.device+'|'+b.n];
+    const commands=(entry&&Array.isArray(entry.commands))?entry.commands:b.commands;
+    const keys=(entry&&Array.isArray(entry.keys))?entry.keys:deriveKeys(b.n,commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i], n:b.n}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('a[data-bind-cmd]').forEach(el=>{
+    const hits=bindingsFor(el.dataset.bindCmd);
+    el.target='_blank'; el.rel='noopener';
+    if(!hits.length){
+      el.textContent='non affecté';
+      el.classList.add('unbound');
+      el.title='Pas de bind confirmé dans le profil actuel — ouvre le mapping pour vérifier ou en poser un';
+      el.href='mapping-hotas.html';
+      return;
+    }
+    el.textContent=hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ');
+    el.classList.remove('unbound');
+    const h=hits[0];
+    el.title='Ouvrir le mapping sur ce contrôle';
+    el.href='mapping-hotas.html?dev='+h.device+'&n='+encodeURIComponent(h.n);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
+loadBindings().then(paintBindBadges);
+</script>
+</body>
+</html>

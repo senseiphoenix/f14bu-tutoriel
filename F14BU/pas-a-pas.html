@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F-14B(U) — Pas à pas</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;
+    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  .wrap{max-width:880px;margin:0 auto;padding:48px 24px 80px}
+  .crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+  .crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+  .crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+  .tail{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:44px;letter-spacing:.04em;line-height:1.02;margin:10px 0 8px;text-transform:uppercase}
+  .sub{color:var(--dim);max-width:64ch;margin:0 0 36px}
+  .sub b{color:var(--ink)}
+  a.card{display:flex;gap:18px;align-items:baseline;border:1px solid var(--line);background:var(--panel);
+         padding:18px 20px;margin:10px 0;text-decoration:none;color:var(--ink);transition:border-color .12s}
+  a.card:hover{border-color:var(--amber)}
+  .card.soon{display:flex;gap:18px;align-items:baseline;border:1px dashed var(--line);background:transparent;
+         padding:18px 20px;margin:10px 0;opacity:.55;cursor:default}
+  .idx{font-family:var(--mono);font-size:13px;color:var(--amber);min-width:26px}
+  .nm{font-family:var(--display);font-size:19px;letter-spacing:.04em;text-transform:uppercase}
+  .ds{color:var(--dim);font-size:13.5px;margin-left:auto;text-align:right;max-width:46%}
+  .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--deck);
+       background:var(--dim);padding:2px 7px;border-radius:2px;white-space:nowrap;align-self:center}
+  .hr{border-top:1px solid var(--line);margin:34px 0 22px}
+  h2{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:0 0 12px}
+  p{margin:12px 0;color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="crumbs">
+    <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+    <span>Pas à pas</span>
+  </nav>
+  <div class="tail">DCS · Heatblur · F-14B(U) Tomcat — pilote solo</div>
+  <h1>Pas à pas</h1>
+  <p class="sub">Des tutoriels <b>une seule page, très détaillés</b>, pensés pour un débutant total : chaque étape dit quoi faire, où, et pourquoi, avec une checklist qui garde ta progression. Différent du <a href="cursus-complet.html" style="color:var(--amber)">cursus complet</a> (sections A→G) qui explique le <b>pourquoi</b> en profondeur — ici, c'est le <b>quoi faire, maintenant</b>, avec les numéros de bouton HOTAS de ton profil réel en direct.</p>
+
+  <a class="card" href="preparer-module-controles.html" style="border-color:var(--go)"><span class="idx">1</span><span class="nm">Préparer le module et les contrôles</span><span class="ds">Vérifier l'installation, régler les courbes d'axes et les zones mortes, activer les aides d'apprentissage</span></a>
+
+  <a class="card" href="travailler-avec-jester.html" style="border-color:var(--go)"><span class="idx">2</span><span class="nm">Travailler avec JESTER</span><span class="ds">Le mécanisme du menu (1/2/3 pressions), l'explorer sans risque, construire ton lexique</span></a>
+
+  <a class="card" href="demarrage-a-froid.html" style="border-color:var(--go)"><span class="idx">3</span><span class="nm">Démarrage à froid</span><span class="ds">De l'avion froid aux moteurs lancés, sans rien connaître par cœur — parking aérodrome</span></a>
+
+  <a class="card" href="demarrage-porte-avions.html" style="border-color:var(--go)"><span class="idx">4</span><span class="nm">Démarrage et catapultage, porte-avions</span><span class="ds">Ce qui change par rapport à l'aérodrome, jusqu'à la sortie de pont</span></a>
+
+  <a class="card" href="roulage-decollage.html" style="border-color:var(--go)"><span class="idx">5</span><span class="nm">Roulage et décollage</span><span class="ds">Configuration avant roulage, vitesse de rotation, montée initiale</span></a>
+
+  <a class="card" href="vol-base-aoa-dfcs.html" style="border-color:var(--go)"><span class="idx">6</span><span class="nm">Vol de base, AoA et DFCS</span><span class="ds">Trim, autopilote, tenue d'incidence — les bases du pilotage Tomcat</span></a>
+
+  <a class="card" href="retour-atterrissage.html" style="border-color:var(--go)"><span class="idx">7</span><span class="nm">Retour terrain et atterrissage</span><span class="ds">Circuit standard, configuration d'approche, poser sur piste</span></a>
+
+  <a class="card" href="navigation-hud-tacan.html" style="border-color:var(--go)"><span class="idx">8</span><span class="nm">Navigation : HUD, HSD/TID, TACAN</span><span class="ds">Lire le HUD, suivre un waypoint, se guider au TACAN</span></a>
+
+  <a class="card" href="case-i-appontage.html" style="border-color:var(--go)"><span class="idx">9</span><span class="nm">Circuit CASE I et appontage</span><span class="ds">Boule/axe/incidence, le DLC, poser sur le pont</span></a>
+
+  <a class="card" href="radar-rws-stt.html" style="border-color:var(--go)"><span class="idx">10</span><span class="nm">Radar air-air : RWS et STT</span><span class="ds">Chercher, régler l'élévation, verrouiller un contact</span></a>
+
+  <a class="card" href="combat-courte-portee.html" style="border-color:var(--go)"><span class="idx">11</span><span class="nm">Combat courte portée : AIM-9 et canon</span><span class="ds">Ton de verrouillage, gestion d'énergie, tir au canon</span></a>
+
+  <a class="card" href="aim7-sparrow.html" style="border-color:var(--go)"><span class="idx">12</span><span class="nm">AIM-7 Sparrow</span><span class="ds">Verrouillage STT, enveloppe de tir, maintien du guidage</span></a>
+
+  <a class="card" href="aim54-phoenix-tws.html" style="border-color:var(--go)"><span class="idx">13</span><span class="nm">AIM-54 Phoenix et TWS</span><span class="ds">Suivi multi-cibles, priorisation, tir longue portée</span></a>
+
+  <a class="card" href="contre-mesures.html" style="border-color:var(--go)"><span class="idx">14</span><span class="nm">Contre-mesures : chaff, flares, ECM</span><span class="ds">Programmes ALE-47, quand et comment les déclencher</span></a>
+
+  <a class="card" href="bombes-ccip.html" style="border-color:var(--go)"><span class="idx">15</span><span class="nm">Bombes lisses en CCIP</span><span class="ds">Profil d'attaque simple, mire HUD, largage</span></a>
+
+  <a class="card" href="bombes-laser-lantirn.html" style="border-color:var(--go)"><span class="idx">16</span><span class="nm">Bombes guidées laser et LANTIRN</span><span class="ds">Désignation, illumination, largage avec JESTER</span></a>
+
+  <a class="card" href="jdam.html" style="border-color:var(--go)"><span class="idx">17</span><span class="nm">JDAM : préplanifié et cible d'opportunité</span><span class="ds">Modes PP et TOO, désignation, transfert de coordonnées</span></a>
+
+  <a class="card" href="carburant-pannes-retour.html" style="border-color:var(--go)"><span class="idx">18</span><span class="nm">Carburant, pannes simples et retour</span><span class="ds">Lire les jauges, décider d'un déroutement, réagir à une panne moteur ou hydraulique basique</span></a>
+
+  <a class="card" href="checklists-personnalisees.html" style="border-color:var(--go)"><span class="idx">19</span><span class="nm">Construire ses checklists personnalisées</span><span class="ds">La checklist déjà intégrée au cockpit, ton propre pense-bête, et de bonnes habitudes d'entraînement</span></a>
+
+  <div class="hr"></div>
+  <h2>Voir aussi</h2>
+  <a class="card" href="cursus-complet.html"><span class="idx">★</span><span class="nm">Cursus complet</span><span class="ds">Les 7 sections encyclopédiques, du cockpit à la mission complète</span></a>
+  <a class="card" href="mapping-hotas.html"><span class="idx">&#9998;</span><span class="nm">Mapping HOTAS</span><span class="ds">Chaque bouton de ton HOTAS, annoté et cherchable</span></a>
+</div>
+</body>
+</html>

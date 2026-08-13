@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — Vol de base, AoA et DFCS, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-bind{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
+.bindtag .ic{opacity:.7;font-size:.9em}
+
+figure{margin:14px 0;border:1px solid var(--line);background:#0b1114;padding:9px}
+figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px;border-radius:1px}
+figcaption{font-size:12px;color:var(--dim);margin-top:8px;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+figcaption a{font-family:var(--mono);font-size:10.5px;white-space:nowrap;display:inline-flex;align-items:center;min-height:22px;padding:0 4px;color:var(--dim);text-decoration:none}
+figcaption a:hover{color:var(--amber)}
+.imgfail{display:none;padding:20px 12px;font-size:12.5px;color:var(--dim);text-align:center}
+figure.failed img{display:none} figure.failed .imgfail{display:block}
+.lb{position:fixed;inset:0;background:rgba(5,8,10,.94);display:none;align-items:center;justify-content:center;padding:24px;z-index:30;cursor:zoom-out}
+.lb.on{display:flex}
+.lb img{max-width:100%;max-height:100%}
+
+.watch{background:var(--panel-2);border:1px solid var(--line);border-radius:2px;padding:10px 14px;margin:8px 0 0;font-family:var(--mono);font-size:12px;color:var(--dim)}
+.watch b{color:var(--ink)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.jester{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--amber)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Vol de base, AoA et DFCS</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — pilote solo</div>
+<h1>Vol de base, AoA et DFCS<br>pas à pas</h1>
+<p class="sub">Trim, autopilote, tenue d'incidence — <b>les bases du pilotage Tomcat</b>. Le F-14 se pilote à l'incidence, pas à la vitesse : c'est ce que cette page t'apprend à sentir, en croisière comme en manœuvre. Chaque étape dit <b>quoi faire</b>, <b>où</b>, et <b>pourquoi</b>.</p>
+
+<div class="intro-box">
+  <p><b>Avant de commencer :</b> décolle et stabilise-toi en croisière (repars de la fin de la leçon <a href="section-a-illustree.html#a5" style="color:var(--amber)">Roulage et décollage</a>, ou place directement l'avion en vol dans l'éditeur de mission). Cette page ne couvre ni le décollage ni l'atterrissage — juste ce qui se passe entre les deux.</p>
+  <p>Ce n'est pas une checklist « du début à la fin » comme le démarrage à froid : c'est un ensemble de <b>compétences pratiques</b>, regroupées par thème. Coche chaque case seulement une fois que tu as <b>compris et essayé en vol</b> — comprendre sans essayer ne suffit pas ici.</p>
+  <p><span class="jester">JESTER</span> ne pilote pas à ta place sur cette page : c'est ton entraînement à toi, pilote. Il continue de gérer le radar et les tâches RIO en tâche de fond pendant que tu t'exerces.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée sur cette page porte son bouton HOTAS entre parenthèses (ou <b style="color:var(--dim)">Clic cockpit</b> quand elle n'est pas sur le HOTAS) — clique dessus pour ouvrir le mapping complet directement sur ce contrôle.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Trim et sensations manche</span></div>
+  <p class="phase-why">Le trim ne pilote pas l'avion à ta place : il annule l'effort que tu sens sur le manche pour que tu puisses lâcher la pression sans qu'il parte dans un sens. Sur le Tomcat, il se retouche en permanence, pas une fois pour toutes.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Comprends à quoi sert vraiment le trim</p>
+    <p class="step-detail">Le manche du F-14 a un ressort de rappel artificiel (le « feel » du DFCS) : dès que tu t'écartes du neutre, tu sens une résistance qui grandit avec l'écart. Le trim déplace ce point neutre pour annuler la force que tu dois maintenir en régime établi — il ne change pas l'assiette à lui seul, il te libère juste les doigts.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item">Trim en tangage pour stabiliser ton altitude</p>
+    <p class="step-detail">Palette à bascule sur le sommet du manche : avant = piqué, arrière = cabré. Une fois ton assiette de croisière stabilisée, tape de petites impulsions dans le sens où tu dois pousser/tirer pour tenir l'altitude, jusqu'à pouvoir lâcher le manche sans que le nez bouge.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Trim Pitch Down" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Trim Pitch Up" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item">Trim en roulis pour une aile lourde</p>
+    <p class="step-detail">Même palette, penchée à gauche ou à droite. Utile quand un déséquilibre de carburant entre réservoirs gauche/droit (normal en vol prolongé) fait pencher une aile toute seule — quelques impulsions suffisent à recentrer.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Trim Roll Left Wing Down" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Trim Roll Right Wing Down" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-4"><div class="step-body">
+    <p class="step-item">Le paddle de dégagement — pas seulement pour l'autopilote</p>
+    <p class="step-detail">Gros bouton sous l'index, face avant du manche. Il coupe instantanément l'autopilote <b>et</b> relâche temporairement le ressort de feel tant que tu le maintiens enfoncé — pratique pour repositionner le manche à la main sans lutter contre un trim mal réglé, avant de retrimmer proprement.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Autopilot Emergency Disconnect Paddle" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-5"><div class="step-body">
+    <p class="step-item">Ne pilote jamais uniquement au trim</p>
+    <p class="step-detail">Le trim élimine une force statique, pas les mouvements dynamiques. En virage ou en manœuvre, c'est toujours le manche qui fait le travail — le trim ne fait que soulager l'effort résiduel une fois l'assiette stabilisée.</p>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Autopilote</span></div>
+  <p class="phase-why">L'autopilote du Tomcat n'est pas un pilote automatique moderne : il tient une assiette ou une altitude que tu lui donnes, il ne navigue pas pour toi. Utile en croisière longue ou en attente, jamais en combat.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Engage l'autopilote</p>
+    <p class="step-detail">Bouton sur le manche, sous le pouce droit (différent du paddle). Stabilise d'abord l'avion en palier à la main, trim proprement (phase précédente), puis engage — l'autopilote reprend l'assiette que tu tenais au moment de l'activation, il ne corrige pas une assiette déjà penchée.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Autopilot On" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item">Choisis le mode de maintien sur le panneau AUTOPILOT</p>
+    <p class="step-detail">Petit panneau DFCS/AUTOPILOT de la console gauche (celui où sont aussi les interrupteurs STAB AUG). Les modes courants : maintien d'assiette et maintien d'altitude — ils se sélectionnent au clic sur le panneau, pas au manche.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item">Débraye vite en cas de doute</p>
+    <p class="step-detail">Le paddle du manche coupe l'autopilote instantanément, quelle que soit la raison — mieux vaut débrayer un cran trop tôt qu'être surpris par une correction que tu n'attendais pas.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Autopilot Emergency Disconnect Paddle" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-4"><div class="step-body">
+    <p class="step-item">Auto Throttle pour tenir une vitesse</p>
+    <p class="step-detail">Sur la manette des gaz — maintient automatiquement la vitesse que tu avais au moment de l'activation, pratique en croisière longue pour libérer la main gauche. Se coupe tout seul dès que tu retouches manuellement les manettes.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Toggle Auto Throttle" href="#"></a></div>
+  </div></div>
+
+  <div class="note warn"><b>Limite</b>L'autopilote ne gère ni la navigation, ni les évitements, ni les changements de configuration (train, volets, flèche). Ne l'utilise jamais en dessous d'une altitude de sécurité confortable ni en combat — c'est un outil de croisière, pas un pilote de secours.</div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Lire l'incidence (AoA)</span></div>
+  <p class="phase-why">Le F-14 se pilote à l'incidence, pas à la vitesse indiquée : à masse variable (carburant, armement), la bonne vitesse change tout le temps, mais la bonne incidence ne change jamais. C'est l'instrument à apprendre à lire sans réfléchir.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Repère l'indexeur d'incidence</p>
+    <p class="step-detail">Petit instrument dédié sur le tableau de bord principal, dans ton champ de vision direct pendant l'approche — pas besoin de HUD pour le lire. C'est lui la référence, pas le badin, dès que tu es en configuration lente (approche, décrochage, combat tournant).</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Mémorise les quatre repères clés</p>
+    <p class="step-detail"><span class="setting">5 unités</span> en montée initiale · <span class="setting">8,5 unités</span> en croisière · <span class="setting">15 unités</span> en approche — la référence, quelle que soit ta masse, terrain comme porte-avions · <span class="setting">29 unités</span> la limite haute avant décrochage. Ce sont les seuls chiffres à connaître par cœur sur cette page.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item">Utilise l'incidence en montée et en croisière</p>
+    <p class="step-detail">En montée initiale après décollage, vise 5 unités. Une fois stabilisé en palier, reviens vers 8,5 unités — c'est le compromis qui donne la meilleure finesse (portance/traînée) du Tomcat à masse moyenne.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-4"><div class="step-body">
+    <p class="step-item">Utilise l'incidence en approche</p>
+    <p class="step-detail">15 unités, toujours — que tu sois lourd (plein carburant, armement) ou léger, en configuration terrain ou porte-avions. C'est ce qui remplace le concept de « vitesse d'approche » d'autres avions : ici, une seule référence sert pour toutes les masses.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-5"><div class="step-body">
+    <p class="step-item">Ne dépasse pas la limite haute</p>
+    <p class="step-detail">29 unités, c'est déjà la limite avant décrochage — pas une valeur à viser, une valeur à ne pas atteindre par surprise. Le DFCS (phase suivante) t'aide à sentir la limite arriver, mais c'est toi qui dois la respecter.</p>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Badin, machmètre et altimètres</span></div>
+  <p class="phase-why">Ces instruments restent utiles pour la navigation, les limites structurales et la sécurité — mais une fois en régime lent, c'est l'incidence (phase précédente) qui prime, pas eux.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item">Lis le badin/machmètre</p>
+    <p class="step-detail">Cadran combiné : échelle extérieure jusqu'à 200 nœuds, échelle intérieure de 200 à 850 nœuds (masquée tant qu'elle ne s'applique pas), plus une échelle de Mach qui se décale automatiquement par rapport à la vitesse indiquée. En dessous de 200 nœuds à l'atterrissage, c'est l'incidence qui doit guider ton pilotage, pas cette aiguille.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item">Règle les index de vitesse et de Mach si besoin</p>
+    <p class="step-detail">Bouton central à tirer/pousser pour choisir lequel des deux repères (vitesse ou Mach) tu règles, puis tourne pour le positionner sur la valeur voulue — utile pour matérialiser une vitesse cible sans avoir à la retenir par cœur.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-3"><div class="step-body">
+    <p class="step-item">Cale l'altimètre barométrique sur le QNH</p>
+    <p class="step-detail">Molette de calage en bas à droite de l'instrument — tourne jusqu'à ce que la fenêtre de Kollsman affiche la pression donnée par la tour/l'ATIS. Sans ce calage, ton altitude affichée est fausse (déjà vu en démarrage à froid, à refaire si tu changes de terrain).</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-4"><div class="step-body">
+    <p class="step-item">Règle le seuil du radioaltimètre</p>
+    <p class="step-detail">Bouton de commande unique : alimentation, réglage du seuil d'alerte basse altitude, et lancement d'un test (qui doit afficher 100 pieds ±10, voyant vert pendant le test). Utile surtout en approche par mauvaise visibilité ou de nuit.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-5"><div class="step-body">
+    <p class="step-item">Repère l'horizon de secours et le variomètre</p>
+    <p class="step-detail">L'horizon de secours (ADI) affiche un drapeau OFF s'il est cagé ou sans alimentation — vérifie-le une fois avant le vol (déjà érigé en démarrage à froid). Le variomètre (VVI) peut donner une indication faussée juste après une manœuvre brutale : laisse-le se stabiliser quelques secondes avant de t'y fier.</p>
+  </div></div>
+
+  <div class="note warn"><b>Erreurs à connaître</b>À grande vitesse sous 10 000 pieds, les effets de pression faussent la lecture de l'altimètre barométrique — jusqu'à 1 200 pieds d'erreur en transsonique et 4 000 pieds en supersonique. En cas de doute à haute vitesse basse altitude, ne te fie pas seulement à cet instrument.</div>
+</section>
+
+<!-- ============ PHASE 5 ============ -->
+<section class="phase" data-phase="5">
+  <div class="phase-head"><span class="phase-num">PHASE 5</span><span class="phase-title">DFCS/STAB AUG et pannes partielles</span></div>
+  <p class="phase-why">Le DFCS (Digital Flight Control System) est ce qui rend un avion aussi lourd et aux ailes aussi grandes pilotable près du décrochage. Comprendre son rôle t'aide à savoir ce qu'il fait pour toi — et ce qu'il ne fait pas.</p>
+
+  <div class="step"><input type="checkbox" data-id="p5-1"><div class="step-body">
+    <p class="step-item"><span class="switchname">STAB AUG</span> doit rester activé en vol normal</p>
+    <p class="step-detail">Les 4 interrupteurs du panneau DFCS/AUTOPILOT (console gauche, déjà vus en démarrage à froid) doivent rester sur ON — ils apportent l'augmentation de stabilité en tangage, roulis et lacet qui rend le manche gérable. Ne les coupe jamais volontairement en vol normal.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind HOTAS : action à la souris/VR dans le cockpit"><span class="ic">🖱</span>Clic cockpit</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-2"><div class="step-body">
+    <p class="step-item">Le DFCS repousse la limite, il ne l'efface pas</p>
+    <p class="step-detail">Il rend l'approche du décrochage prévisible — l'avion prévient, et décroche proprement plutôt que de partir en vrille sans préavis. Ce n'est pas une protection absolue comme sur un avion de ligne moderne : dépasser franchement l'incidence limite reste dangereux.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-3"><div class="step-body">
+    <p class="step-item">Repère une panne partielle sur l'indicateur de gouvernes</p>
+    <p class="step-detail">Petit instrument dédié qui montre la position des spoilers (rentrés/sortis dessus/dessous de l'aile) et des empennages/dérives gauche-droite. Une asymétrie inhabituelle, ou un spoiler resté sorti, est souvent le premier signe visible d'une panne hydraulique ou DFCS partielle.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-4"><div class="step-body">
+    <p class="step-item">En cas de dégradation, élargis tes marges</p>
+    <p class="step-detail">Vole plus vite/moins cabré que d'habitude, évite les manœuvres soutenues à haute incidence, et pose-toi dès que raisonnable plutôt que de continuer la mission — un canal DFCS dégradé retire une partie de la marge de prévisibilité vue en phase 3.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-5"><div class="step-body">
+    <p class="step-item">Autopilote et DFCS sont deux systèmes différents</p>
+    <p class="step-detail">Le paddle du manche coupe l'autopilote — il ne touche pas au DFCS/STAB AUG, qui reste actif même autopilote débrayé. Ne confonds pas les deux si tu dois réagir vite à une panne.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Autopilot Emergency Disconnect Paddle" href="#"></a></div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 6 ============ -->
+<section class="phase" data-phase="6">
+  <div class="phase-head"><span class="phase-num">PHASE 6</span><span class="phase-title">Exercices pratiques à faire</span></div>
+  <p class="phase-why">Cette leçon ne se coche pas en lisant : elle se coche en volant. Fais chaque exercice en l'air, dans l'ordre, avant de passer à la suite du cursus.</p>
+
+  <div class="step"><input type="checkbox" data-id="p6-1"><div class="step-body">
+    <p class="step-item">Monte à une altitude de sécurité, zone dégagée</p>
+    <p class="step-detail">15 000 pieds minimum, loin du relief et du trafic — tu vas volontairement chercher les limites de l'avion, laisse-toi de la marge sous toi.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-2"><div class="step-body">
+    <p class="step-item">Tiens un virage soutenu à incidence constante</p>
+    <p class="step-detail">Différents facteurs de charge, mais toujours la même incidence affichée — pas la peine de regarder le badin pendant l'exercice. Utilise le trim pour soulager l'effort une fois l'assiette stabilisée.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Trim Pitch Down" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Trim Pitch Up" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-3"><div class="step-body">
+    <p class="step-item">Ralentis progressivement, configuration lisse puis atterrissage</p>
+    <p class="step-detail">D'abord lisse (rien sorti), puis sors les volets d'un cran, puis en configuration complète — observe comment l'incidence nécessaire pour tenir l'altitude augmente à chaque étape.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Volets rentrés" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Volets - 1 cran" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-4"><div class="step-body">
+    <p class="step-item">Approche le décrochage en douceur, puis récupère</p>
+    <p class="step-detail">Laisse l'incidence monter lentement vers la limite haute jusqu'à sentir l'avion protester (buffet, perte d'efficacité des ailerons), puis relâche et rends la main pour récupérer. Répète plusieurs fois jusqu'à ce que ce ne soit plus une surprise.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-5"><div class="step-body">
+    <p class="step-item">Teste l'autopilote et ses modes de maintien</p>
+    <p class="step-detail">Stabilise, trim, engage, puis observe ce qu'il tient (assiette/altitude) et comment il réagit si tu pousses légèrement le manche. Débraye au paddle pour t'entraîner au réflexe.</p>
+    <div class="step-bind">
+      <a class="bindtag" data-bind-cmd="Autopilot On" href="#"></a>
+      <a class="bindtag" data-bind-cmd="Autopilot Emergency Disconnect Paddle" href="#"></a>
+    </div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-6"><div class="step-body">
+    <p class="step-item">Note tes propres repères</p>
+    <p class="step-detail">Quelle incidence pour quelle situation, à quel moment l'avion commence à protester, comment il se comporte volets sortis — ce sont des sensations personnelles, note-les quelque part (voir la leçon <a href="checklists-personnalisees.html" style="color:var(--amber)">Construire ses checklists personnalisées</a>).</p>
+  </div></div>
+</section>
+
+<div class="note warn"><b>Pièges</b>Piloter à la vitesse plutôt qu'à l'incidence. Et croire que le DFCS te rend intouchable : il repousse la limite, il ne l'efface pas.</div>
+<div class="note go"><b>Validation</b>Tu tiens un virage soutenu à incidence constante sans jamais regarder le badin, et tu retrouves ton incidence d'approche (15 unités) sans avoir à y penser.</div>
+
+<div class="footlinks">
+  <a href="pas-a-pas.html">&larr; Retour au sommaire Pas à pas</a>
+  <a href="retour-atterrissage.html">Étape suivante : Retour terrain et atterrissage →</a>
+</div>
+
+<p class="src">Repères d'incidence, description du DFCS et exercices repris du <a href="cursus-complet.html#a6">cursus complet, section A6</a> (manuel Heatblur F-14 v2.0), développés ici en checklist pas à pas. Les badges de bouton sont lus en direct dans <code>data/f14bu-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) et suivent tout changement que tu enregistres via <a href="export-bindings.html">l'export de binds</a> — pas de numéro figé dans le texte.</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-volbase-progress';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function save(state){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+
+/* ---------- Badges de bind dynamiques ----------
+   Chaque fonction citée sur cette page porte son bouton HOTAS entre
+   parenthèses, lu en direct dans data/f14bu-bindings.json (corrigé par
+   l'export de binds si l'utilisateur en a un) — jamais un numéro figé dans
+   le texte, pour ne pas répéter l'erreur du 13/08 (bind changé, texte pas
+   mis à jour). Lien direct vers le mapping, sur le bon contrôle : voir
+   gotoDevNum() dans mapping-hotas.html. */
+const BIND_STORE_KEY='f14bu-export-bindings-v1';
+const AXIS_KEYS={X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL={stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS=null;
+async function loadBindings(){
+  try{ BINDINGS=await fetch('data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS=null; }
+}
+function deriveKeys(n,count){
+  const upper=String(n).toUpperCase(), slots=Math.max(count,1);
+  if(AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if(upper==='SLDR') return new Array(slots).fill('JOY_SLIDER1');
+  if(/^\d+$/.test(n)) return new Array(slots).fill('JOY_BTN'+n);
+  const range=n.match(/^(\d+)-(\d+)$/);
+  if(range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides=(saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry=overrides[b.device+'|'+b.n];
+    const commands=(entry&&Array.isArray(entry.commands))?entry.commands:b.commands;
+    const keys=(entry&&Array.isArray(entry.keys))?entry.keys:deriveKeys(b.n,commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i], n:b.n}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('a[data-bind-cmd]').forEach(el=>{
+    const hits=bindingsFor(el.dataset.bindCmd);
+    el.target='_blank'; el.rel='noopener';
+    if(!hits.length){
+      el.textContent='non affecté';
+      el.classList.add('unbound');
+      el.title='Pas de bind confirmé dans le profil actuel — ouvre le mapping pour vérifier ou en poser un';
+      el.href='mapping-hotas.html';
+      return;
+    }
+    el.textContent=hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ');
+    el.classList.remove('unbound');
+    const h=hits[0];
+    el.title='Ouvrir le mapping sur ce contrôle';
+    el.href='mapping-hotas.html?dev='+h.device+'&n='+encodeURIComponent(h.n);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
+loadBindings().then(paintBindBadges);
+</script>
+</body>
+</html>
