@@ -191,7 +191,7 @@ section.device.visible{display:block}
 #board-stick{max-width:1200px}
 #board-pto2{max-width:1550px}
 #board-pto2 svg .jd-lbl{font-size:11px!important;line-height:1.1!important}
-#board-stick svg .jd-lbl{font-size:8px!important;line-height:1.05!important}
+#board-stick svg .jd-lbl{font-size:11px!important;line-height:1.15!important}
 .board-loading{font-family:var(--mono);font-size:12px;color:#555}
 
 /* ---------- Table détaillée ---------- */
@@ -617,7 +617,7 @@ if(document.getElementById('board-throttle'))setThrottlePage('OFF');
    Nécessite d'être servi en HTTP (tools/serve.ps1 en local) : fetch() ne
    fonctionne pas en file://. */
 const SVG_DEVICES=[
-  {id:'stick', svg:'img/templates/virpil-alpha-prime-r.svg', templateName:'F-14B(U) — Pilote',
+  {id:'stick', svg:'img/templates/virpil-alpha-prime-r.svg', templateName:'F-14B(U) — Pilote', wrapWidth:80,
    extra:[
      {n:'X', cat:'vol', text:'Roulis (ailerons)', detail:"Axe X de la base MongoosT-50CM3 — commande de gauchissement.", lesson:'a2'},
      {n:'Y', cat:'vol', text:'Tangage (profondeur)', detail:"Axe Y de la base — tenue d'AoA en approche, précision au ravitaillement.", lesson:'a2'}
@@ -689,7 +689,9 @@ async function mountSvgDevice(cfg, hotas){
         el.append(hdr);
       }
       const row=document.createElement('div');
-      row.style.cssText='white-space:nowrap';
+      row.style.cssText=cfg.wrapWidth
+        ?('white-space:normal;max-width:'+cfg.wrapWidth+'px;text-align:center')
+        :'white-space:nowrap';
       row.append(lbl.boardText+' ');
       const small=document.createElement('small');
       small.style.cssText='display:inline-block;font-weight:700;font-size:.82em;background:rgba(0,0,0,.45);border-radius:2px;padding:0 3px;white-space:nowrap';
