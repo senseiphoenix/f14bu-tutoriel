@@ -143,14 +143,14 @@ const L = [
   {t:"h", v:"Le panneau qui commande tout : l'ACP"},
   {t:"img", k:"acp", c:"Panneau d'armement (ACP), console verticale gauche"},
   {t:"tbl", head:["Réglage","Ce qu'il commande"], rows:[
-   ["Sélection de station","Quelle(s) station(s) d'emport sont armées."],
-   ["Type d'arme","La famille d'arme employée — conditionne la symbologie du HUD."],
-   ["ATTK MODE","Le mode d'attaque : CMPTR TGT, CMPTR IP, CMPTR PLT ou MAN (voir leçon suivante)."],
-   ["Fusée électrique","INST (instantanée), DLY 1 / DLY 2 (retard), VT (aérienne), SAFE."],
-   ["Fusée mécanique","Nose ou Nose-Tail."],
-   ["Mode de largage","Step ou Ripple, en Single ou Pairs."],
-   ["Intervalle de rafale","Espacement des largages en millisecondes, par pas de 10."],
-   ["Quantité","Nombre de bombes larguées à chaque commande de tir."]]},
+   ["Sélection de station","Quelle(s) station(s) d'emport sont armées.","—rio"],
+   ["Type d'arme","La famille d'arme employée — conditionne la symbologie du HUD.","—rio"],
+   ["ATTK MODE","Le mode d'attaque : CMPTR TGT, CMPTR IP, CMPTR PLT ou MAN (voir leçon suivante).","—rio"],
+   ["Fusée électrique","INST (instantanée), DLY 1 / DLY 2 (retard), VT (aérienne), SAFE.","—rio"],
+   ["Fusée mécanique","Nose ou Nose-Tail.","—rio"],
+   ["Mode de largage","Step ou Ripple, en Single ou Pairs.","—rio"],
+   ["Intervalle de rafale","Espacement des largages en millisecondes, par pas de 10.","—rio"],
+   ["Quantité","Nombre de bombes larguées à chaque commande de tir.","—rio"]]},
   {t:"note", k:"", lbl:"Le raccourci qui fait gagner du temps", v:"L'outil de bombardement intégré (<b>RCtrl+B</b>) permet au pilote de transmettre directement ces réglages à JESTER, sans passer par les menus. Pour le B(U), il inclut aussi un calculateur de largage manuel JDAM (portée maximale et temps de vol selon les paramètres de largage)."},
   {t:"p", v:"C'est le RIO qui règle presque tout depuis l'ACP : sélection de station, type d'arme, mode d'attaque, fusée. Le pilote hérite du résultat sur son HUD."},
   {t:"chk", v:"Tu sais où charger le programme air-sol et pourquoi MANUAL sur l'ACP ne le décharge pas."}
@@ -167,7 +167,7 @@ const L = [
    ["MAN","Manuel","Secours pur : un réticule fixe à une dépression réglée à l'avance, sans aucune assistance du calculateur."]]},
 
   {t:"h", v:"CMPTR PLT — le mode qu'on apprend en premier"},
-  {t:"p", v:"C'est le plus direct : le calculateur affiche en temps réel, sous forme de réticule, où tomberait la bombe si tu larguais maintenant. Tu voles ce réticule sur la cible et tu presses la détente."},
+  {t:"p", v:"C'est le plus direct : le calculateur affiche en temps réel, sous forme de réticule, où tomberait la bombe si tu larguais maintenant. Tu voles ce réticule sur la cible et tu presses la détente <span class='bindtag' data-bind-cmd='Store Release'></span>."},
   {t:"img", k:"stores", c:"Symbologie HUD en CMPTR PLT (repère générique)."},
   {t:"note", k:"", lbl:"Le losange qui prévient", v:"Si l'arme configurée est une roquette et qu'elle est hors de portée, un losange de désignation recouvre le réticule. Le losange disparaît une fois la cible à portée — c'est le signal pour tirer."},
 
@@ -177,7 +177,7 @@ const L = [
 
   {t:"h", v:"Ce que tu fais maintenant"},
   {t:"proc", v:[
-   "Programme air-sol chargé, cible non défendue. Sélectionne CMPTR PLT à l'ACP.",
+   "Programme air-sol chargé, cible non défendue. Sélectionne CMPTR PLT à l'ACP <span class='bindtag unbound' title='Commande RIO, absente du profil pilote'>RIO</span>.",
    "Passe en piqué à 30° environ, amène le réticule sur la cible, largue, ressource franche.",
    "Cinq passes, en notant ton altitude de largage et ta hauteur de ressource au radioaltimètre.",
    "Une passe en MAN : règle une dépression au panneau de correction de site, et compare la précision au mode CMPTR PLT.",
@@ -204,7 +204,7 @@ const L = [
   {t:"proc", v:[
    "Attaque complète à la LGB classique sur cible fixe, laisse JESTER gérer la nacelle.",
    "Deuxième attaque sur cible mobile.",
-   "Si tu as un GBU-24E/B en soute : largue-le sans désignation laser et observe qu'il touche quand même son point préplanifié.",
+   "Si tu as un GBU-24E/B en soute : largue-le <span class='bindtag' data-bind-cmd='Store Release'></span> sans désignation laser et observe qu'il touche quand même son point préplanifié.",
    "Note ton enchaînement JESTER exact pour la désignation."]},
   {t:"note", k:"go", lbl:"Validation", v:"Deux cibles détruites en une passe chacune, dont une mobile."},
   {t:"src", v:["manuel"]}
@@ -232,7 +232,7 @@ const L = [
    ["Station et arme sélectionnées","Quelle bombe, sur quelle station, et son état."],
    ["Coordonnées et altitude de la cible","Le point de référence — modifiable en vol depuis le CDNU."],
    ["Défilement des missions préplanifiées","Bascule entre les huit missions stockées pour cette station."],
-   ["Bouton UPDATE","<b>À presser après tout chargement de cartouche ou toute modification de coordonnées</b> — sinon la bombe garde ses anciennes données."],
+   ["Bouton UPDATE","<b>À presser après tout chargement de cartouche ou toute modification de coordonnées</b> — sinon la bombe garde ses anciennes données.","—rio"],
    ["Alimentation JDAM","Encadrée une fois sous tension. Lance un compte à rebours de <b>8 minutes</b> qui disparaît en atteignant 5 — la bombe n'est prête qu'à ce moment."],
    ["Point de largage et altitude","Fixés à la planification, non modifiables en vol."]]},
   {t:"note", k:"warn", lbl:"Le réflexe à ne jamais sauter", v:"Après chargement de la cartouche de données <b>ou</b> toute modification de coordonnées en vol : presse <b>UPDATE</b>. C'est l'erreur la plus fréquente et la plus silencieuse — la bombe part avec les mauvaises données sans le moindre message d'erreur."},
@@ -242,7 +242,7 @@ const L = [
    "Dans l'éditeur de mission, prépare une mission préplanifiée JDAM : cible, cap d'attaque, altitude et vitesse de largage.",
    "En vol, vérifie la page JMSN et presse UPDATE dès que la cartouche est chargée.",
    "Mets les JDAM sous tension tôt — anticipe les 8 minutes du compte à rebours.",
-   "Vole la mission en Launch Point Steering (CPTR PLT), guidé par TMAX / TREL / TMIN.",
+   "Vole la mission en Launch Point Steering (CPTR PLT) <span class='bindtag unbound' title='Commande RIO, absente du profil pilote'>RIO</span>, guidé par TMAX / TREL / TMIN.",
    "Recommence en Target Steering (MANUAL) et compare les deux modes de guidage.",
    "Note ta procédure complète : c'est la plus longue du tutoriel."]},
   {t:"note", k:"go", lbl:"Validation", v:"Une mission préplanifiée larguée avec succès, dans les deux modes de guidage."},
@@ -257,19 +257,19 @@ const L = [
 
   {t:"h", v:"La procédure complète"},
   {t:"proc", v:[
-   "Sélectionne <b>A/G</b> sur le PDCP.",
+   "Sélectionne <b>A/G</b> sur le PDCP <span class='bindtag' data-bind-cmd='Display mode air to ground'></span>.",
    "Accroche le mode A/G sur le menu complet du PTID — JESTER le fait automatiquement si tu le lui demandes.",
    "Configure l'ACP normalement : station, fusée, type d'arme.",
-   "Sélectionne <b>MANUAL</b> dans les options d'attaque de l'ACP — le pilote reçoit alors les temporisations TMAX / TOPT / TMIN.",
+   "Sélectionne <b>MANUAL</b> dans les options d'attaque de l'ACP <span class='bindtag unbound' title='Commande RIO, absente du profil pilote'>RIO</span> — le pilote reçoit alors les temporisations TMAX / TOPT / TMIN.",
    "Désigne la cible avec le LANTIRN.",
-   "Maintiens le bouton S-7 (FOV) du LANTIRN pendant 2 secondes : un nouveau waypoint (numéro 51 ou suivant) se crée dans le plan de vol.",
+   "Maintiens le bouton S-7 (FOV) du LANTIRN <span class='bindtag unbound' title='Commande RIO, absente du profil pilote'>RIO</span> pendant 2 secondes : un nouveau waypoint (numéro 51 ou suivant) se crée dans le plan de vol.",
    "Sélectionne ce nouveau waypoint sur le CDNU.",
    "Fais défiler horizontalement jusqu'à la page d'édition de waypoint 2/2.",
    "Ouvre la page JMSN depuis la page tactique du PTID.",
    "Choisis la station et la mission préplanifiée que tu veux réutiliser pour cette cible.",
-   "Vérifie l'altitude et les coordonnées sur le CDNU, puis presse la <b>LSK 7</b> pour transférer les coordonnées vers la page JMSN.",
-   "Presse <b>UPDATE</b> sur la page JMSN pour mettre à jour la bombe.",
-   "Sélectionne le guidage vers la cible : PB9 sur le PTID, ou la touche F4 (BDHI) du CDNU."]},
+   "Vérifie l'altitude et les coordonnées sur le CDNU, puis presse la <b>LSK 7</b> <span class='bindtag unbound' title='Commande RIO, absente du profil pilote'>RIO</span> pour transférer les coordonnées vers la page JMSN.",
+   "Presse <b>UPDATE</b> <span class='bindtag unbound' title='Commande RIO, absente du profil pilote'>RIO</span> sur la page JMSN pour mettre à jour la bombe.",
+   "Sélectionne le guidage vers la cible : PB9 sur le PTID, ou la touche F4 (BDHI) du CDNU <span class='bindtag unbound' title='Commande RIO, absente du profil pilote'>RIO</span>."]},
 
   {t:"img", k:"ggwcues", c:"Repères HUD typiques pour une cible d'opportunité sans point de largage préplanifié."},
   {t:"note", k:"", lbl:"Un détail qui a son importance", v:"Le transfert de coordonnées via la LSK 7 du CDNU envoie toujours les données vers la mission préplanifiée <b>actuellement sélectionnée</b> pour la station choisie sur le CDNU. Ouvre la page JMSN et confirme la bonne mission <b>avant</b> de lancer le transfert, pas après."},
@@ -278,7 +278,7 @@ const L = [
   {t:"proc", v:[
    "Vole une mission avec une cible non planifiée à l'avance.",
    "Déroule les treize étapes ci-dessus dans l'ordre, sans regarder tes notes la deuxième fois.",
-   "Largue et vérifie l'impact.",
+   "Largue <span class='bindtag' data-bind-cmd='Store Release'></span> et vérifie l'impact.",
    "Note la séquence dans tes mots — c'est la procédure la plus dense du module, elle mérite ses propres mots."]},
   {t:"note", k:"warn", lbl:"Pièges", v:"Une erreur d'un chiffre dans les coordonnées : un kilomètre d'écart. Oublier UPDATE : la bombe garde les anciennes données. Larguer hors zone de tir autorisée : la bombe tombe court, proprement, inutilement."},
   {t:"note", k:"go", lbl:"Validation", v:"Tu désignes une cible non planifiée avec le LANTIRN et tu la détruis à la JDAM, sans relire la procédure. Le B(U) n'a plus de secret offensif pour toi."},

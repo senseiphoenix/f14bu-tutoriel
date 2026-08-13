@@ -210,7 +210,7 @@ const L = [
    ["Cinq fenêtres","Mode de fonctionnement en cours."]]},
   {t:"p", v:"Sur le pont, sur-balayage à 75° jusqu'à la mise en place sur la catapulte."},
   {t:"h", v:"Se mettre en place"},
-  {t:"p", v:"Une fois aligné sur la catapulte, tu déploies la barre de lancement et tu passes en configuration décollage : ailes sorties à 20°, volets et becs sortis, trim réglé. Le contournement de crosse doit être sur CARRIER."},
+  {t:"p", v:"Une fois aligné sur la catapulte, tu déploies la barre de lancement et tu passes en configuration décollage : ailes sorties à 20°, volets et becs sortis, trim réglé. Le contournement de crosse doit être sur CARRIER <span class='bindtag' data-bind-cmd='Lights Hook Bypass CARRIER'></span>."},
   {t:"img", k:"launchbar", c:"Commande de barre de lancement et bouton d'abandon."},
   {t:"img", k:"gear", c:"Panneau de train — la barre de lancement se gère depuis cette zone (légende complète en section A, leçon 2)"},
   {t:"h", v:"Le coup de catapulte"},
@@ -251,7 +251,7 @@ const L = [
    ["Repère d'incidence","Ton incidence, en complément direct de l'indexeur physique."]]},
   {t:"note", k:"warn", lbl:"Signes de perte de guidage", v:"Si les données ACLS deviennent invalides, les aiguilles se figent au centre. Une remise de gaz commandée par le bateau affiche une croix « X » sur les aiguilles. Si aucun message n'arrive pendant plus de deux secondes, l'indication <b>TILT</b> apparaît — c'est ton signal pour repasser en pilotage visuel."},
   {t:"h", v:"Le DFCS en appontage : ACL et VEC/PCD"},
-  {t:"p", v:"Le sélecteur VEC/PCD/ACL du panneau DFCS (section Cockpit) prend tout son sens ici. En position <b>ACL</b>, engagée par le bouton NWS du manche, l'avion se laisse guider automatiquement jusqu'au pont par le bateau — c'est l'appontage entièrement couplé. La position <b>VEC/PCD</b> laisse le datalink commander seulement le roulis et le tangage, un cran moins automatisé. Les deux dépendent d'un guidage ACLS valide : sans lui, ni l'un ni l'autre ne s'engage."},
+  {t:"p", v:"Le sélecteur VEC/PCD/ACL du panneau DFCS (section Cockpit) <span class='bindtag unbound' title='Pas de bind HOTAS : action à la souris/VR dans le cockpit'>Clic cockpit</span> prend tout son sens ici. En position <b>ACL</b>, engagée par le bouton NWS du manche, l'avion se laisse guider automatiquement jusqu'au pont par le bateau — c'est l'appontage entièrement couplé. La position <b>VEC/PCD</b> laisse le datalink commander seulement le roulis et le tangage, un cran moins automatisé. Les deux dépendent d'un guidage ACLS valide : sans lui, ni l'un ni l'autre ne s'engage."},
   {t:"h", v:"Le circuit CASE I en chiffres"},
   {t:"pat", v:PATTERN_SVG, cap:"Circuit visuel CASE I. Les valeurs sont celles du manuel Heatblur ; elles te donnent des repères, pas une contrainte au pied près."},
   {t:"table", head:["Étape","Repères du manuel"], rows:[
@@ -280,7 +280,7 @@ const L = [
   {t:"img", k:"lndgchk", c:"Carte de checklist atterrissage, à compléter avant le 180."},
   {t:"img", k:"hook", c:"Panneau de crosse d'appontage"},
   {t:"tbl", head:["N°","Commande","Fonction"], rows:[
-   ["1","Poignée HOOK","<span class='pos'><b>UP</b> — rentre et verrouille. &nbsp;·&nbsp; <b>DOWN</b> — descend par gravité.<br><b>EMERG DOWN</b> — tirer puis tourner en sens antihoraire : largage mécanique.</span>"],
+   ["1","Poignée HOOK","<span class='pos'><b>UP</b> — rentre et verrouille. &nbsp;·&nbsp; <b>DOWN</b> — descend par gravité.<br><b>EMERG DOWN</b> — tirer puis tourner en sens antihoraire : largage mécanique.</span>","Hook Extend"],
    ["2","Voyant de transit","S'allume tant que la crosse n'est pas dans la position commandée. Peut rester allumé à grande vitesse à cause du soulèvement aérodynamique."],
    ["3","Munitions restantes","Décompte du canon M61A1."]]},
   {t:"img", k:"gear", c:"Train et volets (légende complète en section A, leçon 2)"},
