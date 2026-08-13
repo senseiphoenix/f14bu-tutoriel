@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — Démarrage à froid, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-bind{display:inline-block;margin-top:6px;font-family:var(--mono);font-size:11px;letter-spacing:.04em;background:var(--panel-2);border:1px solid var(--line);color:var(--ink);padding:3px 9px;border-radius:2px}
+.step-bind b{color:var(--amber)}
+
+.watch{background:var(--panel-2);border:1px solid var(--line);border-radius:2px;padding:10px 14px;margin:8px 0 0;font-family:var(--mono);font-size:12px;color:var(--dim)}
+.watch b{color:var(--ink)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.jester{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--amber)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <span>Démarrage à froid</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — pilote solo</div>
+<h1>Démarrage à froid<br>pas à pas</h1>
+<p class="sub">Le tout premier tuto à faire, <b>avant même d'apprendre le cockpit en détail</b>. Tu vas allumer l'avion, lancer les deux moteurs, et te retrouver prêt à rouler — sans rien connaître par cœur. Chaque étape dit <b>quoi faire</b>, <b>où</b>, et <b>pourquoi</b>.</p>
+
+<div class="intro-box">
+  <p><b>Avant de commencer :</b> mets l'avion au parking, froid, avec les prestations au sol disponibles (c'est la config par défaut de la plupart des missions d'entraînement F-14BU). Le canopy peut rester ouvert pour l'instant.</p>
+  <p><b>Tu n'es pas seul.</b> JESTER, ton IA équipier, sait faire tout ce démarrage à ta place. La première fois, le plus simple est de <b>le regarder faire</b> : ouvre son menu <span class="jester">(bouton 22 du throttle, 1ʳᵉ pression)</span> et demande-lui de démarrer. Regarde les interrupteurs bouger, puis reviens ici et refais la séquence toi-même, à ton rythme.</p>
+  <p>Cette page ne couvre que ce qui compte pour un <b>premier vol solo</b> : le pilote seul, avec JESTER qui gère automatiquement la plupart des tâches RIO (radar, alignement, radios). Le manuel réel du Tomcat a une checklist RIO de 30+ lignes que tu n'as jamais besoin d'ouvrir toi-même.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Mets l'avion sous tension</span></div>
+  <p class="phase-why">Rien ne bouge tant qu'il n'y a pas de courant électrique et d'air comprimé au sol. C'est la toute première chose à demander, et ça se fait <b>avant</b> de toucher au reste du cockpit.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Demande l'<span class="switchname">alimentation électrique au sol</span> et l'<span class="switchname">air de démarrage</span></p>
+    <p class="step-detail">Dans la plupart des missions, ils sont déjà connectés au parking. Sinon, passe par le menu radio F10 → Ground Crew (ou demande à JESTER). Sans ça, aucun interrupteur du cockpit ne réagira.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item"><span class="switchname">OXYGEN</span> <span class="setting">ON</span></p>
+    <p class="step-detail">Panneau latéral gauche, près du genou. Vérifie que le débit d'air se fait entendre — c'est ta réserve d'oxygène en vol.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item"><span class="switchname">Siège éjectable</span> <span class="setting">ARMÉ</span></p>
+    <p class="step-detail">Poignée de sécurité au sol du siège, sur le côté. Sans ça, la verrière et le siège ne te sortiraient pas en cas d'urgence — jamais volé désarmé, même en entraînement.</p>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Prépare les moteurs avant de les lancer</span></div>
+  <p class="phase-why">Avant de lancer quoi que ce soit, tout doit être en position neutre : manettes fermées, systèmes hydrauliques/carburant en position par défaut. C'est ce qui évite un moteur qui s'emballe ou un système qui part dans le mauvais sens au démarrage.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Les <span class="switchname">deux manettes des gaz</span> <span class="setting">OFF</span> (butée arrière, cran coupe-feu)</p>
+    <p class="step-detail">Elles doivent être complètement en arrière, au-delà du ralenti, en position coupée. C'est le point de départ obligatoire de toute la séquence.</p>
+    <div class="step-bind">Sur ton HOTAS : <b>manette des gaz gauche = axe RX</b>, <b>droite = axe RY</b> du throttle (pas X/Y).</div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item"><span class="switchname">Frein de parking</span> <span class="setting">tiré (serré)</span></p>
+    <p class="step-detail">Avion immobile au parking — indispensable aussi pour que l'alignement de la centrale (phase 5) puisse aboutir plus tard.</p>
+    <div class="step-bind">PTO2, bouton <b>38</b> (Parking brake pull).</div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item"><span class="switchname">Sélecteur de flèche d'aile</span> <span class="setting">MAN</span></p>
+    <p class="step-detail">Empêche les ailes de bouger toutes seules dès que le système hydraulique reçoit du courant. On les repassera en AUTO une fois les moteurs lancés.</p>
+    <div class="step-bind">PTO2, bouton <b>28</b> pour AUTO plus tard (Wing Sweep Auto Mode) — reste sur MAN pour l'instant, rien à appuyer.</div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-4"><div class="step-body">
+    <p class="step-item"><span class="switchname">Aérofrein</span> <span class="setting">rentré</span></p>
+    <p class="step-detail">Vérifie qu'il n'est pas sorti — pas d'action si tu pars d'un avion neutre.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-5"><div class="step-body">
+    <p class="step-item"><span class="switchname">Train d'atterrissage</span> <span class="setting">DOWN</span></p>
+    <p class="step-detail">Logique : l'avion est posé, le train doit être sorti et verrouillé. Vérifie juste que le levier est en bas.</p>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Lance le moteur droit</span></div>
+  <p class="phase-why">Les deux moteurs se lancent <b>toujours l'un après l'autre</b>, jamais ensemble — d'abord le droit, puis le gauche. C'est le premier vrai moment où tu regardes des chiffres monter à l'écran.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Sélecteur <span class="switchname">ENG CRANK</span> sur <span class="setting">R</span> (droit)</p>
+    <p class="step-detail">Ça lance l'air de démarrage dans le moteur droit. Le régime (RPM) va commencer à monter tout seul à l'écran moteur.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">À <span class="setting">~20 % RPM</span>, avance la <span class="switchname">manette droite</span> sur <span class="setting">IDLE</span></p>
+    <p class="step-detail">Pas avant, pas après — à peu près 20 %. C'est le moment où tu introduis du carburant dans le moteur qui tourne déjà sous l'effet de l'air.</p>
+    <div class="watch">👀 À surveiller à cet instant : la pression d'huile qui apparaît, la pression hydraulique qui monte, et le voyant <b>START/VALVE</b> qui doit être allumé puis s'éteindre tout seul vers 50 %.</div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item">Laisse le moteur monter en régime tout seul</p>
+    <p class="step-detail">Le sélecteur ENG CRANK revient de lui-même sur OFF vers 50 % RPM. Le voyant génératrice droite (R GEN) s'éteint vers 59 %. Le voyant pression carburant (R FUEL PRESS) s'éteint avant le ralenti.</p>
+    <div class="watch">✅ Repères au ralenti stabilisé : RPM <b>62-78 %</b> · température échappement (EGT) <b>~500 °C</b> · pression d'huile <b>25-35 psi</b>. Si un chiffre part dans le rouge, coupe la manette et regarde ce qui cloche avant de continuer.</div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Lance le moteur gauche</span></div>
+  <p class="phase-why">Exactement la même séquence que le moteur droit, mais on en profite pour couper l'alimentation extérieure : le moteur droit qui tourne fournit maintenant assez d'électricité et d'hydraulique à l'avion tout seul.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item">Une fois la pression hydraulique combinée à <span class="setting">~3000 psi</span>, fais couper l'<span class="switchname">alimentation électrique extérieure</span></p>
+    <p class="step-detail">Par le menu Ground Crew (F10) ou en le demandant à JESTER. L'avion vit maintenant sur son propre moteur droit.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item">Sélecteur <span class="switchname">ENG CRANK</span> sur <span class="setting">L</span> (gauche)</p>
+    <p class="step-detail">Même geste que pour le droit.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-3"><div class="step-body">
+    <p class="step-item">À <span class="setting">~20 % RPM</span>, avance la <span class="switchname">manette gauche</span> sur <span class="setting">IDLE</span></p>
+    <p class="step-detail">Mêmes repères que le moteur droit : RPM 62-78 %, EGT ~500 °C, huile 25-35 psi au ralenti stabilisé.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-4"><div class="step-body">
+    <p class="step-item"><span class="switchname">HYD TRANSFER PUMP</span> sur <span class="setting">NORMAL</span></p>
+    <p class="step-detail">Si la pression ne monte pas en 10 secondes, repasse-le sur SHUTOFF et signale-le — mais dans l'immense majorité des cas, ça passe du premier coup.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-5"><div class="step-body">
+    <p class="step-item">Fais déconnecter l'<span class="switchname">air de démarrage</span>, puis <span class="switchname">AIR SOURCE</span> : cycle <span class="setting">L → R → BOTH</span></p>
+    <p class="step-detail">Tu dois sentir/entendre l'air de conditionnement circuler dans le cockpit une fois sur BOTH.</p>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 5 ============ -->
+<section class="phase" data-phase="5">
+  <div class="phase-head"><span class="phase-num">PHASE 5</span><span class="phase-title">Lance l'alignement de la centrale — tout de suite</span></div>
+  <p class="phase-why"><b>C'est l'étape la plus importante à ne pas oublier :</b> la centrale de navigation (l'EGI) a besoin de rester immobile plusieurs minutes pour s'aligner, et elle ne peut démarrer son alignement qu'une fois les moteurs lancés (elle a besoin d'air prélevé sur les moteurs). Plus tu la lances tôt, moins tu attends au point d'arrêt plus tard.</p>
+
+  <div class="step"><input type="checkbox" data-id="p5-1"><div class="step-body">
+    <p class="step-item">Demande à <span class="jester">JESTER</span> de lancer l'<span class="switchname">alignement</span></p>
+    <p class="step-detail">C'est une tâche RIO — sur le F-14BU solo, c'est JESTER qui la pilote. Choisis un alignement rapide pour un vol d'entraînement (suffisant), ou fin seulement si tu prévois une frappe de précision sur coordonnées.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p5-2"><div class="step-body">
+    <p class="step-item">Sélecteur <span class="switchname">NAV MODE</span> sur <span class="setting">GND</span> pendant l'alignement</p>
+    <p class="step-detail">GND = alignement au sol, avion immobile. (CV existe pour un alignement sur porte-avions qui bouge, NAV = position une fois terminé.)</p>
+  </div></div>
+
+  <div class="note warn"><b>Piège n°1</b>Ne bouge pas l'avion pendant l'alignement — même une roue qui roule un peu, et tu recommences depuis le début.</div>
+  <div class="note warn"><b>Piège n°2</b>Attendre d'être au point d'arrêt pour y penser. À ce moment-là c'est trop tard : tu restes immobile en pure perte de temps pendant que d'autres roulent.</div>
+</section>
+
+<!-- ============ PHASE 6 ============ -->
+<section class="phase" data-phase="6">
+  <div class="phase-head"><span class="phase-num">PHASE 6</span><span class="phase-title">Systèmes de vol et instruments</span></div>
+  <p class="phase-why">Les moteurs tournent, l'alignement travaille en tâche de fond. Il reste à mettre en route ce qui te sert à piloter et à voir où tu es.</p>
+
+  <div class="step"><input type="checkbox" data-id="p6-1"><div class="step-body">
+    <p class="step-item"><span class="switchname">STAB AUG</span> (augmentation de stabilité) — tous <span class="setting">ON</span></p>
+    <p class="step-detail">C'est l'assistance au pilotage (le DFCS) qui rend le Tomcat pilotable sans lutter en permanence contre l'avion. Toujours activée.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-2"><div class="step-body">
+    <p class="step-item"><span class="switchname">Générateurs</span> gauche/droit et de secours <span class="setting">NORM</span></p>
+    <p class="step-detail">Vérifie qu'aucun voyant de panne électrique ne reste allumé.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-3"><div class="step-body">
+    <p class="step-item"><span class="switchname">Sélecteur de flèche d'aile</span> repassé sur <span class="setting">AUTO</span></p>
+    <p class="step-detail">Maintenant que l'hydraulique tourne normalement, le CADC (calculateur d'air) peut gérer la flèche automatiquement selon ta vitesse.</p>
+    <div class="step-bind">PTO2, bouton <b>28</b> (Wing Sweep Auto Mode).</div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-4"><div class="step-body">
+    <p class="step-item"><span class="switchname">Altimètre</span> réglé sur l'altitude/pression du terrain</p>
+    <p class="step-detail">Molette de calage en bas de l'instrument — sinon ton altitude affichée sera fausse dès le décollage.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-5"><div class="step-body">
+    <p class="step-item"><span class="switchname">Gyro de secours</span> érigé (déverrouillé)</p>
+    <p class="step-detail">C'est ton horizon de secours si l'électronique principale tombe en panne en vol — autant qu'il soit prêt dès maintenant.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-6"><div class="step-body">
+    <p class="step-item"><span class="switchname">Trim</span> remis à <span class="setting">000</span></p>
+    <p class="step-detail">Neutre en tangage et en roulis, pour partir d'une référence propre avant le roulage.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p6-7"><div class="step-body">
+    <p class="step-item"><span class="switchname">Radios et TACAN</span> allumés et réglés</p>
+    <p class="step-detail">UHF sur la fréquence de la tour/du contrôle, TACAN sur le canal du terrain ou du porte-avions si tu en as un pour la nav retour.</p>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 7 ============ -->
+<section class="phase" data-phase="7">
+  <div class="phase-head"><span class="phase-num">PHASE 7</span><span class="phase-title">Dernières vérifs avant de rouler</span></div>
+  <p class="phase-why">La checklist réelle du Tomcat continue encore longtemps (essais du DFCS, cyclage de l'aérofrein et de la sonde de ravitaillement, tests système…). Pour un premier vol solo, ce qui suit suffit à rouler en sécurité — le reste s'apprend avec l'expérience.</p>
+
+  <div class="step"><input type="checkbox" data-id="p7-1"><div class="step-body">
+    <p class="step-item">Ferme la <span class="switchname">verrière</span></p>
+    <p class="step-detail">Poignée sur le côté droit du cockpit.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p7-2"><div class="step-body">
+    <p class="step-item"><span class="switchname">ANTI SKID / SPOILER BK</span> sur <span class="setting">BOTH</span></p>
+    <p class="step-detail">Anti-dérapage des freins actif — indispensable pour un freinage efficace au roulage et à l'atterrissage sur piste classique (à couper uniquement sur porte-avions).</p>
+    <div class="step-bind">PTO2, bouton <b>10</b> (Antiskid & Spoiler BK - Both).</div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p7-3"><div class="step-body">
+    <p class="step-item">Vérifie qu'aucun voyant <span class="switchname">Master Caution</span> n'est resté allumé</p>
+    <p class="step-detail">S'il l'est, regarde le panneau d'alarmes pour savoir ce qu'il signale, puis acquitte.</p>
+    <div class="step-bind">Acquittement : PTO2, bouton <b>2</b> (Master Caution Reset).</div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p7-4"><div class="step-body">
+    <p class="step-item">Confirme que l'<span class="switchname">alignement de la centrale</span> est terminé (ou proche)</p>
+    <p class="step-detail">JESTER te le signale. S'il n'est pas encore fini, tu peux commencer à demander l'autorisation de rouler et finir le dernier bout en roulant doucement — mais évite les virages serrés tant qu'il n'est pas complet.</p>
+  </div></div>
+</section>
+
+<div class="note go"><b>Tu es prêt</b>Moteurs stabilisés au ralenti, alignement lancé ou terminé, frein de parking encore serré, verrière fermée. La suite logique : relâcher le frein de parking et rouler jusqu'au point d'attente — c'est le sujet de la leçon <b>A5 · Roulage et décollage</b>.</div>
+
+<div class="footlinks">
+  <a href="index.html">&larr; Retour à l'accueil F-14B(U)</a>
+  <a href="section-a-illustree.html#a5">Étape suivante : Roulage et décollage →</a>
+</div>
+
+<p class="src">Sources : checklists réelles Heatblur (<code>pre_start.md</code>, <code>startup.md</code>, <code>post_start.md</code> du manuel F-14 v2.0), simplifiées pour un pilote solo assisté par JESTER — les tâches strictement RIO (radar, contre-mesures, réglages avioniques fins) sont volontairement omises ici. Numéros de bouton HOTAS lus dans <code>data/f14bu-bindings.json</code>, à jour au 12/08/2026.</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-coldstart-progress';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function save(state){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+</script>
+</body>
+</html>
