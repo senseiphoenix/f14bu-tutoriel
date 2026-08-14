@@ -471,6 +471,7 @@ function render(){
   if(cur<L.length-1) document.getElementById("nx").onclick=()=>{cur++;render();window.scrollTo(0,0);};
   rail();
   paintBindBadges();
+  try{ history.replaceState(null,"","#"+l.id); }catch(e){}
 }
 function rail(){
   const r=document.getElementById("rail"); r.innerHTML="";
@@ -543,5 +544,22 @@ document.addEventListener("keydown",e=>{
   if(e.key==="ArrowRight"&&cur<L.length-1){cur++;render();window.scrollTo(0,0);}
   if(e.key==="ArrowLeft"&&cur>0){cur--;render();window.scrollTo(0,0);}
 });
-Promise.all([load(), loadBindings()]).then(render);
+/* ---------- Ancre #idLecon ----------
+   Ouvre directement la bonne leçon quand on arrive depuis un tuto pas à pas
+   (ex. roulage-decollage.html -> section-a-illustree.html#a5). Sans ça le
+   hash était ignoré et le lecteur atterrissait toujours sur la leçon 1.
+   render() réécrit le hash au fil de la navigation : le lien reste partageable. */
+function idxFromHash(){
+  const id=decodeURIComponent(location.hash.replace(/^#/,"")).trim();
+  return id ? L.findIndex(l=>l.id===id) : -1;
+}
+function applyHash(){
+  const i=idxFromHash();
+  if(i>=0&&i!==cur){ cur=i; render(); window.scrollTo(0,0); }
+}
+addEventListener("hashchange", applyHash);
+Promise.all([load(), loadBindings()]).then(()=>{
+  const i=idxFromHash(); if(i>=0) cur=i;
+  render();
+});
 </script>
