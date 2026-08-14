@@ -245,6 +245,7 @@ const L = [
 {id:"b3", title:"Saisir un waypoint",
  intro:"Le cœur de la section. Une fois que tu sais créer un point proprement, tu peux construire n'importe quelle route et, plus tard, guider une JDAM. La procédure est précise, mais courte une fois comprise.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Les leçons B3 à B5 ont une <b>version condensée et actionnable</b> : lire le HUD en navigation, basculer un waypoint et se guider au TACAN, sur <a href='navigation-hud-tacan.html' style='color:var(--amber)'>Navigation : HUD, HSD/TID, TACAN, pas à pas</a>."},
   {t:"h", v:"Le format des coordonnées"},
   {t:"p", v:"Le CDNU attend des coordonnées en degrés et minutes décimales (DMM). Le format exact, sans aucun espace ni séparateur, est le suivant :"},
   {t:"note", k:"", lbl:"Format DMM", v:"<code>Nddmm.mmm Wdddmm.mmm</code> — soit N ou S, quatre chiffres (deux de degrés, deux de minutes), puis E ou W, cinq chiffres (trois de degrés, deux de minutes). Les décimales de minute sont optionnelles. Exemple réel tiré du manuel : <code>N4358.257W10700.347</code>."},
@@ -279,6 +280,7 @@ const L = [
 {id:"b4", title:"Suivre une route",
  intro:"Créer des points ne sert à rien si l'avion ne t'y emmène pas. Cette leçon relie ta route à ce que tu vois devant toi, et t'apprend à choisir comment l'avion enchaîne les points.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon explique <b>comment la route s'enchaîne</b>. La version pas à pas correspondante est <a href='navigation-hud-tacan.html' style='color:var(--amber)'>Navigation : HUD, HSD/TID, TACAN</a>."},
   {t:"h", v:"Les trois modes d'enchaînement"},
   {t:"p", v:"Sur la page FPLN, une LSK bascule le mode de séquencement du point actif. C'est ce qui décide comment l'avion passe d'un waypoint au suivant."},
   {t:"table", head:["Mode","Comportement"], rows:[
@@ -321,6 +323,7 @@ const L = [
 {id:"b5", title:"TACAN et sources de guidage",
  intro:"Dernière brique : comprendre que plusieurs systèmes peuvent te guider en même temps, et savoir lequel écoute ton HUD. C'est la source de confusion classique — « pourquoi mon HUD ne pointe pas où je veux ? »",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon détaille les <b>sources de guidage</b>. La version pas à pas correspondante est <a href='navigation-hud-tacan.html' style='color:var(--amber)'>Navigation : HUD, HSD/TID, TACAN</a>."},
   {t:"h", v:"Quatre sources, une seule écoutée à la fois"},
   {t:"p", v:"Le B(U) a quatre sources de guidage : l'EGI (ta route CDNU), le calculateur de mission pour les modes d'attaque et de destination, le BDHI, et le TACAN. Le HUD et le HSD suivent l'une ou l'autre selon ce qui est sélectionné. La bascule principale se fait sur le panneau TACAN CMD <span class='bindtag unbound' title='Pas de bind HOTAS : action à la souris/VR dans le cockpit'>Clic cockpit</span>, qui alterne entre <b>TACAN</b> et <b>EGI</b>."},
   {t:"img", k:"navoverview", c:"Le système de navigation et ses sources de guidage."},

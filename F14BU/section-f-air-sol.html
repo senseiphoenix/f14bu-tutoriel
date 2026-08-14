@@ -159,6 +159,7 @@ const L = [
 {id:"f2", title:"Bombes lisses : les quatre modes d'attaque",
  intro:"Le sélecteur ATTK MODE du RIO propose quatre logiques différentes pour placer une bombe non guidée. Comprendre les quatre te permet de choisir la bonne plutôt que de toujours utiliser la même.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon compare les <b>quatre modes d'attaque</b>. Pour le profil le plus simple déroulé pas à pas, va sur <a href='bombes-ccip.html' style='color:var(--amber)'>Bombes lisses en CCIP, pas à pas</a>."},
   {t:"h", v:"Les quatre modes"},
   {t:"tbl", head:["Mode","Nom complet","Principe"], rows:[
    ["CMPTR TGT","Computer Target","Mode semi-automatique guidé par calculateur, l'équivalent d'un CCRP moderne."],
@@ -189,6 +190,7 @@ const L = [
 {id:"f3", title:"Bombes guidées laser et GBU-24E/B",
  intro:"Le LANTIRN désigne une cible au laser, ton RIO fait le plus gros du travail. Le B(U) ajoute une arme unique à cette famille : une bombe qui n'a même pas besoin du laser pour toucher.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon explique <b>le guidage laser</b>. Pour la séquence complète avec JESTER au LANTIRN, va sur <a href='bombes-laser-lantirn.html' style='color:var(--amber)'>Bombes guidées laser et LANTIRN, pas à pas</a>."},
   {t:"h", v:"Le principe du guidage laser"},
   {t:"p", v:"Le RIO pointe la nacelle LANTIRN, cherche, accroche et illumine la cible. La bombe suit le point laser réfléchi. Ta part : voler un profil stable qui garde la cible dans le champ de la nacelle jusqu'à l'impact."},
   {t:"img", k:"lgbcues", c:"Symbologie typique de largage LGB : temps avant largage, temps avant impact, distance oblique."},
@@ -213,6 +215,7 @@ const L = [
 {id:"f4", title:"JDAM : mission préplanifiée",
  intro:"La JDAM est une arme GPS pure — aucun laser, aucun visuel requis. Premier des deux cas d'emploi que couvre le manuel : la mission préparée avant le vol.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Les leçons F4 et F5 ont une <b>version pas à pas</b> qui couvre les deux modes : <a href='jdam.html' style='color:var(--amber)'>JDAM : préplanifié et cible d'opportunité</a>."},
   {t:"h", v:"Le principe"},
   {t:"p", v:"Coordonnées de cible et paramètres terminaux sont préparés dans l'éditeur de mission, puis transférés dans l'avion par la cartouche de données (MDL) au démarrage. Le calculateur peut stocker <b>jusqu'à huit missions préplanifiées par station</b>, chacune avec sa cible, sa zone de tir autorisée (LAR) et son point de largage."},
   {t:"img", k:"pplanner", c:"Planification d'une mission JDAM dans l'éditeur — coordonnées, cap d'attaque, altitude et vitesse de largage."},
@@ -252,6 +255,7 @@ const L = [
 {id:"f5", title:"JDAM : cible d'opportunité",
  intro:"Contrairement aux chasseurs modernes, le B(U) n'a pas de mode dédié pour une cible non planifiée. La solution : détourner une mission préplanifiée existante en lui donnant de nouvelles coordonnées en vol. Voici la procédure complète du manuel, étape par étape.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon détaille le <b>mode TOO</b>. La version pas à pas correspondante est <a href='jdam.html' style='color:var(--amber)'>JDAM : préplanifié et cible d'opportunité</a>."},
   {t:"h", v:"Pourquoi cette méthode et pas une autre"},
   {t:"p", v:"L'emploi sur cible d'opportunité reste possible, mais il passe par une reprogrammation : n'importe quel point du plan de vol stocké dans le CDNU peut voir ses coordonnées copiées vers la page JMSN. C'est le détour que le manuel documente."},
 

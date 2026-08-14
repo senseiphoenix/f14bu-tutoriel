@@ -168,6 +168,7 @@ const L = [
 {id:"d1", title:"Le radar : modes et vocabulaire",
  intro:"Le Tomcat est un intercepteur avant d'être un chasseur : le radar est l'arme principale, le missile n'est que la conséquence. Cette leçon te donne le vocabulaire qui te servira dans toutes les suivantes.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Les leçons D1 et D2 ont une <b>version pas à pas</b>, écrite du point de vue du pilote qui dirige JESTER : <a href='radar-rws-stt.html' style='color:var(--amber)'>Radar air-air : RWS et STT</a>."},
   {t:"h", v:"Deux familles, un compromis"},
   {t:"p", v:"L'AN/AWG-9 fonctionne en pulse ou en pulse doppler. Le pulse voit dans toutes les directions, même une cible qui te fait face à vitesse nulle relative, mais il se noie dans le fouillis au sol et porte moins loin. Le pulse doppler porte beaucoup plus loin en se filtrant sur la vitesse relative de la cible — au prix d'un angle mort sur les cibles qui n'ont presque pas de vitesse de rapprochement (le fameux « notch »)."},
   {t:"table", head:["Mode","Fonction","Portée typique"], rows:[
@@ -195,6 +196,7 @@ const L = [
 {id:"d2", title:"Lire le PTID",
  intro:"Le PTID est ton centre de conscience tactique pour tout le reste de la section. Il porte trois pages principales et une page tactique dense en informations — cette leçon te donne les repères pour t'y retrouver sans t'y perdre.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon détaille <b>l'affichage</b>. La version pas à pas correspondante est <a href='radar-rws-stt.html' style='color:var(--amber)'>Radar air-air : RWS et STT</a>."},
   {t:"h", v:"Trois pages, un seul écran"},
   {t:"p", v:"Le PTID s'organise autour de trois pages : la <b>page tactique</b> pour le combat, la <b>page navigation en ligne</b> (NVD PLT) pour tracer des zones d'intérêt, et la <b>page navigation par point</b> (NVD WP) pour consulter le détail d'un waypoint. Vingt boutons-poussoirs numérotés entourent l'écran ; leur fonction change selon la page affichée."},
   {t:"img", k:"ptid", c:"Vue d'ensemble du PTID."},
@@ -236,6 +238,7 @@ const L = [
 {id:"d3", title:"Le HUD en air-air",
  intro:"Le HUD te permet de rester tête haute pendant tout l'engagement. Chaque arme sélectionnée change la symbologie affichée — cette leçon te montre les trois versions que tu croiseras le plus.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Les leçons D3 et D4 ont une <b>version pas à pas</b> : <a href='combat-courte-portee.html' style='color:var(--amber)'>Combat courte portée : AIM-9 et canon</a>."},
   {t:"h", v:"Ce qui ne change jamais"},
   {t:"p", v:"Quel que soit le mode, tu retrouves toujours : le repère de trajectoire (FPM, qui indique où l'avion va réellement, pas où il pointe), l'échelle de cap, l'incidence, le Mach et le facteur de charge, et en bas à droite la donnée de navigation vers ton point actif."},
   {t:"note", k:"", lbl:"FPM contre repère de montée", v:"En manœuvre dynamique, le repère de trajectoire (FPM) peut sortir du champ visible du HUD et disparaître un instant. Le <b>repère de montée/descente (CDM)</b> reste alors ta seule référence de trajectoire — c'est pour ça qu'il existe. Le bouton HUD CAGE <span class='bindtag' data-bind-cmd='CAGE-SEAM button'></span> bascule entre les deux."},
@@ -268,6 +271,7 @@ const L = [
 {id:"d4", title:"Sidewinder et canon",
  intro:"On commence par les armes les plus simples : autonomes après le déclenchement, sans guidage à tenir. C'est là qu'on apprend les bases de la solution de tir avant de compliquer avec les missiles radar.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon explique <b>l'arme et son enveloppe</b>. La version pas à pas correspondante est <a href='combat-courte-portee.html' style='color:var(--amber)'>Combat courte portée : AIM-9 et canon</a>."},
   {t:"h", v:"Préparer l'AIM-9"},
   {t:"p", v:"Le refroidissement du viseur infrarouge doit être activé avant tir — il devient prêt immédiatement mais met environ 60 secondes à atteindre sa pleine performance. Une fois prêt, le mode normal (SEAM) laisse le viseur balayer autour de ta ligne de visée ou de ta cible verrouillée, dans un champ de 40° ; le mode boresight le fige strictement sur l'axe de l'avion, en 2,5° seulement."},
   {t:"img", k:"armpanel", c:"Panneau d'armement (ACP), console verticale gauche du RIO"},
@@ -312,6 +316,7 @@ const L = [
 {id:"d5", title:"Sparrow",
  intro:"Le Sparrow t'oblige à tenir ton verrouillage pendant tout le vol du missile. C'est l'école de la discipline de tir : rien n'est automatique après le départ.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon explique <b>le guidage semi-actif</b>. Pour la séquence de tir complète et le piège du verrouillage à tenir jusqu'à l'impact, va sur <a href='aim7-sparrow.html' style='color:var(--amber)'>AIM-7 Sparrow, pas à pas</a>."},
   {t:"h", v:"Le principe du guidage semi-actif"},
   {t:"p", v:"Le Sparrow ne « voit » pas sa cible : il suit l'énergie radar que ton avion réfléchit dessus. Concrètement, ça veut dire que <b>ton radar doit rester verrouillé sur la cible jusqu'à l'impact</b>. Si tu romps le lock, le missile perd son guidage et devient inutile."},
   {t:"h", v:"Deux modes"},
@@ -341,6 +346,7 @@ const L = [
 {id:"d6", title:"Phoenix et tir multi-cibles",
  intro:"L'arme qui rend le Tomcat unique : tirer loin, sur plusieurs cibles, avant même d'être vu. C'est aussi l'arme la plus longue à préparer et la plus facile à gâcher si on la tire trop tôt.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon explique <b>le tir multi-cibles</b>. Pour la séquence complète en TWS avec JESTER, va sur <a href='aim54-phoenix-tws.html' style='color:var(--amber)'>AIM-54 Phoenix et TWS, pas à pas</a>."},
   {t:"h", v:"Portées réelles"},
   {t:"p", v:"Contre une cible de la taille d'un chasseur, en altitude et en poursuite doppler ferme, compte au moins 60 nm de portée. En TWS contre plusieurs cibles à la fois, ça descend vers 50 nm. Si tu tires en mode actif d'entrée (le missile cherchant seul dès le départ), la portée s'effondre à environ 10 nm — c'est un mode de dernier recours, pas une tactique standard."},
   {t:"h", v:"Préparation"},

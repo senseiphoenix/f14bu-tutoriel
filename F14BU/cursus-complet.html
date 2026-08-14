@@ -398,6 +398,7 @@ L: [
 {id:"a3", title:"Travailler avec JESTER",
  intro:"Le Tomcat est un avion à deux équipiers. Tu ne pilotes pas seul : tu commandes un équipage. Presque tout ce qui touche au radar, à la navigation et à la désignation passe par ton RIO.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon explique <b>ce que JESTER sait faire</b>. Pour apprendre le mécanisme du menu (1/2/3 pressions) et l'explorer sans risque, va sur <a href='travailler-avec-jester.html' style='color:var(--amber)'>Travailler avec JESTER, pas à pas</a>."},
   {t:"h", v:"Ce que JESTER fait pour toi"},
   {t:"p", v:"Il gère le radar (modes, portée, verrouillages), l'alignement de la navigation, la saisie des points, la nacelle de désignation, le datalink et les contre-mesures. Sur les tâches longues comme l'alignement ou le démarrage, il peut travailler pendant que tu observes — une excellente façon d'apprendre une procédure avant de la faire soi-même."},
   {t:"h", v:"Le mécanisme réel du menu"},
@@ -481,6 +482,7 @@ L: [
 {id:"a5", title:"Roulage et décollage",
  intro:"On décolle d'une piste avant de toucher au porte-avions. Une variable difficile à la fois.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon explique le <b>pourquoi</b> de chaque repère au décollage. Pour la checklist case par case, du parking à la montée initiale, avec les numéros de bouton de ton HOTAS, va sur <a href='roulage-decollage.html' style='color:var(--amber)'>Roulage et décollage, pas à pas</a>."},
   {t:"h", v:"Avant de rouler"},
   {t:"tbl", head:["Réglage","Position"], rows:[
    ["Anti-dérapage / frein aérodynamique","Position terrain (BOTH).","Antiskid & Spoiler BK - Both"],
@@ -514,6 +516,7 @@ L: [
 {id:"a6", title:"Vol de base, AoA et DFCS",
  intro:"C'est la leçon la plus importante de la section. Le Tomcat se pilote à l'incidence, pas à la vitesse. Tout ce qui suivra repose sur ce que tu vas sentir ici.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon explique <b>comment le DFCS tient l'avion</b>. Pour les exercices pratiques de trim, d'autopilote et de tenue d'incidence, va sur <a href='vol-base-aoa-dfcs.html' style='color:var(--amber)'>Vol de base, AoA et DFCS, pas à pas</a>."},
   {t:"h", v:"L'incidence commande tout"},
   {t:"p", v:"L'indexeur d'incidence te dit en un coup d'œil si tu es trop rapide, trop lent, ou dans le créneau. En approche, c'est lui que tu regardes, pas le badin : à masse variable, la bonne vitesse change, mais la bonne incidence, jamais."},
   {t:"img", k:"aoa", c:"Indicateur d'incidence"},
@@ -588,6 +591,7 @@ L: [
 {id:"a7", title:"Retour terrain et atterrissage",
  intro:"L'atterrissage terrain, c'est l'appontage sans la pression. Tout ce que tu construis ici sera réutilisé tel quel au bateau.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon explique la <b>logique du circuit</b>. Pour la checklist complète, de la descente jusqu'à la sortie de piste, va sur <a href='retour-atterrissage.html' style='color:var(--amber)'>Retour terrain et atterrissage, pas à pas</a>."},
   {t:"h", v:"La configuration"},
   {t:"p", v:"Train, volets, et la carte de checklist du cockpit pour ne rien oublier. Crosse rentrée sur terrain, HOOK BYPASS sur FIELD, anti-dérapage actif — l'inverse exact de ce que tu feras au bateau."},
   {t:"img", k:"lndgchk", c:"Carte de checklist atterrissage, planche de bord gauche"},
@@ -725,6 +729,7 @@ L: [
 {id:"b3", title:"Saisir un waypoint",
  intro:"Le cœur de la section. Une fois que tu sais créer un point proprement, tu peux construire n'importe quelle route et, plus tard, guider une JDAM. La procédure est précise, mais courte une fois comprise.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Les leçons B3 à B5 ont une <b>version condensée et actionnable</b> : lire le HUD en navigation, basculer un waypoint et se guider au TACAN, sur <a href='navigation-hud-tacan.html' style='color:var(--amber)'>Navigation : HUD, HSD/TID, TACAN, pas à pas</a>."},
   {t:"h", v:"Le format des coordonnées"},
   {t:"p", v:"Le CDNU attend des coordonnées en degrés et minutes décimales (DMM). Le format exact, sans aucun espace ni séparateur, est le suivant :"},
   {t:"note", k:"", lbl:"Format DMM", v:"<code>Nddmm.mmm Wdddmm.mmm</code> — soit N ou S, quatre chiffres (deux de degrés, deux de minutes), puis E ou W, cinq chiffres (trois de degrés, deux de minutes). Les décimales de minute sont optionnelles. Exemple réel tiré du manuel : <code>N4358.257W10700.347</code>."},
@@ -759,6 +764,7 @@ L: [
 {id:"b4", title:"Suivre une route",
  intro:"Créer des points ne sert à rien si l'avion ne t'y emmène pas. Cette leçon relie ta route à ce que tu vois devant toi, et t'apprend à choisir comment l'avion enchaîne les points.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon explique <b>comment la route s'enchaîne</b>. La version pas à pas correspondante est <a href='navigation-hud-tacan.html' style='color:var(--amber)'>Navigation : HUD, HSD/TID, TACAN</a>."},
   {t:"h", v:"Les trois modes d'enchaînement"},
   {t:"p", v:"Sur la page FPLN, une LSK bascule le mode de séquencement du point actif. C'est ce qui décide comment l'avion passe d'un waypoint au suivant."},
   {t:"table", head:["Mode","Comportement"], rows:[
@@ -801,6 +807,7 @@ L: [
 {id:"b5", title:"TACAN et sources de guidage",
  intro:"Dernière brique : comprendre que plusieurs systèmes peuvent te guider en même temps, et savoir lequel écoute ton HUD. C'est la source de confusion classique — « pourquoi mon HUD ne pointe pas où je veux ? »",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon détaille les <b>sources de guidage</b>. La version pas à pas correspondante est <a href='navigation-hud-tacan.html' style='color:var(--amber)'>Navigation : HUD, HSD/TID, TACAN</a>."},
   {t:"h", v:"Quatre sources, une seule écoutée à la fois"},
   {t:"p", v:"Le B(U) a quatre sources de guidage : l'EGI (ta route CDNU), le calculateur de mission pour les modes d'attaque et de destination, le BDHI, et le TACAN. Le HUD et le HSD suivent l'une ou l'autre selon ce qui est sélectionné. La bascule principale se fait sur le panneau TACAN CMD <span class='bindtag unbound' title='Pas de bind HOTAS : action à la souris/VR dans le cockpit'>Clic cockpit</span>, qui alterne entre <b>TACAN</b> et <b>EGI</b>."},
   {t:"img", k:"navoverview", c:"Le système de navigation et ses sources de guidage."},
@@ -888,6 +895,7 @@ L: [
 {id:"c2", title:"La théorie de l'appontage",
  intro:"Avant de tourner autour du bateau, il faut comprendre ce qu'on cherche à faire. L'appontage n'est pas un atterrissage précis : c'est trois paramètres tenus simultanément jusqu'au fil d'arrêt. Cette leçon est de la lecture — la pratique vient après.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Les leçons C2 à C4 ont une <b>version pas à pas</b> qui enchaîne le circuit complet, du break au brin d'arrêt : <a href='case-i-appontage.html' style='color:var(--amber)'>Circuit CASE I et appontage</a>."},
   {t:"h", v:"Les trois paramètres"},
   {t:"p", v:"Tout l'appontage tient dans un balayage permanent entre trois choses : la <b>boule</b> (ton plan de descente, lue sur le miroir optique du bateau), l'<b>alignement</b> (rester dans l'axe de la piste oblique, qui se dérobe puisque le bateau avance), et l'<b>incidence</b> (l'AoA, ta vitesse d'approche). Tu ne fixes jamais un seul des trois : tu balaies les trois en boucle."},
   {t:"img", k:"aoa", c:"L'indexeur d'incidence — un de tes trois yeux en approche bateau (repères chiffrés en section A, leçon 6)"},
@@ -929,6 +937,7 @@ L: [
 {id:"c3", title:"Voler le circuit",
  intro:"Maintenant tu voles ce que tu viens d'apprendre. On construit le circuit morceau par morceau, sans chercher à réussir l'appontage du premier coup — l'objectif ici, c'est d'arriver dans l'axe, stabilisé, à la bonne incidence.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon explique <b>la forme du circuit</b>. La version pas à pas correspondante est <a href='case-i-appontage.html' style='color:var(--amber)'>Circuit CASE I et appontage</a>."},
   {t:"h", v:"La configuration, dans l'ordre"},
   {t:"p", v:"Le point qui sauve tout : tu arrives dans le dernier virage <b>déjà stabilisé en incidence</b>. Ce que tu n'as pas stabilisé en vent arrière et dans le 180, tu ne le rattraperas jamais dans l'axe. La configuration se fait donc entièrement avant le 90."},
   {t:"img", k:"lndgchk", c:"Carte de checklist atterrissage, à compléter avant le 180."},
@@ -956,6 +965,7 @@ L: [
 {id:"c4", title:"Poser sur le pont",
  intro:"La dernière marche. Tu ajoutes le toucher à ce que tu maîtrises déjà. Il n'y a pas de raccourci ici : seulement du volume. Vingt appontages ratés valent mieux qu'un tutoriel de plus.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon explique <b>le poser lui-même</b>. La version pas à pas correspondante est <a href='case-i-appontage.html' style='color:var(--amber)'>Circuit CASE I et appontage</a>."},
   {t:"h", v:"Le balayage final"},
   {t:"p", v:"Dans l'axe, tu balaies en boucle : boule, axe, incidence. Corrections minuscules. Si la boule descend, une touche de poussée et de DLC vers le haut. Si tu dérives, une petite correction d'axe au manche, accompagnée d'un léger palonnier pour contrer le lacet. Jamais de grand geste."},
   {t:"note", k:"", lbl:"Le geste qui compte", v:"Au toucher : <b>plein gaz militaire systématique</b>. Tu remets les gaz à chaque fois, avant même de savoir si tu as accroché un brin. Si la crosse tient, l'avion s'arrête ; si elle rebondit, tu es déjà en train de redécoller. Ce réflexe est non négociable — c'est lui qui transforme un raté en simple remise de gaz. Sélectionner la pleine poussée coupe aussi automatiquement le DLC et rentre les aérofreins."},
@@ -1005,6 +1015,7 @@ L: [
 {id:"d1", title:"Le radar : modes et vocabulaire",
  intro:"Le Tomcat est un intercepteur avant d'être un chasseur : le radar est l'arme principale, le missile n'est que la conséquence. Cette leçon te donne le vocabulaire qui te servira dans toutes les suivantes.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Les leçons D1 et D2 ont une <b>version pas à pas</b>, écrite du point de vue du pilote qui dirige JESTER : <a href='radar-rws-stt.html' style='color:var(--amber)'>Radar air-air : RWS et STT</a>."},
   {t:"h", v:"Deux familles, un compromis"},
   {t:"p", v:"L'AN/AWG-9 fonctionne en pulse ou en pulse doppler. Le pulse voit dans toutes les directions, même une cible qui te fait face à vitesse nulle relative, mais il se noie dans le fouillis au sol et porte moins loin. Le pulse doppler porte beaucoup plus loin en se filtrant sur la vitesse relative de la cible — au prix d'un angle mort sur les cibles qui n'ont presque pas de vitesse de rapprochement (le fameux « notch »)."},
   {t:"table", head:["Mode","Fonction","Portée typique"], rows:[
@@ -1032,6 +1043,7 @@ L: [
 {id:"d2", title:"Lire le PTID",
  intro:"Le PTID est ton centre de conscience tactique pour tout le reste de la section. Il porte trois pages principales et une page tactique dense en informations — cette leçon te donne les repères pour t'y retrouver sans t'y perdre.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon détaille <b>l'affichage</b>. La version pas à pas correspondante est <a href='radar-rws-stt.html' style='color:var(--amber)'>Radar air-air : RWS et STT</a>."},
   {t:"h", v:"Trois pages, un seul écran"},
   {t:"p", v:"Le PTID s'organise autour de trois pages : la <b>page tactique</b> pour le combat, la <b>page navigation en ligne</b> (NVD PLT) pour tracer des zones d'intérêt, et la <b>page navigation par point</b> (NVD WP) pour consulter le détail d'un waypoint. Vingt boutons-poussoirs numérotés entourent l'écran ; leur fonction change selon la page affichée."},
   {t:"img", k:"ptid", c:"Vue d'ensemble du PTID."},
@@ -1073,6 +1085,7 @@ L: [
 {id:"d3", title:"Le HUD en air-air",
  intro:"Le HUD te permet de rester tête haute pendant tout l'engagement. Chaque arme sélectionnée change la symbologie affichée — cette leçon te montre les trois versions que tu croiseras le plus.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Les leçons D3 et D4 ont une <b>version pas à pas</b> : <a href='combat-courte-portee.html' style='color:var(--amber)'>Combat courte portée : AIM-9 et canon</a>."},
   {t:"h", v:"Ce qui ne change jamais"},
   {t:"p", v:"Quel que soit le mode, tu retrouves toujours : le repère de trajectoire (FPM, qui indique où l'avion va réellement, pas où il pointe), l'échelle de cap, l'incidence, le Mach et le facteur de charge, et en bas à droite la donnée de navigation vers ton point actif."},
   {t:"note", k:"", lbl:"FPM contre repère de montée", v:"En manœuvre dynamique, le repère de trajectoire (FPM) peut sortir du champ visible du HUD et disparaître un instant. Le <b>repère de montée/descente (CDM)</b> reste alors ta seule référence de trajectoire — c'est pour ça qu'il existe. Le bouton HUD CAGE <span class='bindtag' data-bind-cmd='CAGE-SEAM button'></span> bascule entre les deux."},
@@ -1105,6 +1118,7 @@ L: [
 {id:"d4", title:"Sidewinder et canon",
  intro:"On commence par les armes les plus simples : autonomes après le déclenchement, sans guidage à tenir. C'est là qu'on apprend les bases de la solution de tir avant de compliquer avec les missiles radar.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon explique <b>l'arme et son enveloppe</b>. La version pas à pas correspondante est <a href='combat-courte-portee.html' style='color:var(--amber)'>Combat courte portée : AIM-9 et canon</a>."},
   {t:"h", v:"Préparer l'AIM-9"},
   {t:"p", v:"Le refroidissement du viseur infrarouge doit être activé avant tir — il devient prêt immédiatement mais met environ 60 secondes à atteindre sa pleine performance. Une fois prêt, le mode normal (SEAM) laisse le viseur balayer autour de ta ligne de visée ou de ta cible verrouillée, dans un champ de 40° ; le mode boresight le fige strictement sur l'axe de l'avion, en 2,5° seulement."},
   {t:"img", k:"armpanel", c:"Panneau d'armement (ACP), console verticale gauche du RIO"},
@@ -1149,6 +1163,7 @@ L: [
 {id:"d5", title:"Sparrow",
  intro:"Le Sparrow t'oblige à tenir ton verrouillage pendant tout le vol du missile. C'est l'école de la discipline de tir : rien n'est automatique après le départ.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon explique <b>le guidage semi-actif</b>. Pour la séquence de tir complète et le piège du verrouillage à tenir jusqu'à l'impact, va sur <a href='aim7-sparrow.html' style='color:var(--amber)'>AIM-7 Sparrow, pas à pas</a>."},
   {t:"h", v:"Le principe du guidage semi-actif"},
   {t:"p", v:"Le Sparrow ne « voit » pas sa cible : il suit l'énergie radar que ton avion réfléchit dessus. Concrètement, ça veut dire que <b>ton radar doit rester verrouillé sur la cible jusqu'à l'impact</b>. Si tu romps le lock, le missile perd son guidage et devient inutile."},
   {t:"h", v:"Deux modes"},
@@ -1178,6 +1193,7 @@ L: [
 {id:"d6", title:"Phoenix et tir multi-cibles",
  intro:"L'arme qui rend le Tomcat unique : tirer loin, sur plusieurs cibles, avant même d'être vu. C'est aussi l'arme la plus longue à préparer et la plus facile à gâcher si on la tire trop tôt.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon explique <b>le tir multi-cibles</b>. Pour la séquence complète en TWS avec JESTER, va sur <a href='aim54-phoenix-tws.html' style='color:var(--amber)'>AIM-54 Phoenix et TWS, pas à pas</a>."},
   {t:"h", v:"Portées réelles"},
   {t:"p", v:"Contre une cible de la taille d'un chasseur, en altitude et en poursuite doppler ferme, compte au moins 60 nm de portée. En TWS contre plusieurs cibles à la fois, ça descend vers 50 nm. Si tu tires en mode actif d'entrée (le missile cherchant seul dès le départ), la portée s'effondre à environ 10 nm — c'est un mode de dernier recours, pas une tactique standard."},
   {t:"h", v:"Préparation"},
@@ -1251,6 +1267,7 @@ L: [
 {id:"e1", title:"Lire le RWR",
  intro:"Le détecteur d'alerte radar (ALR-67) est ta première ligne de défense : il te dit qui t'illumine, d'où, et avec quelle intention. Savoir le lire en un coup d'œil vaut tous les leurres du monde.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Les leçons E1 et E2 ont une <b>version pas à pas</b> qui va de la détection au largage : <a href='contre-mesures.html' style='color:var(--amber)'>Contre-mesures : chaff, flares, ECM</a>."},
   {t:"h", v:"Trois bandes, classées par danger — pas par distance"},
   {t:"p", v:"L'écran s'organise en trois bandes concentriques. Ce qui les sépare n'est <b>pas</b> la distance réelle de l'émetteur, mais son niveau de menace."},
   {t:"tbl", head:["Bande","Contenu"], rows:[
@@ -1295,6 +1312,7 @@ L: [
 {id:"e2", title:"L'ALE-47 : leurres programmés",
  intro:"Le B(U) emporte l'AN/ALE-47, un système de contre-mesures programmable. La philosophie est claire : tu ne largues pas au hasard sous le stress, tu déclenches des programmes préparés à froid.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon détaille <b>les programmes de leurres</b>. La version pas à pas correspondante est <a href='contre-mesures.html' style='color:var(--amber)'>Contre-mesures : chaff, flares, ECM</a>."},
   {t:"h", v:"Ce qui a changé"},
   {t:"p", v:"L'ALE-47 se pilote via deux panneaux sur la console droite du RIO : l'unité d'affichage (DCDU) et le programmateur. Les programmes de largage — combien de paillettes ou de fusées, à quelle cadence, sur quelle durée — peuvent être préparés avant le vol, y compris chargés depuis l'éditeur de mission via la cartouche de données (MDL), la même qui transporte tes plans de vol."},
   {t:"img", k:"rconsole", c:"Console droite du RIO — les panneaux ALE-47 (DCDU et programmateur) s'y trouvent."},
@@ -1394,6 +1412,7 @@ L: [
 {id:"f2", title:"Bombes lisses : les quatre modes d'attaque",
  intro:"Le sélecteur ATTK MODE du RIO propose quatre logiques différentes pour placer une bombe non guidée. Comprendre les quatre te permet de choisir la bonne plutôt que de toujours utiliser la même.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon compare les <b>quatre modes d'attaque</b>. Pour le profil le plus simple déroulé pas à pas, va sur <a href='bombes-ccip.html' style='color:var(--amber)'>Bombes lisses en CCIP, pas à pas</a>."},
   {t:"h", v:"Les quatre modes"},
   {t:"tbl", head:["Mode","Nom complet","Principe"], rows:[
    ["CMPTR TGT","Computer Target","Mode semi-automatique guidé par calculateur, l'équivalent d'un CCRP moderne."],
@@ -1424,6 +1443,7 @@ L: [
 {id:"f3", title:"Bombes guidées laser et GBU-24E/B",
  intro:"Le LANTIRN désigne une cible au laser, ton RIO fait le plus gros du travail. Le B(U) ajoute une arme unique à cette famille : une bombe qui n'a même pas besoin du laser pour toucher.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon explique <b>le guidage laser</b>. Pour la séquence complète avec JESTER au LANTIRN, va sur <a href='bombes-laser-lantirn.html' style='color:var(--amber)'>Bombes guidées laser et LANTIRN, pas à pas</a>."},
   {t:"h", v:"Le principe du guidage laser"},
   {t:"p", v:"Le RIO pointe la nacelle LANTIRN, cherche, accroche et illumine la cible. La bombe suit le point laser réfléchi. Ta part : voler un profil stable qui garde la cible dans le champ de la nacelle jusqu'à l'impact."},
   {t:"img", k:"lgbcues", c:"Symbologie typique de largage LGB : temps avant largage, temps avant impact, distance oblique."},
@@ -1448,6 +1468,7 @@ L: [
 {id:"f4", title:"JDAM : mission préplanifiée",
  intro:"La JDAM est une arme GPS pure — aucun laser, aucun visuel requis. Premier des deux cas d'emploi que couvre le manuel : la mission préparée avant le vol.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Les leçons F4 et F5 ont une <b>version pas à pas</b> qui couvre les deux modes : <a href='jdam.html' style='color:var(--amber)'>JDAM : préplanifié et cible d'opportunité</a>."},
   {t:"h", v:"Le principe"},
   {t:"p", v:"Coordonnées de cible et paramètres terminaux sont préparés dans l'éditeur de mission, puis transférés dans l'avion par la cartouche de données (MDL) au démarrage. Le calculateur peut stocker <b>jusqu'à huit missions préplanifiées par station</b>, chacune avec sa cible, sa zone de tir autorisée (LAR) et son point de largage."},
   {t:"img", k:"pplanner", c:"Planification d'une mission JDAM dans l'éditeur — coordonnées, cap d'attaque, altitude et vitesse de largage."},
@@ -1487,6 +1508,7 @@ L: [
 {id:"f5", title:"JDAM : cible d'opportunité",
  intro:"Contrairement aux chasseurs modernes, le B(U) n'a pas de mode dédié pour une cible non planifiée. La solution : détourner une mission préplanifiée existante en lui donnant de nouvelles coordonnées en vol. Voici la procédure complète du manuel, étape par étape.",
  body:[
+  {t:"note", k:"go", lbl:"Version pas à pas", v:"Cette leçon détaille le <b>mode TOO</b>. La version pas à pas correspondante est <a href='jdam.html' style='color:var(--amber)'>JDAM : préplanifié et cible d'opportunité</a>."},
   {t:"h", v:"Pourquoi cette méthode et pas une autre"},
   {t:"p", v:"L'emploi sur cible d'opportunité reste possible, mais il passe par une reprogrammation : n'importe quel point du plan de vol stocké dans le CDNU peut voir ses coordonnées copiées vers la page JMSN. C'est le détour que le manuel documente."},
 
