@@ -56,6 +56,34 @@ s'appliquent directement si on refait ce travail sur un autre avion.
   indépendante de la phase de vol — une urgence peut survenir à tout
   moment, ne pas forcer une rotation du sélecteur pour l'atteindre.
 
+## Rédiger du contenu de tutoriel (procédures, systèmes, théorie)
+
+- **Ce dépôt (dossier `F14BU/`) documente le F-14B(U) « Upgrade », pas le
+  F-14A/B classique.** Les deux modules Heatblur coexistent et partagent
+  beaucoup de théorie (aérodynamique, radar AWG-9, géométrie BVR/BFM), mais
+  certains systèmes diffèrent réellement entre variantes (ex. contre-mesures
+  ALE-39 sur le F-14A/B classique vs **ALE-47** sur le B(U), TID classique vs
+  **PTID** sur le B(U), HUD classique vs **VDIG-R** sur le B(U)). Une source
+  qui ne précise pas la variante (vidéo communautaire ancienne, article
+  générique, page manuel sous le chemin `f14ab/...` plutôt que `f14bu/...`)
+  peut décrire le mauvais système sans le signaler explicitement.
+- Avant de reprendre un fait technique précis (nom de système, procédure
+  précise, symbologie) d'une source externe, **vérifier si une page manuel
+  équivalente existe sous le chemin `f14bu/...`** (le manuel Heatblur
+  distingue les deux : `f14.manuals.heatblur.se/f14ab/...` pour le classique,
+  `.../f14bu/...` pour le B(U)). Si seule la version `f14ab` existe et que le
+  système a pu changer avec l'upgrade, le signaler explicitement dans le
+  texte plutôt que d'affirmer silencieusement que ça s'applique au B(U).
+  Exemple vécu : la leçon ACM (PAL/VSL/Boresight) n'a été confirmée que via
+  la page `f14ab/systems/radar/acm_modes.html` — mécanique très probablement
+  identique sur le B(U) (le panneau ACM n'a pas été annoncé comme changé),
+  mais ce n'est pas la même certitude qu'une page `f14bu/...` dédiée.
+- La théorie pure (gestion d'énergie, géométrie 1/2 cercles, BVR — Vc, ATA,
+  drift, hot/cold side, brevity codes) est indépendante de la variante et
+  s'applique telle quelle. Ce qui doit être vérifié variante par variante,
+  c'est tout ce qui touche à un **système embarqué nommé** ou à un
+  **affichage cockpit précis**.
+
 ## UI des pages de mapping (`mapping-hotas.html`)
 
 - **Un indicateur dynamique (couleur de page, badge) ne doit jamais changer

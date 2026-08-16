@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — BVR &amp; WVR : synthèse et modes ACM, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-bind{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
+.bindtag .ic{opacity:.7;font-size:.9em}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.jester{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--amber)}
+
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--panel-2)}
+tbody tr:nth-child(odd){background:rgba(30,42,51,.35)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+.src a{color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="perfectionnement.html">Perfectionnement</a><span>/</span>
+  <span>BVR &amp; WVR : synthèse</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — pilote solo · Leçon 2/6</div>
+<h1>BVR &amp; WVR :<br>synthèse et modes ACM</h1>
+<p class="sub">Tu as déjà des tutoriels dédiés pour chaque arme air-air. Cette leçon <b>ne les répète pas</b> : elle fait le lien entre elles, couvre les modes ACM non traités ailleurs, et ajoute la théorie de géométrie d'interception qui manque encore à ce site.</p>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon n'est pas :</b> un quatrième tutoriel sur comment tirer un AIM-54, un AIM-7 ou un AIM-9 — ça, tu l'as déjà, en détail, avec les binds de ton HOTAS. Vois plutôt ça comme le chapitre qui relie ces armes entre elles et qui ajoute ce qui manquait : le panneau ACM complet, et la théorie derrière ce que tu vois au radar avant même de verrouiller.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée porte son bouton HOTAS entre parenthèses — clique dessus pour ouvrir le mapping complet directement sur ce contrôle.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Rappel express : quelle arme, quelle leçon</span></div>
+  <p class="phase-why">Une carte de référence, pas une nouvelle procédure — pour te réorienter vite vers la bonne leçon existante selon l'arme et le mode radar.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Retrouve la bonne leçon dédiée selon la situation</p>
+    <table>
+      <thead><tr><th>Situation</th><th>Mode radar</th><th>Leçon dédiée</th></tr></thead>
+      <tbody>
+        <tr><td>Longue portée, plusieurs cibles</td><td>TWS (suivi multi-pistes)</td><td><a href="aim54-phoenix-tws.html" style="color:var(--amber)">AIM-54 Phoenix et TWS</a></td></tr>
+        <tr><td>Portée moyenne, verrouillage unique tenu</td><td>STT (poursuite mono-cible)</td><td><a href="aim7-sparrow.html" style="color:var(--amber)">AIM-7 Sparrow</a></td></tr>
+        <tr><td>Recherche avant verrouillage</td><td>RWS (balayage)</td><td><a href="radar-rws-stt.html" style="color:var(--amber)">Radar air-air : RWS et STT</a></td></tr>
+        <tr><td>Courte portée, visuel</td><td>IR (sans radar) / canon</td><td><a href="combat-courte-portee.html" style="color:var(--amber)">Combat courte portée</a></td></tr>
+      </tbody>
+    </table>
+  </div></div>
+
+  <div class="note go"><b>Le fil conducteur</b>BVR (AIM-54/AIM-7) et WVR (AIM-9/canon) ne sont pas deux combats séparés : c'est une seule séquence qui se resserre en distance. Ce que tu prépares en BVR (priorisation, gestion du RWR adverse) conditionne ta posture en arrivant en WVR.</div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Le panneau ACM au complet</span></div>
+  <p class="phase-why">Les leçons existantes couvrent le CAGE-SEAM du Sidewinder, mais pas le reste du panneau ACM (Air Combat Maneuvering) : les modes d'acquisition automatique du radar, pensés pour un merge où tu n'as pas le temps de chercher un contact au scope.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Ouvre le volet <span class="switchname">ACM Cover</span> pour activer le panneau</p>
+    <p class="step-detail">Le volet de protection du panneau ACM doit être ouvert avant que les modes PAL/VSL ou le tir Boresight ne soient disponibles — un réflexe à prendre avant le merge, pas pendant.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="ACM cover open" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item">Mode <span class="switchname">PAL</span> (Pilot Automatic Lock) : verrouillage automatique droit devant</p>
+    <p class="step-detail">Le radar balaie un secteur étroit centré sur ton axe et verrouille automatiquement le premier contact détecté jusqu'à environ 15 NM. Utile quand tu sais qu'un contact est droit devant mais que tu n'as pas le temps de le désigner manuellement.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Target designate fwd / PAL" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item">Mode <span class="switchname">VSL</span> (Vertical Scan Lock) Hi/Lo : verrouillage vertical</p>
+    <p class="step-detail">Balaie verticalement au-dessus ou en dessous de ton axe pour accrocher un contact qui n'est pas à ton altitude — le cas typique d'un adversaire qui plonge ou grimpe pendant le merge. Une fois un contact détecté à moins de 5 NM, le radar bascule automatiquement en poursuite STT.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Target designate up / VSL HI" href="#"></a> <a class="bindtag" data-bind-cmd="Target designate down / VSL LO" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-4"><div class="step-body">
+    <p class="step-item">Tir <span class="switchname">Boresight</span> sans verrouillage radar</p>
+    <p class="step-detail">Avec le volet ACM ouvert et sans piste WCS active, un tir Phoenix ou Sparrow part directement le long de ton axe de visée (ADL) : le missile cherche sa cible en vol plutôt qu'avant le lancer. C'est un mode de dernier recours en fusion rapprochée, pas une technique BVR.</p>
+  </div></div>
+
+  <div class="note warn"><b>Différence à retenir</b>PAL et VSL cherchent un contact <i>pour toi</i> puis passent automatiquement en STT ; Boresight tire <i>sans attendre</i> ce verrouillage. Les trois supposent le volet ACM ouvert, et tous les trois sont pensés pour le merge, pas pour l'interception longue distance.</div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">La géométrie d'interception, en théorie</span></div>
+  <p class="phase-why">Ce que le HUD, le TID et le radar B-Scope affichent ne veut rien dire sans ce vocabulaire : c'est la grammaire commune à toute interception BVR, indépendante de l'arme utilisée ensuite.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Angle d'aspect (<span class="setting">Aspect Angle</span>) : sous quel angle l'adversaire te voit</p>
+    <p class="step-detail">Mesuré depuis l'arrière de l'adversaire jusqu'à ta position — 0° veut dire qu'il te voit droit devant lui (queue), 180° qu'il te tourne le dos. Un angle d'aspect faible signale un adversaire qui fonce vers toi ; un angle élevé, qu'il s'éloigne ou te présente son flanc.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Vitesse de rapprochement (<span class="setting">Vc / Closure</span>) : la donnée qui prédit le temps avant fusion</p>
+    <p class="step-detail">Affichée au HUD/TID, c'est la vitesse à laquelle la distance oblique diminue — pas ta vitesse sol ni celle de l'adversaire seules, mais leur composante combinée sur l'axe qui vous relie. Une Vc élevée et stable annonce un merge rapide ; une Vc qui chute peut signaler un adversaire qui vire pour ouvrir la distance ou changer d'aspect.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item">Angle d'antenne (<span class="setting">ATA — Antenna Train Angle</span>) : où pointer le radar</p>
+    <p class="step-detail">L'écart angulaire entre ton axe avion et la ligne de mire vers la cible. Un ATA élevé veut dire que le contact sort du cône de balayage si tu ne corriges pas ton cap — c'est ce qui dicte quand virer pour garder un contact BVR dans ton radar plutôt que le perdre.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-4"><div class="step-body">
+    <p class="step-item">Angle de cap relatif (<span class="setting">HCA</span>), Cut et séparation latérale</p>
+    <p class="step-detail">Le HCA compare ton cap à celui de l'adversaire : un HCA proche de 0° veut dire que vous vous croisez de face, proche de 180° que vous vous suivez. Un « Cut » est une correction de cap délibérée pour ajuster l'angle de fusion ; la séparation latérale (distance perpendiculaire à la route de fusion) détermine si vous allez réellement vous croiser ou juste vous frôler.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-5"><div class="step-body">
+    <p class="step-item">Côté chaud / côté froid (<span class="setting">Hot / Cold side</span>) et sens de passage</p>
+    <p class="step-detail">Le côté chaud est celui où l'adversaire peut encore te menacer (missile ou canon en paramètres) ; le côté froid, celui où sa géométrie ne le permet plus. Anticiper de quel côté le croisement va se faire (le « Direction of Passage ») te dit dans quel sens regarder au merge et quand tu deviens vulnérable ou non.</p>
+  </div></div>
+
+  <div class="note"><b>Pourquoi ce vocabulaire, pas juste des chiffres</b>Ces termes sont ceux qu'utilisent réellement les équipages et les contrôleurs (AWACS) en BVR — les connaître te permet de comprendre un briefing ou une phraséologie radio sans traduire mentalement, et de lire une géométrie de front que le HUD seul ne résume pas toujours clairement.</div>
+
+  <div class="note go"><b>Pour aller plus loin</b>Cette phase résume l'essentiel. La fiche <a href="bvr-flyandwire-avance.html" style="color:var(--go)">BVR/WVR approfondi : le corpus FlyAndWire</a> développe chaque concept en détail (théorie, lecture cockpit, callouts d'équipage exacts, procédure), plus la timeline BVR complète, les procédures écrites d'équipage et la transition vers le WVR au merge.</div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Callouts d'équipage en BVR</span></div>
+  <p class="phase-why">En équipage humain (ou pour comprendre ce que JESTER devrait idéalement te dire), ces annonces structurent la timeline BVR du contact radar jusqu'au Fox.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item">Contact : gisement, distance, altitude relative dès la détection</p>
+    <p class="step-detail">La première annonce fixe une référence commune — tout ce qui suit (priorisation, décision de tir) s'appuie sur cette image mentale partagée entre pilote et RIO.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item">Verrouillage annoncé avec le mode : « STT » ou « TWS », jamais juste « locked »</p>
+    <p class="step-detail">Le mode change tout pour l'adversaire (alerte RWR différente) et pour ta propre gestion du tir — préciser le mode évite toute ambiguïté sur ce qui va suivre.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-3"><div class="step-body">
+    <p class="step-item">« Fox » annoncé avec le type d'arme et le numéro de cible engagée</p>
+    <p class="step-detail">« Fox 3, groupe 2 » précise sans ambiguïté quelle piste vient d'être engagée sur le TID — essentiel dès que plusieurs contacts sont suivis en TWS simultanément.</p>
+  </div></div>
+
+  <div class="note go"><b>Tu es prêt</b>Tu sais quel radar/quelle leçon utiliser selon la situation, tu maîtrises le panneau ACM complet (PAL, VSL, Boresight), et tu as le vocabulaire pour lire une géométrie BVR au-delà du simple « il est devant ». La suite logique une fois le merge entamé : le dogfight canon, pur WVR (leçon 3).</div>
+</section>
+
+<div class="footlinks">
+  <a href="dtc-cartouche-donnees.html">&larr; Leçon précédente : DTC</a>
+  <a href="dogfight-bfm.html">Leçon suivante : Dogfight BFM →</a>
+</div>
+
+<p class="src">Sources : vidéo <a href="https://www.youtube.com/watch?v=MwEuL_LKZRE" target="_blank" rel="noopener">Air-to-Air Weapons and Radar Guide (Fumi)</a> et corpus théorique <a href="https://flyandwire.com/" target="_blank" rel="noopener">FlyAndWire</a> (Bite-sized Concepts, BVR Timeline 2023). Modes ACM croisés avec le manuel Heatblur — <a href="https://f14.manuals.heatblur.se/f14ab/systems/radar/acm_modes.html" target="_blank" rel="noopener">ACM Modes</a> (page F-14A/B classique, mécanique identique sur le B(U)). Les tirs et procédures détaillées par arme restent dans leurs leçons dédiées, citées en phase 1 — cette page ne duplique pas leur contenu. Les badges de bouton sont lus en direct dans <code>data/f14bu-bindings.json</code> (mêmes données que <a href="mapping-hotas.html" style="color:var(--dim)">le mapping HOTAS</a>).</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-bvrwvr-progress';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function save(state){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+
+const BIND_STORE_KEY='f14bu-export-bindings-v1';
+const AXIS_KEYS={X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL={stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS=null;
+async function loadBindings(){
+  try{ BINDINGS=await fetch('data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS=null; }
+}
+function deriveKeys(n,count){
+  const upper=String(n).toUpperCase(), slots=Math.max(count,1);
+  if(AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if(upper==='SLDR') return new Array(slots).fill('JOY_SLIDER1');
+  if(/^\d+$/.test(n)) return new Array(slots).fill('JOY_BTN'+n);
+  const range=n.match(/^(\d+)-(\d+)$/);
+  if(range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides=(saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry=overrides[b.device+'|'+b.n];
+    const commands=(entry&&Array.isArray(entry.commands))?entry.commands:b.commands;
+    const keys=(entry&&Array.isArray(entry.keys))?entry.keys:deriveKeys(b.n,commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i], n:b.n}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('a[data-bind-cmd]').forEach(el=>{
+    const hits=bindingsFor(el.dataset.bindCmd);
+    el.target='_blank'; el.rel='noopener';
+    if(!hits.length){
+      el.textContent='non affecté';
+      el.classList.add('unbound');
+      el.title='Pas de bind confirmé dans le profil actuel — ouvre le mapping pour vérifier ou en poser un';
+      el.href='mapping-hotas.html';
+      return;
+    }
+    el.textContent=hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ');
+    el.classList.remove('unbound');
+    const h=hits[0];
+    el.title='Ouvrir le mapping sur ce contrôle';
+    el.href='mapping-hotas.html?dev='+h.device+'&n='+encodeURIComponent(h.n);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
+loadBindings().then(paintBindBadges);
+</script>
+</body>
+</html>

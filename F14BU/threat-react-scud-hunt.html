@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — Synthèse : Strike &amp; Threat React, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-bind{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
+.bindtag .ic{opacity:.7;font-size:.9em}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.jester{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--amber)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+.src a{color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="perfectionnement.html">Perfectionnement</a><span>/</span>
+  <span>Synthèse : Strike &amp; Threat React</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — pilote solo · Leçon 6/6</div>
+<h1>Synthèse : Strike<br>&amp; Threat React</h1>
+<p class="sub">La mission qui met tout bout à bout : chasse aux cibles mobiles au JDAM, réaction à une menace SAM pendant le largage, puis bascule air-sol → air-air si un chasseur adverse se présente au retour.</p>
+
+<div class="intro-box">
+  <p><b>Rien de nouveau ici techniquement</b> — cette leçon ne fait qu'enchaîner, dans une seule mission, ce que les cinq leçons précédentes ont couvert séparément : préparation DTC (leçon 1), verrouillage BVR (leçon 2), largage JDAM (leçon 4), et les réflexes de contre-mesures déjà appris dans le Pas à pas. C'est l'examen de synthèse du perfectionnement.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Configuration mixte suggérée : 2× GBU-31 (JDAM 2000 lb), 3× AIM-54 Phoenix, 2× AIM-9 Sidewinder, pod LANTIRN.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Préparation mixte Strike/CAP</span></div>
+  <p class="phase-why">Une mission qui combine frappe au sol et défense aérienne se prépare différemment d'une mission à objectif unique — chaque système doit être prêt dès le décollage, pas configuré en vol au moment d'en avoir besoin.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Utilise la <span class="switchname">DTC</span> (leçon 1) pour préplanifier ce qui peut l'être</p>
+    <p class="step-detail">Si la zone de patrouille et les cibles connues au briefing sont fixes, prépare-les en Pre-Planned avant le décollage — ça libère du temps en vol pour ce qui ne peut pas être anticipé : les cibles mobiles et les menaces aériennes.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item">Prépare des <span class="switchname">programmes ALE-47</span> adaptés à la fois SAM et air-air</p>
+    <p class="step-detail">Contrairement à une mission Strike pure, ici tu peux être menacé par un système sol-air pendant le largage <i>et</i> par un chasseur au retour — prévois au moins un programme radar et un programme mixte de dégagement (voir la leçon <a href="dtc-cartouche-donnees.html" style="color:var(--amber)">DTC</a>, phase 4).</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item">Repère la <span class="switchname">Flight Path Marker (FPM)</span> et le repère AoA du VDIG-R</p>
+    <p class="step-detail">Le HUD modernisé du B(U) (VDIG-R) affiche un repère de trajectoire réelle (FPM) séparé du nez de l'avion, et un repère d'erreur d'incidence en approche — familiarise-toi avec ces éléments au calme avant la mission plutôt qu'en pleine évasive.</p>
+  </div></div>
+
+  <div class="note warn"><b>Ce que je n'ai pas pu vérifier entièrement</b>Le manuel Heatblur confirme le VDIG-R, la Flight Path Marker et un repère d'incidence en approche, mais je n'ai pas retrouvé de page dédiée confirmant un affichage exact de « temps avant impact » au HUD pour cette mission précise — le décompte visible dans la vidéo source peut varier selon le mode de largage. Vérifie l'affichage réel en jeu plutôt que de chercher un chiffre exact décrit ici.</div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Chasse aux cibles mobiles au JDAM</span></div>
+  <p class="phase-why">Une cible mobile (type lanceur SCUD) se traite comme une cible d'opportunité classique — la difficulté ici est de le faire pendant qu'une menace sol-air peut réagir à ta présence.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Désigne la cible mobile via <span class="jester">JESTER</span> et le LANTIRN</p>
+    <p class="step-detail">Reprends la procédure TOO standard (leçon <a href="jdam.html" style="color:var(--amber)">JDAM</a>) ou la Context Key (leçon <a href="jdam-context-key-ripple.html" style="color:var(--amber)">JDAM avancé</a>) selon le temps dont tu disposes avant que la cible ne bouge ou ne se mette à couvert.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item">Surveille le <span class="switchname">RWR</span> pendant toute la phase de largage, pas seulement avant</p>
+    <p class="step-detail">Une menace SAM (type SA-2) peut passer de recherche à poursuite précisément pendant que tu es concentré sur la désignation LANTIRN — un œil sur le RWR reste nécessaire même en pleine procédure d'attaque.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item">Largue au décompte HUD, comme en JDAM standard</p>
+    <p class="step-detail">Rien de spécifique ici — le geste de largage reste identique à la leçon JDAM de base, seule la pression temporelle de la menace environnante change.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Store Release" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-4"><div class="step-body">
+    <p class="step-item">Si la poursuite radar SAM se confirme, déclenche <span class="switchname">manœuvre + leurres</span> sans interrompre le largage si possible</p>
+    <p class="step-detail">Reprends la séquence de la leçon <a href="contre-mesures.html" style="color:var(--amber)">Contre-mesures</a> : virage franc + largage de leurres au même instant. Si la menace devient un tir confirmé, la survie prime sur la précision du largage en cours.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="DLC Toggle / Countermeasure Dispense" href="#"></a></div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Bascule air-sol → air-air en transit retour</span></div>
+  <p class="phase-why">Le scénario Threat React type : un chasseur adverse apparaît alors que tu es encore configuré pour l'attaque au sol — la rapidité de bascule mentale compte autant que la rapidité de verrouillage.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Repasse en mode <span class="switchname">A/A</span> dès le contact annoncé</p>
+    <p class="step-detail">Ne traîne pas en configuration air-sol une fois qu'un contact aérien est confirmé — chaque seconde en mode A/G est une seconde de retard sur ta propre séquence de verrouillage.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Display mode air to air" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Priorise un verrouillage rapide — <span class="jester">JESTER</span> via Context Key, ou TWS classique</p>
+    <p class="step-detail">Si tu as suivi la leçon <a href="jdam-context-key-ripple.html" style="color:var(--amber)">JDAM avancé</a>, le réflexe de laisser JESTER agir vite sur une seule pression te sert aussi ici pour gagner du temps — reviens sinon à la procédure TWS classique de la leçon <a href="aim54-phoenix-tws.html" style="color:var(--amber)">AIM-54 et TWS</a>.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item">Tir <span class="setting">Fox 3</span> en mode actif pour dégager rapidement la zone</p>
+    <p class="step-detail">L'objectif ici n'est pas nécessairement d'aller au mérite jusqu'au bout de l'engagement — un tir AIM-54 qui force l'adversaire à réagir défensivement peut suffire à te permettre de rejoindre ta route de sortie.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Store Release" href="#"></a></div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">RTB et débriefing</span></div>
+  <p class="phase-why">Une mission mixte consomme du carburant plus vite qu'une mission simple — l'engagement air-air improvisé n'était pas dans le plan initial.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item">Réévalue ton carburant restant immédiatement après l'engagement air-air</p>
+    <p class="step-detail">Un engagement improvisé n'était pas dans le plan de carburant initial — reprends les repères de la leçon <a href="carburant-pannes-retour.html" style="color:var(--amber)">Carburant, pannes simples et retour</a> pour décider d'un retour direct ou d'un ravitaillement.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item">Débriefe : qu'est-ce qui a forcé une décision improvisée ?</p>
+    <p class="step-detail">Note ce qui, dans cette mission, n'était pas prévisible au briefing — c'est souvent le meilleur indicateur de ce qu'il faut préparer plus soigneusement en DTC la prochaine fois (leçon 1).</p>
+  </div></div>
+
+  <div class="note go"><b>Tu as terminé le perfectionnement</b>Six leçons plus tôt, tu partais de la préparation DTC avant vol. Tu arrives ici avec une mission complète menée de bout en bout : préparation, frappe au sol sous menace, bascule air-air improvisée, et retour géré. C'est la même boucle que toute mission réelle du module — seule l'ampleur change.</div>
+</section>
+
+<div class="footlinks">
+  <a href="maverick-nvg-nuit.html">&larr; Leçon précédente : Maverick &amp; NVG</a>
+  <a href="perfectionnement.html">Retour à Perfectionnement →</a>
+</div>
+
+<p class="src">Source : vidéo <a href="https://www.youtube.com/watch?v=_o-VIqlVZco" target="_blank" rel="noopener">SCUD HUNT Threat React Mission (Grim Reapers)</a>. VDIG-R (Flight Path Marker, repère d'incidence) croisé avec le manuel Heatblur — <a href="https://f14.manuals.heatblur.se/f14bu/systems/vdig_r/overview.html" target="_blank" rel="noopener">VDIG-R</a>. Cette leçon renvoie vers les procédures détaillées des leçons 1, 2, 4 et du Pas à pas plutôt que de les dupliquer. Les badges de bouton sont lus en direct dans <code>data/f14bu-bindings.json</code> (mêmes données que <a href="mapping-hotas.html" style="color:var(--dim)">le mapping HOTAS</a>).</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-threatreact-progress';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function save(state){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+
+const BIND_STORE_KEY='f14bu-export-bindings-v1';
+const AXIS_KEYS={X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL={stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS=null;
+async function loadBindings(){
+  try{ BINDINGS=await fetch('data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS=null; }
+}
+function deriveKeys(n,count){
+  const upper=String(n).toUpperCase(), slots=Math.max(count,1);
+  if(AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if(upper==='SLDR') return new Array(slots).fill('JOY_SLIDER1');
+  if(/^\d+$/.test(n)) return new Array(slots).fill('JOY_BTN'+n);
+  const range=n.match(/^(\d+)-(\d+)$/);
+  if(range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides=(saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry=overrides[b.device+'|'+b.n];
+    const commands=(entry&&Array.isArray(entry.commands))?entry.commands:b.commands;
+    const keys=(entry&&Array.isArray(entry.keys))?entry.keys:deriveKeys(b.n,commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i], n:b.n}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('a[data-bind-cmd]').forEach(el=>{
+    const hits=bindingsFor(el.dataset.bindCmd);
+    el.target='_blank'; el.rel='noopener';
+    if(!hits.length){
+      el.textContent='non affecté';
+      el.classList.add('unbound');
+      el.title='Pas de bind confirmé dans le profil actuel — ouvre le mapping pour vérifier ou en poser un';
+      el.href='mapping-hotas.html';
+      return;
+    }
+    el.textContent=hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ');
+    el.classList.remove('unbound');
+    const h=hits[0];
+    el.title='Ouvrir le mapping sur ce contrôle';
+    el.href='mapping-hotas.html?dev='+h.device+'&n='+encodeURIComponent(h.n);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
+loadBindings().then(paintBindBadges);
+</script>
+</body>
+</html>

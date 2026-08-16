@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F-14B(U) — Perfectionnement</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;--warn:#d9695a;
+    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  .wrap{max-width:880px;margin:0 auto;padding:48px 24px 80px}
+  .crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+  .crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+  .crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+  .tail{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:44px;letter-spacing:.04em;line-height:1.02;margin:10px 0 8px;text-transform:uppercase}
+  .sub{color:var(--dim);max-width:66ch;margin:0 0 30px}
+  .sub b{color:var(--ink)}
+  a.card{display:flex;gap:18px;align-items:baseline;border:1px solid var(--line);background:var(--panel);
+         padding:18px 20px;margin:10px 0;text-decoration:none;color:var(--ink);transition:border-color .12s}
+  a.card:hover{border-color:var(--amber)}
+  .idx{font-family:var(--mono);font-size:13px;color:var(--amber);min-width:26px}
+  .nm{font-family:var(--display);font-size:19px;letter-spacing:.04em;text-transform:uppercase}
+  .ds{color:var(--dim);font-size:13.5px;margin-left:auto;text-align:right;max-width:48%}
+  .hr{border-top:1px solid var(--line);margin:34px 0 22px}
+  h2{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:0 0 12px}
+  p{margin:12px 0;color:var(--dim)}
+  .note{border:1px solid var(--line);border-left:3px solid var(--amber);background:var(--panel);padding:14px 18px;margin:20px 0;font-size:13.5px;color:var(--dim)}
+  .note b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="crumbs">
+    <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+    <span>Perfectionnement</span>
+  </nav>
+  <div class="tail">DCS · Heatblur · F-14B(U) Tomcat — pilote solo</div>
+  <h1>Perfectionnement</h1>
+  <p class="sub">Six leçons magistrales qui vont <b>au-delà</b> du <a href="pas-a-pas.html" style="color:var(--amber)">Pas à pas</a> et du <a href="cursus-complet.html" style="color:var(--amber)">cursus complet</a> : préparation de mission avancée, emploi tactique complet des armements, et deux missions de synthèse. Chaque leçon part d'une ressource vidéo précise, croisée avec le <a href="https://f14.manuals.heatblur.se/f14bu.html" target="_blank" rel="noopener" style="color:var(--amber)">manuel Heatblur du B(U)</a> quand une page correspondante existe.</p>
+
+  <div class="note"><b>Prérequis</b> — fais d'abord le <a href="pas-a-pas.html" style="color:var(--amber)">Pas à pas</a> jusqu'à la leçon 17 (JDAM). Ces six leçons supposent que tu es déjà à l'aise avec JESTER, le HUD, le radar de base et le largage LANTIRN/JDAM simple.</div>
+
+  <a class="card" href="dtc-cartouche-donnees.html" style="border-color:var(--go)"><span class="idx">1</span><span class="nm">DTC : cartouche de données</span><span class="ds">Mission Data Loader, Plot Lines PTID, préplanification JDAM, programmes ALE-47 — tout se joue avant le décollage</span></a>
+
+  <a class="card" href="bvr-wvr-synthese.html" style="border-color:var(--go)"><span class="idx">2</span><span class="nm">Supériorité aérienne BVR &amp; WVR</span><span class="ds">Synthèse AIM-54/7/9, modes ACM (PAL/VSL/Boresight), et la géométrie d'interception (Vc, ATA, callouts équipage)</span></a>
+
+  <a class="card" href="dogfight-bfm.html" style="border-color:var(--go)"><span class="idx">3</span><span class="nm">Dogfight canon (BFM 1 vs 1)</span><span class="ds">Gestion de l'énergie, 1 cercle vs 2 cercles, Control Zone — la théorie qui manque avant de tirer au canon</span></a>
+
+  <a class="card" href="jdam-context-key-ripple.html" style="border-color:var(--go)"><span class="idx">4</span><span class="nm">JDAM avancé : Context Key &amp; ripple</span><span class="ds">Désignation rapide sans la roue JESTER, Snowplow, largage en salve sur 4 cibles distinctes</span></a>
+
+  <a class="card" href="maverick-nvg-nuit.html" style="border-color:var(--go)"><span class="idx">5</span><span class="nm">Maverick &amp; interception de nuit</span><span class="ds">AGM-65 asservi au LANTIRN, jumelles de vision nocturne, Sidewinder WVR de nuit</span></a>
+
+  <a class="card" href="threat-react-scud-hunt.html" style="border-color:var(--go)"><span class="idx">6</span><span class="nm">Synthèse : Strike &amp; Threat React</span><span class="ds">Mission mixte JDAM + AIM-54, PTID et VDIG-R en pratique, réaction aux menaces en vol</span></a>
+
+  <div class="hr"></div>
+  <h2>Annexes — systèmes propres au B(U)</h2>
+  <a class="card" href="jhmcs.html"><span class="idx">✚</span><span class="nm">JHMCS : viseur de casque</span><span class="ds">Symbologie tête haute, désignation visuelle, alertes RWR intégrées</span></a>
+  <a class="card" href="fti-tis.html"><span class="idx">✚</span><span class="nm">FTI : imagerie tactique</span><span class="ds">Capture, files d'attente et transmission d'images — remplace l'AVTR</span></a>
+
+  <div class="hr"></div>
+  <h2>Voir aussi</h2>
+  <a class="card" href="ressources.html"><span class="idx">▸</span><span class="nm">Ressources externes</span><span class="ds">Toutes les vidéos sources, classées par système</span></a>
+  <a class="card" href="mapping-hotas.html"><span class="idx">&#9998;</span><span class="nm">Mapping HOTAS</span><span class="ds">Chaque bouton de ton HOTAS, annoté et cherchable</span></a>
+</div>
+</body>
+</html>

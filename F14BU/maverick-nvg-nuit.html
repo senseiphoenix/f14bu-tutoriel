@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — Maverick et interception de nuit, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-bind{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
+.bindtag .ic{opacity:.7;font-size:.9em}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.jester{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--amber)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+.src a{color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="perfectionnement.html">Perfectionnement</a><span>/</span>
+  <span>Maverick &amp; interception de nuit</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — pilote solo · Leçon 5/6</div>
+<h1>Maverick et<br>interception de nuit</h1>
+<p class="sub">Une fiche d'instruction opérationnelle nocturne : <b>AGM-65 Maverick</b> asservi au LANTIRN, jumelles de vision nocturne, puis interception <b>AIM-9</b> zéro-alerte RWR — un système entièrement nouveau sur ce site.</p>
+
+<div class="intro-box">
+  <p><b>Aucun tutoriel existant sur ce site ne couvre le Maverick ou les JVN.</b> Cette leçon suppose que tu es déjà à l'aise avec le travail LANTIRN/JESTER (leçon <a href="bombes-laser-lantirn.html" style="color:var(--amber)">Bombes guidées laser</a>) et le combat courte portée au Sidewinder (leçon <a href="combat-courte-portee.html" style="color:var(--amber)">Combat courte portée</a>) — elle ajoute la couche « obscurité » à des gestes déjà connus, pas une nouvelle mécanique de tir depuis zéro.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée porte son bouton HOTAS entre parenthèses — clique dessus pour ouvrir le mapping complet directement sur ce contrôle.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Équipement nocturne avant le décollage</span></div>
+  <p class="phase-why">La nuit change ta perception avant même de changer ta procédure de tir — régler les JVN et l'éclairage cockpit au sol t'évite d'être ébloui au pire moment, une fois en l'air.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Configure l'emport : <span class="switchname">AGM-65 Maverick</span>, <span class="switchname">AIM-9 Sidewinder</span>, pod LANTIRN</p>
+    <p class="step-detail">Une configuration mixte attaque-sol/autodéfense typique : le Maverick pour la frappe, le Sidewinder pour te sortir d'une interception rapprochée si un chasseur adverse se présente pendant ta passe.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item">Active et règle le gain des <span class="switchname">jumelles de vision nocturne (JVN)</span></p>
+    <p class="step-detail">Le gain contrôle l'intensité de l'image intensifiée — trop haut, un point lumineux au sol t'éblouit ; trop bas, tu ne distingues plus le relief. Règle-le au sol, avant le décollage, pas en l'air en pleine recherche de cible.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Night Vision Goggles" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item">Affine le gain en vol avec les commandes dédiées</p>
+    <p class="step-detail">Le gain optimal change avec la clarté du ciel (lune, nuages) — garde ces deux commandes en tête pour ajuster sans retirer les JVN en plein vol.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Night Vision Goggles Gain Up" href="#"></a> <a class="bindtag" data-bind-cmd="Night Vision Goggles Gain Down" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-4"><div class="step-body">
+    <p class="step-item">Baisse l'éclairage cockpit pour rester compatible JVN</p>
+    <p class="step-detail">Un éclairage intérieur trop vif, vu à travers des JVN, sature l'image et masque tout ce qui est dehors — règle-le bas avant de sortir des lignes d'aérodrome, pour toi comme pour ton équipier si tu voles en multicrew.</p>
+  </div></div>
+
+  <div class="note warn"><b>Piège</b>Décoller avec un gain JVN réglé pour le parking, éclairé, puis se retrouver ébloui ou aveugle une fois en zone sombre. Règle une dernière fois juste avant d'entrer dans la zone d'opération, pas seulement au parking.</div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Attaque au sol : Maverick asservi au LANTIRN</span></div>
+  <p class="phase-why">Comme pour la LGB, c'est <span class="jester">JESTER</span> qui tient la nacelle — ton rôle est de voler un profil stable pendant qu'il cherche, accroche, puis passe la cible au chercheur du Maverick.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Laisse <span class="jester">JESTER</span> chercher et accrocher la cible au pod LANTIRN</p>
+    <p class="step-detail">Exactement le même travail que pour une LGB (leçon <a href="bombes-laser-lantirn.html" style="color:var(--amber)">Bombes guidées laser</a>) : brief la cible avant d'entrer dans le profil d'attaque, vole droit, laisse-le chercher et confirmer l'accroche.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item">Demande le transfert de la piste vers le chercheur du <span class="switchname">Maverick</span></p>
+    <p class="step-detail">Une fois la cible accrochée au LANTIRN, JESTER peut asservir le chercheur IR/TV du missile sur ce même point — le missile « voit » alors la même cible que la nacelle, sans que tu aies à la rechercher une seconde fois.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item">Vérifie le retour vidéo du missile sur le VDI/PTID</p>
+    <p class="step-detail">Une fois asservi, l'écran affiche l'image vue par le chercheur du Maverick — c'est ta confirmation visuelle que le missile regarde bien la bonne cible avant le tir, pas seulement la parole de JESTER.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-4"><div class="step-body">
+    <p class="step-item">Confirme le verrouillage puis <span class="switchname">tire</span></p>
+    <p class="step-detail">Une fois le chercheur confirmé sur la cible (accroche visible sur son propre retour vidéo), presse la détente — le missile suit ensuite sa cible de façon autonome, contrairement à la LGB qui a besoin d'une illumination laser continue jusqu'à l'impact.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Store Release" href="#"></a></div>
+  </div></div>
+
+  <div class="note go"><b>Différence avec la LGB</b>Une fois le Maverick tiré, il n'a plus besoin de toi ni de JESTER — contrairement à la bombe laser, tu peux dégager immédiatement sans tenir une illumination jusqu'à l'impact.</div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Interception visuelle nocturne au Sidewinder</span></div>
+  <p class="phase-why">Un contact aérien inopiné en pleine nuit se traite différemment qu'en plein jour : les JVN remplacent en partie le radar pour le contact visuel, et un tir IR sans verrouillage radar te garde discret jusqu'au dernier moment.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Garde le contact visuel avec les <span class="switchname">JVN</span> plutôt que le radar seul</p>
+    <p class="step-detail">De nuit, un contact repéré à l'œil (assisté JVN) avant même une détection radar te donne un temps de réaction précieux — surtout face à un adversaire qui vole lui aussi sans feux ni radar actif.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Utilise <span class="switchname">CAGE/SEAM</span> pour une acquisition IR hors-axe sans radar</p>
+    <p class="step-detail">Comme en plein jour (leçon <a href="combat-courte-portee.html" style="color:var(--amber)">Combat courte portée</a>), le bouton CAGE-SEAM déverrouille la tête chercheuse du Sidewinder pour chercher hors de ton axe — de nuit, c'est souvent ta seule option puisqu'un verrouillage radar actif te trahirait immédiatement au RWR adverse.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="CAGE-SEAM button" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item">Écoute la <span class="switchname">tonalité d'acquisition IR</span> avant de tirer</p>
+    <p class="step-detail">Le missile lui-même confirme son accroche par un son distinct — de nuit, quand le contact visuel est plus incertain qu'en plein jour, cette tonalité devient ta confirmation la plus fiable avant le Fox 2.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-4"><div class="step-body">
+    <p class="step-item">Tire <span class="setting">Fox 2</span> une fois la tonalité confirmée</p>
+    <p class="step-detail">Rien ne change dans le geste lui-même par rapport à un tir de jour — ce qui change, c'est la fiabilité relative de chaque source d'information (JVN, tonalité, radar) que tu dois pondérer différemment dans le noir.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Store Release" href="#"></a></div>
+  </div></div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Conscience situationnelle nocturne</span></div>
+  <p class="phase-why">Le plus grand risque d'un profil nocturne à basse altitude n'est pas l'adversaire — c'est la désorientation spatiale et le relief invisible.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item">Reste conscient du risque de <span class="switchname">désorientation spatiale</span> à basse altitude</p>
+    <p class="step-detail">Sans horizon visuel net, il est facile de perdre la référence d'assiette réelle — fais confiance à tes instruments plutôt qu'à la sensation, surtout après un virage engagé pendant l'interception.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item">Utilise le <span class="switchname">pilote automatique</span> pour soulager la charge pendant les phases d'acquisition</p>
+    <p class="step-detail">Pendant que tu te concentres sur la recherche visuelle JVN ou sur le retour vidéo du Maverick, un pilote automatique engagé (cap et altitude) réduit le risque de dériver sans t'en rendre compte.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Autopilot toggle" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-3"><div class="step-body">
+    <p class="step-item">Ne descends jamais sous une altitude de sécurité connue sans repère visuel fiable</p>
+    <p class="step-detail">Le relief masqué de nuit ne pardonne pas une erreur d'altitude qui passerait inaperçue en plein jour — fixe-toi un plancher avant la mission et ne le remets pas en question sous le coup de l'action.</p>
+  </div></div>
+
+  <div class="note warn"><b>Piège le plus dangereux de cette leçon</b>Ce n'est ni le Maverick ni le Sidewinder qui posent le plus de risque de nuit — c'est le vol lui-même à basse altitude, sans repère. Priorise toujours la sécurité de vol avant l'engagement.</div>
+</section>
+
+<div class="note go"><b>Tu es prêt</b>Tu sais préparer un emport mixte Maverick/Sidewinder pour une mission nocturne, asservir le chercheur du Maverick au LANTIRN via JESTER, intercepter au Sidewinder sans radar avec les JVN, et rester en sécurité de vol dans le noir. Dernière étape du perfectionnement : combiner air-sol et air-air dans une mission de synthèse complète (leçon 6).</div>
+
+<div class="footlinks">
+  <a href="jdam-context-key-ripple.html">&larr; Leçon précédente : JDAM avancé</a>
+  <a href="threat-react-scud-hunt.html">Leçon suivante : Synthèse Strike &amp; Threat React →</a>
+</div>
+
+<p class="src">Source : vidéo <a href="https://www.youtube.com/watch?v=lSCr86UzVmA" target="_blank" rel="noopener">Maverick &amp; Sidewinder Night Intercept Mission (Grim Reapers)</a>. Aucune page du manuel Heatblur B(U) dédiée au Maverick ou aux JVN n'a pu être retrouvée en ligne au moment de la rédaction (module récent, documentation communautaire encore incomplète — voir la réserve similaire sur <a href="ressources.html" style="color:var(--dim)">Ressources externes</a>) : le contenu de cette leçon reste basé sur la vidéo source, pas croisé avec le manuel. Vérifie les détails précis en jeu via le click-to-explain avant de t'y fier entièrement. Les badges de bouton sont lus en direct dans <code>data/f14bu-bindings.json</code> (mêmes données que <a href="mapping-hotas.html" style="color:var(--dim)">le mapping HOTAS</a>).</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-maverick-progress';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function save(state){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+
+const BIND_STORE_KEY='f14bu-export-bindings-v1';
+const AXIS_KEYS={X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL={stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS=null;
+async function loadBindings(){
+  try{ BINDINGS=await fetch('data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS=null; }
+}
+function deriveKeys(n,count){
+  const upper=String(n).toUpperCase(), slots=Math.max(count,1);
+  if(AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if(upper==='SLDR') return new Array(slots).fill('JOY_SLIDER1');
+  if(/^\d+$/.test(n)) return new Array(slots).fill('JOY_BTN'+n);
+  const range=n.match(/^(\d+)-(\d+)$/);
+  if(range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides=(saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry=overrides[b.device+'|'+b.n];
+    const commands=(entry&&Array.isArray(entry.commands))?entry.commands:b.commands;
+    const keys=(entry&&Array.isArray(entry.keys))?entry.keys:deriveKeys(b.n,commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i], n:b.n}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('a[data-bind-cmd]').forEach(el=>{
+    const hits=bindingsFor(el.dataset.bindCmd);
+    el.target='_blank'; el.rel='noopener';
+    if(!hits.length){
+      el.textContent='non affecté';
+      el.classList.add('unbound');
+      el.title='Pas de bind confirmé dans le profil actuel — ouvre le mapping pour vérifier ou en poser un';
+      el.href='mapping-hotas.html';
+      return;
+    }
+    el.textContent=hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ');
+    el.classList.remove('unbound');
+    const h=hits[0];
+    el.title='Ouvrir le mapping sur ce contrôle';
+    el.href='mapping-hotas.html?dev='+h.device+'&n='+encodeURIComponent(h.n);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
+loadBindings().then(paintBindBadges);
+</script>
+</body>
+</html>

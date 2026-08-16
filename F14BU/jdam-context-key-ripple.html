@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — JDAM avancé : Context Key et ripple, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-bind{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
+.bindtag .ic{opacity:.7;font-size:.9em}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.jester{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--amber)}
+
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--panel-2)}
+tbody tr:nth-child(odd){background:rgba(30,42,51,.35)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+.src a{color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="perfectionnement.html">Perfectionnement</a><span>/</span>
+  <span>JDAM avancé : Context Key &amp; ripple</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — pilote solo · Leçon 4/6</div>
+<h1>JDAM avancé :<br>Context Key et ripple</h1>
+<p class="sub">Deux techniques pour aller plus vite que la procédure de base : désigner au LANTIRN <b>sans naviguer dans la roue JESTER</b>, et larguer <b>quatre bombes sur quatre cibles distinctes</b> en une seule passe.</p>
+
+<div class="intro-box">
+  <p><b>Ceci suppose la leçon <a href="jdam.html" style="color:var(--amber)">JDAM : préplanifié et cible d'opportunité</a> déjà acquise.</b> Cette leçon ne réexplique pas les modes PP/TOO de base ni la configuration d'armement — elle ajoute deux techniques qui accélèrent la même procédure : la Context Key à la place de la roue JESTER pour une cible unique, et le largage en salve pour plusieurs cibles en une passe.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée porte son bouton HOTAS entre parenthèses — clique dessus pour ouvrir le mapping complet directement sur ce contrôle.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Le principe : un seul passage par la roue JESTER</span></div>
+  <p class="phase-why">La procédure de base (leçon JDAM) navigue plusieurs fois dans le menu JESTER pour désigner une cible. La Context Key réduit ça à une seule préparation, puis tout le reste se joue sur un seul bouton contextuel.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Passe en <span class="switchname">A/G</span>, arme, affiche la <span class="setting">vidéo LANTIRN</span></p>
+    <p class="step-detail">Comme pour la procédure de base : mode air-sol sélectionné, Master Arm ouvert, laser armé, page vidéo du pod affichée sur le VDI. Rien ne change ici par rapport à ta leçon JDAM.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Master arm on and cover open" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item">Unique passage par la roue : demande à <span class="jester">JESTER</span> de préparer l'armement GBU</p>
+    <p class="step-detail">C'est la seule fois où tu ouvres réellement le menu JESTER dans toute la séquence — pour sélectionner l'armement à larguer. Une fois cette étape faite, tout se passe via le bouton contextuel.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Toggle Menu" href="#"></a></div>
+  </div></div>
+
+  <div class="note go"><b>L'idée centrale</b>Au lieu d'ouvrir un menu à chaque étape (chercher, zoomer, verrouiller, désigner), un seul bouton — la Context Key — fait tout, avec un comportement différent selon comment tu l'actionnes (appui court, maintien, double-clic).</div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">La séquence Context Key, étape par étape</span></div>
+  <p class="phase-why">Chaque type d'appui sur la Context Key déclenche une action différente chez JESTER — les distinguer clairement t'évite de chercher un bouton supplémentaire qui n'existe pas.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Pointage rapide : <span class="switchname">maintien</span> de la Context Key + direction sur le mini-stick</p>
+    <p class="step-detail">Un appui maintenu, combiné à une direction sur le hat switch/mini-stick, ordonne à JESTER d'orienter le pod LANTIRN vers cette zone — sans passer par le menu.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Jester Context Action HOLD (button, direct bind)" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item">Zoom : <span class="switchname">double-clic</span> sur la Context Key pour alterner la focale</p>
+    <p class="step-detail">Bascule entre champ large (recherche) et champ étroit (identification précise) sur la vidéo du pod — pratique pour affiner la vue une fois dans la bonne direction générale.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Jester Context Action DOUBLE (button, direct bind)" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item">Verrouillage : ré-appui sur la cible pour passer en <span class="setting">Track</span></p>
+    <p class="step-detail">Une fois la cible visible dans le champ, un nouvel appui maintenu dessus fait passer JESTER en mode suivi — il continue de la suivre même si l'avion bouge, sans que tu aies à réajuster le pointage.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-4"><div class="step-body">
+    <p class="step-item">Désignation : <span class="switchname">appui simple</span> pour valider et calculer la télémétrie</p>
+    <p class="step-detail">Un appui court valide la désignation et déclenche le calcul de distance — c'est ce qui transfère les coordonnées vers l'arme, comme le ferait la procédure complète au menu dans la leçon de base.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Jester Context Action SHORT (button, direct bind)" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-5"><div class="step-body">
+    <p class="step-item">Alignement et largage : suis la barre et le décompte comme d'habitude</p>
+    <p class="step-detail">À partir d'ici, retrouve exactement les repères HUD appris dans la leçon JDAM (temps avant largage, avant impact) — la Context Key n'a accéléré que la phase de désignation, pas le profil de largage lui-même.</p>
+  </div></div>
+
+  <div class="note warn"><b>Piège</b>Si un appui semble ne rien faire, vérifie que tu utilises le bon type (court / maintenu / double) pour l'action voulue — les trois sont des binds distincts sur ce profil, pas une seule commande qui devine ton intention.</div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Recentrer le pod rapidement (Snowplow)</span></div>
+  <p class="phase-why">Après une passe, le pod reste orienté vers l'arrière (vers la dernière cible) et met du temps à pivoter tout seul — sauf si tu demandes explicitement à JESTER de le recentrer.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Repère le symptôme : le pod pivote lentement après le passage</p>
+    <p class="step-detail">Normal — sans instruction, JESTER laisse la nacelle pointée sur la dernière zone d'intérêt pendant que l'avion continue sa trajectoire, ce qui la fait sortir progressivement de son enveloppe de pointage utile.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Demande à <span class="jester">JESTER</span> de recentrer l'axe du pod sur le nez de l'avion</p>
+    <p class="step-detail">La fonction de recentrage rapide (« Snowplow » dans le vocabulaire de la vidéo source) ramène instantanément l'axe de la nacelle dans l'axe avion, prêt pour la cible suivante — sans attendre le pivotement naturel.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Pas de bind direct confirmé pour cette fonction précise sur ce profil — passe par le menu JESTER"><span class="ic">🎙</span>RIO · JESTER, via menu</span></div>
+  </div></div>
+
+  <div class="note warn"><b>Non vérifié en profondeur</b>Je n'ai pas retrouvé de page manuel Heatblur dédiée nommant spécifiquement une fonction « Snowplow » pour confirmer si elle existe en bind direct ou uniquement via le menu JESTER sur ce profil. Vérifie en jeu (click-to-explain sur le menu JESTER en mode A/G) avant de chercher un raccourci qui n'existerait pas.</div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Ripple : quatre cibles, une seule passe</span></div>
+  <p class="phase-why">Répète la séquence de désignation (phase 2) quatre fois de suite, une par cible, chaque désignation étant transférée à une station d'emport différente — puis largue le tout dans la fenêtre de tir.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item">Retiens l'ordre d'assignation des stations : <span class="setting">4 → 5 → 3 → 6</span></p>
+    <table>
+      <thead><tr><th>Cible désignée</th><th>Station assignée</th></tr></thead>
+      <tbody>
+        <tr><td>1<sup>re</sup> cible</td><td>Station 4 (arrière gauche)</td></tr>
+        <tr><td>2<sup>e</sup> cible</td><td>Station 5 (arrière droite)</td></tr>
+        <tr><td>3<sup>e</sup> cible</td><td>Station 3 (avant gauche)</td></tr>
+        <tr><td>4<sup>e</sup> cible</td><td>Station 6 (avant droite)</td></tr>
+      </tbody>
+    </table>
+    <p class="step-detail">Cet ordre suit la séquence d'éjection en salve du B(U) — respecte-le pour que chaque bombe parte bien vers la cible qui lui a été désignée, pas vers une autre par confusion de station.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item">Répète la séquence Context Key (phase 2) une fois par cible</p>
+    <p class="step-detail">Pointage, zoom si besoin, track, désignation — puis passe à la cible suivante sans relarguer immédiatement. Les quatre désignations se préparent avant d'entrer dans la fenêtre de tir, pas une par une pendant le largage.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-3"><div class="step-body">
+    <p class="step-item">Vole le profil d'approche standard, autour de <span class="setting">15 000 ft</span></p>
+    <p class="step-detail">Une fois les quatre cibles désignées, le profil d'approche ne change pas fondamentalement d'un largage à cible unique — garde une trajectoire stable pendant que le décompte de largage défile au HUD.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-4"><div class="step-body">
+    <p class="step-item">Largue avec une <span class="switchname">cadence répétée</span> (pickle cadence) dans la fenêtre de tir</p>
+    <p class="step-detail">Des appuis successifs sur la commande de largage, au rythme indiqué par le décompte, libèrent les quatre bombes l'une après l'autre vers leurs cibles respectives — chacune garde ses propres coordonnées, déjà transférées en phase de désignation.</p>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="Store Release" href="#"></a></div>
+  </div></div>
+
+  <div class="note warn"><b>Piège</b>Désigner les quatre cibles dans le désordre par rapport à la table ci-dessus envoie chaque bombe vers la mauvaise coordonnée — la station suit l'<i>ordre de désignation</i>, pas un choix que tu fais explicitement station par station.</div>
+</section>
+
+<div class="note go"><b>Tu es prêt</b>Tu sais désigner une cible LANTIRN sans passer par la roue JESTER à chaque étape, recentrer le pod entre deux passes, et enchaîner quatre désignations pour un largage en salve. Pour aller plus loin : la leçon 6 combine cette technique avec de l'air-air en une seule mission de synthèse.</div>
+
+<div class="footlinks">
+  <a href="dogfight-bfm.html">&larr; Leçon précédente : Dogfight BFM</a>
+  <a href="maverick-nvg-nuit.html">Leçon suivante : Maverick &amp; NVG →</a>
+</div>
+
+<p class="src">Sources : vidéos <a href="https://www.youtube.com/watch?v=LANTtWxUasU" target="_blank" rel="noopener">Context is key (CasmoTV)</a> et <a href="https://www.youtube.com/watch?v=Gj5po3lqAsU" target="_blank" rel="noopener">Ripple JDAMS in TOO and the Volleyball Magazine (Fumi)</a>. Les noms de commande Context Key sont vérifiés dans <code>data/f14bu-commands.json</code> ; la fonction de recentrage rapide du pod (« Snowplow ») n'a pas pu être confirmée comme bind direct — vérifie en jeu. La procédure TOO de base reste dans <a href="jdam.html" style="color:var(--dim)">JDAM : préplanifié et cible d'opportunité</a>. Les badges de bouton sont lus en direct dans <code>data/f14bu-bindings.json</code> (mêmes données que <a href="mapping-hotas.html" style="color:var(--dim)">le mapping HOTAS</a>).</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-jdamadv-progress';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function save(state){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+
+const BIND_STORE_KEY='f14bu-export-bindings-v1';
+const AXIS_KEYS={X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL={stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS=null;
+async function loadBindings(){
+  try{ BINDINGS=await fetch('data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS=null; }
+}
+function deriveKeys(n,count){
+  const upper=String(n).toUpperCase(), slots=Math.max(count,1);
+  if(AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if(upper==='SLDR') return new Array(slots).fill('JOY_SLIDER1');
+  if(/^\d+$/.test(n)) return new Array(slots).fill('JOY_BTN'+n);
+  const range=n.match(/^(\d+)-(\d+)$/);
+  if(range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides=(saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry=overrides[b.device+'|'+b.n];
+    const commands=(entry&&Array.isArray(entry.commands))?entry.commands:b.commands;
+    const keys=(entry&&Array.isArray(entry.keys))?entry.keys:deriveKeys(b.n,commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i], n:b.n}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('a[data-bind-cmd]').forEach(el=>{
+    const hits=bindingsFor(el.dataset.bindCmd);
+    el.target='_blank'; el.rel='noopener';
+    if(!hits.length){
+      el.textContent='non affecté';
+      el.classList.add('unbound');
+      el.title='Pas de bind confirmé dans le profil actuel — ouvre le mapping pour vérifier ou en poser un';
+      el.href='mapping-hotas.html';
+      return;
+    }
+    el.textContent=hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ');
+    el.classList.remove('unbound');
+    const h=hits[0];
+    el.title='Ouvrir le mapping sur ce contrôle';
+    el.href='mapping-hotas.html?dev='+h.device+'&n='+encodeURIComponent(h.n);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
+loadBindings().then(paintBindBadges);
+</script>
+</body>
+</html>
