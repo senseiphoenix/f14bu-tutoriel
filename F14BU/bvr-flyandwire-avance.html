@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — BVR/WVR approfondi (FlyAndWire), fiche technique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:860px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:68ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.toc{background:var(--panel);border:1px solid var(--line);padding:16px 20px;margin:24px 0;font-size:13.5px}
+.toc b{color:var(--amber);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:8px}
+.toc ol{margin:0;padding-left:20px;color:var(--dim)}
+.toc li{margin:4px 0}
+.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent}
+.toc a:hover{border-bottom-color:var(--amber);color:var(--amber)}
+
+.chapter{margin:44px 0;padding-top:6px}
+.chapter-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:16px}
+.chapter-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.chapter-title{font-family:var(--display);font-weight:600;font-size:23px;letter-spacing:.03em;text-transform:uppercase}
+
+.item{margin:26px 0;padding:18px 20px;background:var(--panel);border:1px solid var(--line)}
+.item-title{font-family:var(--display);font-weight:600;font-size:17px;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);margin:0 0 10px}
+.item h4{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin:14px 0 6px}
+.item h4:first-of-type{margin-top:0}
+.item p{margin:4px 0;color:var(--dim);font-size:14px}
+.item code{font-family:var(--mono);font-size:.9em;background:var(--panel-2);padding:1px 6px;border:1px solid var(--line);color:var(--go)}
+
+.callout-ex{font-family:var(--mono);font-size:12.5px;background:var(--panel-2);border:1px solid var(--line);padding:8px 12px;margin:6px 0;color:var(--go)}
+
+table{width:100%;border-collapse:collapse;margin:8px 0;font-size:13px}
+th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
+th{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--panel-2)}
+tbody tr:nth-child(odd){background:rgba(30,42,51,.35)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:16px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+.src a{color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="perfectionnement.html">Perfectionnement</a><span>/</span>
+  <a href="bvr-wvr-synthese.html">BVR &amp; WVR</a><span>/</span>
+  <span>Approfondissement FlyAndWire</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — approfondissement, corpus FlyAndWire</div>
+<h1>BVR/WVR approfondi :<br>le corpus FlyAndWire</h1>
+<p class="sub">Le développement complet du corpus théorique <a href="https://flyandwire.com/" target="_blank" rel="noopener">FlyAndWire</a> évoqué dans la leçon <a href="bvr-wvr-synthese.html" style="color:var(--amber)">BVR &amp; WVR : synthèse</a> : géométrie de base, timeline BVR complète, procédures d'équipage, et transition vers le WVR au merge.</p>
+
+<div class="intro-box">
+  <p><b>Variante concernée par ce contenu :</b> le corpus FlyAndWire documente le <b>F-14 Tomcat en général</b> (radar AWG-9, doctrine BVR/BFM) — pas spécifiquement le B(U). La théorie pure ci-dessous (géométrie, Vc, ATA, doctrine d'équipage, brevity codes) s'applique sans changement au B(U), l'avion et le radar n'ayant pas changé avec l'upgrade. En revanche, certains détails d'affichage cockpit cités par les sources (TID, DDD dans leur forme classique) concernent le F-14A/B <i>avant</i> upgrade — le RIO du B(U) lit la même information sur le <b>PTID</b>, dont la présentation exacte peut différer. Ces points sont signalés au fil du texte plutôt que présentés comme identiques par défaut.</p>
+</div>
+
+<div class="toc">
+  <b>Sommaire</b>
+  <ol>
+    <li><a href="#ch1">Concepts de base &amp; géométrie de combat</a></li>
+    <li><a href="#ch2">Série BVR Timeline 2023</a></li>
+    <li><a href="#ch3">Procédures BVR écrites &amp; communications d'équipage</a></li>
+    <li><a href="#ch4">Transition WVR : du BVR au merge</a></li>
+  </ol>
+</div>
+
+<!-- ============ CHAPITRE 1 ============ -->
+<section class="chapter" id="ch1">
+  <div class="chapter-head"><span class="chapter-num">CH. 1</span><span class="chapter-title">Concepts de base &amp; géométrie de combat</span></div>
+
+  <div class="item">
+    <p class="item-title">Drift, et les côtés « chaud » / « froid »</p>
+    <h4>Théorie</h4>
+    <p>Le <b>drift</b> décrit comment le contact se déplace sur ton affichage radar en fonction de l'angle d'aspect et de la séparation latérale — c'est ce déplacement, plus que la position instantanée, qui révèle la géométrie réelle de l'engagement.</p>
+    <h4>Application cockpit</h4>
+    <p>Le côté <b>chaud</b> de l'affichage est celui où placer le contact augmente la vitesse à laquelle la séparation latérale se réduit (un virage qui te rapproche de la trajectoire adverse) ; le côté <b>froid</b> est celui qui la ralentit ou l'inverse (un virage qui t'en éloigne). Lire ce sens de déplacement te dit, avant même un calcul explicite, si un virage donné te rapproche ou t'éloigne d'un merge.</p>
+    <h4>Callout</h4>
+    <p>Pas un brevity word en soi — c'est une lecture d'écran que le RIO traduit en instruction de cap pour le pilote (« viens à droite », « stabilise »).</p>
+    <h4>Procédure</h4>
+    <p>Observe un contact qui orbite (ou une IA en RWS) et note dans quel sens il dérive sur l'affichage quand tu tournes d'un côté puis de l'autre — c'est l'exercice de base recommandé par la source pour internaliser la lecture avant de l'appliquer sous pression.</p>
+  </div>
+
+  <div class="item">
+    <p class="item-title">Angle d'aspect (Target Aspect)</p>
+    <h4>Théorie</h4>
+    <p>Défini comme la perspective du bandit <i>vis-à-vis du chasseur</i> — c'est-à-dire l'angle mesuré depuis l'arrière du bandit jusqu'à ta position. Un aspect proche de 0° veut dire qu'il te voit droit devant lui.</p>
+    <h4>Application cockpit</h4>
+    <p>L'angle d'aspect n'est pas lu directement sur un cadran — il se déduit en combinant l'ATA (ci-dessous) et le cap du contact, ou t'est donné directement par un contrôleur AWACS dans certains comptes-rendus.</p>
+    <h4>Callout</h4>
+    <p>Intervient dans la détermination de la portée d'engagement d'un missile : un aspect favorable (bandit qui te fait face) autorise un tir à plus longue distance qu'un aspect défavorable.</p>
+    <h4>Procédure</h4>
+    <p>Avant tout tir BVR, évalue l'aspect du groupe engagé — c'est ce qui conditionne la portée réaliste du missile, pas seulement la distance affichée au TID/PTID.</p>
+  </div>
+
+  <div class="item">
+    <p class="item-title">Vitesse de rapprochement (Closure Rate, Vc)</p>
+    <h4>Théorie</h4>
+    <p>La somme des composantes des vitesses du chasseur et du bandit qui contribuent au rapprochement direct entre les deux — pas simplement la différence de vitesse sol.</p>
+    <h4>Application cockpit</h4>
+    <p>Affichée directement au HUD/PTID. Une Vc anormalement élevée pour la vitesse apparente du contact peut trahir sa nature (un intercepteur rapide plutôt qu'un bombardier lent) avant même une identification visuelle.</p>
+    <h4>Callout</h4>
+    <p>Se rapporte en chiffres dans les comptes-rendus RIO → pilote (« Vc 900, en fermeture ») plutôt que sous forme de brevity word dédié.</p>
+    <h4>Procédure</h4>
+    <p>Surveille la Vc en continu pendant la phase de fermeture BVR — une chute brutale peut indiquer un virage défensif adverse (Notch, voir chapitre 2) avant que tu ne le voies autrement.</p>
+  </div>
+
+  <div class="item">
+    <p class="item-title">Angle d'antenne (Antenna Train Angle, ATA)</p>
+    <h4>Théorie</h4>
+    <p>La position du contact à gauche ou à droite de ton axe avion, telle que donnée par le radar — par exemple, un contact à 330° de ton nez correspond à un <b>ATA de 30L</b> (30° à gauche).</p>
+    <h4>Application cockpit</h4>
+    <p>Lu directement sur l'affichage radar (azimut du contact par rapport à l'axe avion). Combiné à la Vc et au drift, l'ATA permet de déduire les changements d'aspect du contact sans attendre une confirmation visuelle.</p>
+    <h4>Callout</h4>
+    <p>Se rapporte en degrés + côté (« 30 gauche », « contact 20 droit ») dans les comptes-rendus internes à l'équipage.</p>
+    <h4>Procédure</h4>
+    <p>Un ATA qui augmente rapidement vers les limites du radar annonce que le contact va sortir du cône de balayage si tu ne corriges pas ton cap (voir aussi le Crank, chapitre 2, qui exploite volontairement cette limite).</p>
+  </div>
+
+  <div class="item">
+    <p class="item-title">HCA, Cut et séparation latérale</p>
+    <h4>Théorie</h4>
+    <p>Le <b>Heading Crossing Angle (HCA)</b> compare ton cap à celui de l'adversaire ; un <b>Cut</b> est une correction de cap délibérée pour ajuster l'angle de fusion ; la <b>séparation latérale</b> est la distance perpendiculaire à la route de fusion qui détermine si vous allez réellement vous croiser.</p>
+    <h4>Application cockpit</h4>
+    <p>Combinaison de lecture ATA + estimation du cap adverse (donné par l'AWACS ou déduit du drift) — aucun instrument n'affiche un « HCA » brut, c'est une construction mentale à partir des autres données.</p>
+    <h4>Callout</h4>
+    <p>Un Cut se communique comme une instruction de cap directe entre RIO et pilote plutôt que comme un mot de code isolé.</p>
+    <h4>Procédure</h4>
+    <p>Utilise un Cut pour ajuster ta géométrie de fusion <i>avant</i> d'être proche — un ajustement tardif coûte bien plus d'angle qu'une petite correction anticipée.</p>
+  </div>
+
+  <div class="item">
+    <p class="item-title">Sens de passage (Direction of Passage)</p>
+    <h4>Théorie</h4>
+    <p>De quel côté le croisement va effectivement se produire une fois la géométrie figée — utile pour anticiper de quel côté regarder au merge plutôt que de le découvrir au dernier instant.</p>
+    <h4>Application cockpit</h4>
+    <p>Se déduit de la combinaison ATA + drift + séparation latérale observés dans les dernières miles avant fusion.</p>
+    <h4>Callout</h4>
+    <p>S'annonce généralement juste avant le merge (« passage par la droite ») pour synchroniser l'équipage sur où regarder.</p>
+    <h4>Procédure</h4>
+    <p>Anticipe le sens de passage dès que la géométrie se stabilise — c'est ce qui te permet de préparer ta manœuvre de merge plutôt que de la découvrir en même temps que le contact visuel.</p>
+  </div>
+
+  <div class="note warn"><b>Où ce chapitre s'applique moins directement au B(U)</b>Les descriptions de vecteurs à l'écran (TID en mode Ground Stabilized, subtraction des vecteurs Euclidiens avion/cible) proviennent de sources sur le TID classique du F-14A/B. Le principe reste vrai sur le B(U), mais la présentation exacte au PTID n'a pas pu être confirmée dans le manuel B(U) en ligne — vérifie l'affichage réel en jeu plutôt que de t'attendre à un rendu identique au TID d'origine.</div>
+</section>
+
+<!-- ============ CHAPITRE 2 ============ -->
+<section class="chapter" id="ch2">
+  <div class="chapter-head"><span class="chapter-num">CH. 2</span><span class="chapter-title">Série BVR Timeline 2023</span></div>
+
+  <div class="item">
+    <p class="item-title">Géométrie d'interception — théorie et pratique</p>
+    <h4>Théorie</h4>
+    <p>Les « gameplans » d'interception organisent la manipulation de la séparation latérale pour amener le chasseur en position de tir — par exemple une <b>Horizontal Stern Conversion Turn</b>, qui convertit une approche à angle vers une position arrière favorable.</p>
+    <h4>Application cockpit</h4>
+    <p>Sur le TID classique, les vecteurs affichés sont la différence entre les vecteurs vitesse du chasseur et de la cible ; ils pointent strictement vers le haut ou le bas seulement quand les trajectoires (FFP — Fighter Flight Path — et BFP — Bandit Flight Path) sont parallèles ou se superposent. Sur le radar en mode Pulse Doppler, la DDD (Detail Data Display) affiche notamment l'azimut en fonction de la fermeture (AZM vs Closure).</p>
+    <h4>Callout</h4>
+    <p>Le choix de gameplan se décide en interne équipage, rarement annoncé tel quel sur la fréquence tactique.</p>
+    <h4>Procédure</h4>
+    <p>Choisis le gameplan (conversion horizontale, verticale, etc.) en fonction de la séparation latérale mesurée dès la détection — un mauvais choix initial se corrige difficilement une fois proche.</p>
+  </div>
+
+  <div class="item">
+    <p class="item-title">Contrôleurs, AWACS et phraséologie</p>
+    <h4>Théorie</h4>
+    <p>« The Picture » est la mise à jour de conscience de la situation fournie par le contrôleur (souvent une IA ou un joueur AWACS en DCS) sur l'espace aérien environnant.</p>
+    <h4>Application cockpit</h4>
+    <p>Le radar AWG-9 du Tomcat voit souvent plus loin que ce que l'AWACS transmet ; de nouveaux groupes détectés par ton propre radar peuvent ne pas encore apparaître via la liaison de données (LINK4A), qui sature facilement avec beaucoup de contacts — ne traite jamais la Picture de l'AWACS comme exhaustive.</p>
+    <h4>Callout</h4>
+    <table>
+      <thead><tr><th>Réponse DECLARE</th><th>Signification</th></tr></thead>
+      <tbody>
+        <tr><td>BOGEY</td><td>Contact non identifié — pas d'autorisation d'engagement tant qu'il n'est pas réévalué</td></tr>
+        <tr><td>FRIENDLY / NEUTRAL</td><td>Identifié comme non-menaçant</td></tr>
+        <tr><td>BANDIT / HOSTILE</td><td>Identifié comme hostile — c'est cette escalade qui autorise l'engagement</td></tr>
+        <tr><td>FURBALL</td><td>Mêlée confuse, contacts amis et ennemis mélangés</td></tr>
+        <tr><td>UNABLE / CLEAN</td><td>Le contrôleur ne peut pas répondre / plus de contact (VANISHED en entraînement)</td></tr>
+      </tbody>
+    </table>
+    <h4>Procédure</h4>
+    <p>Demande un DECLARE avant tout engagement sur un contact non confirmé hostile par ailleurs — un Bogey reste un Bogey tant qu'il n'a pas été explicitement réévalué.</p>
+  </div>
+
+  <div class="item">
+    <p class="item-title">Contrats d'équipage et manœuvres : Crank, Notch</p>
+    <h4>Théorie</h4>
+    <p><b>Crank</b> (avec direction) : manœuvre de type F-Pole — tourner pour illuminer la cible en limite de gimbal du radar, gardant un suivi minimal tout en ouvrant la distance après un tir. <b>Notch</b> (avec direction) : manœuvre défensive directive contre un missile tous-aspects, visant à mettre la menace en travers pour sortir du filtrage Doppler.</p>
+    <h4>Application cockpit</h4>
+    <p>Le Crank exploite volontairement la limite d'ATA (chapitre 1) — tu tournes jusqu'à la limite de balayage du radar plutôt que de rompre le contact. Le Notch se juge sur la position relative de la menace, pas sur un repère fixe à l'écran.</p>
+    <h4>Callout</h4>
+    <div class="callout-ex">« Crank right » / « Notch left »</div>
+    <p>Un ordre directif : le récepteur exécute sans attendre confirmation, contrairement à un simple compte-rendu informatif.</p>
+    <h4>Procédure</h4>
+    <p>Après un tir BVR, un Crank vers la limite de gimbal ouvre la distance tout en gardant assez de suivi radar pour confirmer l'impact — ne romps pas le contact trop tôt par excès de prudence.</p>
+  </div>
+
+  <div class="item">
+    <p class="item-title">Timeline et modes radar</p>
+    <h4>Théorie</h4>
+    <p>La timeline BVR s'enchaîne : sanitisation de l'espace aérien, détection, verrouillage, tir, manœuvre post-tir — chaque phase a un mode radar associé (RWS pour la recherche, TWS ou STT pour le suivi/tir, voir tes leçons dédiées).</p>
+    <h4>Application cockpit</h4>
+    <p>Le choix RWS/TWS/STT n'est pas qu'une question de portée — la Timeline Study 2023 insiste sur le <i>moment</i> où basculer d'un mode à l'autre en fonction de la Picture et non d'une distance fixe systématique.</p>
+    <h4>Callout</h4>
+    <p>Le changement de mode s'annonce en interne équipage (« je passe TWS sur le groupe »).</p>
+    <h4>Procédure</h4>
+    <p>Reste en RWS le plus longtemps possible pour préserver la sanitisation générale de l'espace, puis bascule en TWS/STT seulement quand un groupe précis doit être engagé — voir tes leçons <a href="aim54-phoenix-tws.html" style="color:var(--amber)">AIM-54 et TWS</a> / <a href="aim7-sparrow.html" style="color:var(--amber)">AIM-7 Sparrow</a> pour le détail des modes eux-mêmes.</p>
+  </div>
+
+  <div class="item">
+    <p class="item-title">Exécution complète : du départ au Fox-3</p>
+    <h4>Théorie</h4>
+    <p>La synthèse de toute la timeline, du décollage jusqu'au tir, dans une seule séquence continue — l'objectif de cette dernière partie de la série est de faire tenir ensemble tous les éléments précédents plutôt que de les pratiquer isolément.</p>
+    <h4>Application cockpit</h4>
+    <p>Reprend l'ensemble des écrans déjà vus : RWR, radar (RWS/TWS/STT selon phase), HUD/PTID pour le décompte de tir.</p>
+    <h4>Callout</h4>
+    <p>C'est ici que tous les callouts précédents (Picture, DECLARE, mode radar, Crank/Notch, Fox-3) s'enchaînent dans l'ordre réel d'une mission.</p>
+    <h4>Procédure</h4>
+    <p>Une fois les chapitres 1 et 2 individuellement compris, entraîne-toi sur une mission BVR complète en verbalisant chaque callout à voix haute, dans l'ordre — c'est l'exercice de synthèse recommandé avant de passer au chapitre 3.</p>
+  </div>
+</section>
+
+<!-- ============ CHAPITRE 3 ============ -->
+<section class="chapter" id="ch3">
+  <div class="chapter-head"><span class="chapter-num">CH. 3</span><span class="chapter-title">Procédures BVR écrites &amp; communications d'équipage</span></div>
+
+  <div class="item">
+    <p class="item-title">Partie I — Sanitisation et Radar Mating</p>
+    <h4>Théorie</h4>
+    <p>La sanitisation est une vérification complète de l'espace aérien avant de concentrer l'antenne sur une cible précise. Le Radar Mating divise l'espace en deux zones verticales avec un léger recouvrement — chaque appareil d'une paire ayant sa propre zone de responsabilité (Area of Responsibility, AoR).</p>
+    <h4>Application cockpit</h4>
+    <p>En équipage à deux avions, le Radar Mating accélère le balayage global (chaque avion ne couvre qu'une partie du volume) sans laisser de trou grâce au recouvrement.</p>
+    <h4>Callout</h4>
+    <p>L'attribution des AoR se négocie en briefing avant le décollage, pas improvisée en vol.</p>
+    <h4>Procédure</h4>
+    <p>Avant toute focalisation sur un contact précis, assure-toi que ta zone de responsabilité reste couverte — soit par toi en RWS large, soit par ton ailier.</p>
+  </div>
+
+  <div class="item">
+    <p class="item-title">Partie II — Vue d'ensemble simplifiée de la timeline</p>
+    <h4>Théorie</h4>
+    <p>La timeline démarre avec les radars configurés pour garantir la sanitisation, et l'exécution de la checklist <b>FENCE-IN</b> (configuration systématique de l'avion — armement, contre-mesures, radios — avant d'entrer en zone tactique).</p>
+    <h4>Application cockpit</h4>
+    <p>FENCE-IN regroupe plusieurs réglages déjà vus séparément dans tes autres leçons (Master Arm, mode radar, ALE-47 armé) — la nouveauté ici est de les enchaîner systématiquement à un point fixe de la mission, pas de découvrir un nouveau geste.</p>
+    <h4>Callout</h4>
+    <p>« Fence in » s'annonce en équipage comme jalon de mission, pas comme une simple checklist silencieuse.</p>
+    <h4>Procédure</h4>
+    <p>Fixe un point de mission précis (waypoint, distance à la zone) où exécuter systématiquement FENCE-IN — la régularité compte plus que la vitesse d'exécution.</p>
+  </div>
+
+  <div class="item">
+    <p class="item-title">Partie III — Timeline en détail</p>
+    <h4>Théorie</h4>
+    <p>Détaille les critères précis (distance, mode radar, nombre de contacts) qui déclenchent chaque transition de la timeline, avec des exemples de comptes-rendus radio réels.</p>
+    <h4>Application cockpit</h4>
+    <p>Chaque transition de mode radar (RWS → TWS → STT) suit des critères de distance et de confirmation d'identification, pas une décision arbitraire du moment.</p>
+    <h4>Callout</h4>
+    <div class="callout-ex">« Spectre 1-2 [Aft] ► Spectre, single group, 45 nm »</div>
+    <p>Format type d'un compte-rendu de contact : indicatif d'appel, puis groupe unique/multiple et distance — la structure prime sur la formulation exacte.</p>
+    <h4>Procédure</h4>
+    <p>Reprends ce format pour tes propres comptes-rendus internes équipage : indicatif, type de groupe, distance — dans cet ordre, systématiquement.</p>
+  </div>
+
+  <div class="item">
+    <p class="item-title">Partie IV — Communications d'équipage</p>
+    <h4>Théorie</h4>
+    <p>Les échanges RIO ↔ pilote peuvent se faire en langage clair, mais l'usage de brevity words et de mots de code les rend plus rapides et plus précis sous charge — l'objectif n'est pas le jargon pour lui-même, mais la réduction d'ambiguïté.</p>
+    <h4>Application cockpit</h4>
+    <p>Le RIO reste la source principale d'information tactique (radar, RWR) pendant que le pilote se concentre sur le vol — la communication structurée est ce qui permet cette répartition des tâches sans perte d'information.</p>
+    <h4>Callout</h4>
+    <p>Reprend les callouts des sections précédentes (Picture, DECLARE, Crank/Notch, comptes-rendus de contact) dans un cadre de communication cohérent de bout en bout.</p>
+    <h4>Procédure</h4>
+    <p>En pilotage solo avec JESTER, ces callouts servent surtout à structurer ta propre lecture de la situation — JESTER ne les prononce pas à l'identique, mais le cadre mental reste utile pour prioriser ce que tu regardes et dans quel ordre.</p>
+  </div>
+</section>
+
+<!-- ============ CHAPITRE 4 ============ -->
+<section class="chapter" id="ch4">
+  <div class="chapter-head"><span class="chapter-num">CH. 4</span><span class="chapter-title">Transition WVR : du BVR au merge</span></div>
+
+  <div class="item">
+    <p class="item-title">« From Beyond to Within » — la transition BVR → WVR</p>
+    <h4>Théorie</h4>
+    <p>Couvre la tactique après une phase défensive : si un appareil reste « spiké » (verrouillé par un radar adverse) pendant et après une manœuvre défensive, la recommandation est d'attendre environ <b>10 secondes</b> puis de forcer le merge — rester en statu quo donne l'avantage à l'adversaire hostile plutôt que de le neutraliser.</p>
+    <h4>Application cockpit</h4>
+    <p>Guidage de type P-825 sur le mode radar selon la distance au merge : recherche au-delà de 5 NM en <b>SRM</b> (mode courte portée), en dessous de 5 NM bascule en <b>WACQ</b> (Wide Acquisition Mode, acquisition grand angle) pour ne pas perdre le contact au moment critique du croisement.</p>
+    <h4>Callout</h4>
+    <p>« Spiked » (verrouillé par un radar adverse) déclenche la décision défensive ; un nouveau terme, « Bricks », est introduit par la source pour simplifier certains échanges RIO/pilote — je n'ai pas pu en confirmer la définition exacte au-delà de sa simple mention, à vérifier directement sur l'article source avant de l'utiliser en briefing.</p>
+    <h4>Procédure</h4>
+    <p>Reste défensif tant que spiké ; si le spike persiste au-delà d'une dizaine de secondes sans opportunité de sortie franche, prépare-toi à forcer le merge plutôt qu'à prolonger indéfiniment une posture défensive qui ne fait que retarder l'inévitable.</p>
+  </div>
+
+  <div class="item">
+    <p class="item-title">« The Bandit's Alive at the Merge » — article USAF, 1985</p>
+    <h4>Théorie</h4>
+    <p>Un article historique de l'US Air Force qui explique la transition du BVR vers le merge : ce à quoi un pilote de chasse doit s'attendre et ce qu'il doit chercher à accomplir à l'approche du croisement visuel.</p>
+    <h4>Application cockpit</h4>
+    <p>Principe intemporel plutôt que procédure liée à un affichage précis — reste valable indépendamment du système d'arme, F-14 classique ou B(U).</p>
+    <h4>Callout</h4>
+    <p>Pas de brevity word spécifique associé — c'est un texte doctrinal plutôt qu'un jeu de callouts.</p>
+    <h4>Procédure</h4>
+    <p>À lire directement en complément de cette page — un texte historique se résume mal en checklist, sa valeur est dans le raisonnement complet qu'il développe.</p>
+  </div>
+
+  <div class="note go"><b>Le fil qui relie ce chapitre à ta leçon Dogfight</b>Ce chapitre s'arrête au moment du merge. La suite — gestion de l'énergie, géométrie 1/2 cercles, Control Zone — est couverte dans ta leçon <a href="dogfight-bfm.html" style="color:var(--go)">Dogfight BFM</a>, qui prend le relais exactement là où celui-ci finit.</div>
+</section>
+
+<div class="footlinks">
+  <a href="bvr-wvr-synthese.html">&larr; Retour à BVR &amp; WVR : synthèse</a>
+  <a href="dogfight-bfm.html">Leçon suivante : Dogfight BFM →</a>
+</div>
+
+<p class="src">Sources : corpus <a href="https://flyandwire.com/" target="_blank" rel="noopener">FlyAndWire</a> — concepts de base (Drift/Hot-Cold Side, Aspect Angle, Closure Rate, ATA, HCA/Cut, Direction of Passage), série <a href="https://flyandwire.com/2023/05/08/bvr-timeline-study-2023-first-five-chapters-available/" target="_blank" rel="noopener">BVR &amp; Timeline Study 2023</a>, série écrite <a href="https://flyandwire.com/2020/03/08/f-14-bvr-part-i-sanitization-and-radar-mating/" target="_blank" rel="noopener">F-14 BVR Part I à IV</a>, et <a href="https://flyandwire.com/2020/09/12/f-14-wvr-part-i-from-beyond-to-within/" target="_blank" rel="noopener">F-14 WVR Part I</a> + <a href="https://flyandwire.com/2025/03/14/the-bandits-alive-at-the-merge-us-af-1985-article/" target="_blank" rel="noopener">« The Bandit's Alive at the Merge »</a>. Contenu reconstitué à partir d'extraits de recherche, pas d'une lecture intégrale de chaque article (accès direct au domaine bloqué depuis cet environnement) — la définition exacte du terme « Bricks » notamment n'a pas pu être confirmée, et certains détails d'affichage (TID classique) sont signalés comme non vérifiés pour le PTID du B(U). Vérifie les articles sources directement pour tout usage en briefing d'équipe.</p>
+
+</div>
+</body>
+</html>
