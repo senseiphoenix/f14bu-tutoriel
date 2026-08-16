@@ -62,6 +62,14 @@ th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-ali
 th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--panel-2)}
 tbody tr:nth-child(odd){background:rgba(30,42,51,.35)}
 
+.diagram{margin:14px 0;border:1px solid var(--line);background:#0b1114;padding:16px;text-align:center}
+.diagram svg{max-width:100%;height:auto;display:block;margin:0 auto}
+.diagram-cap{font-size:11.5px;color:var(--dim);margin-top:10px;font-family:var(--mono);letter-spacing:.02em}
+.diagram-cap b{color:var(--ink)}
+.diagram-row{display:flex;gap:16px;flex-wrap:wrap}
+.diagram-row>div{flex:1;min-width:220px}
+.diagram-sub{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+
 .footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
 .footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
 .footlinks a:hover{color:var(--amber);border-color:var(--amber)}
@@ -100,6 +108,25 @@ tbody tr:nth-child(odd){background:rgba(30,42,51,.35)}
   <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
     <p class="step-item">Comprends l'échange <span class="switchname">altitude ↔ vitesse</span> en temps réel</p>
     <p class="step-detail">Chaque tirage de facteur de charge soutenu coûte de l'énergie ; chaque relâchement en récupère. Un virage serré qui dure trop longtemps vide ta réserve d'énergie sans forcément te rapprocher d'un tir — c'est le piège numéro un du débutant.</p>
+    <div class="diagram">
+      <svg viewBox="0 0 380 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schéma énergie potentielle et cinétique">
+        <text x="10" y="20" font-family="var(--mono)" font-size="11" fill="var(--dim)" letter-spacing="0.05em">E = Ep + Ec</text>
+        <rect x="10" y="34" width="360" height="34" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+        <rect x="12" y="36" width="180" height="30" fill="var(--panel-2)"/>
+        <rect x="192" y="36" width="176" height="30" fill="var(--amber)" fill-opacity="0.28"/>
+        <line x1="192" y1="34" x2="192" y2="68" stroke="var(--line)" stroke-width="1.5"/>
+        <text x="102" y="55" text-anchor="middle" font-family="var(--mono)" font-size="11" fill="var(--ink)">Ep — altitude</text>
+        <text x="280" y="55" text-anchor="middle" font-family="var(--mono)" font-size="11" fill="var(--amber)">Ec — vitesse</text>
+        <path d="M150,80 C 170,100 210,100 230,80" fill="none" stroke="var(--go)" stroke-width="1.5" marker-end="url(#arrge)"/>
+        <path d="M230,90 C 210,110 170,110 150,90" fill="none" stroke="var(--go)" stroke-width="1.5" marker-end="url(#arrge2)"/>
+        <text x="190" y="122" text-anchor="middle" font-family="var(--mono)" font-size="9.5" fill="var(--go)">convertible dans les deux sens (nez haut / nez bas)</text>
+        <defs>
+          <marker id="arrge" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--go)"/></marker>
+          <marker id="arrge2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--go)"/></marker>
+        </defs>
+      </svg>
+      <div class="diagram-cap">L'énergie totale ne change pas d'un coup — elle se <b>déplace</b> entre altitude et vitesse selon ce que tu fais au manche.</div>
+    </div>
   </div></div>
 
   <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
@@ -140,6 +167,45 @@ tbody tr:nth-child(odd){background:rgba(30,42,51,.35)}
   <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
     <p class="step-item">Combat <span class="switchname">2 cercles</span> (Nose-to-Tail) : le combat au taux de virage</p>
     <p class="step-detail">Les deux avions virent en sens opposés, sur deux cercles distincts qui se recoupent périodiquement — ici, l'avantage va à celui qui a le meilleur taux de virage continu (à Corner Speed), car chaque recoupement est une occasion de gagner un peu plus d'angle sur l'adversaire.</p>
+    <div class="diagram">
+      <div class="diagram-row">
+        <div>
+          <div class="diagram-sub">1 cercle — même sens de virage</div>
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Géométrie 1 cercle">
+            <circle cx="100" cy="100" r="70" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="3 5"/>
+            <path d="M100,30 A 70 70 0 0 1 170,100" fill="none" stroke="var(--go)" stroke-width="2.5" marker-end="url(#a1)"/>
+            <path d="M100,170 A 70 70 0 0 1 30,100" fill="none" stroke="var(--amber)" stroke-width="2.5" marker-end="url(#a2)"/>
+            <circle cx="100" cy="30" r="5" fill="var(--go)"/>
+            <circle cx="100" cy="170" r="5" fill="var(--amber)"/>
+            <text x="100" y="18" text-anchor="middle" font-family="var(--mono)" font-size="9.5" fill="var(--go)">toi</text>
+            <text x="100" y="192" text-anchor="middle" font-family="var(--mono)" font-size="9.5" fill="var(--amber)">bandit</text>
+            <defs>
+              <marker id="a1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--go)"/></marker>
+              <marker id="a2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--amber)"/></marker>
+            </defs>
+          </svg>
+          <div class="diagram-cap">Un seul cercle partagé — avantage au <b>plus petit rayon</b> de virage.</div>
+        </div>
+        <div>
+          <div class="diagram-sub">2 cercles — sens de virage opposés</div>
+          <svg viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Géométrie 2 cercles">
+            <circle cx="85" cy="100" r="60" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="3 5"/>
+            <circle cx="155" cy="100" r="60" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="3 5"/>
+            <path d="M85,40 A 60 60 0 0 1 145,100" fill="none" stroke="var(--go)" stroke-width="2.5" marker-end="url(#a3)"/>
+            <path d="M155,40 A 60 60 0 0 0 95,100" fill="none" stroke="var(--amber)" stroke-width="2.5" marker-end="url(#a4)"/>
+            <circle cx="85" cy="40" r="5" fill="var(--go)"/>
+            <circle cx="155" cy="40" r="5" fill="var(--amber)"/>
+            <text x="85" y="28" text-anchor="middle" font-family="var(--mono)" font-size="9.5" fill="var(--go)">toi</text>
+            <text x="155" y="28" text-anchor="middle" font-family="var(--mono)" font-size="9.5" fill="var(--amber)">bandit</text>
+            <defs>
+              <marker id="a3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--go)"/></marker>
+              <marker id="a4" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--amber)"/></marker>
+            </defs>
+          </svg>
+          <div class="diagram-cap">Deux cercles qui se recoupent — avantage au meilleur <b>taux</b> de virage continu.</div>
+        </div>
+      </div>
+    </div>
   </div></div>
 
   <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
