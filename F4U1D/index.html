@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cursus F4U-1D Corsair — Tutoriel</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
 <style>
   :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;
     --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
@@ -37,13 +38,18 @@
   <h1>Cursus complet<br>de pilotage</h1>
   <p class="sub">Sept sections, du parking froid à la mission complète, illustrées avec les planches du manuel officiel Magnitude 3 (AN-01-45MAG-3). Chaque section garde ta progression et tes notes d'une session à l'autre, dans le même navigateur.</p>
 
-  <a class="card" href="section-a-cockpit.html"><span class="idx">A</span><span class="nm">Découverte &amp; cockpit<span class="tag">Prêt</span></span><span class="ds">Planches avant/gauche/droite, instruments, commandes de vol, bloc moteur, HOTAS</span></a>
-  <a class="card" href="section-b-demarrage.html"><span class="idx">B</span><span class="nm">Démarrage &amp; roulage<span class="tag">Prêt</span></span><span class="ds">Procédure de mise en route, tests moteur, roulage en S</span></a>
-  <a class="card" href="section-c-decollage.html"><span class="idx">C</span><span class="nm">Décollage<span class="tag">Prêt</span></span><span class="ds">Terrain, distance minimale, roulant et catapulté depuis l'Essex</span></a>
-  <a class="card" href="section-d-vol.html"><span class="idx">D</span><span class="nm">Vol normal<span class="tag">Prêt</span></span><span class="ds">Régimes moteur, suralimentation, carburant, WEP, voltige permise</span></a>
-  <a class="card" href="section-e-appontage.html"><span class="idx">E</span><span class="nm">Appontage &amp; atterrissage<span class="tag">Prêt</span></span><span class="ds">Terrain, vent de travers, circuit Essex-class complet</span></a>
-  <a class="card" href="section-f-urgences.html"><span class="idx">F</span><span class="nm">Urgences<span class="tag">Prêt</span></span><span class="ds">Panne moteur, atterrissage forcé, ditching, évacuation</span></a>
-  <a class="card" href="section-g-armement.html"><span class="idx">G</span><span class="nm">Armement &amp; radio/nav<span class="tag">Prêt</span></span><span class="ds">Canons, bombes, HVAR/Tiny Tim, Bat Bomb, ARC-5/ARR-2, Morse</span></a>
+  <div class="grp-block">
+  <h2 class="grp">Le cursus <span class="grp-sub">7 sections, dans l'ordre — du parking froid à la mission complète</span></h2>
+  <div class="seq-list">
+    <a class="seq" href="section-a-cockpit.html" style="--accent:var(--amber)"><span class="ic ic-gauge"></span><span class="idx">A</span><span class="nm">Découverte &amp; cockpit</span><span class="ds">Planches avant/gauche/droite, instruments, commandes de vol, bloc moteur, HOTAS</span></a>
+    <a class="seq" href="section-b-demarrage.html" style="--accent:var(--sys-nav)"><span class="ic ic-power"></span><span class="idx">B</span><span class="nm">Démarrage &amp; roulage</span><span class="ds">Procédure de mise en route, tests moteur, roulage en S</span></a>
+    <a class="seq" href="section-c-decollage.html" style="--accent:var(--go)"><span class="ic ic-play"></span><span class="idx">C</span><span class="nm">Décollage</span><span class="ds">Terrain, distance minimale, roulant et catapulté depuis l'Essex</span></a>
+    <a class="seq" href="section-d-vol.html" style="--accent:var(--sys-carrier)"><span class="ic ic-waypoint"></span><span class="idx">D</span><span class="nm">Vol normal</span><span class="ds">Régimes moteur, suralimentation, carburant, WEP, voltige permise</span></a>
+    <a class="seq" href="section-e-appontage.html" style="--accent:var(--sys-mission)"><span class="ic ic-carrier"></span><span class="idx">E</span><span class="nm">Appontage &amp; atterrissage</span><span class="ds">Terrain, vent de travers, circuit Essex-class complet</span></a>
+    <a class="seq" href="section-f-urgences.html" style="--accent:var(--sys-survie)"><span class="ic ic-shield"></span><span class="idx">F</span><span class="nm">Urgences</span><span class="ds">Panne moteur, atterrissage forcé, ditching, évacuation</span></a>
+    <a class="seq" href="section-g-armement.html" style="--accent:var(--sys-aa)"><span class="ic ic-drop"></span><span class="idx">G</span><span class="nm">Armement &amp; radio/nav</span><span class="ds">Canons, bombes, HVAR/Tiny Tim, Bat Bomb, ARC-5/ARR-2, Morse</span></a>
+  </div>
+  </div>
 
   <div class="hr"></div>
   <h2>Sources</h2>

@@ -3,7 +3,7 @@
 Site de tutoriels de pilotage pour **DCS World**, hébergé sur GitHub Pages à l'adresse :
 👉 https://senseiphoenix.github.io/f14bu-tutoriel/
 
-Ce dépôt regroupe des tutoriels HTML interactifs, un par module, pour apprendre à piloter certains avions dans DCS World. Chaque tutoriel est une appli web autonome (HTML/CSS/JS) organisée en sections, avec suivi de progression conservé localement dans le navigateur.
+Ce dépôt regroupe des tutoriels HTML interactifs, un par module, pour apprendre à piloter certains avions dans DCS World. Chaque tutoriel est une appli web (HTML/CSS/JS) organisée en sections, avec suivi de progression conservé localement dans le navigateur. Le thème visuel commun (couleurs, texture de fond, halos de survol, icônes) est partagé par toutes les pages via `css/theme.css`.
 
 ## Contenu
 

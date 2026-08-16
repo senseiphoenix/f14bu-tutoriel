@@ -1,0 +1,21 @@
+/* Filigrane F-14B(U) — le plan technique (vue de dessus, ailes repliées) en
+   fond fixe et discret, propre au module F14BU (pas partagé avec les autres
+   avions). Le PNG porte déjà sa faible opacité dans le canal alpha
+   (voir tools/make-blueprint-watermark.ps1) : ce fichier ne fait que le
+   positionner, en position:fixed pour qu'il reste en place au défilement. */
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background-image:url("../F14BU/img/tomcat-blueprint-watermark.png");
+  background-repeat:no-repeat;
+  background-position:center 64px;
+  background-size:min(640px,72vw) auto;
+}
+
+@media(max-width:700px){
+  body::before{background-position:center 48px;background-size:min(420px,86vw) auto}
+}

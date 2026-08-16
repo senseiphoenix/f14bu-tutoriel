@@ -5,8 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cursus F-14B(U) — Tutoriel</title>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/f14bu-backdrop.css">
 <style>
   :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;
+    --sys-nav:#5b8fd6;--sys-carrier:#48c9c0;--sys-aa:#e2564f;--sys-survie:#e8c547;--sys-mission:#a685e0;
     --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
   *{box-sizing:border-box}
   body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
@@ -25,39 +28,88 @@
   p{margin:12px 0;color:var(--dim)}
   code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:2px 6px;border:1px solid var(--line);color:var(--amber)}
   .ok{color:var(--go)}
+
+  .grp{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+       margin:0 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:10px}
+  .grp .grp-sub{font-family:var(--body);letter-spacing:0;text-transform:none;font-size:12px;color:#5f6d76}
+  .grp-block{margin-bottom:40px}
+  .icons{position:absolute;width:0;height:0;overflow:hidden}
+
+  .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  a.feat{display:block;border:1px solid var(--line);background:var(--panel);padding:22px 22px 20px;
+         text-decoration:none;color:var(--ink);transition:border-color .15s,box-shadow .15s}
+  a.feat:hover{border-color:var(--accent);box-shadow:0 0 22px -6px var(--accent)}
+  a.feat .ic{width:26px;height:26px;color:var(--accent);margin-bottom:14px;display:block}
+  a.feat .nm{font-family:var(--display);font-size:20px;letter-spacing:.03em;text-transform:uppercase;display:block;margin-bottom:6px}
+  a.feat .ds{color:var(--dim);font-size:13px;display:block;margin-left:0;text-align:left;max-width:none}
+
+  .seq-list a.seq{display:flex;gap:14px;align-items:center;border:1px solid var(--line);border-left:3px solid var(--accent);
+                  background:var(--panel);padding:14px 18px;margin:8px 0;text-decoration:none;color:var(--ink);
+                  transition:border-color .12s,box-shadow .12s}
+  .seq-list a.seq:hover{border-color:var(--accent);box-shadow:0 0 16px -4px var(--accent)}
+  .seq-list .ic{width:20px;height:20px;color:var(--accent);flex:none}
+  .seq-list .idx{font-family:var(--mono);font-size:12px;color:var(--accent);min-width:14px}
+  .seq-list .nm{font-family:var(--display);font-size:17px;letter-spacing:.03em;text-transform:uppercase}
+  .seq-list .ds{color:var(--dim);font-size:13px;margin-left:auto;text-align:right;max-width:46%}
+
+  a.card.tool{padding:14px 20px}
 </style>
 </head>
 <body>
+<div class="hero-banner" style="background-image:url('img/hero-climb-clouds.webp')"></div>
+<svg class="icons"><defs>
+  <symbol id="ic-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3 20 12 6 21Z"/></symbol>
+  <symbol id="ic-gauge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18 16 10"/><circle cx="12" cy="18" r="1.4" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="ic-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3 21 8 12 13 3 8Z"/><path d="M3 13l9 5 9-5"/><path d="M3 18l9 5 9-5"/></symbol>
+  <symbol id="ic-chevrons" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15 12 7 20 15"/><path d="M4 20 12 12 20 20"/></symbol>
+  <symbol id="ic-power" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3v8"/><path d="M7 6a8 8 0 1 0 10 0"/></symbol>
+  <symbol id="ic-waypoint" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2 20 12 12 22 4 12Z"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="ic-carrier" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15h18l-2.5 6h-13Z"/><path d="M12 15V5"/><path d="M9 8h6"/></symbol>
+  <symbol id="ic-reticle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></symbol>
+  <symbol id="ic-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2 20 5v6c0 5-3.5 8.5-8 11-4.5-2.5-8-6-8-11V5Z"/></symbol>
+  <symbol id="ic-drop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="14" r="6"/><path d="M12 8V3M9 3h6"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M5 21V4"/><path d="M5 4h13l-3 4 3 4H5Z"/></symbol>
+</defs></svg>
 <div class="wrap">
   <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:16px">&larr; Accueil</a>
   <div class="tail">DCS · Heatblur · F-14B(U) Tomcat</div>
   <h1>Cursus complet<br>de pilotage</h1>
-  <p class="sub">Sept sections, de l'avion froid à la mission complète, illustrées avec les planches du manuel Heatblur.
-  Chaque section garde ta progression et tes notes d'une session à l'autre (dans le même navigateur). Utilise l'appli complète ci-dessous, ou les sections individuelles si tu préfères des fichiers séparés.</p>
+  <p class="sub">Un parcours en trois étapes, du premier démarrage à froid jusqu'à la mission complète, illustré avec les planches du manuel Heatblur. Chaque section garde ta progression et tes notes d'une session à l'autre (dans le même navigateur). Suis les étapes dans l'ordre si tu débutes, ou reviens directement à celle qui t'intéresse.</p>
 
-  <a class="card" href="pas-a-pas.html" style="border-color:var(--go)"><span class="idx">▶</span><span class="nm">Pas à pas</span><span class="ds">Tutoriels une page, très détaillés, pour un débutant total — à commencer en premier</span></a>
+  <div class="grp-block">
+  <h2 class="grp">Étape 1 <span class="stage-badge" style="--accent:var(--go)">Débutant</span> <span class="grp-sub">découvrir l'avion</span></h2>
+  <div class="feat-grid">
+    <a class="feat" href="pas-a-pas.html" style="--accent:var(--go)"><svg class="ic"><use href="#ic-play"/></svg><span class="nm">Pas à pas</span><span class="ds">Tutoriels une page, très détaillés, pour un débutant total — à commencer en premier</span></a>
+    <a class="feat" href="cockpit/index.html" style="--accent:var(--amber)"><svg class="ic"><use href="#ic-gauge"/></svg><span class="nm">Le cockpit</span><span class="ds">Chaque commande nommée et expliquée — planches numérotées du manuel, à garder ouvert à côté</span></a>
+  </div>
+  </div>
 
-  <a class="card" href="cockpit/index.html" style="border-color:var(--amber)"><span class="idx">★</span><span class="nm">Le cockpit</span><span class="ds">Chaque commande nommée et expliquée — planches numérotées du manuel</span></a>
+  <div class="grp-block">
+  <h2 class="grp">Étape 2 <span class="stage-badge" style="--accent:var(--amber)">Intermédiaire</span> <span class="grp-sub">le cursus en profondeur, 7 sections dans l'ordre</span> <a class="grp-link" href="cursus-complet.html">aussi en appli complète →</a></h2>
+  <div class="seq-list">
+    <a class="seq" href="section-a-illustree.html" style="--accent:var(--amber)"><svg class="ic"><use href="#ic-power"/></svg><span class="idx">A</span><span class="nm">Reprendre l'avion en main</span><span class="ds">Cockpit, bindings, JESTER, démarrage, décollage, vol de base, atterrissage</span></a>
+    <a class="seq" href="section-b-navigation.html" style="--accent:var(--sys-nav)"><svg class="ic"><use href="#ic-waypoint"/></svg><span class="idx">B</span><span class="nm">Naviguer : EGI &amp; CDNU</span><span class="ds">Alignement, waypoints, routes, TACAN — le cœur du B(U)</span></a>
+    <a class="seq" href="section-c-porte-avions.html" style="--accent:var(--sys-carrier)"><svg class="ic"><use href="#ic-carrier"/></svg><span class="idx">C</span><span class="nm">Le porte-avions</span><span class="ds">Catapulte, circuit CASE I, DLC, appontage</span></a>
+    <a class="seq" href="section-d-air-air.html" style="--accent:var(--sys-aa)"><svg class="ic"><use href="#ic-reticle"/></svg><span class="idx">D</span><span class="nm">Air-air : chasser</span><span class="ds">Radar, PTID, HUD, AIM-9/7/54, combat tournoyant</span></a>
+    <a class="seq" href="section-e-survie.html" style="--accent:var(--sys-survie)"><svg class="ic"><use href="#ic-shield"/></svg><span class="idx">E</span><span class="nm">Survivre</span><span class="ds">RWR, ALE-47, séquence de survie</span></a>
+    <a class="seq" href="section-f-air-sol.html" style="--accent:var(--go)"><svg class="ic"><use href="#ic-drop"/></svg><span class="idx">F</span><span class="nm">Air-sol : frapper</span><span class="ds">Bombes lisses, LGB/LANTIRN, JDAM</span></a>
+    <a class="seq" href="section-g-mission.html" style="--accent:var(--sys-mission)"><svg class="ic"><use href="#ic-flag"/></svg><span class="idx">G</span><span class="nm">Mettre bout à bout</span><span class="ds">Urgences, ravitaillement, mission complète</span></a>
+  </div>
+  </div>
 
-  <a class="card" href="missions.html"><span class="idx">▸</span><span class="nm">Les missions du module</span><span class="ds">Entraînements et action instantanée livrés par Heatblur — quoi voler et quand</span></a>
+  <div class="grp-block">
+  <h2 class="grp">Étape 3 <span class="stage-badge" style="--accent:var(--sys-mission)">Avancé</span> <span class="grp-sub">au-delà du cursus</span></h2>
+  <div class="feat-grid">
+    <a class="feat" href="perfectionnement.html" style="--accent:var(--sys-mission)"><svg class="ic"><use href="#ic-chevrons"/></svg><span class="nm">Perfectionnement</span><span class="ds">6 leçons magistrales : DTC, BVR/WVR, dogfight, JDAM avancé, Maverick de nuit, mission de synthèse</span></a>
+  </div>
+  </div>
 
-  <a class="card" href="mapping-hotas.html"><span class="idx">&#9998;</span><span class="nm">Mapping HOTAS</span><span class="ds">Manche + PTO2 sur gabarits SVG (Joystick Diagrams), Throttle CM3 + p&eacute;dales sur photo : chaque bouton annot&eacute;, d&eacute;tail avion et lien le&ccedil;on</span></a>
-
-  <a class="card" href="cursus-complet.html" style="border-color:var(--amber)"><span class="idx">★</span><span class="nm">Appli complète</span><span class="ds">Les 7 sections en une seule appli, progression globale unifiée</span></a>
-
-  <a class="card" href="perfectionnement.html"><span class="idx">✦</span><span class="nm">Perfectionnement</span><span class="ds">6 leçons magistrales au-delà du cursus : DTC, BVR/WVR, dogfight, JDAM avancé, Maverick de nuit, mission de synthèse</span></a>
-
-  <a class="card" href="section-a-illustree.html"><span class="idx">A</span><span class="nm">Reprendre l'avion en main</span><span class="ds">Cockpit, bindings, JESTER, démarrage, décollage, vol de base, atterrissage</span></a>
-  <a class="card" href="section-b-navigation.html"><span class="idx">B</span><span class="nm">Naviguer : EGI &amp; CDNU</span><span class="ds">Alignement, waypoints, routes, TACAN — le cœur du B(U)</span></a>
-  <a class="card" href="section-c-porte-avions.html"><span class="idx">C</span><span class="nm">Le porte-avions</span><span class="ds">Catapulte, circuit CASE I, DLC, appontage</span></a>
-  <a class="card" href="section-d-air-air.html"><span class="idx">D</span><span class="nm">Air-air : chasser</span><span class="ds">Radar, PTID, HUD, AIM-9/7/54, combat tournoyant</span></a>
-  <a class="card" href="section-e-survie.html"><span class="idx">E</span><span class="nm">Survivre</span><span class="ds">RWR, ALE-47, séquence de survie</span></a>
-  <a class="card" href="section-f-air-sol.html"><span class="idx">F</span><span class="nm">Air-sol : frapper</span><span class="ds">Bombes lisses, LGB/LANTIRN, JDAM</span></a>
-  <a class="card" href="section-g-mission.html"><span class="idx">G</span><span class="nm">Mettre bout à bout</span><span class="ds">Urgences, ravitaillement, mission complète</span></a>
-
-  <div class="hr"></div>
-  <h2>Outil compagnon</h2>
-  <a class="card" href="tomcat-progression.html"><span class="idx">✦</span><span class="nm">Carnet de progression</span><span class="ds">Vue d'ensemble des 24 leçons, export markdown imprimable</span></a>
+  <div class="grp-block">
+  <h2 class="grp">Outils <span class="grp-sub">pas une étape — à consulter quand tu en as besoin</span></h2>
+  <a class="card tool" href="missions.html"><span class="idx">▸</span><span class="nm">Les missions du module</span><span class="ds">Entraînements et action instantanée livrés par Heatblur — quoi voler et quand</span></a>
+  <a class="card tool" href="mapping-hotas.html"><span class="idx">&#9998;</span><span class="nm">Mapping HOTAS</span><span class="ds">Manche + PTO2 sur gabarits SVG (Joystick Diagrams), Throttle CM3 + p&eacute;dales sur photo : chaque bouton annot&eacute;, d&eacute;tail avion et lien le&ccedil;on</span></a>
+  <a class="card tool" href="tomcat-progression.html"><span class="idx">✦</span><span class="nm">Carnet de progression</span><span class="ds">Vue d'ensemble des 24 leçons, export markdown imprimable</span></a>
+  </div>
 
   <div class="hr"></div>
   <h2>Images</h2>
