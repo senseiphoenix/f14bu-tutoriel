@@ -72,6 +72,11 @@ th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-ali
 th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--panel-2)}
 tbody tr:nth-child(odd){background:rgba(30,42,51,.35)}
 
+.diagram{margin:14px 0;border:1px solid var(--line);background:#0b1114;padding:16px;text-align:center}
+.diagram svg{max-width:100%;height:auto;display:block;margin:0 auto}
+.diagram-cap{font-size:11.5px;color:var(--dim);margin-top:10px;font-family:var(--mono);letter-spacing:.02em}
+.diagram-cap b{color:var(--ink)}
+
 .footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
 .footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
 .footlinks a:hover{color:var(--amber);border-color:var(--amber)}
@@ -123,6 +128,35 @@ tbody tr:nth-child(odd){background:rgba(30,42,51,.35)}
         <tr><td>CMDS (ALE-47)</td><td>Jusqu'à 8 programmes de largage de leurres, définis à l'avance plutôt qu'improvisés en vol</td></tr>
       </tbody>
     </table>
+    <div class="diagram">
+      <svg viewBox="0 0 380 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Schéma des trois catégories de contenu DTC">
+        <rect x="140" y="10" width="100" height="30" rx="3" fill="var(--panel-2)" stroke="var(--amber)" stroke-width="1.5"/>
+        <text x="190" y="30" text-anchor="middle" font-family="var(--mono)" font-size="11" fill="var(--amber)" font-weight="600">DTC / MDL</text>
+        <path d="M190,40 L70,68" stroke="var(--line)" stroke-width="1.5" fill="none" marker-end="url(#dm1)"/>
+        <path d="M190,40 L190,68" stroke="var(--line)" stroke-width="1.5" fill="none" marker-end="url(#dm2)"/>
+        <path d="M190,40 L310,68" stroke="var(--line)" stroke-width="1.5" fill="none" marker-end="url(#dm3)"/>
+        <rect x="15" y="70" width="110" height="30" rx="3" fill="var(--panel)" stroke="var(--line)" stroke-width="1.5"/>
+        <text x="70" y="90" text-anchor="middle" font-family="var(--mono)" font-size="10" fill="var(--ink)">Navigation</text>
+        <rect x="135" y="70" width="110" height="30" rx="3" fill="var(--panel)" stroke="var(--line)" stroke-width="1.5"/>
+        <text x="190" y="90" text-anchor="middle" font-family="var(--mono)" font-size="10" fill="var(--ink)">GGW (JDAM)</text>
+        <rect x="255" y="70" width="110" height="30" rx="3" fill="var(--panel)" stroke="var(--line)" stroke-width="1.5"/>
+        <text x="310" y="90" text-anchor="middle" font-family="var(--mono)" font-size="10" fill="var(--ink)">CMDS (ALE-47)</text>
+        <path d="M70,100 L190,128" stroke="var(--line)" stroke-width="1.5" fill="none" marker-end="url(#dm4)"/>
+        <path d="M190,100 L190,128" stroke="var(--line)" stroke-width="1.5" fill="none" marker-end="url(#dm5)"/>
+        <path d="M310,100 L190,128" stroke="var(--line)" stroke-width="1.5" fill="none" marker-end="url(#dm6)"/>
+        <rect x="120" y="118" width="140" height="26" rx="3" fill="var(--panel-2)" stroke="var(--go)" stroke-width="1.5"/>
+        <text x="190" y="136" text-anchor="middle" font-family="var(--mono)" font-size="10" fill="var(--go)">Avion — CDNU / PTID</text>
+        <defs>
+          <marker id="dm1" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="var(--line)"/></marker>
+          <marker id="dm2" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="var(--line)"/></marker>
+          <marker id="dm3" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="var(--line)"/></marker>
+          <marker id="dm4" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="var(--line)"/></marker>
+          <marker id="dm5" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="var(--line)"/></marker>
+          <marker id="dm6" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="var(--line)"/></marker>
+        </defs>
+      </svg>
+      <div class="diagram-cap">Une seule cartouche, trois catégories de contenu, chargées automatiquement dans l'avion au démarrage.</div>
+    </div>
   </div></div>
 
   <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
