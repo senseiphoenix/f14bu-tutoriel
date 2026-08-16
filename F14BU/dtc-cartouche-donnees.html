@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — DTC : cartouche de données, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+.progress-wrap{position:sticky;top:0;z-index:10;background:var(--deck);padding:12px 0;margin-bottom:8px}
+.progress-bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:var(--go);width:0%;transition:width .25s ease}
+.progress-txt{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:6px;text-transform:uppercase}
+
+.phase{margin:38px 0}
+.phase-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.phase-num{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;flex:0 0 auto}
+.phase-title{font-family:var(--display);font-weight:600;font-size:21px;letter-spacing:.03em;text-transform:uppercase}
+.phase-why{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+
+.step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border-bottom:none}
+.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step-body{flex:1;min-width:0}
+.step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
+.step-item{font-weight:600;margin:0 0 4px}
+.step-item .switchname{font-family:var(--mono);color:var(--amber);font-weight:600}
+.step-item .setting{font-family:var(--mono);background:var(--panel-2);border:1px solid var(--line);padding:1px 7px;border-radius:2px;color:var(--go);font-size:.9em}
+.step-detail{color:var(--dim);font-size:13.5px;margin:0}
+.step-bind{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
+.bindtag .ic{opacity:.7;font-size:.9em}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:14px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.jester{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;color:var(--amber)}
+
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--panel-2)}
+tbody tr:nth-child(odd){background:rgba(30,42,51,.35)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+.src a{color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="perfectionnement.html">Perfectionnement</a><span>/</span>
+  <span>DTC : cartouche de données</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — pilote solo · Leçon 1/6</div>
+<h1>DTC : cartouche<br>de données, pas à pas</h1>
+<p class="sub">Le <b>Mission Data Loader (MDL/DTC)</b> — tout ce qui se prépare <b>avant</b> le décollage : plans de vol, plot lines, cible JDAM préplanifiée, programmes de contre-mesures.</p>
+
+<div class="intro-box">
+  <p><b>Ce n'est pas une action cockpit.</b> Contrairement au reste de ce site, cette leçon ne porte quasiment aucun bouton HOTAS : la cartouche de données se prépare avant le vol, dans le menu de chargement de mission de DCS (ou l'éditeur de mission si tu construis la tienne). Une fois en vol, son contenu est déjà là — tu ne fais que le consulter et l'exploiter au CDNU/PTID.</p>
+  <p>La DTC est le <b>tronc commun</b> des cinq autres leçons de perfectionnement : la navigation préplanifiée y sert de base au JDAM préplanifié (leçon 4) et à la mission de synthèse (leçon 6), et les programmes de contre-mesures que tu y définis sont ceux que <span class="jester">JESTER</span> déclenche pendant la <a href="contre-mesures.html" style="color:var(--amber)">leçon Contre-mesures</a> du Pas à pas.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Terminologie : ce site utilise <b style="color:var(--dim)">DTC</b> (Data Transfer Cartridge, le nom d'usage courant) et <b style="color:var(--dim)">MDL</b> (Mission Data Loader, le nom exact du système AN/ASQ-215 dans le manuel Heatblur) de façon interchangeable.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<!-- ============ PHASE 1 ============ -->
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Comprendre ce que transporte la DTC</span></div>
+  <p class="phase-why">Avant de manipuler quoi que ce soit, sache ce que cette cartouche contient réellement et où elle se règle — sinon tu la cherches au mauvais endroit une fois en vol.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Identifie où la DTC se prépare : le <span class="switchname">chargement de mission DCS</span>, pas le cockpit</p>
+    <p class="step-detail">Dans l'écran de chargement d'une mission (ou l'éditeur de mission si tu en construis une), une section dédiée au F-14B(U) permet de définir le contenu de la cartouche : c'est ce que le manuel Heatblur appelle le Mission Data Loader (MDL). Rien à insérer physiquement en cockpit — le contenu est déjà présent au démarrage à froid.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item">Retiens les trois grandes catégories de contenu</p>
+    <table>
+      <thead><tr><th>Catégorie</th><th>Contenu</th></tr></thead>
+      <tbody>
+        <tr><td>Navigation</td><td>12 plans de vol distincts, jusqu'à 50 points de cheminement chacun, plus les <b>plot lines</b> du PTID</td></tr>
+        <tr><td>GGW (JDAM)</td><td>Coordonnées et paramètres terminaux d'une frappe préplanifiée, chargés avant le décollage</td></tr>
+        <tr><td>CMDS (ALE-47)</td><td>Jusqu'à 8 programmes de largage de leurres, définis à l'avance plutôt qu'improvisés en vol</td></tr>
+      </tbody>
+    </table>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item">Comprends pourquoi ça compte : la DTC, c'est du temps gagné en vol</p>
+    <p class="step-detail">Tout ce qui est préparé dans la DTC n'a plus besoin d'être saisi manuellement au CDNU pendant la mission — un gain de temps et de charge mentale critique en situation tactique, surtout en solo avec JESTER qui ne peut pas faire cette saisie à ta place.</p>
+  </div></div>
+
+  <div class="note"><b>Où vérifier</b>Au sol, avant de rien toucher, ouvre le CDNU et le PTID en click-to-explain : si une mission a une DTC préparée, tu dois y retrouver directement les waypoints, la cible préplanifiée et les programmes ALE-47 sans rien saisir.</div>
+</section>
+
+<!-- ============ PHASE 2 ============ -->
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Navigation : plans de vol et Plot Lines PTID</span></div>
+  <p class="phase-why">La navigation est la partie la plus volumineuse de la DTC, et celle qui sert de fondation aux frappes préplanifiées de la phase 3.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Prépare jusqu'à <span class="setting">12 plans de vol</span> distincts, 50 points chacun</p>
+    <p class="step-detail">Chaque plan de vol est indépendant : une mission avec plusieurs phases (transit, zone de patrouille, dégagement) peut avoir un plan dédié par phase, activé au bon moment au CDNU plutôt que de tout faire tenir dans une seule route.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item">Regroupe des points en <span class="switchname">Plot Lines</span> pour le PTID du RIO</p>
+    <p class="step-detail">Le RIO peut définir jusqu'à <b>4 groupes de plot line</b>, 9 points maximum par groupe, 20 points au total sur les quatre groupes combinés. Une plot line s'affiche comme une ligne reliant ces points sur le PTID — utile pour matérialiser un couloir de progression, une limite de zone, ou une frontière à ne pas franchir.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item">Sache que les plot lines s'ajoutent <span class="setting">après</span> tes 50 points de navigation</p>
+    <p class="step-detail">Quand une plot line est créée depuis le menu DTM (l'éditeur de mission), ses points sont insérés à la suite du plan de vol de 50 points — ils ne remplacent rien, mais consomment un numéro de point. Si un plan de vol semble tronqué, vérifie si ce ne sont pas des points de plot line qui occupent la fin de la liste.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-4"><div class="step-body">
+    <p class="step-item">Modifie l'appartenance d'un point à une plot line directement au <span class="switchname">PTID, page NVD PLT</span></p>
+    <p class="step-detail">Une fois en vol, le RIO (ou JESTER) peut encore ajouter ou retirer un waypoint d'une plot line depuis cette page — la DTC donne un point de départ, pas une configuration figée pour toute la mission.</p>
+  </div></div>
+
+  <div class="note warn"><b>Piège</b>Le nom d'un waypoint peut porter un suffixe (par exemple une lettre après le numéro) qui indique au CDNU comment traiter ce point — mais le CDNU n'affiche jamais ce suffixe, seulement le nom racine, même s'il le garde en mémoire. Si un point semble mal catégorisé, vérifie son nom complet dans la DTC plutôt qu'à l'écran CDNU.</div>
+</section>
+
+<!-- ============ PHASE 3 ============ -->
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Préplanifier une frappe JDAM (GGW)</span></div>
+  <p class="phase-why">Le mode Pre-Planned de la JDAM se joue quasi entièrement ici, avant le décollage — c'est ce qui le distingue du mode TOO (cible d'opportunité), désigné en vol et couvert en détail dans la leçon 4.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item">Renseigne la cible dans la <span class="switchname">section GGW Pre-Planned Employment</span> de la DTC</p>
+    <p class="step-detail">Coordonnées de la cible et paramètres terminaux de l'arme (type de fusée, angle d'impact souhaité si applicable) se saisissent ici, avant le vol — c'est le contenu qui alimente directement la page JMSN du PTID une fois en l'air.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Sache transformer un waypoint de navigation en cible <span class="setting">TOO</span> sans tout ressaisir</p>
+    <p class="step-detail">N'importe quel waypoint déjà stocké dans le CDNU peut voir ses coordonnées copiées vers la page JMSN via la page <b>WP Edit 2/2</b> — pratique si une cible d'opportunité correspond en réalité à un point de passage que tu avais déjà noté, plutôt que de ressaisir une coordonnée à la main.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item">Transfère les données vers l'arme avec <span class="switchname">UPDATE</span> sur la page JMSN du PTID</p>
+    <p class="step-detail">C'est cette fonction qui pousse effectivement les coordonnées et paramètres vers les stations d'emport, via le bus de données 1553 de l'avion, pour qu'elles soient chargées dans les JDAM elles-mêmes avant le largage.</p>
+  </div></div>
+
+  <div class="note go"><b>Lien avec la leçon 4</b>Cette phase couvre la préparation <i>avant vol</i> d'une cible fixe connue à l'avance. La leçon 4 (JDAM avancé) couvre la désignation <i>en vol</i> de cibles non prévues au briefing, via la Context Key et le pod LANTIRN.</div>
+</section>
+
+<!-- ============ PHASE 4 ============ -->
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Programmer les contre-mesures ALE-47</span></div>
+  <p class="phase-why">Le B(U) emporte l'AN/ALE-47, un système programmable à 8 canaux — la DTC est l'endroit où tu définis ces 8 programmes avant de partir, plutôt que de tout régler sous le stress d'une alerte RWR.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item">Définis jusqu'à <span class="setting">8 programmes</span> dans la section CMDS de la DTC</p>
+    <p class="step-detail">Chaque programme fixe le contenu d'une salve (paillettes, fusées, ou mélange), sa cadence et sa durée — exactement les trois programmes types (menace radar, menace IR, dégagement) évoqués dans la leçon Contre-mesures du Pas à pas, mais préparés ici plutôt qu'improvisés.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item">Sache quel poste déclenche quel programme une fois en vol</p>
+    <table>
+      <thead><tr><th>Programme(s)</th><th>Déclenché par</th></tr></thead>
+      <tbody>
+        <tr><td>1 à 4</td><td>RIO, interrupteur intérieur de contre-mesures au-dessus du DDD (auto, semi-auto ou manuel)</td></tr>
+        <tr><td>5, 6, 7</td><td>RIO, interrupteurs de contre-mesures au-dessus du DDD</td></tr>
+        <tr><td>8</td><td>Pilote, via le sélecteur DLC du manche — le même bouton que le largage de leurres appris en <a href="contre-mesures.html" style="color:var(--amber)">Contre-mesures</a></td></tr>
+      </tbody>
+    </table>
+    <div class="step-bind"><a class="bindtag" data-bind-cmd="DLC Toggle / Countermeasure Dispense" href="#"></a></div>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-3"><div class="step-body">
+    <p class="step-item">Sur ce profil pilote solo, laisse <span class="jester">JESTER</span> gérer la sélection des programmes 1 à 7</p>
+    <p class="step-detail">C'est une tâche RIO de bout en bout : tu peux lui demander un programme adapté à la menace du moment, mais le programme 8 reste le seul que tu déclenches toi-même au bouton DLC, quel que soit le contenu réellement chargé dessus.</p>
+    <div class="step-bind"><span class="bindtag unbound" title="Tâche RIO pilotée par JESTER, pas une commande pilote"><span class="ic">🎙</span>RIO · JESTER</span></div>
+  </div></div>
+
+  <div class="note warn"><b>Piège classique</b>Arriver en zone hostile avec les 8 programmes encore à leurs réglages par défaut. Une DTC bien préparée doit avoir au moins un programme radar, un programme IR et un programme de dégagement définis avant le décollage — pas improvisés au premier bip du RWR.</div>
+</section>
+
+<div class="note go"><b>Tu es prêt</b>Tu sais où préparer une mission avant de décoller : navigation multi-plans, plot lines PTID, cible JDAM préplanifiée, et 8 programmes de contre-mesures prêts à l'emploi. La suite logique : appliquer cette préparation en vol, avec le radar et les missiles air-air (leçon 2).</div>
+
+<div class="footlinks">
+  <a href="perfectionnement.html">&larr; Retour à Perfectionnement</a>
+  <a href="bvr-wvr-synthese.html">Leçon suivante : BVR &amp; WVR →</a>
+</div>
+
+<p class="src">Sources : vidéo <a href="https://www.youtube.com/watch?v=ZbV8J47WP1k" target="_blank" rel="noopener">Basic DTC Tutorial (Spud Spike)</a>, croisée avec le manuel Heatblur — <a href="https://f14.manuals.heatblur.se/f14bu/systems/mdl/mission_data_loader.html" target="_blank" rel="noopener">Mission Data Loader</a>, <a href="https://f14.manuals.heatblur.se/f14bu/systems/ptid/programmable_tactical_information_display.html" target="_blank" rel="noopener">PTID</a>, <a href="https://f14.manuals.heatblur.se/f14bu/weapons/air_to_ground/gps_guided_weapons/ggw_employment.html" target="_blank" rel="noopener">GGW Employment</a> et <a href="https://f14.manuals.heatblur.se/f14bu/systems/defensive_systems/countermeasures/ale_47.html" target="_blank" rel="noopener">AN/ALE-47</a>. Le détail exact des « Ring SAM » évoqués dans certaines vidéos communautaires n'a pas pu être retrouvé dans le manuel en ligne au moment de la rédaction — à vérifier en jeu via le click-to-explain avant de t'y fier. Le badge de bouton est lu en direct dans <code>data/f14bu-bindings.json</code> (mêmes données que <a href="mapping-hotas.html" style="color:var(--dim)">le mapping HOTAS</a>).</p>
+
+</div>
+
+<script>
+const boxes=[...document.querySelectorAll('.step input[type=checkbox]')];
+const KEY='f14bu-dtc-progress';
+function load(){
+  try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return {}; }
+}
+function save(state){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+function updateProgress(){
+  const done=boxes.filter(b=>b.checked).length;
+  document.getElementById('ptxt').textContent=done+' / '+boxes.length+' étapes cochées';
+  document.getElementById('pfill').style.width=(boxes.length? (done/boxes.length*100) : 0)+'%';
+}
+const state=load();
+boxes.forEach(b=>{
+  const id=b.dataset.id;
+  if(state[id]){ b.checked=true; b.closest('.step').classList.add('done'); }
+  b.addEventListener('change',()=>{
+    state[id]=b.checked;
+    save(state);
+    b.closest('.step').classList.toggle('done', b.checked);
+    updateProgress();
+  });
+});
+updateProgress();
+
+const BIND_STORE_KEY='f14bu-export-bindings-v1';
+const AXIS_KEYS={X:'JOY_X', Y:'JOY_Y', Z:'JOY_Z', RX:'JOY_RX', RY:'JOY_RY', RZ:'JOY_RZ'};
+const DEV_LABEL={stick:'Manche', throttle:'Manette', pto2:'PTO2', pedals:'Pédales'};
+let BINDINGS=null;
+async function loadBindings(){
+  try{ BINDINGS=await fetch('data/f14bu-bindings.json').then(r=>r.json()); }
+  catch(e){ BINDINGS=null; }
+}
+function deriveKeys(n,count){
+  const upper=String(n).toUpperCase(), slots=Math.max(count,1);
+  if(AXIS_KEYS[upper]) return new Array(slots).fill(AXIS_KEYS[upper]);
+  if(upper==='SLDR') return new Array(slots).fill('JOY_SLIDER1');
+  if(/^\d+$/.test(n)) return new Array(slots).fill('JOY_BTN'+n);
+  const range=n.match(/^(\d+)-(\d+)$/);
+  if(range){
+    const first=+range[1], last=+range[2], keys=[];
+    for(let b=first; b<=last && keys.length<slots; b++) keys.push('JOY_BTN'+b);
+    return keys;
+  }
+  return new Array(slots).fill('');
+}
+function bindingsFor(cmdName){
+  if(!BINDINGS) return [];
+  let saved=null;
+  try{ saved=JSON.parse(localStorage.getItem(BIND_STORE_KEY)||'null'); }catch(e){}
+  const overrides=(saved&&saved.state)||{};
+  const hits=[];
+  for(const b of BINDINGS.bindings){
+    const entry=overrides[b.device+'|'+b.n];
+    const commands=(entry&&Array.isArray(entry.commands))?entry.commands:b.commands;
+    const keys=(entry&&Array.isArray(entry.keys))?entry.keys:deriveKeys(b.n,commands.length);
+    commands.forEach((name,i)=>{ if(name===cmdName && keys[i]) hits.push({device:b.device, key:keys[i], n:b.n}); });
+  }
+  return hits;
+}
+function paintBindBadges(){
+  document.querySelectorAll('a[data-bind-cmd]').forEach(el=>{
+    const hits=bindingsFor(el.dataset.bindCmd);
+    el.target='_blank'; el.rel='noopener';
+    if(!hits.length){
+      el.textContent='non affecté';
+      el.classList.add('unbound');
+      el.title='Pas de bind confirmé dans le profil actuel — ouvre le mapping pour vérifier ou en poser un';
+      el.href='mapping-hotas.html';
+      return;
+    }
+    el.textContent=hits.map(h=>`${DEV_LABEL[h.device]||h.device} · ${h.key.replace('JOY_','')}`).join(' · ');
+    el.classList.remove('unbound');
+    const h=hits[0];
+    el.title='Ouvrir le mapping sur ce contrôle';
+    el.href='mapping-hotas.html?dev='+h.device+'&n='+encodeURIComponent(h.n);
+  });
+}
+addEventListener('storage', e=>{ if(!e.key || e.key===BIND_STORE_KEY) paintBindBadges(); });
+loadBindings().then(paintBindBadges);
+</script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — FTI : imagerie tactique, fiche technique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+h2{font-family:var(--display);font-weight:600;font-size:22px;letter-spacing:.03em;text-transform:uppercase;margin:40px 0 12px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin:22px 0 8px}
+p{margin:10px 0}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--panel-2)}
+tbody tr:nth-child(odd){background:rgba(30,42,51,.35)}
+code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:2px 6px;border:1px solid var(--line);color:var(--amber)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:16px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+.src a{color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="perfectionnement.html">Perfectionnement</a><span>/</span>
+  <span>FTI : imagerie tactique</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — annexe technique</div>
+<h1>FTI : imagerie<br>tactique</h1>
+<p class="sub">Le <b>Fast Tactical Imaging System</b> capture, met en file d'attente et transmet des images tactiques entre appareils — il remplace l'ancien enregistreur AVTR sur le B(U).</p>
+
+<div class="intro-box">
+  <p><b>Aucun bouton HOTAS confirmé pour ce système</b> sur le profil pilote de ce site : le FTI se pilote via un panneau cockpit dédié (souris/click-to-explain), pas via une commande bindable au manche ou à la manette. Cette fiche décrit donc le fonctionnement du système, pas une checklist de boutons HOTAS.</p>
+</div>
+
+<h2>Alimentation et sources</h2>
+<p>Le commutateur principal a trois positions : <code>OFF</code>, <code>STANDBY</code> (moteur sous tension, bande prête) et <code>ON</code> (enregistrement vidéo continu). Quatre sources peuvent être sélectionnées pour l'enregistrement : le HUD, le TCS, le LANTIRN, et les écrans PTID.</p>
+
+<h2>Deux modes de capture</h2>
+<table>
+  <thead><tr><th>Mode</th><th>Comportement</th></tr></thead>
+  <tbody>
+    <tr><td><code>SNAP</code></td><td>Capture un instantané unique, une seule image.</td></tr>
+    <tr><td><code>BURST</code></td><td>Capture des images à intervalle prédéfini, pendant une durée prédéfinie — s'arrête automatiquement si la file d'attente se remplit (environ 188 images).</td></tr>
+  </tbody>
+</table>
+<p>Chaque capture est ensuite traitée selon le mode retenu : <b>capture/send</b> (transmission immédiate) ou <b>capture/hold</b> (stockage dans une file d'attente avant décision).</p>
+
+<h2>Les trois files d'attente</h2>
+<table>
+  <thead><tr><th>File</th><th>Rôle</th></tr></thead>
+  <tbody>
+    <tr><td>Hold Queue</td><td>Images capturées en attente de révision — c'est ici que tu parcours ce que tu viens de photographier avant de décider quoi en faire.</td></tr>
+    <tr><td>Send Queue</td><td>Images marquées pour envoi — en mode capture/hold, quand aucun destinataire n'est sélectionné et qu'aucune réception n'est en cours, les images non compressées de la Hold Queue peuvent être compressées et déplacées ici.</td></tr>
+    <tr><td>Receive Queue</td><td>Images reçues depuis un autre appareil (ailier, AWACS) — le pendant réception de la Send Queue.</td></tr>
+  </tbody>
+</table>
+<p>Navigation dans la Hold Queue au PTID : <code>VIEW</code> → <code>HOLD</code> → <code>NEXT</code>/<code>PREV</code>. Une image intéressante se marque avec <code>MARK</code> pour la faire passer vers la Send Queue ; l'envoi effectif se lance avec <code>SEND</code>, qui transfère une image à la fois vers la carte image du destinataire, avec un indicateur de pourcentage de transfert.</p>
+
+<h2>Fichiers sur le disque</h2>
+<p>Les enregistrements se retrouvent sous <code>Saved Games/DCS_F14/TIS/</code> (le sous-dossier exact peut varier selon ta version DCS/instance) : images au format <code>.JPG</code>, plus un journal d'événements horodatés. Utile pour un débriefing après-vol, en dehors du jeu.</p>
+
+<div class="note warn"><b>À vérifier en jeu</b>Le chemin exact du dossier de sauvegarde et les libellés précis des boutons du panneau physique n'ont pas pu être confirmés au-delà de ce que montre la vidéo source — vérifie via le click-to-explain avant de t'y fier pour une procédure critique.</div>
+
+<div class="footlinks">
+  <a href="perfectionnement.html">&larr; Retour à Perfectionnement</a>
+  <a href="jhmcs.html">Annexe suivante : JHMCS →</a>
+</div>
+
+<p class="src">Sources : vidéo <a href="https://www.youtube.com/watch?v=frxT2vEUUGM" target="_blank" rel="noopener">DCS F-14B(U) Bonus 1 - FTI</a>, croisée avec le manuel Heatblur — <a href="https://f14.manuals.heatblur.se/f14bu/systems/nav_com/com/fast_tactical_imaging_set.html" target="_blank" rel="noopener">Fast Tactical Imaging System</a>.</p>
+
+</div>
+</body>
+</html>

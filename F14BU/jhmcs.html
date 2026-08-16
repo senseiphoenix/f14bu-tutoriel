@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-14B(U) — JHMCS : viseur de casque, fiche technique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
+.wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
+.sub{color:var(--dim);max-width:66ch}
+.sub b{color:var(--ink)}
+h2{font-family:var(--display);font-weight:600;font-size:22px;letter-spacing:.03em;text-transform:uppercase;margin:40px 0 12px;padding-top:20px;border-top:1px solid var(--line)}
+h3{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin:22px 0 8px}
+p{margin:10px 0}
+
+.intro-box{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--amber);padding:18px 20px;margin:26px 0;border-radius:2px}
+.intro-box p{margin:0 0 10px}
+.intro-box p:last-child{margin-bottom:0}
+.intro-box b{color:var(--amber)}
+
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px}
+th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber);background:var(--panel-2)}
+tbody tr:nth-child(odd){background:rgba(30,42,51,.35)}
+code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:2px 6px;border:1px solid var(--line);color:var(--amber)}
+
+.bindtag{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.03em;
+  color:var(--go);background:rgba(111,208,140,.12);border:1px solid rgba(111,208,140,.4);border-radius:3px;
+  padding:3px 8px;text-decoration:none;white-space:nowrap}
+a.bindtag:hover{border-color:var(--go);background:rgba(111,208,140,.2)}
+.bindtag.unbound{color:var(--dim);background:rgba(139,154,163,.08);border-color:var(--line)}
+
+.note{border:1px solid var(--line);border-left:3px solid var(--dim);background:var(--panel);padding:12px 16px;margin:16px 0;font-size:13.5px;color:var(--dim);border-radius:2px}
+.note.warn{border-left-color:var(--warn)}
+.note.go{border-left-color:var(--go)}
+.note b{color:var(--ink);font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px}
+.note.warn b{color:var(--warn)}
+.note.go b{color:var(--go)}
+
+.footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a:hover{color:var(--amber);border-color:var(--amber)}
+
+.src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}
+.src a{color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-14B(U)</a><span>/</span>
+  <a href="perfectionnement.html">Perfectionnement</a><span>/</span>
+  <span>JHMCS : viseur de casque</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-14B(U) Tomcat — annexe technique</div>
+<h1>JHMCS : viseur<br>de casque</h1>
+<p class="sub">Le viseur monté sur casque (Joint Helmet Mounted Cueing System) rapproche le B(U) des chasseurs de 4<sup>e</sup> génération modernes : désignation visuelle, alertes RWR directionnelles, et image tête haute quel que soit ton regard.</p>
+
+<div class="intro-box">
+  <p><b>Contenu partiellement vérifié.</b> Le module B(U) étant sorti début juin 2026, je n'ai pas retrouvé de page manuel Heatblur dédiée en ligne détaillant précisément la symbologie JHMCS au moment de la rédaction — le contenu ci-dessous vient de la vidéo source et de connaissances générales sur les JHMCS d'autres plateformes. Vérifie chaque détail précis via le click-to-explain en jeu.</p>
+  <p style="margin-bottom:0">Ce que le manuel confirme avec certitude : le casque intègre une <b>visière</b> (<code>Helmet Visor</code>), bindable séparément du reste du système.</p>
+</div>
+
+<h2>Ce que le viseur affiche</h2>
+<p>Le principe général d'un HMD (Helmet-Mounted Display) reste le même que sur les plateformes modernes : une image collimatée superposée à ta vision réelle, qui suit ton regard plutôt que de rester fixe droit devant comme le HUD classique.</p>
+<table>
+  <thead><tr><th>Élément affiché</th><th>Utilité</th></tr></thead>
+  <tbody>
+    <tr><td>Cibles aériennes suivies par le radar</td><td>Repère visuel direct sur un contact, même hors de l'axe avion</td></tr>
+    <tr><td>Menaces sol (RWR, SAM)</td><td>Indication directionnelle vers la source d'une menace détectée</td></tr>
+    <tr><td>Alliés</td><td>Distinction visuelle par code couleur/symbologie pour éviter une confusion ami/ennemi</td></tr>
+    <tr><td>Décompte d'armement actif</td><td>Temps avant activation d'un missile en vol (type Fox-3 AIM-54)</td></tr>
+  </tbody>
+</table>
+
+<h2>Interaction avec le RIO / JESTER</h2>
+<p>Le viseur ne remplace pas le travail du RIO — il vient en complément. Le radar et JESTER continuent leur travail de balayage et de suivi normalement ; le JHMCS te permet en plus de désigner et verrouiller visuellement une cible sans attendre que le radar l'ait d'abord accrochée, particulièrement utile en transition BVR → WVR au merge.</p>
+
+<h2>Visière et activation</h2>
+<p>La commande confirmée sur ce profil pilote concerne la visière du casque, pas le JHMCS lui-même comme fonction séparée :</p>
+<p><span class="bindtag unbound">Helmet Visor — Down / Up / Toggle</span></p>
+<p style="font-size:13px">Nom exact des commandes dans <code>data/f14bu-commands.json</code> : <code>Helmet Visor - Down</code>, <code>Helmet Visor - Up</code>, <code>Helmet Visor - [Toggle]</code>.</p>
+
+<div class="note warn"><b>À vérifier en jeu</b>Les alertes directionnelles précises (« SAM 10:00 HOT » et équivalents) et la procédure exacte d'engagement visuel n'ont pas pu être confirmées au-delà de ce que montre la vidéo source — traite cette section comme un point de départ, pas une référence exhaustive.</div>
+
+<div class="footlinks">
+  <a href="fti-tis.html">&larr; Annexe précédente : FTI</a>
+  <a href="perfectionnement.html">Retour à Perfectionnement →</a>
+</div>
+
+<p class="src">Source : vidéo <a href="https://www.youtube.com/watch?v=F078xGI_230" target="_blank" rel="noopener">F14B(U) Just got the JHMCS! (SYNTAX)</a>. Commande de visière vérifiée dans <code>data/f14bu-commands.json</code>.</p>
+
+</div>
+</body>
+</html>
