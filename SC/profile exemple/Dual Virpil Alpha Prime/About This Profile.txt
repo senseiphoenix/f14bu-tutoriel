@@ -1,0 +1,7 @@
+This Profile Requires JoyToKey to Function Properly
+
+This Profile is designed for Dual Virpil Constellation Alpha Prime Grips. 
+For the original Virpil Constellation Alpha sticks use the Other Profile.
+
+This profile was made using the WarBRD gimbals, but it should work regardless of what gimbals you are using.
+Make sure to update your stick's firmware and calibrate them using the Vipril Configurator Tool.
