@@ -87,3 +87,47 @@ a.card.tool{padding:14px 20px}
 .ic-flag{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 21V4'/%3E%3Cpath d='M5 4h13l-3 4 3 4H5Z'/%3E%3C/svg%3E")}
 .ic-anchor{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='5' r='2.2'/%3E%3Cpath d='M12 7v14'/%3E%3Cpath d='M5 14a7 7 0 0 0 14 0'/%3E%3Cpath d='M8 10h8'/%3E%3C/svg%3E")}
 .ic-star{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3 14.6 9.3 21.4 9.9 16.2 14.3 17.8 21 12 17.4 6.2 21 7.8 14.3 2.6 9.9 9.4 9.3Z'/%3E%3C/svg%3E")}
+
+/* ---------- Recherche globale (js/site-search.js) ----------
+   Injectée en JS sur chaque page (bouton flottant + overlay), donc en
+   position:fixed exclusivement : ne doit jamais dépendre du flux normal
+   d'une page pour rester sans risque sur les planches de mapping. */
+.gsearch-btn{
+  position:fixed;right:20px;bottom:20px;z-index:200;
+  width:48px;height:48px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--panel);border:1px solid var(--line);color:var(--dim);
+  cursor:pointer;transition:border-color .15s,color .15s,box-shadow .15s;
+  box-shadow:0 2px 10px rgba(0,0,0,.35);
+}
+.gsearch-btn:hover{border-color:var(--amber);color:var(--amber);box-shadow:0 0 18px -4px var(--amber)}
+.gsearch-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.gsearch-overlay{
+  position:fixed;inset:0;z-index:300;background:rgba(8,11,13,.78);
+  display:flex;align-items:flex-start;justify-content:center;padding:9vh 20px 20px;
+}
+.gsearch-overlay[hidden]{display:none}
+.gsearch-panel{
+  width:100%;max-width:600px;background:var(--panel);border:1px solid var(--line);
+  box-shadow:0 20px 60px rgba(0,0,0,.55);
+}
+.gsearch-input-row{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.gsearch-input-row svg{width:18px;height:18px;flex:none;fill:none;stroke:var(--dim);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.gsearch-input{
+  flex:1;background:transparent;border:0;outline:0;color:var(--ink);
+  font-family:var(--body);font-size:15px;
+}
+.gsearch-input::placeholder{color:var(--dim)}
+.gsearch-esc{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--dim);
+  border:1px solid var(--line);border-radius:2px;padding:2px 6px;flex:none}
+.gsearch-results{max-height:56vh;overflow-y:auto}
+.gsearch-item{display:flex;align-items:baseline;gap:10px;padding:10px 16px;cursor:pointer;
+  border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.gsearch-item:last-child{border-bottom:none}
+.gsearch-item:hover,.gsearch-item.sel{background:var(--deck)}
+.gsearch-type{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);
+  border:1px solid var(--line);border-radius:2px;padding:2px 6px;flex:none}
+.gsearch-label{font-family:var(--body);font-size:13.5px;flex:1;min-width:0}
+.gsearch-aircraft{font-family:var(--mono);font-size:10.5px;color:var(--dim);flex:none;text-align:right}
+.gsearch-empty,.gsearch-hint{padding:16px;font-family:var(--mono);font-size:12px;color:var(--dim)}
+@media(max-width:560px){.gsearch-overlay{padding:6vh 10px 10px}.gsearch-aircraft{display:none}}
