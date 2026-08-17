@@ -1,0 +1,1664 @@
+[
+ {
+  "title": "ACM Jettison",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=17-22",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Afterburner Gate",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=13",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Aircraft Rudder Left",
+  "path": "F14BU/mapping-hotas.html?dev=pedals&n=1",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Aircraft Rudder Right",
+  "path": "F14BU/mapping-hotas.html?dev=pedals&n=2",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "All missiles padlock",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=23",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Antiskid & Spoiler BK - Both",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=10-11",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Antiskid & Spoiler BK - Off",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=10-11",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Autopilot Emergency Disconnect Paddle",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=7",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Autopilot On",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=14",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "CAGE-SEAM button",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=13",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Camera snap view down",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=28",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Camera snap view left",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=29",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Camera snap view right",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=31",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Camera snap view up",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=30",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Display mode air to air",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=23-27",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Display mode air to ground",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=23-27",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Display mode cruise",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=23-27",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Display mode landing",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=23-27",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Display mode takeoff",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=23-27",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "DLC / Maneuver Flaps",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=rZ",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "DLC Thumbwheel Aft",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=27",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "DLC Thumbwheel Forward",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=25",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "DLC Toggle / Countermeasure Dispense",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=29",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Emergency Flaps Down",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=5-7",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Eng/Probe Anti Ice AUTO",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=46",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Eng/Probe Anti Ice OFF",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=47",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "F1 Cockpit view",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=26",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "F2 Aircraft view",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=24",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Fueldump Dump",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=48",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Fueldump Off",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=49",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Gear Emergency Extend",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=35-37",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Gears Down",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=35-37",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Gears Up",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=35-37",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Hook Extend",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=34",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Hook Retract",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=32",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Hook Retract",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=33",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Jester Menu Down",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=23",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Jester Menu Left",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=24",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Jester Menu Right",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=26",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Jester Menu Up",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=25",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Largage d'urgence",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=17-22",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Launch Bar Abort Switch - ABORT",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=3-4",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Launch Bar Abort Switch - AUTO",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=3-4",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Lights Anti Collision ON",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=45",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Lights Hook Bypass CARRIER",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=12-13",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Lights Hook Bypass FIELD",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=12-13",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Lights Position Wing BRT",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=44",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Lights Taxi OFF",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=8-9",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Lights Taxi ON",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=8-9",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Master arm off and cover close",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=37",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Master arm on and cover open",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=36",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Master Caution Reset",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=2",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Night Vision Goggles",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=17",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Parking brake enabled, else disabed",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=32",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Parking brake pull",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=38",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Parking brake pull",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=40",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Parking brake stow",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=39",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Parking brake stow",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=41",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Radar - Break Lock",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=8",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Radar - Range 100",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=10",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Radar - Range 25",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=12",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Radar - Toggle PD-STT or P-STT",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=20",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Refuel Probe extend & Refuel All, else Retract Probe",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=33",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Refuel Probe extend, Refuel All",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=14-16",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Refuel Probe extend, Refuel Fuselage",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=14-16",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Refuel Probe Retract",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=14-16",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Request AWACS Bogey Dope",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=1",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Rudder",
+  "path": "F14BU/mapping-hotas.html?dev=pedals&n=3",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Speed brake extend",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=31",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Speed brake retract",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=18",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Store Release",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=1",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Target designate fwd / PAL",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=6",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Throttle Left",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=rX",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Throttle Right",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=rY",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Toggle Auto Throttle",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=16",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Toggle Menu",
+  "path": "F14BU/mapping-hotas.html?dev=throttle&n=22",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Trigger",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=5",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Trigger First Detent",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=4",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Trim Pitch Down",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=15",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Trim Pitch Up",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=17",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Trim Roll Left Wing Down",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=16",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Trim Roll Right Wing Down",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=18",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Volets - 1 cran",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=5-7",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Volets rentrés",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=5-7",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Weapon Selector Gun",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=2",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Weapon Selector Off",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=3",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Weapon Selector Sidewinder Missiles",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=28",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Weapon Selector Sparrow or Phoenix Missiles",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=30",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Wheel Brake Left",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=SLDR",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Wheel Brake Left",
+  "path": "F14BU/mapping-hotas.html?dev=pedals&n=4",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Wheel Brake Right",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=SLDR",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Wheel Brake Right",
+  "path": "F14BU/mapping-hotas.html?dev=pedals&n=4",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Wing Sweep Aft",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=28-31",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Wing Sweep Auto Mode",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=28-31",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Wing Sweep Bomb Mode",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=28-31",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Wing Sweep Forward",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=28-31",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Zoom in",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=21",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Zoom out",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=22",
+  "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Aligner l'EGI",
+  "path": "F14BU/section-b-navigation.html#b2",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "BFM : le Tomcat au manche",
+  "path": "F14BU/section-d-air-air.html#d7",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Bombes guidées laser et GBU-24E/B",
+  "path": "F14BU/section-f-air-sol.html#f3",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Bombes lisses : les quatre modes d'attaque",
+  "path": "F14BU/section-f-air-sol.html#f2",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ce qu'on emporte, et une étape à ne pas oublier",
+  "path": "F14BU/section-f-air-sol.html#f1",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Commandes et bindings",
+  "path": "F14BU/section-a-illustree.html#a2",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Comprendre le système",
+  "path": "F14BU/section-b-navigation.html#b1",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Démarrage à froid",
+  "path": "F14BU/section-a-illustree.html#a4",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Départ catapulte",
+  "path": "F14BU/section-c-porte-avions.html#c1",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "JDAM : cible d'opportunité",
+  "path": "F14BU/section-f-air-sol.html#f5",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "JDAM : mission préplanifiée",
+  "path": "F14BU/section-f-air-sol.html#f4",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "L'ALE-47 : leurres programmés",
+  "path": "F14BU/section-e-survie.html#e2",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "La mission complète",
+  "path": "F14BU/section-g-mission.html#g3",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "La théorie de l'appontage",
+  "path": "F14BU/section-c-porte-avions.html#c2",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Le HUD en air-air",
+  "path": "F14BU/section-d-air-air.html#d3",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Le radar : modes et vocabulaire",
+  "path": "F14BU/section-d-air-air.html#d1",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Lire le PTID",
+  "path": "F14BU/section-d-air-air.html#d2",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Lire le RWR",
+  "path": "F14BU/section-e-survie.html#e1",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Phoenix et tir multi-cibles",
+  "path": "F14BU/section-d-air-air.html#d6",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Poser sur le pont",
+  "path": "F14BU/section-c-porte-avions.html#c4",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ravitaillement en vol",
+  "path": "F14BU/section-g-mission.html#g2",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
+  "path": "F14BU/section-a-illustree.html#a8",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
+  "path": "F14BU/section-b-navigation.html#b6",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
+  "path": "F14BU/section-c-porte-avions.html#c5",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
+  "path": "F14BU/section-d-air-air.html#d8",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
+  "path": "F14BU/section-e-survie.html#e4",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
+  "path": "F14BU/section-f-air-sol.html#f6",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
+  "path": "F14BU/section-g-mission.html#g4",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Retour terrain et atterrissage",
+  "path": "F14BU/section-a-illustree.html#a7",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Roulage et décollage",
+  "path": "F14BU/section-a-illustree.html#a5",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Saisir un waypoint",
+  "path": "F14BU/section-b-navigation.html#b3",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Sidewinder et canon",
+  "path": "F14BU/section-d-air-air.html#d4",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Sparrow",
+  "path": "F14BU/section-d-air-air.html#d5",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Suivre une route",
+  "path": "F14BU/section-b-navigation.html#b4",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Survivre à un engagement",
+  "path": "F14BU/section-e-survie.html#e3",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "TACAN et sources de guidage",
+  "path": "F14BU/section-b-navigation.html#b5",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Tour du cockpit",
+  "path": "F14BU/section-a-illustree.html#a1",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Travailler avec JESTER",
+  "path": "F14BU/section-a-illustree.html#a3",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Urgences",
+  "path": "F14BU/section-g-mission.html#g1",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Vol de base, AoA et DFCS",
+  "path": "F14BU/section-a-illustree.html#a6",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Voler le circuit",
+  "path": "F14BU/section-c-porte-avions.html#c3",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "AIM-7 Sparrow",
+  "path": "F4E/section-g-armement.html#g3",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Alignement INS",
+  "path": "F4E/section-b-demarrage.html#b2",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Approche initiale",
+  "path": "F4E/section-e-atterrissage.html#e1",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Armement air-sol & Pave Spike",
+  "path": "F4E/section-g-armement.html#g4",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Avant roulage",
+  "path": "F4E/section-b-demarrage.html#b3",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Bold Face — items critiques",
+  "path": "F4E/section-f-urgences.html#f3",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Break & vent arrière",
+  "path": "F4E/section-e-atterrissage.html#e2",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Canon & AIM-9 Sidewinder",
+  "path": "F4E/section-g-armement.html#g2",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Carburant",
+  "path": "F4E/section-d-vol.html#d2",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Commandes de vol & AFCS",
+  "path": "F4E/section-d-vol.html#d1",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Console droite, pédale centrale & armement",
+  "path": "F4E/section-a-cockpit.html#a5",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Console gauche — moteur, AFCS & carburant",
+  "path": "F4E/section-a-cockpit.html#a4",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Démarrage moteur",
+  "path": "F4E/section-b-demarrage.html#b1",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Dérive INS & recalage",
+  "path": "F4E/section-d-vol.html#d4",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Feu & surchauffe moteur",
+  "path": "F4E/section-f-urgences.html#f1",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Instruments de vol & viseur",
+  "path": "F4E/section-a-cockpit.html#a2",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Manche & HOTAS",
+  "path": "F4E/section-a-cockpit.html#a8",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Mise en puissance",
+  "path": "F4E/section-c-decollage.html#c1",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Montée & croisière",
+  "path": "F4E/section-c-decollage.html#c3",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Navigation radio (TACAN/VOR/ADF)",
+  "path": "F4E/section-d-vol.html#d3",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Panneau supérieur, alarmes & IFF",
+  "path": "F4E/section-a-cockpit.html#a3",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Pannes moteur",
+  "path": "F4E/section-f-urgences.html#f2",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Poser & arrêt",
+  "path": "F4E/section-e-atterrissage.html#e4",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Poste WSO — consoles & navigation",
+  "path": "F4E/section-a-cockpit.html#a7",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Poste WSO — instruments avant & radar",
+  "path": "F4E/section-a-cockpit.html#a6",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Radar AN/APQ-120",
+  "path": "F4E/section-g-armement.html#g1",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Radio, autopilote & Jester",
+  "path": "F4E/section-g-armement.html#g6",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Ravitaillement en vol (AAR)",
+  "path": "F4E/section-d-vol.html#d5",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Rotation & train",
+  "path": "F4E/section-c-decollage.html#c2",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Roulage",
+  "path": "F4E/section-b-demarrage.html#b4",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "RWR, contre-mesures & IFF",
+  "path": "F4E/section-g-armement.html#g5",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Virage de base & finale",
+  "path": "F4E/section-e-atterrissage.html#e3",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Vue d'ensemble",
+  "path": "F4E/section-a-cockpit.html#a1",
+  "aircraft": "F-4E Phantom II",
+  "type": "leçon"
+ },
+ {
+  "title": "Amerrissage",
+  "path": "F4U1D/section-f-urgences.html#f6",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Atterrissage forcé sur le ventre",
+  "path": "F4U1D/section-f-urgences.html#f5",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Atterrissage manqué, arrêt moteur & fin de vol",
+  "path": "F4U1D/section-e-appontage.html#e7",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Atterrissage terrain",
+  "path": "F4U1D/section-e-appontage.html#e2",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Auto-start/auto-shutdown & routine perso",
+  "path": "F4U1D/section-b-demarrage.html#b7",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Avant de monter à bord",
+  "path": "F4U1D/section-b-demarrage.html#b1",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Bombes",
+  "path": "F4U1D/section-g-armement.html#g2",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Catapultage",
+  "path": "F4U1D/section-c-decollage.html#c5",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Ce qu'il faut retenir avant la Section D",
+  "path": "F4U1D/section-c-decollage.html#c7",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Chauffe et tests moteur au sol",
+  "path": "F4U1D/section-b-demarrage.html#b5",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Checklist avant vol",
+  "path": "F4U1D/section-b-demarrage.html#b2",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Checklist d'approche",
+  "path": "F4U1D/section-e-appontage.html#e1",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Chercher la panne en vol",
+  "path": "F4U1D/section-f-urgences.html#f3",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Circuit d'appontage Essex — approche finale",
+  "path": "F4U1D/section-e-appontage.html#e5",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Circuit d'appontage Essex — mise en place",
+  "path": "F4U1D/section-e-appontage.html#e4",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Commandes de vol & bloc moteur",
+  "path": "F4U1D/section-a-cockpit.html#a3",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Construire ton réflexe d'urgence",
+  "path": "F4U1D/section-f-urgences.html#f7",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Croisière économique",
+  "path": "F4U1D/section-d-vol.html#d3",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Crosse d'appontage & armement des canons",
+  "path": "F4U1D/section-a-cockpit.html#a6",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Décision : où et comment se poser",
+  "path": "F4U1D/section-f-urgences.html#f4",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Décollage distance minimale",
+  "path": "F4U1D/section-c-decollage.html#c3",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Décollage roulant depuis l'Essex",
+  "path": "F4U1D/section-c-decollage.html#c4",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Décollage terrain standard",
+  "path": "F4U1D/section-c-decollage.html#c2",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Démarrage moteur pas à pas",
+  "path": "F4U1D/section-b-demarrage.html#b3",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Évacuation d'urgence",
+  "path": "F4U1D/section-f-urgences.html#f1",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Généralités & configuration",
+  "path": "F4U1D/section-c-decollage.html#c1",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Horizon gyroscopique, virages & volets de combat",
+  "path": "F4U1D/section-d-vol.html#d6",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Les canons",
+  "path": "F4U1D/section-g-armement.html#g1",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Limites de vitesse & facteur de charge",
+  "path": "F4U1D/section-d-vol.html#d5",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Navigation AN/ARR-2 & repérage Morse",
+  "path": "F4U1D/section-g-armement.html#g6",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Panne moteur au décollage & configuration après décollage",
+  "path": "F4U1D/section-c-decollage.html#c6",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Planche de bord & instruments",
+  "path": "F4U1D/section-a-cockpit.html#a2",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Préparation au roulage",
+  "path": "F4U1D/section-b-demarrage.html#b4",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Puissance militaire & régime nominal",
+  "path": "F4U1D/section-d-vol.html#d1",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Radio AN/ARC-5",
+  "path": "F4U1D/section-g-armement.html#g5",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Reconnaître une panne moteur",
+  "path": "F4U1D/section-f-urgences.html#f2",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Refroidissement, carburant & hydraulique",
+  "path": "F4U1D/section-a-cockpit.html#a4",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Réglages recommandés, rétroviseurs & confort cockpit",
+  "path": "F4U1D/section-a-cockpit.html#a7",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Remise des gaz (wave-off)",
+  "path": "F4U1D/section-e-appontage.html#e6",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Roquettes HVAR",
+  "path": "F4U1D/section-g-armement.html#g3",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Roulage",
+  "path": "F4U1D/section-b-demarrage.html#b6",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Stabilité & changements de trim",
+  "path": "F4U1D/section-d-vol.html#d2",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Synthèse armement complet",
+  "path": "F4U1D/section-g-armement.html#g7",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Tiny Tim & Bat Bomb",
+  "path": "F4U1D/section-g-armement.html#g4",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Tour du cockpit",
+  "path": "F4U1D/section-a-cockpit.html#a1",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Train, ailes repliables, aérofrein & volets",
+  "path": "F4U1D/section-a-cockpit.html#a5",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Vent de travers & distance minimale",
+  "path": "F4U1D/section-e-appontage.html#e3",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Vibrations & pompage moteur",
+  "path": "F4U1D/section-d-vol.html#d4",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Voltige & piqués permis",
+  "path": "F4U1D/section-d-vol.html#d7",
+  "aircraft": "F4U-1D Corsair",
+  "type": "leçon"
+ },
+ {
+  "title": "Tutoriels de pilotage — Accueil",
+  "path": "index.html",
+  "aircraft": null,
+  "type": "page"
+ },
+ {
+  "title": "Cursus F-14B(U) — appli complète",
+  "path": "F14BU/cursus-complet.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "Cursus F-14B(U) — Tutoriel",
+  "path": "F14BU/index.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — AIM-54 Phoenix et TWS, pas à pas",
+  "path": "F14BU/aim54-phoenix-tws.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — AIM-7 Sparrow, pas à pas",
+  "path": "F14BU/aim7-sparrow.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Bombes guidées laser et LANTIRN, pas à pas",
+  "path": "F14BU/bombes-laser-lantirn.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Bombes lisses en CCIP, pas à pas",
+  "path": "F14BU/bombes-ccip.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — BVR & WVR : synthèse et modes ACM, pas à pas",
+  "path": "F14BU/bvr-wvr-synthese.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — BVR/WVR approfondi (FlyAndWire), fiche technique",
+  "path": "F14BU/bvr-flyandwire-avance.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Carburant, pannes simples et retour",
+  "path": "F14BU/carburant-pannes-retour.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Carnet de progression",
+  "path": "F14BU/tomcat-progression.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Circuit CASE I et appontage, pas à pas",
+  "path": "F14BU/case-i-appontage.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Combat courte portée : AIM-9 et canon, pas à pas",
+  "path": "F14BU/combat-courte-portee.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Construire ses checklists personnalisées",
+  "path": "F14BU/checklists-personnalisees.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Contre-mesures : chaff, flares, ECM, pas à pas",
+  "path": "F14BU/contre-mesures.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Démarrage à froid, pas à pas",
+  "path": "F14BU/demarrage-a-froid.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Démarrage et catapultage, porte-avions",
+  "path": "F14BU/demarrage-porte-avions.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Dogfight canon : bases du BFM, pas à pas",
+  "path": "F14BU/dogfight-bfm.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — DTC : cartouche de données, pas à pas",
+  "path": "F14BU/dtc-cartouche-donnees.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Export des bindings DCS",
+  "path": "F14BU/export-bindings.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — FTI : imagerie tactique, fiche technique",
+  "path": "F14BU/fti-tis.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — JDAM : préplanifié et cible d'opportunité, pas à pas",
+  "path": "F14BU/jdam.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — JDAM avancé : Context Key et ripple, pas à pas",
+  "path": "F14BU/jdam-context-key-ripple.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — JHMCS : viseur de casque, fiche technique",
+  "path": "F14BU/jhmcs.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Le cockpit",
+  "path": "F14BU/cockpit/index.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Les missions du module",
+  "path": "F14BU/missions.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Mapping HOTAS",
+  "path": "F14BU/mapping-hotas.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Maverick et interception de nuit, pas à pas",
+  "path": "F14BU/maverick-nvg-nuit.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Navigation : HUD, HSD/TID, TACAN, pas à pas",
+  "path": "F14BU/navigation-hud-tacan.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Pas à pas",
+  "path": "F14BU/pas-a-pas.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Perfectionnement",
+  "path": "F14BU/perfectionnement.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Préparer le module et les contrôles",
+  "path": "F14BU/preparer-module-controles.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Radar air-air : RWS et STT, pas à pas",
+  "path": "F14BU/radar-rws-stt.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Ressources externes",
+  "path": "F14BU/ressources.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Retour terrain et atterrissage, pas à pas",
+  "path": "F14BU/retour-atterrissage.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Roulage et décollage, pas à pas",
+  "path": "F14BU/roulage-decollage.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Section A : reprendre l'avion en main",
+  "path": "F14BU/section-a-illustree.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Section B : naviguer, EGI & CDNU",
+  "path": "F14BU/section-b-navigation.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Section C : le porte-avions",
+  "path": "F14BU/section-c-porte-avions.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Section D : air-air, chasser",
+  "path": "F14BU/section-d-air-air.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Section E : survivre",
+  "path": "F14BU/section-e-survie.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Section F : air-sol, frapper",
+  "path": "F14BU/section-f-air-sol.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Section G : mettre bout à bout",
+  "path": "F14BU/section-g-mission.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Synthèse : Strike & Threat React, pas à pas",
+  "path": "F14BU/threat-react-scud-hunt.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Travailler avec JESTER",
+  "path": "F14BU/travailler-avec-jester.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "F-14B(U) — Vol de base, AoA et DFCS, pas à pas",
+  "path": "F14BU/vol-base-aoa-dfcs.html",
+  "aircraft": "F-14B(U)",
+  "type": "page"
+ },
+ {
+  "title": "Cursus F-4E Phantom II — Tutoriel",
+  "path": "F4E/index.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "Section A — Découverte & cockpit — F-4E",
+  "path": "F4E/section-a-cockpit.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "Section B — Démarrage & roulage — F-4E",
+  "path": "F4E/section-b-demarrage.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "Section C — Décollage — F-4E",
+  "path": "F4E/section-c-decollage.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "Section D — Vol normal & navigation — F-4E",
+  "path": "F4E/section-d-vol.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "Section E — Atterrissage — F-4E",
+  "path": "F4E/section-e-atterrissage.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "Section F — Urgences — F-4E",
+  "path": "F4E/section-f-urgences.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "Section G — Armement & capteurs — F-4E",
+  "path": "F4E/section-g-armement.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "Cursus F4U-1D Corsair — Tutoriel",
+  "path": "F4U1D/index.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "Star Citizen — Pilotage et mapping HOSAS",
+  "path": "SC/index.html",
+  "aircraft": "Star Citizen",
+  "type": "page"
+ }
+]

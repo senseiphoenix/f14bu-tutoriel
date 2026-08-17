@@ -221,3 +221,33 @@ Sur ce poste, PowerShell 5.1 lève `Les types des arguments ne correspondent
 pas` sur `@($liste)` quand l'objet est une `System.Collections.Generic.List[T]`
 — `[object[]]`, `.ToArray()` et le pipeline fonctionnent. Le script n'utilise
 donc que des tableaux natifs.
+
+---
+
+# Recherche globale du site
+
+## `build-search-index.py`
+
+Régénère `data/search-index.json`, l'index consommé par `js/site-search.js`
+(bouton de recherche flottant présent sur toutes les pages). Python 3, aucune
+dépendance :
+
+```bash
+python3 tools/build-search-index.py
+```
+
+Trois familles d'entrées, décrites en tête du script :
+
+- **page** — une par fichier HTML, titre = balise `<title>`.
+- **leçon** — extraites des tableaux JS `id:"xx", title:"…"` /
+  `id:"xx", …, nm:"…"` des pages `section-*.html` de chaque avion.
+- **fonction** — commandes HOTAS non vides de chaque `data/*-bindings.json`
+  trouvé sous un dossier avion, avec lien profond
+  `mapping-hotas.html?dev=<périphérique>&n=<n>` (même mécanique que les
+  badges `data-bind-cmd` des tutoriels).
+
+À relancer après toute modif d'une page `section-*.html`, d'un `<title>`, ou
+d'un fichier `*-bindings.json`. Quand un même intitulé de leçon ou de
+fonction existe sur plusieurs avions (détecté après normalisation
+accents/casse), `site-search.js` l'affiche préfixé `<Avion> — <Sujet>` pour
+lever l'ambiguïté ; sinon le sujet seul suffit.

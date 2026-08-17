@@ -19,7 +19,9 @@ Ce dépôt regroupe des tutoriels HTML interactifs, un par module, pour apprendr
 
 Chaque module de tutoriel est une page HTML statique. La progression de l'utilisateur dans chaque section est sauvegardée dans le stockage local du navigateur — il est donc recommandé de toujours utiliser le même navigateur pour conserver l'avancement.
 
-Certaines pages lisent leurs données via `fetch()` (binds HOTAS, planches SVG) : ouvertes directement en `file://`, ces parties resteront vides. Pour un aperçu local fidèle, servir le dépôt en HTTP :
+Un bouton de recherche flottant (coin bas-droit, raccourci `/`) est présent sur toutes les pages : il cherche dans les titres de page, les leçons et les fonctions HOTAS de tous les avions à la fois (`data/search-index.json`, généré par `tools/build-search-index.py`). Quand un même intitulé existe sur plusieurs avions, le résultat précise lequel (`F-14B(U) — Tour du cockpit`).
+
+Certaines pages lisent leurs données via `fetch()` (binds HOTAS, planches SVG) : ouvertes directement en `file://`, ces parties resteront vides — dont la recherche elle-même. Pour un aperçu local fidèle, servir le dépôt en HTTP :
 
 ```bash
 powershell -ExecutionPolicy Bypass -File tools/serve.ps1
