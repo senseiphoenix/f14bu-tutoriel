@@ -24,21 +24,46 @@ carnet de rédaction, pas du texte joueur.
    priorités pédagogiques, mais **jamais pour un chiffre ou une procédure**
    sans recoupement avec 1 ou 2.
 
-## Images
+## Images — décision et réglages
 
-L'utilisateur souhaite que les illustrations viennent aussi du guide de
-Chuck. **Point à trancher avant de le faire** : le guide est distribué
-gratuitement et Heatblur l'inclut dans le module, mais il reste l'œuvre de
-son auteur. En extraire les planches pour les republier sur un site public
-(GitHub Pages) n'est pas la même chose que le lire. Trois options, par ordre
-de sécurité :
-1. Garder les planches du **manuel officiel Heatblur** déjà présentes dans
-   `F4E/img/` (61 fichiers) — c'est ce que fait le cursus aujourd'hui.
-2. Refaire ses **propres captures** dans DCS pour les points où il manque
-   une illustration.
-3. Reprendre les planches de Chuck **après avoir demandé son accord**, ou en
-   les créditant explicitement si sa licence le permet.
-Ne rien publier de sa mise en page tant que ce n'est pas clarifié.
+**Tranché le 19/08/2026** : les planches du guide de Chuck sont extraites et
+publiées, **avec crédit explicite à leur auteur** sur chaque page qui les
+emploie (titre du guide, auteur, pages exactes, mention « tous droits à son
+auteur »). Le dépôt et le site GitHub Pages sont publics — vérifié, ils
+répondent tous deux sans authentification — et l'utilisateur assume cette
+diffusion à titre pédagogique.
+
+Les planches vont dans **`F4E/img/chuck/`**, nommées par sujet et non par
+numéro de page (`demarrage-allumage.webp`, pas `p163.webp`) : le guide sera
+mis à jour un jour, les numéros bougeront, les sujets non.
+
+**Extraction** : `tools/pdf-extract.html`, servi par `tools/serve.ps1`.
+Le navigateur rend la page avec PDF.js et la POSTe au serveur, qui l'écrit
+sur disque. Aucun outil PDF n'est installé sur la machine et le plugin PDF
+de Chrome ne rend rien en headless — c'est la seule voie qui marche ici.
+
+```
+await extract({
+  pdf: '/F4E/docs/DCS%20F-4E%20Phantom%20II%20Guide.pdf',
+  outDir: 'F4E/img/chuck',
+  pages: [{n:163, name:'demarrage-allumage'}]
+})
+```
+
+**Réglages retenus : WebP, `scale: 1.6`, `quality: 0.80`** → 1536×864,
+130 à 185 Ko par planche. Mesuré sur la page 163 (dense en petit texte) :
+
+| Format | Dimensions | Poids | Verdict |
+| --- | --- | --- | --- |
+| JPEG s2 q.82 | 1920×1080 | 393 Ko | inutilement lourd |
+| WebP s2 q.80 | 1920×1080 | 241 Ko | de la marge en trop |
+| **WebP s1.6 q.80** | **1536×864** | **171 Ko** | **retenu** |
+| WebP s1.35 q.80 | 1296×729 | 133 Ko | lisible, mais juste au zoom |
+
+Ces pages sont des diapos (aplats blancs + captures) : le **WebP** y gagne
+~40 % sur le JPEG à qualité égale. 1536 px pour ~820 px d'affichage réel
+laisse la réserve nécessaire aux écrans haute densité et à l'ouverture en
+grand. Ce sont les valeurs par défaut du harnais, inutile de les repasser.
 
 ---
 

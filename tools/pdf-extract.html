@@ -44,9 +44,19 @@ if (window.pdfjsLib) {
 
 /* Rend une plage de pages et POSTe chaque image au serveur.
    pages accepte une liste de numéros ou d'objets {n, name} pour nommer
-   explicitement une planche plutôt que de la numéroter. */
+   explicitement une planche plutôt que de la numéroter.
+
+   Réglages par défaut, mesurés sur une planche dense en petit texte
+   (guide de Chuck p. 163) :
+     jpeg  scale 2    q .82  → 1920x1080, 393 Ko
+     webp  scale 2    q .80  → 1920x1080, 241 Ko
+     webp  scale 1.6  q .80  → 1536x864,  171 Ko   <- retenu
+     webp  scale 1.35 q .80  → 1296x729,  133 Ko   (encore lisible, moins de marge au zoom)
+   1536 px de large pour ~820 px d'affichage réel : la réserve couvre les
+   écrans haute densité et l'ouverture en grand. Le WebP fait le gros du
+   travail sur ce type de page (aplats blancs + captures). */
 async function extract(opts){
-  const {pdf, pages, outDir, prefix = 'p', scale = 2, quality = 0.82, format = 'jpg'} = opts;
+  const {pdf, pages, outDir, prefix = 'p', scale = 1.6, quality = 0.80, format = 'webp'} = opts;
   const doc = await pdfjsLib.getDocument(pdf).promise;
   log(`PDF ouvert : ${doc.numPages} pages.`);
   const written = [];
@@ -59,7 +69,9 @@ async function extract(opts){
       const canvas = document.createElement('canvas');
       canvas.width = Math.round(vp.width); canvas.height = Math.round(vp.height);
       await page.render({canvasContext: canvas.getContext('2d'), viewport: vp}).promise;
-      const mime = format === 'png' ? 'image/png' : 'image/jpeg';
+      const mime = format === 'png' ? 'image/png'
+                 : format === 'webp' ? 'image/webp'
+                 : 'image/jpeg';
       const data = canvas.toDataURL(mime, quality).split(',')[1];
       const path = `${outDir}/${name}.${format}`;
       const r = await fetch('/__save', {
