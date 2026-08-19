@@ -9,7 +9,7 @@ Ce dépôt regroupe des tutoriels HTML interactifs, un par module, pour apprendr
 
 - **`index.html`** — page d'accueil, une catégorie par simulateur (DCS World, Star Citizen).
 - **`F14BU/`** — tutoriel de pilotage du **F-14B(U)** (mod Heatblur). Deux parcours complémentaires :
-  - **`pas-a-pas.html`** — 19 tutoriels « une page », en checklists cochables, du premier démarrage à froid jusqu'à la JDAM. C'est l'entrée recommandée pour un débutant : chaque étape dit quoi faire, où, et pourquoi.
+  - **`pas-a-pas.html`** — 19 tutoriels « une page », en checklists cochables, du premier démarrage à froid jusqu'à la JDAM. C'est l'entrée recommandée pour un débutant : chaque étape dit quoi faire, où, et pourquoi. Chaque tutoriel s'ouvre sur un bloc « En vidéo » (deux démonstrations YouTube choisies pour le sujet, avec un repère indiquant si elles sont tournées sur le B(U) ou sur le F-14A/B classique) ; la liste complète est reprise dans `ressources.html`.
   - **`cursus-complet.html`** et les `section-*.html` — les mêmes sujets en profondeur (7 sections : cockpit et bases, navigation, appontage, air-air, survie, air-sol, mission), qui expliquent le *pourquoi* plutôt que le geste. Chaque leçon renvoie vers son tutoriel pas à pas et inversement.
   - **`mapping-hotas.html`** — planches annotées et cherchables des quatre périphériques, alimentées par `data/f14bu-bindings.json`. Toute fonction citée dans un tutoriel porte un badge cliquable qui ouvre le mapping sur le bon bouton ; les numéros ne sont jamais écrits en dur dans le texte.
 - **`F4U1D/`** — tutoriel de pilotage du **F4U-1D Corsair**, 7 sections : cockpit, démarrage, décollage, vol, appontage, urgences, armement.
