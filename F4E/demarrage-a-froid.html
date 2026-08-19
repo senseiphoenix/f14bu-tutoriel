@@ -23,10 +23,9 @@
 <h1>Démarrage à froid<br>pas à pas</h1>
 <p class="sub">De l'avion complètement froid aux deux réacteurs stabilisés au ralenti. Deux J79 à démarrer l'un après l'autre, avec une alimentation externe ou une cartouche — et un ordre qu'on ne bouscule pas.</p>
 
-<div class="skel">
-  <b>Contenu partiellement rédigé — non vérifié au manuel</b>
-  <p style="margin:0 0 10px">Les phases 2 à 4 reprennent une procédure collectée dans <code>docs/notes-sources.md</code> (source S2). <span style="color:var(--warn)">Les valeurs chiffrées ne sont pas encore recoupées</span> avec le <b>guide de Chuck</b> ni le manuel Heatblur, qui couvrent tous deux ce démarrage avec des captures — ce sont eux qui feront foi.</p>
-  <p style="margin:0">Planches d'image et badges de bind pas encore rattachés — le mapping HOTAS attend les binds joystick (voir <a href="mapping-hotas.html">mapping-hotas.html</a>).</p>
+<div class="note go">
+  <b>Leçon recoupée avec le guide de Chuck</b>
+  Les phases et les valeurs ci-dessous viennent de la <b>partie 4 du guide de Chuck</b> (p. 145 à 175), planches à l'appui. Une première version de cette page, écrite sur une synthèse non sourcée, contenait plusieurs erreurs — dont un « interrupteur de batterie » qui n'existe pas sur cet avion. Les badges de bind restent en attente du relevé joystick (voir <a href="mapping-hotas.html">mapping HOTAS</a>).
 </div>
 
 <div class="intro-box">
@@ -40,126 +39,165 @@
 </div>
 
 <section class="phase" data-phase="1">
-  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Avant de mettre sous tension</span></div>
-  <p class="phase-why">L'inspection cockpit qui évite les mauvaises surprises.</p>
-  <ul class="plan">
-    <li>Position de départ de chaque commande à l'entrée dans le poste</li>
-    <li>Sécurités, verrières, harnais</li>
-    <li>Ce qu'on demande au Crew Chief avant de commencer</li>
-  </ul>
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Avant le démarrage</span></div>
+  <p class="phase-why">Monter à bord et poser l'avion dans un état connu. Le guide simplifie volontairement cette phase — l'avion est supposé en bon état et correctement préparé par l'équipe au sol.</p>
+
+  <figure>
+    <img src="img/chuck/demarrage-avant-embarquement.jpg" alt="Embarquement et mise du casque, postes pilote et WSO" loading="lazy">
+    <figcaption><span>Embarquement : l'échelle est retirée par l'équipe au sol peu après que le casque est mis.</span><a href="img/chuck/demarrage-avant-embarquement.jpg" target="_blank" rel="noopener">Agrandir &#8599;</a></figcaption>
+    <div class="imgfail">Planche absente du dossier <code>img/chuck/</code>.</div>
+  </figure>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item">Embarquer et mettre le <span class="switchname">casque</span> <span class="setting">P + WSO</span></p>
+    <p class="step-detail">Cliquer sur le casque le met. L'équipe au sol retire l'échelle peu après — c'est le signal que l'avion est à toi.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item">De nuit, penser à la <span class="switchname">lampe torche</span></p>
+    <p class="step-detail">Elle rend le cockpit lisible avant que l'éclairage de bord ne soit alimenté.</p>
+  </div></div>
 </section>
 
 <section class="phase" data-phase="2">
-  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">L'électricité et le groupe de parc</span></div>
-  <p class="phase-why">Rien ne démarre sans une source d'alimentation valide — et sans air, le démarreur ne tournera pas. C'est ici que bloquent la plupart des premiers essais.</p>
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Demander l'air au Crew Chief</span></div>
+  <p class="phase-why">C'est ici que bloquent la plupart des premiers essais — et pour une raison structurelle, pas par distraction.</p>
+
+  <div class="note warn">
+    <b>Pas de batterie, pas d'APU sur cet avion</b>
+    Le F-4 n'a <b>ni interrupteur de batterie ni groupe auxiliaire de puissance</b>. Son électricité vient uniquement des <b>générateurs moteur</b> ou d'une <b>source externe</b>. Et les J79 ont des démarreurs <b>pneumatiques</b> : sans air comprimé fourni par l'équipe au sol, rien ne tourne. Si tu viens d'un jet moderne, c'est le réflexe à désapprendre en premier.
+  </div>
+
+  <figure>
+    <img src="img/chuck/demarrage-air-source.jpg" alt="Demande de connexion de l'air comprimé au réacteur droit via la roue JESTER" loading="lazy">
+    <figcaption><span>La demande d'air passe par la roue JESTER, menu Crew Chief, puis Air Source et connexion au réacteur droit.</span><a href="img/chuck/demarrage-air-source.jpg" target="_blank" rel="noopener">Agrandir &#8599;</a></figcaption>
+    <div class="imgfail">Planche absente du dossier <code>img/chuck/</code>.</div>
+  </figure>
 
   <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
-    <p class="step-item"><span class="switchname">Manettes des gaz</span> vérifiées sur <span class="setting">OFF / CUTOFF</span></p>
-    <p class="step-detail">Position arrière verrouillée. Rien ne doit pouvoir injecter du carburant tant que le réacteur n'a pas atteint son régime de lancement.</p>
+    <p class="step-item"><span class="switchname">Manettes des gaz</span> vérifiées dans le cran <span class="setting">OFF</span> <span class="setting">P + WSO</span></p>
+    <p class="step-detail">Démarrer avec une manette sortie du cran <code>OFF</code> fait s'accumuler du carburant dans le réacteur : démarrage chaud, voire <b>feu moteur</b>. C'est la vérification qui évite le plus gros incident possible à ce stade.</p>
   </div></div>
 
   <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
-    <p class="step-item"><span class="switchname">Frein de parc</span> tiré et <span class="setting">verrouillé</span></p>
+    <p class="step-item"><span class="switchname">Engine Master Switches</span> gauche et droit sur <span class="setting">OFF</span> (arrière)</p>
   </div></div>
 
   <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
-    <p class="step-item"><span class="switchname">Batterie</span> sur <span class="setting">ON</span></p>
-    <p class="step-detail">Console droite.</p>
+    <p class="step-item">Demander la <span class="switchname">connexion de l'air comprimé</span> au <b>réacteur droit</b></p>
+    <p class="step-detail">Roue JESTER, menu <b>Crew Chief</b>, puis <b>Air Source</b> et <b>Connect to Right Engine</b>. L'équipe au sol confirme à la radio une fois connectée. Voir la leçon <a href="jester-crew-chief.html">4 · JESTER et le Crew Chief</a> pour l'usage de la roue.</p>
   </div></div>
 
-  <div class="step"><input type="checkbox" data-id="p2-4"><div class="step-body">
-    <p class="step-item"><span class="switchname">Générateurs gauche et droit</span> sur <span class="setting">NORM</span></p>
-  </div></div>
-
-  <div class="step"><input type="checkbox" data-id="p2-5"><div class="step-body">
-    <p class="step-item">Demander au <span class="switchname">Crew Chief</span> l'<span class="setting">alimentation électrique</span> puis l'<span class="setting">air de démarrage</span></p>
-    <p class="step-detail">Par le menu de communication. <b>C'est l'étape qui bloque le plus de débutants</b> : sans air de parc, le démarreur ne fait rien tourner et on croit à une panne. Voir la leçon <a href="jester-crew-chief.html">4 · JESTER et le Crew Chief</a> pour l'usage de la roue.</p>
-  </div></div>
-
-  <div class="step"><input type="checkbox" data-id="p2-6"><div class="step-body">
-    <p class="step-item">Vérifier l'<span class="switchname">intercom</span> avec le WSO</p>
-    <p class="step-detail">Que ce soit un équipier humain ou JESTER, il faut pouvoir se parler avant de lancer quoi que ce soit.</p>
-  </div></div>
-
-  <div class="step"><input type="checkbox" data-id="p2-7"><div class="step-body">
-    <p class="step-item"><span class="switchname">Pompes à carburant</span> toutes sur <span class="setting">ON</span></p>
-  </div></div>
-
-  <div class="step"><input type="checkbox" data-id="p2-8"><div class="step-body">
-    <p class="step-item"><span class="switchname">Feux de position</span> selon la visibilité</p>
-  </div></div>
+  <div class="note">
+    <b>Variante sans groupe d'air : les cartouches</b>
+    Un démarrage par <b>cartouches explosives</b> est possible quand aucun groupe d'air n'est disponible. Ce sont les mécaniciens qui les installent.
+  </div>
 </section>
 
 <section class="phase" data-phase="3">
-  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Lancer les deux réacteurs</span></div>
-  <p class="phase-why">Un moteur après l'autre, jamais les deux en même temps. La séquence est identique pour les deux — seul le commutateur et la manette changent de côté.</p>
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Lancer le réacteur droit</span></div>
+  <p class="phase-why">Le droit d'abord, parce que c'est lui que le groupe d'air alimente. La séquence de manette est contre-intuitive : ce n'est pas un simple passage de OFF à IDLE.</p>
+
+  <figure>
+    <img src="img/chuck/demarrage-master-switch.jpg" alt="Engine Master Switch droit sur ON et demande de mise en pression" loading="lazy">
+    <figcaption><span>Régime à 0 %, Master Switch droit sur ON, puis demande de mise en pression au Crew Chief.</span><a href="img/chuck/demarrage-master-switch.jpg" target="_blank" rel="noopener">Agrandir &#8599;</a></figcaption>
+    <div class="imgfail">Planche absente du dossier <code>img/chuck/</code>.</div>
+  </figure>
 
   <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
-    <p class="step-item"><span class="switchname">Commutateur de démarrage</span> sur <span class="setting">RIGHT</span></p>
-    <p class="step-detail">Le moteur droit (n°2) en premier. <span style="color:var(--warn)">À vérifier au manuel</span> : est-ce prescrit, ou simplement l'usage courant ? Certains avions imposent un ordre pour des raisons d'alimentation hydraulique.</p>
+    <p class="step-item">Régime droit à <span class="setting">0 %</span>, puis <span class="switchname">Right Engine Master Switch</span> sur <span class="setting">ON</span> (avant)</p>
   </div></div>
 
   <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
-    <p class="step-item">Attendre <span class="setting">10 à 12 %</span> de régime</p>
-    <p class="step-detail"><span style="color:var(--warn)">Valeur à recouper</span> avec le guide de Chuck — injecter trop tôt ou trop tard est la cause classique d'un démarrage raté.</p>
+    <p class="step-item">Demander la <span class="switchname">mise en pression</span> pour entraîner le démarreur</p>
+    <p class="step-detail">Roue JESTER, Air Source, <b>Start Airflow</b>. Le régime commence à monter, entraîné par l'air.</p>
   </div></div>
 
+  <figure>
+    <img src="img/chuck/demarrage-allumage.jpg" alt="Séquence bouton d'allumage et manette des gaz au démarrage" loading="lazy">
+    <figcaption><span>La séquence qui compte : allumage maintenu, manette à mi-course, puis retour au cran IDLE.</span><a href="img/chuck/demarrage-allumage.jpg" target="_blank" rel="noopener">Agrandir &#8599;</a></figcaption>
+    <div class="imgfail">Planche absente du dossier <code>img/chuck/</code>.</div>
+  </figure>
+
   <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
-    <p class="step-item">Manette <span class="switchname">droite</span> de <span class="setting">OFF</span> à <span class="setting">IDLE</span></p>
-    <p class="step-detail">C'est l'injection du carburant. Le passage franchit un <b>cran</b> — c'est précisément pour ce geste qu'il faut avoir mappé les <i>idle detents</i> en <a href="preparer-module-controles.html">leçon 1</a>, sinon il faut aller le chercher à la souris pendant que le régime monte.</p>
+    <p class="step-item">À <span class="setting">10 %</span> de régime : <span class="switchname">bouton d'allumage droit</span> <b>maintenu enfoncé</b></p>
+    <p class="step-detail">Et il reste enfoncé pendant les deux étapes suivantes — c'est le point que les procédures simplifiées oublient.</p>
   </div></div>
 
   <div class="step"><input type="checkbox" data-id="p3-4"><div class="step-body">
-    <p class="step-item">Surveiller la <span class="switchname">température des gaz d'échappement</span></p>
-    <p class="step-detail">Elle doit monter, mais pas n'importe comment. <span style="color:var(--warn)">Seuil d'interruption à confirmer au manuel</span> — c'est le paramètre qui dit s'il faut couper immédiatement.</p>
+    <p class="step-item">Manette droite sortie du cran <span class="setting">OFF</span>, avancée <span class="setting">à mi-course</span></p>
+    <p class="step-detail">Allumage toujours maintenu.</p>
   </div></div>
 
   <div class="step"><input type="checkbox" data-id="p3-5"><div class="step-body">
-    <p class="step-item">Attendre la stabilisation du ralenti vers <span class="setting">60 à 65 %</span></p>
-    <p class="step-detail">Le démarreur se coupe ensuite de lui-même. <span style="color:var(--warn)">Valeur à recouper.</span></p>
+    <p class="step-item">Manette droite ramenée au cran <span class="setting">IDLE</span></p>
+    <p class="step-detail">Allumage toujours maintenu. C'est ce va-et-vient mi-course puis ralenti qui amorce correctement.</p>
   </div></div>
 
   <div class="step"><input type="checkbox" data-id="p3-6"><div class="step-body">
-    <p class="step-item">Recommencer à l'identique pour le <span class="switchname">moteur gauche</span></p>
-    <p class="step-detail">Commutateur sur <span class="setting">LEFT</span>, même séquence, même surveillance.</p>
+    <p class="step-item">Allumage relâché dès que la <span class="switchname">température des gaz</span> monte</p>
+    <p class="step-detail">La hausse de température confirme l'allumage effectif. Pas avant.</p>
   </div></div>
 
-  <p class="phase-why" style="margin-top:14px">Reste à documenter : le <b>démarrage par cartouche</b>, quand il sert et ce qu'il coûte — le module le modélise (une planche du dossier <code>img/</code> le montre), mais aucune source collectée ne le décrit.</p>
+  <figure>
+    <img src="img/chuck/demarrage-parametres.jpg" alt="Arrêt du flux d'air à 45 % et contrôle des paramètres moteur" loading="lazy">
+    <figcaption><span>À 45 %, l'air n'est plus nécessaire — puis contrôle des paramètres une fois stabilisés.</span><a href="img/chuck/demarrage-parametres.jpg" target="_blank" rel="noopener">Agrandir &#8599;</a></figcaption>
+    <div class="imgfail">Planche absente du dossier <code>img/chuck/</code>.</div>
+  </figure>
+
+  <div class="step"><input type="checkbox" data-id="p3-7"><div class="step-body">
+    <p class="step-item">À <span class="setting">45 %</span> de régime : demander l'<span class="switchname">arrêt du flux d'air</span></p>
+    <p class="step-detail">Roue JESTER, Air Source, <b>Stop Airflow</b>. Ça ne se coupe pas tout seul, il faut le demander.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-8"><div class="step-body">
+    <p class="step-item">Paramètres stabilisés et <span class="switchname">dans les plages</span></p>
+    <p class="step-detail">
+      Température des gaz <b>220 à 420 °C</b> ·
+      débit carburant <b>800 à 1400 lb/h</b> ·
+      régime de ralenti <b>65 %</b> ·
+      pression pompes carburant <b>30 ± 5 psi</b> ·
+      pression d'huile <b>12 à 50 psi</b> ·
+      hydraulique <b>PC-2 3000 ± 250 psi</b> et <b>utilitaire 2755 ± 255 psi</b>.
+    </p>
+  </div></div>
+
+  <figure>
+    <img src="img/chuck/demarrage-generateurs.jpg" alt="Mise en service du générateur droit et extinction du voyant RH GEN OUT" loading="lazy">
+    <figcaption><span>Générateur droit sur ON — le voyant d'alerte correspondant doit s'éteindre.</span><a href="img/chuck/demarrage-generateurs.jpg" target="_blank" rel="noopener">Agrandir &#8599;</a></figcaption>
+    <div class="imgfail">Planche absente du dossier <code>img/chuck/</code>.</div>
+  </figure>
+
+  <div class="step"><input type="checkbox" data-id="p3-9"><div class="step-body">
+    <p class="step-item"><span class="switchname">Générateur droit</span> sur <span class="setting">ON</span>, voyant <span class="switchname">RH GEN OUT</span> éteint</p>
+    <p class="step-detail">Le voyant qui s'éteint est la confirmation que le générateur débite. S'il reste allumé, quelque chose n'a pas pris.</p>
+  </div></div>
+
+  <div class="note warn">
+    <b>Piège à connaître avant de basculer les générateurs</b>
+    La centrale à inertie <b>ne doit pas être en mode alignement</b> quand on met un générateur sur ON : la coupure d'alimentation qui en résulte provoque un <b>refus d'alignement</b>. Si ça arrive, il faut couper l'alimentation de la centrale, puis revenir en alignement <b>en marquant une pause sur la position intermédiaire</b>. C'est une contrainte de coordination pilote/WSO — détail en <a href="alignement-ins.html">leçon 6</a>.
+  </div>
 </section>
 
 <section class="phase" data-phase="4">
-  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Mettre les systèmes en route</span></div>
-  <p class="phase-why">L'avion tourne, il reste à le réveiller — et à rendre au sol ce qu'on lui a emprunté.</p>
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Le réacteur gauche, puis avant roulage</span></div>
+  <p class="phase-why">Le second moteur suit la même logique, puis chaque siège a sa propre liste avant de rouler.</p>
 
   <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
-    <p class="step-item">Faire retirer le <span class="switchname">groupe électrique et l'air</span> par le Crew Chief</p>
-    <p class="step-detail">Oublier cette étape empêche de rouler.</p>
+    <p class="step-item">Recommencer la séquence pour le <span class="switchname">réacteur gauche</span></p>
+    <p class="step-detail">Même enchaînement : master switch, air, 10 % puis allumage maintenu, manette mi-course puis ralenti, contrôle des paramètres, générateur.</p>
   </div></div>
 
   <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
-    <p class="step-item">Vérifier les <span class="switchname">pressions hydrauliques</span> et les voyants générateurs</p>
-    <p class="step-detail">Circuit utilitaire et circuit des commandes de vol. Les voyants d'alarme générateurs doivent être éteints — s'ils restent allumés, quelque chose n'a pas pris.</p>
+    <p class="step-item">Faire <span class="switchname">déconnecter le groupe d'air</span> et retirer les moyens sol</p>
   </div></div>
 
   <div class="step"><input type="checkbox" data-id="p4-3"><div class="step-body">
-    <p class="step-item"><span class="switchname">INS</span> sur <span class="setting">ALIGN</span></p>
-    <p class="step-detail">À lancer <b>dès maintenant</b>, c'est le poste le plus long de toute la préparation. À coordonner avec JESTER à l'arrière — détail complet en <a href="alignement-ins.html">leçon 6</a>.</p>
+    <p class="step-item">Lancer l'<span class="switchname">alignement de la centrale à inertie</span></p>
+    <p class="step-detail">C'est le poste le plus long de toute la préparation, à lancer dès que l'électricité est stable — voir <a href="alignement-ins.html">leçon 6</a>.</p>
   </div></div>
 
-  <div class="step"><input type="checkbox" data-id="p4-4"><div class="step-body">
-    <p class="step-item"><span class="switchname">Volets</span> en position décollage</p>
-    <p class="step-detail"><span style="color:var(--warn)">Position exacte à confirmer</span> selon la masse au décollage.</p>
-  </div></div>
-
-  <div class="step"><input type="checkbox" data-id="p4-5"><div class="step-body">
-    <p class="step-item"><span class="switchname">Trims</span> réglés selon la charge d'emport</p>
-  </div></div>
-
-  <div class="step"><input type="checkbox" data-id="p4-6"><div class="step-body">
-    <p class="step-item"><span class="switchname">Viseur</span> allumé</p>
-  </div></div>
-
-  <p class="phase-why" style="margin-top:14px">Reste à documenter : le test des commandes de vol (libres et dans le bon sens) et le détail de ce que JESTER met en route de son côté.</p>
+  <p class="phase-why" style="margin-top:14px">Reste à détailler depuis le guide : les deux listes <b>avant roulage</b>, distinctes selon le siège (une pour le pilote, une pour le WSO), et les checklists abrégées de la partie 20.</p>
 </section>
 
 <div class="footlinks">
@@ -167,7 +205,7 @@
   <a href="alignement-ins.html">Étape suivante : Alignement INS &rarr;</a>
 </div>
 
-<p class="src">Sources à croiser : <b>manuel officiel Heatblur</b> et <b>guide de Chuck</b>, livrés avec le module dans <code>Mods\aircraft\F-4E\Doc\</code>, plus la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4e-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — jamais de numéro figé dans le texte.</p>
+<p class="src"><b>Planches et procédure</b> : <i>DCS Guide F-4E Phantom II</i> de <b>Chuck</b> — partie 4, pages 145 à 175. Guide distribué gratuitement et livré avec le module par Heatblur ; reproduit ici à titre pédagogique, tous droits à son auteur. Arbitre en cas de doute : le manuel officiel Heatblur, <code>Mods\aircraft\F-4E\Doc\F-4E Manual.pdf</code>. Voir aussi la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4e-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — jamais de numéro figé dans le texte.</p>
 
 </div>
 <script src="../js/tutoriel.js"></script>
