@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-4E — AIM-7 Sparrow, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4e-aim7-sparrow-progress" data-bindings="data/f4e-bindings.json" data-bind-store="f4e-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-4E</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>AIM-7 Sparrow</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-4E Phantom II — pilote et WSO</div>
+<h1>AIM-7<br>Sparrow</h1>
+<p class="sub">Le missile qui définit le Phantom : semi-actif, donc l'avion doit continuer d'illuminer la cible jusqu'à l'impact. Tout l'enjeu est de tenir cet accrochage sans se faire tirer dessus soi-même.</p>
+
+<div class="skel">
+  <b>Page de squelette — contenu à rédiger</b>
+  <p style="margin:0">La structure, les liens et le moteur de checklist sont en place. Le contenu détaillé reste à écrire à partir du <b>manuel officiel Heatblur</b> et du <b>guide de Chuck</b>, tous deux livrés avec le module (voir <a href="ressources.html">Ressources</a>). Les phases ci-dessous annoncent le plan : ce ne sont pas encore des procédures vérifiées, ne pas voler avec.</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> AIM-7 Sparrow, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Le F-4E est un <b>biplace</b> : chaque étape précisera si elle revient au <b>pilote</b>, au <b>WSO</b>, ou à <b>JESTER</b> quand tu voles seul. Les fonctions citées porteront leur bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>, qui attend encore le relevé des binds.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Préparer le tir</span></div>
+  <p class="phase-why">La séquence d'armement, à faire avant d'en avoir besoin.</p>
+  <ul class="plan">
+    <li>Sélection du missile et mise sous tension</li>
+    <li>Ce qui doit être armé côté pilote et côté WSO</li>
+    <li>Les indications qui confirment qu'un missile est prêt</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Le guidage semi-actif</span></div>
+  <p class="phase-why">Le principe, avant les gestes.</p>
+  <ul class="plan">
+    <li>Pourquoi l'avion doit garder la cible illuminée</li>
+    <li>Ce qui se passe si l'accrochage est perdu en vol du missile</li>
+    <li>Ce que ça impose comme trajectoire après le tir</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Tirer</span></div>
+  <p class="phase-why">Le domaine de tir et les repères en cabine.</p>
+  <ul class="plan">
+    <li>Les indications de portée et de domaine</li>
+    <li>Le geste de tir et ce qu'on observe ensuite</li>
+    <li>Combien de temps il faut tenir avant de pouvoir manœuvrer</li>
+  </ul>
+  <div class="note">
+    <b>Quatre procédures, pas une</b>
+    Le guide de Chuck traite l'AIM-7 en <b>quatre variantes distinctes</b>, et c'est ce découpage que cette leçon devra suivre : équipage humain ou <b>JESTER</b> à l'arrière, croisé avec engagement à vue (<b>WVR</b>) ou combat rapproché (<b>ACM</b>). La séquence de boutons n'est pas la même selon qui manipule le radar.
+  </div>
+</section>
+
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Après le tir</span></div>
+  <p class="phase-why">La partie qui décide si on rentre.</p>
+  <ul class="plan">
+    <li>Le moment où l'on peut enfin rompre</li>
+    <li>Réaction si la cible manœuvre ou brouille</li>
+    <li>Enchaîner sur un second tir</li>
+  </ul>
+</section>
+
+<div class="footlinks">
+  <a href="radar-apq120.html">&larr; Radar AN/APQ-120</a>
+  <a href="aim9-canon.html">Étape suivante : AIM-9 et canon &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : <b>manuel officiel Heatblur</b> et <b>guide de Chuck</b>, livrés avec le module dans <code>Mods\aircraft\F-4E\Doc\</code>, plus la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4e-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — jamais de numéro figé dans le texte.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

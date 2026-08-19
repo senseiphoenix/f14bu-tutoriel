@@ -205,13 +205,13 @@
  },
  {
   "title": "Hook Retract",
-  "path": "F14BU/mapping-hotas.html?dev=pto2&n=32",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=33",
   "aircraft": "F-14B(U)",
   "type": "fonction"
  },
  {
   "title": "Hook Retract",
-  "path": "F14BU/mapping-hotas.html?dev=pto2&n=33",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=32",
   "aircraft": "F-14B(U)",
   "type": "fonction"
  },
@@ -541,13 +541,13 @@
  },
  {
   "title": "Wheel Brake Right",
-  "path": "F14BU/mapping-hotas.html?dev=pedals&n=4",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=SLDR",
   "aircraft": "F-14B(U)",
   "type": "fonction"
  },
  {
   "title": "Wheel Brake Right",
-  "path": "F14BU/mapping-hotas.html?dev=stick&n=SLDR",
+  "path": "F14BU/mapping-hotas.html?dev=pedals&n=4",
   "aircraft": "F-14B(U)",
   "type": "fonction"
  },
@@ -721,25 +721,7 @@
  },
  {
   "title": "Ressources vidéo",
-  "path": "F14BU/section-g-mission.html#g4",
-  "aircraft": "F-14B(U)",
-  "type": "leçon"
- },
- {
-  "title": "Ressources vidéo",
   "path": "F14BU/section-b-navigation.html#b6",
-  "aircraft": "F-14B(U)",
-  "type": "leçon"
- },
- {
-  "title": "Ressources vidéo",
-  "path": "F14BU/section-c-porte-avions.html#c5",
-  "aircraft": "F-14B(U)",
-  "type": "leçon"
- },
- {
-  "title": "Ressources vidéo",
-  "path": "F14BU/section-e-survie.html#e4",
   "aircraft": "F-14B(U)",
   "type": "leçon"
  },
@@ -751,7 +733,25 @@
  },
  {
   "title": "Ressources vidéo",
+  "path": "F14BU/section-e-survie.html#e4",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
+  "path": "F14BU/section-g-mission.html#g4",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
   "path": "F14BU/section-f-air-sol.html#f6",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
+  "path": "F14BU/section-c-porte-avions.html#c5",
   "aircraft": "F-14B(U)",
   "type": "leçon"
  },
@@ -1604,6 +1604,234 @@
  {
   "title": "Cursus F-4E Phantom II — Tutoriel",
   "path": "F4E/index.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — AGM-65 Maverick, pas à pas",
+  "path": "F4E/maverick-agm65.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — AIM-7 Sparrow, pas à pas",
+  "path": "F4E/aim7-sparrow.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — AIM-9 Sidewinder et canon, pas à pas",
+  "path": "F4E/aim9-canon.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Alignement INS et préparation de la navigation, pas à pas",
+  "path": "F4E/alignement-ins.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Armes à guidage TV, pas à pas",
+  "path": "F4E/armes-guidage-tv.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — AVTR et débriefing, pas à pas",
+  "path": "F4E/avtr-debriefing.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — BFM en Phantom, leçon avancée",
+  "path": "F4E/bfm-phantom.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Bombardement classique, pas à pas",
+  "path": "F4E/bombardement-classique.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — BVR avancé : interception au Sparrow, leçon avancée",
+  "path": "F4E/bvr-sparrow-avance.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Carnet de progression",
+  "path": "F4E/phantom-progression.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Construire ses checklists, pas à pas",
+  "path": "F4E/checklists-personnalisees.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Démarrage à froid, pas à pas",
+  "path": "F4E/demarrage-a-froid.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — IFF et Combat-Tree, pas à pas",
+  "path": "F4E/iff-combat-tree.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — JESTER et le Crew Chief, pas à pas",
+  "path": "F4E/jester-crew-chief.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Les deux cockpits",
+  "path": "F4E/cockpit/index.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Les missions du module",
+  "path": "F4E/missions.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Mapping HOTAS",
+  "path": "F4E/mapping-hotas.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Mission de synthèse, leçon avancée",
+  "path": "F4E/mission-synthese.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Navigation TACAN, VOR/ILS et INS, pas à pas",
+  "path": "F4E/navigation-tacan-ins.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Pas à pas",
+  "path": "F4E/pas-a-pas.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Pave Spike et bombes guidées, pas à pas",
+  "path": "F4E/pave-spike-guidage.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Perfectionnement",
+  "path": "F4E/perfectionnement.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Préparer le module et les contrôles, pas à pas",
+  "path": "F4E/preparer-module-controles.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Radar AN/APQ-120, pas à pas",
+  "path": "F4E/radar-apq120.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Radio et communications, pas à pas",
+  "path": "F4E/radio-communications.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Ravitaillement en vol, pas à pas",
+  "path": "F4E/ravitaillement-vol.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Ressources externes",
+  "path": "F4E/ressources.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Retour, break et atterrissage, pas à pas",
+  "path": "F4E/retour-atterrissage.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Roquettes et mitraillage au sol, pas à pas",
+  "path": "F4E/roquettes-mitraillage.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Roulage et décollage, pas à pas",
+  "path": "F4E/roulage-decollage.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — RWR, contre-mesures et survie, pas à pas",
+  "path": "F4E/rwr-contremesures.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — SEAD et Wild Weasel, pas à pas",
+  "path": "F4E/sead-wild-weasel.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Strike avancé et Pave Spike, leçon avancée",
+  "path": "F4E/strike-pave-spike-avance.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Tenir les deux postes soi-même, leçon avancée",
+  "path": "F4E/wso-en-solo.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Tour du cockpit pilote, pas à pas",
+  "path": "F4E/tour-cockpit-pilote.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Tour du poste WSO, pas à pas",
+  "path": "F4E/tour-cockpit-wso.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Urgences et items Bold Face, pas à pas",
+  "path": "F4E/urgences-boldface.html",
+  "aircraft": "F-4E Phantom II",
+  "type": "page"
+ },
+ {
+  "title": "F-4E — Vol de base et AFCS, pas à pas",
+  "path": "F4E/vol-de-base-afcs.html",
   "aircraft": "F-4E Phantom II",
   "type": "page"
  },

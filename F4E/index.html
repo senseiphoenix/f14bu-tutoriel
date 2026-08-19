@@ -7,53 +7,85 @@
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/theme.css">
 <style>
-  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;--warn:#d9695a;
     --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
   *{box-sizing:border-box}
   body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
   .wrap{max-width:880px;margin:0 auto;padding:48px 24px 80px}
   .tail{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
   h1{font-family:var(--display);font-weight:600;font-size:44px;letter-spacing:.04em;line-height:1.02;margin:10px 0 8px;text-transform:uppercase}
-  .sub{color:var(--dim);max-width:60ch;margin:0 0 36px}
+  .sub{color:var(--dim);max-width:62ch;margin:0 0 30px}
+  .sub b{color:var(--ink)}
   a.card{display:flex;gap:18px;align-items:baseline;border:1px solid var(--line);background:var(--panel);
          padding:18px 20px;margin:10px 0;text-decoration:none;color:var(--ink);transition:border-color .12s}
   a.card:hover{border-color:var(--amber)}
-  a.card.soon{opacity:.6}
+  a.card.tool{padding:14px 20px}
   .idx{font-family:var(--mono);font-size:13px;color:var(--amber);min-width:26px}
   .nm{font-family:var(--display);font-size:19px;letter-spacing:.04em;text-transform:uppercase}
-  .ds{color:var(--dim);font-size:13.5px;margin-left:auto;text-align:right;max-width:44%}
-  .tag{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
-       color:var(--deck);background:var(--go);padding:2px 6px;margin-left:8px;vertical-align:2px}
-  .tag.soon{background:var(--dim)}
+  .ds{color:var(--dim);font-size:13.5px;margin-left:auto;text-align:right;max-width:46%}
   .hr{border-top:1px solid var(--line);margin:34px 0 22px}
   h2{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:0 0 12px}
   p{margin:12px 0;color:var(--dim)}
   code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:2px 6px;border:1px solid var(--line);color:var(--amber)}
+  .skel{border:1px solid rgba(217,105,90,.5);border-left:3px solid var(--warn);background:rgba(217,105,90,.07);
+        padding:14px 18px;margin:0 0 30px;border-radius:2px;font-size:13.5px;color:var(--dim)}
+  .skel > b:first-child{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--warn);margin-bottom:5px}
+  .skel a{color:var(--amber)}
 </style>
 </head>
 <body>
+<div class="hero-banner" style="background-image:url('img/ext_f4_cockpit_overview.jpg')"></div>
 <div class="wrap">
   <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:16px">&larr; Accueil</a>
   <div class="tail">DCS · Heatblur Simulations · F-4E Phantom II</div>
   <h1>Cursus complet<br>de pilotage</h1>
-  <p class="sub">Sept sections, du parking froid à la mission complète, illustrées avec les planches du manuel officiel Heatblur. Pilote et WSO couverts. Chaque section garde ta progression et tes notes d'une session à l'autre, dans le même navigateur.</p>
+  <p class="sub">Un parcours en trois étapes, du parking froid à la mission complète, illustré avec les planches du manuel officiel Heatblur. Chaque page garde ta progression et tes notes d'une session à l'autre, dans le même navigateur. Suis les étapes dans l'ordre si tu débutes, ou reviens directement à celle qui t'intéresse.</p>
+  <p class="sub">Le Phantom est un chasseur de <b>troisième génération, biplace</b> : aucune aide informatique moderne, un viseur optique à la place d'un HUD, et un <b>WSO en place arrière</b> — tenu par <b>JESTER</b> quand tu voles seul — qui gère le radar, la navigation et la désignation.</p>
+
+  <div class="skel">
+    <b>État du contenu</b>
+    L'<b>étape 2</b> (les 7 sections du cursus, 33 leçons) est complète et utilisable. Les <b>étapes 1 et 3</b> et les outils viennent d'être posés en squelette : structure, liens et progression fonctionnent. Deux leçons ont commencé à recevoir du contenu réel (préparation des contrôles, démarrage à froid), non encore recoupé avec le manuel — chaque point incertain y porte un encadré <span style="color:var(--warn)">« à vérifier »</span>. Le <a href="mapping-hotas.html">mapping HOTAS</a> attend que DCS ait écrit les binds joystick.
+  </div>
 
   <div class="grp-block">
-  <h2 class="grp">Le cursus <span class="grp-sub">7 sections, dans l'ordre — du parking froid à la mission complète</span></h2>
+  <h2 class="grp">Étape 1 <span class="stage-badge" style="--accent:var(--go)">Débutant</span> <span class="grp-sub">découvrir l'avion et son équipage</span></h2>
+  <div class="feat-grid">
+    <a class="feat" href="pas-a-pas.html" style="--accent:var(--go)"><span class="ic ic-play"></span><span class="nm">Pas à pas</span><span class="ds">26 tutoriels une page, très détaillés, du premier démarrage aux missions antiradar — à commencer en premier</span></a>
+    <a class="feat" href="cockpit/index.html" style="--accent:var(--amber)"><span class="ic ic-gauge"></span><span class="nm">Les deux cockpits</span><span class="ds">Place pilote et place WSO, commande par commande — à garder ouvert à côté</span></a>
+  </div>
+  </div>
+
+  <div class="grp-block">
+  <h2 class="grp">Étape 2 <span class="stage-badge" style="--accent:var(--amber)">Intermédiaire</span> <span class="grp-sub">le cursus en profondeur, 7 sections dans l'ordre</span></h2>
   <div class="seq-list">
     <a class="seq" href="section-a-cockpit.html" style="--accent:var(--amber)"><span class="ic ic-gauge"></span><span class="idx">A</span><span class="nm">Découverte &amp; cockpit</span><span class="ds">8 leçons : instruments, panneau supérieur/IFF, consoles pilote et WSO, manche/HOTAS</span></a>
     <a class="seq" href="section-b-demarrage.html" style="--accent:var(--sys-nav)"><span class="ic ic-power"></span><span class="idx">B</span><span class="nm">Démarrage &amp; roulage</span><span class="ds">Démarrage moteur, alignement INS, checklists avant roulage/décollage</span></a>
     <a class="seq" href="section-c-decollage.html" style="--accent:var(--go)"><span class="ic ic-play"></span><span class="idx">C</span><span class="nm">Décollage</span><span class="ds">Mise en puissance, rotation, rentrée train/volets, montée</span></a>
-    <a class="seq" href="section-d-vol.html" style="--accent:var(--sys-carrier)"><span class="ic ic-waypoint"></span><span class="idx">D</span><span class="nm">Vol normal &amp; navigation</span><span class="ds">AFCS, hydraulique, carburant, TACAN/VOR/ADF, dérive INS</span></a>
+    <a class="seq" href="section-d-vol.html" style="--accent:var(--sys-carrier)"><span class="ic ic-waypoint"></span><span class="idx">D</span><span class="nm">Vol normal &amp; navigation</span><span class="ds">AFCS, hydraulique, carburant, TACAN/VOR/ADF, dérive INS, ravitaillement</span></a>
     <a class="seq" href="section-e-atterrissage.html" style="--accent:var(--sys-mission)"><span class="ic ic-flag"></span><span class="idx">E</span><span class="nm">Atterrissage</span><span class="ds">Tour de piste visuel complet, break à l'arrêt</span></a>
     <a class="seq" href="section-f-urgences.html" style="--accent:var(--sys-survie)"><span class="ic ic-shield"></span><span class="idx">F</span><span class="nm">Urgences</span><span class="ds">Feu/panne moteur, items Bold Face à réciter</span></a>
     <a class="seq" href="section-g-armement.html" style="--accent:var(--sys-aa)"><span class="ic ic-drop"></span><span class="idx">G</span><span class="nm">Armement &amp; capteurs</span><span class="ds">Radar, AIM-7/9, canon, bombes, Maverick, Pave Spike, RWR, Jester</span></a>
   </div>
   </div>
 
+  <div class="grp-block">
+  <h2 class="grp">Étape 3 <span class="stage-badge" style="--accent:var(--sys-mission)">Avancé</span> <span class="grp-sub">au-delà du cursus</span></h2>
+  <div class="feat-grid">
+    <a class="feat" href="perfectionnement.html" style="--accent:var(--sys-mission)"><span class="ic ic-chevrons"></span><span class="nm">Perfectionnement</span><span class="ds">5 leçons : BFM en Phantom, BVR au Sparrow, strike avancé au Pave Spike, tenir les deux postes, mission de synthèse</span></a>
+  </div>
+  </div>
+
+  <div class="grp-block">
+  <h2 class="grp">Outils <span class="grp-sub">pas une étape — à consulter quand tu en as besoin</span></h2>
+  <a class="card tool" href="missions.html"><span class="idx">&#9656;</span><span class="nm">Les missions du module</span><span class="ds">Entraînements et missions livrés par Heatblur — quoi voler et quand</span></a>
+  <a class="card tool" href="mapping-hotas.html"><span class="idx">&#9998;</span><span class="nm">Mapping HOTAS</span><span class="ds">Chaque bouton annoté — deux profils, pilote et WSO ; en attente des binds</span></a>
+  <a class="card tool" href="phantom-progression.html"><span class="idx">&#10022;</span><span class="nm">Carnet de progression</span><span class="ds">Vue d'ensemble de tout le parcours, export markdown imprimable</span></a>
+  <a class="card tool" href="ressources.html"><span class="idx">&#9656;</span><span class="nm">Ressources externes</span><span class="ds">Manuel Heatblur et guide de Chuck, tous deux livrés avec le module</span></a>
+  </div>
+
   <div class="hr"></div>
   <h2>Sources</h2>
-  <p>Manuel officiel Heatblur Simulations (dépôt <code>Heatblur-Simulations/f-4e-manual</code>), planches hébergées localement dans <code>img/</code> — aucune dépendance externe. En complément : guide communautaire de Chuck (<i>DCS GUIDE F-4E PHANTOM II</i>), intégré section par section pour les procédures pas-à-pas, les items Bold Face et les tableaux de référence rapide.</p>
+  <p>Manuel officiel Heatblur Simulations, planches hébergées localement dans <code>img/</code> — aucune dépendance externe. Particularité de ce module : le <b>guide de Chuck</b> (<i>DCS GUIDE F-4E PHANTOM II</i>) est <b>livré avec le module lui-même</b>, dans son dossier <code>Doc\</code>, aux côtés du manuel. Les deux servent de référence pour les procédures pas-à-pas, les items Bold Face et les tableaux de référence rapide.</p>
 </div>
 <script src="../js/site-search.js"></script>
 </body></html>

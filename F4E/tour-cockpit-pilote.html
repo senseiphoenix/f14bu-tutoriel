@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-4E — Tour du cockpit pilote, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4e-tour-cockpit-pilote-progress" data-bindings="data/f4e-bindings.json" data-bind-store="f4e-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-4E</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Tour du cockpit pilote</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-4E Phantom II — pilote et WSO</div>
+<h1>Tour du cockpit<br>place avant</h1>
+<p class="sub">Un tour guidé de la place pilote, panneau par panneau, pour savoir où regarder avant de savoir quoi faire. Pas de procédure ici : juste nommer chaque chose et dire à quoi elle sert.</p>
+
+<div class="skel">
+  <b>Page de squelette — contenu à rédiger</b>
+  <p style="margin:0">La structure, les liens et le moteur de checklist sont en place. Le contenu détaillé reste à écrire à partir du <b>manuel officiel Heatblur</b> et du <b>guide de Chuck</b>, tous deux livrés avec le module (voir <a href="ressources.html">Ressources</a>). Les phases ci-dessous annoncent le plan : ce ne sont pas encore des procédures vérifiées, ne pas voler avec.</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> Tour du cockpit pilote, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Le F-4E est un <b>biplace</b> : chaque étape précisera si elle revient au <b>pilote</b>, au <b>WSO</b>, ou à <b>JESTER</b> quand tu voles seul. Les fonctions citées porteront leur bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>, qui attend encore le relevé des binds.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">La planche avant</span></div>
+  <p class="phase-why">Tout ce qui se lit en vol, et le viseur qui occupe le centre.</p>
+  <ul class="plan">
+    <li>Instruments de vol classiques : anémomètre, ADI, altimètre, variomètre</li>
+    <li>Le HSI et ce qu'il affiche selon le mode de navigation retenu</li>
+    <li>Le <b>viseur optique</b> — pas un HUD moderne : ce qu'il montre et ce qu'il ne calcule pas</li>
+    <li>Indicateur d'incidence et son système d'alerte sonore</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Le panneau supérieur et les alarmes</span></div>
+  <p class="phase-why">Les voyants qu'on apprend à lire du coin de l'œil.</p>
+  <ul class="plan">
+    <li>Voyants d'alerte et de mise en garde, et lesquels sont critiques</li>
+    <li>Panneau IFF</li>
+    <li>Test des alarmes avant le vol</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">La console gauche</span></div>
+  <p class="phase-why">Moteurs, carburant, autopilote — la main gauche ne quitte pas cette zone.</p>
+  <ul class="plan">
+    <li>Manettes des gaz et crans de postcombustion</li>
+    <li>Panneau carburant et gestion des réservoirs</li>
+    <li>AFCS — l'autopilote et ses modes</li>
+    <li>Panneau de contre-mesures</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">La console droite et le pédestal</span></div>
+  <p class="phase-why">Systèmes de bord et navigation côté pilote.</p>
+  <ul class="plan">
+    <li>Électricité, générateurs, disjoncteurs</li>
+    <li>Radios et intercom équipage</li>
+    <li>Panneau d'armement côté pilote</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="5">
+  <div class="phase-head"><span class="phase-num">PHASE 5</span><span class="phase-title">Le manche et les commandes au doigt</span></div>
+  <p class="phase-why">Ce qui tombe sous la main sans lâcher le manche.</p>
+  <ul class="plan">
+    <li>Détente, désignation, largage d'urgence</li>
+    <li>Ce qui est réellement sur le manche et la manette, et ce qui ne l'est pas</li>
+  </ul>
+</section>
+
+<div class="footlinks">
+  <a href="preparer-module-controles.html">&larr; Préparer le module</a>
+  <a href="tour-cockpit-wso.html">Étape suivante : Tour du poste WSO &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : <b>manuel officiel Heatblur</b> et <b>guide de Chuck</b>, livrés avec le module dans <code>Mods\aircraft\F-4E\Doc\</code>, plus la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4e-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — jamais de numéro figé dans le texte.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

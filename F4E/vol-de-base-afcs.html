@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-4E — Vol de base et AFCS, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4e-vol-de-base-afcs-progress" data-bindings="data/f4e-bindings.json" data-bind-store="f4e-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-4E</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Vol de base et AFCS</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-4E Phantom II — pilote et WSO</div>
+<h1>Vol de base<br>et AFCS</h1>
+<p class="sub">Piloter un avion sans commandes de vol électriques : il faut trimer en permanence, connaître ses limites, et savoir ce que l'autopilote sait faire — et surtout ce qu'il ne sait pas faire.</p>
+
+<div class="skel">
+  <b>Page de squelette — contenu à rédiger</b>
+  <p style="margin:0">La structure, les liens et le moteur de checklist sont en place. Le contenu détaillé reste à écrire à partir du <b>manuel officiel Heatblur</b> et du <b>guide de Chuck</b>, tous deux livrés avec le module (voir <a href="ressources.html">Ressources</a>). Les phases ci-dessous annoncent le plan : ce ne sont pas encore des procédures vérifiées, ne pas voler avec.</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> Vol de base et AFCS, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Le F-4E est un <b>biplace</b> : chaque étape précisera si elle revient au <b>pilote</b>, au <b>WSO</b>, ou à <b>JESTER</b> quand tu voles seul. Les fonctions citées porteront leur bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>, qui attend encore le relevé des binds.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Le trim et la tenue de vol</span></div>
+  <p class="phase-why">Sans compensation automatique, le trim est une commande à part entière.</p>
+  <ul class="plan">
+    <li>Trimer en tangage et en roulis à chaque changement de vitesse</li>
+    <li>Trouver un vol stabilisé mains lâchées comme référence</li>
+    <li>L'effet des emports sur l'équilibre</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">L'AFCS</span></div>
+  <p class="phase-why">L'autopilote : utile, mais limité et à surveiller.</p>
+  <ul class="plan">
+    <li>Les modes disponibles et ce que chacun tient réellement</li>
+    <li>Comment l'engager et le désengager proprement</li>
+    <li>Les situations où il lâche tout seul</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Le domaine de vol</span></div>
+  <p class="phase-why">Ce que l'avion accepte, et ce qu'il fait quand on dépasse.</p>
+  <ul class="plan">
+    <li>Incidence : lire l'indicateur et écouter l'alerte sonore</li>
+    <li>Comportement à haute incidence et sortie d'assiette inhabituelle</li>
+    <li>Limites de facteur de charge selon la masse et les emports</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Gérer les systèmes en croisière</span></div>
+  <p class="phase-why">Ce qu'on surveille en boucle pendant un transit.</p>
+  <ul class="plan">
+    <li>Gestion du carburant et ordre de consommation des réservoirs</li>
+    <li>Circuits hydrauliques et ce que chacun alimente</li>
+    <li>Paramètres moteur à garder à l'œil</li>
+  </ul>
+</section>
+
+<div class="footlinks">
+  <a href="roulage-decollage.html">&larr; Roulage et décollage</a>
+  <a href="navigation-tacan-ins.html">Étape suivante : Navigation &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : <b>manuel officiel Heatblur</b> et <b>guide de Chuck</b>, livrés avec le module dans <code>Mods\aircraft\F-4E\Doc\</code>, plus la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4e-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — jamais de numéro figé dans le texte.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

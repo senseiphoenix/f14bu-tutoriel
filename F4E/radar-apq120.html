@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-4E — Radar AN/APQ-120, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4e-radar-apq120-progress" data-bindings="data/f4e-bindings.json" data-bind-store="f4e-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-4E</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Radar AN/APQ-120</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-4E Phantom II — pilote et WSO</div>
+<h1>Radar<br>AN/APQ-120</h1>
+<p class="sub">Un radar des années 60, sans piste automatique ni fusion de données : il faut interpréter une image brute. Que tu le pilotes toi-même depuis l'arrière ou que tu le fasses manœuvrer par JESTER, il faut d'abord comprendre ce que l'écran raconte.</p>
+
+<div class="skel">
+  <b>Page de squelette — contenu à rédiger</b>
+  <p style="margin:0">La structure, les liens et le moteur de checklist sont en place. Le contenu détaillé reste à écrire à partir du <b>manuel officiel Heatblur</b> et du <b>guide de Chuck</b>, tous deux livrés avec le module (voir <a href="ressources.html">Ressources</a>). Les phases ci-dessous annoncent le plan : ce ne sont pas encore des procédures vérifiées, ne pas voler avec.</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> Radar AN/APQ-120, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Le F-4E est un <b>biplace</b> : chaque étape précisera si elle revient au <b>pilote</b>, au <b>WSO</b>, ou à <b>JESTER</b> quand tu voles seul. Les fonctions citées porteront leur bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>, qui attend encore le relevé des binds.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Mettre le radar en route</span></div>
+  <p class="phase-why">Chauffe, modes, et ce qu'on voit au départ.</p>
+  <ul class="plan">
+    <li>Mise sous tension et temps de chauffe</li>
+    <li>Les modes principaux et à quoi sert chacun</li>
+    <li>Réglages d'image : gain, luminosité, et pourquoi ça compte tant</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Lire l'écran</span></div>
+  <p class="phase-why">L'étape que tout le monde saute, et qui bloque tout le reste.</p>
+  <ul class="plan">
+    <li>Ce que représentent les axes de l'écran</li>
+    <li>Distinguer un vrai écho d'un parasite</li>
+    <li>L'effet du sol sur l'image à basse altitude</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Chercher et accrocher</span></div>
+  <p class="phase-why">Du balayage à la piste unique.</p>
+  <ul class="plan">
+    <li>Régler la zone de balayage en site et en azimut</li>
+    <li>Accrocher une cible et ce qui change à l'écran</li>
+    <li>Perdre l'accrochage : pourquoi ça arrive et comment reprendre</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Travailler avec JESTER</span></div>
+  <p class="phase-why">La façon normale de voler ce module en solo.</p>
+  <ul class="plan">
+    <li>Les ordres radar qu'on peut lui donner</li>
+    <li>Ce qu'il fait de lui-même</li>
+    <li>Quand basculer à l'arrière pour le faire soi-même</li>
+  </ul>
+</section>
+
+<div class="footlinks">
+  <a href="urgences-boldface.html">&larr; Urgences et Bold Face</a>
+  <a href="aim7-sparrow.html">Étape suivante : AIM-7 Sparrow &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : <b>manuel officiel Heatblur</b> et <b>guide de Chuck</b>, livrés avec le module dans <code>Mods\aircraft\F-4E\Doc\</code>, plus la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4e-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — jamais de numéro figé dans le texte.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

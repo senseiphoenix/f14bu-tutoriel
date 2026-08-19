@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-4E — IFF et Combat-Tree, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4e-iff-combat-tree-progress" data-bindings="data/f4e-bindings.json" data-bind-store="f4e-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-4E</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>IFF et Combat-Tree</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-4E Phantom II — pilote et WSO</div>
+<h1>IFF<br>et Combat-Tree</h1>
+<p class="sub">Savoir qui est en face avant de tirer. Le F-4E interroge, répond, et dispose d'un système d'interrogation qui lit directement les transpondeurs adverses — une capacité rare et très utile à cette époque.</p>
+
+<div class="skel">
+  <b>Page de squelette — contenu à rédiger</b>
+  <p style="margin:0">La structure, les liens et le moteur de checklist sont en place. Le contenu détaillé reste à écrire à partir du <b>manuel officiel Heatblur</b> et du <b>guide de Chuck</b>, tous deux livrés avec le module (voir <a href="ressources.html">Ressources</a>). Les phases ci-dessous annoncent le plan : ce ne sont pas encore des procédures vérifiées, ne pas voler avec.</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> IFF et Combat-Tree, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Le F-4E est un <b>biplace</b> : chaque étape précisera si elle revient au <b>pilote</b>, au <b>WSO</b>, ou à <b>JESTER</b> quand tu voles seul. Les fonctions citées porteront leur bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>, qui attend encore le relevé des binds.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Le transpondeur</span></div>
+  <p class="phase-why">Ce que ton avion raconte de lui-même aux autres.</p>
+  <ul class="plan">
+    <li>Le panneau IFF côté pilote et ses modes</li>
+    <li>Régler un code et le changer en vol</li>
+    <li>Ce qui arrive si on l'oublie en zone amie</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Interroger</span></div>
+  <p class="phase-why">Poser la question, et interpréter la réponse.</p>
+  <ul class="plan">
+    <li>Déclencher une interrogation</li>
+    <li>Lire le résultat sur l'écran radar</li>
+    <li>Les limites : ce qu'une absence de réponse veut dire, et ne veut pas dire</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Le système d'interrogation avancé</span></div>
+  <p class="phase-why">Une capacité que peu d'avions de cette génération possèdent.</p>
+  <ul class="plan">
+    <li>Ce qu'il détecte que l'IFF classique ne détecte pas</li>
+    <li>Comment l'exploiter en interception</li>
+    <li>Ce qu'il ne remplace pas</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Construire son identification</span></div>
+  <p class="phase-why">Croiser plutôt que se fier à une seule source.</p>
+  <ul class="plan">
+    <li>Combiner IFF, radar, contrôle au sol et visuel</li>
+    <li>Les règles d'engagement et ce qu'elles imposent</li>
+    <li>Le rôle du WSO ou de JESTER dans l'identification</li>
+  </ul>
+</section>
+
+<div class="footlinks">
+  <a href="navigation-tacan-ins.html">&larr; Navigation</a>
+  <a href="radio-communications.html">Étape suivante : Radio et communications &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : <b>guide de Chuck</b> (936 pages, référence de rédaction de ce module) et <b>manuel officiel Heatblur</b>, plus la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4e-bindings.json</code> — jamais de numéro figé dans le texte.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

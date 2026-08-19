@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F-4E — Carnet de progression</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+<style>
+  .wrap{max-width:880px}
+  h2.sec{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+         margin:36px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:10px}
+  h2.sec .cnt{margin-left:auto;font-size:10.5px;color:var(--amber)}
+  .row{display:flex;align-items:center;gap:12px;border:1px solid var(--line);background:var(--panel);
+       padding:11px 16px;margin:7px 0;border-radius:2px;text-decoration:none;color:var(--ink)}
+  .row:hover{border-color:var(--amber)}
+  .row .dot{width:9px;height:9px;border-radius:50%;flex:none;background:var(--line);border:1px solid var(--dim)}
+  .row.started .dot{background:var(--amber);border-color:var(--amber)}
+  .row.done .dot{background:var(--go);border-color:var(--go)}
+  .row .rn{flex:1;min-width:0;font-size:14px}
+  .row .rs{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--dim);white-space:nowrap}
+  .row.done .rs{color:var(--go)}
+  .row.started .rs{color:var(--amber)}
+  .bar{height:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:3px;overflow:hidden;margin:6px 0 22px}
+  .bar > i{display:block;height:100%;background:var(--go);width:0}
+  .tools{display:flex;gap:12px;flex-wrap:wrap;margin:26px 0 0}
+  .tools button{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);
+    background:transparent;border:1px solid var(--line);padding:10px 16px;border-radius:2px;cursor:pointer}
+  .tools button:hover{color:var(--amber);border-color:var(--amber)}
+  #md{width:100%;min-height:220px;margin-top:16px;background:var(--panel-2);color:var(--ink);border:1px solid var(--line);
+      font-family:var(--mono);font-size:12px;padding:12px;border-radius:2px;display:none}
+  #md.on{display:block}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-4E</a><span>/</span>
+  <span>Carnet de progression</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-4E Phantom II</div>
+<h1>Carnet<br>de progression</h1>
+<p class="sub">Une vue d'ensemble de tout le parcours, lue directement dans la progression que chaque page enregistre dans ce navigateur. Rien n'est stocké ailleurs : changer de navigateur ou vider les données du site remet ce carnet à zéro.</p>
+
+<div id="board"></div>
+
+<div class="tools">
+  <button id="btn-md">Exporter en markdown</button>
+  <button id="btn-print">Imprimer</button>
+</div>
+<textarea id="md" readonly></textarea>
+
+<div class="footlinks">
+  <a href="index.html">&larr; Retour au F-4E</a>
+  <a href="pas-a-pas.html">Aller au Pas à pas &rarr;</a>
+</div>
+
+<p class="src">Les leçons du cursus comptent leur avancement précis (33 leçons réparties inégalement entre les sections). Les pages Pas à pas et Perfectionnement affichent le nombre d'étapes cochées : tant qu'elles sont au stade du squelette elles n'ont pas encore d'étapes, et resteront donc à zéro.</p>
+
+</div>
+
+<script>
+/* Le carnet ne stocke rien lui-même : il relit les clés écrites par les autres
+   pages. Deux formats coexistent, d'où les deux lecteurs ci-dessous.
+     - sections A→G : objet plat {idLecon:true} sous "f4e_<lettre>_progress"
+       (attention : format différent du F4U-1D, qui imbrique sous .done)
+     - pas à pas / perfectionnement : {idEtape:true} sous "f4e-<slug>-progress"
+   Ajouter une leçon = ajouter une ligne dans les tableaux ci-dessous. */
+const SECTIONS = [
+  {k:"f4e_a_progress", n:"A · Découverte &amp; cockpit",       href:"section-a-cockpit.html",      total:8},
+  {k:"f4e_b_progress", n:"B · Démarrage &amp; roulage",        href:"section-b-demarrage.html",    total:4},
+  {k:"f4e_c_progress", n:"C · Décollage",                      href:"section-c-decollage.html",    total:3},
+  {k:"f4e_d_progress", n:"D · Vol normal &amp; navigation",    href:"section-d-vol.html",          total:5},
+  {k:"f4e_e_progress", n:"E · Atterrissage",                   href:"section-e-atterrissage.html", total:4},
+  {k:"f4e_f_progress", n:"F · Urgences",                       href:"section-f-urgences.html",     total:3},
+  {k:"f4e_g_progress", n:"G · Armement &amp; capteurs",        href:"section-g-armement.html",     total:6}
+];
+const PASAPAS = [
+  ["preparer-module-controles","1 · Préparer le module et les contrôles"],
+  ["tour-cockpit-pilote","2 · Tour du cockpit pilote"],
+  ["tour-cockpit-wso","3 · Tour du poste WSO"],
+  ["jester-crew-chief","4 · JESTER et le Crew Chief"],
+  ["demarrage-a-froid","5 · Démarrage à froid"],
+  ["alignement-ins","6 · Alignement INS"],
+  ["roulage-decollage","7 · Roulage et décollage"],
+  ["vol-de-base-afcs","8 · Vol de base et AFCS"],
+  ["navigation-tacan-ins","9 · Navigation : TACAN, VOR et INS"],
+  ["iff-combat-tree","10 · IFF et Combat-Tree"],
+  ["radio-communications","11 · Radio et communications"],
+  ["ravitaillement-vol","12 · Ravitaillement en vol"],
+  ["retour-atterrissage","13 · Retour, break et atterrissage"],
+  ["urgences-boldface","14 · Urgences et Bold Face"],
+  ["radar-apq120","15 · Radar AN/APQ-120"],
+  ["aim7-sparrow","16 · AIM-7 Sparrow"],
+  ["aim9-canon","17 · AIM-9 et canon"],
+  ["bombardement-classique","18 · Bombardement classique"],
+  ["roquettes-mitraillage","19 · Roquettes et mitraillage"],
+  ["maverick-agm65","20 · AGM-65 Maverick"],
+  ["armes-guidage-tv","21 · Armes à guidage TV"],
+  ["pave-spike-guidage","22 · Pave Spike et bombes laser"],
+  ["sead-wild-weasel","23 · SEAD et Wild Weasel"],
+  ["rwr-contremesures","24 · RWR et contre-mesures"],
+  ["avtr-debriefing","25 · AVTR et débriefing"],
+  ["checklists-personnalisees","26 · Construire ses checklists"]
+];
+const PERF = [
+  ["bfm-phantom","1 · BFM en Phantom"],
+  ["bvr-sparrow-avance","2 · BVR avancé au Sparrow"],
+  ["strike-pave-spike-avance","3 · Strike avancé et Pave Spike"],
+  ["wso-en-solo","4 · Tenir les deux postes"],
+  ["mission-synthese","5 · Mission de synthèse"]
+];
+
+function readJSON(key){
+  try{ return JSON.parse(localStorage.getItem(key) || "null"); }catch(e){ return null; }
+}
+function sectionDone(key){
+  const st = readJSON(key);
+  if(!st) return 0;
+  return Object.keys(st).filter(function(k){ return st[k]; }).length;
+}
+function stepsDone(slug){
+  const st = readJSON("f4e-" + slug + "-progress");
+  if(!st) return 0;
+  return Object.keys(st).filter(function(k){ return st[k]; }).length;
+}
+function row(href, name, state, label){
+  return '<a class="row ' + state + '" href="' + href + '">' +
+         '<span class="dot"></span><span class="rn">' + name + '</span>' +
+         '<span class="rs">' + label + '</span></a>';
+}
+
+const lines = [];
+let html = "";
+
+let secDone = 0, secTotal = 0;
+html += '<h2 class="sec">Le cursus <span class="cnt" id="c-sec"></span></h2><div class="bar"><i id="b-sec"></i></div>';
+SECTIONS.forEach(function(s){
+  const d = sectionDone(s.k);
+  secDone += d; secTotal += s.total;
+  const state = d >= s.total ? "done" : (d > 0 ? "started" : "");
+  html += row(s.href, s.n, state, d + " / " + s.total);
+  lines.push("- [" + (d >= s.total ? "x" : " ") + "] " + s.n.replace(/&amp;/g, "&") + " — " + d + "/" + s.total);
+});
+
+html += '<h2 class="sec">Pas à pas <span class="cnt" id="c-pp"></span></h2>';
+let ppStarted = 0;
+PASAPAS.forEach(function(p){
+  const d = stepsDone(p[0]);
+  if(d > 0) ppStarted++;
+  html += row(p[0] + ".html", p[1], d > 0 ? "started" : "", d > 0 ? d + " étapes" : "non commencé");
+  lines.push("- [" + (d > 0 ? "~" : " ") + "] " + p[1] + (d > 0 ? " — " + d + " étapes cochées" : ""));
+});
+
+html += '<h2 class="sec">Perfectionnement <span class="cnt" id="c-pf"></span></h2>';
+let pfStarted = 0;
+PERF.forEach(function(p){
+  const d = stepsDone(p[0]);
+  if(d > 0) pfStarted++;
+  html += row(p[0] + ".html", p[1], d > 0 ? "started" : "", d > 0 ? d + " étapes" : "non commencé");
+  lines.push("- [" + (d > 0 ? "~" : " ") + "] " + p[1] + (d > 0 ? " — " + d + " étapes cochées" : ""));
+});
+
+document.getElementById("board").innerHTML = html;
+document.getElementById("c-sec").textContent = secDone + " / " + secTotal + " leçons";
+document.getElementById("b-sec").style.width = (secTotal ? secDone / secTotal * 100 : 0) + "%";
+document.getElementById("c-pp").textContent = ppStarted + " / " + PASAPAS.length + " commencés";
+document.getElementById("c-pf").textContent = pfStarted + " / " + PERF.length + " commencées";
+
+document.getElementById("btn-md").addEventListener("click", function(){
+  const ta = document.getElementById("md");
+  ta.value = "# F-4E Phantom II — progression\n\n" + lines.join("\n") + "\n";
+  ta.classList.add("on");
+  ta.select();
+});
+document.getElementById("btn-print").addEventListener("click", function(){ window.print(); });
+</script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-4E — Préparer le module et les contrôles, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4e-preparer-module-controles-progress" data-bindings="data/f4e-bindings.json" data-bind-store="f4e-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-4E</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Préparer le module et les contrôles</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-4E Phantom II — pilote et WSO</div>
+<h1>Préparer le module<br>et les contrôles</h1>
+<p class="sub">Avant le premier vol : vérifier l'installation, comprendre que ce module expose <b>deux jeux de commandes distincts</b> — un pour le pilote, un pour le WSO — et décider dès maintenant si tu voles avec JESTER à l'arrière ou si tu tiens les deux postes toi-même.</p>
+
+<div class="skel">
+  <b>Contenu partiellement rédigé</b>
+  <p style="margin:0 0 10px">La phase 3 (commandes à mapper) reprend la matière de <code>docs/notes-sources.md</code> (source S3), elle-même appuyée sur la catégorie <code>*Essentials*</code> réellement présente dans le module — c'est donc une base solide. Les phases 1, 2 et 4 restent au stade du plan.</p>
+  <p style="margin:0">Aucun numéro de bouton n'est donné ici et n'en donnera jamais : les badges sont résolus depuis <code>data/f4e-bindings.json</code>, qui attend le relevé des binds (voir <a href="mapping-hotas.html">mapping-hotas.html</a>).</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> Préparer le module et les contrôles, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Le F-4E est un <b>biplace</b> : chaque étape précisera si elle revient au <b>pilote</b>, au <b>WSO</b>, ou à <b>JESTER</b> quand tu voles seul. Les fonctions citées porteront leur bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>, qui attend encore le relevé des binds.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Vérifier l'installation et la version</span></div>
+  <p class="phase-why">Un module Heatblur évolue vite : ce qui est vrai dans une vidéo d'il y a six mois ne l'est plus forcément.</p>
+  <ul class="plan">
+    <li>Retrouver le dossier du module et l'instance DCS réellement utilisée</li>
+    <li>Relever la version et les notes de mise à jour Heatblur</li>
+    <li>Ouvrir le manuel officiel et le guide de Chuck à côté — les deux sont livrés dans le dossier <b>Doc</b> du module</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Comprendre les deux postes</span></div>
+  <p class="phase-why">C'est la particularité structurante du F-4E, à régler avant de toucher au moindre bouton.</p>
+  <ul class="plan">
+    <li>DCS expose <b>deux profils de commandes séparés</b> pour cet avion : un poste pilote et un poste WSO</li>
+    <li>Ce que ça implique quand on bascule d'un siège à l'autre en vol</li>
+    <li>Choisir sa façon de voler : tout déléguer à JESTER, ou reprendre la place arrière soi-même</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Poser les axes et les commandes de base</span></div>
+  <p class="phase-why">Un chasseur des années 60 : pas de commandes de vol électriques, beaucoup de choses à la main. Le module range lui-même les commandes indispensables dans une catégorie <code>*Essentials*</code> — c'est elle qu'on suit ici plutôt qu'une liste inventée.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item"><span class="switchname">Axes de vol</span> : tangage, roulis, lacet</p>
+    <p class="step-detail">Manche et palonnier, rien de particulier — mais sans compensation automatique, ils travailleront beaucoup.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item"><span class="switchname">Deux axes de gaz distincts</span>, un par réacteur</p>
+    <p class="step-detail">Particularité du biréacteur : les deux J79 se pilotent indépendamment. Un axe unique suffit pour voler, mais empêche de gérer une panne asymétrique ou un démarrage moteur par moteur.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item"><span class="switchname">Freins différentiels</span> gauche et droite au palonnier</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-4"><div class="step-body">
+    <p class="step-item"><span class="switchname">Crans d'injection ralenti</span> <span class="setting">(idle detents)</span> gauche et droit</p>
+    <p class="step-detail">La commande la plus facile à oublier, et celle qui gâche le premier démarrage. C'est elle qui fait passer une manette de <code>OFF</code> à <code>IDLE</code> au bon moment — voir <a href="demarrage-a-froid.html">leçon 5</a>. Sans bind, il faut aller la chercher à la souris pendant que le régime monte.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-5"><div class="step-body">
+    <p class="step-item"><span class="switchname">Commutateur de démarrage</span> et <span class="switchname">générateurs</span>, gauche et droit</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-6"><div class="step-body">
+    <p class="step-item"><span class="switchname">Direction de roulette de nez</span> <span class="setting">(NWS)</span></p>
+    <p class="step-detail">Décrite comme le bouton le plus important du manche : sans elle, l'avion ne tourne pas au sol au palonnier. <span style="color:var(--warn)">À vérifier</span> : ce bouton semble partager sa fonction avec l'acquisition automatique de cible — à confirmer sur ce module.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-7"><div class="step-body">
+    <p class="step-item"><span class="switchname">Volets</span> et <span class="switchname">aérofreins</span> — commandes à trois positions</p>
+    <p class="step-detail">Ce ne sont pas de simples bascules on/off : prévoir trois positions distinctes chacune, ou un axe.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-8"><div class="step-body">
+    <p class="step-item"><span class="switchname">Frein de parc</span></p>
+  </div></div>
+
+  <div class="note go">
+    <b>Les deux boutons JESTER, à ne pas négliger</b>
+    <b>Jester Context Action</b> et <b>Jester UI Action</b> sont deux commandes distinctes : l'une déclenche l'action contextuelle du moment, l'autre ouvre le menu complet. Sans elles sur le HOTAS, chaque interaction avec le WSO oblige à lâcher les commandes. Prévoir aussi l'<b>alternat micro</b> (radio externe / intercom équipage).
+  </div>
+</section>
+
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Régler les aides de DCS</span></div>
+  <p class="phase-why">Autant commencer avec des béquilles conscientes, qu'on retire une par une.</p>
+  <ul class="plan">
+    <li>Options de réalisme pertinentes pour cet avion</li>
+    <li>Affichage des positions de commandes</li>
+    <li>Ce qu'il faut désactiver dès qu'on est à l'aise, et dans quel ordre</li>
+  </ul>
+</section>
+
+<div class="footlinks">
+  <a href="pas-a-pas.html">&larr; Sommaire Pas à pas</a>
+  <a href="tour-cockpit-pilote.html">Étape suivante : Tour du cockpit pilote &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : <b>manuel officiel Heatblur</b> et <b>guide de Chuck</b>, livrés avec le module dans <code>Mods\aircraft\F-4E\Doc\</code>, plus la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4e-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — jamais de numéro figé dans le texte.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

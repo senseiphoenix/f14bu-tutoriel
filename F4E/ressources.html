@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F-4E — Ressources externes</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+<style>
+  .wrap{max-width:880px}
+  .res{border:1px solid var(--line);background:var(--panel);padding:14px 18px;margin:10px 0;border-radius:2px}
+  .res .rt{font-family:var(--display);font-size:17px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink)}
+  .res .rd{color:var(--dim);font-size:13.5px;margin:5px 0 0}
+  .res a{color:var(--amber);font-family:var(--mono);font-size:11px;letter-spacing:.06em}
+  .res .rm{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);
+           border:1px solid var(--line);border-radius:2px;padding:2px 7px;margin-left:8px;white-space:nowrap}
+  h2.sec{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+         margin:36px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-4E</a><span>/</span>
+  <span>Ressources externes</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-4E Phantom II</div>
+<h1>Ressources externes</h1>
+<p class="sub">Les sources sur lesquelles s'appuient les leçons de ce site, et où aller quand une leçon ne suffit pas. Chaque entrée dit <b>ce qu'on y trouve</b>, pas seulement où elle se trouve.</p>
+
+<div class="note go">
+  <b>Bonne nouvelle : l'essentiel est déjà sur ton disque</b>
+  Contrairement à la plupart des modules, le F-4E est livré avec <b>deux documentations complètes</b> dans son propre dossier <code>Doc\</code>, dont le guide communautaire de Chuck en version intégrée. Pas besoin d'aller les chercher en ligne.
+</div>
+
+<h2 class="sec">Documentation livrée avec le module</h2>
+
+<div class="res">
+  <div class="rt">Manuel officiel <span class="rm">Heatblur</span></div>
+  <p class="rd">Le manuel de vol du module, référence de toutes les procédures, limites et descriptions de systèmes utilisées sur ce site. C'est lui qui fait foi en cas de contradiction avec une vidéo ou un guide communautaire.</p>
+  <p class="rd">Chemin : <code>J:\DCS World\Mods\aircraft\F-4E\Doc\F-4E Manual.pdf</code> (~60 Mo). Une version chinoise est également livrée à côté.</p>
+</div>
+
+<div class="res">
+  <div class="rt">Guide de Chuck <span class="rm">référence du parcours</span></div>
+  <p class="rd"><b style="color:var(--ink)">936 pages</b>, structurées en 20 parties — c'est <b style="color:var(--ink)">la référence retenue</b> pour rédiger le <a href="pas-a-pas.html" style="font-family:inherit;font-size:inherit;letter-spacing:0">Pas à pas</a> de ce module : procédures très visuelles, captures annotées panneau par panneau, checklists abrégées en fin de volume. Fait suffisamment autorité pour que le plan des leçons de ce site soit calqué sur sa table des matières.</p>
+  <p class="rd">Heatblur l'intègre directement au module — <code>Mods\aircraft\F-4E\Doc\Chucks Guide.pdf</code>. Une version plus récente a été récupérée en local, c'est elle qui sert de base.</p>
+  <p class="rd"><b style="color:var(--ink)">À savoir :</b> le guide indique lui-même s'appuyer sur de la documentation publique et des tutoriels communautaires, pas sur des sources constructeur. En cas de contradiction avec le manuel Heatblur, c'est le manuel qui tranche.</p>
+</div>
+
+<div class="res">
+  <div class="rt">Taxonomie officielle des commandes <span class="rm">source technique</span></div>
+  <p class="rd">Peu connu, mais précieux : le module expose sa propre classification des commandes dans <code>Mods\aircraft\F-4E\Input\bind_categories.lua</code> — Stick, Throttle, Radar Controls, Pave Spike, INS, RWR, WRCS, LABS, Combat-Tree, Jester, Crew Chief Commands, etc. C'est la nomenclature à reprendre pour organiser le <a href="mapping-hotas.html" style="font-family:inherit;font-size:inherit;letter-spacing:0">mapping HOTAS</a>, plutôt que d'inventer des thèmes.</p>
+</div>
+
+<h2 class="sec">Documents téléchargés localement</h2>
+
+<div class="res">
+  <div class="rt">Checklists et kneeboards communautaires <span class="rm">à dépouiller</span></div>
+  <p class="rd">Plusieurs archives ont été récupérées dans <code>F4E/docs/</code> : checklists simplifiées, checklists complètes, kneeboard de dépression de viseur, kneeboard des commandes vocales JESTER, et une version plus récente du guide de Chuck (en deux parties) que celle livrée avec le module.</p>
+  <p class="rd"><b style="color:var(--ink)">Non redistribuées</b> — elles restent en local et ne sont pas publiées sur le site, leurs licences n'ayant pas été vérifiées. Elles servent de matière de rédaction.</p>
+</div>
+
+<h2 class="sec">Vidéos</h2>
+
+<div class="res">
+  <div class="rt">Sélection à constituer <span class="rm">à faire</span></div>
+  <p class="rd">Objectif : deux vidéos par leçon du <a href="pas-a-pas.html" style="font-family:inherit;font-size:inherit;letter-spacing:0">Pas à pas</a>, une détaillée et une express, chacune accompagnée d'une phrase disant quoi y regarder. Point de vigilance propre au F-4E : beaucoup de contenu ancien porte sur d'autres variantes du Phantom ou sur d'autres simulateurs — vérifier que la vidéo montre bien le <b>F-4E de Heatblur dans DCS</b> avant de la retenir.</p>
+</div>
+
+<div class="footlinks">
+  <a href="index.html">&larr; Retour au F-4E</a>
+  <a href="pas-a-pas.html">Aller au Pas à pas &rarr;</a>
+</div>
+
+<p class="src">Toute source citée doit préciser sa variante et sa date. Le F-4E de Heatblur reçoit des mises à jour régulières : une procédure filmée sur une version antérieure peut ne plus correspondre.</p>
+
+</div>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

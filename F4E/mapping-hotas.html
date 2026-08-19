@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F-4E — Mapping HOTAS</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+<style>
+  .wrap{max-width:880px}
+  ol.steps{counter-reset:s;list-style:none;padding:0;margin:18px 0}
+  ol.steps li{counter-increment:s;position:relative;padding:14px 0 14px 44px;border-bottom:1px solid var(--line)}
+  ol.steps li:last-child{border-bottom:none}
+  ol.steps li::before{content:counter(s);position:absolute;left:0;top:14px;width:26px;height:26px;
+    display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;
+    color:var(--amber);border:1px solid var(--amber);border-radius:2px}
+  ol.steps b{color:var(--ink)}
+  ol.steps code{font-family:var(--mono);font-size:.9em;background:var(--panel-2);border:1px solid var(--line);padding:1px 6px;color:var(--amber)}
+  table.liv{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  table.liv td,table.liv th{border-bottom:1px solid var(--line);padding:8px 8px;text-align:left;vertical-align:top}
+  table.liv th{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:400}
+  table.liv code{font-family:var(--mono);font-size:.92em;color:var(--amber)}
+  table.liv td.st{font-family:var(--mono);font-size:11px;color:var(--dim);white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-4E</a><span>/</span>
+  <span>Mapping HOTAS</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-4E Phantom II</div>
+<h1>Mapping HOTAS</h1>
+<p class="sub">Les planches annotées et cherchables de chaque périphérique, sur le modèle de celles du <a href="../F14BU/mapping-hotas.html">F-14B(U)</a> : un bouton, sa commande DCS, le détail côté avion, et un lien vers la leçon qui s'en sert.</p>
+
+<div class="skel">
+  <b>Bloqué — DCS n'a encore rien écrit pour cet avion</b>
+  <p style="margin:0 0 10px">Le matériel est connu : <b>même rig que le F-14B(U)</b> — manche Virpil, manette MongoosT-50CM3, panneau WinWing PTO2, pédales Fanatec. Les planches sont donc les mêmes images, déjà présentes dans le dépôt.</p>
+  <p style="margin:0">Ce qui manque, ce sont les fichiers : aucune des instances DCS de la machine n'a de dossier d'entrées pour le F-4E, donc <b>aucune commande ne lui a jamais été assignée</b>. Sans ça, ni les GUID ni les numéros de bouton ne peuvent être lus — et ils ne se devinent pas. Chaque badge de bind des leçons affiche <b>non affecté</b> et renvoie ici.</p>
+</div>
+
+<div class="note warn">
+  <b>Particularité du F-4E : deux jeux de binds, pas un</b>
+  Contrairement au F4U-1D et au F-14B(U), ce module expose <b>deux profils d'entrées distincts</b>, confirmés en lisant la cascade du module (<code>Mods\aircraft\F-4E\Input\</code>) :
+  <b>F-4E-Pilot</b> et <b>F-4E-WSO</b>. Chacun aura son propre dossier dans <code>Config\Input\</code>, ses propres fichiers et ses propres assignations.
+  <br><br>
+  Conséquence directe : il faudra <b>décider ce que le mapping documente</b> — le seul poste pilote, ou les deux. Et au relevé, il faudra binder dans les deux profils si l'on veut les deux.
+</div>
+
+<div class="note">
+  <b>À vérifier au relevé : le module livre des profils tout faits</b>
+  La cascade du module contient des profils par défaut pour plusieurs périphériques du commerce, dont un nommé <code>VPC WarBRD + MT50</code> — proche, mais pas identique, au matériel réellement utilisé ici. Si DCS en applique un automatiquement, une partie des commandes peut déjà être assignée <b>sans qu'aucun fichier utilisateur n'existe</b>. À contrôler dans l'écran Contrôles avant de conclure que rien n'est bindé.
+</div>
+
+<h2 class="phase-title" style="font-size:19px;margin:34px 0 4px">Ce qu'il faut faire pour débloquer</h2>
+<p class="phase-why">La même méthode que celle qui a servi pour le F-14B(U), consignée dans <code>CLAUDE.md</code>. Chaque étape produit une donnée vérifiée, jamais une hypothèse.</p>
+
+<ol class="steps">
+  <li style="opacity:.6"><b>Dire quel matériel sert à piloter le Phantom.</b> <b style="color:var(--go)">Fait</b> — même rig que le F-14B(U) : manche Virpil, manette MongoosT-50CM3, panneau WinWing PTO2, pédales Fanatec. À revérifier quand même dans les noms de fichiers de l'étape 3.</li>
+  <li><b>Faire écrire les fichiers de binds par DCS.</b> Dans l'écran Contrôles du F-4E, changer un bind dans la colonne de <b>chacun des quatre appareils</b> — de préférence sur une commande encore libre — puis <b>quitter proprement</b> l'écran : l'écriture disque n'a lieu qu'à ce moment. À refaire pour le profil <b>WSO</b> si l'on veut aussi le documenter.</li>
+  <li style="opacity:.6"><b>Relire les vrais fichiers.</b> <b style="color:var(--go)">Noms de dossiers déjà confirmés</b> : ce seront <code>F-4E-Pilot</code> et <code>F-4E-WSO</code>, lus dans la cascade du module et non devinés. Reste à lire les noms de fichiers <code>joystick\&lt;Nom {GUID}&gt;.diff.lua</code>, qui n'existent pas encore.</li>
+  <li><b>Extraire le catalogue de commandes du module</b> avec la chaîne Lua du dépôt (<code>tools/extract-commands.lua</code>), en pointant la cascade d'entrées du F-4E — attention, elle est plus complexe que celle des autres modules : elle passe par <code>bind_dsl.lua</code> et <code>bind_categories.lua</code> plutôt que par un simple <code>default.lua</code>.</li>
+  <li><b>Construire le mapping</b> — un enregistrement par bouton et par axe, avec un statut explicite : correspondance confirmée, proposition à valider, ou pas d'équivalent. La <b>taxonomie officielle du module</b> est déjà disponible dans <code>bind_categories.lua</code> (Stick, Throttle, Radar Controls, Pave Spike, INS, RWR, Jester, Crew Chief Commands…) — la reprendre plutôt qu'inventer des thèmes.</li>
+  <li style="opacity:.6"><b>Récupérer les gabarits d'image</b> des périphériques. <b style="color:var(--go)">Déjà disponibles</b> — rig identique au F-14B(U), donc les quatre planches existent dans le dépôt. Il reste à monter la page en réutilisant tel quel le moteur JS du F-14B(U) : seules les données changent.</li>
+  <li><b>Générer les binds installables</b> et valider chaque <code>.diff.lua</code> avec l'interpréteur Lua de DCS avant toute installation — après avoir sauvegardé le fichier existant.</li>
+</ol>
+
+<h2 class="phase-title" style="font-size:19px;margin:40px 0 4px">Fichiers attendus</h2>
+<p class="phase-why">Les mêmes que côté F-14B(U), transposés. Tant qu'ils n'existent pas, le moteur de badges tombe proprement sur « non affecté ».</p>
+
+<table class="liv">
+  <tr><th>Fichier</th><th>Rôle</th><th>État</th></tr>
+  <tr><td><code>data/f4e-commands.json</code></td><td>Catalogue des commandes DCS du module</td><td class="st">à produire</td></tr>
+  <tr><td><code>data/f4e-bindings.json</code></td><td>Un enregistrement par bouton et axe physique</td><td class="st">à produire</td></tr>
+  <tr><td><code>data/f4e-hotas.json</code></td><td>Positions et libellés des étiquettes sur les planches</td><td class="st">à produire</td></tr>
+  <tr><td><code>export-bindings.html</code></td><td>Génération des <code>.diff.lua</code> installables</td><td class="st">à produire</td></tr>
+</table>
+
+<div class="note warn">
+  <b>Règle qui ne se contourne pas</b>
+  Aucun numéro de bouton n'est jamais écrit en dur dans le texte d'une leçon. Les badges sont résolus à l'affichage depuis <code>data/f4e-bindings.json</code> — le jour où un bind change, il suffit de mettre à jour ce fichier et toutes les leçons suivent.
+</div>
+
+<div class="footlinks">
+  <a href="index.html">&larr; Retour au F-4E</a>
+  <a href="../F14BU/mapping-hotas.html">Voir le mapping F-14B(U) &rarr;</a>
+</div>
+
+<p class="src">Méthode et garde-fous : <code>CLAUDE.md</code> (section « Vérifier ou générer des binds DCS ») et <code>tools/README.md</code> pour la chaîne d'extraction.</p>
+
+</div>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

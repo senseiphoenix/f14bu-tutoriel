@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-4E — SEAD et Wild Weasel, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4e-sead-wild-weasel-progress" data-bindings="data/f4e-bindings.json" data-bind-store="f4e-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-4E</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>SEAD et Wild Weasel</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-4E Phantom II — pilote et WSO</div>
+<h1>SEAD<br>et Wild Weasel</h1>
+<p class="sub">Chasser les radars ennemis avec des missiles antiradar : la mission la plus dangereuse du répertoire, celle où l'on se fait délibérément prendre pour cible afin de faire émettre l'adversaire.</p>
+
+<div class="skel">
+  <b>Page de squelette — contenu à rédiger</b>
+  <p style="margin:0">La structure, les liens et le moteur de checklist sont en place. Le contenu détaillé reste à écrire à partir du <b>manuel officiel Heatblur</b> et du <b>guide de Chuck</b>, tous deux livrés avec le module (voir <a href="ressources.html">Ressources</a>). Les phases ci-dessous annoncent le plan : ce ne sont pas encore des procédures vérifiées, ne pas voler avec.</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> SEAD et Wild Weasel, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Le F-4E est un <b>biplace</b> : chaque étape précisera si elle revient au <b>pilote</b>, au <b>WSO</b>, ou à <b>JESTER</b> quand tu voles seul. Les fonctions citées porteront leur bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>, qui attend encore le relevé des binds.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Le principe</span></div>
+  <p class="phase-why">Comprendre le marché qu'on passe avant de décoller.</p>
+  <ul class="plan">
+    <li>Ce qu'est une mission de suppression des défenses</li>
+    <li>Pourquoi il faut que le radar adverse émette pour pouvoir le traiter</li>
+    <li>Le rôle du détecteur d'alerte comme capteur principal</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Les missiles antiradar</span></div>
+  <p class="phase-why">Deux armes, deux emplois très différents.</p>
+  <ul class="plan">
+    <li>L'<b>AGM-45 Shrike</b> : portée, contraintes, et ses deux modes d'emploi via le calculateur de largage</li>
+    <li>Ce qu'il fait quand le radar visé s'éteint</li>
+    <li>Le réglage préalable sur le type d'émetteur visé</li>
+  </ul>
+  <div class="note warn">
+    <b>Un seul missile antiradar confirmé</b>
+    Le guide de Chuck ne documente que l'<b>AGM-45 Shrike</b>. Un AGM-78 Standard ARM est parfois évoqué pour le Phantom, mais il n'apparaît pas dans le guide — soit il n'est pas modélisé, soit il a été ajouté après. <span style="color:var(--warn)">À vérifier dans l'éditeur de mission</span> avant d'en parler.
+  </div>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">L'attaque</span></div>
+  <p class="phase-why">Le déroulé d'une passe, du repérage au tir.</p>
+  <ul class="plan">
+    <li>Identifier et localiser l'émetteur au détecteur d'alerte</li>
+    <li>Se placer dans le domaine de tir</li>
+    <li>Tirer, puis se dégager sans attendre le résultat</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Survivre</span></div>
+  <p class="phase-why">La partie qui distingue une mission réussie d'un avion perdu.</p>
+  <ul class="plan">
+    <li>Rester hors de portée pendant le travail</li>
+    <li>Réagir à un tir pendant qu'on est occupé à chercher</li>
+    <li>La coordination avec le reste de la patrouille</li>
+  </ul>
+</section>
+
+<div class="footlinks">
+  <a href="pave-spike-guidage.html">&larr; Pave Spike</a>
+  <a href="rwr-contremesures.html">Étape suivante : RWR et contre-mesures &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : <b>manuel officiel Heatblur</b> et <b>guide de Chuck</b>, livrés avec le module dans <code>Mods\aircraft\F-4E\Doc\</code>, plus la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4e-bindings.json</code> — jamais de numéro figé dans le texte.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

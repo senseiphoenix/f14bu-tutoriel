@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F-4E — Pas à pas</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<style>
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;--warn:#d9695a;
+    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  .wrap{max-width:880px;margin:0 auto;padding:48px 24px 80px}
+  .crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+  .crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+  .crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+  .tail{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:44px;letter-spacing:.04em;line-height:1.02;margin:10px 0 8px;text-transform:uppercase}
+  .sub{color:var(--dim);max-width:64ch;margin:0 0 24px}
+  .sub b{color:var(--ink)}
+  .sub a{color:var(--amber)}
+  a.card{display:flex;gap:18px;align-items:baseline;border:1px solid var(--line);background:var(--panel);
+         padding:18px 20px;margin:10px 0;text-decoration:none;color:var(--ink);transition:border-color .12s}
+  a.card:hover{border-color:var(--amber)}
+  .idx{font-family:var(--mono);font-size:13px;color:var(--amber);min-width:26px}
+  .nm{font-family:var(--display);font-size:19px;letter-spacing:.04em;text-transform:uppercase}
+  .ds{color:var(--dim);font-size:13.5px;margin-left:auto;text-align:right;max-width:46%}
+  .hr{border-top:1px solid var(--line);margin:34px 0 22px}
+  h2{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:0 0 12px}
+  p{margin:12px 0;color:var(--dim)}
+  .skel{border:1px solid rgba(217,105,90,.5);border-left:3px solid var(--warn);background:rgba(217,105,90,.07);
+        padding:16px 20px;margin:0 0 30px;border-radius:2px;font-size:14px;color:var(--dim)}
+  .skel > b:first-child{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--warn);margin-bottom:6px}
+  .skel a{color:var(--amber)}
+  .skel code{font-family:var(--mono);font-size:.9em;background:var(--panel-2);border:1px solid var(--line);padding:1px 6px;color:var(--amber)}
+  .grp{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+       margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:10px}
+  .grp .grp-sub{font-family:var(--body);letter-spacing:0;text-transform:none;font-size:12px;color:#5f6d76}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="crumbs">
+    <a href="index.html">&larr; F-4E</a><span>/</span>
+    <span>Pas à pas</span>
+  </nav>
+  <div class="tail">DCS · Heatblur · F-4E Phantom II — pilote et WSO</div>
+  <h1>Pas à pas</h1>
+  <p class="sub">Des tutoriels <b>une seule page, très détaillés</b> : chaque étape dit quoi faire, où, et pourquoi, avec une checklist qui garde ta progression. Différent du <a href="index.html">cursus en 7 sections</a> qui explique le <b>pourquoi</b> en profondeur — ici, c'est le <b>quoi faire, maintenant</b>.</p>
+  <p class="sub">Le F-4E est un <b>biplace</b> : chaque leçon précise ce qui revient au <b>pilote</b>, au <b>WSO</b>, ou à <b>JESTER</b> quand tu voles seul. Trois leçons y sont entièrement consacrées — poste arrière, JESTER, et l'art de reprendre la main.</p>
+
+  <div class="skel">
+    <b>Parcours au stade du squelette</b>
+    Les 26 leçons ci-dessous existent avec leur structure et leur plan de phases. Deux ont commencé à recevoir du contenu réel (1 et 5). Le reste est à rédiger à partir du <b>guide de Chuck</b> — 936 pages livrées avec le module, c'est la référence retenue pour ce parcours — et du <b>manuel officiel Heatblur</b> en arbitre. Le <a href="index.html">cursus en 7 sections</a>, lui, est complet et utilisable dès maintenant.
+  </div>
+
+  <h2 class="grp">Prendre l'avion en main <span class="grp-sub">avant le premier vol</span></h2>
+  <a class="card" href="preparer-module-controles.html"><span class="idx">1</span><span class="nm">Préparer le module et les contrôles</span><span class="ds">Deux jeux de commandes séparés, axes, crans d'injection, boutons JESTER</span></a>
+  <a class="card" href="tour-cockpit-pilote.html"><span class="idx">2</span><span class="nm">Tour du cockpit pilote</span><span class="ds">Planche avant, viseur optique, consoles, manche — nommer avant de manipuler</span></a>
+  <a class="card" href="tour-cockpit-wso.html"><span class="idx">3</span><span class="nm">Tour du poste WSO</span><span class="ds">Écran radar, manche d'antenne, centrale à inertie, panneaux de désignation</span></a>
+  <a class="card" href="jester-crew-chief.html"><span class="idx">4</span><span class="nm">JESTER et le Crew Chief</span><span class="ds">La roue de commande, ce qu'on délègue au sol et en vol, quand reprendre la main</span></a>
+
+  <h2 class="grp">Faire voler l'avion <span class="grp-sub">du parking froid au premier atterrissage</span></h2>
+  <a class="card" href="demarrage-a-froid.html"><span class="idx">5</span><span class="nm">Démarrage à froid</span><span class="ds">Deux J79 l'un après l'autre, groupe de parc, mise en route des systèmes</span></a>
+  <a class="card" href="alignement-ins.html"><span class="idx">6</span><span class="nm">Alignement INS</span><span class="ds">Le poste le plus long de la préparation — et la dérive avec laquelle il faudra vivre</span></a>
+  <a class="card" href="roulage-decollage.html"><span class="idx">7</span><span class="nm">Roulage et décollage</span><span class="ds">Un avion lourd, long à lancer et à arrêter ; postcombustion et rotation</span></a>
+  <a class="card" href="vol-de-base-afcs.html"><span class="idx">8</span><span class="nm">Vol de base et AFCS</span><span class="ds">Trimer en permanence, domaine de vol, incidence, ce que l'autopilote tient vraiment</span></a>
+  <a class="card" href="navigation-tacan-ins.html"><span class="idx">9</span><span class="nm">Navigation : TACAN, VOR et INS</span><span class="ds">Quatre moyens qui se contredisent — savoir lequel croire, et quand</span></a>
+  <a class="card" href="iff-combat-tree.html"><span class="idx">10</span><span class="nm">IFF et Combat-Tree</span><span class="ds">Savoir qui est en face avant de tirer — interroger, répondre, croiser les sources</span></a>
+  <a class="card" href="radio-communications.html"><span class="idx">11</span><span class="nm">Radio et communications</span><span class="ds">Postes de bord, intercom équipage, et les échanges qui reviennent à chaque vol</span></a>
+  <a class="card" href="ravitaillement-vol.html"><span class="idx">12</span><span class="nm">Ravitaillement en vol</span><span class="ds">Le geste le plus exigeant du répertoire : tenir la position au mètre près</span></a>
+  <a class="card" href="retour-atterrissage.html"><span class="idx">13</span><span class="nm">Retour, break et atterrissage</span><span class="ds">Circuit militaire, poser à l'incidence, parachute de freinage</span></a>
+  <a class="card" href="urgences-boldface.html"><span class="idx">14</span><span class="nm">Urgences et Bold Face</span><span class="ds">Les gestes qu'on exécute de mémoire, puis les pannes qui laissent réfléchir</span></a>
+
+  <h2 class="grp">Se battre <span class="grp-sub">capteurs, air-air, air-sol, survie</span></h2>
+  <a class="card" href="radar-apq120.html"><span class="idx">15</span><span class="nm">Radar AN/APQ-120</span><span class="ds">Lire une image brute, chercher, accrocher — soi-même ou via JESTER</span></a>
+  <a class="card" href="aim7-sparrow.html"><span class="idx">16</span><span class="nm">AIM-7 Sparrow</span><span class="ds">Guidage semi-actif : tenir l'illumination jusqu'à l'impact sans se faire tirer dessus</span></a>
+  <a class="card" href="aim9-canon.html"><span class="idx">17</span><span class="nm">AIM-9 et canon</span><span class="ds">Le son de l'autodirecteur, le réticule sans calculateur, et l'art de se placer</span></a>
+  <a class="card" href="bombardement-classique.html"><span class="idx">18</span><span class="nm">Bombardement classique</span><span class="ds">Pas de CCIP ici : Dive Toss, Direct, Loft, Laydown — chaque bombe a son mode</span></a>
+  <a class="card" href="roquettes-mitraillage.html"><span class="idx">19</span><span class="nm">Roquettes et mitraillage</span><span class="ds">L'attaque rasante : salves de roquettes, passes au canon, et le dégagement qui sauve</span></a>
+  <a class="card" href="maverick-agm65.html"><span class="idx">20</span><span class="nm">AGM-65 Maverick</span><span class="ds">Accrocher, tirer, partir — le seul air-sol qui travaille seul après le tir</span></a>
+  <a class="card" href="armes-guidage-tv.html"><span class="idx">21</span><span class="nm">Armes à guidage TV</span><span class="ds">Bombe planante et missiles guidés à l'image, avant l'ère du Maverick</span></a>
+  <a class="card" href="pave-spike-guidage.html"><span class="idx">22</span><span class="nm">Pave Spike et bombes laser</span><span class="ds">Désignation côté WSO, et tenir le laser pendant toute la chute</span></a>
+  <a class="card" href="sead-wild-weasel.html"><span class="idx">23</span><span class="nm">SEAD et Wild Weasel</span><span class="ds">Chasser les radars au Shrike — se faire viser volontairement pour les faire émettre</span></a>
+  <a class="card" href="rwr-contremesures.html"><span class="idx">24</span><span class="nm">RWR et contre-mesures</span><span class="ds">Savoir qu'on est visé, leurres, brouilleur — et la manœuvre, qui reste le meilleur recours</span></a>
+  <a class="card" href="avtr-debriefing.html"><span class="idx">25</span><span class="nm">AVTR et débriefing</span><span class="ds">Revoir ses passes pour comprendre pourquoi la bombe est tombée à côté</span></a>
+  <a class="card" href="checklists-personnalisees.html"><span class="idx">26</span><span class="nm">Construire ses checklists</span><span class="ds">Un pense-bête d'une page et une routine d'entraînement qui tient dans le temps</span></a>
+
+  <div class="hr"></div>
+  <h2>Voir aussi</h2>
+  <a class="card" href="index.html"><span class="idx">&#9733;</span><span class="nm">Le cursus en 7 sections</span><span class="ds">Les mêmes sujets en profondeur, 33 leçons — complet et utilisable</span></a>
+  <a class="card" href="perfectionnement.html"><span class="idx">&#10022;</span><span class="nm">Perfectionnement</span><span class="ds">5 leçons au-delà : BFM, BVR au Sparrow, strike avancé, tenir les deux postes, mission de synthèse</span></a>
+  <a class="card" href="mapping-hotas.html"><span class="idx">&#9998;</span><span class="nm">Mapping HOTAS</span><span class="ds">Chaque bouton annoté — en attente des binds joystick</span></a>
+</div>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

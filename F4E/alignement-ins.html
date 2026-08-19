@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F-4E — Alignement INS et préparation de la navigation, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4e-alignement-ins-progress" data-bindings="data/f4e-bindings.json" data-bind-store="f4e-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F-4E</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Alignement INS</span>
+</nav>
+<div class="tail">DCS · Heatblur · F-4E Phantom II — pilote et WSO</div>
+<h1>Alignement INS<br>et préparation nav</h1>
+<p class="sub">La centrale à inertie met plusieurs minutes à s'aligner, et elle dérive ensuite tout le vol. Cette leçon explique quoi lancer, quand, et comment vérifier que la navigation ne t'a pas déjà menti.</p>
+
+<div class="skel">
+  <b>Page de squelette — contenu à rédiger</b>
+  <p style="margin:0">La structure, les liens et le moteur de checklist sont en place. Le contenu détaillé reste à écrire à partir du <b>manuel officiel Heatblur</b> et du <b>guide de Chuck</b>, tous deux livrés avec le module (voir <a href="ressources.html">Ressources</a>). Les phases ci-dessous annoncent le plan : ce ne sont pas encore des procédures vérifiées, ne pas voler avec.</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> Alignement INS, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Le F-4E est un <b>biplace</b> : chaque étape précisera si elle revient au <b>pilote</b>, au <b>WSO</b>, ou à <b>JESTER</b> quand tu voles seul. Les fonctions citées porteront leur bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>, qui attend encore le relevé des binds.</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Lancer l'alignement</span></div>
+  <p class="phase-why">À faire tôt : c'est le poste le plus long de toute la préparation.</p>
+  <ul class="plan">
+    <li>Le panneau de commande de la centrale et ses positions</li>
+    <li>Renseigner la position de départ</li>
+    <li>Combien de temps ça prend, et ce qu'on fait pendant</li>
+    <li>Ce que JESTER peut lancer à ta place</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Le calculateur de navigation</span></div>
+  <p class="phase-why">Ce qui transforme une position en cap et distance utilisables.</p>
+  <ul class="plan">
+    <li>Renseigner une destination</li>
+    <li>Les modes de fonctionnement et ce qu'ils changent au HSI</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Vérifier avant de rouler</span></div>
+  <p class="phase-why">Un alignement raté ne se voit qu'en vol, trop tard.</p>
+  <ul class="plan">
+    <li>Les indications qui confirment un alignement correct</li>
+    <li>Ce qui doit être cohérent entre les instruments</li>
+    <li>Que faire si l'alignement échoue ou n'a pas eu le temps de finir</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Anticiper la dérive</span></div>
+  <p class="phase-why">Une centrale des années 60 dérive, c'est normal — il faut vivre avec.</p>
+  <ul class="plan">
+    <li>L'ordre de grandeur de la dérive sur un vol</li>
+    <li>Les moyens de recalage disponibles</li>
+    <li>Quand cesser de faire confiance à la centrale et repasser au TACAN</li>
+  </ul>
+</section>
+
+<div class="footlinks">
+  <a href="demarrage-a-froid.html">&larr; Démarrage à froid</a>
+  <a href="roulage-decollage.html">Étape suivante : Roulage et décollage &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : <b>manuel officiel Heatblur</b> et <b>guide de Chuck</b>, livrés avec le module dans <code>Mods\aircraft\F-4E\Doc\</code>, plus la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4e-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — jamais de numéro figé dans le texte.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>
