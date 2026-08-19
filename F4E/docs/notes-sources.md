@@ -38,32 +38,62 @@ numéro de page (`demarrage-allumage.webp`, pas `p163.webp`) : le guide sera
 mis à jour un jour, les numéros bougeront, les sujets non.
 
 **Extraction** : `tools/pdf-extract.html`, servi par `tools/serve.ps1`.
-Le navigateur rend la page avec PDF.js et la POSTe au serveur, qui l'écrit
-sur disque. Aucun outil PDF n'est installé sur la machine et le plugin PDF
-de Chrome ne rend rien en headless — c'est la seule voie qui marche ici.
+Le navigateur rend avec PDF.js et POSTe au serveur, qui écrit sur disque.
+Aucun outil PDF n'est installé sur la machine et le plugin PDF de Chrome ne
+rend rien en headless — c'est la seule voie qui marche ici.
+
+Le harnais expose **trois fonctions**, par ordre d'utilité :
+
+### `extractFigures()` — celle à utiliser
+
+Découpe **chaque photo de la page avec ses annotations**, sans les
+paragraphes de Chuck autour. C'est le bon compromis : le texte explicatif
+est le nôtre, mais on garde les cadres rouges, flèches, pastilles numérotées
+et étiquettes (« Throttle – OFF / Ignition Button – PRESSED »), qui font la
+moitié de la valeur pédagogique.
 
 ```
-await extract({
+await extractFigures({
   pdf: '/F4E/docs/DCS%20F-4E%20Phantom%20II%20Guide.pdf',
-  outDir: 'F4E/img/chuck',
-  pages: [{n:163, name:'demarrage-allumage'}]
+  page: 163, outDir: 'F4E/img/chuck', prefix: 'manette'
 })
+await extractFigures({..., dryRun:true})   // liste sans écrire
+await extractFigures({..., only:[1,3]})    // ne garde que ces cadres
+await extractFigures({..., pad:80})        // étiquette lointaine à rattraper
 ```
 
-**Réglages retenus : WebP, `scale: 1.6`, `quality: 0.80`** → 1536×864,
-130 à 185 Ko par planche. Mesuré sur la page 163 (dense en petit texte) :
+Elle rend la page entière puis découpe au cadre de chaque image, élargi de
+`pad` points. La position est calculée en suivant la matrice de
+transformation dans la liste d'opérateurs — attention, il faut gérer les
+XObjects de formulaire, sinon certaines images atterrissent hors page.
+`pad: 56` par défaut : assez pour les étiquettes collées à la photo, au prix
+d'un léger débord du contenu voisin. Monter si une étiquette est loin.
+
+### `extractImages()` — bitmap brut
+
+Récupère l'image embarquée d'origine, à sa résolution native et sans aucune
+annotation (elles sont vectorielles, dessinées par-dessus). Utile si on veut
+la capture nue pour l'annoter soi-même. Plus légère, mais on perd les repères.
+
+### `extract()` — page entière
+
+Rend la page complète, texte de Chuck compris. Réservé aux cas où la mise en
+page elle-même est l'information (tableau, schéma pleine page).
+
+**Réglages mesurés** sur la page 163 (dense en petit texte), page entière :
 
 | Format | Dimensions | Poids | Verdict |
 | --- | --- | --- | --- |
 | JPEG s2 q.82 | 1920×1080 | 393 Ko | inutilement lourd |
 | WebP s2 q.80 | 1920×1080 | 241 Ko | de la marge en trop |
-| **WebP s1.6 q.80** | **1536×864** | **171 Ko** | **retenu** |
+| **WebP s1.6 q.80** | **1536×864** | **171 Ko** | retenu pour `extract()` |
 | WebP s1.35 q.80 | 1296×729 | 133 Ko | lisible, mais juste au zoom |
 
-Ces pages sont des diapos (aplats blancs + captures) : le **WebP** y gagne
-~40 % sur le JPEG à qualité égale. 1536 px pour ~820 px d'affichage réel
-laisse la réserve nécessaire aux écrans haute densité et à l'ouverture en
-grand. Ce sont les valeurs par défaut du harnais, inutile de les repasser.
+Le **WebP** gagne ~40 % sur le JPEG pour ce type de page (aplats blancs +
+captures). En figures découpées, on tombe à **15 à 115 Ko** par image :
+les 13 figures du démarrage pèsent **624 Ko** au total, contre 1,4 Mo pour
+les 6 pages entières correspondantes. Toutes ces valeurs sont les défauts du
+harnais, inutile de les repasser.
 
 ---
 

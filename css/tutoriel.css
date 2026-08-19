@@ -77,6 +77,11 @@ a.bindtag.unbound:hover{border-color:var(--dim);color:var(--ink)}
 
 figure{margin:14px 0;border:1px solid var(--line);background:#0b1114;padding:9px}
 figure img{width:100%;display:block;cursor:zoom-in;background:#0b1114;min-height:40px;border-radius:1px}
+/* plusieurs vues d'une même séquence côte à côte (états successifs d'une
+   commande, par exemple) — repasse en une colonne sur écran étroit */
+figure .quad{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+figure .quad img{min-height:0}
+@media(max-width:620px){figure .quad{grid-template-columns:1fr}}
 figcaption{font-size:12px;color:var(--dim);margin-top:8px;display:flex;justify-content:space-between;gap:12px;align-items:baseline}
 figcaption a{font-family:var(--mono);font-size:10.5px;white-space:nowrap;display:inline-flex;align-items:center;min-height:22px;padding:0 4px;color:var(--dim);text-decoration:none}
 figcaption a:hover{color:var(--amber)}

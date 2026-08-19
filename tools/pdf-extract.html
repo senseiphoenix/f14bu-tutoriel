@@ -90,6 +90,208 @@ async function extract(opts){
   return written;
 }
 window.extract = extract;
+
+/* ---------------------------------------------------------------------
+   extractImages : récupère les IMAGES EMBARQUÉES d'une page, sans le texte
+   ni la mise en page autour. C'est ce qu'on veut pour illustrer une leçon —
+   la capture de cockpit seule, le texte explicatif étant le nôtre.
+
+   On lit la liste d'opérateurs de la page, on repère les tracés d'image, et
+   on récupère le bitmap d'origine dans le magasin d'objets de PDF.js. Les
+   petites images (flèches, cadres, logos, pastilles de numéro) sont filtrées
+   par `minWidth` / `minHeight`.
+
+   Usage :
+     await extractImages({pdf, page:163, outDir:'F4E/img/chuck', prefix:'demarrage-allumage'})
+   Puis on renomme/garde ce qui sert. `dryRun:true` liste sans écrire.
+--------------------------------------------------------------------- */
+async function extractImages(opts){
+  const {pdf, page: pageNo, outDir, prefix, minWidth = 300, minHeight = 200,
+         quality = 0.82, format = 'webp', dryRun = false, only = null} = opts;
+  const doc = await pdfjsLib.getDocument(pdf).promise;
+  const page = await doc.getPage(pageNo);
+  const ops = await page.getOperatorList();
+
+  // noms d'objets image tracés par cette page, dans l'ordre d'apparition
+  const names = [];
+  for (let i = 0; i < ops.fnArray.length; i++){
+    const fn = ops.fnArray[i];
+    if (fn === pdfjsLib.OPS.paintImageXObject || fn === pdfjsLib.OPS.paintJpegXObject){
+      const id = ops.argsArray[i][0];
+      if (typeof id === 'string' && !names.includes(id)) names.push(id);
+    }
+  }
+  log(`page ${pageNo} : ${names.length} image(s) tracée(s).`);
+
+  const written = [];
+  let kept = 0;
+  for (const id of names){
+    let obj = null;
+    try {
+      obj = await new Promise((res, rej) => {
+        const t = setTimeout(() => rej(new Error('objet non résolu')), 5000);
+        page.objs.get(id, v => { clearTimeout(t); res(v); });
+      });
+    } catch(e){ log(`  ${id} : ${e.message}`, 'ko'); continue; }
+    if (!obj || !obj.width || !obj.height){ continue; }
+    if (obj.width < minWidth || obj.height < minHeight){
+      log(`  ${id} ignorée (${obj.width}x${obj.height}, sous le seuil)`);
+      continue;
+    }
+    kept++;
+    if (only && !only.includes(kept)){ log(`  #${kept} ${id} (${obj.width}x${obj.height}) — hors sélection`); continue; }
+
+    const c = document.createElement('canvas');
+    c.width = obj.width; c.height = obj.height;
+    const ctx = c.getContext('2d');
+    try {
+      if (obj.bitmap){ ctx.drawImage(obj.bitmap, 0, 0); }
+      else {
+        const img = ctx.createImageData(obj.width, obj.height);
+        const src = obj.data, dst = img.data;
+        const comps = src.length / (obj.width * obj.height);
+        if (comps === 4){ dst.set(src); }
+        else if (comps === 3){
+          for (let p = 0, q = 0; p < src.length; p += 3, q += 4){
+            dst[q] = src[p]; dst[q+1] = src[p+1]; dst[q+2] = src[p+2]; dst[q+3] = 255;
+          }
+        } else if (comps === 1){
+          for (let p = 0, q = 0; p < src.length; p++, q += 4){
+            dst[q] = dst[q+1] = dst[q+2] = src[p]; dst[q+3] = 255;
+          }
+        } else { throw new Error(`${comps} composantes par pixel, non géré`); }
+        ctx.putImageData(img, 0, 0);
+      }
+    } catch(e){ log(`  ${id} : ${e.message}`, 'ko'); continue; }
+
+    const mime = format === 'png' ? 'image/png' : format === 'webp' ? 'image/webp' : 'image/jpeg';
+    const data = c.toDataURL(mime, quality).split(',')[1];
+    const name = `${prefix}-${kept}`;
+    const path = `${outDir}/${name}.${format}`;
+    if (dryRun){
+      log(`  #${kept} ${obj.width}x${obj.height} → ${path} (${Math.round(data.length*0.75/1024)} Ko) [simulation]`);
+      continue;
+    }
+    const r = await fetch('/__save', {method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({path, data})});
+    if (!r.ok){ log(`  ${path} : ${await r.text()}`, 'ko'); continue; }
+    log(`  ${path}  (${obj.width}x${obj.height}, ${Math.round(data.length*0.75/1024)} Ko)`, 'ok');
+    written.push(path);
+  }
+  log(`page ${pageNo} : ${kept} image(s) au-dessus du seuil, ${written.length} écrite(s).`, 'ok');
+  return written;
+}
+window.extractImages = extractImages;
+
+/* ---------------------------------------------------------------------
+   extractFigures : LA fonction à utiliser en pratique.
+
+   extractImages() récupère le bitmap brut et perd donc les annotations de
+   Chuck (cadres rouges, flèches jaunes, pastilles numérotées, étiquettes
+   « Throttle – OFF »...) : elles sont dessinées en vectoriel PAR-DESSUS la
+   photo. Or ces repères font la moitié de la valeur pédagogique.
+
+   Ici on rend la page entière — annotations comprises — puis on découpe au
+   cadre de chaque photo, élargi de `pad` points pour attraper les étiquettes
+   posées juste à côté. On obtient la capture annotée, sans les paragraphes
+   de Chuck autour.
+
+   La position de chaque photo est calculée en suivant la matrice de
+   transformation courante dans la liste d'opérateurs.
+
+   Usage :
+     await extractFigures({pdf, page:163, outDir:'F4E/img/chuck', prefix:'demarrage-allumage', pad:26})
+     await extractFigures({..., dryRun:true})        // liste sans écrire
+     await extractFigures({..., only:[1,3]})          // ne garde que ces cadres
+--------------------------------------------------------------------- */
+async function extractFigures(opts){
+  const {pdf, page: pageNo, outDir, prefix, pad = 56, scale = 2.2,
+         minWidth = 200, minHeight = 150, quality = 0.82, format = 'webp',
+         dryRun = false, only = null} = opts;
+
+  const doc = await pdfjsLib.getDocument(pdf).promise;
+  const page = await doc.getPage(pageNo);
+  const vp = page.getViewport({scale});
+
+  // 1) rendu de la page complète, annotations comprises
+  const full = document.createElement('canvas');
+  full.width = Math.round(vp.width); full.height = Math.round(vp.height);
+  await page.render({canvasContext: full.getContext('2d'), viewport: vp}).promise;
+
+  // 2) position de chaque photo, en suivant la matrice courante
+  const ops = await page.getOperatorList();
+  const U = pdfjsLib.Util;
+  let ctm = vp.transform.slice();
+  const stack = [];
+  const rects = [];
+  for (let i = 0; i < ops.fnArray.length; i++){
+    const fn = ops.fnArray[i], args = ops.argsArray[i];
+    if (fn === pdfjsLib.OPS.save){ stack.push(ctm.slice()); }
+    else if (fn === pdfjsLib.OPS.restore){ if (stack.length) ctm = stack.pop(); }
+    else if (fn === pdfjsLib.OPS.transform){ ctm = U.transform(ctm, args); }
+    // un XObject de formulaire empile sa propre matrice : sans ça, les images
+    // qu'il contient sont placées au mauvais endroit (voire hors page)
+    else if (fn === pdfjsLib.OPS.paintFormXObjectBegin){
+      stack.push(ctm.slice());
+      if (args && args[0]) ctm = U.transform(ctm, args[0]);
+    }
+    else if (fn === pdfjsLib.OPS.paintFormXObjectEnd){ if (stack.length) ctm = stack.pop(); }
+    else if (fn === pdfjsLib.OPS.beginGroup){ stack.push(ctm.slice()); }
+    else if (fn === pdfjsLib.OPS.endGroup){ if (stack.length) ctm = stack.pop(); }
+    else if (fn === pdfjsLib.OPS.paintImageXObject || fn === pdfjsLib.OPS.paintJpegXObject){
+      // l'image occupe le carré unité, placé par la matrice courante
+      const pts = [[0,0],[1,0],[0,1],[1,1]].map(p => U.applyTransform(p, ctm));
+      const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+      rects.push({
+        x: Math.min(...xs), y: Math.min(...ys),
+        w: Math.max(...xs) - Math.min(...xs),
+        h: Math.max(...ys) - Math.min(...ys)
+      });
+    }
+  }
+  log(`page ${pageNo} : ${rects.length} cadre(s) d'image repéré(s).`);
+
+  // 3) découpe, avec marge pour les étiquettes voisines
+  const written = [];
+  let kept = 0;
+  for (const r of rects){
+    if (r.w < minWidth || r.h < minHeight){
+      log(`  cadre ${Math.round(r.w)}x${Math.round(r.h)} ignoré (sous le seuil)`);
+      continue;
+    }
+    // intersection du cadre élargi avec la page, en évitant toute dimension nulle
+    const x0 = Math.max(0, Math.round(r.x - pad));
+    const y0 = Math.max(0, Math.round(r.y - pad));
+    const x1 = Math.min(full.width,  Math.round(r.x + r.w + pad));
+    const y1 = Math.min(full.height, Math.round(r.y + r.h + pad));
+    const w = x1 - x0, h = y1 - y0;
+    // le seuil s'applique aussi APRÈS découpe : un cadre qui déborde de la page
+    // ne laisse qu'un liseré de quelques pixels, ce n'est pas une figure
+    if (w < minWidth || h < minHeight){
+      log(`  cadre hors page ou tronqué (${w}x${h}) ignoré`, 'ko');
+      continue;
+    }
+    kept++;
+    const x = x0, y = y0;
+    if (only && !only.includes(kept)){ log(`  #${kept} ${w}x${h} — hors sélection`); continue; }
+
+    const c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    c.getContext('2d').drawImage(full, x, y, w, h, 0, 0, w, h);
+    const mime = format === 'png' ? 'image/png' : format === 'webp' ? 'image/webp' : 'image/jpeg';
+    const data = c.toDataURL(mime, quality).split(',')[1];
+    const path = `${outDir}/${prefix}-${kept}.${format}`;
+    if (dryRun){ log(`  #${kept} ${w}x${h} → ${path} (${Math.round(data.length*0.75/1024)} Ko) [simulation]`); continue; }
+    const res = await fetch('/__save', {method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({path, data})});
+    if (!res.ok){ log(`  ${path} : ${await res.text()}`, 'ko'); continue; }
+    log(`  ${path}  (${w}x${h}, ${Math.round(data.length*0.75/1024)} Ko)`, 'ok');
+    written.push(path);
+  }
+  log(`page ${pageNo} : ${written.length} figure(s) écrite(s).`, 'ok');
+  return written;
+}
+window.extractFigures = extractFigures;
 </script>
 </body>
 </html>
