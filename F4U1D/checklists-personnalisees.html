@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4U-1D — Construire ses checklists, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4u1d-checklists-personnalisees-progress" data-bindings="data/f4u1d-bindings.json" data-bind-store="f4u1d-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F4U-1D</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Checklists personnalisées</span>
+</nav>
+<div class="tail">DCS · Magnitude 3 · F4U-1D Corsair — pilote solo</div>
+<h1>Construire<br>ses checklists</h1>
+<p class="sub">La dernière leçon : transformer tout ce parcours en un pense-bête qui tient sur une page, utilisable en vol sans quitter le cockpit des yeux — et une routine d'entraînement pour que ça reste acquis.</p>
+
+<div class="skel">
+  <b>Page de squelette — contenu à rédiger</b>
+  <p style="margin:0">La structure, les liens et le moteur de checklist sont en place. Le contenu détaillé (étapes cochables, planches, badges de bind) reste à écrire à partir du manuel officiel Magnitude 3 <code>AN-01-45MAG-3</code> (<code>docs/manuel-f4u1d.pdf</code>) et de la section correspondante du cursus. Les phases ci-dessous annoncent le plan : ce ne sont pas encore des procédures vérifiées, ne pas voler avec.</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> Checklists personnalisées, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée portera son bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>. Tant que le relevé matériel n'est pas fait, ces badges afficheront « non affecté ».</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Ce que le module fournit déjà</span></div>
+  <p class="phase-why">Autant ne pas réécrire ce qui existe.</p>
+  <ul class="plan">
+    <li>Les listes intégrées et les aides d'affichage de DCS</li>
+    <li>Les kneeboards livrés avec le module</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Écrire sa propre liste</span></div>
+  <p class="phase-why">Une liste utile est courte et écrite dans ses propres mots.</p>
+  <ul class="plan">
+    <li>Ce qu'on garde et ce qu'on supprime d'une checklist officielle</li>
+    <li>Les valeurs chiffrées qui méritent d'être notées</li>
+    <li>Format kneeboard : ce qui se lit d'un coup d'œil et ce qui ne se lit pas</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Une routine d'entraînement</span></div>
+  <p class="phase-why">Trois vols réguliers valent mieux qu'une longue session.</p>
+  <ul class="plan">
+    <li>Le vol de remise en jambes : démarrage, tour de piste, appontage</li>
+    <li>Ce qu'on ajoute une fois que la base est automatique</li>
+    <li>Comment mesurer qu'on progresse</li>
+  </ul>
+</section>
+
+<div class="footlinks">
+  <a href="manoeuvres-combat.html">&larr; Manœuvres de combat</a>
+  <a href="pas-a-pas.html">Retour au sommaire Pas à pas &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : manuel officiel Magnitude 3 <code>AN-01-45MAG-3</code> (<code>docs/manuel-f4u1d.pdf</code>) et la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4u1d-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — jamais de numéro figé dans le texte.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

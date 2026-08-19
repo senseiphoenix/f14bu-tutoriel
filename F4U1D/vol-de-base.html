@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4U-1D — Vol de base, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4u1d-vol-de-base-progress" data-bindings="data/f4u1d-bindings.json" data-bind-store="f4u1d-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F4U-1D</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Vol de base</span>
+</nav>
+<div class="tail">DCS · Magnitude 3 · F4U-1D Corsair — pilote solo</div>
+<h1>Vol de base<br>trim, hélice, mélange</h1>
+<p class="sub">Piloter un avion qui n'a ni pilote automatique ni compensation électrique : on trime en permanence, on gère trois leviers moteur au lieu d'un, et chaque changement de vitesse ou de puissance redemande une correction de pied.</p>
+
+<div class="skel">
+  <b>Page de squelette — contenu à rédiger</b>
+  <p style="margin:0">La structure, les liens et le moteur de checklist sont en place. Le contenu détaillé (étapes cochables, planches, badges de bind) reste à écrire à partir du manuel officiel Magnitude 3 <code>AN-01-45MAG-3</code> (<code>docs/manuel-f4u1d.pdf</code>) et de la section correspondante du cursus. Les phases ci-dessous annoncent le plan : ce ne sont pas encore des procédures vérifiées, ne pas voler avec.</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> Vol de base, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée portera son bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>. Tant que le relevé matériel n'est pas fait, ces badges afficheront « non affecté ».</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Trimer en permanence</span></div>
+  <p class="phase-why">Sur cet avion, le trim n'est pas un confort, c'est une commande de vol à part entière.</p>
+  <ul class="plan">
+    <li>Les trois trims et l'ordre dans lequel on les touche</li>
+    <li>Pourquoi le trim de direction change à chaque changement de puissance</li>
+    <li>Trouver un vol stabilisé mains lâchées, et s'en servir comme référence</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Faire fonctionner l'ensemble moteur-hélice</span></div>
+  <p class="phase-why">Gaz, pas d'hélice et mélange se règlent ensemble, jamais isolément.</p>
+  <ul class="plan">
+    <li>Le couple pression d'admission / tours-minute : lequel on bouge en premier</li>
+    <li>Réglage du mélange selon l'altitude</li>
+    <li>Volets de capot et volets d'huile : le thermostat manuel de cet avion</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Le domaine de vol</span></div>
+  <p class="phase-why">Ce que l'avion accepte, et ce qu'il fait quand on dépasse.</p>
+  <ul class="plan">
+    <li>Comportement à basse vitesse et signes annonciateurs de décrochage</li>
+    <li>Décrochage en virage et dissymétrie de l'aile en mouette</li>
+    <li>Facteur de charge admissible et voltige permise</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Croisière et navigation à vue</span></div>
+  <p class="phase-why">Tenir un cap et une altitude pendant vingt minutes sans autopilote.</p>
+  <ul class="plan">
+    <li>Réglages de croisière et recalage régulier du gyro directionnel</li>
+    <li>Ce qu'on surveille en boucle pendant un transit</li>
+  </ul>
+</section>
+
+<div class="footlinks">
+  <a href="decollage-porte-avions.html">&larr; Décollage du pont</a>
+  <a href="regimes-moteur-wep.html">Étape suivante : Régimes moteur et WEP &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : manuel officiel Magnitude 3 <code>AN-01-45MAG-3</code> (<code>docs/manuel-f4u1d.pdf</code>) et la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4u1d-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — jamais de numéro figé dans le texte.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

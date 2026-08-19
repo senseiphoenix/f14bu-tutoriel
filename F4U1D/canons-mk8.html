@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4U-1D — Canons .50 et viseur Mk 8, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4u1d-canons-mk8-progress" data-bindings="data/f4u1d-bindings.json" data-bind-store="f4u1d-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F4U-1D</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Canons et viseur Mk 8</span>
+</nav>
+<div class="tail">DCS · Magnitude 3 · F4U-1D Corsair — pilote solo</div>
+<h1>Canons .50<br>et viseur Mk 8</h1>
+<p class="sub">Six mitrailleuses, un viseur sans calculateur, et aucune aide au tir. Tout se joue sur la distance de convergence, l'anticipation à la main et des rafales courtes — cette leçon met en place la mécanique avant de parler de combat.</p>
+
+<div class="skel">
+  <b>Contenu partiellement rédigé — non vérifié au manuel</b>
+  <p style="margin:0 0 10px">Les phases 1 à 3 reprennent la matière de <code>docs/notes-sources.md</code> (vidéo Spud Spike et forums Eagle Dynamics, sources S2 et S5). <span style="color:var(--warn)">La distance de convergence est un choix, pas une valeur unique</span> — voir la note en phase 3. La phase 4 (protocole d'entraînement) reste au stade du plan.</p>
+  <p style="margin:0">Planches d'image et badges de bind pas encore rattachés — le mapping HOTAS attend toujours le relevé matériel (voir <a href="mapping-hotas.html">mapping-hotas.html</a>).</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> Canons et viseur Mk 8, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée portera son bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>. Tant que le relevé matériel n'est pas fait, ces badges afficheront « non affecté ».</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Armer et sécuriser</span></div>
+  <p class="phase-why">Rien ne part tant que la séquence n'est pas faite, et c'est voulu.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item"><span class="switchname">Master Arm</span> en position haute <span class="setting">(ARM)</span></p>
+    <p class="step-detail">Interrupteur principal de l'armement — rien ne part tant qu'il n'est pas sur cette position.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item"><span class="switchname">Alimentation des mitrailleuses</span> — trois groupes activés</p>
+    <p class="step-detail">Extérieures, intermédiaires et intérieures s'activent séparément, pas d'un seul geste — vérifier les trois sur le panneau.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item"><span class="switchname">Leviers de rechargement</span> basculés jusqu'au <span class="setting">clic</span></p>
+    <p class="step-detail">L'armement mécanique proprement dit. Sans ce geste, l'alimentation seule ne suffit pas à pouvoir tirer.</p>
+  </div></div>
+
+  <div class="note go">
+    <b>Astuce</b>
+    Faire une <b>brève rafale d'essai avant d'entrer dans la zone d'engagement</b> — c'est la seule façon de découvrir un problème d'armement autrement qu'au moment de tirer sur la cible.
+  </div>
+
+  <p class="phase-why" style="margin-top:14px">Reste à confirmer au manuel : ce qu'on laisse en position au décollage et à l'appontage (armement coupé par sécurité, ou indifférent).</p>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Le viseur</span></div>
+  <p class="phase-why">Un réticule fixe, une échelle, et rien d'autre.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item"><span class="switchname">Viseur</span> allumé, <span class="switchname">luminosité</span> au <span class="setting">maximum</span></p>
+    <p class="step-detail">Le réticule Mk.8 est difficile à voir si la luminosité n'est pas poussée au maximum.</p>
+  </div></div>
+
+  <div class="note">
+    <b>Lire les anneaux comme un télémètre</b>
+    <span style="color:var(--warn)">Principe historique du viseur Mk.8, à vérifier tel quel en jeu</span> — les anneaux du réticule servent aussi à estimer une distance à partir de l'envergure connue de la cible : une envergure de 30 pieds qui remplit tout juste l'anneau à 50 mils correspond à 400 yards ; une envergure de 60 pieds dans l'anneau à 100 mils, à la même distance. Utile autant pour la visée canon (cette leçon) que pour le bombardement en piqué (<a href="bombes-roquettes.html">leçon 12</a>).
+  </div>
+
+  <p class="phase-why" style="margin-top:14px">Reste à documenter : le repli de secours si le viseur tombe en panne — aucune source collectée ne le couvre.</p>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Tirer</span></div>
+  <p class="phase-why">La discipline de tir compte plus que la visée.</p>
+
+  <div class="note warn">
+    <b>La convergence se règle dans l'éditeur de mission, pas en vol</b>
+    Confirmé par un développeur Magnitude 3 : l'unité est le <b>mètre</b>, et le réglage se fait par avion, dans l'éditeur de mission (fiche avion → propriétés additionnelles → sélecteurs inner/middle/outer guns). <b>Ce n'est pas un bouton du cockpit</b> — inutile de le chercher en vol.
+    <br><br>
+    Valeurs disponibles : <b>300 à 800 m</b>, par paliers de 100, réglage par défaut <b>500 m</b>. Une note technique navale de 1943 donne la convergence réelle utilisée à l'époque : <b>450 yards</b> (canons extérieurs/intérieurs) et <b>250 yards</b> (canons du milieu) — nettement plus court que le défaut du jeu. <span style="color:var(--warn)">Aucune valeur « officielle » à recommander pour l'instant</span> : un réglage plus court que 500 m colle mieux à l'usage réel, mais le choix reste à trancher en le confrontant au manuel.
+  </div>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item"><span class="switchname">Bille centrée</span> au palonnier pendant toute la rafale</p>
+    <p class="step-detail">Sans calculateur de tir, la moindre dissymétrie disperse le tir — c'est le geste qui distingue une passe qui touche d'une passe qui laboure le sol à côté.</p>
+  </div></div>
+
+  <p class="phase-why" style="margin-top:14px">Reste à confirmer au manuel : distance d'ouverture du feu recommandée, gestion de l'échauffement et de la dispersion sur rafale longue.</p>
+</section>
+
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">S'entraîner utilement</span></div>
+  <p class="phase-why">Un protocole d'entraînement plutôt qu'une séance au hasard.</p>
+  <ul class="plan">
+    <li>Cibles fixes puis cibles manœuvrantes, dans cet ordre</li>
+    <li>Ce qu'on regarde dans la rediffusion pour progresser</li>
+  </ul>
+</section>
+
+<div class="footlinks">
+  <a href="appontage-essex.html">&larr; Circuit d'appontage</a>
+  <a href="bombes-roquettes.html">Étape suivante : Bombes et roquettes &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : manuel officiel Magnitude 3 <code>AN-01-45MAG-3</code> (<code>docs/manuel-f4u1d.pdf</code>) et la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4u1d-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — jamais de numéro figé dans le texte.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

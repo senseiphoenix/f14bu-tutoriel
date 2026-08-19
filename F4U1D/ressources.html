@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F4U-1D — Ressources externes</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+<style>
+  .wrap{max-width:880px}
+  .res{border:1px solid var(--line);background:var(--panel);padding:14px 18px;margin:10px 0;border-radius:2px}
+  .res .rt{font-family:var(--display);font-size:17px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink)}
+  .res .rd{color:var(--dim);font-size:13.5px;margin:5px 0 0}
+  .res a{color:var(--amber);font-family:var(--mono);font-size:11px;letter-spacing:.06em}
+  .res .rm{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);
+           border:1px solid var(--line);border-radius:2px;padding:2px 7px;margin-left:8px;white-space:nowrap}
+  h2.sec{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+         margin:36px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F4U-1D</a><span>/</span>
+  <span>Ressources externes</span>
+</nav>
+<div class="tail">DCS · Magnitude 3 · F4U-1D Corsair</div>
+<h1>Ressources externes</h1>
+<p class="sub">Les sources sur lesquelles s'appuient les leçons de ce site, et où aller quand une leçon ne suffit pas. Chaque entrée dit <b>ce qu'on y trouve</b>, pas seulement où elle se trouve.</p>
+
+<div class="skel">
+  <b>Page à compléter</b>
+  Le manuel officiel est en place ; la sélection de vidéos et de guides communautaires reste à constituer, sur le modèle de la page <a href="../F14BU/ressources.html">Ressources du F-14B(U)</a>. Chaque vidéo ajoutée devra dire <b>quoi y regarder</b> et à quelle leçon elle se rattache.
+</div>
+
+<h2 class="sec">Documentation officielle</h2>
+
+<div class="res">
+  <div class="rt">Manuel du module <span class="rm">Magnitude 3</span></div>
+  <p class="rd">Le manuel de vol complet <code>AN-01-45MAG-3</code>, référence de toutes les procédures, limites moteur et tableaux de performances utilisés sur ce site. Hébergé dans le dépôt, donc consultable hors ligne.</p>
+  <p class="rd">C'est le PDF livré avec le module, copié tel quel depuis l'installation DCS — <code>Mods\aircraft\F4U-1D\Doc\DCS_F4U-1D_Manual_Early-Access_16-Sept-2025.pdf</code> — et vérifié identique au fichier du dépôt (même empreinte SHA-256). Après une mise à jour du module, recomparer les deux : c'est la seule façon de savoir qu'une procédure a bougé.</p>
+  <p class="rd"><a href="docs/manuel-f4u1d.pdf" target="_blank" rel="noopener">Ouvrir le PDF &#8599;</a></p>
+</div>
+
+<div class="res">
+  <div class="rt">Planches du manuel <span class="rm">local</span></div>
+  <p class="rd">Les illustrations du manuel sont extraites et hébergées dans <code>img/</code> — aucune dépendance à un service externe. Ce sont elles qu'affichent les sections du cursus.</p>
+</div>
+
+<h2 class="sec">Vidéos</h2>
+
+<div class="res">
+  <div class="rt">Démarrage du Corsair <span class="rm">CasmoTV</span></div>
+  <p class="rd"><b style="color:var(--ink)">Quoi y regarder :</b> la séquence complète du cockpit froid jusqu'à la fin de la préparation avant roulage — amorçage et lancement du moteur en étoile, chauffe à 800&nbsp;tr/min, déploiement <i>et verrouillage</i> de la voilure (le klaxon sert de repère dans les deux sens), verrière, roulette de queue, décagage de l'horizon artificiel. C'est la source principale des leçons <a href="demarrage-a-froid.html" style="font-family:inherit;font-size:inherit;letter-spacing:0">3 · Démarrage à froid</a> et <a href="roulage-decollage.html" style="font-family:inherit;font-size:inherit;letter-spacing:0">4 · Roulage et décollage</a>.</p>
+  <p class="rd">Elle donne aussi les commandes qui méritent vraiment un bouton dédié sur le HOTAS — mélange, magnétos, volets de capot, verrouillage de roulette de queue — parce qu'elles se manipulent à deux mains pendant le lancement.</p>
+  <p class="rd"><b style="color:var(--ink)">Ce qu'elle ne couvre pas :</b> essais magnétos et pas d'hélice, décollage, procédures porte-avions, limites moteur chiffrées. Pour tout ça, le manuel reste la seule source.</p>
+  <p class="rd"><a href="https://www.youtube.com/watch?v=G7iiuslnMNs" target="_blank" rel="noopener">Voir sur YouTube &#8599;</a></p>
+</div>
+
+<div class="res">
+  <div class="rt">Armement air-sol : mitrailleuses, roquettes, bombes <span class="rm">Spud Spike</span></div>
+  <p class="rd"><b style="color:var(--ink)">Quoi y regarder :</b> la mise en œuvre complète du coffret d'armement — activation des trois groupes de mitrailleuses et armement mécanique jusqu'au clic, réglage des fusées nez-et-queue, sélection des pylônes bombe par bombe. Puis les trois façons de frapper : piqué de bombardement (avec la préparation moteur qui va avec — pilote automatique coupé, volets de capot fermés, compresseur réduit contre le choc thermique), tir de roquettes HVAR à l'appui du palonnier, et passe de mitraillage à haute vitesse. C'est la source principale des leçons <a href="canons-mk8.html" style="font-family:inherit;font-size:inherit;letter-spacing:0">11 · Canons et viseur Mk 8</a> et <a href="bombes-roquettes.html" style="font-family:inherit;font-size:inherit;letter-spacing:0">12 · Bombes, HVAR et Tiny Tim</a>.</p>
+  <p class="rd">Le conseil le plus utile n'est pas dans le geste de tir mais dans ce qui suit : <b style="color:var(--ink)">rompre immédiatement après la passe et ne jamais évoluer en ligne droite à basse altitude</b> — c'est ce qui distingue une passe réussie d'un avion abattu par la DCA.</p>
+  <p class="rd"><b style="color:var(--ink)">Ce qu'elle ne couvre pas :</b> aucune valeur chiffrée — angle et altitude de piqué, distance de convergence des mitrailleuses, portée utile des HVAR. Le Tiny Tim n'y apparaît pas non plus. Pour tout ça, le manuel reste la seule source.</p>
+  <p class="rd"><a href="https://www.youtube.com/watch?v=66a2xXPraTs" target="_blank" rel="noopener">Voir sur YouTube &#8599;</a></p>
+</div>
+
+<div class="res">
+  <div class="rt">Radiocompas YE-ZB : retrouver le porte-avions <span class="rm">VCTF 58</span></div>
+  <p class="rd"><b style="color:var(--ink)">Quoi y regarder :</b> le principe du système avant la procédure — le porte-avions émet un faisceau tournant en secteurs de 30°, chacun associé à une lettre Morse, et le cap de retour est l'<b style="color:var(--ink)">inverse</b> du secteur entendu, pas le secteur lui-même. Puis la mise en route complète du récepteur AN/ARR-2 sur l'unité C-38 : chauffe des tubes (~5 s), sélection du canal, et la bascule <code>CW/VOICE</code> sur <code>VOICE</code> — un artefact propre à DCS, à ne pas prendre pour un geste historique. C'est la source principale de la partie radiocompas de la leçon <a href="navigation-radio.html" style="font-family:inherit;font-size:inherit;letter-spacing:0">8 · Navigation, radio et homing</a>.</p>
+  <p class="rd">Bonus rare : elle montre aussi comment <b style="color:var(--ink)">configurer un porte-avions émetteur dans l'éditeur de mission</b> (fréquence, identifiant Morse via les 3 premières lettres du nom de l'unité) — utile pour se fabriquer ses propres vols d'entraînement.</p>
+  <p class="rd"><b style="color:var(--ink)">Ce qu'elle ne couvre pas :</b> l'ARC-5 (postes de communication), la navigation à l'estime, ni ce qui se passe hors de portée du signal.</p>
+  <p class="rd"><a href="https://www.youtube.com/watch?v=hqg6BRgkdDc" target="_blank" rel="noopener">Voir sur YouTube &#8599;</a></p>
+</div>
+
+<div class="res">
+  <div class="rt">Sélection à compléter <span class="rm">à faire</span></div>
+  <p class="rd">Objectif : deux vidéos par leçon du <a href="pas-a-pas.html" style="font-family:inherit;font-size:inherit;letter-spacing:0">Pas à pas</a>, une détaillée et une express, chacune accompagnée d'une phrase disant quoi y regarder. Point de vigilance propre au Corsair : beaucoup de contenu communautaire porte sur d'autres simulateurs ou sur des variantes différentes du F4U — vérifier que la vidéo montre bien le module DCS de Magnitude 3 avant de la retenir.</p>
+</div>
+
+<h2 class="sec">Fichiers communautaires</h2>
+
+<div class="res">
+  <div class="rt">Checklist et procédures d'urgence complètes <span class="rm">Mike Busutil</span></div>
+  <p class="rd">34 pages calquées sur le vrai manuel de vol Navy : préparation, essais moteur et compresseur, croisière, <b style="color:var(--ink)">piqué</b>, approche et atterrissage, et <b style="color:var(--ink)">17 procédures d'urgence détaillées</b>. Couvre à lui seul une bonne partie de ce qui manque encore aux leçons 3, 7 et 13 — voir <code>docs/notes-sources.md</code>.</p>
+  <p class="rd"><a href="https://www.digitalcombatsimulator.com/en/files/3345416/" target="_blank" rel="noopener">Fiche du fichier sur digitalcombatsimulator.com &#8599;</a></p>
+</div>
+
+<div class="res">
+  <div class="rt">Kneeboards : vitesses, réglages moteur, secteurs YE-ZB, arbre Morse <span class="rm">GTFreeFlyer</span></div>
+  <p class="rd">Complète directement la leçon <a href="navigation-radio.html" style="font-family:inherit;font-size:inherit;letter-spacing:0">8</a> avec un arbre de décodage Morse pour les secteurs YE-ZB. Contient aussi les réglages moteur les plus à jour au moment de sa dernière mise à jour, confirmés par Magnitude 3 — mais un module en accès anticipé continue de changer, à revérifier avant de citer un chiffre précis dans une leçon.</p>
+  <p class="rd"><a href="https://www.digitalcombatsimulator.com/en/files/3345803/" target="_blank" rel="noopener">Fiche du fichier sur digitalcombatsimulator.com &#8599;</a></p>
+</div>
+
+<div class="res">
+  <div class="rt">Plaquette de limites moteur (Do Not Exceed) <span class="rm">Dkha</span></div>
+  <p class="rd">Reproduction lisible de la plaquette affichée en cockpit. <b style="color:var(--warn)">À vérifier avant usage</b> : un développeur Magnitude 3 a confirmé que la texture d'origine dans le jeu reprenait par erreur un moteur sans injection d'eau, différent de celui du 1D — s'assurer que cette reproduction a bien été corrigée depuis.</p>
+  <p class="rd"><a href="https://www.digitalcombatsimulator.com/en/files/3345478/" target="_blank" rel="noopener">Fiche du fichier sur digitalcombatsimulator.com &#8599;</a></p>
+</div>
+
+<h2 class="sec">Points de vigilance relevés sur les forums Eagle Dynamics</h2>
+
+<div class="res">
+  <div class="rt">Bug connu — accrochage de brin sur certaines cartes <span class="rm">forum ED</span></div>
+  <p class="rd">Signalé indépendamment par plusieurs pilotes (mission construite sur WW2 Marianas et Normandy, pas sur la mission d'entraînement Caucase) : le crochet ne s'accroche à aucun brin alors que l'approche est correcte. <b style="color:var(--ink)">C'est un problème du module, pas une erreur de pilotage</b> — si l'appontage rate systématiquement sur ces cartes, ce n'est pas forcément la technique en cause.</p>
+  <p class="rd"><a href="https://forum.dcs.world/topic/375143-carrier-landings/" target="_blank" rel="noopener">Voir le fil sur le forum ED &#8599;</a></p>
+</div>
+
+<h2 class="sec">Communauté</h2>
+
+<div class="res">
+  <div class="rt">Checklists et kneeboards communautaires <span class="rm">à recenser</span></div>
+  <p class="rd">Les listes condensées publiées sur les forums, utiles en vol. À retenir seulement si elles indiquent leur version du module — un module en accès anticipé change vite, et une checklist périmée est pire que pas de checklist.</p>
+</div>
+
+<div class="footlinks">
+  <a href="index.html">&larr; Retour au F4U-1D</a>
+  <a href="pas-a-pas.html">Aller au Pas à pas &rarr;</a>
+</div>
+
+<p class="src">Toute source citée ici doit préciser sa variante et sa date : le F4U-1D de Magnitude 3 est un module récent, et une procédure filmée sur une version antérieure peut ne plus correspondre.</p>
+
+</div>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

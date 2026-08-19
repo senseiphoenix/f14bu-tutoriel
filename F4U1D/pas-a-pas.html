@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F4U-1D — Pas à pas</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<style>
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;--warn:#d9695a;
+    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  .wrap{max-width:880px;margin:0 auto;padding:48px 24px 80px}
+  .crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+  .crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
+  .crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+  .tail{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:44px;letter-spacing:.04em;line-height:1.02;margin:10px 0 8px;text-transform:uppercase}
+  .sub{color:var(--dim);max-width:64ch;margin:0 0 24px}
+  .sub b{color:var(--ink)}
+  .sub a{color:var(--amber)}
+  a.card{display:flex;gap:18px;align-items:baseline;border:1px solid var(--line);background:var(--panel);
+         padding:18px 20px;margin:10px 0;text-decoration:none;color:var(--ink);transition:border-color .12s}
+  a.card:hover{border-color:var(--amber)}
+  .idx{font-family:var(--mono);font-size:13px;color:var(--amber);min-width:26px}
+  .nm{font-family:var(--display);font-size:19px;letter-spacing:.04em;text-transform:uppercase}
+  .ds{color:var(--dim);font-size:13.5px;margin-left:auto;text-align:right;max-width:46%}
+  .hr{border-top:1px solid var(--line);margin:34px 0 22px}
+  h2{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:0 0 12px}
+  p{margin:12px 0;color:var(--dim)}
+  .skel{border:1px solid rgba(217,105,90,.5);border-left:3px solid var(--warn);background:rgba(217,105,90,.07);
+        padding:16px 20px;margin:0 0 30px;border-radius:2px;font-size:14px;color:var(--dim)}
+  .skel > b:first-child{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--warn);margin-bottom:6px}
+  .skel a{color:var(--amber)}
+  .skel code{font-family:var(--mono);font-size:.9em;background:var(--panel-2);border:1px solid var(--line);padding:1px 6px;color:var(--amber)}
+  .grp{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);
+       margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:10px}
+  .grp .grp-sub{font-family:var(--body);letter-spacing:0;text-transform:none;font-size:12px;color:#5f6d76}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="crumbs">
+    <a href="index.html">&larr; F4U-1D</a><span>/</span>
+    <span>Pas à pas</span>
+  </nav>
+  <div class="tail">DCS · Magnitude 3 · F4U-1D Corsair — pilote solo</div>
+  <h1>Pas à pas</h1>
+  <p class="sub">Des tutoriels <b>une seule page, très détaillés</b>, pensés pour un débutant total sur avion à hélice : chaque étape dit quoi faire, où, et pourquoi, avec une checklist qui garde ta progression. Différent du <a href="index.html">cursus en 7 sections</a> qui explique le <b>pourquoi</b> en profondeur — ici, c'est le <b>quoi faire, maintenant</b>.</p>
+  <p class="sub">Le Corsair est <b>monoplace</b> : pas d'équipier IA à qui déléguer, tout est à toi. En contrepartie, aucun système ne se pilote au menu — tout est un levier, un interrupteur ou une manette.</p>
+
+  <div class="skel">
+    <b>Parcours en cours de rédaction</b>
+    Les 15 leçons existent toutes avec leur structure et leur plan de phases. Six ont commencé à recevoir du contenu réel à partir de vidéos communautaires — <b>1</b> (préparation des contrôles), <b>3</b> (démarrage), <b>4</b> (roulage), <b>8</b> (navigation radio), <b>11</b> (canons) et <b>12</b> (bombes/roquettes) — chaque point encore incertain y est signalé par un encadré <span style="color:var(--warn)">« à vérifier »</span>, rien n'a été recoupé avec le manuel pour l'instant. Les neuf autres restent au stade du plan. Le <a href="index.html">cursus en 7 sections</a>, lui, est complet et utilisable dès maintenant.
+  </div>
+
+  <h2 class="grp">Prendre l'avion en main <span class="grp-sub">avant le premier vol</span></h2>
+  <a class="card" href="preparer-module-controles.html"><span class="idx">1</span><span class="nm">Préparer le module et les contrôles</span><span class="ds">Installation, axes gaz / hélice / mélange / palonnier, courbes, aides d'apprentissage</span></a>
+  <a class="card" href="tour-cockpit.html"><span class="idx">2</span><span class="nm">Tour du cockpit</span><span class="ds">Planche avant, console gauche, console droite — nommer chaque chose avant de s'en servir</span></a>
+
+  <h2 class="grp">Faire voler l'avion <span class="grp-sub">du parking froid au premier atterrissage</span></h2>
+  <a class="card" href="demarrage-a-froid.html"><span class="idx">3</span><span class="nm">Démarrage à froid</span><span class="ds">Amorçage, lancement, chauffe et essais moteur d'un moteur en étoile</span></a>
+  <a class="card" href="roulage-decollage.html"><span class="idx">4</span><span class="nm">Roulage en S et décollage</span><span class="ds">Rouler sans rien voir devant, tenir l'axe contre le couple, montée initiale</span></a>
+  <a class="card" href="decollage-porte-avions.html"><span class="idx">5</span><span class="nm">Décollage du porte-avions</span><span class="ds">Départ roulant sur pont d'Essex, catapulte, sortie de pont</span></a>
+  <a class="card" href="vol-de-base.html"><span class="idx">6</span><span class="nm">Vol de base : trim, hélice, mélange</span><span class="ds">Trimer en permanence, gérer trois leviers moteur, connaître le domaine de vol</span></a>
+  <a class="card" href="regimes-moteur-wep.html"><span class="idx">7</span><span class="nm">Régimes moteur, compresseur et WEP</span><span class="ds">Ce qu'on tient indéfiniment, cinq minutes, ou pas du tout</span></a>
+  <a class="card" href="navigation-radio.html"><span class="idx">8</span><span class="nm">Navigation, radio et homing</span><span class="ds">Cap, montre et estime ; ARC-5, radiocompas ARR-2, indicatifs en morse</span></a>
+  <a class="card" href="retour-atterrissage.html"><span class="idx">9</span><span class="nm">Retour terrain et atterrissage</span><span class="ds">Circuit, virage de base continu, trois points ou sur les roues, cheval de bois</span></a>
+  <a class="card" href="appontage-essex.html"><span class="idx">10</span><span class="nm">Circuit d'appontage</span><span class="ds">Sans boule ni piste oblique : virage continu et officier d'appontage</span></a>
+
+  <h2 class="grp">Se servir de l'avion <span class="grp-sub">armement, urgences, combat</span></h2>
+  <a class="card" href="canons-mk8.html"><span class="idx">11</span><span class="nm">Canons .50 et viseur Mk 8</span><span class="ds">Armement, réticule fixe, convergence, discipline de rafale</span></a>
+  <a class="card" href="bombes-roquettes.html"><span class="idx">12</span><span class="nm">Bombes, HVAR et Tiny Tim</span><span class="ds">Emports, piqué de bombardement, tir de roquettes, sortie d'attaque</span></a>
+  <a class="card" href="urgences.html"><span class="idx">13</span><span class="nm">Urgences</span><span class="ds">Panne moteur, incendie, hydraulique, poser forcé, amerrissage, évacuation</span></a>
+  <a class="card" href="manoeuvres-combat.html"><span class="idx">14</span><span class="nm">Manœuvres de combat</span><span class="ds">Forces réelles du Corsair, énergie, piqué-tir-dégagement, rompre le combat</span></a>
+  <a class="card" href="checklists-personnalisees.html"><span class="idx">15</span><span class="nm">Construire ses checklists</span><span class="ds">Un pense-bête d'une page et une routine d'entraînement qui tient dans le temps</span></a>
+
+  <div class="hr"></div>
+  <h2>Voir aussi</h2>
+  <a class="card" href="index.html"><span class="idx">&#9733;</span><span class="nm">Le cursus en 7 sections</span><span class="ds">Les mêmes sujets en profondeur, du cockpit à l'armement — complet et utilisable</span></a>
+  <a class="card" href="perfectionnement.html"><span class="idx">&#10022;</span><span class="nm">Perfectionnement</span><span class="ds">5 leçons au-delà de ce parcours : BFM à hélice, rayon d'action, appontage avancé, attaque coordonnée, Bat Bomb</span></a>
+  <a class="card" href="mapping-hotas.html"><span class="idx">&#9998;</span><span class="nm">Mapping HOTAS</span><span class="ds">Chaque bouton annoté — en attente du relevé matériel</span></a>
+</div>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

@@ -226,7 +226,7 @@ donc que des tableaux natifs.
 
 # Recherche globale du site
 
-## `build-search-index.py`
+## `build-search-index.py` / `build-search-index.ps1`
 
 Régénère `data/search-index.json`, l'index consommé par `js/site-search.js`
 (bouton de recherche flottant présent sur toutes les pages). Python 3, aucune
@@ -235,6 +235,19 @@ dépendance :
 ```bash
 python3 tools/build-search-index.py
 ```
+
+Sur une machine sans Python — c'est le cas de la machine de dev, où `python`
+n'est que le raccourci Microsoft Store — utiliser le port PowerShell, qui
+produit le même fichier :
+
+```bash
+powershell -ExecutionPolicy Bypass -File tools/build-search-index.ps1
+```
+
+Les deux scripts sont volontairement redondants : **corriger l'un implique de
+corriger l'autre**. Seule différence connue, sans effet fonctionnel : à clé de
+tri égale, l'ordre des entrées ex æquo peut différer (`sorted()` de Python est
+stable, `[Array]::Sort` ne l'est pas).
 
 Trois familles d'entrées, décrites en tête du script :
 

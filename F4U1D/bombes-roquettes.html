@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4U-1D — Bombes, HVAR et Tiny Tim, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4u1d-bombes-roquettes-progress" data-bindings="data/f4u1d-bindings.json" data-bind-store="f4u1d-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F4U-1D</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Bombes et roquettes</span>
+</nav>
+<div class="tail">DCS · Magnitude 3 · F4U-1D Corsair — pilote solo</div>
+<h1>Bombes, HVAR<br>et Tiny Tim</h1>
+<p class="sub">Le Corsair travaille surtout au sol. Emports sous voilure et sous fuselage, largage en piqué, tir de roquettes — le tout visé au même réticule fixe, donc à l'angle et à la vitesse, pas au calculateur.</p>
+
+<div class="skel">
+  <b>Contenu partiellement rédigé — non vérifié au manuel</b>
+  <p style="margin:0 0 10px">Les quatre phases reprennent la matière de <code>docs/notes-sources.md</code> (vidéo Spud Spike et forum Eagle Dynamics, sources S2 et S5). <span style="color:var(--warn)">Aucune valeur chiffrée de piqué (angle, vitesse, altitude de largage) n'est confirmée</span> — voir la note en phase 2. Le Tiny Tim n'est couvert par aucune source collectée.</p>
+  <p style="margin:0">Planches d'image et badges de bind pas encore rattachés — le mapping HOTAS attend toujours le relevé matériel (voir <a href="mapping-hotas.html">mapping-hotas.html</a>).</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> Bombes et roquettes, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée portera son bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>. Tant que le relevé matériel n'est pas fait, ces badges afficheront « non affecté ».</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Préparer les emports</span></div>
+  <p class="phase-why">Ce qui se décide avant le décollage conditionne toute l'attaque.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item"><span class="switchname">Fusées</span> réglées sur <span class="setting">Nose &amp; Tail</span></p>
+    <p class="step-detail">Nez et queue, pour garantir la détonation à l'impact. <span style="color:var(--warn)">À vérifier au manuel</span> : le choix du fusible dépend normalement du type de cible et de l'effet recherché (retard pour un bunker, instantané pour du matériel) — ceci n'est qu'un réglage par défaut, pas une règle universelle.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item"><span class="switchname">Sélection du pylône</span> à larguer, un à la fois</p>
+    <p class="step-detail">Bombe centrale → <code>Pylon Release</code> (central) ; bombes sous voilure → <code>Left Hand Release</code> ou <code>Right Hand Release</code> selon celle qu'on veut lâcher.</p>
+  </div></div>
+
+  <div class="note warn">
+    <b>Piège classique de la deuxième passe</b>
+    Entre deux passes, il faut <b>désactiver le largage du pylône déjà utilisé</b> avant de sélectionner le suivant. Ce n'est pas automatique — c'est ce qui fait qu'à la deuxième passe, rien ne part alors que tout semblait en ordre.
+  </div>
+
+  <p class="phase-why" style="margin-top:14px">Reste à confirmer au manuel : points d'emport disponibles et charges compatibles, boîtier de distribution des roquettes et ses modes de tir.</p>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Le piqué de bombardement</span></div>
+  <p class="phase-why">La méthode d'époque : un angle, une vitesse, une altitude de largage.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item">Préparer le moteur <b>avant</b> d'engager le piqué</p>
+    <p class="step-detail"><span class="switchname">Pilote automatique</span> désactivé, <span class="switchname">volets de capot</span> fermés, <span class="switchname">compresseur</span> réduit. <span style="color:var(--warn)">Mécanisme à confirmer au manuel</span> : le but rapporté est d'éviter un refroidissement brutal du moteur (<i>shock cooling</i>) pendant la descente rapide — plausible pour un moteur en étoile, mais pas encore vérifié dans la documentation officielle.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item">Approche <span class="setting">à plat</span>, puis <span class="switchname">bascule en piqué</span></p>
+    <p class="step-detail">Arriver à plat avant de plonger permet d'obtenir un angle de piqué franc sur la cible plutôt qu'une descente molle qui dégrade la précision.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item">Aligner le <span class="switchname">réticule</span> sur la cible, larguer</p>
+    <p class="step-detail">Voir la leçon <a href="canons-mk8.html">11 · Canons et viseur Mk 8</a> pour la lecture des anneaux du Mk.8.</p>
+  </div></div>
+
+  <div class="note warn">
+    <b>Angle, vitesse et altitude de largage — non confirmés</b>
+    Une seule piste trouvée, donnée par un pilote qui précise lui-même ne pas l'avoir vérifiée dans DCS (expérience tirée d'autres simulateurs) : en piqué à environ <b>70°</b>, placer la cible à mi-chemin entre le haut du capot et le bas de l'anneau des 100 mils du réticule. <b>À ne pas publier comme une valeur fiable</b> tant que le manuel ou un test en jeu ne l'a pas confirmée.
+  </div>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Les roquettes</span></div>
+  <p class="phase-why">Tirées presque à plat, avec une trajectoire qui tombe vite.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item"><span class="switchname">Sélecteur d'armement</span> sur <span class="setting">roquettes</span></p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Vol <span class="setting">parfaitement coordonné</span>, bille au centre, <span class="setting">approche en ligne droite</span></p>
+    <p class="step-detail">La roquette part dans l'axe de l'avion : toute dissymétrie au palonnier se traduit directement en erreur latérale au but.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item">Tirer <span class="switchname">par salves</span>, corriger pour la suivante</p>
+    <p class="step-detail">Observer le point d'impact et ajuster la visée pour la salve suivante — une visée par correction successive, pas un calcul préalable.</p>
+  </div></div>
+
+  <p class="phase-why" style="margin-top:14px">Reste à confirmer au manuel : cadence de tir HVAR (salve ou coup par coup), distance utile, et le comportement du <b>Tiny Tim</b> — aucune source collectée n'en parle.</p>
+</section>
+
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Sortir de l'attaque</span></div>
+  <p class="phase-why">La passe la plus dangereuse est celle du retour.</p>
+
+  <div class="step"><input type="checkbox" data-id="p4-1"><div class="step-body">
+    <p class="step-item"><span class="switchname">Rompre immédiatement</span> dès la fin du tir</p>
+    <p class="step-detail">Virage franc, sans délai — c'est le geste qui suit le tir, pas une option.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p4-2"><div class="step-body">
+    <p class="step-item">Ne <b>jamais</b> évoluer en ligne droite à basse altitude</p>
+    <p class="step-detail">C'est ce qui transforme une passe réussie en avion abattu par la DCA — la règle la plus importante de cette leçon, avant même la précision du tir.</p>
+  </div></div>
+
+  <p class="phase-why" style="margin-top:14px">Reste à confirmer au manuel : altitude de sécurité, procédure de largage d'urgence des charges restantes, et vérifications avant de rentrer avec une charge non larguée.</p>
+</section>
+
+<div class="footlinks">
+  <a href="canons-mk8.html">&larr; Canons et viseur Mk 8</a>
+  <a href="urgences.html">Étape suivante : Urgences &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : manuel officiel Magnitude 3 <code>AN-01-45MAG-3</code> (<code>docs/manuel-f4u1d.pdf</code>) et la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4u1d-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — jamais de numéro figé dans le texte.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

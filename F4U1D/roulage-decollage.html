@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4U-1D — Roulage et décollage, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4u1d-roulage-decollage-progress" data-bindings="data/f4u1d-bindings.json" data-bind-store="f4u1d-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F4U-1D</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Roulage et décollage</span>
+</nav>
+<div class="tail">DCS · Magnitude 3 · F4U-1D Corsair — pilote solo</div>
+<h1>Roulage en S<br>et décollage</h1>
+<p class="sub">Le Corsair a le nez le plus long de sa génération : au sol, on ne voit rien devant. Cette leçon couvre le roulage en S, la mise en piste, et un décollage terrain où le couple essaie de te sortir à gauche du premier au dernier mètre.</p>
+
+<div class="skel">
+  <b>Contenu partiellement rédigé — non vérifié au manuel</b>
+  <p style="margin:0 0 10px">La phase 1 (voilure, verrière, roulette de queue) reprend la matière de <code>docs/notes-sources.md</code> (sources S1 et S6). <span style="color:var(--warn)">Un point reste explicitement incertain</span> : le comportement du repliage de voilure en cas d'échec du verrouillage mécanique — voir la note dans la phase. Les phases 2 à 4 (roulage, alignement, décollage) restent au stade du plan : aucune source ne les couvre encore.</p>
+  <p style="margin:0">Planches d'image et badges de bind pas encore rattachés — le mapping HOTAS attend toujours le relevé matériel (voir <a href="mapping-hotas.html">mapping-hotas.html</a>).</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> Roulage et décollage, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée portera son bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>. Tant que le relevé matériel n'est pas fait, ces badges afficheront « non affecté ».</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Configurer avant de lâcher le frein</span></div>
+  <p class="phase-why">Tout ce qui se règle à l'arrêt ne se règlera pas en roulant.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item"><span class="switchname">Déploiement de la voilure</span> — clic droit sur la commande, panneau droit</p>
+    <p class="step-detail">Attendre la <b>descente complète</b> des ailes, confirmée par deux repères simultanés : les <b>indicateurs mécaniques qui sortent</b>, et un <b>avertisseur sonore (klaxon)</b> qui se déclenche pour signaler « dépliée mais pas verrouillée ».</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item"><span class="switchname">Verrouillage</span> — manette abaissée puis <b>immédiatement</b> remontée</p>
+    <p class="step-detail">Confirmation du verrouillage : le <b>klaxon s'arrête</b>. Son silence est le repère fiable, pas la position de la manette seule.</p>
+  </div></div>
+
+  <div class="note warn">
+    <b>Point non confirmé — à vérifier avant de voler avec</b>
+    Un pilote rapporte que l'étiquette du cockpit indique de laisser la commande sur <code>Spread</code> (dépliée), mais que si le <b>verrouillage mécanique échoue</b>, la <b>pression hydraulique continue de pousser les ailes vers le bas</b> malgré tout — la position de la commande ne garantirait donc pas à elle seule que les ailes restent hautes. Ce comportement n'est confirmé ni par le manuel ni par une deuxième source : à vérifier avant de le présenter comme un fait établi.
+  </div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item"><span class="switchname">Verrière</span> — commande <span class="setting">jaune</span> pour ouvrir/fermer</p>
+    <p class="step-detail">La commande <b style="color:var(--warn)">rouge</b> est le largage d'urgence de la verrière, pas la commande normale — piège de clic à connaître avant d'en avoir besoin en urgence (voir <a href="urgences.html">leçon 13</a>).</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-4"><div class="step-body">
+    <p class="step-item"><span class="switchname">Roulette de queue</span> <span class="setting">déverrouillée</span> pour le roulage</p>
+    <p class="step-detail">Poignée en bas à droite (tirer et tourner), ou interrupteur du manche si mappée. Déverrouillée, la direction au sol se fait aux <b>freins différentiels</b> — voir phase 2.</p>
+  </div></div>
+
+  <p class="phase-why" style="margin-top:14px">Reste à confirmer au manuel : positions de départ des trims (et pourquoi celui de direction n'est pas neutre), position des volets pour le décollage, et réglage des volets de capot pendant le roulage — aucune source collectée ne les détaille pour cette phase.</p>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Rouler sans rien voir devant</span></div>
+  <p class="phase-why">Le roulage en S n'est pas une coquetterie, c'est la seule façon de voir la piste.</p>
+  <ul class="plan">
+    <li>L'amplitude des S et la vitesse à tenir</li>
+    <li>Freins différentiels et palonnier : qui fait quoi selon la vitesse</li>
+    <li>Surveillance des températures pendant le roulage</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">L'alignement et la montée en puissance</span></div>
+  <p class="phase-why">La tenue d'axe se joue dans les trois premières secondes.</p>
+  <ul class="plan">
+    <li>Roulette de queue verrouillée, dernier tour d'horizon</li>
+    <li>Comment ouvrir les gaz : progressivement, et jusqu'où</li>
+    <li>La correction de pied à anticiper, pas à subir</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Rotation et montée initiale</span></div>
+  <p class="phase-why">Une fois en l'air, il reste à ranger l'avion avant d'accélérer.</p>
+  <ul class="plan">
+    <li>Vitesse de décollement et attitude de montée</li>
+    <li>Ordre de rentrée : train, puis volets, à quelle vitesse</li>
+    <li>Réduction aux paramètres de montée et gestion des volets de capot</li>
+  </ul>
+</section>
+
+<div class="footlinks">
+  <a href="demarrage-a-froid.html">&larr; Démarrage à froid</a>
+  <a href="decollage-porte-avions.html">Étape suivante : Décollage du pont &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : manuel officiel Magnitude 3 <code>AN-01-45MAG-3</code> (<code>docs/manuel-f4u1d.pdf</code>) et la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4u1d-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — jamais de numéro figé dans le texte.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

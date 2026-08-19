@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F4U-1D — Mapping HOTAS</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+<style>
+  .wrap{max-width:880px}
+  ol.steps{counter-reset:s;list-style:none;padding:0;margin:18px 0}
+  ol.steps li{counter-increment:s;position:relative;padding:14px 0 14px 44px;border-bottom:1px solid var(--line)}
+  ol.steps li:last-child{border-bottom:none}
+  ol.steps li::before{content:counter(s);position:absolute;left:0;top:14px;width:26px;height:26px;
+    display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;
+    color:var(--amber);border:1px solid var(--amber);border-radius:2px}
+  ol.steps b{color:var(--ink)}
+  ol.steps code{font-family:var(--mono);font-size:.9em;background:var(--panel-2);border:1px solid var(--line);padding:1px 6px;color:var(--amber)}
+  table.liv{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  table.liv td,table.liv th{border-bottom:1px solid var(--line);padding:8px 8px;text-align:left;vertical-align:top}
+  table.liv th{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:400}
+  table.liv code{font-family:var(--mono);font-size:.92em;color:var(--amber)}
+  table.liv td.st{font-family:var(--mono);font-size:11px;color:var(--dim);white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F4U-1D</a><span>/</span>
+  <span>Mapping HOTAS</span>
+</nav>
+<div class="tail">DCS · Magnitude 3 · F4U-1D Corsair</div>
+<h1>Mapping HOTAS</h1>
+<p class="sub">Les planches annotées et cherchables de chaque périphérique, sur le modèle de celles du <a href="../F14BU/mapping-hotas.html">F-14B(U)</a> : un bouton, sa commande DCS, le détail côté avion, et un lien vers la leçon qui s'en sert.</p>
+
+<div class="skel">
+  <b>Bloqué — DCS n'a encore rien écrit pour cet avion</b>
+  <p style="margin:0 0 10px">Le matériel, lui, est connu : <b>le Corsair se pilote sur le même rig que le F-14B(U)</b> — manche Virpil, manette MongoosT-50CM3, panneau WinWing PTO2, pédales Fanatec. Les planches sont donc les mêmes images, déjà présentes dans le dépôt.</p>
+  <p style="margin:0 0 10px">Le dossier d'entrées du module existe désormais — <code>Saved Games\DCS\Config\Input\<b>F4U-1D</b>\</code>, sur l'instance <b>DCS stable</b>, la même que le F-14B(U). Le nom exact est donc confirmé, plus besoin de le supposer.</p>
+  <p style="margin:0 0 10px">Mais DCS n'y a créé que <code>headtracker\</code>, <code>keyboard\</code>, <code>mouse\</code> et <code>trackir\</code> : <b>pas de dossier <code>joystick\</code></b>. Autrement dit, la commande assignée l'a été dans la colonne <b>clavier</b>, pas sur un périphérique physique. Sans fichier joystick, aucun GUID ni numéro de bouton ne peut être lu — et ils ne se devinent pas.</p>
+  <p style="margin:0">Publier ici un mapping « plausible » serait pire que de ne rien publier : les badges de bind de toutes les leçons pointeraient sur de faux boutons. Tant que le relevé n'est pas fait, chaque badge affiche <b>non affecté</b> et renvoie sur cette page.</p>
+</div>
+
+<div class="note warn">
+  <b>Le mapping du F-14B(U) ne se recopie pas</b>
+  Mêmes périphériques ne veut pas dire mêmes affectations. Le Corsair a besoin d'axes que le Tomcat n'a pas — <b>pas d'hélice</b>, <b>mélange</b>, <b>volets de capot</b> — et n'a ni radar, ni HUD, ni équipier à qui déléguer. Seuls les <b>gabarits d'image</b> et le <b>moteur de la page</b> se réutilisent ; les données sont à construire de zéro, en suivant les phases de vol d'un chasseur à hélice.
+</div>
+
+<h2 class="phase-title" style="font-size:19px;margin:34px 0 4px">Ce qu'il faut faire pour débloquer</h2>
+<p class="phase-why">La même méthode que celle qui a servi pour le F-14B(U), consignée dans <code>CLAUDE.md</code>. Chaque étape produit une donnée vérifiée, jamais une hypothèse.</p>
+
+<ol class="steps">
+  <li style="opacity:.6"><b>Dire quel matériel sert à piloter le Corsair.</b> <b style="color:var(--go)">Fait</b> — c'est le même rig que le F-14B(U) : manche Virpil, manette MongoosT-50CM3, panneau WinWing PTO2, pédales Fanatec. À revérifier quand même dans les noms de fichiers de l'étape 3 : c'est là que se lit la vérité.</li>
+  <li><b>Faire écrire les fichiers de binds par DCS.</b> <b style="color:var(--warn)">En cours — il manque le joystick.</b> Un premier passage a bien créé le dossier du module, mais la commande a été assignée dans la colonne <b>clavier</b> : DCS n'écrit le fichier d'un périphérique que si on modifie un bind <b>dans la colonne de ce périphérique</b>. Il faut donc, dans l'écran Contrôles du F4U-1D, changer un bind dans la colonne de <b>chacun des quatre appareils</b> (manche, manette, PTO2, pédales) — de préférence sur une commande encore libre, pour ne rien casser —, puis <b>quitter proprement</b> l'écran : l'écriture disque n'a lieu qu'à ce moment.</li>
+  <li><b>Relire les vrais fichiers.</b> <b style="color:var(--go)">À moitié fait</b> — le dossier de module est confirmé : <code>Saved Games\DCS\Config\Input\F4U-1D\</code>, instance <b>DCS stable</b>. Reste à lire les noms de fichiers <code>joystick\&lt;Nom {GUID}&gt;.diff.lua</code>, qui n'existent pas encore. Ni le registre Windows ni un ancien profil exporté ne font foi.</li>
+  <li><b>Extraire le catalogue de commandes du module</b> avec la chaîne Lua du dépôt (<code>tools/extract-commands.lua</code>), en pointant la cascade d'entrées du F4U-1D — elle tient en deux fichiers, <code>Mods\aircraft\F4U-1D\Input\joystick\default.lua</code> et <code>...\keyboard\default.lua</code>, plus les fichiers communs de <code>Config\Input\Aircrafts\</code>.</li>
+  <li><b>Construire le mapping</b> — un enregistrement par bouton et par axe, avec un statut explicite : correspondance confirmée, proposition à valider, ou pas d'équivalent.</li>
+  <li style="opacity:.6"><b>Récupérer les gabarits d'image</b> des périphériques. <b style="color:var(--go)">Déjà disponibles</b> — rig identique au F-14B(U), donc les quatre planches existent dans le dépôt (gabarits SVG du manche et du PTO2, photos de la manette et des pédales). Il reste à monter la page en réutilisant tel quel le moteur JS du F-14B(U) : seules les données changent.</li>
+  <li><b>Générer les binds installables</b> et valider chaque <code>.diff.lua</code> avec l'interpréteur Lua de DCS avant toute installation — après avoir sauvegardé le fichier existant.</li>
+</ol>
+
+<h2 class="phase-title" style="font-size:19px;margin:40px 0 4px">Fichiers attendus</h2>
+<p class="phase-why">Les mêmes que côté F-14B(U), transposés. Tant qu'ils n'existent pas, le moteur de badges tombe proprement sur « non affecté ».</p>
+
+<table class="liv">
+  <tr><th>Fichier</th><th>Rôle</th><th>État</th></tr>
+  <tr><td><code>data/f4u1d-commands.json</code></td><td>Catalogue des commandes DCS du module</td><td class="st">à produire</td></tr>
+  <tr><td><code>data/f4u1d-bindings.json</code></td><td>Un enregistrement par bouton et axe physique</td><td class="st">à produire</td></tr>
+  <tr><td><code>data/f4u1d-hotas.json</code></td><td>Positions et libellés des étiquettes sur les planches</td><td class="st">à produire</td></tr>
+  <tr><td><code>export-bindings.html</code></td><td>Génération des <code>.diff.lua</code> installables</td><td class="st">à produire</td></tr>
+</table>
+
+<div class="note warn">
+  <b>Règle qui ne se contourne pas</b>
+  Aucun numéro de bouton n'est jamais écrit en dur dans le texte d'une leçon. Les badges sont résolus à l'affichage depuis <code>data/f4u1d-bindings.json</code> — le jour où un bind change, il suffit de mettre à jour ce fichier et toutes les leçons suivent.
+</div>
+
+<div class="footlinks">
+  <a href="index.html">&larr; Retour au F4U-1D</a>
+  <a href="../F14BU/mapping-hotas.html">Voir le mapping F-14B(U) &rarr;</a>
+</div>
+
+<p class="src">Méthode et garde-fous : <code>CLAUDE.md</code> (section « Vérifier ou générer des binds DCS ») et <code>tools/README.md</code> pour la chaîne d'extraction.</p>
+
+</div>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

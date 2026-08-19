@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4U-1D — Retour terrain et atterrissage, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4u1d-retour-atterrissage-progress" data-bindings="data/f4u1d-bindings.json" data-bind-store="f4u1d-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F4U-1D</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Retour et atterrissage</span>
+</nav>
+<div class="tail">DCS · Magnitude 3 · F4U-1D Corsair — pilote solo</div>
+<h1>Retour terrain<br>et atterrissage</h1>
+<p class="sub">Poser un train classique sans voir la piste dans les derniers mètres. Circuit standard, approche en virage continu — l'approche en ligne droite est justement ce qu'on évite —, et les deux façons de toucher : trois points ou sur les roues.</p>
+
+<div class="skel">
+  <b>Page de squelette — contenu à rédiger</b>
+  <p style="margin:0">La structure, les liens et le moteur de checklist sont en place. Le contenu détaillé (étapes cochables, planches, badges de bind) reste à écrire à partir du manuel officiel Magnitude 3 <code>AN-01-45MAG-3</code> (<code>docs/manuel-f4u1d.pdf</code>) et de la section correspondante du cursus. Les phases ci-dessous annoncent le plan : ce ne sont pas encore des procédures vérifiées, ne pas voler avec.</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> Retour et atterrissage, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée portera son bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>. Tant que le relevé matériel n'est pas fait, ces badges afficheront « non affecté ».</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Préparer le retour</span></div>
+  <p class="phase-why">La configuration se prépare avant d'arriver, pas en finale.</p>
+  <ul class="plan">
+    <li>Réglages moteur de descente, et le refroidissement trop rapide à éviter</li>
+    <li>Le point d'entrée dans le circuit et l'altitude à tenir</li>
+    <li>Consommation restante : la décision de tenter ou de dérouter</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Le circuit</span></div>
+  <p class="phase-why">Un tour de piste taillé pour un avion dont le nez cache tout.</p>
+  <ul class="plan">
+    <li>Vent arrière : vitesse, configuration, sortie du train</li>
+    <li>Le virage de base continu qui garde la piste en vue</li>
+    <li>Sortie des volets par étapes et effet sur l'assiette</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">La finale</span></div>
+  <p class="phase-why">La vitesse d'approche est le seul paramètre qui ne se négocie pas.</p>
+  <ul class="plan">
+    <li>Vitesse de seuil selon la masse, et ce que coûtent dix nœuds de trop</li>
+    <li>Tenir l'axe au pied, pas au manche</li>
+    <li>Le moment où la piste disparaît sous le nez, et sur quoi on se guide alors</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Le toucher et le roulage à l'atterrissage</span></div>
+  <p class="phase-why">L'avion n'est pas posé tant qu'il n'est pas arrêté.</p>
+  <ul class="plan">
+    <li>Trois points ou toucher sur les roues : quand choisir l'un ou l'autre</li>
+    <li>Le cheval de bois : comment il commence et comment on l'arrête</li>
+    <li>Verrouillage de roulette de queue, freinage, dégagement de piste</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="5">
+  <div class="phase-head"><span class="phase-num">PHASE 5</span><span class="phase-title">Remise de gaz</span></div>
+  <p class="phase-why">À décider tôt, parce que la puissance arrive brutalement.</p>
+  <ul class="plan">
+    <li>Le point de décision, avant le seuil</li>
+    <li>Ordre des gestes et anticipation du couple</li>
+  </ul>
+</section>
+
+<div class="footlinks">
+  <a href="navigation-radio.html">&larr; Navigation et radio</a>
+  <a href="appontage-essex.html">Étape suivante : Circuit d'appontage &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : manuel officiel Magnitude 3 <code>AN-01-45MAG-3</code> (<code>docs/manuel-f4u1d.pdf</code>) et la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4u1d-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — jamais de numéro figé dans le texte.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

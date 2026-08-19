@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4U-1D — Gestion moteur avancée et rayon d'action, leçon avancée</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4u1d-gestion-moteur-avancee-progress" data-bindings="data/f4u1d-bindings.json" data-bind-store="f4u1d-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F4U-1D</a><span>/</span>
+  <a href="perfectionnement.html">Perfectionnement</a><span>/</span>
+  <span>Gestion moteur avancée</span>
+</nav>
+<div class="tail">DCS · Magnitude 3 · F4U-1D Corsair — pilote solo</div>
+<h1>Gestion moteur<br>et rayon d'action</h1>
+<p class="sub">Aller plus loin que « croisière = tel réglage » : construire un profil de vol qui tient la distance, calculer un rayon d'action réel avec réserve d'appontage, et savoir dire non à une mission avant de décoller.</p>
+
+<div class="skel">
+  <b>Page de squelette — contenu à rédiger</b>
+  <p style="margin:0">La structure, les liens et le moteur de checklist sont en place. Le contenu détaillé (étapes cochables, planches, badges de bind) reste à écrire à partir du manuel officiel Magnitude 3 <code>AN-01-45MAG-3</code> (<code>docs/manuel-f4u1d.pdf</code>) et de la section correspondante du cursus. Les phases ci-dessous annoncent le plan : ce ne sont pas encore des procédures vérifiées, ne pas voler avec.</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> Gestion moteur avancée, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée portera son bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>. Tant que le relevé matériel n'est pas fait, ces badges afficheront « non affecté ».</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Les courbes du manuel</span></div>
+  <p class="phase-why">Les tableaux de performances, rendus utilisables.</p>
+  <ul class="plan">
+    <li>Lire une courbe de consommation en fonction du réglage</li>
+    <li>Le compromis vitesse-autonomie, chiffré</li>
+    <li>L'effet de la masse et des emports extérieurs</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Construire un profil de mission</span></div>
+  <p class="phase-why">Une mission se calcule avant, pas en vol.</p>
+  <ul class="plan">
+    <li>Montée, transit, réserve de combat, retour</li>
+    <li>Réserve d'appontage : combien, et pourquoi elle n'est pas négociable</li>
+    <li>Le point de non-retour et comment on le surveille en vol</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Optimiser en vol</span></div>
+  <p class="phase-why">Récupérer des minutes quand la marge est mince.</p>
+  <ul class="plan">
+    <li>Réglage de croisière longue distance</li>
+    <li>Gestion des réservoirs et ordre de consommation</li>
+    <li>Ce qu'on sacrifie en premier quand ça ne passe pas</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Le vol en formation</span></div>
+  <p class="phase-why">Suivre un chef de patrouille coûte du carburant.</p>
+  <ul class="plan">
+    <li>La marge à prévoir en équipier</li>
+    <li>Réglages de croisière compatibles avec la tenue de formation</li>
+  </ul>
+</section>
+
+<div class="footlinks">
+  <a href="bfm-helice.html">&larr; BFM à hélice</a>
+  <a href="appontage-avance.html">Leçon suivante : Appontage avancé &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : manuel officiel Magnitude 3 <code>AN-01-45MAG-3</code> (<code>docs/manuel-f4u1d.pdf</code>), les sections du <a href="index.html">cursus</a> et les ressources externes listées sur <a href="ressources.html">Ressources</a>. Leçon avancée : elle suppose le <a href="pas-a-pas.html">Pas à pas</a> déjà fait.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

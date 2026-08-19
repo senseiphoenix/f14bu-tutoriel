@@ -7,39 +7,58 @@
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/theme.css">
 <style>
-  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;--warn:#d9695a;
     --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
   *{box-sizing:border-box}
   body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
   .wrap{max-width:880px;margin:0 auto;padding:48px 24px 80px}
   .tail{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
   h1{font-family:var(--display);font-weight:600;font-size:44px;letter-spacing:.04em;line-height:1.02;margin:10px 0 8px;text-transform:uppercase}
-  .sub{color:var(--dim);max-width:60ch;margin:0 0 36px}
+  .sub{color:var(--dim);max-width:62ch;margin:0 0 30px}
+  .sub b{color:var(--ink)}
   a.card{display:flex;gap:18px;align-items:baseline;border:1px solid var(--line);background:var(--panel);
          padding:18px 20px;margin:10px 0;text-decoration:none;color:var(--ink);transition:border-color .12s}
   a.card:hover{border-color:var(--amber)}
-  a.card.soon{opacity:.6}
+  a.card.tool{padding:14px 20px}
   .idx{font-family:var(--mono);font-size:13px;color:var(--amber);min-width:26px}
   .nm{font-family:var(--display);font-size:19px;letter-spacing:.04em;text-transform:uppercase}
-  .ds{color:var(--dim);font-size:13.5px;margin-left:auto;text-align:right;max-width:44%}
-  .tag{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
-       color:var(--deck);background:var(--go);padding:2px 6px;margin-left:8px;vertical-align:2px}
-  .tag.soon{background:var(--dim)}
+  .ds{color:var(--dim);font-size:13.5px;margin-left:auto;text-align:right;max-width:46%}
   .hr{border-top:1px solid var(--line);margin:34px 0 22px}
   h2{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:0 0 12px}
   p{margin:12px 0;color:var(--dim)}
   code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:2px 6px;border:1px solid var(--line);color:var(--amber)}
+  .skel{border:1px solid rgba(217,105,90,.5);border-left:3px solid var(--warn);background:rgba(217,105,90,.07);
+        padding:14px 18px;margin:0 0 30px;border-radius:2px;font-size:13.5px;color:var(--dim)}
+  .skel > b:first-child{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--warn);margin-bottom:5px}
+  .skel a{color:var(--amber)}
 </style>
 </head>
 <body>
+<!-- Bandeau : sortie de pont d'un Essex. Attention aux noms de fichiers du dossier img/ —
+     `flight_photo_high_altitude.jpg` n'est pas une photo mais un abaque de performances. -->
+<div class="hero-banner" style="background-image:url('img/takeoff_carrier_photo.jpg')"></div>
 <div class="wrap">
   <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:16px">&larr; Accueil</a>
   <div class="tail">DCS · Magnitude 3 · F4U-1D Corsair</div>
   <h1>Cursus complet<br>de pilotage</h1>
-  <p class="sub">Sept sections, du parking froid à la mission complète, illustrées avec les planches du manuel officiel Magnitude 3 (AN-01-45MAG-3). Chaque section garde ta progression et tes notes d'une session à l'autre, dans le même navigateur.</p>
+  <p class="sub">Un parcours en trois étapes, du parking froid à la mission complète, illustré avec les planches du manuel officiel Magnitude 3 (<code>AN-01-45MAG-3</code>). Chaque page garde ta progression et tes notes d'une session à l'autre, dans le même navigateur. Suis les étapes dans l'ordre si tu débutes, ou reviens directement à celle qui t'intéresse.</p>
+  <p class="sub">Le Corsair est <b>monoplace, à hélice, sans radar ni HUD</b> : trois leviers moteur au lieu d'un, un viseur sans calculateur, et une navigation au compas et à la montre. Rien ne se pilote au menu — tout est un levier ou un interrupteur.</p>
+
+  <div class="skel">
+    <b>État du contenu</b>
+    L'<b>étape 2</b> (les 7 sections du cursus) est complète et utilisable. L'<b>étape 1</b> a commencé à recevoir du contenu réel sur 6 de ses 15 leçons (préparation des contrôles, démarrage, roulage, navigation radio, canons, bombes/roquettes) — le reste et l'<b>étape 3</b> restent au stade du plan. Rien n'a encore été recoupé avec le manuel officiel : chaque point incertain porte un encadré <span style="color:var(--warn)">« à vérifier »</span> dans la leçon elle-même. Le <a href="mapping-hotas.html">mapping HOTAS</a> attend, lui, que DCS ait écrit les binds joystick du Corsair — le matériel est connu (même rig que le F-14B(U)), les fichiers pas encore.
+  </div>
 
   <div class="grp-block">
-  <h2 class="grp">Le cursus <span class="grp-sub">7 sections, dans l'ordre — du parking froid à la mission complète</span></h2>
+  <h2 class="grp">Étape 1 <span class="stage-badge" style="--accent:var(--go)">Débutant</span> <span class="grp-sub">découvrir l'avion</span></h2>
+  <div class="feat-grid">
+    <a class="feat" href="pas-a-pas.html" style="--accent:var(--go)"><span class="ic ic-play"></span><span class="nm">Pas à pas</span><span class="ds">15 tutoriels une page, très détaillés, pour un débutant total sur avion à hélice — à commencer en premier</span></a>
+    <a class="feat" href="cockpit/index.html" style="--accent:var(--amber)"><span class="ic ic-gauge"></span><span class="nm">Le cockpit</span><span class="ds">Chaque commande nommée et expliquée — planches du manuel, à garder ouvert à côté</span></a>
+  </div>
+  </div>
+
+  <div class="grp-block">
+  <h2 class="grp">Étape 2 <span class="stage-badge" style="--accent:var(--amber)">Intermédiaire</span> <span class="grp-sub">le cursus en profondeur, 7 sections dans l'ordre</span></h2>
   <div class="seq-list">
     <a class="seq" href="section-a-cockpit.html" style="--accent:var(--amber)"><span class="ic ic-gauge"></span><span class="idx">A</span><span class="nm">Découverte &amp; cockpit</span><span class="ds">Planches avant/gauche/droite, instruments, commandes de vol, bloc moteur, HOTAS</span></a>
     <a class="seq" href="section-b-demarrage.html" style="--accent:var(--sys-nav)"><span class="ic ic-power"></span><span class="idx">B</span><span class="nm">Démarrage &amp; roulage</span><span class="ds">Procédure de mise en route, tests moteur, roulage en S</span></a>
@@ -51,9 +70,24 @@
   </div>
   </div>
 
+  <div class="grp-block">
+  <h2 class="grp">Étape 3 <span class="stage-badge" style="--accent:var(--sys-mission)">Avancé</span> <span class="grp-sub">au-delà du cursus</span></h2>
+  <div class="feat-grid">
+    <a class="feat" href="perfectionnement.html" style="--accent:var(--sys-mission)"><span class="ic ic-chevrons"></span><span class="nm">Perfectionnement</span><span class="ds">5 leçons : BFM à hélice, gestion moteur et rayon d'action, appontage avancé, attaque au sol coordonnée, Bat Bomb</span></a>
+  </div>
+  </div>
+
+  <div class="grp-block">
+  <h2 class="grp">Outils <span class="grp-sub">pas une étape — à consulter quand tu en as besoin</span></h2>
+  <a class="card tool" href="missions.html"><span class="idx">&#9656;</span><span class="nm">Les missions du module</span><span class="ds">Entraînements et action instantanée livrés par Magnitude 3 — quoi voler et quand</span></a>
+  <a class="card tool" href="mapping-hotas.html"><span class="idx">&#9998;</span><span class="nm">Mapping HOTAS</span><span class="ds">Chaque bouton annoté et cherchable — en attente du relevé matériel</span></a>
+  <a class="card tool" href="corsair-progression.html"><span class="idx">&#10022;</span><span class="nm">Carnet de progression</span><span class="ds">Vue d'ensemble de tout le parcours, export markdown imprimable</span></a>
+  <a class="card tool" href="ressources.html"><span class="idx">&#9656;</span><span class="nm">Ressources externes</span><span class="ds">Manuel officiel, vidéos et documents sources</span></a>
+  </div>
+
   <div class="hr"></div>
   <h2>Sources</h2>
-  <p>Toutes les planches viennent directement du manuel officiel Magnitude 3 (<code>AN-01-45MAG-3</code>, 16 septembre 2025), extraites et hébergées localement dans <code>img/</code> — aucune dépendance à un Drive externe. Le PDF complet est disponible dans <code>docs/manuel-f4u1d.pdf</code>. En complément : checklists et kneeboards communautaires à jour (ED Forums), et une série de tutoriels vidéo pour les points encore absents du manuel (early access).</p>
+  <p>Toutes les planches viennent directement du manuel officiel Magnitude 3 (<code>AN-01-45MAG-3</code>, 16 septembre 2025), extraites et hébergées localement dans <code>img/</code> — aucune dépendance à un service externe. Le PDF complet est disponible dans <code>docs/manuel-f4u1d.pdf</code>. En complément : checklists et kneeboards communautaires à jour, et une sélection de tutoriels vidéo pour les points encore absents du manuel (accès anticipé).</p>
 </div>
 <script src="../js/site-search.js"></script>
 </body></html>

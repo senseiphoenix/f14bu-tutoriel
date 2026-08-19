@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4U-1D — Démarrage à froid, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4u1d-demarrage-a-froid-progress" data-bindings="data/f4u1d-bindings.json" data-bind-store="f4u1d-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F4U-1D</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Démarrage à froid</span>
+</nav>
+<div class="tail">DCS · Magnitude 3 · F4U-1D Corsair — pilote solo</div>
+<h1>Démarrage à froid<br>pas à pas</h1>
+<p class="sub">De l'avion complètement froid au moteur stabilisé au ralenti, sur un parking d'aérodrome. Un moteur en étoile ne se démarre pas comme un réacteur : il y a un ordre, une amorce, et plusieurs façons de le noyer ou de le faire retourner.</p>
+
+<div class="skel">
+  <b>Contenu partiellement rédigé — non vérifié au manuel</b>
+  <p style="margin:0 0 10px">Les phases 1 à 3 reprennent la matière collectée dans <code>docs/notes-sources.md</code> (vidéos CasmoTV et Spud Spike, sources S1 et S6). <b style="color:var(--warn)">Aucune valeur chiffrée ci-dessous n'a encore été recoupée avec le manuel officiel</b> <code>AN-01-45MAG-3</code> — chaque durée ou seuil marqué « à vérifier » vient d'un commentaire de vol, pas d'une procédure écrite. La phase 4 (essais moteur) reste au stade du plan : aucune source ne la couvre encore.</p>
+  <p style="margin:0">Planches d'image et badges de bind pas encore rattachés — le mapping HOTAS attend toujours le relevé matériel (voir <a href="mapping-hotas.html">mapping-hotas.html</a>).</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> Démarrage à froid, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée portera son bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>. Tant que le relevé matériel n'est pas fait, ces badges afficheront « non affecté ».</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Avant de toucher au démarreur</span></div>
+  <p class="phase-why">L'ordre compte : plusieurs interrupteurs doivent être posés avant, sous peine de rien obtenir.</p>
+
+  <div class="step"><input type="checkbox" data-id="p1-1"><div class="step-body">
+    <p class="step-item"><span class="switchname">Mélange</span> sur <span class="setting">OFF (Cut-off)</span></p>
+    <p class="step-detail">On ne l'avance qu'au moment précis où l'hélice commence à tourner, en phase 2 — pas avant.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-2"><div class="step-body">
+    <p class="step-item"><span class="switchname">Gaz</span> entrouverts très légèrement <span class="setting">(crack the throttle)</span></p>
+    <p class="step-detail">Une ouverture minime, pas un réglage précis chiffré. <span style="color:var(--warn)">À vérifier au manuel</span> : la vidéo source ne donne aucune valeur, juste un geste.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-3"><div class="step-body">
+    <p class="step-item"><span class="switchname">Sélecteur de carburant</span> sur <span class="setting">MAIN</span></p>
+    <p class="step-detail">Réservoir principal — pas un réservoir auxiliaire ou externe.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-4"><div class="step-body">
+    <p class="step-item"><span class="switchname">Magnétos</span> sur <span class="setting">BOTH</span></p>
+    <p class="step-detail">Les deux circuits d'allumage activés ensemble.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-5"><div class="step-body">
+    <p class="step-item"><span class="switchname">Éclairage cockpit</span> si besoin, <span class="switchname">puis batterie</span></p>
+    <p class="step-detail">Dans cet ordre pour rester lisible en train de basculer les interrupteurs suivants. <span style="color:var(--warn)">À vérifier au manuel</span> : cet ordre vient d'une vidéo de démonstration, pas d'une checklist officielle.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p1-6"><div class="step-body">
+    <p class="step-item"><span class="switchname">Pompe à carburant</span> <span class="setting">enclenchée</span></p>
+    <p class="step-detail">Dernier geste avant l'amorçage.</p>
+  </div></div>
+
+  <p class="phase-why" style="margin-top:14px">Reste à confirmer au manuel avant de compléter cette phase : la configuration précise de la voilure, des volets et de la crosse au parking, ainsi que l'actionnement du frein de parking — aucune des vidéos collectées ne les détaille.</p>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">L'amorçage et le lancement</span></div>
+  <p class="phase-why">La partie qui rate le plus souvent quand on improvise — les deux mains sont occupées presque en même temps.</p>
+
+  <div class="step"><input type="checkbox" data-id="p2-1"><div class="step-body">
+    <p class="step-item"><span class="switchname">Amorçage</span> <span class="setting">(primer)</span> maintenu <span class="setting">5 à 6 secondes</span></p>
+    <p class="step-detail">Un sifflement confirme que ça amorce. <span style="color:var(--warn)">À vérifier au manuel</span> : la durée dépend normalement de la température du moteur (froid ou déjà chaud), cette vidéo ne donne qu'un cas.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-2"><div class="step-body">
+    <p class="step-item"><span class="switchname">Cache de sécurité du démarreur</span> relevé</p>
+    <p class="step-detail">À faire juste avant d'actionner le démarreur, pas avant.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-3"><div class="step-body">
+    <p class="step-item"><span class="switchname">Démarreur</span> maintenu jusqu'à ce que l'<span class="switchname">hélice commence à tourner</span></p>
+    <p class="step-detail">C'est le signal pour passer au geste suivant, pas une durée fixe à compter.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-4"><div class="step-body">
+    <p class="step-item"><span class="switchname">Mélange avancé</span> au moment où l'hélice tourne</p>
+    <p class="step-detail">Le geste critique de la séquence : les deux mains sont occupées (démarreur encore maintenu, mélange à avancer). C'est pour ça qu'un bouton dédié au mélange, posé en <a href="preparer-module-controles.html">leçon 1</a>, change vraiment la manip.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-5"><div class="step-body">
+    <p class="step-item"><span class="switchname">Démarreur</span> maintenu un bref instant de plus, puis <span class="setting">relâché</span></p>
+    <p class="step-detail">Le temps que le lancement se stabilise avant de lâcher.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p2-6"><div class="step-body">
+    <p class="step-item"><span class="switchname">Gaz modulés</span> au besoin pour empêcher le moteur de caler</p>
+    <p class="step-detail">Juste après le lancement, le moteur peut avoir besoin d'un peu plus ou moins de gaz pour ne pas repartir au ralenti et s'éteindre.</p>
+  </div></div>
+
+  <p class="phase-why" style="margin-top:14px">Reste à documenter : que faire si le moteur ne prend pas au premier essai, et combien de temps attendre avant de retenter — aucune source collectée ne le couvre, à prendre entièrement au manuel.</p>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">La montée en température</span></div>
+  <p class="phase-why">Un moteur en étoile froid n'accepte pas la puissance : il faut le laisser venir.</p>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item"><span class="switchname">Freins maintenus</span>, régime monté vers <span class="setting">800 tr/min</span></p>
+    <p class="step-detail">L'avion ne bouge pas, le moteur tourne à ce régime le temps de la chauffe.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Laisser tourner <span class="setting">quelques minutes</span> pour stabiliser pressions et températures</p>
+    <p class="step-detail"><span style="color:var(--warn)">À vérifier au manuel</span> : un seuil de température à atteindre serait plus fiable à enseigner qu'une durée approximative — c'est probablement ce que donne le manuel officiel.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item"><span class="switchname">Volets de capot</span> ouverts <span class="setting">en grand</span></p>
+    <p class="step-detail">Pour évacuer la chaleur des culasses (CHT) pendant que le moteur tourne au sol.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-4"><div class="step-body">
+    <p class="step-item"><span class="switchname">Volets d'huile</span> <span class="setting">fermés</span> au début</p>
+    <p class="step-detail">À l'inverse des volets de capot : une huile encore froide est visqueuse, la refroidir davantage ferait chuter la pression affichée sans raison. À rouvrir seulement une fois l'huile à sa température de fonctionnement — <span style="color:var(--warn)">seuil exact à confirmer au manuel</span>. Ne pas confondre ces deux volets, qui se règlent en sens inverse l'un de l'autre à ce stade.</p>
+  </div></div>
+</section>
+
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Les essais moteur et la mise en route des systèmes</span></div>
+  <p class="phase-why">Le contrôle qui évite de découvrir une panne à la rotation.</p>
+  <ul class="plan">
+    <li>Essai des magnétos et chute de régime acceptable</li>
+    <li>Essai du pas d'hélice</li>
+    <li>Radios, gyros à recaler, éclairage</li>
+    <li>Vérification des commandes de vol, libres et dans le bon sens</li>
+  </ul>
+</section>
+
+<div class="footlinks">
+  <a href="tour-cockpit.html">&larr; Tour du cockpit</a>
+  <a href="roulage-decollage.html">Étape suivante : Roulage et décollage &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : manuel officiel Magnitude 3 <code>AN-01-45MAG-3</code> (<code>docs/manuel-f4u1d.pdf</code>) et la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4u1d-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — jamais de numéro figé dans le texte.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

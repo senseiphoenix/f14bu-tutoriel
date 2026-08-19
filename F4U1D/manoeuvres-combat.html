@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4U-1D — Manœuvres de combat de base, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4u1d-manoeuvres-combat-progress" data-bindings="data/f4u1d-bindings.json" data-bind-store="f4u1d-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F4U-1D</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Manœuvres de combat</span>
+</nav>
+<div class="tail">DCS · Magnitude 3 · F4U-1D Corsair — pilote solo</div>
+<h1>Manœuvres<br>de combat</h1>
+<p class="sub">Les bases du combat à hélice, sans théorie inutile : ce que le Corsair fait bien, ce qu'il ne faut jamais tenter contre un avion plus léger, et les quelques manœuvres qui suffisent à survivre au premier engagement.</p>
+
+<div class="skel">
+  <b>Page de squelette — contenu à rédiger</b>
+  <p style="margin:0">La structure, les liens et le moteur de checklist sont en place. Le contenu détaillé (étapes cochables, planches, badges de bind) reste à écrire à partir du manuel officiel Magnitude 3 <code>AN-01-45MAG-3</code> (<code>docs/manuel-f4u1d.pdf</code>) et de la section correspondante du cursus. Les phases ci-dessous annoncent le plan : ce ne sont pas encore des procédures vérifiées, ne pas voler avec.</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> Manœuvres de combat, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée portera son bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>. Tant que le relevé matériel n'est pas fait, ces badges afficheront « non affecté ».</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Connaître son avion</span></div>
+  <p class="phase-why">On se bat avec ce qu'on a, pas avec ce qu'on voudrait.</p>
+  <ul class="plan">
+    <li>Vitesse, taux de roulis, taux de virage : les forces réelles du Corsair</li>
+    <li>Ce qu'il perd en combat lent, et pourquoi c'est une mauvaise idée d'y aller</li>
+    <li>Les limites structurelles à ne pas franchir en manœuvre</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">L'énergie</span></div>
+  <p class="phase-why">La monnaie du combat à hélice, plus encore qu'en jet.</p>
+  <ul class="plan">
+    <li>Altitude et vitesse : convertir l'une en l'autre à volonté</li>
+    <li>Ce qui coûte de l'énergie sans rien rapporter</li>
+    <li>La vitesse de manœuvre optimale et comment la retrouver en vol</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Les manœuvres de base</span></div>
+  <p class="phase-why">Quelques figures, à savoir faire proprement plutôt que beaucoup.</p>
+  <ul class="plan">
+    <li>Le piqué-tir-dégagement et sa version répétée</li>
+    <li>Le virage défensif et le déchargement</li>
+    <li>Le dégagement vertical qui exploite la puissance disponible</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Se sortir d'une mauvaise position</span></div>
+  <p class="phase-why">La compétence qui sert le plus souvent.</p>
+  <ul class="plan">
+    <li>Reconnaître qu'on est en défensive avant qu'il ne soit trop tard</li>
+    <li>Rompre le combat : dans quelle direction et avec quelle marge</li>
+    <li>Appeler et se faire aider, en solo comme en formation</li>
+  </ul>
+</section>
+
+<div class="footlinks">
+  <a href="urgences.html">&larr; Urgences</a>
+  <a href="checklists-personnalisees.html">Étape suivante : Checklists personnalisées &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : manuel officiel Magnitude 3 <code>AN-01-45MAG-3</code> (<code>docs/manuel-f4u1d.pdf</code>) et la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4u1d-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — jamais de numéro figé dans le texte.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

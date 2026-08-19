@@ -541,13 +541,13 @@
  },
  {
   "title": "Wheel Brake Right",
-  "path": "F14BU/mapping-hotas.html?dev=stick&n=SLDR",
+  "path": "F14BU/mapping-hotas.html?dev=pedals&n=4",
   "aircraft": "F-14B(U)",
   "type": "fonction"
  },
  {
   "title": "Wheel Brake Right",
-  "path": "F14BU/mapping-hotas.html?dev=pedals&n=4",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=SLDR",
   "aircraft": "F-14B(U)",
   "type": "fonction"
  },
@@ -721,6 +721,12 @@
  },
  {
   "title": "Ressources vidéo",
+  "path": "F14BU/section-g-mission.html#g4",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
   "path": "F14BU/section-b-navigation.html#b6",
   "aircraft": "F-14B(U)",
   "type": "leçon"
@@ -733,25 +739,19 @@
  },
  {
   "title": "Ressources vidéo",
-  "path": "F14BU/section-d-air-air.html#d8",
-  "aircraft": "F-14B(U)",
-  "type": "leçon"
- },
- {
-  "title": "Ressources vidéo",
   "path": "F14BU/section-e-survie.html#e4",
   "aircraft": "F-14B(U)",
   "type": "leçon"
  },
  {
   "title": "Ressources vidéo",
-  "path": "F14BU/section-f-air-sol.html#f6",
+  "path": "F14BU/section-d-air-air.html#d8",
   "aircraft": "F-14B(U)",
   "type": "leçon"
  },
  {
   "title": "Ressources vidéo",
-  "path": "F14BU/section-g-mission.html#g4",
+  "path": "F14BU/section-f-air-sol.html#f6",
   "aircraft": "F-14B(U)",
   "type": "leçon"
  },
@@ -1652,6 +1652,168 @@
  {
   "title": "Cursus F4U-1D Corsair — Tutoriel",
   "path": "F4U1D/index.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Appontage avancé : pont mouvant, mauvais temps, nuit — leçon avancée",
+  "path": "F4U1D/appontage-avance.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Attaque au sol coordonnée, leçon avancée",
+  "path": "F4U1D/attaque-sol-coordonnee.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Bat Bomb et radar AN/APS-4, leçon avancée",
+  "path": "F4U1D/batbomb-aps4.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — BFM à hélice, leçon avancée",
+  "path": "F4U1D/bfm-helice.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Bombes, HVAR et Tiny Tim, pas à pas",
+  "path": "F4U1D/bombes-roquettes.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Canons .50 et viseur Mk 8, pas à pas",
+  "path": "F4U1D/canons-mk8.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Carnet de progression",
+  "path": "F4U1D/corsair-progression.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Circuit d'appontage Essex-class, pas à pas",
+  "path": "F4U1D/appontage-essex.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Construire ses checklists, pas à pas",
+  "path": "F4U1D/checklists-personnalisees.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Décollage du porte-avions, pas à pas",
+  "path": "F4U1D/decollage-porte-avions.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Démarrage à froid, pas à pas",
+  "path": "F4U1D/demarrage-a-froid.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Gestion moteur avancée et rayon d'action, leçon avancée",
+  "path": "F4U1D/gestion-moteur-avancee.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Le cockpit",
+  "path": "F4U1D/cockpit/index.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Les missions du module",
+  "path": "F4U1D/missions.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Manœuvres de combat de base, pas à pas",
+  "path": "F4U1D/manoeuvres-combat.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Mapping HOTAS",
+  "path": "F4U1D/mapping-hotas.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Navigation, radio et homing, pas à pas",
+  "path": "F4U1D/navigation-radio.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Pas à pas",
+  "path": "F4U1D/pas-a-pas.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Perfectionnement",
+  "path": "F4U1D/perfectionnement.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Préparer le module et les contrôles, pas à pas",
+  "path": "F4U1D/preparer-module-controles.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Régimes moteur, compresseur et WEP, pas à pas",
+  "path": "F4U1D/regimes-moteur-wep.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Ressources externes",
+  "path": "F4U1D/ressources.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Retour terrain et atterrissage, pas à pas",
+  "path": "F4U1D/retour-atterrissage.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Roulage et décollage, pas à pas",
+  "path": "F4U1D/roulage-decollage.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Tour du cockpit, pas à pas",
+  "path": "F4U1D/tour-cockpit.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Urgences : panne moteur, atterrissage forcé, amerrissage, pas à pas",
+  "path": "F4U1D/urgences.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "F4U-1D — Vol de base, pas à pas",
+  "path": "F4U1D/vol-de-base.html",
   "aircraft": "F4U-1D Corsair",
   "type": "page"
  },

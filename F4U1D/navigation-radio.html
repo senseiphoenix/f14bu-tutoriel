@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4U-1D — Navigation, radio et homing, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4u1d-navigation-radio-progress" data-bindings="data/f4u1d-bindings.json" data-bind-store="f4u1d-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F4U-1D</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Navigation et radio</span>
+</nav>
+<div class="tail">DCS · Magnitude 3 · F4U-1D Corsair — pilote solo</div>
+<h1>Navigation<br>radio et homing</h1>
+<p class="sub">Pas de TACAN, pas d'ILS, pas de waypoint : on navigue à la montre, au compas et à l'estime, et on retrouve le porte-avions au radiocompas. Cette leçon rend cette navigation d'époque utilisable en jeu, sans carte papier.</p>
+
+<div class="skel">
+  <b>Contenu partiellement rédigé — non vérifié au manuel</b>
+  <p style="margin:0 0 10px">La phase 3 (radiocompas YE-ZB) reprend la matière de <code>docs/notes-sources.md</code> (vidéo Virtual Carrier Task Force 58, source S3) — c'est la mieux sourcée du site à ce stade. <span style="color:var(--warn)">Un point reste à vérifier au manuel</span> : le comportement hors de portée du signal. Les phases 1, 2 et 4 (estime, postes ARC-5, télégraphie) restent au stade du plan : aucune source ne les couvre encore.</p>
+  <p style="margin:0">Planches d'image et badges de bind pas encore rattachés — le mapping HOTAS attend toujours le relevé matériel (voir <a href="mapping-hotas.html">mapping-hotas.html</a>).</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> Navigation et radio, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée portera son bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>. Tant que le relevé matériel n'est pas fait, ces badges afficheront « non affecté ».</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Cap, montre, carte</span></div>
+  <p class="phase-why">La navigation à l'estime, ramenée à trois gestes.</p>
+  <ul class="plan">
+    <li>Recaler le gyro directionnel sur le compas magnétique, et à quelle fréquence</li>
+    <li>Tenir un cap avec la dérive du vent</li>
+    <li>Calculer un temps de branche et savoir quand on aurait dû arriver</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Les postes radio de bord</span></div>
+  <p class="phase-why">Savoir ce qu'on a avant de savoir s'en servir.</p>
+  <ul class="plan">
+    <li>L'ensemble émission-réception et ses commandes déportées</li>
+    <li>Sélection de canaux et ce que la sélection change côté DCS</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Le radiocompas</span></div>
+  <p class="phase-why">Retrouver un bateau qui n'est pas là où on l'a laissé.</p>
+
+  <div class="note">
+    <b>Le principe, avant la procédure</b>
+    Le porte-avions (<b>YE</b>) émet un faisceau radio <b>tournant</b>, découpé en <b>secteurs de 30°</b> — douze tranches de camembert autour du navire, chacune associée à une lettre du code Morse. Le récepteur de l'avion (<b>ZB</b>, matériel <b>AN/ARR-2</b>) capte en boucle deux éléments : l'identifiant du porte-avions (ex. <code>CV</code>), puis la lettre du secteur où se trouve l'avion (ex. <code>S</code>, <code>L</code>…). Le signal se répète environ toutes les <b>30 secondes</b> — ce n'est pas un indicateur continu comme un TACAN, la patience fait partie de la méthode.
+  </div>
+
+  <div class="step"><input type="checkbox" data-id="p3-1"><div class="step-body">
+    <p class="step-item"><span class="switchname">RECTIFIER C MHF</span> sur <span class="setting">ON</span></p>
+    <p class="step-detail">Sur l'unité de contrôle C-38. Attendre environ <b>5 secondes</b> : les tubes à vide doivent chauffer, ce n'est pas instantané comme un équipement à semi-conducteurs.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-2"><div class="step-body">
+    <p class="step-item">Récepteur réglé sur le <span class="switchname">canal présélectionné</span> du porte-avions</p>
+    <p class="step-detail">Le canal 1 dans l'exemple source — le canal réellement utilisé dépend de la fréquence programmée en mission (voir encadré plus bas).</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-3"><div class="step-body">
+    <p class="step-item"><span class="switchname">CW / VOICE</span> sur <span class="setting">VOICE</span></p>
+    <p class="step-detail"><b>Spécificité DCS</b>, pas un geste historique : c'est ce qui permet d'<i>entendre</i> le Morse simulé. Un pilote de 1944 n'avait pas ce choix à faire dans la réalité.</p>
+  </div></div>
+
+  <div class="step"><input type="checkbox" data-id="p3-4"><div class="step-body">
+    <p class="step-item">Écouter la lettre, calculer le <span class="switchname">cap inverse</span>, corriger</p>
+    <p class="step-detail">Le cap de retour est l'<b>inverse</b> du secteur entendu, pas le secteur lui-même : entendre <code>S</code> (secteur centré sur le relèvement 345° depuis le bateau) veut dire « je suis sur ce relèvement », donc voler au cap <b>165°</b> pour rejoindre. Entendre <code>L</code> (015°) → cap <b>195°</b>. Recommencer à chaque répétition du signal, environ 30 secondes plus tard.</p>
+  </div></div>
+
+  <div class="note go">
+    <b>Un signal qui alterne n'est pas un problème</b>
+    Entendre deux lettres en va-et-vient (ex. <code>S</code> et <code>L</code>) signifie qu'on est <b>sur la frontière</b> entre deux secteurs — l'avion est quasiment dans l'axe direct du bateau. C'est en fait la meilleure situation possible, pas une ambiguïté à résoudre.
+  </div>
+
+  <p class="phase-why" style="margin-top:14px"><span style="color:var(--warn)">À vérifier au manuel</span> : ce qui se passe hors de portée du signal (silence complet ? signal affaibli ?), et si la distance au porte-avions se déduit d'une façon ou d'une autre.</p>
+
+  <div class="note" style="margin-top:20px">
+    <b>Pour t'entraîner toi-même</b>
+    Le YE-ZB se configure aussi côté éditeur de mission — utile pour se fabriquer ses propres vols (voir <a href="missions.html">Les missions du module</a>). Sur le porte-avions : définir une fréquence (ex. <code>124.000 MHz AM</code>) et <b>renommer l'unité</b> — les <b>trois premières lettres</b> de son nom deviennent l'identifiant Morse transmis (<code>CV_</code> → <code>CV</code>). Un seul porte-avions par fréquence, pour éviter que deux signaux se chevauchent. Côté Corsair : régler le <b>preset de navigation ARR-2</b> (canal 1) sur cette même fréquence.
+  </div>
+</section>
+
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">La télégraphie</span></div>
+  <p class="phase-why">La partie qu'on saute d'habitude, et qui sert quand même.</p>
+  <ul class="plan">
+    <li>Lire un indicatif en morse pour identifier une balise</li>
+    <li>Le repère visuel qui évite d'apprendre le code par cœur</li>
+  </ul>
+</section>
+
+<div class="footlinks">
+  <a href="regimes-moteur-wep.html">&larr; Régimes moteur et WEP</a>
+  <a href="retour-atterrissage.html">Étape suivante : Retour et atterrissage &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : manuel officiel Magnitude 3 <code>AN-01-45MAG-3</code> (<code>docs/manuel-f4u1d.pdf</code>) et la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4u1d-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — jamais de numéro figé dans le texte.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

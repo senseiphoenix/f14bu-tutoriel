@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F4U-1D — Préparer le module et les contrôles, pas à pas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="../css/tutoriel.css">
+</head>
+<body data-progress-key="f4u1d-preparer-module-controles-progress" data-bindings="data/f4u1d-bindings.json" data-bind-store="f4u1d-export-bindings-v1">
+<div class="lb" id="lb"><img id="lbimg" alt=""></div>
+<div class="wrap">
+
+<nav class="crumbs">
+  <a href="index.html">&larr; F4U-1D</a><span>/</span>
+  <a href="pas-a-pas.html">Pas à pas</a><span>/</span>
+  <span>Préparer le module et les contrôles</span>
+</nav>
+<div class="tail">DCS · Magnitude 3 · F4U-1D Corsair — pilote solo</div>
+<h1>Préparer le module<br>et les contrôles</h1>
+<p class="sub">Avant le premier vol : vérifier l'installation du module, poser les axes qui comptent vraiment sur un chasseur à hélice — gaz, pas d'hélice, mélange, palonnier — et régler les aides d'apprentissage de DCS pour ne pas se battre contre le couple dès la première minute.</p>
+
+<div class="skel">
+  <b>Contenu partiellement rédigé — non vérifié au manuel</b>
+  <p style="margin:0 0 10px">La phase 2 (axes prioritaires) reprend la matière de <code>docs/notes-sources.md</code> (vidéo CasmoTV, source S1). Les phases 1, 3 et 4 restent au stade du plan : elles dépendent de l'installation et des options réellement présentes dans le module, pas d'un commentaire de vol.</p>
+  <p style="margin:0">Planches d'image et badges de bind pas encore rattachés — le mapping HOTAS attend toujours le relevé matériel (voir <a href="mapping-hotas.html">mapping-hotas.html</a>).</p>
+</div>
+
+<div class="intro-box">
+  <p><b>Ce que cette leçon couvrira :</b> Préparer le module et les contrôles, en checklist cochable, avec pour chaque geste le <b>quoi faire</b>, l'<b>où</b> dans le cockpit et le <b>pourquoi</b>.</p>
+  <p style="margin-bottom:0;font-size:12.5px;color:var(--dim)">Chaque fonction citée portera son bouton HOTAS entre parenthèses — cliquable vers le <a href="mapping-hotas.html">mapping</a>. Tant que le relevé matériel n'est pas fait, ces badges afficheront « non affecté ».</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+  <div class="progress-txt" id="ptxt">0 / 0 étapes cochées</div>
+</div>
+
+<section class="phase" data-phase="1">
+  <div class="phase-head"><span class="phase-num">PHASE 1</span><span class="phase-title">Vérifier l'installation et la version</span></div>
+  <p class="phase-why">Le Corsair est un module récent : ce qui est vrai dans une vidéo de l'an dernier ne l'est pas forcément aujourd'hui.</p>
+  <ul class="plan">
+    <li>Retrouver le dossier du module et l'instance DCS réellement utilisée (stable ou Open Beta)</li>
+    <li>Relever la version du module et les notes de mise à jour Magnitude 3</li>
+    <li>Ouvrir <b>docs/manuel-f4u1d.pdf</b> à côté — c'est la référence de toutes ces leçons</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="2">
+  <div class="phase-head"><span class="phase-num">PHASE 2</span><span class="phase-title">Poser les axes indispensables</span></div>
+  <p class="phase-why">Un chasseur à hélice demande plus d'axes qu'un jet : trois commandes moteur au lieu d'une.</p>
+
+  <p class="step-detail" style="margin-bottom:14px"><span class="switchname">Gaz</span>, <span class="switchname">pas d'hélice (RPM)</span> et <span class="switchname">mélange</span> — les trois leviers de la console gauche — ainsi que le <span class="switchname">palonnier</span> et les <span class="switchname">freins différentiels</span>, indispensables au roulage et à la tenue d'axe au décollage, sont les axes qui ne se discutent pas sur cet avion.</p>
+
+  <div class="note">
+    <b>Quatre boutons à poser en priorité, pas seulement des axes</b>
+    Une démonstration de démarrage insiste sur ces quatre commandes précises, parce qu'elles se manipulent <b>à deux mains, sous contrainte de temps</b>, pendant le lancement du moteur — voir la leçon <a href="demarrage-a-froid.html">3 · Démarrage à froid</a> :
+    <ul class="plan" style="margin-top:10px">
+      <li><b>Mélange</b> — passer vite de <code>Cut-off</code> à la position centrale/intermédiaire pendant le lancement, une main restant sur le démarreur. Prévoir des positions dédiées, pas seulement un axe.</li>
+      <li><b>Magnétos</b> — défiler ou sélectionner la position <code>BOTH</code> rapidement.</li>
+      <li><b>Volets de capot</b> — se règlent en continu pendant la chauffe et le roulage.</li>
+      <li><b>Verrouillage de roulette de queue</b> — bascule fréquente entre roulage et alignement.</li>
+    </ul>
+  </div>
+
+  <p class="phase-why" style="margin-top:14px">Reste à confirmer au manuel : réglage des trims (profondeur, direction, gauchissement), et des courbes/zones mortes — ce qu'il vaut mieux laisser linéaire sur cet avion.</p>
+</section>
+
+<section class="phase" data-phase="3">
+  <div class="phase-head"><span class="phase-num">PHASE 3</span><span class="phase-title">Régler les aides d'apprentissage de DCS</span></div>
+  <p class="phase-why">Autant commencer avec des béquilles conscientes, qu'on retire une par une.</p>
+  <ul class="plan">
+    <li>Options de réalisme concernées par un avion à hélice (couple, aide au décollage, démarrage automatique)</li>
+    <li>Affichage des positions de commandes, indicateur de gouvernes</li>
+    <li>Ce qu'il faut désactiver dès qu'on est à l'aise, et dans quel ordre</li>
+  </ul>
+</section>
+
+<section class="phase" data-phase="4">
+  <div class="phase-head"><span class="phase-num">PHASE 4</span><span class="phase-title">Repérer ce qui restera au clic cockpit</span></div>
+  <p class="phase-why">Sur un avion de 1944, beaucoup de choses n'ont pas de raccourci évident.</p>
+  <ul class="plan">
+    <li>Liste des commandes qui resteront en clic souris ou au clavier</li>
+    <li>Ce qui mérite vraiment une place sur le HOTAS et ce qui n'en vaut pas la peine</li>
+  </ul>
+</section>
+
+<div class="footlinks">
+  <a href="pas-a-pas.html">&larr; Sommaire Pas à pas</a>
+  <a href="tour-cockpit.html">Étape suivante : Tour du cockpit &rarr;</a>
+</div>
+
+<p class="src">Sources à croiser : manuel officiel Magnitude 3 <code>AN-01-45MAG-3</code> (<code>docs/manuel-f4u1d.pdf</code>) et la section correspondante du <a href="index.html">cursus</a>. Les badges de bouton seront lus en direct dans <code>data/f4u1d-bindings.json</code> (mêmes données que <a href="mapping-hotas.html">le mapping HOTAS</a>) — jamais de numéro figé dans le texte.</p>
+
+</div>
+<script src="../js/tutoriel.js"></script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>
