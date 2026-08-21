@@ -101,6 +101,16 @@ section.device.visible{display:block}
 /* Bandeau épinglé : pleine largeur pour que le tableau ne défile pas de part
    et d'autre de la planche, qui elle reste centrée et plafonnée en hauteur. */
 .board-pin{position:sticky;top:0;z-index:20;background:var(--deck);padding:8px 0 10px}
+/* container-type:inline-size (pour les étiquettes en cqw plus bas) impose que
+   .board ait une largeur déterminée SANS dépendre de son contenu — fit-content
+   ou un parent flex ne marchent donc pas ici, ça donne une planche à 0×0
+   (testé, régression du 21/08/2026). La largeur reste 100% de la colonne par
+   défaut ; fitBoards() (JS, plus bas) la réduit explicitement en pixels
+   quand la hauteur qui en résulterait dépasserait MAX_VH, à partir du ratio
+   largeur/hauteur du viewBox du gabarit — c'est ce qui permet à l'épinglage
+   (position:sticky, ci-dessus) de s'activer sur un écran large et pas très
+   haut, sans quoi la planche du manche (portrait, gabarit 823×1165) dépasse
+   largement 80% de la hauteur de la fenêtre dès qu'elle remplit la colonne. */
 .board{position:relative;margin:0 auto;background:#f4f2ec;border:1px solid var(--line);border-radius:2px;container-type:inline-size;user-select:none;box-shadow:0 2px 18px rgba(0,0,0,.35)}
 .board img{width:100%;height:auto;display:block;pointer-events:none}
 .board svg{width:100%;height:auto;display:block}
@@ -235,7 +245,8 @@ section.device.visible{display:block}
   main{max-width:none;padding:0}
   section.device{display:block!important;page-break-after:always}
   section.device:last-of-type{page-break-after:auto}
-  .board{box-shadow:none;border-color:#999;max-width:none!important}
+  .board{box-shadow:none;border-color:#999;width:auto!important;max-width:none!important}
+  .board img,.board svg{max-height:none!important}
   .board-pin{position:static;background:none;padding:0}
   .lbl.dim{opacity:1}
   .legend-wrap{background:#fff;border-color:#999}
@@ -961,23 +972,53 @@ document.addEventListener('click',e=>{
 });
 
 /* ---------- Planche épinglée ----------
-   La planche garde sa LARGEUR NATURELLE (celle de la colonne) : on ne la
-   rétrécit jamais pour la faire tenir en hauteur. Un plafond en vh rendait
-   les étiquettes illisibles sur un écran peu haut, et empêchait la page de
-   prendre la hauteur dont elle a besoin — en portrait notamment.
-   L'épinglage devient donc conditionnel : il ne s'applique que si la planche
-   tient déjà dans MAX_VH (cas du portrait, où elle est large mais l'écran est
-   haut). Sinon on laisse la page défiler normalement, ce qui vaut mieux
-   qu'une planche écrasée. */
-const MAX_VH=.8;
+   La planche garde sa largeur naturelle (celle de la colonne) TANT QUE ça
+   tient dans MAX_VH. Sinon, plutôt que de renoncer d'un bloc à l'épinglage
+   (ancien comportement : sur un écran large et pas très haut, la planche du
+   manche — portrait, gabarit 823×1165 — dépasse presque toujours 80% de la
+   hauteur de fenêtre en pleine largeur de colonne, donc l'épinglage ne
+   s'activait quasiment jamais), on calcule la largeur en pixels qui ferait
+   tenir la planche en hauteur, à partir du ratio largeur/hauteur du gabarit
+   (viewBox du SVG, ou dimensions naturelles pour un <img>). En dessous de
+   MIN_BOARD_W cette largeur rendrait les étiquettes illisibles : on renonce
+   alors à l'épinglage, exactement comme avant — ça ne concerne en pratique
+   qu'un écran vraiment bas (mobile en paysage). */
+const MAX_VH=.8, MIN_BOARD_W=340;
+/* .toolbar est LUI AUSSI en position:sticky;top:0 (bandeau recherche/onglets,
+   toujours visible). Donner le même top:0 à .board-pin faisait concourir les
+   deux pour la même bande de l'écran — rendu instable au défilement (planche
+   qui semblait sauter, écran qui restait noir après un grand défilement,
+   observé et reproduit le 21/08/2026). Le board-pin doit s'ancrer JUSTE SOUS
+   la toolbar, pas au même endroit — d'où la mesure de sa hauteur ici. */
+function toolbarH(){
+  const t=document.querySelector('.toolbar');
+  return t?Math.ceil(t.getBoundingClientRect().height):0;
+}
+function boardRatio(b){
+  const svg=b.querySelector('svg');
+  if(svg){
+    const vb=(svg.getAttribute('viewBox')||'').trim().split(/\s+/).map(Number);
+    return (vb.length===4 && vb[2]>0 && vb[3]>0) ? vb[2]/vb[3] : null;
+  }
+  const img=b.querySelector('img');
+  return (img && img.naturalWidth && img.naturalHeight) ? img.naturalWidth/img.naturalHeight : null;
+}
 function fitBoards(){
-  const hMax=Math.round(innerHeight*MAX_VH);
+  const th=toolbarH();
+  const hMax=Math.round((innerHeight-th)*MAX_VH);
   document.querySelectorAll('.board').forEach(b=>{
-    b.style.maxWidth='';
     const pin=b.parentElement;
     if(!pin.classList.contains('board-pin')) return;
+    pin.style.top=th+'px';
+    b.style.width='';
     pin.classList.remove('nopin');
-    if(b.getBoundingClientRect().height>hMax) pin.classList.add('nopin');
+    const ratio=boardRatio(b);
+    if(!ratio){ if(b.getBoundingClientRect().height>hMax) pin.classList.add('nopin'); return; }
+    const naturalH=b.getBoundingClientRect().width/ratio;
+    if(naturalH<=hMax) return; // tient déjà en pleine largeur de colonne
+    const fitW=Math.round(hMax*ratio);
+    if(fitW<MIN_BOARD_W){ pin.classList.add('nopin'); return; }
+    b.style.width=fitW+'px';
   });
 }
 document.querySelectorAll('.board').forEach(b=>{
