@@ -36,9 +36,9 @@
   Trois appareils : manche <b>VPC Alpha Prime [R]</b>, manette <b>MongoosT-50CM3</b>, panneau <b>WinWing PTO2</b> — le même que sur le F-14B(U), les GUID sont identiques. Le pédalier Fanatec a été retiré du rig le 19/08/2026 : c'est un pédalier <b>automobile</b>, sans axe de lacet bidirectionnel. Le lacet passe donc par le <b>twist du manche</b> et le freinage par sa <b>gâchette analogique avant</b>.
 </div>
 
-<div class="note warn">
-  <b>Deux axes à finir de régler dans DCS</b>
-  DCS assigne le lacet à <code>JOY_RZ</code> par défaut, or le twist de ce manche est l'axe <code>JOY_Z</code> : le réglage d'usine tombe sur un axe qui n'existe pas physiquement. Le fichier actuel retire bien « Throttle lever » de <code>JOY_Z</code> (sinon twister commanderait les gaz) mais n'y met rien à la place. <b>Lacet et freins de roues restent donc à assigner à la main</b> dans l'écran Contrôles — les deux lignes concernées sont marquées « à valider » ci-dessous.
+<div class="note go">
+  <b>Lacet et freins installés le 21/08/2026</b>
+  DCS met le lacet sur <code>JOY_RZ</code> par défaut, un axe que ce manche n'a pas : il n'y avait donc <b>aucun lacet</b>, et les freins avaient disparu avec le pédalier. Le <b>lacet</b> a été assigné sur le twist (<code>JOY_Z</code>) et le <b>frein des deux roues</b> sur la gâchette avant (<code>JOY_SLIDER1</code>). Les binds ont été écrits dans le fichier du manche puis validés avec l'interpréteur Lua de DCS. Il reste à <b>déverrouiller mécaniquement le twist</b> sur la base MongoosT-50CM3 pour que l'axe bouge.
 </div>
 
 <div id="mapping-root">

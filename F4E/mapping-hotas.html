@@ -36,9 +36,9 @@
   Trois appareils : manche <b>VPC Alpha Prime [R]</b>, manette <b>MongoosT-50CM3</b>, panneau <b>WinWing PTO2</b> — le même que sur le F-14B(U), les GUID sont identiques. Le pédalier Fanatec a été retiré du rig le 19/08/2026 : c'est un pédalier <b>automobile</b>, sans axe de lacet bidirectionnel. Le lacet passe donc par le <b>twist du manche</b> et le freinage par sa <b>gâchette analogique avant</b>.
 </div>
 
-<div class="note warn">
-  <b>Le twist commande actuellement les gaz — à corriger</b>
-  C'est ici le réglage le plus incomplet des trois avions. DCS assigne le lacet à <code>JOY_RZ</code> (axe physiquement inexistant sur ce manche) <b>et</b> laisse les gaz sur <code>JOY_Z</code>, qui est justement le twist. En l'état, twister le manche modifie la poussée. À corriger dans l'écran Contrôles : retirer les gaz de <code>JOY_Z</code>, y assigner <b>Rudder</b>, puis assigner les freins sur la gâchette avant.
+<div class="note go">
+  <b>Lacet et freins installés le 21/08/2026</b>
+  Ce manche était le plus mal réglé des trois : DCS mettait le lacet sur <code>JOY_RZ</code> (un axe que ce manche n'a pas) et laissait les gaz sur <code>JOY_Z</code>, si bien que <b>twister commandait la poussée</b>. Les gaz ont été retirés de <code>JOY_Z</code>, le <b>lacet</b> y a été assigné, et le <b>frein des deux roues</b> sur la gâchette avant (<code>JOY_SLIDER1</code>). Les binds ont été écrits dans le fichier du manche puis validés avec l'interpréteur Lua de DCS. Il reste à <b>déverrouiller mécaniquement le twist</b> sur la base MongoosT-50CM3 pour que l'axe bouge.
 </div>
 
 <div class="note warn">
