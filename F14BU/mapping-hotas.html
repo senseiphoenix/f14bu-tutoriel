@@ -257,7 +257,7 @@ section.device.visible{display:block}
   </div>
   <div class="tail">DCS · F-14B(U) Tomcat</div>
   <h1>Mapping HOTAS</h1>
-  <div class="sub">MongoosT-50CM3 + Alpha Prime [R] · VPC Throttle CM3 · WinWing PTO2</div>
+  <div class="sub">Manche Alpha Prime [R] · Manette VPC MongoosT-50CM3 · WinWing PTO2</div>
   <div class="search-wrap">
     <input type="search" id="cmd-search" placeholder="Rechercher une commande sur tous les périphériques…" autocomplete="off">
     <div class="search-results" id="search-results"></div>
@@ -300,12 +300,12 @@ section.device.visible{display:block}
   <div class="fig-head">
     <span class="fig-num">FIG. 1</span>
     <span class="fig-title">Manche — VPC Alpha Prime [R]</span>
-    <span class="fig-sub">Base MongoosT-50CM3 · positions calées sur la grille du template</span>
+    <span class="fig-sub">Grip Alpha Prime [R] · positions calées sur la grille du template</span>
   </div>
   <div class="board" id="board-stick">
     <div class="board-loading" style="padding:60px 20px;text-align:center;font-family:var(--mono);font-size:12px;color:#555">Chargement du gabarit vectoriel&hellip;</div>
   </div>
-  <div class="note">Plus de pédales sur ce rig : le lacet est sur le twist (axe Z) et le frein des deux roues sur la gâchette avant (SLDR), tous deux assignés le 21/08/2026. Le twist doit être déverrouillé mécaniquement sur la base MongoosT-50CM3 pour que l'axe bouge.</div>
+  <div class="note">Plus de pédales sur ce rig : le lacet est sur le twist (axe Z) et le frein des deux roues sur la gâchette avant (SLDR), tous deux assignés le 21/08/2026. Le twist doit être déverrouillé mécaniquement sur le manche Alpha Prime pour que l'axe bouge.</div>
   <div class="legend-wrap"><table class="dtable" id="dtbl-stick">
     <thead><tr><th>N°</th><th>Contrôle</th><th>Ce que ça fait sur l'avion</th><th>Leçon</th></tr></thead><tbody></tbody></table></div>
 </section>
@@ -610,7 +610,7 @@ if(document.getElementById('board-throttle'))setThrottlePage('OFF');
 const SVG_DEVICES=[
   {id:'stick', svg:'img/templates/virpil-alpha-prime-r.svg', templateName:'F-14B(U) — Pilote', wrapWidth:80,
    extra:[
-     {n:'X', cat:'vol', text:'Roulis (ailerons)', detail:"Axe X de la base MongoosT-50CM3 — commande de gauchissement.", lesson:'a2'},
+     {n:'X', cat:'vol', text:'Roulis (ailerons)', detail:"Axe X du manche Alpha Prime — commande de gauchissement.", lesson:'a2'},
      {n:'Y', cat:'vol', text:'Tangage (profondeur)', detail:"Axe Y de la base — tenue d'AoA en approche, précision au ravitaillement.", lesson:'a2'}
    ]},
   {id:'pto2', svg:'img/templates/winwing-pto2.svg', templateName:'F-14B(U) — PTO2', extra:[]}

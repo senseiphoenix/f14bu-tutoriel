@@ -768,12 +768,6 @@
   "type": "fonction"
  },
  {
-  "title": "Pitch",
-  "path": "F4E/mapping-hotas.html?dev=throttle&n=Y",
-  "aircraft": "F-4E Phantom II",
-  "type": "fonction"
- },
- {
   "title": "Pitot Heat - Off",
   "path": "F4E/mapping-hotas.html?dev=pto2&n=13",
   "aircraft": "F-4E Phantom II",
@@ -788,12 +782,6 @@
  {
   "title": "Roll",
   "path": "F4E/mapping-hotas.html?dev=stick&n=X",
-  "aircraft": "F-4E Phantom II",
-  "type": "fonction"
- },
- {
-  "title": "Roll",
-  "path": "F4E/mapping-hotas.html?dev=throttle&n=X",
   "aircraft": "F-4E Phantom II",
   "type": "fonction"
  },
@@ -973,12 +961,6 @@
  },
  {
   "title": "Pitch",
-  "path": "F4U1D/mapping-hotas.html?dev=throttle&n=Y",
-  "aircraft": "F4U-1D Corsair",
-  "type": "fonction"
- },
- {
-  "title": "Pitch",
   "path": "F4U1D/mapping-hotas.html?dev=stick&n=Y",
   "aircraft": "F4U-1D Corsair",
   "type": "fonction"
@@ -1004,12 +986,6 @@
  {
   "title": "Roll",
   "path": "F4U1D/mapping-hotas.html?dev=stick&n=X",
-  "aircraft": "F4U-1D Corsair",
-  "type": "fonction"
- },
- {
-  "title": "Roll",
-  "path": "F4U1D/mapping-hotas.html?dev=throttle&n=X",
   "aircraft": "F4U-1D Corsair",
   "type": "fonction"
  },
@@ -1177,13 +1153,7 @@
  },
  {
   "title": "Ressources vidéo",
-  "path": "F14BU/section-d-air-air.html#d8",
-  "aircraft": "F-14B(U)",
-  "type": "leçon"
- },
- {
-  "title": "Ressources vidéo",
-  "path": "F14BU/section-a-illustree.html#a8",
+  "path": "F14BU/section-g-mission.html#g4",
   "aircraft": "F-14B(U)",
   "type": "leçon"
  },
@@ -1195,7 +1165,7 @@
  },
  {
   "title": "Ressources vidéo",
-  "path": "F14BU/section-e-survie.html#e4",
+  "path": "F14BU/section-d-air-air.html#d8",
   "aircraft": "F-14B(U)",
   "type": "leçon"
  },
@@ -1207,13 +1177,19 @@
  },
  {
   "title": "Ressources vidéo",
-  "path": "F14BU/section-b-navigation.html#b6",
+  "path": "F14BU/section-e-survie.html#e4",
   "aircraft": "F-14B(U)",
   "type": "leçon"
  },
  {
   "title": "Ressources vidéo",
-  "path": "F14BU/section-g-mission.html#g4",
+  "path": "F14BU/section-a-illustree.html#a8",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
+  "path": "F14BU/section-b-navigation.html#b6",
   "aircraft": "F-14B(U)",
   "type": "leçon"
  },
