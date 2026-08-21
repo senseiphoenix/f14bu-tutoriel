@@ -1,0 +1,127 @@
+/* Styles des planches HOTAS interactives (gabarits SVG annotés).
+   Extrait de F14BU/mapping-hotas.html le 21/08/2026, débarrassé de tout ce
+   qui est propre au F14BU (throttle en planche photo paginée, édition/export,
+   onglet clavier) — voir js/svg-board.js pour le pourquoi de la scission. */
+
+:root{
+  --deck:#10161a; --panel:#18222a; --panel-2:#1e2a33; --line:#2c3b45;
+  --ink:#e6e9e4; --dim:#8b9aa3; --amber:#f2a93b; --go:#6fd08c; --warn:#d9695a;
+  --display:"Oswald",sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace;
+  --arm:#b3382c; --vol:#1f5fa8; --sens:#2e7d46; --comm:#8a5a00; --misc:#5c5f66;
+  --arm-l:#e0705f; --vol-l:#6aa6e0; --sens-l:#6fd08c; --comm-l:#f2a93b; --misc-l:#8b9aa3;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--body);background:var(--deck);color:var(--ink);line-height:1.5}
+
+header{background:var(--panel);border-bottom:1px solid var(--line);padding:18px 28px 16px}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap}
+.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent;display:inline-flex;align-items:center;min-height:28px}
+.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-top:12px}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(26px,4vw,38px);letter-spacing:.04em;line-height:1.05;margin:4px 0 6px;text-transform:uppercase}
+.sub{font-family:var(--mono);font-size:12px;color:var(--dim)}
+
+.search-wrap{position:relative;max-width:480px;margin-top:14px}
+#cmd-search{width:100%;font-family:var(--mono);font-size:13px;color:var(--ink);background:var(--panel-2);border:1px solid var(--line);border-radius:2px;padding:10px 12px;min-height:44px}
+#cmd-search::placeholder{color:var(--dim)}
+#cmd-search:focus{outline:2px solid var(--amber);outline-offset:1px;border-color:var(--amber)}
+.search-results{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:40;background:var(--panel-2);border:1px solid var(--line);border-radius:2px;max-height:360px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.search-results.open{display:block}
+.sr-item{display:flex;align-items:baseline;gap:10px;padding:9px 12px;cursor:pointer;border-bottom:1px solid var(--line)}
+.sr-item:last-child{border-bottom:none}
+.sr-item:hover,.sr-item.sel{background:var(--panel)}
+.sr-dev{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);flex:0 0 auto;min-width:58px}
+.sr-name{font-family:var(--body);font-size:13px;color:var(--ink)}
+.sr-num{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-left:auto;flex:0 0 auto}
+.sr-empty{padding:12px;font-family:var(--mono);font-size:12px;color:var(--dim)}
+
+@keyframes searchPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.6)}}
+.dtable tbody tr.search-hit{background:var(--panel-2)!important;box-shadow:inset 3px 0 0 var(--amber);animation:searchPulse 1s ease-in-out 3}
+.board svg .jd-lbl.search-hit{outline:3px solid var(--amber)!important;z-index:6;animation:searchPulse 1s ease-in-out 3}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;padding:11px 28px;background:var(--panel-2);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
+.tabs{display:flex;gap:5px;flex-wrap:wrap}
+.tab{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--line);background:transparent;color:var(--dim);padding:7px 14px;cursor:pointer;transition:.15s;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+.tab:hover{color:var(--ink);border-color:var(--dim)}
+.tab.active{background:var(--amber);border-color:var(--amber);color:#10161a;font-weight:600}
+.spacer{flex:1}
+.flt-label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:6px 11px 6px 23px;border:1px solid var(--line);background:transparent;color:var(--dim);cursor:pointer;position:relative;transition:.15s;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+.chip::before{content:'';position:absolute;left:8px;top:50%;transform:translateY(-50%);width:8px;height:8px;background:var(--c,#999);border-radius:1px}
+.chip:hover{color:var(--ink)}
+.chip.off{opacity:.32}
+.btn{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);background:transparent;color:var(--dim);padding:7px 13px;cursor:pointer;transition:.15s;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
+.btn:hover{color:var(--ink);border-color:var(--dim)}
+.btn.primary{border-color:var(--amber);color:var(--amber)}
+.btn.primary:hover{background:var(--amber);color:#10161a}
+.tab:focus-visible,.chip:focus-visible,.btn:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.board-pin.nopin{position:static}
+
+main{max-width:1500px;margin:0 auto;padding:26px 22px 70px}
+section.device{display:none}
+section.device.visible{display:block}
+
+.fig-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:18px}
+.fig-num{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;color:var(--amber);border:1px solid var(--amber);padding:3px 9px}
+.fig-title{font-family:var(--display);font-weight:600;font-size:22px;letter-spacing:.04em;text-transform:uppercase}
+.fig-sub{font-family:var(--mono);font-size:11px;color:var(--dim)}
+
+.board-pin{position:sticky;top:0;z-index:20;background:var(--deck);padding:8px 0 10px}
+/* container-type:inline-size (cqw plus bas, si besoin futur) impose que .board
+   ait une largeur déterminée SANS dépendre de son contenu — la largeur reste
+   100% de la colonne par défaut ; fitBoards() (js/svg-board.js) la réduit en
+   pixels quand la hauteur qui en résulterait dépasserait MAX_VH, à partir du
+   ratio du viewBox du gabarit. Voir F14BU/mapping-hotas.html pour l'historique
+   complet de cette contrainte (régression du 21/08/2026, déjà rencontrée et
+   corrigée une fois). */
+.board{position:relative;margin:0 auto;background:#f4f2ec;border:1px solid var(--line);border-radius:2px;container-type:inline-size;user-select:none;box-shadow:0 2px 18px rgba(0,0,0,.35)}
+.board svg{width:100%;height:auto;display:block}
+.board svg .jd-lbl{cursor:default;border-radius:2px;transition:opacity .12s ease}
+.board svg .jd-lbl.hl{outline:2px solid var(--amber)}
+.board svg .jd-lbl.dim{opacity:.12}
+#board-stick{max-width:1200px}
+#board-pto2{max-width:1550px}
+#board-pto2 svg .jd-lbl{font-size:11px!important;line-height:1.1!important}
+#board-stick svg .jd-lbl{font-size:11px!important;line-height:1.15!important}
+.board-loading{font-family:var(--mono);font-size:12px;color:#555;padding:60px 20px;text-align:center}
+.note{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:10px;padding-left:2px}
+
+.legend-wrap{background:var(--panel);border:1px solid var(--line);margin-top:18px;overflow-x:auto}
+.dtable{width:100%;border-collapse:collapse;font-size:13.5px}
+.dtable th{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;text-align:left;color:var(--dim);border-bottom:1px solid var(--line);padding:11px 12px;background:var(--panel-2)}
+.dtable td{border-bottom:1px solid var(--line);padding:9px 12px;vertical-align:top}
+.dtable tr:last-child td{border-bottom:none}
+.dtable tbody tr:hover{background:var(--panel-2)}
+.dtable tr.hidden{display:none}
+.dtable tbody tr.hl{background:var(--panel-2);box-shadow:inset 3px 0 0 var(--c,#888)}
+.dtable td.c1{white-space:nowrap}
+.dtable td.c2{min-width:160px}
+.dtable td.c2 b{display:block;font-weight:600}
+.dtable td.c2 span{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.06em}
+.dtable td.c3{color:var(--ink);max-width:520px;opacity:.92}
+.num-badge{display:inline-block;min-width:28px;text-align:center;font-family:var(--mono);font-size:10.5px;font-weight:600;color:#10161a;background:var(--c,#8b9aa3);padding:3px 6px;border-radius:1px}
+.lec-link{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-decoration:none;color:var(--amber);border:1px solid var(--line);padding:4px 9px;white-space:nowrap;transition:.15s}
+.lec-link:hover{border-color:var(--amber);background:rgba(242,169,59,.1)}
+
+.foot{max-width:1500px;margin:0 auto;padding:0 22px 50px;font-family:var(--mono);font-size:10.5px;color:var(--dim);line-height:1.9}
+.foot b{color:var(--ink);font-weight:600}
+.footlinks{max-width:1500px;margin:0 auto;padding:0 22px}
+
+@media print{
+  .toolbar{display:none!important}
+  body{background:#fff;color:#000}
+  header{background:#fff;padding:8px 0}
+  h1,.fig-title{color:#000}
+  main{max-width:none;padding:0}
+  section.device{display:block!important;page-break-after:always}
+  section.device:last-of-type{page-break-after:auto}
+  .board{box-shadow:none;border-color:#999;width:auto!important;max-width:none!important}
+  .board svg{max-height:none!important}
+  .board-pin{position:static;background:none;padding:0}
+  .legend-wrap{background:#fff;border-color:#999}
+  .dtable th{background:#eee;color:#000}
+  .dtable td{border-color:#ddd;color:#000;padding:3px 6px;font-size:10px}
+  .dtable td.c2 span,.dtable td.c3{color:#333}
+  .num-badge{color:#fff}
+  .lec-link{color:#000;border-color:#999}
+}

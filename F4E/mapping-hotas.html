@@ -1,75 +1,108 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>F-4E — Mapping HOTAS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/theme.css">
-<link rel="stylesheet" href="../css/tutoriel.css">
-<link rel="stylesheet" href="../css/mapping-table.css">
+<link rel="stylesheet" href="../css/svg-board.css">
 </head>
-<body data-bindings="data/f4e-bindings.json"
-      data-devices='[
-        {"id":"stick","label":"Manche","sub":"Virpil Constellation Alpha Prime · R-VPC Stick MT-50CM3"},
-        {"id":"throttle","label":"Manette","sub":"LEFT VPC MongoosT-50CM3"},
-        {"id":"pto2","label":"Panneau PTO2","sub":"WinWing · WINCTRL CarrierAce PTO 2"}
-      ]'>
-<div class="wrap">
+<body>
 
-<nav class="crumbs">
-  <a href="../index.html">&larr; Accueil</a><span>/</span>
-  <a href="index.html">F-4E</a><span>/</span>
-  <span>Mapping HOTAS</span>
-</nav>
-<div class="tail">DCS · Heatblur · F-4E Phantom II</div>
-<h1>Mapping HOTAS</h1>
-<p class="sub">Ce que chaque contact de ton matériel commande réellement sur le Phantom. Les axes viennent des fichiers de binds que <b>DCS a écrits lui-même</b> (relus le 21/08/2026) ; le panneau PTO2, lui, porte une <b>proposition d'organisation</b> à essayer en jeu — c'est signalé ligne par ligne.</p>
+<header>
+  <div class="crumbs">
+    <a href="../index.html">&larr; Accueil</a>
+    <a href="index.html">F-4E</a>
+    <span>Mapping HOTAS</span>
+  </div>
+  <div class="tail">DCS · Heatblur · F-4E Phantom II</div>
+  <h1>Mapping HOTAS</h1>
+  <div class="sub">Manche Alpha Prime [R] · Manette VPC MongoosT-50CM3 · WinWing PTO2</div>
+  <div class="search-wrap">
+    <input type="search" id="cmd-search" placeholder="Rechercher une commande sur tous les périphériques…" autocomplete="off">
+    <div class="search-results" id="search-results"></div>
+  </div>
+</header>
 
-<div class="map-search">
-  <input type="search" id="cmd-search" placeholder="Rechercher un bouton, un axe ou une commande…" autocomplete="off">
-</div>
-<div class="map-count" id="bind-count">Chargement…</div>
-
-<div class="note">
-  <b>Le rig, et pourquoi il n'y a plus de pédales</b>
-  Trois appareils : manche <b>VPC Alpha Prime [R]</b>, manette <b>MongoosT-50CM3</b>, panneau <b>WinWing PTO2</b> — le même que sur le F-14B(U), les GUID sont identiques. Le pédalier Fanatec a été retiré du rig le 19/08/2026 : c'est un pédalier <b>automobile</b>, sans axe de lacet bidirectionnel. Le lacet passe donc par le <b>twist du manche</b> et le freinage par sa <b>gâchette analogique avant</b>.
-</div>
-
-<div class="note go">
-  <b>Lacet et freins installés le 21/08/2026</b>
-  Ce manche était le plus mal réglé des trois : DCS mettait le lacet sur <code>JOY_RZ</code> (un axe que ce manche n'a pas) et laissait les gaz sur <code>JOY_Z</code>, si bien que <b>twister commandait la poussée</b>. Les gaz ont été retirés de <code>JOY_Z</code>, le <b>lacet</b> y a été assigné, et le <b>frein des deux roues</b> sur la gâchette avant (<code>JOY_SLIDER1</code>). Les binds ont été écrits dans le fichier du manche, validés avec l'interpréteur Lua de DCS, et confirmés fonctionnels en jeu le 21/08/2026.
-</div>
-
-<div class="note warn">
-  <b>Le dossier de binds ne s'appelle pas comme la cascade du module</b>
-  <code>Mods\aircraft\F-4E\Input\</code> expose deux profils, <code>F-4E-Pilot</code> et <code>F-4E-WSO</code>, ce qui laissait supposer deux dossiers dans <code>Config\Input\</code>. <b>Ce n'est pas ce que DCS a écrit</b> : un seul dossier réel, <code>F-4E-45MC</code>. C'est la lecture directe des fichiers qui a tranché, pas la cascade du module.
+<div class="toolbar">
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-dev="stick" role="tab">Manche</button>
+    <button class="tab" data-dev="pto2" role="tab">PTO2</button>
+    <button class="tab" data-dev="throttle" role="tab">Manette</button>
+  </div>
+  <div class="spacer"></div>
+  <span class="flt-label">Filtres</span>
+  <button class="chip" data-cat="arm" style="--c:var(--arm-l)">Armement</button>
+  <button class="chip" data-cat="vol" style="--c:var(--vol-l)">Vol</button>
+  <button class="chip" data-cat="sens" style="--c:var(--sens-l)">Senseurs</button>
+  <button class="chip" data-cat="comm" style="--c:var(--comm-l)">Comms/CM</button>
+  <button class="chip" data-cat="misc" style="--c:var(--misc-l)">Divers</button>
+  <button class="btn primary" onclick="window.print()">Imprimer</button>
 </div>
 
-<div id="mapping-root">
-  <p class="dev-empty">Chargement des binds…</p>
-</div>
-<p class="dev-empty" id="no-hit" hidden>Aucun contact ne correspond à cette recherche.</p>
+<main>
 
-<div class="note">
-  <b>Comment le PTO2 a été rempli</b>
-  Le panneau n'avait qu'une seule assignation réelle (phare de roulage). Les autres contacts reprennent la <b>disposition physique déjà utilisée sur le F-14B(U)</b> — c'est le même panneau — garnie de fonctions Phantom : d'abord celles listées comme essentielles dans les notes de source (volets trois positions, Master Caution, Master Arm, actions JESTER), puis, là où le F-4E n'a pas d'équivalent au Tomcat (ni flèche d'aile, ni opérations porte-avions), des fonctions utiles du module : RWR, frein de secours, ravitaillement, verrière. Les noms de commande sont vérifiés contre le catalogue du module ; leur <b>emplacement</b> reste une proposition.
+<section class="device visible" id="dev-stick">
+  <div class="fig-head">
+    <span class="fig-num">FIG. 1</span>
+    <span class="fig-title">Manche — VPC Alpha Prime [R]</span>
+    <span class="fig-sub">Grip Alpha Prime [R] · positions calées sur la grille du template</span>
+  </div>
+  <div class="board" id="board-stick">
+    <div class="board-loading">Chargement du gabarit vectoriel&hellip;</div>
+  </div>
+  <div class="note">Pas de pédales sur ce rig : le lacet passe par le twist du manche (axe Z, à déverrouiller mécaniquement sur la base) et le frein des deux roues par la gâchette avant.</div>
+  <div class="legend-wrap"><table class="dtable" id="dtbl-stick">
+    <thead><tr><th>N°</th><th>Contrôle</th><th>Ce que ça fait sur l'avion</th><th>Leçon</th></tr></thead><tbody></tbody></table></div>
+</section>
+
+<section class="device" id="dev-pto2">
+  <div class="fig-head">
+    <span class="fig-num">FIG. 2</span>
+    <span class="fig-title">Panneau — WinWing PTO2</span>
+    <span class="fig-sub">Sérigraphie F/A-18 · fonctions assignées Phantom</span>
+  </div>
+  <div class="board" id="board-pto2">
+    <div class="board-loading">Chargement du gabarit vectoriel&hellip;</div>
+  </div>
+  <div class="note">Les libellés gravés sur le panneau ne correspondent pas aux fonctions du Phantom — se fier aux numéros. Une partie de ce panneau reprend des propositions pas encore essayées en vol : vérifie chaque fonction avant de t'y fier en mission.</div>
+  <div class="legend-wrap"><table class="dtable" id="dtbl-pto2">
+    <thead><tr><th>N°</th><th>Contrôle</th><th>Ce que ça fait sur l'avion</th><th>Leçon</th></tr></thead><tbody></tbody></table></div>
+</section>
+
+<section class="device" id="dev-throttle">
+  <div class="fig-head">
+    <span class="fig-num">FIG. 3</span>
+    <span class="fig-title">Manette — VPC MongoosT-50CM3</span>
+    <span class="fig-sub" id="throttle-count">Chargement…</span>
+  </div>
+  <div class="legend-wrap"><table class="dtable" id="dtbl-throttle">
+    <thead><tr><th>N°</th><th>Commande</th><th>Type</th><th></th></tr></thead><tbody></tbody></table></div>
+</section>
+
+</main>
+
+<div class="foot">
+  <b>Armement</b> · <b>Vol / moteurs</b> · <b>Senseurs</b> · <b>Comms / contre-mesures</b> · <b>Divers</b> — les couleurs sont communes à la planche et au tableau.
+</div>
+<div class="footlinks" style="padding-bottom:30px">
+  <a href="index.html" style="color:var(--amber);font-family:var(--mono);font-size:11px">&larr; Retour au F-4E</a>
 </div>
 
-<div class="note">
-  <b>Prochaine étape : la planche annotée</b>
-  Le F-14B(U) dispose de <a href="../F14BU/mapping-hotas.html">planches interactives</a> où chaque étiquette est posée sur une image du périphérique. Ces coordonnées n'existent pas encore pour le Phantom : elles se grefferont sur ce même fichier <code>data/f4e-bindings.json</code>, sans retoucher les données.
-</div>
-
-<div class="footlinks">
-  <a href="index.html">&larr; Retour au F-4E</a>
-  <a href="../F14BU/mapping-hotas.html">Voir le mapping F-14B(U) &rarr;</a>
-</div>
-
-<p class="src">Binds relus dans <code>Saved&nbsp;Games\DCS\Config\Input\F-4E-45MC\joystick\</code> le 21/08/2026. Catalogue des commandes extrait du module avec <code>tools/extract-commands-f4e.lua</code> (1894 commandes), taxonomie officielle reprise de <code>Input/bind_categories.lua</code>. Méthode et garde-fous : <code>CLAUDE.md</code>, section « Vérifier ou générer des binds DCS ».</p>
-
-</div>
-<script src="../js/mapping-table.js"></script>
+<script>
+window.BOARD_CONFIG = {
+  aircraft: 'F-4E Phantom II',
+  hotasUrl: 'data/f4e-hotas.json',
+  bindingsUrl: 'data/f4e-bindings.json',
+  svgDevices: [
+    {id:'stick', svg:'../F14BU/img/templates/virpil-alpha-prime-r.svg', templateName:'F-4E — Pilote', wrapWidth:80},
+    {id:'pto2', svg:'../F14BU/img/templates/winwing-pto2.svg', templateName:'F-4E — PTO2'}
+  ]
+};
+</script>
+<script src="../js/svg-board.js"></script>
 <script src="../js/site-search.js"></script>
 </body>
 </html>

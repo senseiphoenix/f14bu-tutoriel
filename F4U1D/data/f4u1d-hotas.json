@@ -1,0 +1,39 @@
+{
+"device":[
+{"id":"stick","labels":[
+  {"n":"X","cat":"vol","text":"Roulis (ailerons)","detail":"Incline l'avion en roulis.","lesson":"vol-de-base.html"},
+  {"n":"Y","cat":"vol","text":"Tangage (profondeur)","detail":"Cabre ou pique du nez.","lesson":"vol-de-base.html"},
+  {"n":"Z","cat":"vol","text":"LACET (twist)","detail":"Palonnier virtuel : le lacet passe par le twist du manche, à déverrouiller mécaniquement sur la base.","lesson":"roulage-decollage.html"},
+  {"n":"SLDR","cat":"vol","text":"Freins de roues","detail":"Gâchette analogique à l'avant du manche — freine les deux roues ensemble.","lesson":"roulage-decollage.html"},
+  {"n":"rX","cat":"misc","text":"Mini-stick libre","detail":"Non assigné : le Corsair n'a ni radar ni désignateur à déplacer.","verify":false},
+  {"n":"rY","cat":"misc","text":"Mini-stick libre","detail":"Non assigné, comme l'axe rX.","verify":false}
+]},
+{"id":"pto2","labels":[
+  {"n":"5","cat":"vol","text":"VOLETS +","detail":"Sort les volets d'un cran.","lesson":"roulage-decollage.html"},
+  {"n":"7","cat":"vol","text":"VOLETS −","detail":"Rentre les volets d'un cran.","lesson":"roulage-decollage.html"},
+  {"n":"10","cat":"vol","text":"Aérofrein sort","detail":"Sort l'aérofrein.","lesson":"retour-atterrissage.html"},
+  {"n":"11","cat":"vol","text":"Aérofrein rentre","detail":"Rentre l'aérofrein.","lesson":"retour-atterrissage.html"},
+  {"n":"28","cat":"vol","text":"AILES repli","detail":"Replie les ailes — parking sur porte-avions.","lesson":"appontage-essex.html"},
+  {"n":"29","cat":"vol","text":"AILES stop","detail":"Arrête le mouvement de pliage en cours.","lesson":"appontage-essex.html"},
+  {"n":"30","cat":"vol","text":"AILES déploi","detail":"Déploie les ailes en position de vol.","lesson":"appontage-essex.html"},
+  {"n":"31","cat":"vol","text":"Verrou ailes","detail":"Verrouille ou déverrouille les ailes en position déployée.","lesson":"appontage-essex.html"},
+  {"n":"32","cat":"vol","text":"CROSSE haute","detail":"Rentre la crosse d'appontage.","lesson":"appontage-essex.html"},
+  {"n":"33","cat":"vol","text":"CROSSE parc","detail":"Position parking de la crosse, ni rentrée ni sortie.","lesson":"appontage-essex.html"},
+  {"n":"34","cat":"vol","text":"CROSSE basse","detail":"Sort la crosse d'appontage.","lesson":"appontage-essex.html"},
+  {"n":"35","cat":"vol","text":"TRAIN rentré","detail":"Rentre le train d'atterrissage.","lesson":"roulage-decollage.html"},
+  {"n":"37","cat":"vol","text":"TRAIN sorti","detail":"Sort le train d'atterrissage.","lesson":"retour-atterrissage.html"},
+  {"n":"38","cat":"vol","text":"Frein parc OFF","detail":"Relâche le frein de parking.","lesson":"roulage-decollage.html"},
+  {"n":"39","cat":"vol","text":"Frein parc ON","detail":"Serre le frein de parking.","lesson":"roulage-decollage.html"},
+  {"n":"8","cat":"vol","text":"Phare approche ON","detail":"Allume le phare d'approche.","lesson":"retour-atterrissage.html"},
+  {"n":"9","cat":"vol","text":"Phare approche OFF","detail":"Éteint le phare d'approche.","lesson":"retour-atterrissage.html"},
+  {"n":"17","cat":"arm","text":"Réservoir : attache","detail":"Attache le réservoir largable sous le fuselage.","lesson":"preparer-module-controles.html"},
+  {"n":"19","cat":"arm","text":"Réservoir : verrou","detail":"Verrouille le réservoir largable en place.","lesson":"preparer-module-controles.html"},
+  {"n":"22","cat":"arm","text":"Réservoir : largage","detail":"Largue le réservoir externe.","lesson":"bombes-roquettes.html"},
+  {"n":"23","cat":"arm","text":"Sélecteur : pylône","detail":"Sélectionne le pylône central ventral pour le largage.","lesson":"bombes-roquettes.html"},
+  {"n":"24","cat":"arm","text":"Sélecteur : aile G","detail":"Sélectionne les points d'emport de l'aile gauche.","lesson":"bombes-roquettes.html"},
+  {"n":"25","cat":"arm","text":"Sélecteur : aile D","detail":"Sélectionne les points d'emport de l'aile droite.","lesson":"bombes-roquettes.html"},
+  {"n":"26","cat":"arm","text":"Urgence aile G","detail":"Largage d'urgence des emports de l'aile gauche.","lesson":"urgences.html"},
+  {"n":"27","cat":"arm","text":"Urgence aile D","detail":"Largage d'urgence des emports de l'aile droite.","lesson":"urgences.html"}
+]}
+]
+}
