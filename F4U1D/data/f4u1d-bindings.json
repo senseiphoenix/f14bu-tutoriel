@@ -1,0 +1,50 @@
+{
+"version": 1,
+"aircraft": "F4U-1D Corsair",
+"inputFolder": "F4U-1D",
+"statusLegend": {
+  "ok": "Bind réel confirmé dans le fichier .diff.lua écrit par DCS.",
+  "check": "Assignation réelle mais non confirmée individuellement dans l'écran Contrôles (défaut DCS déduit du fichier, ou point de conflit à vérifier).",
+  "none": "Aucune commande équivalente / contact réellement libre."
+},
+"bindings": [
+
+{"device":"stick","n":"X","commands":["Roll"],"status":"ok","axis":true,"note":"Défaut DCS jamais retiré (aucun axisDiff sur X dans le fichier du manche, relu le 21/08/2026)."},
+{"device":"stick","n":"Y","commands":["Pitch"],"status":"ok","axis":true,"note":"Défaut DCS jamais retiré (aucun axisDiff sur Y dans le fichier du manche, relu le 21/08/2026)."},
+{"device":"stick","n":"Z","commands":["Rudder"],"status":"check","axis":true,"note":"Twist du manche droit — seule source de lacet depuis le retrait du pédalier (19/08/2026). RESTE À FAIRE EN JEU : DCS place Lacet sur JOY_RZ par défaut, or le twist de ce manche est l'axe Z — le défaut tombe sur un axe qui n'existe pas physiquement. Le fichier .diff.lua actuel se contente de retirer « Throttle lever » de Z (sinon le twist commandait les gaz) sans rien mettre à la place : il faut assigner explicitement Rudder sur Z dans l'écran Contrôles. Twist à déverrouiller mécaniquement sur la base MongoosT-50CM3."},
+{"device":"stick","n":"SLDR","commands":["Gear brakes, both"],"status":"check","axis":true,"note":"Gâchette analogique à l'avant du manche — seule source de freinage depuis le retrait du pédalier (19/08/2026). Le Corsair expose un axe combiné « Gear brakes, both », inutile de doubler les axes gauche et droit. RESTE À FAIRE EN JEU : aucun axe de frein n'existe aujourd'hui dans le fichier .diff.lua du manche, à assigner dans l'écran Contrôles."},
+{"device":"stick","n":"rX","commands":[],"status":"none","note":"Mini-stick du pouce, axe horizontal — libre. Le Corsair n'a ni radar ni désignateur à déplacer : pas de fonction évidente à y mettre."},
+{"device":"stick","n":"rY","commands":[],"status":"none","note":"Mini-stick du pouce, axe vertical — libre, voir la note de l'axe rX."},
+
+{"device":"throttle","n":"X","commands":["Roll"],"status":"check","axis":true,"note":"Défaut DCS (Roulis→X) jamais retiré sur ce périphérique pour ce module — relu le 21/08/2026, aucun axisDiff ne le supprime. Concurrence potentielle avec le manche qui porte déjà Roll : à retirer dans l'écran Contrôles si la manette a un axe X physiquement mobile, comme cela avait dû être fait pour le F-14B(U)."},
+{"device":"throttle","n":"Y","commands":["Pitch"],"status":"check","axis":true,"note":"Défaut DCS (Tangage→Y) jamais retiré sur ce périphérique pour ce module — même remarque que l'axe X ci-dessus."},
+{"device":"throttle","n":"rY","commands":["Throttle lever"],"status":"ok","axis":true,"note":"Confirmé dans le fichier .diff.lua de la manette (LEFT VPC MongoosT-50CM3), relu le 21/08/2026 : JOY_Z retiré, JOY_RY ajouté."},
+
+{"device":"pto2","n":"5","commands":["Flaps +"],"status":"ok"},
+{"device":"pto2","n":"7","commands":["Flaps -"],"status":"ok"},
+{"device":"pto2","n":"28","commands":["Wings fold, fold"],"status":"ok"},
+{"device":"pto2","n":"29","commands":["Wings fold, stop"],"status":"ok"},
+{"device":"pto2","n":"30","commands":["Wings fold, spread"],"status":"ok"},
+{"device":"pto2","n":"31","commands":["Wings lock toggle"],"status":"ok"},
+{"device":"pto2","n":"32","commands":["Hook, up"],"status":"ok"},
+{"device":"pto2","n":"33","commands":["Hook, parking"],"status":"ok"},
+{"device":"pto2","n":"34","commands":["Hook, down"],"status":"ok"},
+{"device":"pto2","n":"35","commands":["Gears, up"],"status":"ok"},
+{"device":"pto2","n":"37","commands":["Gears, down"],"status":"ok"},
+{"device":"pto2","n":"38","commands":["Parking brake OFF"],"status":"ok"},
+{"device":"pto2","n":"39","commands":["Parking brake ON"],"status":"ok"},
+{"device":"pto2","n":"10","commands":["Airbrake, up"],"status":"ok"},
+{"device":"pto2","n":"11","commands":["Airbrake, down"],"status":"ok"},
+{"device":"pto2","n":"8","commands":["Approach light On"],"status":"ok"},
+{"device":"pto2","n":"9","commands":["Approach light Off"],"status":"ok"},
+{"device":"pto2","n":"17","commands":["Droppable tank lock: attach"],"status":"ok"},
+{"device":"pto2","n":"19","commands":["Droppable tank lock: lock"],"status":"ok"},
+{"device":"pto2","n":"22","commands":["Droppable tank lock: release"],"status":"ok"},
+{"device":"pto2","n":"23","commands":["Pylon, release selector ON"],"status":"ok"},
+{"device":"pto2","n":"24","commands":["Left wing, release selector ON"],"status":"ok"},
+{"device":"pto2","n":"25","commands":["Right wing, release selector ON"],"status":"ok"},
+{"device":"pto2","n":"26","commands":["Left wing, emergency release ON"],"status":"ok"},
+{"device":"pto2","n":"27","commands":["Right wing, emergency release ON"],"status":"ok"}
+
+]
+}

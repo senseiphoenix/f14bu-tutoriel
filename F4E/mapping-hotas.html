@@ -7,72 +7,58 @@
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/theme.css">
 <link rel="stylesheet" href="../css/tutoriel.css">
-<style>
-  .wrap{max-width:880px}
-  ol.steps{counter-reset:s;list-style:none;padding:0;margin:18px 0}
-  ol.steps li{counter-increment:s;position:relative;padding:14px 0 14px 44px;border-bottom:1px solid var(--line)}
-  ol.steps li:last-child{border-bottom:none}
-  ol.steps li::before{content:counter(s);position:absolute;left:0;top:14px;width:26px;height:26px;
-    display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;
-    color:var(--amber);border:1px solid var(--amber);border-radius:2px}
-  ol.steps b{color:var(--ink)}
-  ol.steps code{font-family:var(--mono);font-size:.9em;background:var(--panel-2);border:1px solid var(--line);padding:1px 6px;color:var(--amber)}
-  table.liv{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
-  table.liv td,table.liv th{border-bottom:1px solid var(--line);padding:8px 8px;text-align:left;vertical-align:top}
-  table.liv th{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:400}
-  table.liv code{font-family:var(--mono);font-size:.92em;color:var(--amber)}
-  table.liv td.st{font-family:var(--mono);font-size:11px;color:var(--dim);white-space:nowrap}
-</style>
+<link rel="stylesheet" href="../css/mapping-table.css">
 </head>
-<body>
+<body data-bindings="data/f4e-bindings.json"
+      data-devices='[
+        {"id":"stick","label":"Manche","sub":"VPC Alpha Prime [R] · base MongoosT-50CM3"},
+        {"id":"throttle","label":"Manette","sub":"LEFT VPC MongoosT-50CM3"},
+        {"id":"pto2","label":"Panneau PTO2","sub":"WinWing · WINCTRL CarrierAce PTO 2"}
+      ]'>
 <div class="wrap">
 
 <nav class="crumbs">
-  <a href="index.html">&larr; F-4E</a><span>/</span>
+  <a href="../index.html">&larr; Accueil</a><span>/</span>
+  <a href="index.html">F-4E</a><span>/</span>
   <span>Mapping HOTAS</span>
 </nav>
 <div class="tail">DCS · Heatblur · F-4E Phantom II</div>
 <h1>Mapping HOTAS</h1>
-<p class="sub">Les planches annotées et cherchables de chaque périphérique, sur le modèle de celles du <a href="../F14BU/mapping-hotas.html">F-14B(U)</a> : un bouton, sa commande DCS, le détail côté avion, et un lien vers la leçon qui s'en sert.</p>
+<p class="sub">Ce que chaque contact de ton matériel commande réellement sur le Phantom. Les axes viennent des fichiers de binds que <b>DCS a écrits lui-même</b> (relus le 21/08/2026) ; le panneau PTO2, lui, porte une <b>proposition d'organisation</b> à essayer en jeu — c'est signalé ligne par ligne.</p>
 
-<div class="skel">
-  <b>En cours — les fichiers existent, les données restent à construire</b>
-  <p style="margin:0 0 10px">Le matériel est connu : <b>même rig que le F-14B(U)</b>, moins les pédales — manche Virpil, manette MongoosT-50CM3, panneau WinWing PTO2. Les planches sont donc les mêmes images, déjà présentes dans le dépôt.</p>
-  <p style="margin:0">Le dossier d'entrées réel s'appelle <code>Saved Games\DCS\Config\Input\<b>F-4E-45MC</b>\joystick\</code> — un seul dossier, pas deux : ni <code>F-4E-Pilot</code> ni <code>F-4E-WSO</code> comme la cascade du module le laissait supposer. Les 3 appareils utiles y ont désormais un fichier, avec leurs GUID lisibles.</p>
+<div class="map-search">
+  <input type="search" id="cmd-search" placeholder="Rechercher un bouton, un axe ou une commande…" autocomplete="off">
+</div>
+<div class="map-count" id="bind-count">Chargement…</div>
+
+<div class="note">
+  <b>Le rig, et pourquoi il n'y a plus de pédales</b>
+  Trois appareils : manche <b>VPC Alpha Prime [R]</b>, manette <b>MongoosT-50CM3</b>, panneau <b>WinWing PTO2</b> — le même que sur le F-14B(U), les GUID sont identiques. Le pédalier Fanatec a été retiré du rig le 19/08/2026 : c'est un pédalier <b>automobile</b>, sans axe de lacet bidirectionnel. Le lacet passe donc par le <b>twist du manche</b> et le freinage par sa <b>gâchette analogique avant</b>.
 </div>
 
 <div class="note warn">
-  <b>Corrigé : le nom réel du dossier n'était pas celui prévu</b>
-  La cascade du module (<code>Mods\aircraft\F-4E\Input\</code>) expose deux profils, <code>F-4E-Pilot</code> et <code>F-4E-WSO</code>, ce qui laissait supposer deux dossiers séparés dans <code>Config\Input\</code>. <b>Ce n'est pas ce que DCS a écrit</b> : un seul dossier réel, <code>F-4E-45MC</code>, relevé le 19/08/2026. Exactement le genre d'hypothèse que la méthode du dépôt interdit — c'est la lecture directe qui a tranché, pas la cascade du module.
+  <b>Le twist commande actuellement les gaz — à corriger</b>
+  C'est ici le réglage le plus incomplet des trois avions. DCS assigne le lacet à <code>JOY_RZ</code> (axe physiquement inexistant sur ce manche) <b>et</b> laisse les gaz sur <code>JOY_Z</code>, qui est justement le twist. En l'état, twister le manche modifie la poussée. À corriger dans l'écran Contrôles : retirer les gaz de <code>JOY_Z</code>, y assigner <b>Rudder</b>, puis assigner les freins sur la gâchette avant.
 </div>
 
-<h2 class="phase-title" style="font-size:19px;margin:34px 0 4px">Ce qu'il faut faire pour débloquer</h2>
-<p class="phase-why">La même méthode que celle qui a servi pour le F-14B(U), consignée dans <code>CLAUDE.md</code>. Chaque étape produit une donnée vérifiée, jamais une hypothèse.</p>
-
-<ol class="steps">
-  <li style="opacity:.6"><b>Dire quel matériel sert à piloter le Phantom.</b> <b style="color:var(--go)">Fait</b> — même rig que le F-14B(U) : manche Virpil, manette MongoosT-50CM3, panneau WinWing PTO2. Confirmé dans les noms de fichiers de l'étape suivante : les GUID sont identiques à ceux du F-14B(U).</li>
-  <li style="opacity:.6"><b>Faire écrire les fichiers de binds par DCS.</b> <b style="color:var(--go)">Fait</b> — les 3 appareils ont un fichier dans <code>F-4E-45MC\joystick\</code>, avec une assignation chacun.</li>
-  <li style="opacity:.6"><b>Relire les vrais fichiers.</b> <b style="color:var(--go)">Fait</b> — le nom réel du dossier est <code>F-4E-45MC</code> (voir l'encadré ci-dessus), et les GUID des 3 fichiers <code>joystick\&lt;Nom {GUID}&gt;.diff.lua</code> sont lus.</li>
-  <li><b>Extraire le catalogue de commandes du module</b> avec la chaîne Lua du dépôt (<code>tools/extract-commands.lua</code>), en pointant la cascade d'entrées du F-4E — attention, elle est plus complexe que celle des autres modules : elle passe par <code>bind_dsl.lua</code> et <code>bind_categories.lua</code> plutôt que par un simple <code>default.lua</code>.</li>
-  <li><b>Construire le mapping</b> — un enregistrement par bouton et par axe, avec un statut explicite : correspondance confirmée, proposition à valider, ou pas d'équivalent. La <b>taxonomie officielle du module</b> est déjà disponible dans <code>bind_categories.lua</code> (Stick, Throttle, Radar Controls, Pave Spike, INS, RWR, Jester, Crew Chief Commands…) — la reprendre plutôt qu'inventer des thèmes.</li>
-  <li style="opacity:.6"><b>Récupérer les gabarits d'image</b> des périphériques. <b style="color:var(--go)">Déjà disponibles</b> — rig identique au F-14B(U) sur les 3 appareils utilisés, donc les planches existent dans le dépôt. Il reste à monter la page en réutilisant tel quel le moteur JS du F-14B(U) : seules les données changent.</li>
-  <li><b>Générer les binds installables</b> et valider chaque <code>.diff.lua</code> avec l'interpréteur Lua de DCS avant toute installation — après avoir sauvegardé le fichier existant.</li>
-</ol>
-
-<h2 class="phase-title" style="font-size:19px;margin:40px 0 4px">Fichiers attendus</h2>
-<p class="phase-why">Les mêmes que côté F-14B(U), transposés. Tant qu'ils n'existent pas, le moteur de badges tombe proprement sur « non affecté ».</p>
-
-<table class="liv">
-  <tr><th>Fichier</th><th>Rôle</th><th>État</th></tr>
-  <tr><td><code>data/f4e-commands.json</code></td><td>Catalogue des commandes DCS du module</td><td class="st">à produire</td></tr>
-  <tr><td><code>data/f4e-bindings.json</code></td><td>Un enregistrement par bouton et axe physique</td><td class="st">à produire</td></tr>
-  <tr><td><code>data/f4e-hotas.json</code></td><td>Positions et libellés des étiquettes sur les planches</td><td class="st">à produire</td></tr>
-  <tr><td><code>export-bindings.html</code></td><td>Génération des <code>.diff.lua</code> installables</td><td class="st">à produire</td></tr>
-</table>
-
 <div class="note warn">
-  <b>Règle qui ne se contourne pas</b>
-  Aucun numéro de bouton n'est jamais écrit en dur dans le texte d'une leçon. Les badges sont résolus à l'affichage depuis <code>data/f4e-bindings.json</code> — le jour où un bind change, il suffit de mettre à jour ce fichier et toutes les leçons suivent.
+  <b>Le dossier de binds ne s'appelle pas comme la cascade du module</b>
+  <code>Mods\aircraft\F-4E\Input\</code> expose deux profils, <code>F-4E-Pilot</code> et <code>F-4E-WSO</code>, ce qui laissait supposer deux dossiers dans <code>Config\Input\</code>. <b>Ce n'est pas ce que DCS a écrit</b> : un seul dossier réel, <code>F-4E-45MC</code>. C'est la lecture directe des fichiers qui a tranché, pas la cascade du module.
+</div>
+
+<div id="mapping-root">
+  <p class="dev-empty">Chargement des binds…</p>
+</div>
+<p class="dev-empty" id="no-hit" hidden>Aucun contact ne correspond à cette recherche.</p>
+
+<div class="note">
+  <b>Comment le PTO2 a été rempli</b>
+  Le panneau n'avait qu'une seule assignation réelle (phare de roulage). Les autres contacts reprennent la <b>disposition physique déjà utilisée sur le F-14B(U)</b> — c'est le même panneau — garnie de fonctions Phantom : d'abord celles listées comme essentielles dans les notes de source (volets trois positions, Master Caution, Master Arm, actions JESTER), puis, là où le F-4E n'a pas d'équivalent au Tomcat (ni flèche d'aile, ni opérations porte-avions), des fonctions utiles du module : RWR, frein de secours, ravitaillement, verrière. Les noms de commande sont vérifiés contre le catalogue du module ; leur <b>emplacement</b> reste une proposition.
+</div>
+
+<div class="note">
+  <b>Prochaine étape : la planche annotée</b>
+  Le F-14B(U) dispose de <a href="../F14BU/mapping-hotas.html">planches interactives</a> où chaque étiquette est posée sur une image du périphérique. Ces coordonnées n'existent pas encore pour le Phantom : elles se grefferont sur ce même fichier <code>data/f4e-bindings.json</code>, sans retoucher les données.
 </div>
 
 <div class="footlinks">
@@ -80,9 +66,10 @@
   <a href="../F14BU/mapping-hotas.html">Voir le mapping F-14B(U) &rarr;</a>
 </div>
 
-<p class="src">Méthode et garde-fous : <code>CLAUDE.md</code> (section « Vérifier ou générer des binds DCS ») et <code>tools/README.md</code> pour la chaîne d'extraction.</p>
+<p class="src">Binds relus dans <code>Saved&nbsp;Games\DCS\Config\Input\F-4E-45MC\joystick\</code> le 21/08/2026. Catalogue des commandes extrait du module avec <code>tools/extract-commands-f4e.lua</code> (1894 commandes), taxonomie officielle reprise de <code>Input/bind_categories.lua</code>. Méthode et garde-fous : <code>CLAUDE.md</code>, section « Vérifier ou générer des binds DCS ».</p>
 
 </div>
+<script src="../js/mapping-table.js"></script>
 <script src="../js/site-search.js"></script>
 </body>
 </html>

@@ -1,0 +1,77 @@
+{
+"version": 1,
+"aircraft": "F-4E Phantom II Pilot",
+"inputFolder": "F-4E-45MC",
+"statusLegend": {
+  "ok": "Bind réel confirmé dans le fichier .diff.lua écrit par DCS.",
+  "check": "Assignation réelle mais non confirmée individuellement dans l'écran Contrôles (défaut DCS déduit du fichier, proposition PTO2 pas encore essayée en jeu, ou point de conflit à vérifier)."
+},
+"bindings": [
+
+{"device":"stick","n":"X","commands":["Roll"],"status":"ok","axis":true,"note":"Confirmé dans le fichier .diff.lua du manche (R-VPC Stick MT-50CM3), relu le 21/08/2026 : axisDiff a2002cdnil, JOY_X ajouté, nom affiché « Roulis »."},
+{"device":"stick","n":"Y","commands":["Pitch"],"status":"check","axis":true,"note":"Aucun axisDiff sur Y dans le fichier du manche (relu le 21/08/2026) : défaut DCS jamais retiré, pas encore confirmé individuellement dans l'écran Contrôles."},
+{"device":"stick","n":"Z","commands":["Rudder"],"status":"check","axis":true,"note":"Twist du manche droit — seule source de lacet depuis le retrait du pédalier (19/08/2026). RESTE À FAIRE EN JEU, et c'est le cas le plus incomplet des trois avions : DCS place Lacet sur JOY_RZ par défaut (axe physiquement inexistant sur ce manche) ET le défaut « Throttle » sur Z n'a même pas été retiré ici, contrairement au F-14B(U) et au F4U-1D. En l'état, twister le manche commande donc les gaz. À corriger dans l'écran Contrôles : retirer les gaz de Z, y assigner Rudder. Twist à déverrouiller mécaniquement sur la base MongoosT-50CM3."},
+{"device":"stick","n":"SLDR","commands":["Wheel Brake (Both)"],"status":"check","axis":true,"note":"Gâchette analogique à l'avant du manche — seule source de freinage depuis le retrait du pédalier (19/08/2026). Le F-4E expose un axe combiné « Wheel Brake (Both) », inutile de doubler les axes gauche et droit. RESTE À FAIRE EN JEU : aucun axe de frein n'existe aujourd'hui dans le fichier .diff.lua du manche, à assigner dans l'écran Contrôles."},
+{"device":"stick","n":"rX","commands":["Weapon Slew (Forward Hand Control) - Right"],"status":"check","axis":true,"note":"Mini-stick du pouce, axe horizontal — proposition du 21/08/2026 pour le déplacement du curseur d'arme (Pave Spike, désignation). ATTENTION : DCS n'expose ces commandes qu'en touches directionnelles, pas en axe analogique — cet axe ne pourra donc pas être assigné tel quel, il faudra soit passer par les 4 touches sur un hat, soit laisser le mini-stick libre. Point à trancher en jeu."},
+{"device":"stick","n":"rY","commands":["Weapon Slew (Forward Hand Control) - Up"],"status":"check","axis":true,"note":"Mini-stick du pouce, axe vertical — voir la réserve importante notée sur l'axe rX."},
+
+{"device":"throttle","n":"X","commands":["Roll"],"status":"check","axis":true,"note":"Défaut DCS (Roulis→X) jamais retiré sur ce périphérique pour ce module — relu le 21/08/2026, aucun axisDiff ne le supprime. Concurrence potentielle avec le manche qui porte déjà Roll : à retirer dans l'écran Contrôles si la manette a un axe X physiquement mobile."},
+{"device":"throttle","n":"Y","commands":["Pitch"],"status":"check","axis":true,"note":"Défaut DCS (Tangage→Y) jamais retiré sur ce périphérique pour ce module — même remarque que l'axe X ci-dessus."},
+{"device":"throttle","n":"rY","commands":["Throttle (Both)"],"status":"ok","axis":true,"note":"Confirmé dans le fichier .diff.lua de la manette (LEFT VPC MongoosT-50CM3), relu le 21/08/2026 : axisDiff a2004cdnil, JOY_RY ajouté."},
+
+{"device":"pto2","n":"1","commands":["Dispense Program - [Toggle]"],"status":"check","note":"Proposition du 21/08/2026 : bascule Normal/Flares du programme de leurres, pas encore essayée en jeu."},
+{"device":"pto2","n":"2","commands":["Master Caution Reset"],"status":"check","note":"Reprend le même repère que le Master Caution du F-14B(U) — commande à usage très fréquent, catégorie Instruments. Pas encore essayée en jeu."},
+
+{"device":"pto2","n":"3","commands":["Emergency Wheel Brake - Deactivate"],"status":"check","note":"Proposition du 21/08/2026 : le F-4E n'a pas de barre de catapultage (pas d'opérations porte-avions), ce contact reprend donc le frein de secours plutôt qu'inventer une fonction sans équivalent. Pas encore essayée en jeu."},
+{"device":"pto2","n":"4","commands":["Emergency Wheel Brake - Activate"],"status":"check","note":"Voir la note du repère 3."},
+
+{"device":"pto2","n":"5","commands":["Flaps/Slats Switch - Norm"],"status":"check","note":"Volets à trois positions — signalé comme fonction essentielle dans la synthèse HOTAS fournie le 19/08/2026 (source S3 de notes-sources.md). Pas encore essayée en jeu."},
+{"device":"pto2","n":"6","commands":["Flaps/Slats Switch - Out"],"status":"check","note":"Voir la note du repère 5."},
+{"device":"pto2","n":"7","commands":["Flaps/Slats Switch - Out&Down"],"status":"check","note":"Voir la note du repère 5."},
+
+{"device":"pto2","n":"8","commands":["Taxi/Landing Light - Taxi Light"],"status":"ok","note":"Seule assignation déjà réelle du PTO2 pour ce module (relu le 21/08/2026)."},
+{"device":"pto2","n":"9","commands":["Taxi/Landing Light - Off"],"status":"check","note":"Complète le contact 8 (interrupteur à trois positions Off/Taxi/Landing) — pas encore essayée en jeu."},
+
+{"device":"pto2","n":"10","commands":["Anti-Skid - On"],"status":"check","note":"Reprend le même repère que le F-14B(U). Pas encore essayée en jeu."},
+{"device":"pto2","n":"11","commands":["Anti-Skid - Off"],"status":"check","note":"Voir la note du repère 10."},
+
+{"device":"pto2","n":"12","commands":["Pitot Heat - On"],"status":"check","note":"Proposition du 21/08/2026 : le F-4E n'a pas de bascule crosse terrain/porte-avions comme le F-14B(U) (pas d'opérations porte-avions) — contact réaffecté au réchauffage Pitot, item de checklist courant. Pas encore essayée en jeu."},
+{"device":"pto2","n":"13","commands":["Pitot Heat - Off"],"status":"check","note":"Voir la note du repère 12."},
+
+{"device":"pto2","n":"14","commands":["Air Refuel Switch - Extend"],"status":"check","note":"Proposition du 21/08/2026 : le F-4E n'a pas de sonde rétractable comme le F4U-1D/F-14B(U) (réceptacle de ravitaillement en vol), ce cluster reprend donc le sélecteur de contact + réservoir plutôt que la sonde. Pas encore essayée en jeu."},
+{"device":"pto2","n":"15","commands":["Air Refuel Switch - Retract"],"status":"check","note":"Voir la note du repère 14."},
+{"device":"pto2","n":"16","commands":["Select Tank to Refuel - All Tanks"],"status":"check","note":"Voir la note du repère 14."},
+
+{"device":"pto2","n":"17","commands":["Jettison Selector - Off"],"status":"check","note":"Cluster largage (6 contacts, proposition du 21/08/2026) : sous-ensemble utile du sélecteur rotatif à 8 positions, plus le bouton et le largage d'urgence — pas encore essayée en jeu."},
+{"device":"pto2","n":"18","commands":["Jettison Selector - Stores"],"status":"check","note":"Voir la note du repère 17."},
+{"device":"pto2","n":"19","commands":["Jettison Selector - Left Wing"],"status":"check","note":"Voir la note du repère 17."},
+{"device":"pto2","n":"20","commands":["Jettison Selector - Right Wing"],"status":"check","note":"Voir la note du repère 17."},
+{"device":"pto2","n":"21","commands":["Jettison Button"],"status":"check","note":"Voir la note du repère 17 — c'est le bouton qui déclenche réellement le largage une fois le sélecteur positionné."},
+{"device":"pto2","n":"22","commands":["External Stores Emergency Release"],"status":"check","note":"Largage d'urgence général, distinct du sélecteur ci-dessus. Pas encore essayée en jeu."},
+
+{"device":"pto2","n":"23","commands":["Master Arm - Safe"],"status":"check","note":"Cluster du 21/08/2026 : armement + éléments de sécurité/urgence fréquemment utilisés, faute d'équivalent local à la flèche d'aile du F-14B(U) (le F-4E a une voilure fixe). Pas encore essayée en jeu."},
+{"device":"pto2","n":"24","commands":["Master Arm - Arm"],"status":"check","note":"Voir la note du repère 23."},
+{"device":"pto2","n":"25","commands":["RWR Power Button"],"status":"check","note":"Voir la note du repère 23 — mise sous tension du détecteur d'alerte radar, geste répété à chaque vol."},
+{"device":"pto2","n":"26","commands":["RWR BIT Button"],"status":"check","note":"Voir la note du repère 23 — autotest du RWR."},
+{"device":"pto2","n":"27","commands":["Canopy Emergency Handle - Jettison"],"status":"check","note":"Voir la note du repère 23 — largage d'urgence de la verrière."},
+
+{"device":"pto2","n":"28","commands":["Jester Command: Systems > Chaff Mode > Off"],"status":"check","note":"Cluster du 21/08/2026 (4 contacts) : les 4 modes du programme de leurres chaff confiés à JESTER — signalé dans la synthèse HOTAS du 19/08/2026 (source S3) comme impératif à mapper pour ne pas lâcher le HOTAS à chaque interaction JESTER. Pas encore essayée en jeu."},
+{"device":"pto2","n":"29","commands":["Jester Command: Systems > Chaff Mode > Single"],"status":"check","note":"Voir la note du repère 28."},
+{"device":"pto2","n":"30","commands":["Jester Command: Systems > Chaff Mode > Multiple"],"status":"check","note":"Voir la note du repère 28."},
+{"device":"pto2","n":"31","commands":["Jester Command: Systems > Chaff Mode > Program"],"status":"check","note":"Voir la note du repère 28."},
+
+{"device":"pto2","n":"32","commands":["Arresting Hook Control Handle - Out"],"status":"check","note":"Le F-4E a une vraie crosse d'appontage/arrêt d'urgence sur terrain équipé — reprend le même repère que le F-14B(U). Pas encore essayée en jeu."},
+{"device":"pto2","n":"33","commands":["Arresting Hook Control Handle - In"],"status":"check","note":"Voir la note du repère 32."},
+{"device":"pto2","n":"34","commands":["Drag-Parachute - Deploy"],"status":"check","note":"Parachute de freinage à l'atterrissage — regroupé avec la crosse, aides au roulage d'arrêt. Pas encore essayée en jeu."},
+
+{"device":"pto2","n":"35","commands":["Landing Gear - Up"],"status":"check","note":"Reprend le même repère que le F-14B(U) — train rentré. Pas encore essayée en jeu."},
+{"device":"pto2","n":"36","commands":["Landing Gear - Down"],"status":"check","note":"Voir la note du repère 35."},
+{"device":"pto2","n":"37","commands":["Landing Gear - Emergency Extension - On"],"status":"check","note":"Voir la note du repère 35 — sortie de secours."},
+
+{"device":"pto2","n":"38","commands":["Flaps/Slats Emergency Extension Handle - On"],"status":"check","note":"Cluster du 21/08/2026 (4 contacts) : le F-4E n'a pas de frein de parc dédié comme le F4U-1D (freinage aux palettes/pédales), ce cluster reprend donc la sortie de secours des volets/slats et la verrière. Pas encore essayée en jeu."},
+{"device":"pto2","n":"39","commands":["Flaps/Slats Emergency Extension Handle - Off"],"status":"check","note":"Voir la note du repère 38."},
+{"device":"pto2","n":"40","commands":["Canopy Handle - Open"],"status":"check","note":"Voir la note du repère 38 — ouverture verrière au sol."},
+{"device":"pto2","n":"41","commands":["Canopy Handle - Close"],"status":"check","note":"Voir la note du repère 38."}
+
+]
+}

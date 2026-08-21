@@ -12,18 +12,6 @@
   "type": "fonction"
  },
  {
-  "title": "Aircraft Rudder Left",
-  "path": "F14BU/mapping-hotas.html?dev=pedals&n=1",
-  "aircraft": "F-14B(U)",
-  "type": "fonction"
- },
- {
-  "title": "Aircraft Rudder Right",
-  "path": "F14BU/mapping-hotas.html?dev=pedals&n=2",
-  "aircraft": "F-14B(U)",
-  "type": "fonction"
- },
- {
   "title": "All missiles padlock",
   "path": "F14BU/mapping-hotas.html?dev=stick&n=23",
   "aircraft": "F-14B(U)",
@@ -403,7 +391,7 @@
  },
  {
   "title": "Rudder",
-  "path": "F14BU/mapping-hotas.html?dev=pedals&n=3",
+  "path": "F14BU/mapping-hotas.html?dev=stick&n=Z",
   "aircraft": "F-14B(U)",
   "type": "fonction"
  },
@@ -528,26 +516,8 @@
   "type": "fonction"
  },
  {
-  "title": "Wheel Brake Left",
+  "title": "Wheel Brake both",
   "path": "F14BU/mapping-hotas.html?dev=stick&n=SLDR",
-  "aircraft": "F-14B(U)",
-  "type": "fonction"
- },
- {
-  "title": "Wheel Brake Left",
-  "path": "F14BU/mapping-hotas.html?dev=pedals&n=4",
-  "aircraft": "F-14B(U)",
-  "type": "fonction"
- },
- {
-  "title": "Wheel Brake Right",
-  "path": "F14BU/mapping-hotas.html?dev=stick&n=SLDR",
-  "aircraft": "F-14B(U)",
-  "type": "fonction"
- },
- {
-  "title": "Wheel Brake Right",
-  "path": "F14BU/mapping-hotas.html?dev=pedals&n=4",
   "aircraft": "F-14B(U)",
   "type": "fonction"
  },
@@ -585,6 +555,498 @@
   "title": "Zoom out",
   "path": "F14BU/mapping-hotas.html?dev=stick&n=22",
   "aircraft": "F-14B(U)",
+  "type": "fonction"
+ },
+ {
+  "title": "Air Refuel Switch - Extend",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=14",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Air Refuel Switch - Retract",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=15",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Anti-Skid - Off",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=11",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Anti-Skid - On",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=10",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Arresting Hook Control Handle - In",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=33",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Arresting Hook Control Handle - Out",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=32",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Canopy Emergency Handle - Jettison",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=27",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Canopy Handle - Close",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=41",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Canopy Handle - Open",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=40",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Dispense Program - [Toggle]",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=1",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Drag-Parachute - Deploy",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=34",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Emergency Wheel Brake - Activate",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=4",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Emergency Wheel Brake - Deactivate",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=3",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "External Stores Emergency Release",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=22",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Flaps/Slats Emergency Extension Handle - Off",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=39",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Flaps/Slats Emergency Extension Handle - On",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=38",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Flaps/Slats Switch - Norm",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=5",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Flaps/Slats Switch - Out",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=6",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Flaps/Slats Switch - Out&Down",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=7",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Jester Command: Systems > Chaff Mode > Multiple",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=30",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Jester Command: Systems > Chaff Mode > Off",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=28",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Jester Command: Systems > Chaff Mode > Program",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=31",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Jester Command: Systems > Chaff Mode > Single",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=29",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Jettison Button",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=21",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Jettison Selector - Left Wing",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=19",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Jettison Selector - Off",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=17",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Jettison Selector - Right Wing",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=20",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Jettison Selector - Stores",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=18",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Landing Gear - Down",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=36",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Landing Gear - Emergency Extension - On",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=37",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Landing Gear - Up",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=35",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Master Arm - Arm",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=24",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Master Arm - Safe",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=23",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Master Caution Reset",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=2",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Pitch",
+  "path": "F4E/mapping-hotas.html?dev=stick&n=Y",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Pitch",
+  "path": "F4E/mapping-hotas.html?dev=throttle&n=Y",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Pitot Heat - Off",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=13",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Pitot Heat - On",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=12",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Roll",
+  "path": "F4E/mapping-hotas.html?dev=stick&n=X",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Roll",
+  "path": "F4E/mapping-hotas.html?dev=throttle&n=X",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Rudder",
+  "path": "F4E/mapping-hotas.html?dev=stick&n=Z",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "RWR BIT Button",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=26",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "RWR Power Button",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=25",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Select Tank to Refuel - All Tanks",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=16",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Taxi/Landing Light - Off",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=9",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Taxi/Landing Light - Taxi Light",
+  "path": "F4E/mapping-hotas.html?dev=pto2&n=8",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Throttle (Both)",
+  "path": "F4E/mapping-hotas.html?dev=throttle&n=rY",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Weapon Slew (Forward Hand Control) - Right",
+  "path": "F4E/mapping-hotas.html?dev=stick&n=rX",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Weapon Slew (Forward Hand Control) - Up",
+  "path": "F4E/mapping-hotas.html?dev=stick&n=rY",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Wheel Brake (Both)",
+  "path": "F4E/mapping-hotas.html?dev=stick&n=SLDR",
+  "aircraft": "F-4E Phantom II",
+  "type": "fonction"
+ },
+ {
+  "title": "Airbrake, down",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=11",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Airbrake, up",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=10",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Approach light Off",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=9",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Approach light On",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=8",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Droppable tank lock: attach",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=17",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Droppable tank lock: lock",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=19",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Droppable tank lock: release",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=22",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Flaps +",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=5",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Flaps -",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=7",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Gear brakes, both",
+  "path": "F4U1D/mapping-hotas.html?dev=stick&n=SLDR",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Gears, down",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=37",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Gears, up",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=35",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Hook, down",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=34",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Hook, parking",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=33",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Hook, up",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=32",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Left wing, emergency release ON",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=26",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Left wing, release selector ON",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=24",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Parking brake OFF",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=38",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Parking brake ON",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=39",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Pitch",
+  "path": "F4U1D/mapping-hotas.html?dev=throttle&n=Y",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Pitch",
+  "path": "F4U1D/mapping-hotas.html?dev=stick&n=Y",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Pylon, release selector ON",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=23",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Right wing, emergency release ON",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=27",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Right wing, release selector ON",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=25",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Roll",
+  "path": "F4U1D/mapping-hotas.html?dev=stick&n=X",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Roll",
+  "path": "F4U1D/mapping-hotas.html?dev=throttle&n=X",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Rudder",
+  "path": "F4U1D/mapping-hotas.html?dev=stick&n=Z",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Throttle lever",
+  "path": "F4U1D/mapping-hotas.html?dev=throttle&n=rY",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Wings fold, fold",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=28",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Wings fold, spread",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=30",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Wings fold, stop",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=29",
+  "aircraft": "F4U-1D Corsair",
+  "type": "fonction"
+ },
+ {
+  "title": "Wings lock toggle",
+  "path": "F4U1D/mapping-hotas.html?dev=pto2&n=31",
+  "aircraft": "F4U-1D Corsair",
   "type": "fonction"
  },
  {
@@ -715,31 +1177,13 @@
  },
  {
   "title": "Ressources vidéo",
-  "path": "F14BU/section-a-illustree.html#a8",
-  "aircraft": "F-14B(U)",
-  "type": "leçon"
- },
- {
-  "title": "Ressources vidéo",
-  "path": "F14BU/section-b-navigation.html#b6",
-  "aircraft": "F-14B(U)",
-  "type": "leçon"
- },
- {
-  "title": "Ressources vidéo",
   "path": "F14BU/section-d-air-air.html#d8",
   "aircraft": "F-14B(U)",
   "type": "leçon"
  },
  {
   "title": "Ressources vidéo",
-  "path": "F14BU/section-e-survie.html#e4",
-  "aircraft": "F-14B(U)",
-  "type": "leçon"
- },
- {
-  "title": "Ressources vidéo",
-  "path": "F14BU/section-g-mission.html#g4",
+  "path": "F14BU/section-a-illustree.html#a8",
   "aircraft": "F-14B(U)",
   "type": "leçon"
  },
@@ -751,7 +1195,25 @@
  },
  {
   "title": "Ressources vidéo",
+  "path": "F14BU/section-e-survie.html#e4",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
   "path": "F14BU/section-c-porte-avions.html#c5",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
+  "path": "F14BU/section-b-navigation.html#b6",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
+  "path": "F14BU/section-g-mission.html#g4",
   "aircraft": "F-14B(U)",
   "type": "leçon"
  },
@@ -1326,15 +1788,15 @@
   "type": "leçon"
  },
  {
-  "title": "Tutoriels de pilotage — Accueil",
-  "path": "index.html",
+  "title": "Extraction de planches PDF",
+  "path": "tools/pdf-extract.html",
   "aircraft": null,
   "type": "page"
  },
  {
-  "title": "Cursus F-14B(U) — appli complète",
-  "path": "F14BU/cursus-complet.html",
-  "aircraft": "F-14B(U)",
+  "title": "Tutoriels de pilotage — Accueil",
+  "path": "index.html",
+  "aircraft": null,
   "type": "page"
  },
  {

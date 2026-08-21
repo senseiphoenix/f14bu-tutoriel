@@ -55,6 +55,10 @@ $entries = New-Object Collections.ArrayList
 Get-ChildItem -Path $root -Filter *.html -Recurse -File | Sort-Object FullName | ForEach-Object {
   $rel = Get-RelPath $_.FullName
   if ($rel -like 'SC/profile exemple/*') { return }
+  # cursus-complet.html dupliquait les 41 leçons des pages section-*.html ;
+  # retiré de la navigation le 21/08/2026, le fichier reste sur disque mais ne
+  # doit plus remonter dans la recherche, sinon chaque leçon sort en double.
+  if ($rel -like '*/cursus-complet.html') { return }
   $text = [IO.File]::ReadAllText($_.FullName, [Text.Encoding]::UTF8)
   $m = [regex]::Match($text, '<title>(.*?)</title>', 'IgnoreCase, Singleline')
   if (-not $m.Success) { return }
