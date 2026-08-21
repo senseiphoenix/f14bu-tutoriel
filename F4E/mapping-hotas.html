@@ -36,34 +36,26 @@
 <p class="sub">Les planches annotées et cherchables de chaque périphérique, sur le modèle de celles du <a href="../F14BU/mapping-hotas.html">F-14B(U)</a> : un bouton, sa commande DCS, le détail côté avion, et un lien vers la leçon qui s'en sert.</p>
 
 <div class="skel">
-  <b>Bloqué — DCS n'a encore rien écrit pour cet avion</b>
-  <p style="margin:0 0 10px">Le matériel est connu : <b>même rig que le F-14B(U)</b> — manche Virpil, manette MongoosT-50CM3, panneau WinWing PTO2, pédales Fanatec. Les planches sont donc les mêmes images, déjà présentes dans le dépôt.</p>
-  <p style="margin:0">Ce qui manque, ce sont les fichiers : aucune des instances DCS de la machine n'a de dossier d'entrées pour le F-4E, donc <b>aucune commande ne lui a jamais été assignée</b>. Sans ça, ni les GUID ni les numéros de bouton ne peuvent être lus — et ils ne se devinent pas. Chaque badge de bind des leçons affiche <b>non affecté</b> et renvoie ici.</p>
+  <b>En cours — les fichiers existent, les données restent à construire</b>
+  <p style="margin:0 0 10px">Le matériel est connu : <b>même rig que le F-14B(U)</b>, moins les pédales — manche Virpil, manette MongoosT-50CM3, panneau WinWing PTO2. Les planches sont donc les mêmes images, déjà présentes dans le dépôt.</p>
+  <p style="margin:0">Le dossier d'entrées réel s'appelle <code>Saved Games\DCS\Config\Input\<b>F-4E-45MC</b>\joystick\</code> — un seul dossier, pas deux : ni <code>F-4E-Pilot</code> ni <code>F-4E-WSO</code> comme la cascade du module le laissait supposer. Les 3 appareils utiles y ont désormais un fichier, avec leurs GUID lisibles.</p>
 </div>
 
 <div class="note warn">
-  <b>Particularité du F-4E : deux jeux de binds, pas un</b>
-  Contrairement au F4U-1D et au F-14B(U), ce module expose <b>deux profils d'entrées distincts</b>, confirmés en lisant la cascade du module (<code>Mods\aircraft\F-4E\Input\</code>) :
-  <b>F-4E-Pilot</b> et <b>F-4E-WSO</b>. Chacun aura son propre dossier dans <code>Config\Input\</code>, ses propres fichiers et ses propres assignations.
-  <br><br>
-  Conséquence directe : il faudra <b>décider ce que le mapping documente</b> — le seul poste pilote, ou les deux. Et au relevé, il faudra binder dans les deux profils si l'on veut les deux.
-</div>
-
-<div class="note">
-  <b>À vérifier au relevé : le module livre des profils tout faits</b>
-  La cascade du module contient des profils par défaut pour plusieurs périphériques du commerce, dont un nommé <code>VPC WarBRD + MT50</code> — proche, mais pas identique, au matériel réellement utilisé ici. Si DCS en applique un automatiquement, une partie des commandes peut déjà être assignée <b>sans qu'aucun fichier utilisateur n'existe</b>. À contrôler dans l'écran Contrôles avant de conclure que rien n'est bindé.
+  <b>Corrigé : le nom réel du dossier n'était pas celui prévu</b>
+  La cascade du module (<code>Mods\aircraft\F-4E\Input\</code>) expose deux profils, <code>F-4E-Pilot</code> et <code>F-4E-WSO</code>, ce qui laissait supposer deux dossiers séparés dans <code>Config\Input\</code>. <b>Ce n'est pas ce que DCS a écrit</b> : un seul dossier réel, <code>F-4E-45MC</code>, relevé le 19/08/2026. Exactement le genre d'hypothèse que la méthode du dépôt interdit — c'est la lecture directe qui a tranché, pas la cascade du module.
 </div>
 
 <h2 class="phase-title" style="font-size:19px;margin:34px 0 4px">Ce qu'il faut faire pour débloquer</h2>
 <p class="phase-why">La même méthode que celle qui a servi pour le F-14B(U), consignée dans <code>CLAUDE.md</code>. Chaque étape produit une donnée vérifiée, jamais une hypothèse.</p>
 
 <ol class="steps">
-  <li style="opacity:.6"><b>Dire quel matériel sert à piloter le Phantom.</b> <b style="color:var(--go)">Fait</b> — même rig que le F-14B(U) : manche Virpil, manette MongoosT-50CM3, panneau WinWing PTO2, pédales Fanatec. À revérifier quand même dans les noms de fichiers de l'étape 3.</li>
-  <li><b>Faire écrire les fichiers de binds par DCS.</b> Dans l'écran Contrôles du F-4E, changer un bind dans la colonne de <b>chacun des quatre appareils</b> — de préférence sur une commande encore libre — puis <b>quitter proprement</b> l'écran : l'écriture disque n'a lieu qu'à ce moment. À refaire pour le profil <b>WSO</b> si l'on veut aussi le documenter.</li>
-  <li style="opacity:.6"><b>Relire les vrais fichiers.</b> <b style="color:var(--go)">Noms de dossiers déjà confirmés</b> : ce seront <code>F-4E-Pilot</code> et <code>F-4E-WSO</code>, lus dans la cascade du module et non devinés. Reste à lire les noms de fichiers <code>joystick\&lt;Nom {GUID}&gt;.diff.lua</code>, qui n'existent pas encore.</li>
+  <li style="opacity:.6"><b>Dire quel matériel sert à piloter le Phantom.</b> <b style="color:var(--go)">Fait</b> — même rig que le F-14B(U) : manche Virpil, manette MongoosT-50CM3, panneau WinWing PTO2. Confirmé dans les noms de fichiers de l'étape suivante : les GUID sont identiques à ceux du F-14B(U).</li>
+  <li style="opacity:.6"><b>Faire écrire les fichiers de binds par DCS.</b> <b style="color:var(--go)">Fait</b> — les 3 appareils ont un fichier dans <code>F-4E-45MC\joystick\</code>, avec une assignation chacun.</li>
+  <li style="opacity:.6"><b>Relire les vrais fichiers.</b> <b style="color:var(--go)">Fait</b> — le nom réel du dossier est <code>F-4E-45MC</code> (voir l'encadré ci-dessus), et les GUID des 3 fichiers <code>joystick\&lt;Nom {GUID}&gt;.diff.lua</code> sont lus.</li>
   <li><b>Extraire le catalogue de commandes du module</b> avec la chaîne Lua du dépôt (<code>tools/extract-commands.lua</code>), en pointant la cascade d'entrées du F-4E — attention, elle est plus complexe que celle des autres modules : elle passe par <code>bind_dsl.lua</code> et <code>bind_categories.lua</code> plutôt que par un simple <code>default.lua</code>.</li>
   <li><b>Construire le mapping</b> — un enregistrement par bouton et par axe, avec un statut explicite : correspondance confirmée, proposition à valider, ou pas d'équivalent. La <b>taxonomie officielle du module</b> est déjà disponible dans <code>bind_categories.lua</code> (Stick, Throttle, Radar Controls, Pave Spike, INS, RWR, Jester, Crew Chief Commands…) — la reprendre plutôt qu'inventer des thèmes.</li>
-  <li style="opacity:.6"><b>Récupérer les gabarits d'image</b> des périphériques. <b style="color:var(--go)">Déjà disponibles</b> — rig identique au F-14B(U), donc les quatre planches existent dans le dépôt. Il reste à monter la page en réutilisant tel quel le moteur JS du F-14B(U) : seules les données changent.</li>
+  <li style="opacity:.6"><b>Récupérer les gabarits d'image</b> des périphériques. <b style="color:var(--go)">Déjà disponibles</b> — rig identique au F-14B(U) sur les 3 appareils utilisés, donc les planches existent dans le dépôt. Il reste à monter la page en réutilisant tel quel le moteur JS du F-14B(U) : seules les données changent.</li>
   <li><b>Générer les binds installables</b> et valider chaque <code>.diff.lua</code> avec l'interpréteur Lua de DCS avant toute installation — après avoir sauvegardé le fichier existant.</li>
 </ol>
 

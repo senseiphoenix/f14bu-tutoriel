@@ -42,7 +42,7 @@
 {"device":"stick","n":"31","commands":["Speed brake extend"],"status":"check","note":"« Speed brake toggle » si vous ne voulez pas maintenir le bouton."},
 {"device":"stick","n":"32","commands":["Parking brake enabled, else disabed"],"status":"ok"},
 {"device":"stick","n":"SLDR","commands":["Wheel Brake Left","Wheel Brake Right"],"status":"ok","axis":true,"note":"DCS n'expose pas d'axe « frein des deux roues » : on assigne les deux axes au même curseur, comme le fait votre profil actuel."},
-{"device":"stick","n":"Z","commands":[],"status":"none","note":"Twist verrouillé mécaniquement : rien à binder."},
+{"device":"stick","n":"Z","commands":["Rudder"],"status":"ok","axis":true,"note":"Décision du 19/08/2026 : le pédalier Fanatec CSL Elite V2 (un modèle automobile, sans axe bidirectionnel gauche↔droite) est retiré du rig sur tous les avions. Le lacet passe uniquement par le twist du manche droit — assigné par défaut par DCS (JOY_RZ), aucun diff nécessaire, confirmé dans le fichier .diff.lua actuel du manche. Le twist doit être déverrouillé mécaniquement sur la base MongoosT-50CM3 pour que l'axe bouge."},
 {"device":"stick","n":"rX","commands":[],"status":"none","note":"Slew TDC : commande RIO, absente du profil pilote."},
 {"device":"stick","n":"rY","commands":[],"status":"none","note":"Slew TDC : commande RIO, absente du profil pilote."},
 
@@ -131,12 +131,7 @@
 {"device":"pto2","n":"38","commands":["Parking brake pull"],"status":"ok"},
 {"device":"pto2","n":"40","commands":["Parking brake pull"],"status":"ok","note":"Deuxième contact du même levier que le 38 — redondance mécanique."},
 {"device":"pto2","n":"39","commands":["Parking brake stow"],"status":"ok"},
-{"device":"pto2","n":"41","commands":["Parking brake stow"],"status":"ok","note":"Deuxième contact du même levier que le 39 — redondance mécanique. Le freinage de secours pneumatique n'a pas de commande dédiée."},
-
-{"device":"pedals","n":"1","commands":["Aircraft Rudder Left"],"status":"check","note":"À n'utiliser que si vous pilotez le lacet au clavier : l'axe 3 le remplace."},
-{"device":"pedals","n":"2","commands":["Aircraft Rudder Right"],"status":"check","note":"Voir l'étiquette 1."},
-{"device":"pedals","n":"3","commands":["Rudder"],"status":"ok","axis":true},
-{"device":"pedals","n":"4","commands":["Wheel Brake Left","Wheel Brake Right"],"status":"ok","axis":true,"note":"Voir le curseur du manche : les deux axes de frein sur la même commande."}
+{"device":"pto2","n":"41","commands":["Parking brake stow"],"status":"ok","note":"Deuxième contact du même levier que le 39 — redondance mécanique. Le freinage de secours pneumatique n'a pas de commande dédiée."}
 
 ]
 }
