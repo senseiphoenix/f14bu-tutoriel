@@ -100,6 +100,7 @@ async function mountSvgDevice(cfg, hotas) {
     tr.innerHTML = `<td class="c1"><span class="num-badge" style="--c:${c}">${l.boardNum}</span></td>
       <td class="c2"><b>${l.text}</b><span>${l.boardNum}</span></td>
       <td class="c3">${l.detail || '—'}</td>
+      <td class="c4">${l.cmd || '—'}</td>
       <td>${href ? `<a class="lec-link" href="${href}">Leçon</a>` : '—'}</td>`;
     tbody.appendChild(tr);
   }
@@ -202,6 +203,7 @@ function mountPhotoDevice(cfg, hotas) {
             (f.real != null ? f.real : l.n) + '</span></td>' +
           '<td class="c2"><b>' + (f.s || '—') + '</b><span>Repère ' + l.n + ' · Page ' + PAGE_NAME[p] + '</span></td>' +
           '<td class="c3">' + (f.f || '—') + '</td>' +
+          '<td class="c4">' + (f.cmd || '—') + '</td>' +
           '<td>' + (f.lesson ? '<a class="lec-link" href="' + f.lesson + '">Leçon</a>' : '—') + '</td>';
         tbody.appendChild(tr);
       });
@@ -213,6 +215,7 @@ function mountPhotoDevice(cfg, hotas) {
     tr.innerHTML = `<td class="c1"><span class="num-badge" style="--c:${cl}">${l.n}</span></td>
       <td class="c2"><b>${l.text}</b><span>${l.n}</span></td>
       <td class="c3">${l.detail || '—'}</td>
+      <td class="c4">${l.cmd || '—'}</td>
       <td>${href ? `<a class="lec-link" href="${href}">Leçon</a>` : '—'}</td>`;
     tbody.appendChild(tr);
   });
@@ -262,6 +265,14 @@ document.querySelectorAll('.board').forEach(b => {
   w.className = 'board-pin';
   b.parentNode.insertBefore(w, b);
   w.appendChild(b);
+  const btn = document.createElement('button');
+  btn.className = 'board-toggle';
+  btn.textContent = 'Masquer la planche';
+  btn.addEventListener('click', () => {
+    const hidden = w.classList.toggle('collapsed');
+    btn.textContent = hidden ? 'Afficher la planche' : 'Masquer la planche';
+  });
+  w.parentNode.insertBefore(btn, w);
 });
 addEventListener('resize', fitBoards);
 

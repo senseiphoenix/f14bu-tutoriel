@@ -1,1577 +1,1618 @@
 {
- "device": [
-  {
-   "id": "stick",
-   "labels": [
+  "device": [
     {
-     "n": "X",
-     "cat": "vol",
-     "text": "Roulis (ailerons)",
-     "detail": "Incline l'avion en roulis. Courbe recommandée : 5, sans zone morte.",
-     "lesson": "vol-de-base-afcs.html",
-     "cmd": "Roll"
+      "id": "stick",
+      "labels": [
+        {
+          "n": "X",
+          "cat": "vol",
+          "text": "Roulis (ailerons)",
+          "detail": "Incline l'avion en roulis. Courbe recommandée : 5, sans zone morte.",
+          "lesson": "vol-de-base-afcs.html",
+          "cmd": "Roll"
+        },
+        {
+          "n": "Y",
+          "cat": "vol",
+          "text": "Tangage (profondeur)",
+          "detail": "Cabre ou pique du nez. Courbe recommandée : 5, sans zone morte.",
+          "lesson": "vol-de-base-afcs.html",
+          "cmd": "Pitch"
+        },
+        {
+          "n": "Z",
+          "cat": "vol",
+          "text": "LACET (twist)",
+          "detail": "Palonnier. Courbe recommandée : 0, sans zone morte.",
+          "lesson": "roulage-decollage.html",
+          "cmd": "Rudder"
+        },
+        {
+          "n": "SLDR",
+          "cat": "vol",
+          "text": "Freins de roues",
+          "detail": "Gâchette avant : freine les deux roues ensemble.",
+          "lesson": "roulage-decollage.html",
+          "cmd": "Wheel Brake (Both)"
+        },
+        {
+          "n": "rX",
+          "cat": "arm",
+          "text": "Curseur d'arme X",
+          "detail": "Mini-stick du pouce : déplace le curseur d'arme à l'horizontale (Pave Spike, désignation).",
+          "lesson": "pave-spike-guidage.html",
+          "cmd": "Weapon Slew (Forward Hand Control) X"
+        },
+        {
+          "n": "rY",
+          "cat": "arm",
+          "text": "Curseur d'arme Y",
+          "detail": "Mini-stick du pouce, axe vertical — à inverser dans DCS.",
+          "lesson": "pave-spike-guidage.html",
+          "cmd": "Weapon Slew (Forward Hand Control) Y"
+        },
+        {
+          "n": "1",
+          "cat": "arm",
+          "text": "LARGAGE BOMBES",
+          "detail": "Largue les bombes selon le mode réglé.",
+          "lesson": "bombardement-classique.html",
+          "cmd": "Bomb Release Button"
+        },
+        {
+          "n": "2",
+          "cat": "misc",
+          "text": "Vue centrée",
+          "detail": "Recentre la vue.",
+          "cmd": "View Center"
+        },
+        {
+          "n": "3",
+          "cat": "misc",
+          "text": "Rétroviseurs",
+          "detail": "Affiche ou masque les rétroviseurs.",
+          "cmd": "Mirrors - [Toggle]"
+        },
+        {
+          "n": "4",
+          "cat": "arm",
+          "text": "Détente 1er cran",
+          "detail": "Premier cran : prépare le tir.",
+          "lesson": "roquettes-mitraillage.html",
+          "cmd": "Flight Stick Trigger (Gun, Missiles) - Half Action (button)"
+        },
+        {
+          "n": "5",
+          "cat": "arm",
+          "text": "FEU",
+          "detail": "Tir canon ou missile selon l'arme sélectionnée.",
+          "lesson": "roquettes-mitraillage.html",
+          "cmd": "Flight Stick Trigger (Gun, Missiles) - Full Action (button)"
+        },
+        {
+          "n": "6",
+          "cat": "vol",
+          "text": "ROULETTE DE NEZ",
+          "detail": "Direction de roulette au sol, acquisition automatique en vol — le bouton le plus utilisé du manche.",
+          "lesson": "roulage-decollage.html",
+          "cmd": "Nose Gear Steering / Auto Acquisition Button"
+        },
+        {
+          "n": "7",
+          "cat": "vol",
+          "text": "Largage rapide",
+          "detail": "Levier de dégagement d'urgence.",
+          "lesson": "urgences-boldface.html",
+          "cmd": "Emergency Quick Release Lever"
+        },
+        {
+          "n": "8",
+          "cat": "sens",
+          "text": "Antenne radar haut",
+          "detail": "Relève l'antenne radar si tu tiens la place arrière.",
+          "lesson": "tour-cockpit-wso.html",
+          "cmd": "[WSO] Antenna Hand Control Slew - Up"
+        },
+        {
+          "n": "9",
+          "cat": "misc",
+          "text": "Regard haut",
+          "detail": "Coup d'œil vers le haut.",
+          "cmd": "Glance up"
+        },
+        {
+          "n": "10",
+          "cat": "misc",
+          "text": "Regard gauche",
+          "detail": "Coup d'œil à gauche.",
+          "cmd": "Glance left"
+        },
+        {
+          "n": "11",
+          "cat": "misc",
+          "text": "Regard droite",
+          "detail": "Coup d'œil à droite.",
+          "cmd": "Glance right"
+        },
+        {
+          "n": "12",
+          "cat": "misc",
+          "text": "Regard bas",
+          "detail": "Coup d'œil aux instruments.",
+          "cmd": "Glance down"
+        },
+        {
+          "n": "13",
+          "cat": "sens",
+          "text": "Antenne radar bas",
+          "detail": "Abaisse l'antenne radar si tu tiens la place arrière.",
+          "lesson": "tour-cockpit-wso.html",
+          "cmd": "[WSO] Antenna Hand Control Slew - Down"
+        },
+        {
+          "n": "14",
+          "cat": "vol",
+          "text": "Frein de secours",
+          "detail": "Freinage pneumatique de secours, sans antidérapant.",
+          "lesson": "urgences-boldface.html",
+          "cmd": "Emergency Wheel Brake - [Toggle]"
+        },
+        {
+          "n": "15",
+          "cat": "vol",
+          "text": "Trim piqué",
+          "detail": "Abaisse le nez.",
+          "lesson": "vol-de-base-afcs.html",
+          "cmd": "Trim - Nose Down (Hat Forward)"
+        },
+        {
+          "n": "16",
+          "cat": "vol",
+          "text": "Trim roulis G",
+          "detail": "Compense une tendance au roulis à droite.",
+          "lesson": "vol-de-base-afcs.html",
+          "cmd": "Trim - Left Wing Down (Hat Left)"
+        },
+        {
+          "n": "17",
+          "cat": "vol",
+          "text": "Trim cabré",
+          "detail": "Relève le nez.",
+          "lesson": "vol-de-base-afcs.html",
+          "cmd": "Trim - Nose Up (Hat Aft)"
+        },
+        {
+          "n": "18",
+          "cat": "vol",
+          "text": "Trim roulis D",
+          "detail": "Compense une tendance au roulis à gauche.",
+          "lesson": "vol-de-base-afcs.html",
+          "cmd": "Trim - Right Wing Down (Hat Right)"
+        },
+        {
+          "n": "19",
+          "cat": "vol",
+          "text": "Trim lacet G",
+          "detail": "Trim de direction à gauche.",
+          "lesson": "vol-de-base-afcs.html",
+          "cmd": "Trim - Rudder Left"
+        },
+        {
+          "n": "20",
+          "cat": "vol",
+          "text": "Trim lacet D",
+          "detail": "Trim de direction à droite.",
+          "lesson": "vol-de-base-afcs.html",
+          "cmd": "Trim - Rudder Right"
+        },
+        {
+          "n": "21",
+          "cat": "misc",
+          "text": "Zoom +",
+          "detail": "Resserre le champ de vision.",
+          "cmd": "Zoom in slow"
+        },
+        {
+          "n": "22",
+          "cat": "misc",
+          "text": "Zoom −",
+          "detail": "Élargit le champ de vision.",
+          "cmd": "Zoom out slow"
+        },
+        {
+          "n": "23",
+          "cat": "misc",
+          "text": "Padlock off",
+          "detail": "Relâche le verrouillage de vue.",
+          "cmd": "Unlock view (stop padlock)"
+        },
+        {
+          "n": "24",
+          "cat": "misc",
+          "text": "Vue extérieure",
+          "detail": "Vue extérieure de l'appareil.",
+          "cmd": "F2 Aircraft view"
+        },
+        {
+          "n": "25",
+          "cat": "comm",
+          "text": "JESTER menu",
+          "detail": "Ouvre le menu JESTER — sinon il faut lâcher le manche.",
+          "lesson": "jester-crew-chief.html",
+          "cmd": "Jester UI Action (short, hold)"
+        },
+        {
+          "n": "26",
+          "cat": "misc",
+          "text": "Vue cockpit",
+          "detail": "Revient à la vue cockpit.",
+          "cmd": "F1 Cockpit view"
+        },
+        {
+          "n": "27",
+          "cat": "comm",
+          "text": "JESTER contextuel",
+          "detail": "Action contextuelle rapide de JESTER.",
+          "lesson": "jester-crew-chief.html",
+          "cmd": "Jester Context Action (short, hold, double click)"
+        },
+        {
+          "n": "28",
+          "cat": "comm",
+          "text": "LEURRES",
+          "detail": "Largue chaff et flares.",
+          "lesson": "rwr-contremesures.html",
+          "cmd": "Dispense Countermeasures (Chaff/Flare)"
+        },
+        {
+          "n": "29",
+          "cat": "vol",
+          "text": "Ravitaillement",
+          "detail": "Déconnecte la perche de ravitaillement.",
+          "lesson": "ravitaillement-vol.html",
+          "cmd": "Air Refueling (AAR) Release Button"
+        },
+        {
+          "n": "30",
+          "cat": "sens",
+          "text": "Antenne radar G",
+          "detail": "Balaye l'antenne vers la gauche.",
+          "lesson": "tour-cockpit-wso.html",
+          "cmd": "[WSO] Antenna Hand Control Slew - Left"
+        },
+        {
+          "n": "31",
+          "cat": "sens",
+          "text": "Antenne radar D",
+          "detail": "Balaye l'antenne vers la droite.",
+          "lesson": "tour-cockpit-wso.html",
+          "cmd": "[WSO] Antenna Hand Control Slew - Right"
+        },
+        {
+          "n": "32",
+          "cat": "vol",
+          "text": "Pilote auto",
+          "detail": "Engage ou coupe le pilote automatique.",
+          "lesson": "vol-de-base-afcs.html",
+          "cmd": "AFCS Autopilot - [Toggle]"
+        }
+      ]
     },
     {
-     "n": "Y",
-     "cat": "vol",
-     "text": "Tangage (profondeur)",
-     "detail": "Cabre ou pique du nez. Courbe recommandée : 5, sans zone morte.",
-     "lesson": "vol-de-base-afcs.html",
-     "cmd": "Pitch"
+      "id": "throttle",
+      "labels": [
+        {
+          "n": "rY",
+          "cat": "vol",
+          "text": "GAZ (les deux)",
+          "detail": "Manette des gaz des deux J79 — c'est elle qui commande le régime.",
+          "lesson": "roulage-decollage.html",
+          "cmd": "Throttle (Both)",
+          "x": 87.13,
+          "y": 10.14,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "rX",
+          "cat": "vol",
+          "text": "Gaz moteur G",
+          "detail": "Réacteur gauche, si tu sépares les deux leviers.",
+          "lesson": "roulage-decollage.html",
+          "cmd": "Throttle (Left)",
+          "x": 87.13,
+          "y": 21.3,
+          "bw": 8.55,
+          "sm": 1
+        },
+        {
+          "n": "rZ",
+          "cat": "misc",
+          "text": "Molette libre",
+          "detail": "Non assignée.",
+          "x": 66.86,
+          "y": 52.74,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "AX1",
+          "cat": "misc",
+          "text": "Molette libre",
+          "detail": "Non assignée.",
+          "x": 9.01,
+          "y": 4.98,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "AX2",
+          "cat": "misc",
+          "text": "Molette libre",
+          "detail": "Non assignée.",
+          "x": 41.3,
+          "y": 4.98,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "AX3",
+          "cat": "misc",
+          "text": "Molette libre",
+          "detail": "Non assignée.",
+          "x": 25.49,
+          "y": 25.57,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "1",
+          "cat": "comm",
+          "text": "Alternat intercom",
+          "detail": "Parle à JESTER en interne — position arrière de l'alternat.",
+          "lesson": "jester-crew-chief.html",
+          "cmd": "Microphone Switch - ICS (Hold)",
+          "x": 5.19,
+          "y": 19.95,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "2",
+          "cat": "sens",
+          "text": "Volume RWR +",
+          "detail": "Monte le volume du détecteur d'alerte radar.",
+          "lesson": "rwr-contremesures.html",
+          "cmd": "RWR Audio Volume - [Inc]",
+          "x": 5.19,
+          "y": 14.35,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "3",
+          "cat": "sens",
+          "text": "Volume RWR −",
+          "detail": "Baisse le volume du RWR.",
+          "lesson": "rwr-contremesures.html",
+          "cmd": "RWR Audio Volume - [Dec]",
+          "x": 5.19,
+          "y": 25.51,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "4",
+          "cat": "comm",
+          "text": "Alternat UHF",
+          "detail": "Émet sur la radio UHF — position avant de l'alternat.",
+          "lesson": "radio-communications.html",
+          "cmd": "Microphone Switch - UHF (Hold)",
+          "x": 5.17,
+          "y": 35.93,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "5",
+          "cat": "comm",
+          "text": "Canal UHF +",
+          "detail": "Canal préréglé suivant.",
+          "lesson": "radio-communications.html",
+          "cmd": "Comm Channel - [Next]",
+          "x": 15.91,
+          "y": 47.1,
+          "bw": 8.61,
+          "sm": 1
+        },
+        {
+          "n": "6",
+          "cat": "comm",
+          "text": "Canal UHF −",
+          "detail": "Canal préréglé précédent.",
+          "lesson": "radio-communications.html",
+          "cmd": "Comm Channel - [Dec]",
+          "x": 15.94,
+          "y": 41.54,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "8",
+          "cat": "arm",
+          "text": "Arme : REJET",
+          "detail": "Position HAUT du sélecteur : rejette le missile et passe au suivant.",
+          "lesson": "bombardement-classique.html",
+          "cmd": "Gun/Missile Pinky Switch - Reject",
+          "x": 61.79,
+          "y": 20.17,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "9",
+          "cat": "arm",
+          "text": "Arme : RADAR",
+          "detail": "Position AVANT : Sparrow.",
+          "lesson": "bombardement-classique.html",
+          "cmd": "Gun/Missile Pinky Switch - Radar",
+          "x": 61.79,
+          "y": 14.57,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "10",
+          "cat": "arm",
+          "text": "Arme : IR",
+          "detail": "Position CENTRE : Sidewinder.",
+          "lesson": "bombardement-classique.html",
+          "cmd": "Gun/Missile Pinky Switch - Heat",
+          "x": 72.56,
+          "y": 20.17,
+          "bw": 8.55,
+          "sm": 1
+        },
+        {
+          "n": "11",
+          "cat": "arm",
+          "text": "Arme : CANON",
+          "detail": "Position ARRIÈRE : canon M61.",
+          "lesson": "roquettes-mitraillage.html",
+          "cmd": "Gun/Missile Pinky Switch - Gun",
+          "x": 61.79,
+          "y": 25.74,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "12",
+          "cat": "arm",
+          "text": "Cage / décage",
+          "detail": "Cage ou décage l'autodirecteur du missile.",
+          "lesson": "bombardement-classique.html",
+          "cmd": "Cage Button",
+          "x": 51.11,
+          "y": 20.17,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "13",
+          "cat": "vol",
+          "text": "Finger lift",
+          "detail": "Franchit le cran de coupure — allumage du réacteur gauche.",
+          "lesson": "demarrage-a-froid.html",
+          "cmd": "Left Engine Ignition",
+          "x": 88.3,
+          "y": 15.74,
+          "bw": 8.55,
+          "sm": 1
+        },
+        {
+          "n": "14",
+          "cat": "vol",
+          "text": "Finger lift D",
+          "detail": "Allumage du réacteur droit.",
+          "lesson": "demarrage-a-froid.html",
+          "cmd": "Right Engine Ignition",
+          "x": 56.61,
+          "y": 41.52,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "16",
+          "cat": "vol",
+          "text": "Aérofrein sort",
+          "detail": "Position AVANT : sort les aérofreins tant que c'est tenu.",
+          "lesson": "vol-de-base-afcs.html",
+          "cmd": "Speed Brake - Out (Hold)",
+          "x": 77.55,
+          "y": 33.64,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "17",
+          "cat": "vol",
+          "text": "Aérofrein stop",
+          "detail": "Position neutre : fige les aérofreins.",
+          "lesson": "vol-de-base-afcs.html",
+          "cmd": "Speed Brake - Stop",
+          "x": 88.3,
+          "y": 33.64,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "18",
+          "cat": "vol",
+          "text": "Aérofrein rentre",
+          "detail": "Position ARRIÈRE : rentre les aérofreins.",
+          "lesson": "vol-de-base-afcs.html",
+          "cmd": "Speed Brake - In",
+          "x": 77.55,
+          "y": 39.2,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "22",
+          "cat": "vol",
+          "text": "Volets : rentrés",
+          "detail": "Volets et becs rentrés.",
+          "lesson": "roulage-decollage.html",
+          "cmd": "Flaps/Slats Switch - Norm",
+          "x": 42.47,
+          "y": 33.64,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "23",
+          "cat": "vol",
+          "text": "Volets : becs",
+          "detail": "Becs sortis.",
+          "lesson": "roulage-decollage.html",
+          "cmd": "Flaps/Slats Switch - Out",
+          "x": 42.47,
+          "y": 39.2,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "24",
+          "cat": "vol",
+          "text": "Volets : approche",
+          "detail": "Configuration d'approche complète.",
+          "lesson": "retour-atterrissage.html",
+          "cmd": "Flaps/Slats Switch - Out&Down",
+          "x": 31.78,
+          "y": 33.64,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "28",
+          "cat": "misc",
+          "text": "Regard haut",
+          "detail": "Coup d'œil vers le haut.",
+          "cmd": "Glance up",
+          "x": 77.55,
+          "y": 58.3,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "29",
+          "cat": "misc",
+          "text": "Regard gauche",
+          "detail": "Coup d'œil à gauche.",
+          "cmd": "Glance left",
+          "x": 65.55,
+          "y": 69.35,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "30",
+          "cat": "misc",
+          "text": "Regard droite",
+          "detail": "Coup d'œil à droite.",
+          "cmd": "Glance right",
+          "x": 77.55,
+          "y": 47.14,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "31",
+          "cat": "misc",
+          "text": "Regard bas",
+          "detail": "Coup d'œil aux instruments.",
+          "cmd": "Glance down",
+          "x": 88.3,
+          "y": 52.74,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "33",
+          "cat": "vol",
+          "text": "Parachute frein",
+          "detail": "Déploie le parachute de freinage à l'atterrissage.",
+          "lesson": "retour-atterrissage.html",
+          "cmd": "Drag-Parachute - Deploy",
+          "x": 77.55,
+          "y": 67.05,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "34",
+          "cat": "vol",
+          "text": "Parachute largué",
+          "detail": "Largue le parachute une fois arrêté.",
+          "lesson": "retour-atterrissage.html",
+          "cmd": "Drag-Parachute - In",
+          "x": 42.47,
+          "y": 53.99,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "36",
+          "cat": "arm",
+          "text": "MASTER ARM",
+          "detail": "Arme le circuit de tir.",
+          "lesson": "bombardement-classique.html",
+          "cmd": "Master Arm - Arm",
+          "x": 26.65,
+          "y": 59.63,
+          "bw": 8.61,
+          "sm": 1
+        },
+        {
+          "n": "37",
+          "cat": "arm",
+          "text": "Master arm sécu",
+          "detail": "Coupe le circuit de tir.",
+          "lesson": "preparer-module-controles.html",
+          "cmd": "Master Arm - Safe",
+          "x": 26.71,
+          "y": 72.07,
+          "bw": 8.55,
+          "sm": 1
+        },
+        {
+          "n": "44",
+          "cat": "vol",
+          "text": "Feux ext. ON",
+          "detail": "Allume les feux de position.",
+          "cmd": "Tail-Position Lights - Bright",
+          "x": 5.19,
+          "y": 66.47,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "45",
+          "cat": "vol",
+          "text": "Feux ext. OFF",
+          "detail": "Éteint les feux de position.",
+          "cmd": "Tail-Position Lights - Off",
+          "x": 5.19,
+          "y": 72.07,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "46",
+          "cat": "vol",
+          "text": "Réchauffage Pitot ON",
+          "detail": "Évite le givrage anémométrique.",
+          "lesson": "preparer-module-controles.html",
+          "cmd": "Pitot Heat - On",
+          "x": 15.94,
+          "y": 66.47,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "47",
+          "cat": "vol",
+          "text": "Réchauffage Pitot OFF",
+          "detail": "Coupe le réchauffage Pitot.",
+          "lesson": "preparer-module-controles.html",
+          "cmd": "Pitot Heat - Off",
+          "x": 15.94,
+          "y": 72.07,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "48",
+          "cat": "vol",
+          "text": "Verrière ouvre",
+          "detail": "Ouvre la verrière au sol.",
+          "lesson": "preparer-module-controles.html",
+          "cmd": "Canopy Handle - Open",
+          "x": 26.65,
+          "y": 54.03,
+          "bw": 8.61,
+          "sm": 1
+        },
+        {
+          "n": "49",
+          "cat": "vol",
+          "text": "Verrière ferme",
+          "detail": "Ferme la verrière.",
+          "lesson": "preparer-module-controles.html",
+          "cmd": "Canopy Handle - Close",
+          "x": 26.68,
+          "y": 66.47,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "52",
+          "cat": "sens",
+          "text": "RWR luminosité +",
+          "detail": "Monte la luminosité de l'écran RWR.",
+          "lesson": "rwr-contremesures.html",
+          "cmd": "RWR Display Brightness - [Inc]",
+          "x": 10.32,
+          "y": 82.22,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "53",
+          "cat": "sens",
+          "text": "RWR luminosité −",
+          "detail": "Baisse la luminosité de l'écran RWR.",
+          "lesson": "rwr-contremesures.html",
+          "cmd": "RWR Display Brightness - [Dec]",
+          "x": 21.1,
+          "y": 87.83,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "7",
+          "cat": "comm",
+          "text": "Menu radio",
+          "detail": "Ouvre le menu de communication DCS.",
+          "lesson": "radio-communications.html",
+          "cmd": "Communication menu",
+          "x": 15.91,
+          "y": 35.93,
+          "bw": 8.61,
+          "sm": 1
+        },
+        {
+          "n": "15",
+          "cat": "vol",
+          "text": "Coupure moteur G",
+          "detail": "Coupe ou rétablit l'alimentation du réacteur gauche.",
+          "lesson": "demarrage-a-froid.html",
+          "cmd": "Left Engine Master Switch - [Toggle]",
+          "x": 56.61,
+          "y": 47.12,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "19",
+          "cat": "sens",
+          "text": "RWR marche",
+          "detail": "Met le détecteur d'alerte radar sous tension.",
+          "lesson": "rwr-contremesures.html",
+          "cmd": "RWR Power Button",
+          "x": 66.86,
+          "y": 33.64,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "20",
+          "cat": "sens",
+          "text": "RWR autotest",
+          "detail": "Lance l'autotest du RWR.",
+          "lesson": "rwr-contremesures.html",
+          "cmd": "RWR BIT Button",
+          "x": 77.55,
+          "y": 28.03,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "21",
+          "cat": "vol",
+          "text": "Antidérapant",
+          "detail": "Active ou coupe l'antidérapant au freinage.",
+          "lesson": "roulage-decollage.html",
+          "cmd": "Anti-Skid - [Toggle]",
+          "x": 88.27,
+          "y": 64.79,
+          "bw": 8.61,
+          "sm": 1
+        },
+        {
+          "n": "25",
+          "cat": "arm",
+          "text": "Sécurité armement",
+          "detail": "Bascule le circuit de tir.",
+          "lesson": "bombardement-classique.html",
+          "cmd": "Master Arm - [Toggle]",
+          "x": 42.47,
+          "y": 28.03,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "26",
+          "cat": "arm",
+          "text": "Bouton largage",
+          "detail": "Déclenche le largage sélectif.",
+          "lesson": "bombardement-classique.html",
+          "cmd": "Jettison Button",
+          "x": 53.21,
+          "y": 33.64,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "27",
+          "cat": "arm",
+          "text": "Largage urgence",
+          "detail": "Largage d'urgence de tous les emports.",
+          "lesson": "urgences-boldface.html",
+          "cmd": "External Stores Emergency Release",
+          "x": 77.55,
+          "y": 52.74,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "32",
+          "cat": "misc",
+          "text": "Vue centrée",
+          "detail": "Recentre la vue.",
+          "cmd": "View Center",
+          "x": 42.47,
+          "y": 47.12,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "35",
+          "cat": "vol",
+          "text": "Crosse",
+          "detail": "Sort ou rentre la crosse d'arrêt.",
+          "lesson": "urgences-boldface.html",
+          "cmd": "Arresting Hook Control Handle - [Toggle]",
+          "x": 42.47,
+          "y": 61.93,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "50",
+          "cat": "vol",
+          "text": "Feux formation",
+          "detail": "Fait défiler les modes de feux de formation.",
+          "cmd": "Formation Lights Mode - [Next]",
+          "x": 10.32,
+          "y": 87.83,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "51",
+          "cat": "vol",
+          "text": "Éclairage +",
+          "detail": "Monte l'éclairage de la planche.",
+          "cmd": "Instrument Panel Light Brightness - [Inc]",
+          "x": 10.32,
+          "y": 93.39,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "54",
+          "cat": "vol",
+          "text": "Éclairage −",
+          "detail": "Baisse l'éclairage de la planche.",
+          "cmd": "Instrument Panel Light Brightness - [Dec]",
+          "x": 21.1,
+          "y": 93.39,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "55",
+          "cat": "misc",
+          "text": "Kneeboard",
+          "detail": "Ouvre ou ferme la planchette.",
+          "cmd": "Kneeboard ON/OFF",
+          "x": 21.1,
+          "y": 82.22,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "38",
+          "cat": "misc",
+          "text": "B1",
+          "detail": null,
+          "x": 66.72,
+          "y": 77.4,
+          "bw": 8.55,
+          "sm": 1
+        },
+        {
+          "n": "39",
+          "cat": "misc",
+          "text": "B2",
+          "detail": null,
+          "x": 77.41,
+          "y": 77.4,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "40",
+          "cat": "misc",
+          "text": "B3",
+          "detail": null,
+          "x": 88.24,
+          "y": 77.4,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "41",
+          "cat": "misc",
+          "text": "B4",
+          "detail": null,
+          "x": 66.72,
+          "y": 85.4,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "42",
+          "cat": "misc",
+          "text": "B5",
+          "detail": null,
+          "x": 77.41,
+          "y": 85.4,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "43",
+          "cat": "misc",
+          "text": "B6",
+          "detail": null,
+          "x": 88.27,
+          "y": 85.4,
+          "bw": 8.55,
+          "sm": 1
+        },
+        {
+          "n": "OFF",
+          "cat": "misc",
+          "text": "Blanc",
+          "detail": "Position repos : page Sol et mise en route.",
+          "x": 34.63,
+          "y": 93.37,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "M1",
+          "cat": "misc",
+          "text": "Bleu",
+          "detail": "Page Air-air.",
+          "x": 45.32,
+          "y": 93.37,
+          "bw": 8.58,
+          "sm": 1
+        },
+        {
+          "n": "M2",
+          "cat": "misc",
+          "text": "Vert",
+          "detail": "Page Air-sol.",
+          "x": 56.04,
+          "y": 93.37,
+          "bw": 8.55,
+          "sm": 1
+        },
+        {
+          "n": "M3",
+          "cat": "misc",
+          "text": "Rouge",
+          "detail": "Page Urgences et défense.",
+          "x": 66.69,
+          "y": 93.37,
+          "bw": 8.61,
+          "sm": 1
+        },
+        {
+          "n": "M4",
+          "cat": "misc",
+          "text": "Jaune",
+          "detail": "Page Navigation.",
+          "x": 77.41,
+          "y": 93.37,
+          "bw": 8.55,
+          "sm": 1
+        }
+      ],
+      "pages": {
+        "OFF": {
+          "38": {
+            "real": 38,
+            "s": "Cales retirées",
+            "f": "Le chef de piste retire les cales.",
+            "cmd": "Crew Chief Command: Wheel Chocks > Remove",
+            "lesson": "jester-crew-chief.html"
+          },
+          "39": {
+            "real": 39,
+            "s": "Cales placées",
+            "f": "Le chef de piste place les cales au parking.",
+            "cmd": "Crew Chief Command: Wheel Chocks > Place",
+            "lesson": "jester-crew-chief.html"
+          },
+          "40": {
+            "real": 40,
+            "s": "Alim. ext. ON",
+            "f": "Branche le groupe de parc.",
+            "cmd": "Crew Chief Command: External Power > Connect",
+            "lesson": "demarrage-a-froid.html"
+          },
+          "41": {
+            "real": 41,
+            "s": "Alim. ext. OFF",
+            "f": "Débranche le groupe de parc avant de rouler.",
+            "cmd": "Crew Chief Command: External Power > Disconnect",
+            "lesson": "demarrage-a-froid.html"
+          },
+          "42": {
+            "real": 42,
+            "s": "Air démarrage",
+            "f": "Lance le débit d'air de démarrage.",
+            "cmd": "Crew Chief Command: Air Source > Start Flow",
+            "lesson": "demarrage-a-froid.html"
+          },
+          "43": {
+            "real": 43,
+            "s": "Alignement INS",
+            "f": "JESTER lance l'alignement de la centrale inertielle.",
+            "cmd": "Jester Command: Crew Contract > Start Alignment",
+            "lesson": "alignement-ins.html"
+          },
+          "theme": "Sol et mise en route — ce qui sert avant de rouler : équipe de piste, alignement."
+        },
+        "M1": {
+          "38": {
+            "real": 56,
+            "s": "Radar actif",
+            "f": "JESTER passe le radar en émission.",
+            "cmd": "Jester Command: Radar > Operation > Active",
+            "lesson": "jester-crew-chief.html"
+          },
+          "39": {
+            "real": 57,
+            "s": "Radar veille",
+            "f": "Radar en veille : plus d'émission détectable.",
+            "cmd": "Jester Command: Radar > Operation > Standby",
+            "lesson": "jester-crew-chief.html"
+          },
+          "40": {
+            "real": 58,
+            "s": "Balayage 25 large",
+            "f": "Balayage 25 nm en secteur large.",
+            "cmd": "Jester Command: Radar > Scan Type > 25nm Wide",
+            "lesson": "jester-crew-chief.html"
+          },
+          "41": {
+            "real": 59,
+            "s": "Balayage 50 large",
+            "f": "Balayage 50 nm en secteur large.",
+            "cmd": "Jester Command: Radar > Scan Type > 50nm Wide",
+            "lesson": "jester-crew-chief.html"
+          },
+          "42": {
+            "real": 60,
+            "s": "Élévation centrée",
+            "f": "Recentre le balayage sur l'horizon.",
+            "cmd": "Jester Command: Radar > Scan Elevation > Center",
+            "lesson": "jester-crew-chief.html"
+          },
+          "43": {
+            "real": 61,
+            "s": "Boresight",
+            "f": "Passe en acquisition boresight pour un verrouillage rapproché.",
+            "cmd": "Jester Command: Radar > Boresight > Enter BST",
+            "lesson": "jester-crew-chief.html"
+          },
+          "theme": "Air-air — le radar, que JESTER opère depuis la place arrière."
+        },
+        "M2": {
+          "38": {
+            "real": 62,
+            "s": "Vidéo : armes",
+            "f": "Bascule la source vidéo sur l'arme.",
+            "cmd": "Jester Command: A2G > Video Source > Weapons",
+            "lesson": "armes-guidage-tv.html"
+          },
+          "39": {
+            "real": 63,
+            "s": "Vidéo : Pave Spike",
+            "f": "Bascule la source vidéo sur le pod de désignation.",
+            "cmd": "Jester Command: A2G > Video Source > Pave Spike",
+            "lesson": "pave-spike-guidage.html"
+          },
+          "40": {
+            "real": 64,
+            "s": "Pave Spike prêt",
+            "f": "Met le pod en service.",
+            "cmd": "Jester Command: A2G > Pave Spike > Operation > Ready",
+            "lesson": "pave-spike-guidage.html"
+          },
+          "41": {
+            "real": 65,
+            "s": "Pave Spike veille",
+            "f": "Remet le pod en veille.",
+            "cmd": "Jester Command: A2G > Pave Spike > Operation > Standby",
+            "lesson": "pave-spike-guidage.html"
+          },
+          "42": {
+            "real": 66,
+            "s": "Largage direct",
+            "f": "Mode de largage direct, viseur fixe.",
+            "cmd": "Delivery Mode - Direct",
+            "lesson": "bombardement-classique.html"
+          },
+          "43": {
+            "real": 67,
+            "s": "Largage différé",
+            "f": "Mode DL : largage retardé calculé.",
+            "cmd": "Delivery Mode - DL",
+            "lesson": "bombardement-classique.html"
+          },
+          "theme": "Air-sol — désignation, Pave Spike et mode de largage."
+        },
+        "M3": {
+          "38": {
+            "real": 68,
+            "s": "Brouilleur ON",
+            "f": "Le brouilleur émet — attention, ça vous désigne aussi.",
+            "cmd": "Jester Command: Systems > Jammer > Transmit",
+            "lesson": "rwr-contremesures.html"
+          },
+          "39": {
+            "real": 69,
+            "s": "Brouilleur veille",
+            "f": "Coupe l'émission du brouilleur.",
+            "cmd": "Jester Command: Systems > Jammer > Standby",
+            "lesson": "rwr-contremesures.html"
+          },
+          "40": {
+            "real": 70,
+            "s": "Flares : simple",
+            "f": "Largage de flares un par un.",
+            "cmd": "Jester Command: Systems > Flare Mode > Single",
+            "lesson": "rwr-contremesures.html"
+          },
+          "41": {
+            "real": 71,
+            "s": "Flares : programme",
+            "f": "Largage de flares selon le programme.",
+            "cmd": "Jester Command: Systems > Flare Mode > Program",
+            "lesson": "rwr-contremesures.html"
+          },
+          "42": {
+            "real": 72,
+            "s": "Flares OFF",
+            "f": "Coupe le largage automatique de flares.",
+            "cmd": "Jester Command: Systems > Flare Mode > Off",
+            "lesson": "rwr-contremesures.html"
+          },
+          "43": {
+            "real": 73,
+            "s": "AVTR enregistre",
+            "f": "Lance l'enregistrement vidéo pour le débriefing.",
+            "cmd": "Jester Command: Systems > AVTR > Record",
+            "lesson": "avtr-debriefing.html"
+          },
+          "theme": "Urgences et défense — page fixe, atteignable sans réfléchir à la phase de vol."
+        },
+        "M4": {
+          "38": {
+            "real": 74,
+            "s": "TACAN T/R",
+            "f": "TACAN en émission-réception : relèvement et distance.",
+            "cmd": "Jester Command: Navigation > Tacan > Mode > T/R",
+            "lesson": "navigation-tacan-ins.html"
+          },
+          "39": {
+            "real": 75,
+            "s": "TACAN réception",
+            "f": "TACAN en réception seule : relèvement, sans émettre.",
+            "cmd": "Jester Command: Navigation > Tacan > Mode > R",
+            "lesson": "navigation-tacan-ins.html"
+          },
+          "40": {
+            "real": 76,
+            "s": "TACAN A/A",
+            "f": "Mode air-air : distance à un autre appareil équipé.",
+            "cmd": "Jester Command: Navigation > Tacan > Mode > A/A T/R",
+            "lesson": "navigation-tacan-ins.html"
+          },
+          "41": {
+            "real": 77,
+            "s": "TACAN OFF",
+            "f": "Coupe le TACAN.",
+            "cmd": "Jester Command: Navigation > Tacan > Mode > Off",
+            "lesson": "navigation-tacan-ins.html"
+          },
+          "42": {
+            "real": 78,
+            "s": "Point tournant +",
+            "f": "Passe au point tournant suivant.",
+            "cmd": "Jester Command: Navigation > Go To Resume > Next Turn Point",
+            "lesson": "navigation-tacan-ins.html"
+          },
+          "43": {
+            "real": 79,
+            "s": "Réaligner INS",
+            "f": "Réalignement fin de la centrale en vol.",
+            "cmd": "Jester Command: Navigation > Fine-Align INS",
+            "lesson": "alignement-ins.html"
+          },
+          "theme": "Navigation — TACAN et points tournants."
+        }
+      }
     },
     {
-     "n": "Z",
-     "cat": "vol",
-     "text": "LACET (twist)",
-     "detail": "Palonnier. Courbe recommandée : 0, sans zone morte.",
-     "lesson": "roulage-decollage.html",
-     "cmd": "Rudder"
-    },
-    {
-     "n": "SLDR",
-     "cat": "vol",
-     "text": "Freins de roues",
-     "detail": "Gâchette avant : freine les deux roues ensemble.",
-     "lesson": "roulage-decollage.html",
-     "cmd": "Wheel Brake (Both)"
-    },
-    {
-     "n": "rX",
-     "cat": "arm",
-     "text": "Curseur d'arme X",
-     "detail": "Mini-stick du pouce : déplace le curseur d'arme à l'horizontale (Pave Spike, désignation).",
-     "lesson": "pave-spike-guidage.html",
-     "cmd": "Weapon Slew (Forward Hand Control) X"
-    },
-    {
-     "n": "rY",
-     "cat": "arm",
-     "text": "Curseur d'arme Y",
-     "detail": "Mini-stick du pouce, axe vertical — à inverser dans DCS.",
-     "lesson": "pave-spike-guidage.html",
-     "cmd": "Weapon Slew (Forward Hand Control) Y"
-    },
-    {
-     "n": "1",
-     "cat": "arm",
-     "text": "LARGAGE BOMBES",
-     "detail": "Largue les bombes selon le mode réglé.",
-     "lesson": "bombardement-classique.html",
-     "cmd": "Bomb Release Button"
-    },
-    {
-     "n": "2",
-     "cat": "misc",
-     "text": "Vue centrée",
-     "detail": "Recentre la vue.",
-     "cmd": "View Center"
-    },
-    {
-     "n": "3",
-     "cat": "misc",
-     "text": "Rétroviseurs",
-     "detail": "Affiche ou masque les rétroviseurs.",
-     "cmd": "Mirrors - [Toggle]"
-    },
-    {
-     "n": "4",
-     "cat": "arm",
-     "text": "Détente 1er cran",
-     "detail": "Premier cran : prépare le tir.",
-     "lesson": "roquettes-mitraillage.html",
-     "cmd": "Flight Stick Trigger (Gun, Missiles) - Half Action (button)"
-    },
-    {
-     "n": "5",
-     "cat": "arm",
-     "text": "FEU",
-     "detail": "Tir canon ou missile selon l'arme sélectionnée.",
-     "lesson": "roquettes-mitraillage.html",
-     "cmd": "Flight Stick Trigger (Gun, Missiles) - Full Action (button)"
-    },
-    {
-     "n": "6",
-     "cat": "vol",
-     "text": "ROULETTE DE NEZ",
-     "detail": "Direction de roulette au sol, acquisition automatique en vol — le bouton le plus utilisé du manche.",
-     "lesson": "roulage-decollage.html",
-     "cmd": "Nose Gear Steering / Auto Acquisition Button"
-    },
-    {
-     "n": "7",
-     "cat": "vol",
-     "text": "Largage rapide",
-     "detail": "Levier de dégagement d'urgence.",
-     "lesson": "urgences-boldface.html",
-     "cmd": "Emergency Quick Release Lever"
-    },
-    {
-     "n": "8",
-     "cat": "sens",
-     "text": "Antenne radar haut",
-     "detail": "Relève l'antenne radar si tu tiens la place arrière.",
-     "lesson": "tour-cockpit-wso.html",
-     "cmd": "[WSO] Antenna Hand Control Slew - Up"
-    },
-    {
-     "n": "9",
-     "cat": "misc",
-     "text": "Regard haut",
-     "detail": "Coup d'œil vers le haut.",
-     "cmd": "Glance up"
-    },
-    {
-     "n": "10",
-     "cat": "misc",
-     "text": "Regard gauche",
-     "detail": "Coup d'œil à gauche.",
-     "cmd": "Glance left"
-    },
-    {
-     "n": "11",
-     "cat": "misc",
-     "text": "Regard droite",
-     "detail": "Coup d'œil à droite.",
-     "cmd": "Glance right"
-    },
-    {
-     "n": "12",
-     "cat": "misc",
-     "text": "Regard bas",
-     "detail": "Coup d'œil aux instruments.",
-     "cmd": "Glance down"
-    },
-    {
-     "n": "13",
-     "cat": "sens",
-     "text": "Antenne radar bas",
-     "detail": "Abaisse l'antenne radar si tu tiens la place arrière.",
-     "lesson": "tour-cockpit-wso.html",
-     "cmd": "[WSO] Antenna Hand Control Slew - Down"
-    },
-    {
-     "n": "14",
-     "cat": "vol",
-     "text": "Frein de secours",
-     "detail": "Freinage pneumatique de secours, sans antidérapant.",
-     "lesson": "urgences-boldface.html",
-     "cmd": "Emergency Wheel Brake - [Toggle]"
-    },
-    {
-     "n": "15",
-     "cat": "vol",
-     "text": "Trim piqué",
-     "detail": "Abaisse le nez.",
-     "lesson": "vol-de-base-afcs.html",
-     "cmd": "Trim - Nose Down (Hat Forward)"
-    },
-    {
-     "n": "16",
-     "cat": "vol",
-     "text": "Trim roulis G",
-     "detail": "Compense une tendance au roulis à droite.",
-     "lesson": "vol-de-base-afcs.html",
-     "cmd": "Trim - Left Wing Down (Hat Left)"
-    },
-    {
-     "n": "17",
-     "cat": "vol",
-     "text": "Trim cabré",
-     "detail": "Relève le nez.",
-     "lesson": "vol-de-base-afcs.html",
-     "cmd": "Trim - Nose Up (Hat Aft)"
-    },
-    {
-     "n": "18",
-     "cat": "vol",
-     "text": "Trim roulis D",
-     "detail": "Compense une tendance au roulis à gauche.",
-     "lesson": "vol-de-base-afcs.html",
-     "cmd": "Trim - Right Wing Down (Hat Right)"
-    },
-    {
-     "n": "19",
-     "cat": "vol",
-     "text": "Trim lacet G",
-     "detail": "Trim de direction à gauche.",
-     "lesson": "vol-de-base-afcs.html",
-     "cmd": "Trim - Rudder Left"
-    },
-    {
-     "n": "20",
-     "cat": "vol",
-     "text": "Trim lacet D",
-     "detail": "Trim de direction à droite.",
-     "lesson": "vol-de-base-afcs.html",
-     "cmd": "Trim - Rudder Right"
-    },
-    {
-     "n": "21",
-     "cat": "misc",
-     "text": "Zoom +",
-     "detail": "Resserre le champ de vision.",
-     "cmd": "Zoom in slow"
-    },
-    {
-     "n": "22",
-     "cat": "misc",
-     "text": "Zoom −",
-     "detail": "Élargit le champ de vision.",
-     "cmd": "Zoom out slow"
-    },
-    {
-     "n": "23",
-     "cat": "misc",
-     "text": "Padlock off",
-     "detail": "Relâche le verrouillage de vue.",
-     "cmd": "Unlock view (stop padlock)"
-    },
-    {
-     "n": "24",
-     "cat": "misc",
-     "text": "Vue extérieure",
-     "detail": "Vue extérieure de l'appareil.",
-     "cmd": "F2 Aircraft view"
-    },
-    {
-     "n": "25",
-     "cat": "comm",
-     "text": "JESTER menu",
-     "detail": "Ouvre le menu JESTER — sinon il faut lâcher le manche.",
-     "lesson": "jester-crew-chief.html",
-     "cmd": "Jester UI Action (short, hold)"
-    },
-    {
-     "n": "26",
-     "cat": "misc",
-     "text": "Vue cockpit",
-     "detail": "Revient à la vue cockpit.",
-     "cmd": "F1 Cockpit view"
-    },
-    {
-     "n": "27",
-     "cat": "comm",
-     "text": "JESTER contextuel",
-     "detail": "Action contextuelle rapide de JESTER.",
-     "lesson": "jester-crew-chief.html",
-     "cmd": "Jester Context Action (short, hold, double click)"
-    },
-    {
-     "n": "28",
-     "cat": "comm",
-     "text": "LEURRES",
-     "detail": "Largue chaff et flares.",
-     "lesson": "rwr-contremesures.html",
-     "cmd": "Dispense Countermeasures (Chaff/Flare)"
-    },
-    {
-     "n": "29",
-     "cat": "vol",
-     "text": "Ravitaillement",
-     "detail": "Déconnecte la perche de ravitaillement.",
-     "lesson": "ravitaillement-vol.html",
-     "cmd": "Air Refueling (AAR) Release Button"
-    },
-    {
-     "n": "30",
-     "cat": "sens",
-     "text": "Antenne radar G",
-     "detail": "Balaye l'antenne vers la gauche.",
-     "lesson": "tour-cockpit-wso.html",
-     "cmd": "[WSO] Antenna Hand Control Slew - Left"
-    },
-    {
-     "n": "31",
-     "cat": "sens",
-     "text": "Antenne radar D",
-     "detail": "Balaye l'antenne vers la droite.",
-     "lesson": "tour-cockpit-wso.html",
-     "cmd": "[WSO] Antenna Hand Control Slew - Right"
-    },
-    {
-     "n": "32",
-     "cat": "vol",
-     "text": "Pilote auto",
-     "detail": "Engage ou coupe le pilote automatique.",
-     "lesson": "vol-de-base-afcs.html",
-     "cmd": "AFCS Autopilot - [Toggle]"
+      "id": "pto2",
+      "labels": [
+        {
+          "n": "1",
+          "cat": "comm",
+          "text": "Leurres : programme",
+          "detail": "Bascule le programme de leurres entre Normal et Flares.",
+          "lesson": "rwr-contremesures.html",
+          "cmd": "Dispense Program - [Toggle]"
+        },
+        {
+          "n": "2",
+          "cat": "vol",
+          "text": "Reset M.Caution",
+          "detail": "Éteint le voyant Master Caution après lecture de la panne.",
+          "lesson": "urgences-boldface.html",
+          "cmd": "Master Caution Reset"
+        },
+        {
+          "n": "3",
+          "cat": "vol",
+          "text": "Frein secours OFF",
+          "detail": "Désactive le frein de secours.",
+          "lesson": "urgences-boldface.html",
+          "cmd": "Emergency Wheel Brake - Deactivate"
+        },
+        {
+          "n": "4",
+          "cat": "vol",
+          "text": "Frein secours ON",
+          "detail": "Active le frein de secours (perte du freinage normal).",
+          "lesson": "urgences-boldface.html",
+          "cmd": "Emergency Wheel Brake - Activate"
+        },
+        {
+          "n": "5",
+          "cat": "vol",
+          "text": "VOLETS rentrés",
+          "detail": "Position Norm — volets et becs rentrés.",
+          "lesson": "roulage-decollage.html",
+          "cmd": "Flaps/Slats Switch - Norm"
+        },
+        {
+          "n": "6",
+          "cat": "vol",
+          "text": "VOLETS sortis",
+          "detail": "Position Out — becs sortis.",
+          "lesson": "roulage-decollage.html",
+          "cmd": "Flaps/Slats Switch - Out"
+        },
+        {
+          "n": "7",
+          "cat": "vol",
+          "text": "VOLETS + becs",
+          "detail": "Position Out&Down — volets et becs sortis, configuration d'approche.",
+          "lesson": "retour-atterrissage.html",
+          "cmd": "Flaps/Slats Switch - Out&Down"
+        },
+        {
+          "n": "8",
+          "cat": "vol",
+          "text": "Phare roulage ON",
+          "detail": "Allume le phare de roulage.",
+          "lesson": "roulage-decollage.html",
+          "cmd": "Taxi/Landing Light - Taxi Light"
+        },
+        {
+          "n": "9",
+          "cat": "vol",
+          "text": "Phares OFF",
+          "detail": "Éteint phare de roulage et phare d'atterrissage.",
+          "lesson": "roulage-decollage.html",
+          "cmd": "Taxi/Landing Light - Off"
+        },
+        {
+          "n": "10",
+          "cat": "vol",
+          "text": "Antidérapant ON",
+          "detail": "Active l'antidérapant au freinage.",
+          "lesson": "roulage-decollage.html",
+          "cmd": "Anti-Skid - On"
+        },
+        {
+          "n": "11",
+          "cat": "vol",
+          "text": "Antidérapant OFF",
+          "detail": "Coupe l'antidérapant.",
+          "lesson": "roulage-decollage.html",
+          "cmd": "Anti-Skid - Off"
+        },
+        {
+          "n": "12",
+          "cat": "vol",
+          "text": "Réchauffage Pitot ON",
+          "detail": "Active le réchauffage de la sonde Pitot — évite le givrage anémométrique.",
+          "lesson": "preparer-module-controles.html",
+          "cmd": "Pitot Heat - On"
+        },
+        {
+          "n": "13",
+          "cat": "vol",
+          "text": "Réchauffage Pitot OFF",
+          "detail": "Coupe le réchauffage Pitot.",
+          "lesson": "preparer-module-controles.html",
+          "cmd": "Pitot Heat - Off"
+        },
+        {
+          "n": "14",
+          "cat": "vol",
+          "text": "Ravito : sortir",
+          "detail": "Sort le contact du réceptacle de ravitaillement en vol.",
+          "lesson": "ravitaillement-vol.html",
+          "cmd": "Air Refuel Switch - Extend"
+        },
+        {
+          "n": "15",
+          "cat": "vol",
+          "text": "Ravito : rentrer",
+          "detail": "Rentre le contact du réceptacle.",
+          "lesson": "ravitaillement-vol.html",
+          "cmd": "Air Refuel Switch - Retract"
+        },
+        {
+          "n": "16",
+          "cat": "vol",
+          "text": "Réservoirs : tous",
+          "detail": "Sélectionne tous les réservoirs pour le ravitaillement.",
+          "lesson": "ravitaillement-vol.html",
+          "cmd": "Select Tank to Refuel - All Tanks"
+        },
+        {
+          "n": "17",
+          "cat": "arm",
+          "text": "Largage : OFF",
+          "detail": "Position OFF du sélecteur de largage — rien ne se largue.",
+          "lesson": "preparer-module-controles.html",
+          "cmd": "Jettison Selector - Off"
+        },
+        {
+          "n": "18",
+          "cat": "arm",
+          "text": "Largage : emports",
+          "detail": "Sélectionne tous les emports pour le largage.",
+          "lesson": "bombardement-classique.html",
+          "cmd": "Jettison Selector - Stores"
+        },
+        {
+          "n": "19",
+          "cat": "arm",
+          "text": "Largage : aile G",
+          "detail": "Sélectionne l'aile gauche pour le largage.",
+          "lesson": "bombardement-classique.html",
+          "cmd": "Jettison Selector - Left Wing"
+        },
+        {
+          "n": "20",
+          "cat": "arm",
+          "text": "Largage : aile D",
+          "detail": "Sélectionne l'aile droite pour le largage.",
+          "lesson": "bombardement-classique.html",
+          "cmd": "Jettison Selector - Right Wing"
+        },
+        {
+          "n": "21",
+          "cat": "arm",
+          "text": "LARGAGE",
+          "detail": "Déclenche le largage une fois le sélecteur positionné.",
+          "lesson": "bombardement-classique.html",
+          "cmd": "Jettison Button"
+        },
+        {
+          "n": "22",
+          "cat": "arm",
+          "text": "Largage d'urgence",
+          "detail": "Largage d'urgence général de tous les emports.",
+          "lesson": "urgences-boldface.html",
+          "cmd": "External Stores Emergency Release"
+        },
+        {
+          "n": "23",
+          "cat": "arm",
+          "text": "MASTER ARM safe",
+          "detail": "Circuit de tir coupé — position sécurité au roulage.",
+          "lesson": "preparer-module-controles.html",
+          "cmd": "Master Arm - Safe"
+        },
+        {
+          "n": "24",
+          "cat": "arm",
+          "text": "MASTER ARM armé",
+          "detail": "Arme le circuit de tir — sans ça, ni canon ni largage ne fonctionnent.",
+          "lesson": "bombardement-classique.html",
+          "cmd": "Master Arm - Arm"
+        },
+        {
+          "n": "25",
+          "cat": "sens",
+          "text": "RWR marche",
+          "detail": "Met sous tension le détecteur d'alerte radar.",
+          "lesson": "rwr-contremesures.html",
+          "cmd": "RWR Power Button"
+        },
+        {
+          "n": "26",
+          "cat": "sens",
+          "text": "RWR autotest",
+          "detail": "Lance l'autotest du RWR.",
+          "lesson": "rwr-contremesures.html",
+          "cmd": "RWR BIT Button"
+        },
+        {
+          "n": "27",
+          "cat": "vol",
+          "text": "Verrière : largage",
+          "detail": "Largage d'urgence de la verrière.",
+          "lesson": "urgences-boldface.html",
+          "cmd": "Canopy Emergency Handle - Jettison"
+        },
+        {
+          "n": "28",
+          "cat": "comm",
+          "text": "Chaff : OFF",
+          "detail": "Coupe le largage automatique de chaff par JESTER.",
+          "lesson": "rwr-contremesures.html",
+          "cmd": "Jester Command: Systems > Chaff Mode > Off"
+        },
+        {
+          "n": "29",
+          "cat": "comm",
+          "text": "Chaff : simple",
+          "detail": "JESTER largue le chaff par salve unique.",
+          "lesson": "rwr-contremesures.html",
+          "cmd": "Jester Command: Systems > Chaff Mode > Single"
+        },
+        {
+          "n": "30",
+          "cat": "comm",
+          "text": "Chaff : multiple",
+          "detail": "JESTER largue le chaff par salves répétées.",
+          "lesson": "rwr-contremesures.html",
+          "cmd": "Jester Command: Systems > Chaff Mode > Multiple"
+        },
+        {
+          "n": "31",
+          "cat": "comm",
+          "text": "Chaff : programme",
+          "detail": "JESTER suit le programme de largage préréglé.",
+          "lesson": "rwr-contremesures.html",
+          "cmd": "Jester Command: Systems > Chaff Mode > Program"
+        },
+        {
+          "n": "32",
+          "cat": "vol",
+          "text": "CROSSE sortie",
+          "detail": "Sort la crosse d'arrêt d'urgence.",
+          "lesson": "urgences-boldface.html",
+          "cmd": "Arresting Hook Control Handle - Out"
+        },
+        {
+          "n": "33",
+          "cat": "vol",
+          "text": "CROSSE rentrée",
+          "detail": "Rentre la crosse.",
+          "lesson": "urgences-boldface.html",
+          "cmd": "Arresting Hook Control Handle - In"
+        },
+        {
+          "n": "34",
+          "cat": "vol",
+          "text": "Parachute frein",
+          "detail": "Déploie le parachute de freinage à l'atterrissage.",
+          "lesson": "retour-atterrissage.html",
+          "cmd": "Drag-Parachute - Deploy"
+        },
+        {
+          "n": "35",
+          "cat": "vol",
+          "text": "TRAIN rentré",
+          "detail": "Rentre le train d'atterrissage.",
+          "lesson": "roulage-decollage.html",
+          "cmd": "Landing Gear - Up"
+        },
+        {
+          "n": "36",
+          "cat": "vol",
+          "text": "TRAIN sorti",
+          "detail": "Sort le train d'atterrissage.",
+          "lesson": "retour-atterrissage.html",
+          "cmd": "Landing Gear - Down"
+        },
+        {
+          "n": "37",
+          "cat": "vol",
+          "text": "TRAIN secours",
+          "detail": "Sortie de secours du train par gravité.",
+          "lesson": "urgences-boldface.html",
+          "cmd": "Landing Gear - Emergency Extension - On"
+        },
+        {
+          "n": "38",
+          "cat": "vol",
+          "text": "Volets secours ON",
+          "detail": "Sortie de secours des volets/becs.",
+          "lesson": "urgences-boldface.html",
+          "cmd": "Flaps/Slats Emergency Extension Handle - On"
+        },
+        {
+          "n": "39",
+          "cat": "vol",
+          "text": "Volets secours OFF",
+          "detail": "Désactive la sortie de secours des volets.",
+          "lesson": "urgences-boldface.html",
+          "cmd": "Flaps/Slats Emergency Extension Handle - Off"
+        },
+        {
+          "n": "40",
+          "cat": "vol",
+          "text": "Verrière ouverte",
+          "detail": "Ouvre la verrière au sol.",
+          "lesson": "preparer-module-controles.html",
+          "cmd": "Canopy Handle - Open"
+        },
+        {
+          "n": "41",
+          "cat": "vol",
+          "text": "Verrière fermée",
+          "detail": "Ferme la verrière.",
+          "lesson": "preparer-module-controles.html",
+          "cmd": "Canopy Handle - Close"
+        }
+      ]
     }
-   ]
-  },
-  {
-   "id": "throttle",
-   "labels": [
-    {
-     "n": "rY",
-     "cat": "vol",
-     "text": "GAZ (les deux)",
-     "detail": "Manette des gaz des deux J79 — c'est elle qui commande le régime.",
-     "lesson": "roulage-decollage.html",
-     "cmd": "Throttle (Both)",
-     "x": 87.13,
-     "y": 10.14,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "rX",
-     "cat": "vol",
-     "text": "Gaz moteur G",
-     "detail": "Réacteur gauche, si tu sépares les deux leviers.",
-     "lesson": "roulage-decollage.html",
-     "cmd": "Throttle (Left)",
-     "x": 87.13,
-     "y": 21.3,
-     "bw": 8.55,
-     "sm": 1
-    },
-    {
-     "n": "rZ",
-     "cat": "misc",
-     "text": "Molette libre",
-     "detail": "Non assignée.",
-     "x": 66.86,
-     "y": 52.74,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "AX1",
-     "cat": "misc",
-     "text": "Molette libre",
-     "detail": "Non assignée.",
-     "x": 9.01,
-     "y": 4.98,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "AX2",
-     "cat": "misc",
-     "text": "Molette libre",
-     "detail": "Non assignée.",
-     "x": 41.3,
-     "y": 4.98,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "AX3",
-     "cat": "misc",
-     "text": "Molette libre",
-     "detail": "Non assignée.",
-     "x": 25.49,
-     "y": 25.57,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "1",
-     "cat": "comm",
-     "text": "Alternat intercom",
-     "detail": "Parle à JESTER en interne — position arrière de l'alternat.",
-     "lesson": "jester-crew-chief.html",
-     "cmd": "Microphone Switch - ICS (Hold)",
-     "x": 5.19,
-     "y": 19.95,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "2",
-     "cat": "sens",
-     "text": "Volume RWR +",
-     "detail": "Monte le volume du détecteur d'alerte radar.",
-     "lesson": "rwr-contremesures.html",
-     "cmd": "RWR Audio Volume - [Inc]",
-     "x": 5.19,
-     "y": 14.35,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "3",
-     "cat": "sens",
-     "text": "Volume RWR −",
-     "detail": "Baisse le volume du RWR.",
-     "lesson": "rwr-contremesures.html",
-     "cmd": "RWR Audio Volume - [Dec]",
-     "x": 5.19,
-     "y": 25.51,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "4",
-     "cat": "comm",
-     "text": "Alternat UHF",
-     "detail": "Émet sur la radio UHF — position avant de l'alternat.",
-     "lesson": "radio-communications.html",
-     "cmd": "Microphone Switch - UHF (Hold)",
-     "x": 5.17,
-     "y": 35.93,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "5",
-     "cat": "comm",
-     "text": "Canal UHF +",
-     "detail": "Canal préréglé suivant.",
-     "lesson": "radio-communications.html",
-     "cmd": "Comm Channel - [Next]",
-     "x": 15.91,
-     "y": 47.1,
-     "bw": 8.61,
-     "sm": 1
-    },
-    {
-     "n": "6",
-     "cat": "comm",
-     "text": "Canal UHF −",
-     "detail": "Canal préréglé précédent.",
-     "lesson": "radio-communications.html",
-     "cmd": "Comm Channel - [Dec]",
-     "x": 15.94,
-     "y": 41.54,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "8",
-     "cat": "arm",
-     "text": "Arme : REJET",
-     "detail": "Position HAUT du sélecteur : rejette le missile et passe au suivant.",
-     "lesson": "bombardement-classique.html",
-     "cmd": "Gun/Missile Pinky Switch - Reject",
-     "x": 61.79,
-     "y": 20.17,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "9",
-     "cat": "arm",
-     "text": "Arme : RADAR",
-     "detail": "Position AVANT : Sparrow.",
-     "lesson": "bombardement-classique.html",
-     "cmd": "Gun/Missile Pinky Switch - Radar",
-     "x": 61.79,
-     "y": 14.57,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "10",
-     "cat": "arm",
-     "text": "Arme : IR",
-     "detail": "Position CENTRE : Sidewinder.",
-     "lesson": "bombardement-classique.html",
-     "cmd": "Gun/Missile Pinky Switch - Heat",
-     "x": 72.56,
-     "y": 20.17,
-     "bw": 8.55,
-     "sm": 1
-    },
-    {
-     "n": "11",
-     "cat": "arm",
-     "text": "Arme : CANON",
-     "detail": "Position ARRIÈRE : canon M61.",
-     "lesson": "roquettes-mitraillage.html",
-     "cmd": "Gun/Missile Pinky Switch - Gun",
-     "x": 61.79,
-     "y": 25.74,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "12",
-     "cat": "arm",
-     "text": "Cage / décage",
-     "detail": "Cage ou décage l'autodirecteur du missile.",
-     "lesson": "bombardement-classique.html",
-     "cmd": "Cage Button",
-     "x": 51.11,
-     "y": 20.17,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "13",
-     "cat": "vol",
-     "text": "Finger lift",
-     "detail": "Franchit le cran de coupure — allumage du réacteur gauche.",
-     "lesson": "demarrage-a-froid.html",
-     "cmd": "Left Engine Ignition",
-     "x": 88.3,
-     "y": 15.74,
-     "bw": 8.55,
-     "sm": 1
-    },
-    {
-     "n": "14",
-     "cat": "vol",
-     "text": "Finger lift D",
-     "detail": "Allumage du réacteur droit.",
-     "lesson": "demarrage-a-froid.html",
-     "cmd": "Right Engine Ignition",
-     "x": 56.61,
-     "y": 41.52,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "16",
-     "cat": "vol",
-     "text": "Aérofrein sort",
-     "detail": "Position AVANT : sort les aérofreins tant que c'est tenu.",
-     "lesson": "vol-de-base-afcs.html",
-     "cmd": "Speed Brake - Out (Hold)",
-     "x": 77.55,
-     "y": 33.64,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "17",
-     "cat": "vol",
-     "text": "Aérofrein stop",
-     "detail": "Position neutre : fige les aérofreins.",
-     "lesson": "vol-de-base-afcs.html",
-     "cmd": "Speed Brake - Stop",
-     "x": 88.3,
-     "y": 33.64,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "18",
-     "cat": "vol",
-     "text": "Aérofrein rentre",
-     "detail": "Position ARRIÈRE : rentre les aérofreins.",
-     "lesson": "vol-de-base-afcs.html",
-     "cmd": "Speed Brake - In",
-     "x": 77.55,
-     "y": 39.2,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "22",
-     "cat": "vol",
-     "text": "Volets : rentrés",
-     "detail": "Volets et becs rentrés.",
-     "lesson": "roulage-decollage.html",
-     "cmd": "Flaps/Slats Switch - Norm",
-     "x": 42.47,
-     "y": 33.64,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "23",
-     "cat": "vol",
-     "text": "Volets : becs",
-     "detail": "Becs sortis.",
-     "lesson": "roulage-decollage.html",
-     "cmd": "Flaps/Slats Switch - Out",
-     "x": 42.47,
-     "y": 39.2,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "24",
-     "cat": "vol",
-     "text": "Volets : approche",
-     "detail": "Configuration d'approche complète.",
-     "lesson": "retour-atterrissage.html",
-     "cmd": "Flaps/Slats Switch - Out&Down",
-     "x": 31.78,
-     "y": 33.64,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "28",
-     "cat": "misc",
-     "text": "Regard haut",
-     "detail": "Coup d'œil vers le haut.",
-     "cmd": "Glance up",
-     "x": 77.55,
-     "y": 58.3,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "29",
-     "cat": "misc",
-     "text": "Regard gauche",
-     "detail": "Coup d'œil à gauche.",
-     "cmd": "Glance left",
-     "x": 65.55,
-     "y": 69.35,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "30",
-     "cat": "misc",
-     "text": "Regard droite",
-     "detail": "Coup d'œil à droite.",
-     "cmd": "Glance right",
-     "x": 77.55,
-     "y": 47.14,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "31",
-     "cat": "misc",
-     "text": "Regard bas",
-     "detail": "Coup d'œil aux instruments.",
-     "cmd": "Glance down",
-     "x": 88.3,
-     "y": 52.74,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "33",
-     "cat": "vol",
-     "text": "Parachute frein",
-     "detail": "Déploie le parachute de freinage à l'atterrissage.",
-     "lesson": "retour-atterrissage.html",
-     "cmd": "Drag-Parachute - Deploy",
-     "x": 77.55,
-     "y": 67.05,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "34",
-     "cat": "vol",
-     "text": "Parachute largué",
-     "detail": "Largue le parachute une fois arrêté.",
-     "lesson": "retour-atterrissage.html",
-     "cmd": "Drag-Parachute - In",
-     "x": 42.47,
-     "y": 53.99,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "36",
-     "cat": "arm",
-     "text": "MASTER ARM",
-     "detail": "Arme le circuit de tir.",
-     "lesson": "bombardement-classique.html",
-     "cmd": "Master Arm - Arm",
-     "x": 26.65,
-     "y": 59.63,
-     "bw": 8.61,
-     "sm": 1
-    },
-    {
-     "n": "37",
-     "cat": "arm",
-     "text": "Master arm sécu",
-     "detail": "Coupe le circuit de tir.",
-     "lesson": "preparer-module-controles.html",
-     "cmd": "Master Arm - Safe",
-     "x": 26.71,
-     "y": 72.07,
-     "bw": 8.55,
-     "sm": 1
-    },
-    {
-     "n": "44",
-     "cat": "vol",
-     "text": "Feux ext. ON",
-     "detail": "Allume les feux de position.",
-     "cmd": "Tail-Position Lights - Bright",
-     "x": 5.19,
-     "y": 66.47,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "45",
-     "cat": "vol",
-     "text": "Feux ext. OFF",
-     "detail": "Éteint les feux de position.",
-     "cmd": "Tail-Position Lights - Off",
-     "x": 5.19,
-     "y": 72.07,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "46",
-     "cat": "vol",
-     "text": "Réchauffage Pitot ON",
-     "detail": "Évite le givrage anémométrique.",
-     "lesson": "preparer-module-controles.html",
-     "cmd": "Pitot Heat - On",
-     "x": 15.94,
-     "y": 66.47,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "47",
-     "cat": "vol",
-     "text": "Réchauffage Pitot OFF",
-     "detail": "Coupe le réchauffage Pitot.",
-     "lesson": "preparer-module-controles.html",
-     "cmd": "Pitot Heat - Off",
-     "x": 15.94,
-     "y": 72.07,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "48",
-     "cat": "vol",
-     "text": "Verrière ouvre",
-     "detail": "Ouvre la verrière au sol.",
-     "lesson": "preparer-module-controles.html",
-     "cmd": "Canopy Handle - Open",
-     "x": 26.65,
-     "y": 54.03,
-     "bw": 8.61,
-     "sm": 1
-    },
-    {
-     "n": "49",
-     "cat": "vol",
-     "text": "Verrière ferme",
-     "detail": "Ferme la verrière.",
-     "lesson": "preparer-module-controles.html",
-     "cmd": "Canopy Handle - Close",
-     "x": 26.68,
-     "y": 66.47,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "52",
-     "cat": "sens",
-     "text": "RWR luminosité +",
-     "detail": "Monte la luminosité de l'écran RWR.",
-     "lesson": "rwr-contremesures.html",
-     "cmd": "RWR Display Brightness - [Inc]",
-     "x": 10.32,
-     "y": 82.22,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "53",
-     "cat": "sens",
-     "text": "RWR luminosité −",
-     "detail": "Baisse la luminosité de l'écran RWR.",
-     "lesson": "rwr-contremesures.html",
-     "cmd": "RWR Display Brightness - [Dec]",
-     "x": 21.1,
-     "y": 87.83,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "7",
-     "cat": "comm",
-     "text": "Menu radio",
-     "detail": "Ouvre le menu de communication DCS.",
-     "lesson": "radio-communications.html",
-     "cmd": "Communication menu",
-     "x": 15.91,
-     "y": 35.93,
-     "bw": 8.61,
-     "sm": 1
-    },
-    {
-     "n": "15",
-     "cat": "vol",
-     "text": "Coupure moteur G",
-     "detail": "Coupe ou rétablit l'alimentation du réacteur gauche.",
-     "lesson": "demarrage-a-froid.html",
-     "cmd": "Left Engine Master Switch - [Toggle]",
-     "x": 56.61,
-     "y": 47.12,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "19",
-     "cat": "sens",
-     "text": "RWR marche",
-     "detail": "Met le détecteur d'alerte radar sous tension.",
-     "lesson": "rwr-contremesures.html",
-     "cmd": "RWR Power Button",
-     "x": 66.86,
-     "y": 33.64,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "20",
-     "cat": "sens",
-     "text": "RWR autotest",
-     "detail": "Lance l'autotest du RWR.",
-     "lesson": "rwr-contremesures.html",
-     "cmd": "RWR BIT Button",
-     "x": 77.55,
-     "y": 28.03,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "21",
-     "cat": "vol",
-     "text": "Antidérapant",
-     "detail": "Active ou coupe l'antidérapant au freinage.",
-     "lesson": "roulage-decollage.html",
-     "cmd": "Anti-Skid - [Toggle]",
-     "x": 88.27,
-     "y": 64.79,
-     "bw": 8.61,
-     "sm": 1
-    },
-    {
-     "n": "25",
-     "cat": "arm",
-     "text": "Sécurité armement",
-     "detail": "Bascule le circuit de tir.",
-     "lesson": "bombardement-classique.html",
-     "cmd": "Master Arm - [Toggle]",
-     "x": 42.47,
-     "y": 28.03,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "26",
-     "cat": "arm",
-     "text": "Bouton largage",
-     "detail": "Déclenche le largage sélectif.",
-     "lesson": "bombardement-classique.html",
-     "cmd": "Jettison Button",
-     "x": 53.21,
-     "y": 33.64,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "27",
-     "cat": "arm",
-     "text": "Largage urgence",
-     "detail": "Largage d'urgence de tous les emports.",
-     "lesson": "urgences-boldface.html",
-     "cmd": "External Stores Emergency Release",
-     "x": 77.55,
-     "y": 52.74,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "32",
-     "cat": "misc",
-     "text": "Vue centrée",
-     "detail": "Recentre la vue.",
-     "cmd": "View Center",
-     "x": 42.47,
-     "y": 47.12,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "35",
-     "cat": "vol",
-     "text": "Crosse",
-     "detail": "Sort ou rentre la crosse d'arrêt.",
-     "lesson": "urgences-boldface.html",
-     "cmd": "Arresting Hook Control Handle - [Toggle]",
-     "x": 42.47,
-     "y": 61.93,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "50",
-     "cat": "vol",
-     "text": "Feux formation",
-     "detail": "Fait défiler les modes de feux de formation.",
-     "cmd": "Formation Lights Mode - [Next]",
-     "x": 10.32,
-     "y": 87.83,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "51",
-     "cat": "vol",
-     "text": "Éclairage +",
-     "detail": "Monte l'éclairage de la planche.",
-     "cmd": "Instrument Panel Light Brightness - [Inc]",
-     "x": 10.32,
-     "y": 93.39,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "54",
-     "cat": "vol",
-     "text": "Éclairage −",
-     "detail": "Baisse l'éclairage de la planche.",
-     "cmd": "Instrument Panel Light Brightness - [Dec]",
-     "x": 21.1,
-     "y": 93.39,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "55",
-     "cat": "misc",
-     "text": "Kneeboard",
-     "detail": "Ouvre ou ferme la planchette.",
-     "cmd": "Kneeboard ON/OFF",
-     "x": 21.1,
-     "y": 82.22,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "38",
-     "cat": "misc",
-     "text": "B1",
-     "detail": null,
-     "x": 66.72,
-     "y": 77.4,
-     "bw": 8.55,
-     "sm": 1
-    },
-    {
-     "n": "39",
-     "cat": "misc",
-     "text": "B2",
-     "detail": null,
-     "x": 77.41,
-     "y": 77.4,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "40",
-     "cat": "misc",
-     "text": "B3",
-     "detail": null,
-     "x": 88.24,
-     "y": 77.4,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "41",
-     "cat": "misc",
-     "text": "B4",
-     "detail": null,
-     "x": 66.72,
-     "y": 85.4,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "42",
-     "cat": "misc",
-     "text": "B5",
-     "detail": null,
-     "x": 77.41,
-     "y": 85.4,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "43",
-     "cat": "misc",
-     "text": "B6",
-     "detail": null,
-     "x": 88.27,
-     "y": 85.4,
-     "bw": 8.55,
-     "sm": 1
-    },
-    {
-     "n": "OFF",
-     "cat": "misc",
-     "text": "Blanc",
-     "detail": "Position repos : page Sol et mise en route.",
-     "x": 34.63,
-     "y": 93.37,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "M1",
-     "cat": "misc",
-     "text": "Bleu",
-     "detail": "Page Air-air.",
-     "x": 45.32,
-     "y": 93.37,
-     "bw": 8.58,
-     "sm": 1
-    },
-    {
-     "n": "M2",
-     "cat": "misc",
-     "text": "Vert",
-     "detail": "Page Air-sol.",
-     "x": 56.04,
-     "y": 93.37,
-     "bw": 8.55,
-     "sm": 1
-    },
-    {
-     "n": "M3",
-     "cat": "misc",
-     "text": "Rouge",
-     "detail": "Page Urgences et défense.",
-     "x": 66.69,
-     "y": 93.37,
-     "bw": 8.61,
-     "sm": 1
-    },
-    {
-     "n": "M4",
-     "cat": "misc",
-     "text": "Jaune",
-     "detail": "Page Navigation.",
-     "x": 77.41,
-     "y": 93.37,
-     "bw": 8.55,
-     "sm": 1
-    }
-   ],
-   "pages": {
-    "OFF": {
-     "38": {
-      "real": 38,
-      "s": "Cales retirées",
-      "f": "Le chef de piste retire les cales.",
-      "cmd": "Crew Chief Command: Wheel Chocks > Remove",
-      "lesson": "jester-crew-chief.html"
-     },
-     "39": {
-      "real": 39,
-      "s": "Cales placées",
-      "f": "Le chef de piste place les cales au parking.",
-      "cmd": "Crew Chief Command: Wheel Chocks > Place",
-      "lesson": "jester-crew-chief.html"
-     },
-     "40": {
-      "real": 40,
-      "s": "Alim. ext. ON",
-      "f": "Branche le groupe de parc.",
-      "cmd": "Crew Chief Command: External Power > Connect",
-      "lesson": "demarrage-a-froid.html"
-     },
-     "41": {
-      "real": 41,
-      "s": "Alim. ext. OFF",
-      "f": "Débranche le groupe de parc avant de rouler.",
-      "cmd": "Crew Chief Command: External Power > Disconnect",
-      "lesson": "demarrage-a-froid.html"
-     },
-     "42": {
-      "real": 42,
-      "s": "Air démarrage",
-      "f": "Lance le débit d'air de démarrage.",
-      "cmd": "Crew Chief Command: Air Source > Start Flow",
-      "lesson": "demarrage-a-froid.html"
-     },
-     "43": {
-      "real": 43,
-      "s": "Alignement INS",
-      "f": "JESTER lance l'alignement de la centrale inertielle.",
-      "cmd": "Jester Command: Crew Contract > Start Alignment",
-      "lesson": "alignement-ins.html"
-     },
-     "theme": "Sol et mise en route — ce qui sert avant de rouler : équipe de piste, alignement."
-    },
-    "M1": {
-     "38": {
-      "real": 56,
-      "s": "Radar actif",
-      "f": "JESTER passe le radar en émission.",
-      "cmd": "Jester Command: Radar > Operation > Active",
-      "lesson": "jester-crew-chief.html"
-     },
-     "39": {
-      "real": 57,
-      "s": "Radar veille",
-      "f": "Radar en veille : plus d'émission détectable.",
-      "cmd": "Jester Command: Radar > Operation > Standby",
-      "lesson": "jester-crew-chief.html"
-     },
-     "40": {
-      "real": 58,
-      "s": "Balayage 25 large",
-      "f": "Balayage 25 nm en secteur large.",
-      "cmd": "Jester Command: Radar > Scan Type > 25nm Wide",
-      "lesson": "jester-crew-chief.html"
-     },
-     "41": {
-      "real": 59,
-      "s": "Balayage 50 large",
-      "f": "Balayage 50 nm en secteur large.",
-      "cmd": "Jester Command: Radar > Scan Type > 50nm Wide",
-      "lesson": "jester-crew-chief.html"
-     },
-     "42": {
-      "real": 60,
-      "s": "Élévation centrée",
-      "f": "Recentre le balayage sur l'horizon.",
-      "cmd": "Jester Command: Radar > Scan Elevation > Center",
-      "lesson": "jester-crew-chief.html"
-     },
-     "43": {
-      "real": 61,
-      "s": "Boresight",
-      "f": "Passe en acquisition boresight pour un verrouillage rapproché.",
-      "cmd": "Jester Command: Radar > Boresight > Enter BST",
-      "lesson": "jester-crew-chief.html"
-     },
-     "theme": "Air-air — le radar, que JESTER opère depuis la place arrière."
-    },
-    "M2": {
-     "38": {
-      "real": 62,
-      "s": "Vidéo : armes",
-      "f": "Bascule la source vidéo sur l'arme.",
-      "cmd": "Jester Command: A2G > Video Source > Weapons",
-      "lesson": "armes-guidage-tv.html"
-     },
-     "39": {
-      "real": 63,
-      "s": "Vidéo : Pave Spike",
-      "f": "Bascule la source vidéo sur le pod de désignation.",
-      "cmd": "Jester Command: A2G > Video Source > Pave Spike",
-      "lesson": "pave-spike-guidage.html"
-     },
-     "40": {
-      "real": 64,
-      "s": "Pave Spike prêt",
-      "f": "Met le pod en service.",
-      "cmd": "Jester Command: A2G > Pave Spike > Operation > Ready",
-      "lesson": "pave-spike-guidage.html"
-     },
-     "41": {
-      "real": 65,
-      "s": "Pave Spike veille",
-      "f": "Remet le pod en veille.",
-      "cmd": "Jester Command: A2G > Pave Spike > Operation > Standby",
-      "lesson": "pave-spike-guidage.html"
-     },
-     "42": {
-      "real": 66,
-      "s": "Largage direct",
-      "f": "Mode de largage direct, viseur fixe.",
-      "cmd": "Delivery Mode - Direct",
-      "lesson": "bombardement-classique.html"
-     },
-     "43": {
-      "real": 67,
-      "s": "Largage différé",
-      "f": "Mode DL : largage retardé calculé.",
-      "cmd": "Delivery Mode - DL",
-      "lesson": "bombardement-classique.html"
-     },
-     "theme": "Air-sol — désignation, Pave Spike et mode de largage."
-    },
-    "M3": {
-     "38": {
-      "real": 68,
-      "s": "Brouilleur ON",
-      "f": "Le brouilleur émet — attention, ça vous désigne aussi.",
-      "cmd": "Jester Command: Systems > Jammer > Transmit",
-      "lesson": "rwr-contremesures.html"
-     },
-     "39": {
-      "real": 69,
-      "s": "Brouilleur veille",
-      "f": "Coupe l'émission du brouilleur.",
-      "cmd": "Jester Command: Systems > Jammer > Standby",
-      "lesson": "rwr-contremesures.html"
-     },
-     "40": {
-      "real": 70,
-      "s": "Flares : simple",
-      "f": "Largage de flares un par un.",
-      "cmd": "Jester Command: Systems > Flare Mode > Single",
-      "lesson": "rwr-contremesures.html"
-     },
-     "41": {
-      "real": 71,
-      "s": "Flares : programme",
-      "f": "Largage de flares selon le programme.",
-      "cmd": "Jester Command: Systems > Flare Mode > Program",
-      "lesson": "rwr-contremesures.html"
-     },
-     "42": {
-      "real": 72,
-      "s": "Flares OFF",
-      "f": "Coupe le largage automatique de flares.",
-      "cmd": "Jester Command: Systems > Flare Mode > Off",
-      "lesson": "rwr-contremesures.html"
-     },
-     "43": {
-      "real": 73,
-      "s": "AVTR enregistre",
-      "f": "Lance l'enregistrement vidéo pour le débriefing.",
-      "cmd": "Jester Command: Systems > AVTR > Record",
-      "lesson": "avtr-debriefing.html"
-     },
-     "theme": "Urgences et défense — page fixe, atteignable sans réfléchir à la phase de vol."
-    },
-    "M4": {
-     "38": {
-      "real": 74,
-      "s": "TACAN T/R",
-      "f": "TACAN en émission-réception : relèvement et distance.",
-      "cmd": "Jester Command: Navigation > Tacan > Mode > T/R",
-      "lesson": "navigation-tacan-ins.html"
-     },
-     "39": {
-      "real": 75,
-      "s": "TACAN réception",
-      "f": "TACAN en réception seule : relèvement, sans émettre.",
-      "cmd": "Jester Command: Navigation > Tacan > Mode > R",
-      "lesson": "navigation-tacan-ins.html"
-     },
-     "40": {
-      "real": 76,
-      "s": "TACAN A/A",
-      "f": "Mode air-air : distance à un autre appareil équipé.",
-      "cmd": "Jester Command: Navigation > Tacan > Mode > A/A T/R",
-      "lesson": "navigation-tacan-ins.html"
-     },
-     "41": {
-      "real": 77,
-      "s": "TACAN OFF",
-      "f": "Coupe le TACAN.",
-      "cmd": "Jester Command: Navigation > Tacan > Mode > Off",
-      "lesson": "navigation-tacan-ins.html"
-     },
-     "42": {
-      "real": 78,
-      "s": "Point tournant +",
-      "f": "Passe au point tournant suivant.",
-      "cmd": "Jester Command: Navigation > Go To Resume > Next Turn Point",
-      "lesson": "navigation-tacan-ins.html"
-     },
-     "43": {
-      "real": 79,
-      "s": "Réaligner INS",
-      "f": "Réalignement fin de la centrale en vol.",
-      "cmd": "Jester Command: Navigation > Fine-Align INS",
-      "lesson": "alignement-ins.html"
-     },
-     "theme": "Navigation — TACAN et points tournants."
-    }
-   }
-  },
-  {
-   "id": "pto2",
-   "labels": [
-    {
-     "n": "1",
-     "cat": "comm",
-     "text": "Leurres : programme",
-     "detail": "Bascule le programme de leurres entre Normal et Flares.",
-     "lesson": "rwr-contremesures.html"
-    },
-    {
-     "n": "2",
-     "cat": "vol",
-     "text": "Reset M.Caution",
-     "detail": "Éteint le voyant Master Caution après lecture de la panne.",
-     "lesson": "urgences-boldface.html"
-    },
-    {
-     "n": "3",
-     "cat": "vol",
-     "text": "Frein secours OFF",
-     "detail": "Désactive le frein de secours.",
-     "lesson": "urgences-boldface.html"
-    },
-    {
-     "n": "4",
-     "cat": "vol",
-     "text": "Frein secours ON",
-     "detail": "Active le frein de secours (perte du freinage normal).",
-     "lesson": "urgences-boldface.html"
-    },
-    {
-     "n": "5",
-     "cat": "vol",
-     "text": "VOLETS rentrés",
-     "detail": "Position Norm — volets et becs rentrés.",
-     "lesson": "roulage-decollage.html"
-    },
-    {
-     "n": "6",
-     "cat": "vol",
-     "text": "VOLETS sortis",
-     "detail": "Position Out — becs sortis.",
-     "lesson": "roulage-decollage.html"
-    },
-    {
-     "n": "7",
-     "cat": "vol",
-     "text": "VOLETS + becs",
-     "detail": "Position Out&Down — volets et becs sortis, configuration d'approche.",
-     "lesson": "retour-atterrissage.html"
-    },
-    {
-     "n": "8",
-     "cat": "vol",
-     "text": "Phare roulage ON",
-     "detail": "Allume le phare de roulage.",
-     "lesson": "roulage-decollage.html"
-    },
-    {
-     "n": "9",
-     "cat": "vol",
-     "text": "Phares OFF",
-     "detail": "Éteint phare de roulage et phare d'atterrissage.",
-     "lesson": "roulage-decollage.html"
-    },
-    {
-     "n": "10",
-     "cat": "vol",
-     "text": "Antidérapant ON",
-     "detail": "Active l'antidérapant au freinage.",
-     "lesson": "roulage-decollage.html"
-    },
-    {
-     "n": "11",
-     "cat": "vol",
-     "text": "Antidérapant OFF",
-     "detail": "Coupe l'antidérapant.",
-     "lesson": "roulage-decollage.html"
-    },
-    {
-     "n": "12",
-     "cat": "vol",
-     "text": "Réchauffage Pitot ON",
-     "detail": "Active le réchauffage de la sonde Pitot — évite le givrage anémométrique.",
-     "lesson": "preparer-module-controles.html"
-    },
-    {
-     "n": "13",
-     "cat": "vol",
-     "text": "Réchauffage Pitot OFF",
-     "detail": "Coupe le réchauffage Pitot.",
-     "lesson": "preparer-module-controles.html"
-    },
-    {
-     "n": "14",
-     "cat": "vol",
-     "text": "Ravito : sortir",
-     "detail": "Sort le contact du réceptacle de ravitaillement en vol.",
-     "lesson": "ravitaillement-vol.html"
-    },
-    {
-     "n": "15",
-     "cat": "vol",
-     "text": "Ravito : rentrer",
-     "detail": "Rentre le contact du réceptacle.",
-     "lesson": "ravitaillement-vol.html"
-    },
-    {
-     "n": "16",
-     "cat": "vol",
-     "text": "Réservoirs : tous",
-     "detail": "Sélectionne tous les réservoirs pour le ravitaillement.",
-     "lesson": "ravitaillement-vol.html"
-    },
-    {
-     "n": "17",
-     "cat": "arm",
-     "text": "Largage : OFF",
-     "detail": "Position OFF du sélecteur de largage — rien ne se largue.",
-     "lesson": "preparer-module-controles.html"
-    },
-    {
-     "n": "18",
-     "cat": "arm",
-     "text": "Largage : emports",
-     "detail": "Sélectionne tous les emports pour le largage.",
-     "lesson": "bombardement-classique.html"
-    },
-    {
-     "n": "19",
-     "cat": "arm",
-     "text": "Largage : aile G",
-     "detail": "Sélectionne l'aile gauche pour le largage.",
-     "lesson": "bombardement-classique.html"
-    },
-    {
-     "n": "20",
-     "cat": "arm",
-     "text": "Largage : aile D",
-     "detail": "Sélectionne l'aile droite pour le largage.",
-     "lesson": "bombardement-classique.html"
-    },
-    {
-     "n": "21",
-     "cat": "arm",
-     "text": "LARGAGE",
-     "detail": "Déclenche le largage une fois le sélecteur positionné.",
-     "lesson": "bombardement-classique.html"
-    },
-    {
-     "n": "22",
-     "cat": "arm",
-     "text": "Largage d'urgence",
-     "detail": "Largage d'urgence général de tous les emports.",
-     "lesson": "urgences-boldface.html"
-    },
-    {
-     "n": "23",
-     "cat": "arm",
-     "text": "MASTER ARM safe",
-     "detail": "Circuit de tir coupé — position sécurité au roulage.",
-     "lesson": "preparer-module-controles.html"
-    },
-    {
-     "n": "24",
-     "cat": "arm",
-     "text": "MASTER ARM armé",
-     "detail": "Arme le circuit de tir — sans ça, ni canon ni largage ne fonctionnent.",
-     "lesson": "bombardement-classique.html"
-    },
-    {
-     "n": "25",
-     "cat": "sens",
-     "text": "RWR marche",
-     "detail": "Met sous tension le détecteur d'alerte radar.",
-     "lesson": "rwr-contremesures.html"
-    },
-    {
-     "n": "26",
-     "cat": "sens",
-     "text": "RWR autotest",
-     "detail": "Lance l'autotest du RWR.",
-     "lesson": "rwr-contremesures.html"
-    },
-    {
-     "n": "27",
-     "cat": "vol",
-     "text": "Verrière : largage",
-     "detail": "Largage d'urgence de la verrière.",
-     "lesson": "urgences-boldface.html"
-    },
-    {
-     "n": "28",
-     "cat": "comm",
-     "text": "Chaff : OFF",
-     "detail": "Coupe le largage automatique de chaff par JESTER.",
-     "lesson": "rwr-contremesures.html"
-    },
-    {
-     "n": "29",
-     "cat": "comm",
-     "text": "Chaff : simple",
-     "detail": "JESTER largue le chaff par salve unique.",
-     "lesson": "rwr-contremesures.html"
-    },
-    {
-     "n": "30",
-     "cat": "comm",
-     "text": "Chaff : multiple",
-     "detail": "JESTER largue le chaff par salves répétées.",
-     "lesson": "rwr-contremesures.html"
-    },
-    {
-     "n": "31",
-     "cat": "comm",
-     "text": "Chaff : programme",
-     "detail": "JESTER suit le programme de largage préréglé.",
-     "lesson": "rwr-contremesures.html"
-    },
-    {
-     "n": "32",
-     "cat": "vol",
-     "text": "CROSSE sortie",
-     "detail": "Sort la crosse d'arrêt d'urgence.",
-     "lesson": "urgences-boldface.html"
-    },
-    {
-     "n": "33",
-     "cat": "vol",
-     "text": "CROSSE rentrée",
-     "detail": "Rentre la crosse.",
-     "lesson": "urgences-boldface.html"
-    },
-    {
-     "n": "34",
-     "cat": "vol",
-     "text": "Parachute frein",
-     "detail": "Déploie le parachute de freinage à l'atterrissage.",
-     "lesson": "retour-atterrissage.html"
-    },
-    {
-     "n": "35",
-     "cat": "vol",
-     "text": "TRAIN rentré",
-     "detail": "Rentre le train d'atterrissage.",
-     "lesson": "roulage-decollage.html"
-    },
-    {
-     "n": "36",
-     "cat": "vol",
-     "text": "TRAIN sorti",
-     "detail": "Sort le train d'atterrissage.",
-     "lesson": "retour-atterrissage.html"
-    },
-    {
-     "n": "37",
-     "cat": "vol",
-     "text": "TRAIN secours",
-     "detail": "Sortie de secours du train par gravité.",
-     "lesson": "urgences-boldface.html"
-    },
-    {
-     "n": "38",
-     "cat": "vol",
-     "text": "Volets secours ON",
-     "detail": "Sortie de secours des volets/becs.",
-     "lesson": "urgences-boldface.html"
-    },
-    {
-     "n": "39",
-     "cat": "vol",
-     "text": "Volets secours OFF",
-     "detail": "Désactive la sortie de secours des volets.",
-     "lesson": "urgences-boldface.html"
-    },
-    {
-     "n": "40",
-     "cat": "vol",
-     "text": "Verrière ouverte",
-     "detail": "Ouvre la verrière au sol.",
-     "lesson": "preparer-module-controles.html"
-    },
-    {
-     "n": "41",
-     "cat": "vol",
-     "text": "Verrière fermée",
-     "detail": "Ferme la verrière.",
-     "lesson": "preparer-module-controles.html"
-    }
-   ]
-  }
- ]
+  ]
 }

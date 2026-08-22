@@ -24,9 +24,10 @@ body{font-family:var(--body);background:var(--deck);color:var(--ink);line-height
 
 /* ---------- En-tête ---------- */
 header{background:var(--panel);border-bottom:1px solid var(--line);padding:18px 28px 16px}
-.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap}
-.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
-.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.crumbs{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.crumbs a{color:var(--dim);text-decoration:none;border:1px solid var(--line);border-radius:2px;display:inline-flex;align-items:center;min-height:44px;padding:0 14px;transition:.15s}
+.crumbs a:hover{color:var(--amber);border-color:var(--amber);background:rgba(242,169,59,.08)}
+.crumbs span{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;color:var(--ink);font-weight:600}
 .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-top:12px}
 h1{font-family:var(--display);font-weight:600;font-size:clamp(26px,4vw,38px);letter-spacing:.04em;line-height:1.05;margin:4px 0 6px;text-transform:uppercase}
 .sub{font-family:var(--mono);font-size:12px;color:var(--dim)}
@@ -81,7 +82,6 @@ h1{font-family:var(--display);font-weight:600;font-size:clamp(26px,4vw,38px);let
    faisaient 28-31px de haut — on complète par le bas sans changer la
    typographie, via inline-flex pour que le texte reste centré. */
 .tab,.chip,.btn{min-height:44px;display:inline-flex;align-items:center;justify-content:center}
-.crumbs a{display:inline-flex;align-items:center;min-height:28px}
 .board-pin.nopin{position:static}
 /* Le glissement d'étiquette en mode édition est piloté par pointermove : sans
    touch-action le navigateur fait défiler la page au lieu de déplacer. */
@@ -220,6 +220,7 @@ section.device.visible{display:block}
 .dtable td.c2 b{display:block;font-weight:600}
 .dtable td.c2 span{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.06em}
 .dtable td.c3{color:var(--ink);max-width:520px;opacity:.92}
+.dtable td.c4{font-family:var(--mono);font-size:11px;color:var(--dim);white-space:nowrap;letter-spacing:.03em}
 .num-badge{display:inline-block;min-width:28px;text-align:center;font-family:var(--mono);font-size:10.5px;font-weight:600;color:#10161a;background:var(--c,#8b9aa3);padding:3px 6px;border-radius:1px}
 .lec-link{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-decoration:none;color:var(--amber);border:1px solid var(--line);padding:4px 9px;white-space:nowrap;transition:.15s}
 .lec-link:hover{border-color:var(--amber);background:rgba(242,169,59,.1)}
@@ -233,6 +234,13 @@ section.device.visible{display:block}
 .modal-box p{font-size:13px;color:var(--dim);margin-bottom:10px}
 .modal-box textarea{width:100%;height:230px;font-family:var(--mono);font-size:11px;background:var(--deck);color:var(--ink);border:1px solid var(--line);padding:10px;resize:vertical}
 .modal-box .row{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+
+.board-toggle{display:none;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);background:var(--panel-2);color:var(--amber);padding:8px 16px;cursor:pointer;min-height:44px;width:100%;text-align:center;margin-bottom:6px;transition:.15s}
+.board-toggle:hover{border-color:var(--amber);background:rgba(242,169,59,.1)}
+@media (orientation:portrait) and (max-width:900px){
+  .board-toggle{display:block}
+  .board-pin.collapsed{display:none}
+}
 
 .foot{max-width:1500px;margin:0 auto;padding:0 22px 50px;font-family:var(--mono);font-size:10.5px;color:var(--dim);line-height:1.9}
 .foot b{color:var(--ink);font-weight:600}
@@ -318,7 +326,7 @@ section.device.visible{display:block}
   </div>
   <div class="note">Pas de pédales sur ce rig : le lacet est sur le twist du manche (axe Z, à déverrouiller mécaniquement) et le frein des deux roues sur la gâchette avant (SLDR).</div>
   <div class="legend-wrap"><table class="dtable" id="dtbl-stick">
-    <thead><tr><th>N°</th><th>Contrôle</th><th>Ce que ça fait sur l'avion</th><th>Leçon</th></tr></thead><tbody></tbody></table></div>
+    <thead><tr><th>N°</th><th>Contrôle</th><th>Ce que ça fait sur l'avion</th><th>Commande DCS</th><th>Leçon</th></tr></thead><tbody></tbody></table></div>
 </section>
 
 <section class="device" id="dev-throttle">
@@ -333,7 +341,7 @@ section.device.visible{display:block}
   <div class="note">Étiquettes cerclées d'ambre : position à confirmer en mode édition.</div>
   <div class="pgnote" id="pgnote-throttle"></div>
   <div class="legend-wrap"><table class="dtable" id="dtbl-throttle">
-    <thead><tr><th>N°</th><th>Contrôle</th><th>Ce que ça fait sur l'avion</th><th>Leçon</th></tr></thead><tbody></tbody></table></div>
+    <thead><tr><th>N°</th><th>Contrôle</th><th>Ce que ça fait sur l'avion</th><th>Commande DCS</th><th>Leçon</th></tr></thead><tbody></tbody></table></div>
 </section>
 
 <section class="device" id="dev-pto2">
@@ -347,7 +355,7 @@ section.device.visible{display:block}
   </div>
   <div class="note">Les libellés gravés ne correspondent pas aux fonctions F-14 — se fier aux numéros.</div>
   <div class="legend-wrap"><table class="dtable" id="dtbl-pto2">
-    <thead><tr><th>N°</th><th>Contrôle</th><th>Ce que ça fait sur l'avion</th><th>Leçon</th></tr></thead><tbody></tbody></table></div>
+    <thead><tr><th>N°</th><th>Contrôle</th><th>Ce que ça fait sur l'avion</th><th>Commande DCS</th><th>Leçon</th></tr></thead><tbody></tbody></table></div>
 </section>
 
 </main>
@@ -588,9 +596,11 @@ function renderTable(dev){
         const tr=document.createElement('tr'); tr.dataset.cat=d.cat;
         tr.dataset.dev=dev; tr.dataset.i=i; tr.dataset.n=d.n; tr.dataset.pg=p;
         tr.style.setProperty('--c',PAGE_COLOR[p]);
+        tr.dataset.realn=String(f.real);
         tr.innerHTML=`<td class="c1"><span class="num-badge" style="--c:${PAGE_COLOR[p]}">${f.real}</span></td>
           <td class="c2"><b>${f.s}</b><span>Repère ${d.n} · Page ${PAGE_NAME[p]}</span></td>
           <td class="c3">${f.f||f.s}${p==='OFF'?'':` <span style="color:${PAGE_COLOR[p]};font-family:var(--mono);font-size:10px;letter-spacing:.06em">— PAGE ${PAGE_NAME[p].toUpperCase()}</span>`}</td>
+          <td class="c4">—</td>
           <td>—</td>`;
         tb.appendChild(tr);
       });
@@ -603,6 +613,7 @@ function renderTable(dev){
     tr.innerHTML=`<td class="c1"><span class="num-badge" style="--c:${c}">${d.n}</span></td>
       <td class="c2"><b>${d.t}</b><span>${d.n}${d.v?' · à vérifier':''}</span></td>
       <td class="c3">${x.det||'—'}</td>
+      <td class="c4">—</td>
       <td>${lec?`<a class="lec-link" href="${lessonHref(lec)}">${lec.toUpperCase()}<small>${lt}</small></a>`:'—'}</td>`;
     tr.querySelector('.c3').dataset.orig=x.det||'—';
     tb.appendChild(tr);
@@ -720,6 +731,7 @@ async function mountSvgDevice(cfg, hotas){
     tr.innerHTML=`<td class="c1"><span class="num-badge" style="--c:${c}">${l.boardNum}</span></td>
       <td class="c2"><b>${ctl}</b><span>${l.boardNum}</span></td>
       <td class="c3">${l.detail||'—'}</td>
+      <td class="c4">—</td>
       <td>${l.lesson?`<a class="lec-link" href="${lessonHref(l.lesson)}">${l.lesson.toUpperCase()}<small>${LESSONS[l.lesson]||''}</small></a>`:'—'}</td>`;
     tbody.appendChild(tr);
   }
@@ -932,7 +944,18 @@ const p2=fetch('data/f14bu-hotas.json').then(r=>{if(!r.ok)throw new Error('data/
   });
 });
 
-Promise.all([p1,p2]).then(handleDeepLink);
+function fillCmdColumn(){
+  const cmdMap=new Map();
+  bindingsIndex.forEach((cmds,key)=>{ if(cmds.trim()) cmdMap.set(key,cmds); });
+  document.querySelectorAll('.dtable tbody tr[data-dev]').forEach(tr=>{
+    const td=tr.querySelector('.c4'); if(!td) return;
+    const n=tr.dataset.realn||tr.dataset.n;
+    const key=tr.dataset.dev+'|'+n;
+    const cmds=cmdMap.get(key);
+    if(cmds) td.textContent=cmds;
+  });
+}
+Promise.all([p1,p2]).then(()=>{ fillCmdColumn(); handleDeepLink(); });
 
 /* ---------- Survol : étiquette ↔ ligne ----------
    L'index data-i est commun aux deux rendus, qui parcourent LABELS[dev] dans
@@ -1026,6 +1049,14 @@ document.querySelectorAll('.board').forEach(b=>{
   w.className='board-pin';
   b.parentNode.insertBefore(w,b);
   w.appendChild(b);
+  const btn=document.createElement('button');
+  btn.className='board-toggle';
+  btn.textContent='Masquer la planche';
+  btn.addEventListener('click',()=>{
+    const hidden=w.classList.toggle('collapsed');
+    btn.textContent=hidden?'Afficher la planche':'Masquer la planche';
+  });
+  w.parentNode.insertBefore(btn,w);
 });
 fitBoards();
 addEventListener('resize',fitBoards);
