@@ -828,13 +828,13 @@
   "type": "fonction"
  },
  {
-  "title": "Weapon Slew (Forward Hand Control) - Right",
+  "title": "Weapon Slew (Forward Hand Control) X",
   "path": "F4E/mapping-hotas.html?dev=stick&n=rX",
   "aircraft": "F-4E Phantom II",
   "type": "fonction"
  },
  {
-  "title": "Weapon Slew (Forward Hand Control) - Up",
+  "title": "Weapon Slew (Forward Hand Control) Y",
   "path": "F4E/mapping-hotas.html?dev=stick&n=rY",
   "aircraft": "F-4E Phantom II",
   "type": "fonction"

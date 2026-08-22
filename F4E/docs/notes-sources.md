@@ -414,8 +414,95 @@ numéros de bouton.
 - **Tout le contenu détaillé** : 22 leçons Pas à pas et 5 de
   perfectionnement sont au stade du plan. Seul le démarrage dispose d'une
   matière exploitable (S2), encore à recouper.
-- **Le guide de Chuck n'a pas encore été dépouillé** — c'est la prochaine
+- **Le guide de Chuck est dépouillé pour la partie 2 seulement** (« Controls
+  Setup », p. 20-30). Les 18 autres parties restent à lire — c'est la prochaine
   étape la plus rentable, il couvre à lui seul la majorité des leçons.
 - **Les deux points `[DOUTEUX]`** (appontage, CCIP) à trancher.
 - **La liste réelle des missions** livrées avec le module.
-- **Le relevé des binds**, qui débloquerait tous les badges du site.
+
+---
+
+# Partie 2 du guide de Chuck — disposition HOTAS (dépouillée)
+
+Pages **24-25** (pilote), **26** (axes), 27-29 (WSO), 30 (profil manette de
+jeu). C'est la disposition du **vrai cockpit** que Chuck reproduit, d'où son
+autorité : les commandes qu'il place sur la manette des gaz y sont
+physiquement sur l'avion.
+
+## Manche (p. 24)
+
+Hat de trim 4 directions · Zoom in/out slow · Nose Gear Steering / Auto
+Acquisition · Emergency Quick Release Lever · Air Refuel (AAR) Release ·
+détente 2 crans (Half/Full Action) · Bomb Release Button · Dispense
+Countermeasures (*bouton gris caché côté droit*).
+
+## Manette des gaz (p. 25)
+
+**Gun/Missile Pinky Switch** à 4 positions — REJECT (haut), RADAR (avant),
+HEAT (centre), GUN (arrière) · **Cage Button** · Drag Parachute Deploy/IN ·
+**Speed Brake** In (arrière) / Out-Hold (avant) · Microphone Switch UHF
+(avant) / ICS (arrière) · Flaps/Slats 3 positions · Landing Gear Toggle.
+
+## Axes (p. 26)
+
+| Axe | Réglage recommandé |
+| --- | --- |
+| Pitch | zone morte 0, saturation X/Y 100, **courbe 5** |
+| Roll | zone morte 0, saturation X/Y 100, **courbe 5** |
+| Rudder | zone morte 0, saturation X/Y 100, **courbe 0** |
+| Throttles | contrôle du régime moteur |
+| **Weapon Slew (Forward Hand Control) X et Y** | **en AXE**, Y à inverser |
+| Wheel Brake Left / Right | à inverser (Chuck les met aux pédales) |
+
+**Point corrigé grâce à cette lecture :** une note antérieure du dépôt
+affirmait que DCS n'exposait le Weapon Slew qu'en touches directionnelles.
+C'est faux — les axes `Weapon Slew (Forward Hand Control) X` et `Y` existent
+bel et bien dans le catalogue du module. Ils sont désormais sur le mini-stick
+du pouce, ce qui correspond exactement au « Forward Hand Control » du vrai
+avion.
+
+**Divergences assumées avec Chuck**, imposées par le matériel : pas de
+pédales sur ce rig (freins des deux roues sur la gâchette avant du manche au
+lieu des palonniers), et train + parachute de freinage laissés sur le panneau
+PTO2, qui joue ce rôle sur les trois avions du dépôt.
+
+---
+
+# Rotacteur de pages Virpil — découpage retenu pour le F-4E
+
+Les six boutons B1-B6 de la manette (repères 38-43 sur la planche) émettent
+une plage de numéros DirectInput différente selon la position du rotacteur —
+c'est le firmware Virpil qui le fait, pas DCS. Plages relevées sur ce
+matériel : **Blanc 38-43 · Bleu 56-61 · Vert 62-67 · Rouge 68-73 · Jaune
+74-79**. Trente fonctions sur six boutons physiques.
+
+**Le F-4E n'a pas de sélecteur de phase de vol officiel** à reprendre,
+contrairement au F-14B(U) dont les cinq pages sont calées sur le PDCP réel
+(T.O./CRUISE/A-A/A-G/LDG). Sa taxonomie (`bind_categories.lua`) est par
+système et par emplacement, pas par phase.
+
+Le découpage reprend donc **le schéma déjà en place sur le F-14B(U)**, pour
+qu'une position du rotacteur veuille dire la même chose d'un avion à
+l'autre :
+
+| Page | Thème | Source des commandes |
+| --- | --- | --- |
+| **Blanc** (38-43) | Sol et mise en route | Crew Chief Commands + Crew Contract |
+| **Bleu** (56-61) | Air-air : le radar | `Jester Command: Radar > …` |
+| **Vert** (62-67) | Air-sol : Pave Spike, mode de largage | `Jester Command: A2G > …` + Delivery Mode |
+| **Rouge** (68-73) | Urgences et défense | `Jester Command: Systems > …` |
+| **Jaune** (74-79) | Navigation : TACAN, points tournants | `Jester Command: Navigation > …` |
+
+**Pourquoi JESTER fournit l'essentiel** : sur un F-4E piloté seul, le radar,
+la navigation fine et les contre-mesures sont des tâches WSO. Les 108
+commandes `Jester Command:` du catalogue sont l'interface directe du pilote
+vers ces systèmes, sans passer par la roue — elles sont regroupées par thème
+(UHF Radio 46, Radar 29, Systems 12, Navigation 9, Crew Contract 8, A2G 4),
+ce qui **est** la taxonomie officielle et tombe naturellement sur cinq pages.
+
+**Rouge reste la page des urgences sur les deux avions**, conformément à la
+règle du dépôt : une position fixe que le pilote retrouve sans réfléchir à
+sa phase de vol. Les urgences vraiment vitales (largage d'urgence, verrière,
+train et volets de secours, frein de secours) ne sont d'ailleurs **pas** sur
+le rotacteur du tout — elles vivent sur le PTO2 et le manche, donc
+atteignables sans tourner quoi que ce soit.

@@ -1,39 +1,1253 @@
 {
-"device":[
-{"id":"stick","labels":[
-  {"n":"X","cat":"vol","text":"Roulis (ailerons)","detail":"Incline l'avion en roulis.","lesson":"vol-de-base.html"},
-  {"n":"Y","cat":"vol","text":"Tangage (profondeur)","detail":"Cabre ou pique du nez.","lesson":"vol-de-base.html"},
-  {"n":"Z","cat":"vol","text":"LACET (twist)","detail":"Palonnier virtuel : le lacet passe par le twist du manche, à déverrouiller mécaniquement sur la base.","lesson":"roulage-decollage.html"},
-  {"n":"SLDR","cat":"vol","text":"Freins de roues","detail":"Gâchette analogique à l'avant du manche — freine les deux roues ensemble.","lesson":"roulage-decollage.html"},
-  {"n":"rX","cat":"misc","text":"Mini-stick libre","detail":"Non assigné : le Corsair n'a ni radar ni désignateur à déplacer.","verify":false},
-  {"n":"rY","cat":"misc","text":"Mini-stick libre","detail":"Non assigné, comme l'axe rX.","verify":false}
-]},
-{"id":"pto2","labels":[
-  {"n":"5","cat":"vol","text":"VOLETS +","detail":"Sort les volets d'un cran.","lesson":"roulage-decollage.html"},
-  {"n":"7","cat":"vol","text":"VOLETS −","detail":"Rentre les volets d'un cran.","lesson":"roulage-decollage.html"},
-  {"n":"10","cat":"vol","text":"Aérofrein sort","detail":"Sort l'aérofrein.","lesson":"retour-atterrissage.html"},
-  {"n":"11","cat":"vol","text":"Aérofrein rentre","detail":"Rentre l'aérofrein.","lesson":"retour-atterrissage.html"},
-  {"n":"28","cat":"vol","text":"AILES repli","detail":"Replie les ailes — parking sur porte-avions.","lesson":"appontage-essex.html"},
-  {"n":"29","cat":"vol","text":"AILES stop","detail":"Arrête le mouvement de pliage en cours.","lesson":"appontage-essex.html"},
-  {"n":"30","cat":"vol","text":"AILES déploi","detail":"Déploie les ailes en position de vol.","lesson":"appontage-essex.html"},
-  {"n":"31","cat":"vol","text":"Verrou ailes","detail":"Verrouille ou déverrouille les ailes en position déployée.","lesson":"appontage-essex.html"},
-  {"n":"32","cat":"vol","text":"CROSSE haute","detail":"Rentre la crosse d'appontage.","lesson":"appontage-essex.html"},
-  {"n":"33","cat":"vol","text":"CROSSE parc","detail":"Position parking de la crosse, ni rentrée ni sortie.","lesson":"appontage-essex.html"},
-  {"n":"34","cat":"vol","text":"CROSSE basse","detail":"Sort la crosse d'appontage.","lesson":"appontage-essex.html"},
-  {"n":"35","cat":"vol","text":"TRAIN rentré","detail":"Rentre le train d'atterrissage.","lesson":"roulage-decollage.html"},
-  {"n":"37","cat":"vol","text":"TRAIN sorti","detail":"Sort le train d'atterrissage.","lesson":"retour-atterrissage.html"},
-  {"n":"38","cat":"vol","text":"Frein parc OFF","detail":"Relâche le frein de parking.","lesson":"roulage-decollage.html"},
-  {"n":"39","cat":"vol","text":"Frein parc ON","detail":"Serre le frein de parking.","lesson":"roulage-decollage.html"},
-  {"n":"8","cat":"vol","text":"Phare approche ON","detail":"Allume le phare d'approche.","lesson":"retour-atterrissage.html"},
-  {"n":"9","cat":"vol","text":"Phare approche OFF","detail":"Éteint le phare d'approche.","lesson":"retour-atterrissage.html"},
-  {"n":"17","cat":"arm","text":"Réservoir : attache","detail":"Attache le réservoir largable sous le fuselage.","lesson":"preparer-module-controles.html"},
-  {"n":"19","cat":"arm","text":"Réservoir : verrou","detail":"Verrouille le réservoir largable en place.","lesson":"preparer-module-controles.html"},
-  {"n":"22","cat":"arm","text":"Réservoir : largage","detail":"Largue le réservoir externe.","lesson":"bombes-roquettes.html"},
-  {"n":"23","cat":"arm","text":"Sélecteur : pylône","detail":"Sélectionne le pylône central ventral pour le largage.","lesson":"bombes-roquettes.html"},
-  {"n":"24","cat":"arm","text":"Sélecteur : aile G","detail":"Sélectionne les points d'emport de l'aile gauche.","lesson":"bombes-roquettes.html"},
-  {"n":"25","cat":"arm","text":"Sélecteur : aile D","detail":"Sélectionne les points d'emport de l'aile droite.","lesson":"bombes-roquettes.html"},
-  {"n":"26","cat":"arm","text":"Urgence aile G","detail":"Largage d'urgence des emports de l'aile gauche.","lesson":"urgences.html"},
-  {"n":"27","cat":"arm","text":"Urgence aile D","detail":"Largage d'urgence des emports de l'aile droite.","lesson":"urgences.html"}
-]}
-]
+ "device": [
+  {
+   "id": "stick",
+   "labels": [
+    {
+     "n": "X",
+     "cat": "vol",
+     "text": "Roulis (ailerons)",
+     "detail": "Incline l'avion en roulis.",
+     "lesson": "vol-de-base.html",
+     "cmd": "Roll"
+    },
+    {
+     "n": "Y",
+     "cat": "vol",
+     "text": "Tangage (profondeur)",
+     "detail": "Cabre ou pique du nez.",
+     "lesson": "vol-de-base.html",
+     "cmd": "Pitch"
+    },
+    {
+     "n": "Z",
+     "cat": "vol",
+     "text": "LACET (twist)",
+     "detail": "Palonnier. Contre le couple de l'hélice au décollage — le Corsair part à gauche si on ne compense pas.",
+     "lesson": "roulage-decollage.html",
+     "cmd": "Rudder"
+    },
+    {
+     "n": "SLDR",
+     "cat": "vol",
+     "text": "Freins de roues",
+     "detail": "Gâchette avant : freine les deux roues ensemble.",
+     "lesson": "roulage-decollage.html",
+     "cmd": "Gear brakes, both"
+    },
+    {
+     "n": "rX",
+     "cat": "misc",
+     "text": "Mini-stick libre",
+     "detail": "Non assigné."
+    },
+    {
+     "n": "rY",
+     "cat": "misc",
+     "text": "Mini-stick libre",
+     "detail": "Non assigné."
+    },
+    {
+     "n": "1",
+     "cat": "arm",
+     "text": "LARGAGE",
+     "detail": "Largue la bombe ou le réservoir sélectionné au sélecteur d'emport.",
+     "lesson": "bombes-roquettes.html",
+     "cmd": "Weapons release button"
+    },
+    {
+     "n": "2",
+     "cat": "arm",
+     "text": "Fusée : SÉCURITÉ",
+     "detail": "Emports non armés : rien n'explose à l'impact.",
+     "lesson": "bombes-roquettes.html",
+     "cmd": "Arming selector SAFE"
+    },
+    {
+     "n": "3",
+     "cat": "arm",
+     "text": "Fusée : NEZ/QUEUE",
+     "detail": "Arme les deux fusées de la bombe.",
+     "lesson": "bombes-roquettes.html",
+     "cmd": "Arming selector NOSE/TAIL"
+    },
+    {
+     "n": "4",
+     "cat": "arm",
+     "text": "Caméra de tir",
+     "detail": "Enregistre sans tirer — utile pour vérifier son alignement.",
+     "lesson": "canons-mk8.html",
+     "cmd": "Gun camera"
+    },
+    {
+     "n": "5",
+     "cat": "arm",
+     "text": "FEU CANONS",
+     "detail": "Tire les six .50 — rafales courtes, 400 coups par arme.",
+     "lesson": "canons-mk8.html",
+     "cmd": "Guns fire button"
+    },
+    {
+     "n": "6",
+     "cat": "arm",
+     "text": "TIR ROQUETTES",
+     "detail": "Tire les HVAR selon le mode réglé à la boîte roquettes.",
+     "lesson": "bombes-roquettes.html",
+     "cmd": "Rockets fire button"
+    },
+    {
+     "n": "7",
+     "cat": "vol",
+     "text": "PA désengagé",
+     "detail": "Coupe le pilote automatique — réflexe avant toute manœuvre.",
+     "lesson": "vol-de-base.html",
+     "cmd": "Autopilot Off"
+    },
+    {
+     "n": "8",
+     "cat": "arm",
+     "text": "MASTER ARM",
+     "detail": "Arme ou coupe tout le circuit de tir.",
+     "lesson": "canons-mk8.html",
+     "cmd": "Master arm toggle"
+    },
+    {
+     "n": "9",
+     "cat": "vol",
+     "text": "Trim lacet G",
+     "detail": "Compense le couple vers la gauche.",
+     "lesson": "vol-de-base.html",
+     "cmd": "Trim, yaw left"
+    },
+    {
+     "n": "10",
+     "cat": "vol",
+     "text": "Trim remis à zéro",
+     "detail": "Remet les trois trims au neutre.",
+     "lesson": "vol-de-base.html",
+     "cmd": "Trim, reset all"
+    },
+    {
+     "n": "11",
+     "cat": "vol",
+     "text": "Trim lacet D",
+     "detail": "Compense le couple vers la droite.",
+     "lesson": "vol-de-base.html",
+     "cmd": "Trim, yaw right"
+    },
+    {
+     "n": "12",
+     "cat": "vol",
+     "text": "Verrou roulette",
+     "detail": "Verrouille la roulette de queue : obligatoire au décollage et à l'atterrissage.",
+     "lesson": "roulage-decollage.html",
+     "cmd": "Tail wheel lock"
+    },
+    {
+     "n": "13",
+     "cat": "arm",
+     "text": "Éclairage viseur",
+     "detail": "Allume le réticule du viseur Mk 8.",
+     "lesson": "canons-mk8.html",
+     "cmd": "Gunsight light toggle"
+    },
+    {
+     "n": "14",
+     "cat": "vol",
+     "text": "Mise à plat",
+     "detail": "Remet l'avion en palier — sortie de situation inusuelle.",
+     "lesson": "vol-de-base.html",
+     "cmd": "Autolevel"
+    },
+    {
+     "n": "15",
+     "cat": "vol",
+     "text": "Trim piqué",
+     "detail": "Abaisse le nez.",
+     "lesson": "vol-de-base.html",
+     "cmd": "Trim, nose down"
+    },
+    {
+     "n": "16",
+     "cat": "vol",
+     "text": "Trim roulis G",
+     "detail": "Compense une tendance au roulis à droite.",
+     "lesson": "vol-de-base.html",
+     "cmd": "Trim, left bank"
+    },
+    {
+     "n": "17",
+     "cat": "vol",
+     "text": "Trim cabré",
+     "detail": "Relève le nez — trim de base en approche.",
+     "lesson": "retour-atterrissage.html",
+     "cmd": "Trim, nose up"
+    },
+    {
+     "n": "18",
+     "cat": "vol",
+     "text": "Trim roulis D",
+     "detail": "Compense une tendance au roulis à gauche.",
+     "lesson": "vol-de-base.html",
+     "cmd": "Trim, right bank"
+    },
+    {
+     "n": "19",
+     "cat": "arm",
+     "text": "Roquettes : UNE",
+     "detail": "Tir des roquettes une par une.",
+     "lesson": "bombes-roquettes.html",
+     "cmd": "Rockets Box Single"
+    },
+    {
+     "n": "20",
+     "cat": "arm",
+     "text": "Roquettes : AUTO",
+     "detail": "Tir des roquettes en salve automatique.",
+     "lesson": "bombes-roquettes.html",
+     "cmd": "Rockets Box Auto"
+    },
+    {
+     "n": "21",
+     "cat": "misc",
+     "text": "Zoom +",
+     "detail": "Resserre le champ de vision.",
+     "cmd": "Zoom in slow"
+    },
+    {
+     "n": "22",
+     "cat": "misc",
+     "text": "Zoom −",
+     "detail": "Élargit le champ de vision.",
+     "cmd": "Zoom out slow"
+    },
+    {
+     "n": "23",
+     "cat": "misc",
+     "text": "Padlock off",
+     "detail": "Relâche le verrouillage de vue.",
+     "cmd": "Unlock view (stop padlock)"
+    },
+    {
+     "n": "24",
+     "cat": "misc",
+     "text": "Vue extérieure",
+     "detail": "Vue extérieure de l'appareil.",
+     "cmd": "F2 Aircraft view"
+    },
+    {
+     "n": "25",
+     "cat": "vol",
+     "text": "Injection eau ON",
+     "detail": "Arme le WEP : pleine puissance de guerre, cinq minutes maximum.",
+     "lesson": "regimes-moteur-wep.html",
+     "cmd": "Enable water injection"
+    },
+    {
+     "n": "26",
+     "cat": "misc",
+     "text": "Vue cockpit",
+     "detail": "Revient à la vue cockpit.",
+     "cmd": "F1 Cockpit view"
+    },
+    {
+     "n": "27",
+     "cat": "vol",
+     "text": "Injection eau OFF",
+     "detail": "Coupe le WEP.",
+     "lesson": "regimes-moteur-wep.html",
+     "cmd": "Disable water injection"
+    },
+    {
+     "n": "28",
+     "cat": "arm",
+     "text": "Roquettes : ARM",
+     "detail": "Arme la boîte roquettes.",
+     "lesson": "bombes-roquettes.html",
+     "cmd": "Rockets Box Arm"
+    },
+    {
+     "n": "29",
+     "cat": "arm",
+     "text": "Roquettes : SÉCU",
+     "detail": "Met la boîte roquettes en sécurité.",
+     "lesson": "bombes-roquettes.html",
+     "cmd": "Rockets Box Safe"
+    },
+    {
+     "n": "30",
+     "cat": "arm",
+     "text": "Canons centraux",
+     "detail": "Sélectionne la paire de canons centrale.",
+     "lesson": "canons-mk8.html",
+     "cmd": "Guns, center selector"
+    },
+    {
+     "n": "31",
+     "cat": "arm",
+     "text": "Canons internes",
+     "detail": "Sélectionne la paire de canons interne.",
+     "lesson": "canons-mk8.html",
+     "cmd": "Guns, inboard selector"
+    },
+    {
+     "n": "32",
+     "cat": "vol",
+     "text": "Verrière",
+     "detail": "Ouvre ou ferme la verrière.",
+     "lesson": "demarrage-a-froid.html",
+     "cmd": "Canopy toggle"
+    }
+   ]
+  },
+  {
+   "id": "throttle",
+   "labels": [
+    {
+     "n": "rY",
+     "cat": "vol",
+     "text": "GAZ",
+     "detail": "Manette des gaz du R-2800.",
+     "lesson": "regimes-moteur-wep.html",
+     "cmd": "Throttle lever",
+     "x": 87.13,
+     "y": 10.14,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "rX",
+     "cat": "vol",
+     "text": "HÉLICE (RPM)",
+     "detail": "Régime hélice : plein petit pas au décollage, grand pas en croisière.",
+     "lesson": "regimes-moteur-wep.html",
+     "cmd": "Propeller governor handle",
+     "x": 87.13,
+     "y": 21.3,
+     "bw": 8.55,
+     "sm": 1
+    },
+    {
+     "n": "rZ",
+     "cat": "vol",
+     "text": "MÉLANGE",
+     "detail": "Richesse : AUTO RICH en combat, AUTO LEAN en croisière.",
+     "lesson": "regimes-moteur-wep.html",
+     "cmd": "Mixture handle",
+     "x": 66.86,
+     "y": 52.74,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "AX1",
+     "cat": "vol",
+     "text": "Compresseur",
+     "detail": "Étage du compresseur : neutre, bas, haut selon l'altitude.",
+     "lesson": "regimes-moteur-wep.html",
+     "cmd": "Supercharger handle",
+     "x": 9.01,
+     "y": 4.98,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "AX2",
+     "cat": "misc",
+     "text": "Lumière viseur",
+     "detail": "Intensité du réticule.",
+     "cmd": "Gunsight light intensity",
+     "x": 41.3,
+     "y": 4.98,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "AX3",
+     "cat": "misc",
+     "text": "Lumière carte",
+     "detail": "Éclairage de la planchette.",
+     "cmd": "Chartboard light intensity",
+     "x": 25.49,
+     "y": 25.57,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "1",
+     "cat": "comm",
+     "text": "Menu radio",
+     "detail": "Ouvre le menu de communication.",
+     "lesson": "navigation-radio.html",
+     "cmd": "Communication menu",
+     "x": 5.19,
+     "y": 19.95,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "2",
+     "cat": "comm",
+     "text": "Volume +",
+     "detail": "Monte le volume du récepteur.",
+     "lesson": "navigation-radio.html",
+     "cmd": "C-38 Volume, Increase",
+     "x": 5.19,
+     "y": 14.35,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "3",
+     "cat": "comm",
+     "text": "Volume −",
+     "detail": "Baisse le volume du récepteur.",
+     "lesson": "navigation-radio.html",
+     "cmd": "C-38 Volume, Decrease",
+     "x": 5.19,
+     "y": 25.51,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "4",
+     "cat": "comm",
+     "text": "Canal +",
+     "detail": "Canal suivant de l'émetteur ARC-5.",
+     "lesson": "navigation-radio.html",
+     "cmd": "C-30A Channel, Increase",
+     "x": 5.17,
+     "y": 35.93,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "5",
+     "cat": "comm",
+     "text": "Canal −",
+     "detail": "Canal précédent.",
+     "lesson": "navigation-radio.html",
+     "cmd": "C-30A Channel, Decrease",
+     "x": 15.91,
+     "y": 47.1,
+     "bw": 8.61,
+     "sm": 1
+    },
+    {
+     "n": "6",
+     "cat": "comm",
+     "text": "Radio ON",
+     "detail": "Met l'émetteur sous tension.",
+     "lesson": "navigation-radio.html",
+     "cmd": "C-30A, on",
+     "x": 15.94,
+     "y": 41.54,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "7",
+     "cat": "comm",
+     "text": "Radio OFF",
+     "detail": "Coupe l'émetteur.",
+     "lesson": "navigation-radio.html",
+     "cmd": "C-30A, off",
+     "x": 15.91,
+     "y": 35.93,
+     "bw": 8.61,
+     "sm": 1
+    },
+    {
+     "n": "8",
+     "cat": "sens",
+     "text": "Cap radio +",
+     "detail": "Règle le cap du radiocompas ARR-2.",
+     "lesson": "navigation-radio.html",
+     "cmd": "Radio course set +",
+     "x": 61.79,
+     "y": 20.17,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "9",
+     "cat": "sens",
+     "text": "Cap radio −",
+     "detail": "Règle le cap du radiocompas.",
+     "lesson": "navigation-radio.html",
+     "cmd": "Radio course set -",
+     "x": 61.79,
+     "y": 14.57,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "10",
+     "cat": "sens",
+     "text": "Gyro cap +",
+     "detail": "Tourne la rose du gyro directionnel.",
+     "lesson": "navigation-radio.html",
+     "cmd": "Directional gyro course +",
+     "x": 72.56,
+     "y": 20.17,
+     "bw": 8.55,
+     "sm": 1
+    },
+    {
+     "n": "11",
+     "cat": "sens",
+     "text": "Gyro cap −",
+     "detail": "Tourne la rose du gyro directionnel.",
+     "lesson": "navigation-radio.html",
+     "cmd": "Directional gyro course -",
+     "x": 61.79,
+     "y": 25.74,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "12",
+     "cat": "sens",
+     "text": "Recaler gyro",
+     "detail": "Recale le gyro sur le compas magnétique — à refaire toutes les 15 min.",
+     "lesson": "navigation-radio.html",
+     "cmd": "Directional gyro cage",
+     "x": 51.11,
+     "y": 20.17,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "13",
+     "cat": "vol",
+     "text": "DÉMARREUR",
+     "detail": "Lance le moteur, capot de sécurité ouvert.",
+     "lesson": "demarrage-a-froid.html",
+     "cmd": "Starter",
+     "x": 88.3,
+     "y": 15.74,
+     "bw": 8.55,
+     "sm": 1
+    },
+    {
+     "n": "14",
+     "cat": "vol",
+     "text": "Magnétos +",
+     "detail": "OFF → droite → gauche → les deux.",
+     "lesson": "demarrage-a-froid.html",
+     "cmd": "Ignition switch (magnets) +",
+     "x": 56.61,
+     "y": 41.52,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "15",
+     "cat": "vol",
+     "text": "Magnétos −",
+     "detail": "Position précédente des magnétos.",
+     "lesson": "demarrage-a-froid.html",
+     "cmd": "Ignition switch (magnets) -",
+     "x": 56.61,
+     "y": 47.12,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "16",
+     "cat": "vol",
+     "text": "Pompe amorçage",
+     "detail": "Injecte du carburant avant lancement.",
+     "lesson": "demarrage-a-froid.html",
+     "cmd": "Primer",
+     "x": 77.55,
+     "y": 33.64,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "17",
+     "cat": "vol",
+     "text": "Pompe carbu ON",
+     "detail": "Pompe électrique en marche.",
+     "lesson": "demarrage-a-froid.html",
+     "cmd": "Fuel pump, on",
+     "x": 88.3,
+     "y": 33.64,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "18",
+     "cat": "vol",
+     "text": "Pompe carbu OFF",
+     "detail": "Coupe la pompe électrique.",
+     "lesson": "demarrage-a-froid.html",
+     "cmd": "Fuel pump, off",
+     "x": 77.55,
+     "y": 39.2,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "19",
+     "cat": "vol",
+     "text": "Réservoir +",
+     "detail": "Sélecteur de réservoir suivant.",
+     "lesson": "regimes-moteur-wep.html",
+     "cmd": "Fuel selector +",
+     "x": 66.86,
+     "y": 33.64,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "20",
+     "cat": "vol",
+     "text": "Réservoir −",
+     "detail": "Sélecteur de réservoir précédent.",
+     "lesson": "regimes-moteur-wep.html",
+     "cmd": "Fuel selector -",
+     "x": 77.55,
+     "y": 28.03,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "21",
+     "cat": "vol",
+     "text": "Tenue d'assiette",
+     "detail": "Maintient l'assiette courante.",
+     "lesson": "vol-de-base.html",
+     "cmd": "Hold Attitude",
+     "x": 88.27,
+     "y": 64.79,
+     "bw": 8.61,
+     "sm": 1
+    },
+    {
+     "n": "22",
+     "cat": "vol",
+     "text": "Volets capot ouvre",
+     "detail": "Ouvre les volets de capot : refroidit, mais traîne.",
+     "lesson": "regimes-moteur-wep.html",
+     "cmd": "Cowl flaps: open",
+     "x": 42.47,
+     "y": 33.64,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "23",
+     "cat": "vol",
+     "text": "Volets capot ferme",
+     "detail": "Ferme les volets de capot.",
+     "lesson": "regimes-moteur-wep.html",
+     "cmd": "Cowl flaps: close",
+     "x": 42.47,
+     "y": 39.2,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "24",
+     "cat": "vol",
+     "text": "Radiateur huile ouvre",
+     "detail": "Ouvre le radiateur d'huile.",
+     "lesson": "regimes-moteur-wep.html",
+     "cmd": "Oil cooler: open",
+     "x": 31.78,
+     "y": 33.64,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "25",
+     "cat": "vol",
+     "text": "Radiateur huile ferme",
+     "detail": "Ferme le radiateur d'huile.",
+     "lesson": "regimes-moteur-wep.html",
+     "cmd": "Oil cooler: close",
+     "x": 42.47,
+     "y": 28.03,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "26",
+     "cat": "vol",
+     "text": "Intercooler ouvre",
+     "detail": "Ouvre l'intercooler.",
+     "lesson": "regimes-moteur-wep.html",
+     "cmd": "Intercooler: open",
+     "x": 53.21,
+     "y": 33.64,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "27",
+     "cat": "vol",
+     "text": "Intercooler ferme",
+     "detail": "Ferme l'intercooler.",
+     "lesson": "regimes-moteur-wep.html",
+     "cmd": "Intercooler: close",
+     "x": 77.55,
+     "y": 52.74,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "28",
+     "cat": "misc",
+     "text": "Regard haut",
+     "detail": "Coup d'œil vers le haut.",
+     "cmd": "Glance up",
+     "x": 77.55,
+     "y": 58.3,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "29",
+     "cat": "misc",
+     "text": "Regard gauche",
+     "detail": "Coup d'œil à gauche.",
+     "cmd": "Glance left",
+     "x": 65.55,
+     "y": 69.35,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "30",
+     "cat": "misc",
+     "text": "Regard droite",
+     "detail": "Coup d'œil à droite.",
+     "cmd": "Glance right",
+     "x": 77.55,
+     "y": 47.14,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "31",
+     "cat": "misc",
+     "text": "Regard bas",
+     "detail": "Coup d'œil aux instruments.",
+     "cmd": "Glance down",
+     "x": 88.3,
+     "y": 52.74,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "32",
+     "cat": "misc",
+     "text": "Vue centrée",
+     "detail": "Recentre la vue.",
+     "cmd": "View Center",
+     "x": 42.47,
+     "y": 47.12,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "33",
+     "cat": "vol",
+     "text": "Verrière ouvre",
+     "detail": "Ouvre la verrière.",
+     "lesson": "demarrage-a-froid.html",
+     "cmd": "Canopy open",
+     "x": 77.55,
+     "y": 67.05,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "34",
+     "cat": "vol",
+     "text": "Verrière ferme",
+     "detail": "Ferme la verrière.",
+     "lesson": "demarrage-a-froid.html",
+     "cmd": "Canopy close",
+     "x": 42.47,
+     "y": 53.99,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "35",
+     "cat": "misc",
+     "text": "Rétroviseurs",
+     "detail": "Affiche ou masque les rétroviseurs.",
+     "cmd": "Toggle Mirrors",
+     "x": 42.47,
+     "y": 61.93,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "36",
+     "cat": "arm",
+     "text": "Armer canons G",
+     "detail": "Charge les canons de l'aile gauche.",
+     "lesson": "canons-mk8.html",
+     "cmd": "Guns, left, charge ON",
+     "x": 26.65,
+     "y": 59.63,
+     "bw": 8.61,
+     "sm": 1
+    },
+    {
+     "n": "37",
+     "cat": "arm",
+     "text": "Armer canons D",
+     "detail": "Charge les canons de l'aile droite.",
+     "lesson": "canons-mk8.html",
+     "cmd": "Guns, right, charge ON",
+     "x": 26.71,
+     "y": 72.07,
+     "bw": 8.55,
+     "sm": 1
+    },
+    {
+     "n": "44",
+     "cat": "vol",
+     "text": "Feux ext. ON",
+     "detail": "Allume les feux de navigation.",
+     "cmd": "Exterior lights On",
+     "x": 5.19,
+     "y": 66.47,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "45",
+     "cat": "vol",
+     "text": "Feux ext. OFF",
+     "detail": "Éteint les feux de navigation.",
+     "cmd": "Exterior lights Off",
+     "x": 5.19,
+     "y": 72.07,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "46",
+     "cat": "vol",
+     "text": "Réchauffage Pitot ON",
+     "detail": "Évite le givrage anémométrique.",
+     "lesson": "vol-de-base.html",
+     "cmd": "Pitot heat, on",
+     "x": 15.94,
+     "y": 66.47,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "47",
+     "cat": "vol",
+     "text": "Réchauffage Pitot OFF",
+     "detail": "Coupe le réchauffage Pitot.",
+     "lesson": "vol-de-base.html",
+     "cmd": "Pitot heat, off",
+     "x": 15.94,
+     "y": 72.07,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "48",
+     "cat": "vol",
+     "text": "Lumières cockpit ON",
+     "detail": "Allume l'éclairage de planche.",
+     "cmd": "Cockpit lights ON",
+     "x": 26.65,
+     "y": 54.03,
+     "bw": 8.61,
+     "sm": 1
+    },
+    {
+     "n": "49",
+     "cat": "vol",
+     "text": "Lumières cockpit OFF",
+     "detail": "Éteint l'éclairage de planche.",
+     "cmd": "Cockpit lights OFF",
+     "x": 26.68,
+     "y": 66.47,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "50",
+     "cat": "vol",
+     "text": "Feux formation",
+     "detail": "Fait défiler les feux de formation.",
+     "cmd": "Formation cycle",
+     "x": 10.32,
+     "y": 87.83,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "51",
+     "cat": "vol",
+     "text": "Panneau G +",
+     "detail": "Monte l'éclairage du panneau gauche.",
+     "cmd": "Left panel light +",
+     "x": 10.32,
+     "y": 93.39,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "52",
+     "cat": "vol",
+     "text": "Panneau G −",
+     "detail": "Baisse l'éclairage du panneau gauche.",
+     "cmd": "Left panel light -",
+     "x": 10.32,
+     "y": 82.22,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "53",
+     "cat": "vol",
+     "text": "Dégivrage ON",
+     "detail": "Dégivre le pare-brise.",
+     "cmd": "Defrost, on",
+     "x": 21.1,
+     "y": 87.83,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "54",
+     "cat": "vol",
+     "text": "Dégivrage OFF",
+     "detail": "Coupe le dégivrage.",
+     "cmd": "Defrost, off",
+     "x": 21.1,
+     "y": 93.39,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "55",
+     "cat": "misc",
+     "text": "Reset accéléromètre",
+     "detail": "Remet les aiguilles de G à zéro.",
+     "cmd": "Accelerometer reset",
+     "x": 21.1,
+     "y": 82.22,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "38",
+     "cat": "vol",
+     "text": "Pompe hydraulique",
+     "detail": "Pompe à main : sortie de secours du train et des volets si la pression tombe.",
+     "lesson": "urgences.html",
+     "cmd": "Hand pump",
+     "x": 66.72,
+     "y": 77.4,
+     "bw": 8.55,
+     "sm": 1
+    },
+    {
+     "n": "39",
+     "cat": "vol",
+     "text": "Batterie ON",
+     "detail": "Met la batterie sous tension — premier geste du démarrage.",
+     "lesson": "demarrage-a-froid.html",
+     "cmd": "Battery, on",
+     "x": 77.41,
+     "y": 77.4,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "40",
+     "cat": "vol",
+     "text": "Batterie OFF",
+     "detail": "Coupe la batterie.",
+     "lesson": "demarrage-a-froid.html",
+     "cmd": "Battery, off",
+     "x": 88.24,
+     "y": 77.4,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "41",
+     "cat": "arm",
+     "text": "Canons externes",
+     "detail": "Sélectionne la paire de canons externe.",
+     "lesson": "canons-mk8.html",
+     "cmd": "Guns, outboard selector",
+     "x": 66.72,
+     "y": 85.4,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "42",
+     "cat": "arm",
+     "text": "Boîte roquettes ON",
+     "detail": "Met la boîte roquettes sous tension.",
+     "lesson": "bombes-roquettes.html",
+     "cmd": "Rockets Box On",
+     "x": 77.41,
+     "y": 85.4,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "43",
+     "cat": "arm",
+     "text": "Boîte roquettes OFF",
+     "detail": "Coupe la boîte roquettes.",
+     "lesson": "bombes-roquettes.html",
+     "cmd": "Rockets Box Off",
+     "x": 88.27,
+     "y": 85.4,
+     "bw": 8.55,
+     "sm": 1
+    },
+    {
+     "n": "OFF",
+     "cat": "misc",
+     "text": "Page Blanc",
+     "detail": "Position repos du rotacteur de pages Virpil. Le Corsair n'a pas assez de commandes pour justifier plusieurs pages : les six boutons B1-B6 (repères 38-43) gardent la même fonction quelle que soit la position.",
+     "x": 34.63,
+     "y": 93.37,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "M1",
+     "cat": "misc",
+     "text": "Page Bleu",
+     "detail": "Position libre du rotacteur — voir la position Blanc.",
+     "x": 45.32,
+     "y": 93.37,
+     "bw": 8.58,
+     "sm": 1
+    },
+    {
+     "n": "M2",
+     "cat": "misc",
+     "text": "Page Vert",
+     "detail": "Position libre du rotacteur — voir la position Blanc.",
+     "x": 56.04,
+     "y": 93.37,
+     "bw": 8.55,
+     "sm": 1
+    },
+    {
+     "n": "M3",
+     "cat": "misc",
+     "text": "Page Rouge",
+     "detail": "Position libre du rotacteur — voir la position Blanc.",
+     "x": 66.69,
+     "y": 93.37,
+     "bw": 8.61,
+     "sm": 1
+    },
+    {
+     "n": "M4",
+     "cat": "misc",
+     "text": "Page Jaune",
+     "detail": "Position libre du rotacteur — voir la position Blanc.",
+     "x": 77.41,
+     "y": 93.37,
+     "bw": 8.55,
+     "sm": 1
+    }
+   ]
+  },
+  {
+   "id": "pto2",
+   "labels": [
+    {
+     "n": "5",
+     "cat": "vol",
+     "text": "VOLETS +",
+     "detail": "Sort les volets d'un cran.",
+     "lesson": "roulage-decollage.html"
+    },
+    {
+     "n": "7",
+     "cat": "vol",
+     "text": "VOLETS −",
+     "detail": "Rentre les volets d'un cran.",
+     "lesson": "roulage-decollage.html"
+    },
+    {
+     "n": "10",
+     "cat": "vol",
+     "text": "Aérofrein sort",
+     "detail": "Sort l'aérofrein.",
+     "lesson": "retour-atterrissage.html"
+    },
+    {
+     "n": "11",
+     "cat": "vol",
+     "text": "Aérofrein rentre",
+     "detail": "Rentre l'aérofrein.",
+     "lesson": "retour-atterrissage.html"
+    },
+    {
+     "n": "28",
+     "cat": "vol",
+     "text": "AILES repli",
+     "detail": "Replie les ailes — parking sur porte-avions.",
+     "lesson": "appontage-essex.html"
+    },
+    {
+     "n": "29",
+     "cat": "vol",
+     "text": "AILES stop",
+     "detail": "Arrête le mouvement de pliage en cours.",
+     "lesson": "appontage-essex.html"
+    },
+    {
+     "n": "30",
+     "cat": "vol",
+     "text": "AILES déploi",
+     "detail": "Déploie les ailes en position de vol.",
+     "lesson": "appontage-essex.html"
+    },
+    {
+     "n": "31",
+     "cat": "vol",
+     "text": "Verrou ailes",
+     "detail": "Verrouille ou déverrouille les ailes en position déployée.",
+     "lesson": "appontage-essex.html"
+    },
+    {
+     "n": "32",
+     "cat": "vol",
+     "text": "CROSSE haute",
+     "detail": "Rentre la crosse d'appontage.",
+     "lesson": "appontage-essex.html"
+    },
+    {
+     "n": "33",
+     "cat": "vol",
+     "text": "CROSSE parc",
+     "detail": "Position parking de la crosse, ni rentrée ni sortie.",
+     "lesson": "appontage-essex.html"
+    },
+    {
+     "n": "34",
+     "cat": "vol",
+     "text": "CROSSE basse",
+     "detail": "Sort la crosse d'appontage.",
+     "lesson": "appontage-essex.html"
+    },
+    {
+     "n": "35",
+     "cat": "vol",
+     "text": "TRAIN rentré",
+     "detail": "Rentre le train d'atterrissage.",
+     "lesson": "roulage-decollage.html"
+    },
+    {
+     "n": "37",
+     "cat": "vol",
+     "text": "TRAIN sorti",
+     "detail": "Sort le train d'atterrissage.",
+     "lesson": "retour-atterrissage.html"
+    },
+    {
+     "n": "38",
+     "cat": "vol",
+     "text": "Frein parc OFF",
+     "detail": "Relâche le frein de parking.",
+     "lesson": "roulage-decollage.html"
+    },
+    {
+     "n": "39",
+     "cat": "vol",
+     "text": "Frein parc ON",
+     "detail": "Serre le frein de parking.",
+     "lesson": "roulage-decollage.html"
+    },
+    {
+     "n": "8",
+     "cat": "vol",
+     "text": "Phare approche ON",
+     "detail": "Allume le phare d'approche.",
+     "lesson": "retour-atterrissage.html"
+    },
+    {
+     "n": "9",
+     "cat": "vol",
+     "text": "Phare approche OFF",
+     "detail": "Éteint le phare d'approche.",
+     "lesson": "retour-atterrissage.html"
+    },
+    {
+     "n": "17",
+     "cat": "arm",
+     "text": "Réservoir : attache",
+     "detail": "Attache le réservoir largable sous le fuselage.",
+     "lesson": "preparer-module-controles.html"
+    },
+    {
+     "n": "19",
+     "cat": "arm",
+     "text": "Réservoir : verrou",
+     "detail": "Verrouille le réservoir largable en place.",
+     "lesson": "preparer-module-controles.html"
+    },
+    {
+     "n": "22",
+     "cat": "arm",
+     "text": "Réservoir : largage",
+     "detail": "Largue le réservoir externe.",
+     "lesson": "bombes-roquettes.html"
+    },
+    {
+     "n": "23",
+     "cat": "arm",
+     "text": "Sélecteur : pylône",
+     "detail": "Sélectionne le pylône central ventral pour le largage.",
+     "lesson": "bombes-roquettes.html"
+    },
+    {
+     "n": "24",
+     "cat": "arm",
+     "text": "Sélecteur : aile G",
+     "detail": "Sélectionne les points d'emport de l'aile gauche.",
+     "lesson": "bombes-roquettes.html"
+    },
+    {
+     "n": "25",
+     "cat": "arm",
+     "text": "Sélecteur : aile D",
+     "detail": "Sélectionne les points d'emport de l'aile droite.",
+     "lesson": "bombes-roquettes.html"
+    },
+    {
+     "n": "26",
+     "cat": "arm",
+     "text": "Urgence aile G",
+     "detail": "Largage d'urgence des emports de l'aile gauche.",
+     "lesson": "urgences.html"
+    },
+    {
+     "n": "27",
+     "cat": "arm",
+     "text": "Urgence aile D",
+     "detail": "Largage d'urgence des emports de l'aile droite.",
+     "lesson": "urgences.html"
+    }
+   ]
+  }
+ ]
 }

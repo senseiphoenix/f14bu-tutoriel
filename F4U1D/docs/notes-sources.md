@@ -700,3 +700,59 @@ seul ou une source supplémentaire :
   pas-à-pas, peut-être un encadré dans `ressources.html` ou `missions.html`.
 - Le **break militaire** décrit en S6 reste à confirmer avant publication —
   voir la section dédiée ci-dessus.
+
+---
+
+# Disposition HOTAS — ce que dit le manuel officiel
+
+Le Corsair n'a **pas de guide de binds** équivalent à la partie 2 du guide
+de Chuck pour le F-4E (vérifié le 21/08/2026 : rien de tel dans
+`F4U1D/docs/`, qui ne contient que des kneeboards, des checklists et une
+liste d'arguments cockpit). En remplacement, le manuel officiel Magnitude 3
+donne mieux qu'une liste de binds : **la carte du cockpit réel**, ce qui
+permet de répartir les commandes là où la main du pilote les trouve
+vraiment.
+
+## Ce que porte réellement le manche (manuel §2.1, §2.3)
+
+**Deux contacts, pas un de plus** :
+
+- la **détente** des six .50 — « Trigger switch on the control stick » ;
+- le **bouton pouce de largage** — « The thumb switch for releasing the
+  bombs is located on the control stick », confirmé par la procédure de
+  largage électrique (§3.3 : *Press the thumb Weapons Release button on the
+  control stick*).
+
+Tout le reste de l'armement est ailleurs : master arm, sélecteurs de canons
+(interne / intermédiaire / externe) et viseur sont dans la **boîte
+d'armement**, à gauche du gunsight ; l'armement des bombes est sur la
+**boîte pylônes**.
+
+## Console gauche (planche p. 25 du manuel)
+
+C'est la main gauche du pilote, donc ce qui doit aller sur la manette :
+
+Wing Hinge Pin Lock · Wing Folding · Manual Drop Tank and Bomb Release ·
+Tail Wheel Lock · **Trim Tab Controls** · **Engine Control Unit** (gaz,
+hélice, mélange) · Landing Gear and Dive Brake · **Rocket Launching
+Switch** · **Ignition Switch** · Wing Flaps · CO2 Release · **Hydraulic
+System Hand Pump** · **Fuel Selector** · **Auxiliary Fuel Pump**.
+
+## Console droite (planche p. 26 du manuel)
+
+Mk.3 Rocket Station Distribution Box · **Cooling Flaps Control** · Pilot's
+Distribution Box · **AN/ARC-5 Radio Remote Controls** · Arresting Hook ·
+Flare Cartridge Box · Oxygène · **Defroster** · Batterie · Map Case.
+
+## Comment le mapping du site s'y raccroche
+
+| Périphérique | Logique retenue |
+| --- | --- |
+| **Manche** | Les 2 contacts réels (détente, largage) + ce qui doit rester sous la main droite en vol : trim 3 axes, vues, sélection d'armes et de roquettes |
+| **Manette** | Calquée sur la console gauche : les 3 leviers moteur sur les 3 axes, compresseur sur une molette, puis allumage, carburant, refroidissements ; radio ARC-5 et dégivrage repris de la console droite |
+| **PTO2** | Les 25 binds **réels** déjà écrits par DCS : train, volets, crosse, repliage de voilure, largage sélectif |
+
+Le rotacteur de pages Virpil (positions Blanc/Bleu/Vert/Rouge/Jaune) est
+laissé **sans pagination** : contrairement au F-14B(U), le Corsair n'a pas
+assez de commandes distinctes pour justifier cinq jeux de six boutons. Les
+repères 38-43 gardent donc la même fonction quelle que soit la position.

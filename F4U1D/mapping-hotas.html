@@ -29,8 +29,8 @@
 <div class="toolbar">
   <div class="tabs" role="tablist">
     <button class="tab active" data-dev="stick" role="tab">Manche</button>
+    <button class="tab" data-dev="throttle" role="tab">Throttle</button>
     <button class="tab" data-dev="pto2" role="tab">PTO2</button>
-    <button class="tab" data-dev="throttle" role="tab">Manette</button>
   </div>
   <div class="spacer"></div>
   <span class="flt-label">Filtres</span>
@@ -53,14 +53,28 @@
   <div class="board" id="board-stick">
     <div class="board-loading">Chargement du gabarit vectoriel&hellip;</div>
   </div>
-  <div class="note">Pas de pédales sur ce rig : le lacet passe par le twist du manche (axe Z, à déverrouiller mécaniquement sur la base) et le frein des deux roues par la gâchette avant.</div>
+  <div class="note">Sur le vrai Corsair, le manche ne porte que <b>deux</b> contacts : la détente des canons et le bouton pouce de largage (manuel, §2.1 et §2.3). Tout le reste ici est ajouté pour garder sous la main droite ce qui sert en vol — trim, vues, sélection d'armes. Pas de pédales sur ce rig : le lacet passe par le twist du manche et le frein des deux roues par la gâchette avant.</div>
   <div class="legend-wrap"><table class="dtable" id="dtbl-stick">
+    <thead><tr><th>N°</th><th>Contrôle</th><th>Ce que ça fait sur l'avion</th><th>Leçon</th></tr></thead><tbody></tbody></table></div>
+</section>
+
+<section class="device" id="dev-throttle">
+  <div class="fig-head">
+    <span class="fig-num">FIG. 2</span>
+    <span class="fig-title">Throttle — VPC MongoosT-50CM3</span>
+    <span class="fig-sub">rX = hélice · rY = gaz · rZ = mélange · AX1-3 = molettes</span>
+  </div>
+  <div class="board" id="board-throttle">
+    <div class="board-loading">Chargement de la planche&hellip;</div>
+  </div>
+  <div class="note">Calquée sur la <b>console gauche</b> du vrai Corsair (manuel, planche p. 25) : c'est là qu'on trouve le bloc moteur — gaz, hélice, mélange sur les trois leviers, compresseur sur une molette — puis l'allumage, le sélecteur de carburant, la pompe auxiliaire et les refroidissements. La radio ARC-5 et le dégivrage viennent de la console droite.</div>
+  <div class="legend-wrap"><table class="dtable" id="dtbl-throttle">
     <thead><tr><th>N°</th><th>Contrôle</th><th>Ce que ça fait sur l'avion</th><th>Leçon</th></tr></thead><tbody></tbody></table></div>
 </section>
 
 <section class="device" id="dev-pto2">
   <div class="fig-head">
-    <span class="fig-num">FIG. 2</span>
+    <span class="fig-num">FIG. 3</span>
     <span class="fig-title">Panneau — WinWing PTO2</span>
     <span class="fig-sub">Sérigraphie F/A-18 · fonctions assignées Corsair</span>
   </div>
@@ -70,16 +84,6 @@
   <div class="note">Les libellés gravés sur le panneau ne correspondent pas aux fonctions du Corsair — se fier aux numéros.</div>
   <div class="legend-wrap"><table class="dtable" id="dtbl-pto2">
     <thead><tr><th>N°</th><th>Contrôle</th><th>Ce que ça fait sur l'avion</th><th>Leçon</th></tr></thead><tbody></tbody></table></div>
-</section>
-
-<section class="device" id="dev-throttle">
-  <div class="fig-head">
-    <span class="fig-num">FIG. 3</span>
-    <span class="fig-title">Manette — VPC MongoosT-50CM3</span>
-    <span class="fig-sub" id="throttle-count">Chargement…</span>
-  </div>
-  <div class="legend-wrap"><table class="dtable" id="dtbl-throttle">
-    <thead><tr><th>N°</th><th>Commande</th><th>Type</th><th></th></tr></thead><tbody></tbody></table></div>
 </section>
 
 </main>
@@ -99,6 +103,9 @@ window.BOARD_CONFIG = {
   svgDevices: [
     {id:'stick', svg:'../F14BU/img/templates/virpil-alpha-prime-r.svg', templateName:'F4U-1D — Pilote', wrapWidth:80},
     {id:'pto2', svg:'../F14BU/img/templates/winwing-pto2.svg', templateName:'F4U-1D — PTO2'}
+  ],
+  photoDevices: [
+    {id:'throttle', img:'../img/templates/vpc-throttle-cm3.webp', templateName:'Throttle VPC MongoosT-50CM3'}
   ]
 };
 </script>
