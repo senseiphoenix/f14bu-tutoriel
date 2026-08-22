@@ -506,3 +506,36 @@ sa phase de vol. Les urgences vraiment vitales (largage d'urgence, verrière,
 train et volets de secours, frein de secours) ne sont d'ailleurs **pas** sur
 le rotacteur du tout — elles vivent sur le PTO2 et le manche, donc
 atteignables sans tourner quoi que ce soit.
+
+---
+
+# Installation des binds dans DCS — état au 22/08/2026
+
+**257 boutons installés** dans les vrais `.diff.lua` (F4U-1D 32+55+25,
+F-4E 25+79+41), sauvegardes `.bak-20260822`, chacun validé au Lua de DCS.
+Les axes déjà en place (roll, pitch, rudder, gaz, freins) ont été préservés,
+pas réécrits.
+
+**7 commandes F-4E restent à binder à la main** — leur hash n'est pas
+calculable sans le fichier réel (constante moteur `iCommand…` dans une
+touche, cf. règle « jamais deviner un hash ») :
+
+| Repère manche | Commande DCS |
+| --- | --- |
+| 3 | Mirrors - [Toggle] |
+| 15 | Trim - Nose Down (Hat Forward) |
+| 16 | Trim - Left Wing Down (Hat Left) |
+| 17 | Trim - Nose Up (Hat Aft) |
+| 18 | Trim - Right Wing Down (Hat Right) |
+| 19 | Trim - Rudder Left |
+| 20 | Trim - Rudder Right |
+
+Le trim du Phantom est de toute façon un **hat 4 directions** sur le vrai
+manche : à binder de préférence sur un hat physique (POV), pas sur des
+boutons isolés. Une fois ces 7 posées une fois dans l'écran Contrôles, on
+peut récolter leurs hash et les rendre reproductibles.
+
+**Axes moteur non installés volontairement** (F4U-1D throttle hélice /
+mélange / compresseur, mini-molettes AX1-3) : leur affectation physique
+dépend du matériel réel de l'utilisateur (quels axes la manette expose), on
+ne devine pas — à régler dans l'écran Contrôles.
