@@ -220,9 +220,17 @@ section.device.visible{display:block}
 .dtable td.c2 b{display:block;font-weight:600}
 .dtable td.c2 span{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.06em}
 .dtable td.c3{color:var(--ink);max-width:520px;opacity:.92}
-.dtable td.c4{font-family:var(--mono);font-size:11px;color:var(--dim);white-space:nowrap;letter-spacing:.03em}
+/* Nom de commande DCS : jamais en nowrap. Les noms longs élargissaient la
+   colonne jusqu'à la moitié du tableau et écrasaient la description, qui est
+   ce qu'on lit en vol. */
+.dtable td.c4{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.03em;
+  max-width:230px;overflow-wrap:anywhere;line-height:1.35}
 .num-badge{display:inline-block;min-width:28px;text-align:center;font-family:var(--mono);font-size:10.5px;font-weight:600;color:#10161a;background:var(--c,#8b9aa3);padding:3px 6px;border-radius:1px}
-.lec-link{display:inline-block;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-decoration:none;color:var(--amber);border:1px solid var(--line);padding:4px 9px;white-space:nowrap;transition:.15s}
+/* Le badge « Leçon » remplit sa cellule pour atteindre la cible tactile de
+   44px (voir css/svg-board.css pour le détail). */
+.lec-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;
+  font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-decoration:none;
+  color:var(--amber);border:1px solid var(--line);padding:4px 12px;white-space:nowrap;transition:.15s}
 .lec-link:hover{border-color:var(--amber);background:rgba(242,169,59,.1)}
 .lec-link small{font-weight:400;opacity:.75;margin-left:5px;letter-spacing:0}
 
@@ -237,7 +245,10 @@ section.device.visible{display:block}
 
 .board-toggle{display:none;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--line);background:var(--panel-2);color:var(--amber);padding:8px 16px;cursor:pointer;min-height:44px;width:100%;text-align:center;margin-bottom:6px;transition:.15s}
 .board-toggle:hover{border-color:var(--amber);background:rgba(242,169,59,.1)}
-@media (orientation:portrait) and (max-width:900px){
+/* Seuil calé sur la Surface Pro 4 en portrait : 2736x1824 à 200 % d'échelle
+   donne un viewport CSS de 912x1368, donc au-dessus de 900px. Le seuil est
+   porté à 1100px pour couvrir aussi les tablettes 10" en portrait. */
+@media (orientation:portrait) and (max-width:1100px){
   .board-toggle{display:block}
   .board-pin.collapsed{display:none}
 }
@@ -496,29 +507,29 @@ const PAGE_THEME={OFF:'Train / Volets / Ailes — réel, déjà bindé dans DCS'
    reste hors phase par choix — une panne peut survenir à tout moment,
    la page doit rester trouvable sans réflexion. */
 const THROTTLE_PAGE_BTN={
-  OFF:{38:{real:38,s:'Libre (PTO2)', f:'Retiré le 12/08/2026 : doublon avec PTO2 B35 (Gears Up)'},
-       39:{real:39,s:'Libre (PTO2)', f:'Retiré le 12/08/2026 : doublon avec PTO2 B36 (Gears Down)'},
-       40:{real:40,s:'Libre (PTO2)', f:'Retiré le 12/08/2026 : doublon avec PTO2 B5 (Volets rentrés)'},
-       41:{real:41,s:'Libre (PTO2)', f:'Retiré le 12/08/2026 : doublon avec PTO2 B6 (Volets - 1 cran)'},
-       42:{real:42,s:'Libre (PTO2)', f:'Retiré le 12/08/2026 : doublon avec PTO2 B28 (Wing Sweep Auto Mode)'},
-       43:{real:43,s:'Libre (PTO2)', f:'Retiré le 12/08/2026 : doublon avec PTO2 B31 (Wing Sweep Bomb Mode)'}},
+  OFF:{38:{real:38,s:'Libre (PTO2)', f:'Libre : le train se rentre depuis le PTO2 (repère 35).'},
+       39:{real:39,s:'Libre (PTO2)', f:'Libre : le train se sort depuis le PTO2 (repère 36).'},
+       40:{real:40,s:'Libre (PTO2)', f:'Libre : les volets se rentrent depuis le PTO2 (repère 5).'},
+       41:{real:41,s:'Libre (PTO2)', f:'Libre : le cran de volets intermédiaire est sur le PTO2 (repère 6).'},
+       42:{real:42,s:'Libre (PTO2)', f:'Libre : la flèche de voilure en AUTO est sur le PTO2 (repère 28).'},
+       43:{real:43,s:'Libre (PTO2)', f:'Libre : la flèche de voilure en mode BOMB est sur le PTO2 (repère 31).'}},
   M1: {38:{real:56,s:'Missile Mode', f:'Missile mode toggle'},
        39:{real:57,s:'AIM-9 Cooling',f:'AIM-9 cooling toggle'},
        40:{real:58,s:'Missile Prep.',f:'Missile prepare toggle'},
        41:{real:59,s:'ACM Cover',    f:'ACM cover toggle'},
        42:{real:60,s:'Arm Training', f:'Master arm training'},
-       43:{real:61,s:'Libre (PTO2)', f:'Retiré le 12/08/2026 : doublon avec PTO2 B25 (Display mode air to air) — accès direct sans passer par cette page.'}},
+       43:{real:61,s:'Libre (PTO2)', f:'Libre : le mode d\'affichage air-air est en accès direct sur le PTO2 (repère 25).'}},
   M2: {38:{real:62,s:'Bomb Tool',    f:'Bombing Tool - [Toggle]'},
        39:{real:63,s:'Pointeur ON',  f:'Toggle Pointer On/Off (désignateur laser)'},
        40:{real:64,s:'Pointeur Vis.',f:'Toggle Pointer Visibility (désignateur laser)'},
        41:{real:65,s:'STEER AWL/PCD',f:'STEER CMD AWL/PCD'},
        42:{real:66,s:'Rafale canon', f:'Change gun burst mode'},
-       43:{real:67,s:'Libre (PTO2)', f:'Retiré le 12/08/2026 : doublon avec PTO2 B26 (Display mode air to ground) — accès direct sans passer par cette page.'}},
+       43:{real:67,s:'Libre (PTO2)', f:'Libre : le mode d\'affichage air-sol est en accès direct sur le PTO2 (repère 26).'}},
   M3: {38:{real:68,s:'Hyd. AUTO',    f:'Hydraulic Emergency Flight Control Switch - AUTO'},
        39:{real:69,s:'Hyd. LOW',     f:'Hydraulic Emergency Flight Control Switch - LOW'},
        40:{real:70,s:'Hyd. HIGH',    f:'Hydraulic Emergency Flight Control Switch - HIGH'},
        41:{real:71,s:'Pompe hyd.',   f:'Hydraulic Transfer Pump Switch Toggle'},
-       42:{real:72,s:'Libre',       f:'Retiré le 13/08/2026 : doublon avec le n°16 de la throttle (Toggle Auto Throttle), désormais en accès direct sans passer par cette page.'},
+       42:{real:72,s:'Libre',       f:'Libre : l\'auto-manette est en accès direct sur la manette.'},
        43:{real:73,s:'Génér. NORM',  f:'Emergency Generator Switch - NORM'}},
   M4: {38:{real:74,s:'TACAN Fonct.', f:'TACAN Function Inc'},
        39:{real:75,s:'TACAN BIT',    f:'TACAN BIT Button'},
@@ -728,6 +739,11 @@ async function mountSvgDevice(cfg, hotas){
     const tr=document.createElement('tr'); tr.dataset.cat=l.cat;
     tr.dataset.dev=cfg.id; tr.dataset.i=l.i; tr.dataset.n=l.n; tr.style.setProperty('--c',c);
     const ctl=(l.showHeader? l.short+' — ' : '')+l.boardText+(l.isProposed?' <span style="color:var(--amber);font-size:.85em">— proposé, à binder</span>':'');
+    /* La colonne « Commande DCS » est remplie plus tard par fillCmdColumn(),
+       depuis data/f14bu-bindings.json. Ne PAS la remplir avec states/proposals :
+       ceux-ci portent le libellé court de la planche ("AUTO", "PULL"), pas le
+       nom de commande DCS ("Launch Bar Abort Switch - AUTO"), qui est
+       justement ce qu'on cherche pour retrouver la ligne dans le jeu. */
     tr.innerHTML=`<td class="c1"><span class="num-badge" style="--c:${c}">${l.boardNum}</span></td>
       <td class="c2"><b>${ctl}</b><span>${l.boardNum}</span></td>
       <td class="c3">${l.detail||'—'}</td>
@@ -749,11 +765,15 @@ let searchIndex=[];
    commande DCS (souvent anglais) — les deux se disent tant que DCS n'a pas
    de traduction. */
 let bindingsIndex=new Map();
+/* Mêmes données, non aplaties : la recherche veut une chaîne, la colonne
+   « Commande DCS » veut les commandes une par une (voir fillCmdColumn). */
+const bindingsRaw=new Map();
 const boundCommandNames=new Set();
 function loadBindingsIndex(){
   return fetch('data/f14bu-bindings.json').then(r=>r.ok?r.json():null).then(data=>{
     if(!data) return;
     (data.bindings||[]).forEach(b=>{
+      bindingsRaw.set(b.device+'|'+b.n, b.commands||[]);
       bindingsIndex.set(b.device+'|'+b.n, (b.commands||[]).join(' '));
       (b.commands||[]).forEach(c=>boundCommandNames.add(c));
     });
@@ -944,15 +964,29 @@ const p2=fetch('data/f14bu-hotas.json').then(r=>{if(!r.ok)throw new Error('data/
   });
 });
 
+/* Complète la colonne « Commande DCS » là où le rendu n'a pas déjà posé le nom
+   exact (mountSvgDevice le fait via states/proposals). On interroge
+   bindingsRaw avec le NUMÉRO DE BOUTON affiché, pas l'étiquette : une plage
+   "35-37" n'a pas d'entrée par bouton, alors que 32/33/34 en ont une chacun.
+   À défaut, on retombe sur l'entrée de plage en prenant la commande de rang
+   correspondant — les commandes y sont listées dans l'ordre des boutons. */
 function fillCmdColumn(){
-  const cmdMap=new Map();
-  bindingsIndex.forEach((cmds,key)=>{ if(cmds.trim()) cmdMap.set(key,cmds); });
   document.querySelectorAll('.dtable tbody tr[data-dev]').forEach(tr=>{
     const td=tr.querySelector('.c4'); if(!td) return;
-    const n=tr.dataset.realn||tr.dataset.n;
-    const key=tr.dataset.dev+'|'+n;
-    const cmds=cmdMap.get(key);
-    if(cmds) td.textContent=cmds;
+    if(td.textContent.trim()&&td.textContent.trim()!=='—') return;  // déjà renseigné
+    const dev=tr.dataset.dev;
+    const badge=(tr.querySelector('.c1')||{}).textContent;
+    const num=(badge||'').trim();
+    const n=tr.dataset.realn||tr.dataset.n||'';
+    let cmds=bindingsRaw.get(dev+'|'+num);
+    if(!cmds||!cmds.length){
+      const range=n.match(/^(\d+)-(\d+)$/), all=bindingsRaw.get(dev+'|'+n);
+      if(range&&all&&all.length){
+        const one=all[(+num)-(+range[1])];
+        cmds=one?[one]:null;
+      } else cmds=all;
+    }
+    if(cmds&&cmds.length) td.textContent=cmds.join(' · ');
   });
 }
 Promise.all([p1,p2]).then(()=>{ fillCmdColumn(); handleDeepLink(); });

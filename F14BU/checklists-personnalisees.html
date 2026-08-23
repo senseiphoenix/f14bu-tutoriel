@@ -18,9 +18,10 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.6}
 .wrap{max-width:840px;margin:0 auto;padding:26px 22px 90px}
-.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
-.crumbs a{color:var(--dim);text-decoration:none;border-bottom:1px solid transparent}
-.crumbs a:hover{color:var(--amber);border-bottom-color:var(--amber)}
+.crumbs{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:flex;gap:4px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.crumbs a{color:var(--dim);text-decoration:none;border:1px solid var(--line);border-radius:2px;display:inline-flex;align-items:center;min-height:44px;padding:0 13px;transition:.15s}
+.crumbs a:hover{color:var(--amber);border-color:var(--amber);background:rgba(242,169,59,.08)}
+  .crumbs>span{display:inline-flex;align-items:center;min-height:44px;padding:0 2px}
 .tail{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
 h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);letter-spacing:.03em;line-height:1.05;margin:8px 0 10px;text-transform:uppercase}
 .sub{color:var(--dim);max-width:66ch}
@@ -44,7 +45,7 @@ h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,5vw,42px);let
 
 .step{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
 .step:last-child{border-bottom:none}
-.step input[type=checkbox]{flex:0 0 auto;width:20px;height:20px;margin-top:2px;accent-color:var(--go);cursor:pointer}
+.step input[type=checkbox]{flex:0 0 auto;width:28px;height:28px;margin-top:0;accent-color:var(--go);cursor:pointer}
 .step-body{flex:1;min-width:0}
 .step.done .step-item{color:var(--dim);text-decoration:line-through;text-decoration-color:var(--line)}
 .step-item{font-weight:600;margin:0 0 4px}
@@ -79,7 +80,7 @@ figure.failed img{display:none} figure.failed .imgfail{display:block}
 .note.go b{color:var(--go)}
 
 .footlinks{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:50px;padding-top:20px;border-top:1px solid var(--line)}
-.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px}
+.footlinks a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--line);padding:10px 16px;border-radius:2px;display:inline-flex;align-items:center;min-height:44px}
 .footlinks a:hover{color:var(--amber);border-color:var(--amber)}
 
 .src{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:60px;padding-top:16px;border-top:1px solid var(--line)}

@@ -14,6 +14,21 @@
   var thisScript = document.currentScript;
   var SITE_ROOT = thisScript ? thisScript.src.replace(/js\/site-search\.js(\?.*)?$/, "") : "";
 
+  /* La feuille de styles suit le script, au lieu d'être à la charge de chaque
+     page : les planches de mapping F4U-1D et F-4E ne chargent pas theme.css,
+     et le bouton flottant s'y retrouvait sans style — réduit à quelques pixels
+     en bas de page, donc introuvable. En l'injectant ici, toute page qui
+     inclut ce script obtient les styles, y compris une page future. */
+  (function injectStyles(){
+    var href = SITE_ROOT + "css/site-search.css";
+    if(document.querySelector('link[data-gsearch-css]')) return;
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    link.setAttribute("data-gsearch-css", "");
+    document.head.appendChild(link);
+  })();
+
   var TYPE_LABEL = {page:"Page", "leçon":"Leçon", "fonction":"Fonction"};
 
   var index = null;         // tableau brut chargé depuis search-index.json
@@ -105,10 +120,34 @@
   document.addEventListener("DOMContentLoaded", mount);
   if(document.readyState === "interactive" || document.readyState === "complete") mount();
 
+  /* Retour en haut : certaines pages sont très longues au doigt — l'onglet
+     « Clavier / Souris » du mapping F-14B(U) fait 33 écrans en portrait sur
+     une Surface. La barre d'onglets reste collée en haut, mais rien ne
+     permettait de remonter sans balayer toute la page. Le bouton ne se montre
+     qu'au-delà d'un écran et demi, pour ne pas encombrer les pages courtes. */
+  var topBtn = document.createElement("button");
+  topBtn.type = "button";
+  topBtn.className = "gtop-btn";
+  topBtn.hidden = true;
+  topBtn.setAttribute("aria-label", "Revenir en haut de la page");
+  topBtn.title = "Revenir en haut";
+  topBtn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>';
+  topBtn.addEventListener("click", function(){
+    window.scrollTo({top: 0, behavior: "smooth"});
+  });
+
+  function syncTopBtn(){
+    topBtn.hidden = window.scrollY < window.innerHeight * 1.5;
+  }
+
   function mount(){
     if(document.body.contains(btn)) return;
     document.body.appendChild(btn);
+    document.body.appendChild(topBtn);
     document.body.appendChild(overlay);
+    syncTopBtn();
+    window.addEventListener("scroll", syncTopBtn, {passive: true});
+    window.addEventListener("resize", syncTopBtn);
   }
 
   var input = overlay.querySelector(".gsearch-input");

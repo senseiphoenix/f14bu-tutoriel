@@ -325,13 +325,13 @@
  },
  {
   "title": "Parking brake stow",
-  "path": "F14BU/mapping-hotas.html?dev=pto2&n=39",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=41",
   "aircraft": "F-14B(U)",
   "type": "fonction"
  },
  {
   "title": "Parking brake stow",
-  "path": "F14BU/mapping-hotas.html?dev=pto2&n=41",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=39",
   "aircraft": "F-14B(U)",
   "type": "fonction"
  },
@@ -1153,13 +1153,31 @@
  },
  {
   "title": "Ressources vidéo",
-  "path": "F14BU/section-g-mission.html#g4",
+  "path": "F14BU/section-a-illustree.html#a8",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
+  "path": "F14BU/section-b-navigation.html#b6",
   "aircraft": "F-14B(U)",
   "type": "leçon"
  },
  {
   "title": "Ressources vidéo",
   "path": "F14BU/section-f-air-sol.html#f6",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
+  "path": "F14BU/section-e-survie.html#e4",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
+  "path": "F14BU/section-g-mission.html#g4",
   "aircraft": "F-14B(U)",
   "type": "leçon"
  },
@@ -1172,24 +1190,6 @@
  {
   "title": "Ressources vidéo",
   "path": "F14BU/section-c-porte-avions.html#c5",
-  "aircraft": "F-14B(U)",
-  "type": "leçon"
- },
- {
-  "title": "Ressources vidéo",
-  "path": "F14BU/section-e-survie.html#e4",
-  "aircraft": "F-14B(U)",
-  "type": "leçon"
- },
- {
-  "title": "Ressources vidéo",
-  "path": "F14BU/section-a-illustree.html#a8",
-  "aircraft": "F-14B(U)",
-  "type": "leçon"
- },
- {
-  "title": "Ressources vidéo",
-  "path": "F14BU/section-b-navigation.html#b6",
   "aircraft": "F-14B(U)",
   "type": "leçon"
  },
@@ -2480,6 +2480,48 @@
  {
   "title": "F4U-1D — Vol de base, pas à pas",
   "path": "F4U1D/vol-de-base.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "Section A — Découverte & cockpit — F4U-1D",
+  "path": "F4U1D/section-a-cockpit.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "Section B — Démarrage & roulage — F4U-1D",
+  "path": "F4U1D/section-b-demarrage.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "Section C — Décollage — F4U-1D",
+  "path": "F4U1D/section-c-decollage.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "Section D — Vol normal — F4U-1D",
+  "path": "F4U1D/section-d-vol.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "Section E — Appontage & atterrissage — F4U-1D",
+  "path": "F4U1D/section-e-appontage.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "Section F — Urgences — F4U-1D",
+  "path": "F4U1D/section-f-urgences.html",
+  "aircraft": "F4U-1D Corsair",
+  "type": "page"
+ },
+ {
+  "title": "Section G — Armement & radio/nav — F4U-1D",
+  "path": "F4U1D/section-g-armement.html",
   "aircraft": "F4U-1D Corsair",
   "type": "page"
  },

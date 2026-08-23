@@ -1,0 +1,57 @@
+/* Recherche globale du site (js/site-search.js).
+   Fichier separe de theme.css : le script est inclus sur 128 pages, dont
+   les planches de mapping F4U-1D et F-4E qui ne chargent PAS theme.css.
+   Le script injecte lui-meme un <link> vers ce fichier, donc les styles
+   suivent le script partout, y compris sur une page future. */
+.gsearch-btn{
+  position:fixed;right:20px;bottom:20px;z-index:200;
+  width:48px;height:48px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--panel);border:1px solid var(--line);color:var(--dim);
+  cursor:pointer;transition:border-color .15s,color .15s,box-shadow .15s;
+  box-shadow:0 2px 10px rgba(0,0,0,.35);
+}
+.gsearch-btn:hover{border-color:var(--amber);color:var(--amber);box-shadow:0 0 18px -4px var(--amber)}
+/* Retour en haut : empilé juste au-dessus du bouton de recherche, même gabarit
+   tactile (48px). Masqué tant qu'on n'a pas dépassé un écran et demi. */
+.gtop-btn{
+  position:fixed;right:20px;bottom:78px;z-index:200;
+  width:48px;height:48px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--panel);border:1px solid var(--line);color:var(--dim);
+  cursor:pointer;transition:border-color .15s,color .15s,box-shadow .15s;
+  box-shadow:0 2px 10px rgba(0,0,0,.35);
+}
+.gtop-btn[hidden]{display:none}
+.gtop-btn:hover{border-color:var(--amber);color:var(--amber);box-shadow:0 0 18px -4px var(--amber)}
+.gtop-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.gsearch-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.gsearch-overlay{
+  position:fixed;inset:0;z-index:300;background:rgba(8,11,13,.78);
+  display:flex;align-items:flex-start;justify-content:center;padding:9vh 20px 20px;
+}
+.gsearch-overlay[hidden]{display:none}
+.gsearch-panel{
+  width:100%;max-width:600px;background:var(--panel);border:1px solid var(--line);
+  box-shadow:0 20px 60px rgba(0,0,0,.55);
+}
+.gsearch-input-row{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.gsearch-input-row svg{width:18px;height:18px;flex:none;fill:none;stroke:var(--dim);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.gsearch-input{
+  flex:1;background:transparent;border:0;outline:0;color:var(--ink);
+  font-family:var(--body);font-size:15px;
+}
+.gsearch-input::placeholder{color:var(--dim)}
+.gsearch-esc{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--dim);
+  border:1px solid var(--line);border-radius:2px;padding:2px 6px;flex:none}
+.gsearch-results{max-height:56vh;overflow-y:auto}
+.gsearch-item{display:flex;align-items:baseline;gap:10px;padding:10px 16px;cursor:pointer;
+  border-bottom:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.gsearch-item:last-child{border-bottom:none}
+.gsearch-item:hover,.gsearch-item.sel{background:var(--deck)}
+.gsearch-type{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);
+  border:1px solid var(--line);border-radius:2px;padding:2px 6px;flex:none}
+.gsearch-label{font-family:var(--body);font-size:13.5px;flex:1;min-width:0}
+.gsearch-aircraft{font-family:var(--mono);font-size:10.5px;color:var(--dim);flex:none;text-align:right}
+.gsearch-empty,.gsearch-hint{padding:16px;font-family:var(--mono);font-size:12px;color:var(--dim)}
+@media(max-width:560px){.gsearch-overlay{padding:6vh 10px 10px}.gsearch-aircraft{display:none}}
