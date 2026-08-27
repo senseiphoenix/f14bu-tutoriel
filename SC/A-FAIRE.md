@@ -4,8 +4,12 @@ Dernière mise à jour : 12 août 2026.
 
 Objectif du dossier : une aide au pilotage de vaisseau et, surtout, le mapping
 complet du rig — deux Virpil Alpha Prime en HOSAS (le gauche monté sur coude,
-tenu comme un guidon de moto), throttle MongoosT-50CM3, panneau WinWing PTO2,
-pédalier Fanatec CSL Elite V2.
+tenu comme un guidon de moto), throttle MongoosT-50CM3 et panneau WinWing PTO2.
+**Le pédalier Fanatec sort du périmètre** (décidé le 28 août 2026).
+
+La conception du mapping est dans [CONCEPTION-MAPPING.md](CONCEPTION-MAPPING.md) :
+principes, inventaire physique des quatre périphériques, allocation proposée
+commande par commande, et les trois décisions à trancher.
 
 ## Fait
 
@@ -56,12 +60,13 @@ la nôtre. Les fichiers DCS, eux, sont écrits par le jeu lui-même ici : ils fo
 foi pour le matériel réel. Seul un export frais après avoir bindé chaque
 périphérique tranchera.
 
-### 2. Gabarit du manche gauche
+### 2. Gabarits — fait
 
-Il manque le gabarit officiel Virpil **« VPC Alpha Prime Grip - L »**,
-équivalent du droit déjà présent dans `images/alphra prime right.png`
-(boîtes numérotées 1 à 32, axes rX, rY, Z, SLDR). À défaut, retourner le droit
-en miroir et confirmer trois numéros au hasard sur le manche gauche.
+Les deux grips ont leur gabarit Joystick Diagrams, copiés dans `SC/img/` :
+`VPC_Constellation_ALPHA_Prime_R.svg` et `_L.svg`, 824 × 1166, boutons 1 à 32 à
+coordonnées exactes plus les axes. Le throttle a le gabarit officiel Virpil
+(`SC/img/throttle.png`, 1 à 55 et le rotacteur MODE), le PTO2 son SVG
+Joystick Diagrams (41 positions).
 
 Les gabarits `nOHbWwB.png` et `Yogidragon Dual Alpha Template.png` sont des
 **Constellation ALPHA**, pas des Prime : ne pas s'en servir comme planche.

@@ -38,9 +38,15 @@ A utiliser a la place, pour les manches
   rY, Z et SLDR. C'est le bon modele, et F14BU/mapping-hotas.html porte deja
   les coordonnees en % de chacune de ces boites (tableau LABELS, entrees
   "stick"), verifiees a l'ecran.
-  Manque l'equivalent gauche : gabarit officiel "VPC Alpha Prime Grip - L",
-  ou a defaut la version R retournee, numeros confirmes sur deux ou trois
-  boutons.
+VPC_Constellation_ALPHA_Prime_R.svg
+VPC_Constellation_ALPHA_Prime_L.svg
+  Gabarits Joystick Diagrams des deux grips, 824 x 1166, meme famille que le
+  SVG du PTO2 : Button_1 a Button_32 a coordonnees exactes, plus les axes
+  X, Y, Twist, rX, rY et S (levier de frein). Copies depuis
+  Desktop\dcs\keybind\joystickdiagram\templates\Virpil\.
+  -> substrat des deux planches manches, lisible par script.
+  Le reste de la bibliotheque (throttle CM2, WarBRD, VFX, panneaux WinWing)
+  est reste a sa place sur le Bureau.
 
 Virpil Alpha Dual Fillable.pdf
 Virpil Mongoose T-50CM2+3 Fillable.pdf
