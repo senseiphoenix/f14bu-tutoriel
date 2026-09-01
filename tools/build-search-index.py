@@ -30,6 +30,7 @@ AIRCRAFT_BY_FOLDER = {
     "F4U1D": "F4U-1D Corsair",
     "F4E": "F-4E Phantom II",
     "SC": "Star Citizen",
+    "ED": "Elite Dangerous",
 }
 
 TITLE_RE = re.compile(r"<title>(.*?)</title>", re.IGNORECASE | re.DOTALL)

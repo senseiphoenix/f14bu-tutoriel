@@ -1,12 +1,15 @@
 # Outils de bindings
 
-Deux chaînes indépendantes :
+Trois chaînes indépendantes :
 
 - **DCS World** — transforme le mapping HOTAS défini dans le site en fichiers
   `.diff.lua` installables (scripts Lua, exécutés par l'interpréteur de DCS).
 - **Star Citizen** — lit les profils `layout_*.xml` exportés par le jeu et
   produit les JSON du dossier `SC/data/` (script PowerShell, aucune
-  dépendance). Voir [Star Citizen](#star-citizen) en fin de fichier.
+  dépendance). Voir [Star Citizen](#star-citizen).
+- **Elite Dangerous** — lit le fichier `Custom.4.x.binds` écrit par le jeu et
+  produit les JSON du dossier `ED/data/` (script PowerShell, aucune
+  dépendance). Voir [Elite Dangerous](#elite-dangerous) en fin de fichier.
 
 ## Outils d'export de bindings DCS
 
@@ -264,3 +267,97 @@ d'un fichier `*-bindings.json`. Quand un même intitulé de leçon ou de
 fonction existe sur plusieurs avions (détecté après normalisation
 accents/casse), `site-search.js` l'affiche préfixé `<Avion> — <Sujet>` pour
 lever l'ambiguïté ; sinon le sujet seul suffit.
+
+---
+
+# Elite Dangerous
+
+## `parse-ed-binds.ps1`
+
+Lit le fichier de bindings écrit par le jeu et écrit les données consommées
+par les pages du dossier `ED/`.
+
+```bash
+powershell -ExecutionPolicy Bypass -File tools\parse-ed-binds.ps1
+```
+
+Sans argument, le script cherche dans
+`%LOCALAPPDATA%\Frontier Developments\Elite Dangerous\Options\Bindings\` le
+preset déclaré actif par `StartPreset.*.start`, et retombe sur le `.binds` le
+plus récent si ce fichier manque ou désigne un preset absent. Arguments
+utiles : `-BindsDir`, `-Binds <nom ou chemin>`, `-OutDir`.
+
+Sorties, **régénérées à chaque exécution** :
+
+| Fichier | Contenu |
+| --- | --- |
+| `ED/data/ed-bindings.json` | le preset courant : périphériques (chaîne VID+PID, axes, boutons), binds (action, contexte, couche de vol, entrée, modificateurs, appui long, inversion, zone morte), réglages `Value=`, conflits réels |
+| `ED/data/ed-actions.json` | catalogue complet du schéma d'actions du jeu, avec pour chacune sa nature (axe / bouton / réglage), son contexte, sa couche de vol et le fait qu'elle accepte le maintien |
+
+`ED/data/ed-labels-fr.json` (libellés et descriptions françaises) est écrit à
+la main et **n'est jamais touché** par ce script.
+
+## Le format de bindings d'Elite Dangerous
+
+Le jeu écrit un XML par preset, dans
+`%LOCALAPPDATA%\Frontier Developments\Elite Dangerous\Options\Bindings\` :
+
+```xml
+<Root PresetName="Custom" MajorVersion="4" MinorVersion="2">
+  <YawAxisRaw>
+    <Binding Device="3344012F" Key="Joy_ZAxis" />
+    <Inverted Value="0" />
+    <Deadzone Value="0.00000000" />
+  </YawAxisRaw>
+  <CycleNextSubsystem>
+    <Primary Device="Keyboard" Key="Key_Y" />
+    <Secondary Device="3344012F" Key="Joy_16">
+      <Modifier Device="3344812F" Key="Joy_30" />
+    </Secondary>
+  </CycleNextSubsystem>
+  <ToggleFlightAssist>
+    <Primary Device="3344812F" Key="Joy_6" />
+    <Secondary Device="{NoDevice}" Key="" />
+    <ToggleOn Value="1" />
+  </ToggleFlightAssist>
+</Root>
+```
+
+Ce qu'il faut en retenir :
+
+- **Le fichier contient TOUT le schéma**, y compris les actions non assignées
+  (`Device="{NoDevice}"`). Le catalogue d'actions est donc exhaustif dès la
+  première lecture — l'inverse de Star Citizen, dont l'export ne contient que
+  ce qui a été modifié. Corollaire pour un futur export : il faut réécrire le
+  fichier **entier**, pas seulement les entrées assignées.
+- **Le contexte est dans le nom de l'action**, pas dans un conteneur : suffixe
+  `_Buggy` (SRV), préfixe `Humanoid` (à pied), `ExplorationFSS`, `SAA`,
+  `MultiCrew`, `Cam`… Un même bouton peut donc porter huit actions sans le
+  moindre modificateur.
+- **Trois jeux d'axes de vol** coexistent : `…Raw` (normal), `…_Landing`
+  (bascule automatique à la sortie du train) et `…Alternate` (bascule
+  manuelle par `UseAlternateFlightValuesToggle`).
+- Un bouton s'écrit `Joy_<n>`, un chapeau `Joy_POV1Up`, un axe
+  `Joy_XAxis`/`Joy_RZAxis`, et une **moitié d'axe** peut servir de bouton :
+  `Pos_Joy_UAxis`, `Neg_Joy_UAxis`. Un profil réel utilise `Joy_74` : le jeu
+  lit donc bien au-delà des 32 boutons.
+- Chaque action digitale a deux emplacements, `<Primary>` et `<Secondary>` —
+  de quoi garder le clavier et le HOTAS en parallèle.
+- Le `<Modifier>` est natif et **inter-périphérique** : maintenir un bouton du
+  manche gauche peut modifier un bouton du manche droit.
+- `<ToggleOn>` n'existe que sur 26 actions : elles seules ont le choix
+  bascule / maintien. Le train, les points durs et les feux sont des bascules
+  pures, sans commande ON et OFF séparées comme en a DCS.
+
+## Le piège des périphériques identiques
+
+Elite ne désigne pas un périphérique par un GUID DirectInput mais par une
+chaîne **VID+PID** hexadécimale : `3344012F` = fabricant `3344` (Virpil),
+produit `012F`. Il accepte aussi un nom convivial (`VPCThrottle`) déclaré dans
+`ControlSchemes\DeviceMappings.xml` côté installation du jeu — fichier écrasé
+à chaque mise à jour, donc peu fiable.
+
+**Deux exemplaires du même modèle portent la même chaîne** : le jeu les
+confond, et un bind posé sur l'un vaut pour l'autre. Pour un rig HOSAS à deux
+manches identiques, changer le PID de l'un des deux dans le VPC Configuration
+Tool (onglet *Profile*) est le seul contournement durable.

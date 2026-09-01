@@ -23,6 +23,7 @@ $aircraftByFolder = @{
   'F4U1D' = 'F4U-1D Corsair'
   'F4E'   = 'F-4E Phantom II'
   'SC'    = 'Star Citizen'
+  'ED'    = 'Elite Dangerous'
 }
 
 function Get-CleanText([string]$raw) {

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elite Dangerous — Pilotage et mapping HOSAS</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<style>
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;
+    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  .wrap{max-width:880px;margin:0 auto;padding:48px 24px 80px}
+  .tail{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:44px;letter-spacing:.04em;line-height:1.02;margin:10px 0 8px;text-transform:uppercase}
+  .sub{color:var(--dim);max-width:62ch;margin:0 0 36px}
+  a.card,.card{display:flex;gap:18px;align-items:baseline;border:1px solid var(--line);background:var(--panel);
+         padding:18px 20px;margin:10px 0;text-decoration:none;color:var(--ink);transition:border-color .12s}
+  a.card:hover{border-color:var(--amber)}
+  .card.soon{border-style:dashed;background:transparent;color:var(--dim)}
+  .card.soon .nm{color:#5f6d76}
+  .idx{font-family:var(--mono);font-size:13px;color:var(--amber);min-width:26px}
+  .card.soon .idx{color:#4a5a64}
+  .nm{font-family:var(--display);font-size:19px;letter-spacing:.04em;text-transform:uppercase}
+  .ds{color:var(--dim);font-size:13.5px;margin-left:auto;text-align:right;max-width:46%}
+  .hr{border-top:1px solid var(--line);margin:34px 0 22px}
+  h2{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:0 0 12px}
+  p{margin:12px 0;color:var(--dim)}
+  code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:2px 6px;border:1px solid var(--line);color:var(--amber)}
+  .ok{color:var(--go)}
+  .warn{color:var(--amber)}
+  table{border-collapse:collapse;width:100%;font-size:13px;margin:12px 0}
+  th,td{border:1px solid var(--line);padding:6px 10px;text-align:left}
+  th{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:400}
+  td.mono{font-family:var(--mono);font-size:11.5px;color:var(--dim)}
+  ul{color:var(--dim)}
+  li{margin:6px 0}
+  .callout{border:1px solid var(--amber);border-left-width:3px;background:rgba(242,169,59,.05);padding:14px 18px;margin:18px 0}
+  .callout p{color:var(--ink)}
+  .callout p:first-child{margin-top:0}
+  .callout p:last-child{margin-bottom:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="../index.html" style="display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:16px">&larr; Accueil</a>
+  <div class="tail">Elite Dangerous · Frontier · Rig HOSAS</div>
+  <h1>Pilotage<br>et mapping</h1>
+  <p class="sub">Mapping complet du rig — deux Virpil Alpha Prime en HOSAS, throttle MongoosT-50CM3, panneau WinWing PTO2 — et cursus de pilotage en sept sections.
+  Le même matériel que pour Star Citizen, mais une logique de bindings très différente : ici, c'est le jeu qui change de contexte, et il en a huit.</p>
+
+  <h2>Planches et outils</h2>
+  <div class="card soon"><span class="idx">&#9998;</span><span class="nm">Mapping HOSAS</span><span class="ds">Chaque bouton annoté sur gabarit, un contexte par onglet, tableau lié au survol</span></div>
+  <div class="card soon"><span class="idx">&#8681;</span><span class="nm">Export des binds</span><span class="ds">Génère le <code>Custom.4.x.binds</code> à déposer dans le dossier Bindings du jeu</span></div>
+
+  <div class="hr"></div>
+  <h2>Cursus de pilotage — 7 sections</h2>
+  <div class="card soon"><span class="idx">A</span><span class="nm">Prise en main</span><span class="ds">Les six axes, la manette des gaz et la zone bleue, assistance de vol, focus interface</span></div>
+  <div class="card soon"><span class="idx">B</span><span class="nm">Naviguer</span><span class="ds">Carte galactique, supercroisière, saut hyperespace, ravitaillement stellaire</span></div>
+  <div class="card soon"><span class="idx">C</span><span class="nm">Se poser et s'amarrer</span><span class="ds">Demande d'amarrage, train, verrouillage de rotation, atterrissage planétaire</span></div>
+  <div class="card soon"><span class="idx">D</span><span class="nm">Combattre</span><span class="ds">Groupes de feu, triangle d'énergie, sous-systèmes, leurres et dissipateurs</span></div>
+  <div class="card soon"><span class="idx">E</span><span class="nm">Explorer</span><span class="ds">Mode analyse, scan de découverte, FSS et accord fréquentiel, sondes DSS</span></div>
+  <div class="card soon"><span class="idx">F</span><span class="nm">Au sol</span><span class="ds">SRV : conduite, tourelle, collecte — et déplacement à pied (Odyssey)</span></div>
+  <div class="card soon"><span class="idx">G</span><span class="nm">Métiers et équipage</span><span class="ds">Minage, cargaison, multi-équipage, tourelles, ordres au chasseur</span></div>
+
+  <div class="hr"></div>
+  <h2>Ce qui rend Elite différent</h2>
+  <p>Le mapping ne se conçoit pas comme celui d'un avion DCS, ni comme celui de Star Citizen. Trois particularités relevées dans le fichier de bindings réel du jeu :</p>
+  <table>
+    <thead><tr><th>Mécanique</th><th>Ce qu'elle change</th></tr></thead>
+    <tbody>
+      <tr><td><b>Huit contextes</b><br><span class="mono">vaisseau · SRV · à pied · FSS · DSS · équipage · caméra · colonisation</span></td>
+          <td>Le jeu bascule seul. Un même bouton porte déjà une action différente dans chaque contexte, sans modificateur et sans rien à mémoriser.</td></tr>
+      <tr><td><b>Trois couches d'axes de vol</b><br><span class="mono">normale · atterrissage · alternative</span></td>
+          <td>La couche « atterrissage » s'active toute seule à la sortie du train. En HOSAS elle est superflue — les deux manches donnent déjà six degrés de liberté.</td></tr>
+      <tr><td><b>Bascule ou maintien : 26 actions seulement</b></td>
+          <td>Le train, les points durs, les phares sont des bascules pures, sans commande ON et OFF séparées. C'est ce qui décide de ce qu'on ose mettre sur un inverseur maintenu du PTO2.</td></tr>
+    </tbody>
+  </table>
+  <p>Le détail, les décomptes et l'allocation proposée sont dans <code>ED/CONCEPTION-MAPPING.md</code>.</p>
+
+  <div class="hr"></div>
+  <h2>Le rig lu dans le jeu</h2>
+  <p>Elite Dangerous ne désigne pas un périphérique par un GUID, mais par une chaîne <b>VID+PID</b> hexadécimale : <code>3344012F</code> = fabricant <code>3344</code> (Virpil), produit <code>012F</code>.</p>
+  <div class="callout">
+    <p><b class="warn">Étape bloquante.</b> Deux Alpha Prime sortis d'usine portent <em>la même</em> chaîne VID+PID : le jeu les confond, et un bind posé sur l'un vaut pour l'autre.
+    Il faut changer le PID de l'un des deux manches dans le VPC Configuration Tool (onglet <em>Profile</em>) avant d'écrire le moindre bind HOSAS.</p>
+  </div>
+  <table>
+    <thead><tr><th>Périphérique</th><th>Désignation attendue</th><th>Rôle prévu</th></tr></thead>
+    <tbody>
+      <tr><td>Alpha Prime droit</td><td class="mono">3344xxxx</td><td>Rotation : roulis, tangage, lacet — ciblage et armes</td></tr>
+      <tr><td>Alpha Prime gauche</td><td class="mono">3344yyyy</td><td>Translation : latéral, avant/arrière, vertical — énergie et survie</td></tr>
+      <tr><td>Throttle MT-50CM3</td><td class="mono">3344zzzz</td><td>Manette des gaz, portée du scanner, accord du FSS</td></tr>
+      <tr><td>WinWing PTO2</td><td class="mono">à relever</td><td>États tenus : train, collecteur, feux, cartes</td></tr>
+    </tbody>
+  </table>
+
+  <div class="hr"></div>
+  <h2>État du projet</h2>
+  <ul>
+    <li><span class="ok">Fait</span> — chaîne de données : <code>tools/parse-ed-binds.ps1</code> lit le <code>.binds</code> du jeu, détecte le preset actif, et produit <code>ED/data/ed-bindings.json</code> (périphériques, axes, boutons, modificateurs, appuis longs) et <code>ED/data/ed-actions.json</code> (catalogue du schéma). Il signale aussi les conflits réels — deux actions du même contexte sur la même entrée.</li>
+    <li><span class="ok">Fait</span> — <code>ED/data/ed-actions.json</code> : 514 actions du schéma 4.2, avec contexte, couche de vol et possibilité de maintien.</li>
+    <li><span class="ok">Fait</span> — <code>ED/data/ed-labels-fr.json</code> : 201 libellés et descriptions françaises, écrits à la main, jamais écrasés par le script.</li>
+    <li><span class="ok">Fait</span> — conception du mapping : <code>ED/CONCEPTION-MAPPING.md</code>, allocation complète et six décisions posées.</li>
+    <li>À faire — donner deux PID distincts aux deux Alpha Prime, puis relever le rig depuis le jeu.</li>
+    <li>À faire — planches interactives, cursus, export du preset.</li>
+  </ul>
+
+  <p>Régénérer les données après chaque sauvegarde de preset depuis le jeu :</p>
+  <p><code>powershell -ExecutionPolicy Bypass -File tools\parse-ed-binds.ps1</code></p>
+</div>
+<script src="../js/site-search.js"></script>
+</body>
+</html>
