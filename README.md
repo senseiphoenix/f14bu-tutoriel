@@ -1,13 +1,13 @@
 # F14BU Tutoriel
 
-Site de tutoriels de pilotage pour **DCS World**, hébergé sur GitHub Pages à l'adresse :
+Site de tutoriels de pilotage pour **DCS World**, **Star Citizen** et **Elite Dangerous**, hébergé sur GitHub Pages à l'adresse :
 👉 https://senseiphoenix.github.io/f14bu-tutoriel/
 
 Ce dépôt regroupe des tutoriels HTML interactifs, un par module, pour apprendre à piloter certains avions dans DCS World. Chaque tutoriel est une appli web (HTML/CSS/JS) organisée en sections, avec suivi de progression conservé localement dans le navigateur. Le thème visuel commun (couleurs, texture de fond, halos de survol, icônes) est partagé par toutes les pages via `css/theme.css`.
 
 ## Contenu
 
-- **`index.html`** — page d'accueil, une catégorie par simulateur (DCS World, Star Citizen).
+- **`index.html`** — page d'accueil, une catégorie par univers : DCS World (un tutoriel par avion) et simulation spatiale (Star Citizen et Elite Dangerous, qui partagent le même rig HOSAS).
 - **`F14BU/`** — tutoriel de pilotage du **F-14B(U)** (mod Heatblur). Deux parcours complémentaires :
   - **`pas-a-pas.html`** — 19 tutoriels « une page », en checklists cochables, du premier démarrage à froid jusqu'à la JDAM. C'est l'entrée recommandée pour un débutant : chaque étape dit quoi faire, où, et pourquoi. Chaque tutoriel s'ouvre sur un bloc « En vidéo » (deux démonstrations YouTube choisies pour le sujet, avec un repère indiquant si elles sont tournées sur le B(U) ou sur le F-14A/B classique) ; la liste complète est reprise dans `ressources.html`.
   - **`cursus-complet.html`** et les `section-*.html` — les mêmes sujets en profondeur (7 sections : cockpit et bases, navigation, appontage, air-air, survie, air-sol, mission), qui expliquent le *pourquoi* plutôt que le geste. Chaque leçon renvoie vers son tutoriel pas à pas et inversement.
@@ -18,6 +18,7 @@ Ce dépôt regroupe des tutoriels HTML interactifs, un par module, pour apprendr
   - **`perfectionnement.html`** — 5 leçons au-delà du cursus (BFM à hélice, rayon d'action, appontage avancé, attaque au sol coordonnée, Bat Bomb), également au stade du squelette.
   - Outils : `missions.html`, `ressources.html`, `corsair-progression.html` (carnet qui relit la progression de toutes les pages), et `mapping-hotas.html` — **bloqué tant que le matériel réellement utilisé sur cet avion n'a pas été relevé**, la page dit quoi faire pour débloquer plutôt que d'afficher un mapping deviné.
 - **`SC/`** — **Star Citizen** : aide au pilotage de vaisseau et mapping du rig HOSAS (deux Virpil, throttle CM3, WinWing PTO2, pédalier Fanatec). En construction ; les données de binds sont générées depuis les profils exportés par le jeu, voir `tools/README.md`.
+- **`ED/`** — **Elite Dangerous** : mapping du **même rig HOSAS** que Star Citizen et cursus de pilotage en sept sections. En construction ; la conception du mapping est écrite (`ED/CONCEPTION-MAPPING.md`), les données d'actions sont extraites du fichier `.binds` du jeu par `tools/parse-ed-binds.ps1`. La logique de bindings diffère nettement de celle de Star Citizen : ici c'est le jeu qui bascule entre huit contextes (vaisseau, SRV, à pied, FSS, DSS, équipage, caméra, colonisation), et un même bouton porte donc déjà une action par contexte sans modificateur.
 
 ## Fonctionnement
 

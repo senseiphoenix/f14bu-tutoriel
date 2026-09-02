@@ -1,0 +1,3104 @@
+{
+  "generatedBy": "tools/parse-ed-binds.ps1",
+  "note": "Catalogue brut du schema de bindings du jeu, regenere a chaque execution. Elite Dangerous ecrit TOUTES les actions dans le .binds, y compris non assignees : le catalogue est donc exhaustif. Les libelles francais sont dans ed-labels-fr.json.",
+  "source": {
+    "file": "Reference.4.2.binds",
+    "presetName": "Custom",
+    "majorVersion": "4",
+    "minorVersion": "2"
+  },
+  "counts": {
+    "total": 514,
+    "axes": 70,
+    "boutons": 352,
+    "reglages": 92,
+    "maintien": 26
+  },
+  "maintienNote": "Les actions marquees toggleable portent un <ToggleOn> : elles seules acceptent le choix bascule / maintien. Toutes les autres commandes 'Toggle' du jeu (train, feux, points durs) sont des bascules pures, sans commande ON et OFF separees : un inverseur physique maintenu se desynchronise des que le jeu change l'etat tout seul.",
+  "actions": {
+    "KeyboardLayout": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseXMode": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseXDecay": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseYMode": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseYDecay": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseReset": {
+      "kind": "bouton",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseSensitivity": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseDecayRate": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseDeadzone": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseLinearity": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseGUI": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BlockMouseDecay": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "YawAxisRaw": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "YawLeftButton": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "YawRightButton": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "YawToRollMode": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "YawToRollSensitivity": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "YawToRollMode_FAOff": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "fa-off",
+      "toggleable": false
+    },
+    "YawToRollButton": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "RollAxisRaw": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "RollLeftButton": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "RollRightButton": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PitchAxisRaw": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PitchUpButton": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PitchDownButton": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "LateralThrustRaw": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "LeftThrustButton": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "RightThrustButton": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "VerticalThrustRaw": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "UpThrustButton": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "DownThrustButton": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "AheadThrust": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ForwardThrustButton": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BackwardThrustButton": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "UseAlternateFlightValuesToggle": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "YawAxisAlternate": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "alternatif",
+      "toggleable": false
+    },
+    "RollAxisAlternate": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "alternatif",
+      "toggleable": false
+    },
+    "PitchAxisAlternate": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "alternatif",
+      "toggleable": false
+    },
+    "LateralThrustAlternate": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "alternatif",
+      "toggleable": false
+    },
+    "VerticalThrustAlternate": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "alternatif",
+      "toggleable": false
+    },
+    "ThrottleAxis": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ThrottleRange": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ToggleReverseThrottleInput": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "ForwardKey": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BackwardKey": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ThrottleIncrement": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SetSpeedMinus100": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SetSpeedMinus75": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SetSpeedMinus50": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SetSpeedMinus25": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SetSpeedZero": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SetSpeed25": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SetSpeed50": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SetSpeed75": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SetSpeed100": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "YawAxis_Landing": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "YawLeftButton_Landing": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "YawRightButton_Landing": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "YawToRollMode_Landing": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "PitchAxis_Landing": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "PitchUpButton_Landing": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "PitchDownButton_Landing": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "RollAxis_Landing": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "RollLeftButton_Landing": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "RollRightButton_Landing": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "LateralThrust_Landing": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "LeftThrustButton_Landing": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "RightThrustButton_Landing": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "VerticalThrust_Landing": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "UpThrustButton_Landing": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "DownThrustButton_Landing": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "AheadThrust_Landing": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "ForwardThrustButton_Landing": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "BackwardThrustButton_Landing": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "atterrissage",
+      "toggleable": false
+    },
+    "ToggleFlightAssist": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "UseBoostJuice": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HyperSuperCombination": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "Supercruise": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "Hyperspace": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "DisableRotationCorrectToggle": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "OrbitLinesToggle": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SelectTarget": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CycleNextTarget": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CyclePreviousTarget": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SelectHighestThreat": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CycleNextHostileTarget": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CyclePreviousHostileTarget": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "TargetWingman0": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "TargetWingman1": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "TargetWingman2": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SelectTargetsTarget": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "WingNavLock": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CycleNextSubsystem": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CyclePreviousSubsystem": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "TargetNextRouteSystem": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PrimaryFire": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SecondaryFire": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CycleFireGroupNext": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CycleFireGroupPrevious": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "DeployHardpointToggle": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "DeployHardpointsOnFire": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ToggleButtonUpInput": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "DeployHeatSink": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ShipSpotLightToggle": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "RadarRangeAxis": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "RadarIncreaseRange": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "RadarDecreaseRange": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "IncreaseEnginesPower": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "IncreaseWeaponsPower": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "IncreaseSystemsPower": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ResetPowerDistribution": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HMDReset": {
+      "kind": "bouton",
+      "context": "vue",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ToggleCargoScoop": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "EjectAllCargo": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "LandingGearToggle": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MicrophoneMute": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "MuteButtonMode": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CqcMuteButtonMode": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "UseShieldCell": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FireChaffLauncher": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "TriggerFieldNeutraliser": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ChargeECM": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "EnableRumbleTrigger": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "EnableMenuGroups": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "WeaponColourToggle": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "EngineColourToggle": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "NightVisionToggle": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "TriggerColonisationModule": {
+      "kind": "bouton",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "UIFocus": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "UIFocusMode": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FocusLeftPanel": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FocusCommsPanel": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FocusOnTextEntryField": {
+      "kind": "reglage",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "QuickCommsPanel": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FocusRadarPanel": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FocusRightPanel": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "LeftPanelFocusOptions": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CommsPanelFocusOptions": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "RolePanelFocusOptions": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "RightPanelFocusOptions": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "EnableCameraLockOn": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "GalaxyMapOpen": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SystemMapOpen": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ShowPGScoreSummaryInput": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "HeadLookToggle": {
+      "kind": "bouton",
+      "context": "vue",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "Pause": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FriendsMenu": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "OpenCodexGoToDiscovery": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PlayerHUDModeToggle": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSEnter": {
+      "kind": "bouton",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "UI_Up": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "UI_Down": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "UI_Left": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "UI_Right": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "UI_Select": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "UI_Back": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "UI_Toggle": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CycleNextPanel": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CyclePreviousPanel": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CycleNextPage": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CyclePreviousPage": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseHeadlook": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseHeadlookInvert": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseHeadlookSensitivity": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HeadlookDefault": {
+      "kind": "reglage",
+      "context": "vue",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HeadlookIncrement": {
+      "kind": "reglage",
+      "context": "vue",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HeadlookMode": {
+      "kind": "reglage",
+      "context": "vue",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HeadlookResetOnToggle": {
+      "kind": "reglage",
+      "context": "vue",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HeadlookSensitivity": {
+      "kind": "reglage",
+      "context": "vue",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HeadlookSmoothing": {
+      "kind": "reglage",
+      "context": "vue",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HeadLookReset": {
+      "kind": "bouton",
+      "context": "vue",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HeadLookPitchUp": {
+      "kind": "bouton",
+      "context": "vue",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HeadLookPitchDown": {
+      "kind": "bouton",
+      "context": "vue",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HeadLookPitchAxisRaw": {
+      "kind": "axe",
+      "context": "vue",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HeadLookYawLeft": {
+      "kind": "bouton",
+      "context": "vue",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HeadLookYawRight": {
+      "kind": "bouton",
+      "context": "vue",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HeadLookYawAxis": {
+      "kind": "axe",
+      "context": "vue",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MotionHeadlook": {
+      "kind": "reglage",
+      "context": "vue",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HeadlookMotionSensitivity": {
+      "kind": "reglage",
+      "context": "vue",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "yawRotateHeadlook": {
+      "kind": "reglage",
+      "context": "vue",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamPitchAxis": {
+      "kind": "axe",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamPitchUp": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamPitchDown": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamYawAxis": {
+      "kind": "axe",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamYawLeft": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamYawRight": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamTranslateYAxis": {
+      "kind": "axe",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamTranslateForward": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamTranslateBackward": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamTranslateXAxis": {
+      "kind": "axe",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamTranslateLeft": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamTranslateRight": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamTranslateZAxis": {
+      "kind": "axe",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamTranslateUp": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamTranslateDown": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamZoomAxis": {
+      "kind": "axe",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamZoomIn": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamZoomOut": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CamTranslateZHold": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "GalaxyMapHome": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ToggleDriveAssist": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "DriveAssistDefault": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseBuggySteeringXMode": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseBuggySteeringXDecay": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseBuggyRollingXMode": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseBuggyRollingXDecay": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseBuggyYMode": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseBuggyYDecay": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SteeringAxis": {
+      "kind": "axe",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SteerLeftButton": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SteerRightButton": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyRollAxisRaw": {
+      "kind": "axe",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyRollLeftButton": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyRollRightButton": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyPitchAxis": {
+      "kind": "axe",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyPitchUpButton": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyPitchDownButton": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "VerticalThrustersButton": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "BuggyPrimaryFireButton": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggySecondaryFireButton": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "AutoBreakBuggyButton": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "HeadlightsBuggyButton": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ToggleBuggyTurretButton": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyCycleFireGroupNext": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyCycleFireGroupPrevious": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SelectTarget_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseTurretXMode": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseTurretXDecay": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseTurretYMode": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseTurretYDecay": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyTurretYawAxisRaw": {
+      "kind": "axe",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyTurretYawLeftButton": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyTurretYawRightButton": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyTurretPitchAxisRaw": {
+      "kind": "axe",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyTurretPitchUpButton": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyTurretPitchDownButton": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyTurretMouseSensitivity": {
+      "kind": "reglage",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyTurretMouseDeadzone": {
+      "kind": "reglage",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyTurretMouseLinearity": {
+      "kind": "reglage",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "DriveSpeedAxis": {
+      "kind": "axe",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyThrottleRange": {
+      "kind": "reglage",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "BuggyToggleReverseThrottleInput": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "BuggyThrottleIncrement": {
+      "kind": "reglage",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "IncreaseSpeedButtonMax": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "DecreaseSpeedButtonMax": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "IncreaseSpeedButtonPartial": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "DecreaseSpeedButtonPartial": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "IncreaseEnginesPower_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "IncreaseWeaponsPower_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "IncreaseSystemsPower_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ResetPowerDistribution_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ToggleCargoScoop_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "EjectAllCargo_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "RecallDismissShip": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "EnableMenuGroupsSRV": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "UIFocus_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FocusLeftPanel_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FocusCommsPanel_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "QuickCommsPanel_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FocusRadarPanel_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FocusRightPanel_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "GalaxyMapOpen_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SystemMapOpen_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "OpenCodexGoToDiscovery_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PlayerHUDModeToggle_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HeadLookToggle_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "MultiCrewToggleMode": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewPrimaryFire": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewSecondaryFire": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewPrimaryUtilityFire": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewSecondaryUtilityFire": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewThirdPersonMouseXMode": {
+      "kind": "reglage",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewThirdPersonMouseXDecay": {
+      "kind": "reglage",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewThirdPersonMouseYMode": {
+      "kind": "reglage",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewThirdPersonMouseYDecay": {
+      "kind": "reglage",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewThirdPersonYawAxisRaw": {
+      "kind": "axe",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewThirdPersonYawLeftButton": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewThirdPersonYawRightButton": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewThirdPersonPitchAxisRaw": {
+      "kind": "axe",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewThirdPersonPitchUpButton": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewThirdPersonPitchDownButton": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewThirdPersonMouseSensitivity": {
+      "kind": "reglage",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewThirdPersonFovAxisRaw": {
+      "kind": "axe",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewThirdPersonFovOutButton": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewThirdPersonFovInButton": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewCockpitUICycleForward": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MultiCrewCockpitUICycleBackward": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "OrderRequestDock": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "OrderDefensiveBehaviour": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "OrderAggressiveBehaviour": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "OrderFocusTarget": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "OrderHoldFire": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "OrderHoldPosition": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "OrderFollow": {
+      "kind": "bouton",
+      "context": "equipage",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "OpenOrders": {
+      "kind": "bouton",
+      "context": "interface",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PhotoCameraToggle": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PhotoCameraToggle_Buggy": {
+      "kind": "bouton",
+      "context": "srv",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PhotoCameraToggle_Humanoid": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "VanityCameraScrollLeft": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "VanityCameraScrollRight": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ToggleFreeCam": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "VanityCameraOne": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "VanityCameraTwo": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "VanityCameraThree": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "VanityCameraFour": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "VanityCameraFive": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "VanityCameraSix": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "VanityCameraSeven": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "VanityCameraEight": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "VanityCameraNine": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "VanityCameraTen": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FreeCamToggleHUD": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FreeCamSpeedInc": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FreeCamSpeedDec": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MoveFreeCamY": {
+      "kind": "axe",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ThrottleRangeFreeCam": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ToggleReverseThrottleInputFreeCam": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "MoveFreeCamForward": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MoveFreeCamBackwards": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MoveFreeCamX": {
+      "kind": "axe",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MoveFreeCamRight": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MoveFreeCamLeft": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MoveFreeCamZ": {
+      "kind": "axe",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MoveFreeCamUpAxis": {
+      "kind": "axe",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MoveFreeCamDownAxis": {
+      "kind": "axe",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MoveFreeCamUp": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MoveFreeCamDown": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PitchCameraMouse": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "YawCameraMouse": {
+      "kind": "reglage",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PitchCamera": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FreeCamMouseSensitivity": {
+      "kind": "reglage",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FreeCamMouseYDecay": {
+      "kind": "reglage",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PitchCameraUp": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PitchCameraDown": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "YawCamera": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FreeCamMouseXDecay": {
+      "kind": "reglage",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "YawCameraLeft": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "YawCameraRight": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "RollCamera": {
+      "kind": "axe",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "RollCameraLeft": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "RollCameraRight": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ToggleRotationLock": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FixCameraRelativeToggle": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FixCameraWorldToggle": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "QuitCamera": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ToggleAdvanceMode": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FreeCamZoomIn": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FreeCamZoomOut": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FStopDec": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FStopInc": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CommanderCreator_Undo": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CommanderCreator_Redo": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CommanderCreator_Rotation_MouseToggle": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "CommanderCreator_Rotation": {
+      "kind": "axe",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "GalnetAudio_Play_Pause": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "GalnetAudio_SkipForward": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "GalnetAudio_SkipBackward": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "GalnetAudio_ClearQueue": {
+      "kind": "bouton",
+      "context": "vaisseau",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSCameraPitch": {
+      "kind": "axe",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSCameraPitchIncreaseButton": {
+      "kind": "bouton",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSCameraPitchDecreaseButton": {
+      "kind": "bouton",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSCameraYaw": {
+      "kind": "axe",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSCameraYawIncreaseButton": {
+      "kind": "bouton",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSCameraYawDecreaseButton": {
+      "kind": "bouton",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSZoomIn": {
+      "kind": "bouton",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSZoomOut": {
+      "kind": "bouton",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSMiniZoomIn": {
+      "kind": "bouton",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSMiniZoomOut": {
+      "kind": "bouton",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSRadioTuningX_Raw": {
+      "kind": "axe",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSRadioTuningX_Increase": {
+      "kind": "bouton",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSRadioTuningX_Decrease": {
+      "kind": "bouton",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSRadioTuningAbsoluteX": {
+      "kind": "axe",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FSSTuningSensitivity": {
+      "kind": "reglage",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSDiscoveryScan": {
+      "kind": "bouton",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSQuit": {
+      "kind": "bouton",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FSSMouseXMode": {
+      "kind": "reglage",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FSSMouseXDecay": {
+      "kind": "reglage",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FSSMouseYMode": {
+      "kind": "reglage",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FSSMouseYDecay": {
+      "kind": "reglage",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FSSMouseSensitivity": {
+      "kind": "reglage",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FSSMouseDeadzone": {
+      "kind": "reglage",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FSSMouseLinearity": {
+      "kind": "reglage",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSTarget": {
+      "kind": "bouton",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationFSSShowHelp": {
+      "kind": "bouton",
+      "context": "fss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationSAAChangeScannedAreaViewToggle": {
+      "kind": "bouton",
+      "context": "dss",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "ExplorationSAAExitThirdPerson": {
+      "kind": "bouton",
+      "context": "dss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationSAANextGenus": {
+      "kind": "bouton",
+      "context": "dss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExplorationSAAPreviousGenus": {
+      "kind": "bouton",
+      "context": "dss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SAAThirdPersonMouseXMode": {
+      "kind": "reglage",
+      "context": "dss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SAAThirdPersonMouseXDecay": {
+      "kind": "reglage",
+      "context": "dss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SAAThirdPersonMouseYMode": {
+      "kind": "reglage",
+      "context": "dss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SAAThirdPersonMouseYDecay": {
+      "kind": "reglage",
+      "context": "dss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SAAThirdPersonMouseSensitivity": {
+      "kind": "reglage",
+      "context": "dss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SAAThirdPersonYawAxisRaw": {
+      "kind": "axe",
+      "context": "dss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SAAThirdPersonYawLeftButton": {
+      "kind": "bouton",
+      "context": "dss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SAAThirdPersonYawRightButton": {
+      "kind": "bouton",
+      "context": "dss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SAAThirdPersonPitchAxisRaw": {
+      "kind": "axe",
+      "context": "dss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SAAThirdPersonPitchUpButton": {
+      "kind": "bouton",
+      "context": "dss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SAAThirdPersonPitchDownButton": {
+      "kind": "bouton",
+      "context": "dss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SAAThirdPersonFovAxisRaw": {
+      "kind": "axe",
+      "context": "dss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SAAThirdPersonFovOutButton": {
+      "kind": "bouton",
+      "context": "dss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SAAThirdPersonFovInButton": {
+      "kind": "bouton",
+      "context": "dss",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseHumanoidXMode": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseHumanoidYMode": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MouseHumanoidSensitivity": {
+      "kind": "reglage",
+      "context": "souris",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidForwardAxis": {
+      "kind": "axe",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidForwardButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidBackwardButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidStrafeAxis": {
+      "kind": "axe",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidStrafeLeftButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidStrafeRightButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidRotateAxis": {
+      "kind": "axe",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidRotateSensitivity": {
+      "kind": "reglage",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidRotateLeftButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidRotateRightButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidPitchAxis": {
+      "kind": "axe",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidPitchSensitivity": {
+      "kind": "reglage",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidPitchUpButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidPitchDownButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidSprintButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "HumanoidWalkButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "HumanoidCrouchButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "HumanoidJumpButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidPrimaryInteractButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidSecondaryInteractButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidItemWheelButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "HumanoidEmoteWheelButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "HumanoidUtilityWheelCycleMode": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidItemWheelButton_XAxis": {
+      "kind": "axe",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidItemWheelButton_XLeft": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidItemWheelButton_XRight": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidItemWheelButton_YAxis": {
+      "kind": "axe",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidItemWheelButton_YUp": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidItemWheelButton_YDown": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidItemWheel_AcceptMouseInput": {
+      "kind": "reglage",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidPrimaryFireButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidZoomButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": true
+    },
+    "HumanoidThrowGrenadeButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidMeleeButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidReloadButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidSwitchWeapon": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidSelectPrimaryWeaponButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidSelectSecondaryWeaponButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidSelectUtilityWeaponButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidSelectNextWeaponButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidSelectPreviousWeaponButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidHideWeaponButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidSelectNextGrenadeTypeButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidSelectPreviousGrenadeTypeButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidToggleFlashlightButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidToggleNightVisionButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidToggleShieldsButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidClearAuthorityLevel": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidHealthPack": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidBattery": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidSelectFragGrenade": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidSelectEMPGrenade": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidSelectShieldGrenade": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidSwitchToRechargeTool": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidSwitchToCompAnalyser": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidSwitchToSuitTool": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidToggleToolModeButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidToggleMissionHelpPanelButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidPing": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "GalaxyMapOpen_Humanoid": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "SystemMapOpen_Humanoid": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "FocusCommsPanel_Humanoid": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "QuickCommsPanel_Humanoid": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidOpenAccessPanelButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidConflictContextualUIButton": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "EnableMenuGroupsOnFoot": {
+      "kind": "reglage",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "EnableAimAssistOnFoot": {
+      "kind": "reglage",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "StoreEnableRotation": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "StorePitchCamera": {
+      "kind": "axe",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "StoreYawCamera": {
+      "kind": "axe",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "StoreCamZoomIn": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "StoreCamZoomOut": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "StoreToggle": {
+      "kind": "bouton",
+      "context": "camera",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidEmoteSlot1": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidEmoteSlot2": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidEmoteSlot3": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidEmoteSlot4": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidEmoteSlot5": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidEmoteSlot6": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidEmoteSlot7": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "HumanoidEmoteSlot8": {
+      "kind": "bouton",
+      "context": "apied",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PlaceSettlement": {
+      "kind": "bouton",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ChangeConstructionOption": {
+      "kind": "bouton",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "RotateSettlement": {
+      "kind": "axe",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "RotateSettlementLeft": {
+      "kind": "bouton",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "RotateSettlementRight": {
+      "kind": "bouton",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "ExitSettlementPlacementCamera": {
+      "kind": "bouton",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MovePlacementCamY": {
+      "kind": "axe",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MovePlacementCamForward": {
+      "kind": "bouton",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MovePlacementCamBackwards": {
+      "kind": "bouton",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MovePlacementCamX": {
+      "kind": "axe",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MovePlacementCamRight": {
+      "kind": "bouton",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MovePlacementCamLeft": {
+      "kind": "bouton",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MovePlacementCamZ": {
+      "kind": "axe",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MovePlacementCamUp": {
+      "kind": "bouton",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MovePlacementCamDown": {
+      "kind": "bouton",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MovePlacementCamUpAxis": {
+      "kind": "axe",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "MovePlacementCamDownAxis": {
+      "kind": "axe",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PitchPlacementCamera": {
+      "kind": "axe",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PitchPlacementCameraUp": {
+      "kind": "bouton",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PitchPlacementCameraDown": {
+      "kind": "bouton",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "YawPlacementCamera": {
+      "kind": "axe",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "YawPlacementCameraRight": {
+      "kind": "bouton",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "YawPlacementCameraLeft": {
+      "kind": "bouton",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PlacementCamSpeedInc": {
+      "kind": "bouton",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PlacementCamSpeedDec": {
+      "kind": "bouton",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PlacementCamMouseSensitivity": {
+      "kind": "reglage",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PlacementCamMouseXDecay": {
+      "kind": "reglage",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    },
+    "PlacementCamMouseYDecay": {
+      "kind": "reglage",
+      "context": "colonisation",
+      "layer": "normal",
+      "toggleable": false
+    }
+  }
+}

@@ -193,13 +193,13 @@
  },
  {
   "title": "Hook Retract",
-  "path": "F14BU/mapping-hotas.html?dev=pto2&n=33",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=32",
   "aircraft": "F-14B(U)",
   "type": "fonction"
  },
  {
   "title": "Hook Retract",
-  "path": "F14BU/mapping-hotas.html?dev=pto2&n=32",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=33",
   "aircraft": "F-14B(U)",
   "type": "fonction"
  },
@@ -325,13 +325,13 @@
  },
  {
   "title": "Parking brake stow",
-  "path": "F14BU/mapping-hotas.html?dev=pto2&n=41",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=39",
   "aircraft": "F-14B(U)",
   "type": "fonction"
  },
  {
   "title": "Parking brake stow",
-  "path": "F14BU/mapping-hotas.html?dev=pto2&n=39",
+  "path": "F14BU/mapping-hotas.html?dev=pto2&n=41",
   "aircraft": "F-14B(U)",
   "type": "fonction"
  },
@@ -1165,19 +1165,7 @@
  },
  {
   "title": "Ressources vidéo",
-  "path": "F14BU/section-f-air-sol.html#f6",
-  "aircraft": "F-14B(U)",
-  "type": "leçon"
- },
- {
-  "title": "Ressources vidéo",
-  "path": "F14BU/section-e-survie.html#e4",
-  "aircraft": "F-14B(U)",
-  "type": "leçon"
- },
- {
-  "title": "Ressources vidéo",
-  "path": "F14BU/section-g-mission.html#g4",
+  "path": "F14BU/section-c-porte-avions.html#c5",
   "aircraft": "F-14B(U)",
   "type": "leçon"
  },
@@ -1189,7 +1177,19 @@
  },
  {
   "title": "Ressources vidéo",
-  "path": "F14BU/section-c-porte-avions.html#c5",
+  "path": "F14BU/section-e-survie.html#e4",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
+  "path": "F14BU/section-f-air-sol.html#f6",
+  "aircraft": "F-14B(U)",
+  "type": "leçon"
+ },
+ {
+  "title": "Ressources vidéo",
+  "path": "F14BU/section-g-mission.html#g4",
   "aircraft": "F-14B(U)",
   "type": "leçon"
  },
@@ -1773,6 +1773,18 @@
   "title": "Tutoriels de pilotage — Accueil",
   "path": "index.html",
   "aircraft": null,
+  "type": "page"
+ },
+ {
+  "title": "Elite Dangerous — Pilotage et mapping HOSAS",
+  "path": "ED/index.html",
+  "aircraft": "Elite Dangerous",
+  "type": "page"
+ },
+ {
+  "title": "Cursus F-14B(U) — appli complète",
+  "path": "F14BU/cursus-complet.html",
+  "aircraft": "F-14B(U)",
   "type": "page"
  },
  {

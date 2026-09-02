@@ -1,0 +1,1070 @@
+{
+  "note": "Libelles francais des actions Elite Dangerous. Fichier ECRIT A LA MAIN : le script tools/parse-ed-binds.ps1 ne le touche jamais. Tous les noms d'action proviennent du schema reel du jeu (voir ed-actions.json), aucun n'est invente. Une action absente d'ici s'affiche sous son nom technique. Sans accents, comme les autres fichiers de donnees du depot.",
+  "categories": {
+    "vol": {
+      "label": "Pilotage",
+      "detail": "Axes de vol, assistance, vitesse, poussees de manoeuvre"
+    },
+    "arm": {
+      "label": "Armement",
+      "detail": "Points durs, groupes de tir, feu principal et secondaire"
+    },
+    "sens": {
+      "label": "Senseurs",
+      "detail": "Ciblage, sous-systemes, portee du scanner, scan FSS et DSS"
+    },
+    "def": {
+      "label": "Defense",
+      "detail": "Boucliers, contre-mesures, repartition d'energie"
+    },
+    "ops": {
+      "label": "Operations",
+      "detail": "FSD, supercroisiere, train, soute, amarrage, cargaison"
+    },
+    "sys": {
+      "label": "Systemes",
+      "detail": "Feux, HUD, panneaux, cartes, comms, camera"
+    },
+    "sol": {
+      "label": "Au sol",
+      "detail": "SRV et deplacement a pied"
+    },
+    "eq": {
+      "label": "Equipage",
+      "detail": "Multi-equipage, tourelles, ordres au chasseur"
+    }
+  },
+  "contexts": {
+    "vaisseau": "Vaisseau - contexte principal, actif en vol et en supercroisiere",
+    "vue": "Vue libre dans le cockpit (headlook)",
+    "interface": "Panneaux du cockpit, cartes galactique et systeme, menus",
+    "fss": "Scanner plein spectre (FSS) - contexte exclusif, le vaisseau est fige",
+    "dss": "Scanner de surface detaille (DSS) - largage de sondes en vue exterieure",
+    "srv": "SRV - vehicule de surface, contexte independant du vaisseau",
+    "apied": "A pied (Odyssey) - contexte independant",
+    "equipage": "Multi-equipage, tourelles et ordres au chasseur",
+    "camera": "Suite camera, camera libre, vanity cam",
+    "colonisation": "Camera de placement des batiments (colonisation)",
+    "souris": "Reglages de souris - jamais bindes sur un peripherique"
+  },
+  "counts": {
+    "actions": 201
+  },
+  "actions": {
+    "PitchAxisRaw": {
+      "label": "Tangage (axe)",
+      "cat": "vol",
+      "detail": "Axe de tangage du vaisseau. Manche droit, axe Y en HOSAS."
+    },
+    "RollAxisRaw": {
+      "label": "Roulis (axe)",
+      "cat": "vol",
+      "detail": "Axe de roulis. Sur un vaisseau ED le roulis est rapide : c'est lui qui oriente le plan de virage."
+    },
+    "YawAxisRaw": {
+      "label": "Lacet (axe)",
+      "cat": "vol",
+      "detail": "Axe de lacet. Volontairement lent sur la plupart des vaisseaux : sert a affiner la visee, pas a tourner."
+    },
+    "PitchAxisAlternate": {
+      "label": "Tangage (axe alternatif)",
+      "cat": "vol",
+      "detail": "Jeu d'axes alternatif, actif tant que UseAlternateFlightValuesToggle est engage."
+    },
+    "RollAxisAlternate": {
+      "label": "Roulis (axe alternatif)",
+      "cat": "vol",
+      "detail": "Jeu d'axes alternatif."
+    },
+    "YawAxisAlternate": {
+      "label": "Lacet (axe alternatif)",
+      "cat": "vol",
+      "detail": "Jeu d'axes alternatif."
+    },
+    "LateralThrustAlternate": {
+      "label": "Poussee laterale (axe alternatif)",
+      "cat": "vol",
+      "detail": "Jeu d'axes alternatif."
+    },
+    "VerticalThrustAlternate": {
+      "label": "Poussee verticale (axe alternatif)",
+      "cat": "vol",
+      "detail": "Jeu d'axes alternatif."
+    },
+    "PitchAxis_Landing": {
+      "label": "Tangage (axe, train sorti)",
+      "cat": "vol",
+      "detail": "Couche d'atterrissage : remplace l'axe normal des que le train est sorti. Laisse vide, l'axe normal reste actif."
+    },
+    "RollAxis_Landing": {
+      "label": "Roulis (axe, train sorti)",
+      "cat": "vol",
+      "detail": "Couche d'atterrissage."
+    },
+    "YawAxis_Landing": {
+      "label": "Lacet (axe, train sorti)",
+      "cat": "vol",
+      "detail": "Couche d'atterrissage."
+    },
+    "LateralThrust_Landing": {
+      "label": "Poussee laterale (axe, train sorti)",
+      "cat": "vol",
+      "detail": "Couche d'atterrissage."
+    },
+    "VerticalThrust_Landing": {
+      "label": "Poussee verticale (axe, train sorti)",
+      "cat": "vol",
+      "detail": "Couche d'atterrissage."
+    },
+    "AheadThrust_Landing": {
+      "label": "Poussee avant/arriere (axe, train sorti)",
+      "cat": "vol",
+      "detail": "Couche d'atterrissage."
+    },
+    "LateralThrustRaw": {
+      "label": "Poussee laterale (axe)",
+      "cat": "vol",
+      "detail": "Translation gauche/droite. Manche gauche, axe X en HOSAS."
+    },
+    "VerticalThrustRaw": {
+      "label": "Poussee verticale (axe)",
+      "cat": "vol",
+      "detail": "Translation haut/bas. Indispensable a l'amarrage et au combat rapproche."
+    },
+    "AheadThrust": {
+      "label": "Poussee avant/arriere (axe)",
+      "cat": "vol",
+      "detail": "Translation longitudinale, distincte de la manette des gaz : sert surtout en assistance coupee et a l'amarrage."
+    },
+    "ThrottleAxis": {
+      "label": "Manette des gaz (axe)",
+      "cat": "vol",
+      "detail": "Vitesse demandee. C'est l'axe le plus important d'Elite : la zone bleue du bandeau de vitesse donne le meilleur taux de virage."
+    },
+    "ThrottleRange": {
+      "label": "Plage de la manette",
+      "cat": "vol",
+      "detail": "Reglage : avant seul, avant et arriere, ou plage complete. Determine si le centre du levier vaut zero ou 50 %."
+    },
+    "ToggleReverseThrottleInput": {
+      "label": "Inverser la manette",
+      "cat": "vol",
+      "detail": "Bascule la manette en marche arriere. Utile avec une plage 'avant seul'."
+    },
+    "ToggleFlightAssist": {
+      "label": "Assistance de vol",
+      "cat": "vol",
+      "critical": true,
+      "detail": "Coupe ou retablit l'assistance. Accepte le choix bascule / maintien. Commande critique : position fixe, jamais sous modificateur."
+    },
+    "UseAlternateFlightValuesToggle": {
+      "label": "Commandes de vol alternatives",
+      "cat": "vol",
+      "detail": "Bascule vers le jeu d'axes 'Alternate'. Accepte bascule / maintien."
+    },
+    "DisableRotationCorrectToggle": {
+      "label": "Correction de rotation",
+      "cat": "vol",
+      "detail": "Desactive l'alignement automatique sur la rotation d'une station ou d'une planete."
+    },
+    "ToggleRotationLock": {
+      "label": "Verrouillage de rotation",
+      "cat": "vol",
+      "detail": "Synchronise le vaisseau sur la rotation du pad d'amarrage."
+    },
+    "UseBoostJuice": {
+      "label": "Post-combustion",
+      "cat": "vol",
+      "critical": true,
+      "detail": "Boost moteur. Commande critique : position fixe, atteignable manche en main."
+    },
+    "PitchUpButton": {
+      "label": "Cabrer (bouton)",
+      "cat": "vol",
+      "detail": "Equivalent bouton de l'axe de tangage."
+    },
+    "PitchDownButton": {
+      "label": "Piquer (bouton)",
+      "cat": "vol",
+      "detail": "Equivalent bouton de l'axe de tangage."
+    },
+    "RollLeftButton": {
+      "label": "Roulis gauche (bouton)",
+      "cat": "vol",
+      "detail": "Equivalent bouton de l'axe de roulis."
+    },
+    "RollRightButton": {
+      "label": "Roulis droit (bouton)",
+      "cat": "vol",
+      "detail": "Equivalent bouton de l'axe de roulis."
+    },
+    "YawLeftButton": {
+      "label": "Lacet gauche (bouton)",
+      "cat": "vol",
+      "detail": "Equivalent bouton de l'axe de lacet."
+    },
+    "YawRightButton": {
+      "label": "Lacet droit (bouton)",
+      "cat": "vol",
+      "detail": "Equivalent bouton de l'axe de lacet."
+    },
+    "LeftThrustButton": {
+      "label": "Poussee gauche",
+      "cat": "vol",
+      "detail": "Translation laterale par bouton."
+    },
+    "RightThrustButton": {
+      "label": "Poussee droite",
+      "cat": "vol",
+      "detail": "Translation laterale par bouton."
+    },
+    "UpThrustButton": {
+      "label": "Poussee haute",
+      "cat": "vol",
+      "detail": "Translation verticale par bouton."
+    },
+    "DownThrustButton": {
+      "label": "Poussee basse",
+      "cat": "vol",
+      "detail": "Translation verticale par bouton."
+    },
+    "ForwardThrustButton": {
+      "label": "Poussee avant",
+      "cat": "vol",
+      "detail": "Translation longitudinale par bouton."
+    },
+    "BackwardThrustButton": {
+      "label": "Poussee arriere",
+      "cat": "vol",
+      "detail": "Translation longitudinale par bouton."
+    },
+    "ForwardKey": {
+      "label": "Accelerer",
+      "cat": "vol",
+      "detail": "Augmente la vitesse demandee d'un cran."
+    },
+    "BackwardKey": {
+      "label": "Ralentir",
+      "cat": "vol",
+      "detail": "Diminue la vitesse demandee d'un cran."
+    },
+    "ThrottleIncrement": {
+      "label": "Pas de la manette",
+      "cat": "vol",
+      "detail": "Reglage : taille du cran d'acceleration au clavier."
+    },
+    "IncreaseSpeedButtonPartial": {
+      "label": "Vitesse + (partiel)",
+      "cat": "vol",
+      "detail": "Augmente la vitesse par paliers."
+    },
+    "DecreaseSpeedButtonPartial": {
+      "label": "Vitesse - (partiel)",
+      "cat": "vol",
+      "detail": "Diminue la vitesse par paliers."
+    },
+    "IncreaseSpeedButtonMax": {
+      "label": "Vitesse maximale",
+      "cat": "vol",
+      "detail": "Pousse la manette a fond."
+    },
+    "DecreaseSpeedButtonMax": {
+      "label": "Arret complet",
+      "cat": "vol",
+      "detail": "Ramene la manette a zero."
+    },
+    "SetSpeedZero": {
+      "label": "Vitesse 0 %",
+      "cat": "vol",
+      "detail": "Vitesse demandee fixe."
+    },
+    "SetSpeed25": {
+      "label": "Vitesse 25 %",
+      "cat": "vol",
+      "detail": "Vitesse demandee fixe."
+    },
+    "SetSpeed50": {
+      "label": "Vitesse 50 %",
+      "cat": "vol",
+      "detail": "Vitesse demandee fixe : milieu de la zone bleue sur la plupart des vaisseaux."
+    },
+    "SetSpeed75": {
+      "label": "Vitesse 75 %",
+      "cat": "vol",
+      "detail": "Vitesse demandee fixe."
+    },
+    "SetSpeed100": {
+      "label": "Vitesse 100 %",
+      "cat": "vol",
+      "detail": "Vitesse demandee fixe."
+    },
+    "SetSpeedMinus25": {
+      "label": "Vitesse -25 %",
+      "cat": "vol",
+      "detail": "Marche arriere."
+    },
+    "SetSpeedMinus50": {
+      "label": "Vitesse -50 %",
+      "cat": "vol",
+      "detail": "Marche arriere."
+    },
+    "SetSpeedMinus75": {
+      "label": "Vitesse -75 %",
+      "cat": "vol",
+      "detail": "Marche arriere."
+    },
+    "SetSpeedMinus100": {
+      "label": "Vitesse -100 %",
+      "cat": "vol",
+      "detail": "Marche arriere pleine."
+    },
+    "YawToRollButton": {
+      "label": "Lacet vers roulis",
+      "cat": "vol",
+      "detail": "Convertit l'entree de lacet en roulis, pour les manches sans troisieme axe."
+    },
+    "YawToRollMode": {
+      "label": "Mode lacet vers roulis",
+      "cat": "vol",
+      "detail": "Reglage du comportement precedent."
+    },
+    "YawToRollSensitivity": {
+      "label": "Sensibilite lacet vers roulis",
+      "cat": "vol",
+      "detail": "Reglage."
+    },
+    "PrimaryFire": {
+      "label": "Feu principal",
+      "cat": "arm",
+      "detail": "Tir du groupe de feu primaire. Gachette du manche droit, cran 1."
+    },
+    "SecondaryFire": {
+      "label": "Feu secondaire",
+      "cat": "arm",
+      "detail": "Tir du groupe de feu secondaire. Gachette du manche droit, cran 2."
+    },
+    "DeployHardpointToggle": {
+      "label": "Points durs",
+      "cat": "arm",
+      "detail": "Sort ou rentre l'armement. Bascule pure : aucune commande separee sortir / rentrer."
+    },
+    "DeployHardpointsOnFire": {
+      "label": "Sortir les points durs au tir",
+      "cat": "arm",
+      "detail": "Reglage : sortir automatiquement l'armement en appuyant sur la gachette."
+    },
+    "CycleFireGroupNext": {
+      "label": "Groupe de feu suivant",
+      "cat": "arm",
+      "detail": "Fait defiler les groupes de feu configures dans le panneau de droite."
+    },
+    "CycleFireGroupPrevious": {
+      "label": "Groupe de feu precedent",
+      "cat": "arm",
+      "detail": "Fait defiler les groupes de feu."
+    },
+    "WeaponColourToggle": {
+      "label": "Couleur des armes",
+      "cat": "arm",
+      "detail": "Cosmetique : change la couleur des tirs."
+    },
+    "EngineColourToggle": {
+      "label": "Couleur des moteurs",
+      "cat": "arm",
+      "detail": "Cosmetique : change la couleur des reacteurs."
+    },
+    "SelectTarget": {
+      "label": "Cible devant",
+      "cat": "sens",
+      "detail": "Verrouille le contact aligne avec le nez. Le geste de ciblage le plus frequent en combat."
+    },
+    "CycleNextTarget": {
+      "label": "Cible suivante",
+      "cat": "sens",
+      "detail": "Fait defiler tous les contacts."
+    },
+    "CyclePreviousTarget": {
+      "label": "Cible precedente",
+      "cat": "sens",
+      "detail": "Fait defiler tous les contacts."
+    },
+    "CycleNextHostileTarget": {
+      "label": "Hostile suivant",
+      "cat": "sens",
+      "detail": "Ne retient que les contacts hostiles."
+    },
+    "CyclePreviousHostileTarget": {
+      "label": "Hostile precedent",
+      "cat": "sens",
+      "detail": "Ne retient que les contacts hostiles."
+    },
+    "SelectHighestThreat": {
+      "label": "Menace principale",
+      "cat": "sens",
+      "detail": "Vise le contact le plus dangereux."
+    },
+    "SelectTargetsTarget": {
+      "label": "Cible de ma cible",
+      "cat": "sens",
+      "detail": "Bascule sur ce que vise la cible courante : indispensable pour proteger un allie."
+    },
+    "CycleNextSubsystem": {
+      "label": "Sous-systeme suivant",
+      "cat": "sens",
+      "detail": "Choisit le module vise (moteurs, distributeur, soute) une fois la cible scannee."
+    },
+    "CyclePreviousSubsystem": {
+      "label": "Sous-systeme precedent",
+      "cat": "sens",
+      "detail": "Choisit le module vise."
+    },
+    "TargetNextRouteSystem": {
+      "label": "Systeme suivant de la route",
+      "cat": "sens",
+      "detail": "Verrouille l'etape suivante du trajet trace sur la carte galactique."
+    },
+    "TargetWingman0": {
+      "label": "Cibler equipier 1",
+      "cat": "sens",
+      "detail": "Selectionne un membre de l'escadrille."
+    },
+    "TargetWingman1": {
+      "label": "Cibler equipier 2",
+      "cat": "sens",
+      "detail": "Selectionne un membre de l'escadrille."
+    },
+    "TargetWingman2": {
+      "label": "Cibler equipier 3",
+      "cat": "sens",
+      "detail": "Selectionne un membre de l'escadrille."
+    },
+    "WingNavLock": {
+      "label": "Verrouillage nav escadrille",
+      "cat": "sens",
+      "detail": "Se cale sur la destination d'un equipier pour le suivre en supercroisiere."
+    },
+    "RadarIncreaseRange": {
+      "label": "Portee du scanner +",
+      "cat": "sens",
+      "detail": "Agrandit la portee du radar spherique."
+    },
+    "RadarDecreaseRange": {
+      "label": "Portee du scanner -",
+      "cat": "sens",
+      "detail": "Reduit la portee du radar spherique."
+    },
+    "RadarRangeAxis": {
+      "label": "Portee du scanner (axe)",
+      "cat": "sens",
+      "detail": "Version analogique du reglage de portee : une molette crantee convient bien."
+    },
+    "PlayerHUDModeToggle": {
+      "label": "Mode combat / analyse",
+      "cat": "sens",
+      "detail": "Bascule le HUD entre mode combat et mode analyse. Le mode analyse conditionne l'acces au scanner de decouverte et au FSS."
+    },
+    "NightVisionToggle": {
+      "label": "Vision nocturne",
+      "cat": "sys",
+      "detail": "Amplification de lumiere. Bascule pure."
+    },
+    "IncreaseSystemsPower": {
+      "label": "Pip systemes",
+      "cat": "def",
+      "critical": true,
+      "detail": "Verse une part d'energie vers les boucliers. Le triangle d'energie est la commande la plus sollicitee en combat : elle doit tomber sous le pouce."
+    },
+    "IncreaseEnginesPower": {
+      "label": "Pip moteurs",
+      "cat": "def",
+      "critical": true,
+      "detail": "Verse une part d'energie vers la vitesse et l'agilite."
+    },
+    "IncreaseWeaponsPower": {
+      "label": "Pip armes",
+      "cat": "def",
+      "critical": true,
+      "detail": "Verse une part d'energie vers l'armement."
+    },
+    "ResetPowerDistribution": {
+      "label": "Equilibrer l'energie",
+      "cat": "def",
+      "critical": true,
+      "detail": "Revient a une repartition egale."
+    },
+    "FireChaffLauncher": {
+      "label": "Leurres",
+      "cat": "def",
+      "critical": true,
+      "detail": "Rompt le verrouillage des tourelles et des armes gimbal. Commande critique : position fixe."
+    },
+    "DeployHeatSink": {
+      "label": "Dissipateur thermique",
+      "cat": "def",
+      "critical": true,
+      "detail": "Evacue la chaleur. Indispensable en silence radio et lors des frolements d'etoile."
+    },
+    "UseShieldCell": {
+      "label": "Cellule de bouclier",
+      "cat": "def",
+      "critical": true,
+      "detail": "Recharge les boucliers, avec pic de chaleur. Commande critique."
+    },
+    "ChargeECM": {
+      "label": "Contre-mesures electroniques",
+      "cat": "def",
+      "detail": "Fait detoner les missiles proches et perturbe les mines."
+    },
+    "TriggerFieldNeutraliser": {
+      "label": "Neutraliseur de champ",
+      "cat": "def",
+      "detail": "Contre un champ de coupure de systemes (Thargoid ou pirate)."
+    },
+    "ToggleAdvanceMode": {
+      "label": "Mode avance",
+      "cat": "def",
+      "detail": "Fonction reservee : verifier son effet en jeu avant de l'assigner."
+    },
+    "HyperSuperCombination": {
+      "label": "FSD (combine)",
+      "cat": "ops",
+      "detail": "Une seule commande pour la supercroisiere et le saut hyperespace, selon qu'une destination est verrouillee ou non. Le choix par defaut sur un HOTAS."
+    },
+    "Supercruise": {
+      "label": "Supercroisiere",
+      "cat": "ops",
+      "detail": "Entree en supercroisiere seule."
+    },
+    "Hyperspace": {
+      "label": "Saut hyperespace",
+      "cat": "ops",
+      "detail": "Saut vers le systeme verrouille seul."
+    },
+    "LandingGearToggle": {
+      "label": "Train d'atterrissage",
+      "cat": "ops",
+      "detail": "Sort ou rentre le train. Bascule pure : un inverseur maintenu se desynchronise des que le jeu rentre le train tout seul."
+    },
+    "ToggleCargoScoop": {
+      "label": "Collecteur de cargaison",
+      "cat": "ops",
+      "detail": "Ouvre ou ferme la trappe de collecte. Accepte le choix bascule / maintien : un inverseur physique maintenu reste donc synchrone."
+    },
+    "EjectAllCargo": {
+      "label": "Larguer la cargaison",
+      "cat": "ops",
+      "critical": true,
+      "detail": "Vide la soute. A placer loin de tout geste reflexe."
+    },
+    "RecallDismissShip": {
+      "label": "Rappeler / renvoyer le vaisseau",
+      "cat": "ops",
+      "detail": "Appelle le vaisseau ou le renvoie en orbite depuis le SRV ou a pied."
+    },
+    "OrbitLinesToggle": {
+      "label": "Lignes d'orbite",
+      "cat": "sys",
+      "detail": "Affiche ou masque les orbites sur la carte et en vol."
+    },
+    "MicrophoneMute": {
+      "label": "Micro",
+      "cat": "sys",
+      "detail": "Coupe le microphone."
+    },
+    "GalnetAudio_Play_Pause": {
+      "label": "Galnet : lecture / pause",
+      "cat": "sys",
+      "detail": "Lecteur audio Galnet."
+    },
+    "GalnetAudio_SkipForward": {
+      "label": "Galnet : suivant",
+      "cat": "sys",
+      "detail": "Lecteur audio Galnet."
+    },
+    "GalnetAudio_SkipBackward": {
+      "label": "Galnet : precedent",
+      "cat": "sys",
+      "detail": "Lecteur audio Galnet."
+    },
+    "GalnetAudio_ClearQueue": {
+      "label": "Galnet : vider la file",
+      "cat": "sys",
+      "detail": "Lecteur audio Galnet."
+    },
+    "ShipSpotLightToggle": {
+      "label": "Phares",
+      "cat": "sys",
+      "detail": "Projecteur du vaisseau. Bascule pure."
+    },
+    "UIFocus": {
+      "label": "Focus interface",
+      "cat": "sys",
+      "detail": "Maintenu ou bascule : redirige le manche vers les panneaux du cockpit au lieu du vaisseau. C'est ce qui permet de piloter toute l'interface sans lacher les manches."
+    },
+    "UIFocusMode": {
+      "label": "Mode du focus interface",
+      "cat": "sys",
+      "detail": "Reglage : focus maintenu ou bascule."
+    },
+    "FocusLeftPanel": {
+      "label": "Panneau gauche",
+      "cat": "sys",
+      "detail": "Navigation et contacts."
+    },
+    "FocusRightPanel": {
+      "label": "Panneau droit",
+      "cat": "sys",
+      "detail": "Modules, groupes de feu, cargaison."
+    },
+    "FocusCommsPanel": {
+      "label": "Panneau de communication",
+      "cat": "sys",
+      "detail": "Messages et canaux."
+    },
+    "FocusRadarPanel": {
+      "label": "Panneau du role",
+      "cat": "sys",
+      "detail": "Panneau inferieur : chasseur, equipage, scanner de sondes."
+    },
+    "QuickCommsPanel": {
+      "label": "Communication rapide",
+      "cat": "sys",
+      "detail": "Ouvre directement la saisie de message."
+    },
+    "UI_Up": {
+      "label": "Interface : haut",
+      "cat": "sys",
+      "detail": "Navigation dans les panneaux, sous focus interface."
+    },
+    "UI_Down": {
+      "label": "Interface : bas",
+      "cat": "sys",
+      "detail": "Navigation dans les panneaux."
+    },
+    "UI_Left": {
+      "label": "Interface : gauche",
+      "cat": "sys",
+      "detail": "Navigation dans les panneaux."
+    },
+    "UI_Right": {
+      "label": "Interface : droite",
+      "cat": "sys",
+      "detail": "Navigation dans les panneaux."
+    },
+    "UI_Select": {
+      "label": "Interface : valider",
+      "cat": "sys",
+      "detail": "Valide l'element selectionne."
+    },
+    "UI_Back": {
+      "label": "Interface : retour",
+      "cat": "sys",
+      "detail": "Revient en arriere."
+    },
+    "UI_Toggle": {
+      "label": "Interface : basculer",
+      "cat": "sys",
+      "detail": "Bascule l'element selectionne."
+    },
+    "CycleNextPanel": {
+      "label": "Onglet suivant",
+      "cat": "sys",
+      "detail": "Change d'onglet dans le panneau ouvert."
+    },
+    "CyclePreviousPanel": {
+      "label": "Onglet precedent",
+      "cat": "sys",
+      "detail": "Change d'onglet dans le panneau ouvert."
+    },
+    "CycleNextPage": {
+      "label": "Page suivante",
+      "cat": "sys",
+      "detail": "Change de page dans l'onglet ouvert."
+    },
+    "CyclePreviousPage": {
+      "label": "Page precedente",
+      "cat": "sys",
+      "detail": "Change de page dans l'onglet ouvert."
+    },
+    "GalaxyMapOpen": {
+      "label": "Carte galactique",
+      "cat": "sys",
+      "detail": "Ouvre la carte de la galaxie."
+    },
+    "GalaxyMapHome": {
+      "label": "Carte : retour au vaisseau",
+      "cat": "sys",
+      "detail": "Recentre la carte sur la position courante."
+    },
+    "SystemMapOpen": {
+      "label": "Carte du systeme",
+      "cat": "sys",
+      "detail": "Ouvre la carte du systeme courant."
+    },
+    "OpenCodexGoToDiscovery": {
+      "label": "Codex",
+      "cat": "sys",
+      "detail": "Ouvre le codex a la decouverte courante."
+    },
+    "OpenOrders": {
+      "label": "Ordres",
+      "cat": "sys",
+      "detail": "Ouvre le panneau des ordres."
+    },
+    "FriendsMenu": {
+      "label": "Amis",
+      "cat": "sys",
+      "detail": "Ouvre la liste d'amis."
+    },
+    "Pause": {
+      "label": "Pause",
+      "cat": "sys",
+      "detail": "Menu de pause."
+    },
+    "HeadLookToggle": {
+      "label": "Vue libre",
+      "cat": "sys",
+      "detail": "Active le regard libre dans le cockpit. Accepte bascule / maintien."
+    },
+    "HeadLookYawAxis": {
+      "label": "Vue libre : lacet (axe)",
+      "cat": "sys",
+      "detail": "Regard gauche/droite. Un mini-stick de pouce convient."
+    },
+    "HeadLookPitchAxisRaw": {
+      "label": "Vue libre : tangage (axe)",
+      "cat": "sys",
+      "detail": "Regard haut/bas."
+    },
+    "HeadLookReset": {
+      "label": "Recentrer la vue",
+      "cat": "sys",
+      "detail": "Ramene le regard dans l'axe."
+    },
+    "HeadLookYawLeft": {
+      "label": "Vue libre : gauche",
+      "cat": "sys",
+      "detail": "Version bouton."
+    },
+    "HeadLookYawRight": {
+      "label": "Vue libre : droite",
+      "cat": "sys",
+      "detail": "Version bouton."
+    },
+    "HeadLookPitchUp": {
+      "label": "Vue libre : haut",
+      "cat": "sys",
+      "detail": "Version bouton."
+    },
+    "HeadLookPitchDown": {
+      "label": "Vue libre : bas",
+      "cat": "sys",
+      "detail": "Version bouton."
+    },
+    "HMDReset": {
+      "label": "Recentrer le casque VR",
+      "cat": "sys",
+      "detail": "Recentre la vue en realite virtuelle."
+    },
+    "ExplorationFSSEnter": {
+      "label": "Entrer dans le FSS",
+      "cat": "sens",
+      "detail": "Ouvre le scanner plein spectre. Contexte exclusif : le vaisseau est fige, tous les boutons peuvent servir a autre chose."
+    },
+    "ExplorationFSSQuit": {
+      "label": "Quitter le FSS",
+      "cat": "sens",
+      "detail": "Referme le scanner."
+    },
+    "ExplorationFSSDiscoveryScan": {
+      "label": "Scan de decouverte",
+      "cat": "sens",
+      "detail": "Le 'honk' : revele les corps du systeme. Exige le mode analyse."
+    },
+    "ExplorationFSSRadioTuningX_Raw": {
+      "label": "Accord frequentiel (axe)",
+      "cat": "sens",
+      "detail": "Balaye la bande de frequences. Un axe analogique - molette ou levier - vaut bien mieux que deux boutons."
+    },
+    "ExplorationFSSRadioTuningAbsoluteX": {
+      "label": "Accord frequentiel absolu (axe)",
+      "cat": "sens",
+      "detail": "Version absolue : la position du controle fait foi."
+    },
+    "ExplorationFSSRadioTuningX_Increase": {
+      "label": "Accord frequentiel +",
+      "cat": "sens",
+      "detail": "Version bouton."
+    },
+    "ExplorationFSSRadioTuningX_Decrease": {
+      "label": "Accord frequentiel -",
+      "cat": "sens",
+      "detail": "Version bouton."
+    },
+    "ExplorationFSSCameraYaw": {
+      "label": "FSS : lacet (axe)",
+      "cat": "sens",
+      "detail": "Oriente la lunette du scanner."
+    },
+    "ExplorationFSSCameraPitch": {
+      "label": "FSS : tangage (axe)",
+      "cat": "sens",
+      "detail": "Oriente la lunette du scanner."
+    },
+    "ExplorationFSSZoomIn": {
+      "label": "FSS : zoom +",
+      "cat": "sens",
+      "detail": "Zoom de la lunette."
+    },
+    "ExplorationFSSZoomOut": {
+      "label": "FSS : zoom -",
+      "cat": "sens",
+      "detail": "Zoom de la lunette."
+    },
+    "ExplorationFSSMiniZoomIn": {
+      "label": "FSS : zoom mini-carte +",
+      "cat": "sens",
+      "detail": "Zoom de la vue d'ensemble."
+    },
+    "ExplorationFSSMiniZoomOut": {
+      "label": "FSS : zoom mini-carte -",
+      "cat": "sens",
+      "detail": "Zoom de la vue d'ensemble."
+    },
+    "ExplorationFSSTarget": {
+      "label": "FSS : verrouiller le corps",
+      "cat": "sens",
+      "detail": "Verrouille le corps resolu comme destination."
+    },
+    "ExplorationFSSShowHelp": {
+      "label": "FSS : aide",
+      "cat": "sens",
+      "detail": "Affiche l'aide du scanner."
+    },
+    "SAAThirdPersonYawAxisRaw": {
+      "label": "DSS : lacet (axe)",
+      "cat": "sens",
+      "detail": "Vise le largage des sondes de surface."
+    },
+    "SAAThirdPersonPitchAxisRaw": {
+      "label": "DSS : tangage (axe)",
+      "cat": "sens",
+      "detail": "Vise le largage des sondes de surface."
+    },
+    "SAAThirdPersonFovAxisRaw": {
+      "label": "DSS : champ de vision (axe)",
+      "cat": "sens",
+      "detail": "Zoom de la vue de largage."
+    },
+    "SAAThirdPersonFovInButton": {
+      "label": "DSS : zoom +",
+      "cat": "sens",
+      "detail": "Version bouton."
+    },
+    "SAAThirdPersonFovOutButton": {
+      "label": "DSS : zoom -",
+      "cat": "sens",
+      "detail": "Version bouton."
+    },
+    "ExplorationSAAExitThirdPerson": {
+      "label": "DSS : quitter",
+      "cat": "sens",
+      "detail": "Referme la vue de largage."
+    },
+    "ExplorationSAANextGenus": {
+      "label": "DSS : genre suivant",
+      "cat": "sens",
+      "detail": "Fait defiler les especes detectees a la surface."
+    },
+    "ExplorationSAAPreviousGenus": {
+      "label": "DSS : genre precedent",
+      "cat": "sens",
+      "detail": "Fait defiler les especes detectees."
+    },
+    "ExplorationSAAChangeScannedAreaViewToggle": {
+      "label": "DSS : vue des zones scannees",
+      "cat": "sens",
+      "detail": "Affiche la couverture des sondes."
+    },
+    "SteeringAxis": {
+      "label": "SRV : direction (axe)",
+      "cat": "sol",
+      "detail": "Volant du SRV."
+    },
+    "DriveSpeedAxis": {
+      "label": "SRV : vitesse (axe)",
+      "cat": "sol",
+      "detail": "Acceleration et freinage du SRV."
+    },
+    "BuggyRollAxisRaw": {
+      "label": "SRV : roulis (axe)",
+      "cat": "sol",
+      "detail": "Controle d'assiette en l'air."
+    },
+    "BuggyPitchAxis": {
+      "label": "SRV : tangage (axe)",
+      "cat": "sol",
+      "detail": "Controle d'assiette en l'air."
+    },
+    "AutoBreakBuggyButton": {
+      "label": "SRV : frein",
+      "cat": "sol",
+      "detail": "Frein du SRV. Accepte bascule / maintien."
+    },
+    "ToggleDriveAssist": {
+      "label": "SRV : assistance de conduite",
+      "cat": "sol",
+      "detail": "Assistance a la conduite. Accepte bascule / maintien."
+    },
+    "HeadlightsBuggyButton": {
+      "label": "SRV : phares",
+      "cat": "sol",
+      "detail": "Trois etats : eteint, croisement, plein phare."
+    },
+    "BuggyPrimaryFireButton": {
+      "label": "SRV : feu principal",
+      "cat": "sol",
+      "detail": "Tourelle du SRV."
+    },
+    "BuggySecondaryFireButton": {
+      "label": "SRV : feu secondaire",
+      "cat": "sol",
+      "detail": "Tourelle du SRV."
+    },
+    "ToggleBuggyTurretButton": {
+      "label": "SRV : tourelle",
+      "cat": "sol",
+      "detail": "Passe en vue tourelle."
+    },
+    "BuggyTurretYawAxisRaw": {
+      "label": "SRV : tourelle lacet (axe)",
+      "cat": "sol",
+      "detail": "Pointage de la tourelle."
+    },
+    "BuggyTurretPitchAxisRaw": {
+      "label": "SRV : tourelle tangage (axe)",
+      "cat": "sol",
+      "detail": "Pointage de la tourelle."
+    },
+    "ToggleCargoScoop_Buggy": {
+      "label": "SRV : collecteur",
+      "cat": "sol",
+      "detail": "Collecte des materiaux au sol."
+    },
+    "EjectAllCargo_Buggy": {
+      "label": "SRV : larguer la cargaison",
+      "cat": "sol",
+      "detail": "Vide la soute du SRV."
+    },
+    "IncreaseSystemsPower_Buggy": {
+      "label": "SRV : pip systemes",
+      "cat": "sol",
+      "detail": "Triangle d'energie du SRV."
+    },
+    "IncreaseEnginesPower_Buggy": {
+      "label": "SRV : pip moteurs",
+      "cat": "sol",
+      "detail": "Triangle d'energie du SRV."
+    },
+    "IncreaseWeaponsPower_Buggy": {
+      "label": "SRV : pip armes",
+      "cat": "sol",
+      "detail": "Triangle d'energie du SRV."
+    },
+    "ResetPowerDistribution_Buggy": {
+      "label": "SRV : equilibrer l'energie",
+      "cat": "sol",
+      "detail": "Triangle d'energie du SRV."
+    },
+    "SelectTarget_Buggy": {
+      "label": "SRV : cible devant",
+      "cat": "sol",
+      "detail": "Verrouille le contact vise."
+    },
+    "BuggyCycleFireGroupNext": {
+      "label": "SRV : groupe de feu suivant",
+      "cat": "sol",
+      "detail": "Groupes de feu du SRV."
+    },
+    "BuggyCycleFireGroupPrevious": {
+      "label": "SRV : groupe de feu precedent",
+      "cat": "sol",
+      "detail": "Groupes de feu du SRV."
+    },
+    "MultiCrewToggleMode": {
+      "label": "Equipage : changer de poste",
+      "cat": "eq",
+      "detail": "Passe entre pilote, tourelle et chasseur."
+    },
+    "MultiCrewPrimaryFire": {
+      "label": "Equipage : feu principal",
+      "cat": "eq",
+      "detail": "Tir depuis le poste occupe."
+    },
+    "MultiCrewSecondaryFire": {
+      "label": "Equipage : feu secondaire",
+      "cat": "eq",
+      "detail": "Tir depuis le poste occupe."
+    },
+    "MultiCrewPrimaryUtilityFire": {
+      "label": "Equipage : utilitaire 1",
+      "cat": "eq",
+      "detail": "Contre-mesures depuis le poste occupe."
+    },
+    "MultiCrewSecondaryUtilityFire": {
+      "label": "Equipage : utilitaire 2",
+      "cat": "eq",
+      "detail": "Contre-mesures depuis le poste occupe."
+    },
+    "MultiCrewThirdPersonYawAxisRaw": {
+      "label": "Equipage : tourelle lacet (axe)",
+      "cat": "eq",
+      "detail": "Pointage de la tourelle."
+    },
+    "MultiCrewThirdPersonPitchAxisRaw": {
+      "label": "Equipage : tourelle tangage (axe)",
+      "cat": "eq",
+      "detail": "Pointage de la tourelle."
+    },
+    "MultiCrewThirdPersonFovAxisRaw": {
+      "label": "Equipage : champ de vision (axe)",
+      "cat": "eq",
+      "detail": "Zoom de la vue tourelle."
+    },
+    "OrderFollow": {
+      "label": "Chasseur : me suivre",
+      "cat": "eq",
+      "detail": "Ordre au chasseur ou a l'equipier IA."
+    },
+    "OrderHoldPosition": {
+      "label": "Chasseur : tenir la position",
+      "cat": "eq",
+      "detail": "Ordre au chasseur."
+    },
+    "OrderFocusTarget": {
+      "label": "Chasseur : attaquer ma cible",
+      "cat": "eq",
+      "detail": "Ordre au chasseur."
+    },
+    "OrderHoldFire": {
+      "label": "Chasseur : cesser le feu",
+      "cat": "eq",
+      "detail": "Ordre au chasseur."
+    },
+    "OrderAggressiveBehaviour": {
+      "label": "Chasseur : comportement agressif",
+      "cat": "eq",
+      "detail": "Ordre au chasseur."
+    },
+    "OrderDefensiveBehaviour": {
+      "label": "Chasseur : comportement defensif",
+      "cat": "eq",
+      "detail": "Ordre au chasseur."
+    },
+    "OrderRequestDock": {
+      "label": "Chasseur : rentrer au bercail",
+      "cat": "eq",
+      "detail": "Rappelle le chasseur a bord."
+    }
+  }
+}
