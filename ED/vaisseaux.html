@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elite Dangerous — Les vaisseaux et leur rôle</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<style>
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;
+    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  .wrap{max-width:1180px;margin:0 auto;padding:40px 24px 80px}
+  a.back{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:16px}
+  a.back:hover{color:var(--amber)}
+  .tail{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:42px;letter-spacing:.04em;line-height:1.04;margin:10px 0 8px;text-transform:uppercase}
+  .sub{color:var(--dim);max-width:70ch;margin:0 0 26px}
+  p{color:var(--dim)}
+  code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:2px 6px;border:1px solid var(--line);color:var(--amber)}
+  h2{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:34px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+
+  /* ---- barre de filtres ---- */
+  .filters{position:sticky;top:0;z-index:5;background:var(--deck);padding:12px 0 14px;border-bottom:1px solid var(--line);margin-bottom:22px}
+  .frow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px}
+  .frow:last-child{margin-bottom:0}
+  .flabel{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#5f6d76;min-width:82px}
+  button.chip{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);
+    background:var(--panel);border:1px solid var(--line);padding:5px 11px;cursor:pointer;transition:all .12s}
+  button.chip:hover{border-color:var(--amber);color:var(--ink)}
+  button.chip[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:var(--deck);font-weight:600}
+  input[type=search]{font-family:var(--body);font-size:13px;background:var(--panel);border:1px solid var(--line);
+    color:var(--ink);padding:6px 10px;min-width:210px}
+  input[type=search]:focus{outline:none;border-color:var(--amber)}
+  .count{font-family:var(--mono);font-size:11px;color:var(--dim);margin-left:auto}
+
+  /* ---- cartes ---- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+  .ship{border:1px solid var(--line);background:var(--panel);padding:16px 18px 14px;display:flex;flex-direction:column}
+  .ship:hover{border-color:#41525e}
+  .snm{display:block;font-family:var(--display);font-size:20px;letter-spacing:.03em;text-transform:uppercase;line-height:1.1}
+  /* Constructeur a gauche, plateforme a droite, sur une ligne a part : un nom
+     long ne pousse jamais le badge et ne change donc pas la hauteur d'en-tete. */
+  .sline{display:flex;align-items:center;gap:10px;margin-top:3px}
+  .sman{font-size:11.5px;color:#5f6d76}
+  .spad{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);
+    border:1px solid var(--line);padding:1px 6px;margin-left:auto;white-space:nowrap;flex:none}
+  .sroles{display:flex;gap:5px;flex-wrap:wrap;margin:9px 0 8px}
+  .rl{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:2px 7px;
+    background:rgba(242,169,59,.12);border:1px solid rgba(242,169,59,.4);color:var(--amber)}
+  .sres{font-size:13.5px;color:var(--ink);margin:0 0 8px}
+  .snote{font-size:12.5px;color:var(--dim);margin:0 0 12px;padding-left:10px;border-left:2px solid var(--line)}
+  .stats{margin-top:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:6px 10px;border-top:1px solid var(--line);padding-top:10px}
+  .st{display:flex;flex-direction:column}
+  .stk{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#5f6d76}
+  .stv{font-family:var(--mono);font-size:13px;color:var(--ink)}
+  .price{font-family:var(--mono);font-size:12.5px;color:var(--go);margin-top:9px}
+
+  /* ---- tableau ---- */
+  .toggle{margin-left:8px}
+  table{border-collapse:collapse;width:100%;font-size:12.5px}
+  th,td{border:1px solid var(--line);padding:5px 8px;text-align:left;white-space:nowrap}
+  th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);font-weight:400;
+     position:sticky;top:0;background:var(--panel-2);cursor:pointer;user-select:none}
+  th:hover{color:var(--amber)}
+  td.num{font-family:var(--mono);text-align:right;color:var(--dim)}
+  td.nm{font-weight:600}
+  tbody tr:hover{background:var(--panel)}
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);max-height:70vh;overflow-y:auto}
+  .hidden{display:none}
+  .empty{color:var(--dim);padding:30px 0;font-style:italic}
+  ul{color:var(--dim)} li{margin:6px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">&larr; Elite Dangerous</a>
+  <div class="tail">Elite Dangerous · Hangar</div>
+  <h1>Les vaisseaux<br>et leur rôle</h1>
+  <p class="sub">Les 47 vaisseaux pilotables, avec ce que leur coque permet réellement de faire.
+  Les chiffres viennent de la base de données <b>Coriolis</b> (EDCD) — la même que le configurateur en ligne — et ne sont jamais saisis à la main.
+  Les rôles et les commentaires sont écrits pour ce site : ils décrivent l'identité de la <em>coque</em>, pas un équipement particulier.</p>
+
+  <div class="filters">
+    <div class="frow">
+      <span class="flabel">Rôle</span>
+      <span id="roleChips"></span>
+    </div>
+    <div class="frow">
+      <span class="flabel">Plateforme</span>
+      <button class="chip" data-size="1" aria-pressed="false">Petite</button>
+      <button class="chip" data-size="2" aria-pressed="false">Moyenne</button>
+      <button class="chip" data-size="3" aria-pressed="false">Grande</button>
+      <span class="flabel" style="margin-left:14px">Budget</span>
+      <button class="chip" data-max="1000000" aria-pressed="false">&lt; 1 M</button>
+      <button class="chip" data-max="10000000" aria-pressed="false">&lt; 10 M</button>
+      <button class="chip" data-max="50000000" aria-pressed="false">&lt; 50 M</button>
+      <button class="chip" data-max="1000000000" aria-pressed="false">Tout</button>
+    </div>
+    <div class="frow">
+      <input type="search" id="q" placeholder="Chercher un vaisseau, un constructeur…" autocomplete="off">
+      <button class="chip toggle" id="viewToggle" aria-pressed="false">Vue tableau</button>
+      <button class="chip" id="reset">Réinitialiser</button>
+      <span class="count" id="count"></span>
+    </div>
+  </div>
+
+  <div id="cards" class="grid"></div>
+
+  <div id="table" class="tablewrap hidden">
+    <table>
+      <thead><tr>
+        <th data-sort="nom">Vaisseau</th>
+        <th data-sort="constructeur">Constructeur</th>
+        <th data-sort="taille">Pl.</th>
+        <th data-sort="prixCoque">Prix coque</th>
+        <th data-sort="vitesse">Vitesse</th>
+        <th data-sort="boost">Boost</th>
+        <th data-sort="blindage">Blindage</th>
+        <th data-sort="bouclier">Bouclier</th>
+        <th data-sort="tangage">Tangage</th>
+        <th data-sort="souteMax">Soute max</th>
+        <th data-sort="poidsArmement">Armement</th>
+        <th data-sort="equipage">Équip.</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <p id="empty" class="empty hidden">Aucun vaisseau ne correspond à ces filtres.</p>
+
+  <h2>Comment lire ces chiffres</h2>
+  <ul>
+    <li><b>Plateforme</b> — la taille d'aire d'atterrissage exigée. Un vaisseau de grande plateforme ne peut pas se poser sur un avant-poste : c'est la contrainte la plus sous-estimée quand on achète gros.</li>
+    <li><b>Soute max</b> — capacité théorique si l'on remplissait <em>tous</em> les emplacements optionnels de cales. En pratique il faut y loger le bouclier, le collecteur de carburant et les réservoirs, donc le chiffre réel est plus bas. Il reste la bonne mesure pour comparer deux coques.</li>
+    <li><b>Armement</b> — somme des classes de points durs. Deux points durs de classe 3 (poids 6) frappent plus fort que quatre de classe 1 (poids 4), à énergie égale.</li>
+    <li><b>Tangage</b> — degrés par seconde. C'est l'axe qui décide d'un combat tournoyant : sous 25, le vaisseau ne suit personne.</li>
+    <li><b>Emplacements militaires</b> — réservés au blindage et aux cellules de bouclier. Leur simple présence signe un vaisseau de combat.</li>
+  </ul>
+
+  <h2>Minage, passagers, exploration : la coque ne fait pas tout</h2>
+  <p>Trois métiers dépendent surtout de l'équipement, pas du châssis. Le <b>minage</b> demande des laveurs, une raffinerie et des drones — n'importe quelle grande soute avec de gros emplacements optionnels fait l'affaire.
+  Le <b>transport de passagers</b> demande des cabines : les Saud Kruger sont conçus pour, mais un Python en emporte aussi.
+  L'<b>exploration</b> se joue sur le rayon de saut, donc sur la masse à vide et le propulseur à distorsion, pas sur la coque seule.
+  Les rôles ci-dessus signalent les coques qui <em>facilitent</em> ces métiers, pas les seules qui les permettent.</p>
+
+  <h2>Vérifier et refaire</h2>
+  <p>Régénérer les caractéristiques depuis la base Coriolis :</p>
+  <p><code>python3 tools/build-ed-ships.py</code></p>
+  <p>Le fichier <code>ED/data/ed-ships-fr.json</code> (rôles, résumés, notes) est écrit à la main et n'est jamais touché par le script.
+  Pour construire un équipement complet, utiliser <a href="https://coriolis.io/" style="color:var(--amber)">Coriolis</a> ou <a href="https://edsy.org/" style="color:var(--amber)">EDSY</a> — voir <a href="ressources.html" style="color:var(--amber)">les ressources</a>.</p>
+</div>
+
+<script>
+const state = { roles:new Set(), sizes:new Set(), max:1e9, q:'', view:'cards', sort:'prixCoque', dir:1 };
+let SHIPS = [], ROLES = {};
+
+const fmt = n => n.toLocaleString('fr-FR');
+const price = n => n >= 1e6 ? (n/1e6).toFixed(n >= 1e8 ? 0 : 1).replace('.',',') + ' M cr' : fmt(n) + ' cr';
+
+function match(s){
+  if (state.sizes.size && !state.sizes.has(s.taille)) return false;
+  if (s.prixCoque > state.max) return false;
+  if (state.roles.size && !s.roles.some(r => state.roles.has(r))) return false;
+  if (state.q){
+    const hay = (s.nom + ' ' + s.constructeur + ' ' + s.resume + ' ' + (s.note||'') + ' ' +
+                 s.roles.map(r => ROLES[r] ? ROLES[r].label : r).join(' ')).toLowerCase();
+    if (!hay.includes(state.q)) return false;
+  }
+  return true;
+}
+
+function render(){
+  const rows = SHIPS.filter(match);
+  document.getElementById('count').textContent =
+    rows.length + ' / ' + SHIPS.length + ' vaisseau' + (SHIPS.length > 1 ? 'x' : '');
+  document.getElementById('empty').classList.toggle('hidden', rows.length > 0);
+
+  const cards = document.getElementById('cards'), table = document.getElementById('table');
+  cards.classList.toggle('hidden', state.view !== 'cards');
+  table.classList.toggle('hidden', state.view !== 'table');
+
+  if (state.view === 'cards'){
+    cards.innerHTML = rows.map(s => `
+      <article class="ship">
+        <span class="snm">${s.nom}</span>
+        <div class="sline">
+          <span class="sman">${s.constructeur}</span>
+          <span class="spad">plateforme ${s.plateforme}</span>
+        </div>
+        <div class="sroles">${s.roles.map(r =>
+          `<span class="rl">${ROLES[r] ? ROLES[r].label : r}</span>`).join('')}</div>
+        <p class="sres">${s.resume}</p>
+        ${s.note ? `<p class="snote">${s.note}</p>` : ''}
+        <div class="stats">
+          <div class="st"><span class="stk">Vitesse</span><span class="stv">${s.vitesse}</span></div>
+          <div class="st"><span class="stk">Blindage</span><span class="stv">${s.blindage}</span></div>
+          <div class="st"><span class="stk">Bouclier</span><span class="stv">${s.bouclier}</span></div>
+          <div class="st"><span class="stk">Tangage</span><span class="stv">${s.tangage}</span></div>
+          <div class="st"><span class="stk">Soute max</span><span class="stv">${s.souteMax}</span></div>
+          <div class="st"><span class="stk">Armement</span><span class="stv">${s.poidsArmement}</span></div>
+          <div class="st"><span class="stk">Points durs</span><span class="stv">${s.nbPointsDurs}</span></div>
+          <div class="st"><span class="stk">Équipage</span><span class="stv">${s.equipage}</span></div>
+        </div>
+        <div class="price">${price(s.prixCoque)}</div>
+      </article>`).join('');
+  } else {
+    const k = state.sort, d = state.dir;
+    const sorted = rows.slice().sort((a,b) => {
+      const x = a[k], y = b[k];
+      return (typeof x === 'string' ? x.localeCompare(y) : x - y) * d;
+    });
+    document.getElementById('tbody').innerHTML = sorted.map(s => `
+      <tr>
+        <td class="nm">${s.nom}</td>
+        <td>${s.constructeur}</td>
+        <td class="num">${s.taille}</td>
+        <td class="num">${fmt(s.prixCoque)}</td>
+        <td class="num">${s.vitesse}</td>
+        <td class="num">${s.boost}</td>
+        <td class="num">${s.blindage}</td>
+        <td class="num">${s.bouclier}</td>
+        <td class="num">${s.tangage}</td>
+        <td class="num">${s.souteMax}</td>
+        <td class="num">${s.poidsArmement}</td>
+        <td class="num">${s.equipage}</td>
+      </tr>`).join('');
+  }
+}
+
+function bindChips(){
+  document.querySelectorAll('button.chip[data-size]').forEach(b => b.onclick = () => {
+    const v = +b.dataset.size, on = b.getAttribute('aria-pressed') === 'true';
+    b.setAttribute('aria-pressed', String(!on));
+    on ? state.sizes.delete(v) : state.sizes.add(v);
+    render();
+  });
+  document.querySelectorAll('button.chip[data-max]').forEach(b => b.onclick = () => {
+    document.querySelectorAll('button.chip[data-max]').forEach(o => o.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true');
+    state.max = +b.dataset.max;
+    render();
+  });
+  document.getElementById('q').oninput = e => { state.q = e.target.value.trim().toLowerCase(); render(); };
+  document.getElementById('viewToggle').onclick = e => {
+    state.view = state.view === 'cards' ? 'table' : 'cards';
+    e.target.setAttribute('aria-pressed', String(state.view === 'table'));
+    e.target.textContent = state.view === 'cards' ? 'Vue tableau' : 'Vue cartes';
+    render();
+  };
+  document.getElementById('reset').onclick = () => {
+    state.roles.clear(); state.sizes.clear(); state.max = 1e9; state.q = '';
+    document.querySelectorAll('button.chip[data-size],button.chip[data-role]')
+      .forEach(b => b.setAttribute('aria-pressed','false'));
+    document.querySelectorAll('button.chip[data-max]').forEach(b => b.setAttribute('aria-pressed','false'));
+    document.getElementById('q').value = '';
+    render();
+  };
+  document.querySelectorAll('th[data-sort]').forEach(th => th.onclick = () => {
+    const k = th.dataset.sort;
+    state.dir = (state.sort === k) ? -state.dir : 1;
+    state.sort = k;
+    render();
+  });
+}
+
+Promise.all([
+  fetch('data/ed-ships.json').then(r => r.json()),
+  fetch('data/ed-ships-fr.json').then(r => r.json())
+]).then(([cat, fr]) => {
+  ROLES = fr.roles;
+  SHIPS = Object.keys(cat.ships).map(id => {
+    const f = fr.ships[id] || { roles:[], resume:'' };
+    return Object.assign({}, cat.ships[id], { roles:f.roles, resume:f.resume, note:f.note });
+  });
+
+  document.getElementById('roleChips').innerHTML = Object.keys(ROLES).map(r =>
+    `<button class="chip" data-role="${r}" aria-pressed="false" title="${ROLES[r].detail}">${ROLES[r].label}</button>`
+  ).join(' ');
+  document.querySelectorAll('button.chip[data-role]').forEach(b => b.onclick = () => {
+    const v = b.dataset.role, on = b.getAttribute('aria-pressed') === 'true';
+    b.setAttribute('aria-pressed', String(!on));
+    on ? state.roles.delete(v) : state.roles.add(v);
+    render();
+  });
+
+  bindChips();
+  render();
+}).catch(e => {
+  document.getElementById('cards').innerHTML =
+    '<p class="empty">Impossible de charger <code>data/ed-ships.json</code>. ' +
+    'Lancer <code>python3 tools/build-ed-ships.py</code> pour le régénérer.</p>';
+  console.error(e);
+});
+</script>
+<script src="../js/site-search.js"></script>
+</body>
+</html>
