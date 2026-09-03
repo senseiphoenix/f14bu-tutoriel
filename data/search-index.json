@@ -1776,8 +1776,20 @@
   "type": "page"
  },
  {
+  "title": "Elite Dangerous — Les vaisseaux et leur rôle",
+  "path": "ED/vaisseaux.html",
+  "aircraft": "Elite Dangerous",
+  "type": "page"
+ },
+ {
   "title": "Elite Dangerous — Pilotage et mapping HOSAS",
   "path": "ED/index.html",
+  "aircraft": "Elite Dangerous",
+  "type": "page"
+ },
+ {
+  "title": "Elite Dangerous — Ressources et sources",
+  "path": "ED/ressources.html",
   "aircraft": "Elite Dangerous",
   "type": "page"
  },

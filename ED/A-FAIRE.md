@@ -1,11 +1,13 @@
 # Elite Dangerous — état et suite du travail
 
-Dernière mise à jour : 1er septembre 2026.
+Dernière mise à jour : 3 septembre 2026.
 
 Objectif du dossier : le mapping complet du rig pour Elite Dangerous — deux
 Virpil Alpha Prime en HOSAS (le gauche monté sur coude), throttle
-MongoosT-50CM3, panneau WinWing PTO2 — et un cursus de pilotage en sept
-sections, sur le modèle des tutoriels DCS du dépôt.
+MongoosT-50CM3, panneau WinWing PTO2 — et **un tutoriel par métier**, parce
+qu'Elite ne se joue pas de la même façon selon qu'on mine, qu'on explore ou
+qu'on chasse la prime. Le découpage par activité remplace le cursus générique
+en sept sections des tutoriels DCS : ici, c'est le métier qui structure.
 
 La conception du mapping est dans
 [CONCEPTION-MAPPING.md](CONCEPTION-MAPPING.md) : mécanique de contextes propre
@@ -36,8 +38,20 @@ périphérique, et les six décisions à trancher.
   inventé.
 - **Conception du mapping** — proposition complète, sources citées, six
   décisions posées.
-- **Accueil et sommaire.** Catégorie sur la page d'accueil du site, et cette
-  page `ED/index.html` avec les planches et le cursus prévus.
+- **Accueil et sommaire.** Elite Dangerous partage la rangée « Simulation
+  spatiale » de la page d'accueil avec Star Citizen ; `ED/index.html` liste les
+  pages livrées, les planches à venir et les dix tutoriels par métier.
+- **Page vaisseaux** — `ED/vaisseaux.html` : les 47 coques pilotables, avec
+  rôle, résumé et note, filtrables par métier, taille de plateforme et budget,
+  plus une vue tableau triable sur douze colonnes. Les caractéristiques sont
+  dérivées de la base **Coriolis** (`EDCD/coriolis-data`) par
+  `tools/build-ed-ships.py` — aucun chiffre n'est saisi à la main. Les rôles et
+  les textes vivent dans `ED/data/ed-ships-fr.json`, écrit à la main.
+- **Page ressources** — `ED/ressources.html` : outils du quotidien (Inara,
+  EDSM, Spansh, Coriolis), applications à installer (EDMC, EDDiscovery, EDDI,
+  EDDN), documentation officielle, **communauté francophone** (Remlok
+  Industries, Deep Space Network, Mille-Sabords, ComTAC) et chaînes vidéo.
+  Sélection établie le 3 septembre 2026.
 
 ## À faire, dans l'ordre
 
@@ -103,24 +117,56 @@ c'est le contexte qui multiplie le mapping ici. En pastille
 `position:absolute`, pour ne jamais changer la hauteur d'une boîte
 d'étiquette.
 
-### 5. Cursus de pilotage — sept sections
+### 5. Les tutoriels, un par métier
 
 Progression en `localStorage` comme les tutoriels DCS, moteur partagé
-`css/tutoriel.css` + `js/tutoriel.js`.
+`css/tutoriel.css` + `js/tutoriel.js`. Trois fondamentaux communs, puis un
+module par activité — le sommaire de `ED/index.html` fait déjà foi.
 
-| | Section | Contenu prévu |
+**Fondamentaux** — servent dans tous les métiers :
+
+| | Module | Contenu prévu |
 | --- | --- | --- |
-| A | Prise en main | Le rig et les six axes, la manette des gaz et **la zone bleue**, assistance de vol et son maintien sur la palette, le focus interface et les quatre panneaux |
+| A | Prise en main | Le rig et les six axes, la manette des gaz et **la zone bleue**, assistance de vol maintenue sur la palette, focus interface et les quatre panneaux |
 | B | Naviguer | Carte galactique et tracé de route, supercroisière, saut hyperespace, ravitaillement stellaire, décélération et approche orbitale |
 | C | Se poser et s'amarrer | Demande d'amarrage, train, verrouillage de rotation, pad, amarrage automatique, atterrissage planétaire |
-| D | Combattre | Points durs et groupes de feu, **triangle d'énergie**, ciblage et sous-systèmes, armes fixes et gimbal, leurres, dissipateur, cellule de bouclier, silence radio |
-| E | Explorer | Mode analyse, scan de découverte, **FSS** et accord fréquentiel, **DSS** et largage de sondes, cartographie et valeur des corps |
-| F | Au sol | SRV : conduite, tourelle, collecte ; à pied (Odyssey) : combinaisons, outils, avant-postes |
-| G | Métiers et équipage | Minage, commerce et cargaison, multi-équipage, tourelles, ordres au chasseur |
+
+**Les métiers** :
+
+| | Module | Contenu prévu |
+| --- | --- | --- |
+| 1 | Commerce et fret | Lire les cours sur Inara, monter une boucle rentable, contrebande et marché noir, objectifs communautaires |
+| 2 | Chasse à la prime | Zones de résurgence, scan de délit, **triangle d'énergie**, sous-systèmes, armes fixes et gimbal, leurres et dissipateur, savoir rompre |
+| 3 | Exploration | Mode analyse, scan de découverte, **FSS** et accord fréquentiel, **DSS** et largage de sondes, valeur des corps, frôlement d'étoile |
+| 4 | Minage | Choisir un anneau et lire les points chauds, laveur et raffinerie, drones prospecteurs et collecteurs, minage au noyau à l'explosif |
+| 5 | Transport de passagers | Cabines et classes, exigences des VIP, missions de tourisme, gestion de la chaleur et discrétion |
+| 6 | Récupération et sauvetage | Épaves et sources de signal, collecte de matériaux, secours aux stations en feu |
+| 7 | Exobiologie | Repérer une planète vivante depuis le FSS, échantillonner à pied à la bonne distance, valoriser les découvertes |
+
+**Aller plus loin** :
+
+| | Module | Contenu prévu |
+| --- | --- | --- |
+| 8 | Au sol : SRV et à pied | Conduite et tourelle du SRV, collecte au sol ; à pied (Odyssey) : combinaisons, outils, avant-postes |
+| 9 | Ingénierie | Débloquer les ingénieurs, récolter les matériaux, choisir ses modifications, effets expérimentaux |
+| 10 | Équipage et pouvoirs | Multi-équipage, escadrilles, chasseurs télépilotés, Powerplay, colonisation |
 
 Chaque leçon renvoie vers la planche de mapping par un badge cliquable, comme
 sur les pages DCS : les numéros de bouton ne sont jamais écrits en dur dans le
-texte.
+texte. Chaque métier renvoie aussi vers les coques adaptées de
+[`vaisseaux.html`](vaisseaux.html), par le filtre de rôle correspondant.
+
+**Sur les sources.** Les gestes se rédigent d'après les guides et les vidéos
+listés dans [`ressources.html`](ressources.html) ; tout chiffre daté — prix
+d'une marchandise, meilleur point d'extraction, rendement horaire — reste hors
+du texte et renvoie vers Inara ou Spansh. Un guide de minage de 2021 est
+excellent sur la méthode et faux sur les prix.
+
+> Note de méthode : la sélection de ressources a été établie par recherche web
+> depuis cette session, mais le proxy réseau de l'environnement bloque la
+> plupart de ces domaines — le contenu des pages n'a donc pas pu être relu
+> directement. Les liens sont à revalider une fois, à la main, avant d'appuyer
+> une leçon dessus.
 
 ### 6. Export installable — `ED/export-bindings.html`
 

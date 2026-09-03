@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elite Dangerous — Ressources et sources</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/theme.css">
+<style>
+  :root{--deck:#10161a;--panel:#18222a;--panel-2:#1e2a33;--line:#2c3b45;--ink:#e6e9e4;--dim:#8b9aa3;--amber:#f2a93b;--go:#6fd08c;
+    --display:"Oswald",sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--deck);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6}
+  .wrap{max-width:1000px;margin:0 auto;padding:40px 24px 80px}
+  a.back{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--dim);text-decoration:none;margin-bottom:16px}
+  a.back:hover{color:var(--amber)}
+  .tail{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase}
+  h1{font-family:var(--display);font-weight:600;font-size:42px;letter-spacing:.04em;line-height:1.04;margin:10px 0 8px;text-transform:uppercase}
+  .sub{color:var(--dim);max-width:68ch;margin:0 0 30px}
+  p{color:var(--dim)}
+  code{font-family:var(--mono);font-size:.92em;background:var(--panel-2);padding:2px 6px;border:1px solid var(--line);color:var(--amber)}
+  h2{font-family:var(--display);font-size:22px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink);
+     margin:38px 0 6px}
+  h2 .h2sub{display:block;font-family:var(--body);font-size:13.5px;letter-spacing:0;text-transform:none;color:var(--dim);margin-top:4px;font-weight:400}
+
+  .items{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-top:16px}
+  a.item{display:block;border:1px solid var(--line);background:var(--panel);padding:14px 16px;text-decoration:none;
+    color:var(--ink);transition:border-color .12s}
+  a.item:hover{border-color:var(--amber)}
+  .inm{font-family:var(--display);font-size:16px;letter-spacing:.03em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+  .lang{font-family:var(--mono);font-size:9px;letter-spacing:.1em;padding:1px 5px;border:1px solid var(--line);color:var(--dim);flex:none}
+  .lang.fr{border-color:rgba(111,208,140,.5);color:var(--go)}
+  .iurl{font-family:var(--mono);font-size:10.5px;color:#5f6d76;margin:3px 0 7px;word-break:break-all}
+  .ids{font-size:13px;color:var(--dim);margin:0}
+  .items.tight a.item{padding:11px 14px}
+
+  table{border-collapse:collapse;width:100%;font-size:13.5px;margin:14px 0}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+  th{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);font-weight:400}
+  td.mono{font-family:var(--mono);font-size:11.5px;color:var(--dim);white-space:nowrap}
+  .callout{border:1px solid var(--line);border-left:3px solid var(--amber);background:rgba(242,169,59,.05);padding:14px 18px;margin:22px 0}
+  .callout p{color:var(--ink);margin:0}
+  .callout p + p{margin-top:9px}
+  ul{color:var(--dim)} li{margin:7px 0}
+  a{color:var(--amber)}
+  .hr{border-top:1px solid var(--line);margin:34px 0 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">&larr; Elite Dangerous</a>
+  <div class="tail">Elite Dangerous · Ressources</div>
+  <h1>Où chercher<br>quand on bloque</h1>
+  <p class="sub">Elite Dangerous documente très peu ses propres systèmes : l'essentiel du savoir vit dans des outils
+  communautaires et des guides écrits par des joueurs. Cette page rassemble les sources sur lesquelles s'appuient les
+  pages de ce dossier, classées par usage plutôt que par popularité.</p>
+
+  <div class="callout">
+    <p><b>Sélection établie le 3 septembre 2026.</b> Les outils communautaires d'Elite vont et viennent — EDDB, longtemps
+    incontournable, a fermé. Si un lien ne répond plus, la page <a href="https://edcd.github.io/">EDCD</a> et le Discord
+    Remlok restent les deux meilleurs points de départ pour retrouver l'outil qui l'a remplacé.</p>
+  </div>
+
+  <h2>Les quatre outils du quotidien
+    <span class="h2sub">Ceux qu'un pilote garde ouverts sur un deuxième écran. Si l'on n'en installe que quelques-uns, ce sont ceux-là.</span></h2>
+  <div class="items">
+    <a class="item" href="https://inara.cz/">
+      <span class="inm">Inara <span class="lang">EN</span></span>
+      <div class="iurl">inara.cz</div>
+      <p class="ids">La base de données la plus complète : cours des marchandises, stations, inventaires d'équipement,
+      objectifs communautaires, ingénieurs, GalNet. C'est là qu'on cherche « où acheter tel module ».</p>
+    </a>
+    <a class="item" href="https://www.edsm.net/">
+      <span class="inm">EDSM <span class="lang">EN</span></span>
+      <div class="iurl">edsm.net</div>
+      <p class="ids">Elite Dangerous Star Map : la cartographie de la galaxie, les corps de chaque système, et le carnet
+      de bord de vos propres voyages. L'API que la plupart des autres outils interrogent.</p>
+    </a>
+    <a class="item" href="https://spansh.co.uk/">
+      <span class="inm">Spansh <span class="lang">EN</span></span>
+      <div class="iurl">spansh.co.uk</div>
+      <p class="ids">Le planificateur de routes. Autoroute à étoiles à neutrons, boucles de fret rentables, tournées
+      d'exploration, recherche de corps. Indispensable dès qu'on veut traverser la galaxie.</p>
+    </a>
+    <a class="item" href="https://coriolis.io/">
+      <span class="inm">Coriolis <span class="lang">EN</span></span>
+      <div class="iurl">coriolis.io</div>
+      <p class="ids">Le configurateur de vaisseau : on monte son équipement hors du jeu, on voit le rayon de saut et
+      les résistances avant de dépenser. <b>C'est la base de données de Coriolis qui alimente notre page vaisseaux.</b></p>
+    </a>
+  </div>
+
+  <h2>Configurer, planifier, calculer
+    <span class="h2sub">Le second cercle : très utile dès qu'on se spécialise.</span></h2>
+  <div class="items tight">
+    <a class="item" href="https://edsy.org/">
+      <span class="inm">EDSY <span class="lang">EN</span></span>
+      <div class="iurl">edsy.org</div>
+      <p class="ids">Configurateur alternatif à Coriolis, réputé plus fidèle sur la gestion thermique et les
+      modifications d'ingénieur.</p>
+    </a>
+    <a class="item" href="https://edcd.github.io/">
+      <span class="inm">EDCD <span class="lang">EN</span></span>
+      <div class="iurl">edcd.github.io</div>
+      <p class="ids">Elite Dangerous Community Developers : le collectif qui maintient les formats de fichiers, les
+      identifiants du jeu et les bases de données publiques. La source technique de référence.</p>
+    </a>
+    <a class="item" href="https://github.com/EDCD/coriolis-data">
+      <span class="inm">coriolis-data <span class="lang">EN</span></span>
+      <div class="iurl">github.com/EDCD/coriolis-data</div>
+      <p class="ids">Les caractéristiques de coque de tous les vaisseaux, en JSON. C'est la source directe de
+      <code>ED/data/ed-ships.json</code> dans ce dépôt.</p>
+    </a>
+    <a class="item" href="https://github.com/EDCD/EliteCustomButtonNames">
+      <span class="inm">EliteCustomButtonNames <span class="lang">EN</span></span>
+      <div class="iurl">github.com/EDCD/EliteCustomButtonNames</div>
+      <p class="ids">Comment le jeu nomme les périphériques et leurs boutons. La source qui a servi à comprendre le
+      format <code>.binds</code> et le piège des deux manches identiques.</p>
+    </a>
+  </div>
+
+  <h2>Les applications à installer
+    <span class="h2sub">Elles lisent le journal du jeu et alimentent tout l'écosystème.</span></h2>
+  <table>
+    <thead><tr><th>Outil</th><th>Ce qu'il fait</th></tr></thead>
+    <tbody>
+      <tr><td class="mono"><a href="https://github.com/EDCD/EDMarketConnector">EDMC</a></td>
+          <td>Elite Dangerous Market Connector. Le plus léger : il lit le journal et publie les cours et les découvertes vers EDDN, ce qui met à jour Inara et EDSM automatiquement. À installer en premier.</td></tr>
+      <tr><td class="mono"><a href="https://github.com/EDDiscovery/EDDiscovery">EDDiscovery</a></td>
+          <td>Carnet de bord complet : historique de vol, statistiques, cartes 3D, intégration Inara / EDSM / Coriolis. Plus lourd, plus riche.</td></tr>
+      <tr><td class="mono"><a href="https://github.com/EDCD/EDDI">EDDI</a></td>
+          <td>Assistant vocal : il commente ce qui se passe et répond aux ordres vocaux. Se marie bien avec un rig HOTAS où toutes les touches sont déjà prises.</td></tr>
+      <tr><td class="mono"><a href="https://eddn.edcd.io/">EDDN</a></td>
+          <td>Le réseau qui relie tout : les applications y publient, les sites web y puisent. On ne l'installe pas, on le nourrit.</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Documentation officielle et encyclopédies
+    <span class="h2sub">Pour vérifier un fait plutôt que pour apprendre un geste.</span></h2>
+  <div class="items tight">
+    <a class="item" href="https://www.elitedangerous.com/fr-FR/">
+      <span class="inm">Site officiel Frontier <span class="lang fr">FR</span></span>
+      <div class="iurl">elitedangerous.com/fr-FR</div>
+      <p class="ids">Fiches officielles des vaisseaux, notes de mise à jour, chronologie des extensions. La seule source
+      qui fasse autorité sur ce que le jeu contient aujourd'hui.</p>
+    </a>
+    <a class="item" href="https://elite-dangerous.fandom.com/fr/wiki/">
+      <span class="inm">Wiki Elite: Dangerous <span class="lang fr">FR</span></span>
+      <div class="iurl">elite-dangerous.fandom.com/fr</div>
+      <p class="ids">L'encyclopédie communautaire, partiellement traduite en français. Utile pour le contexte, la
+      chronologie et les fiches de vaisseaux ; à recouper quand il s'agit de chiffres.</p>
+    </a>
+    <a class="item" href="https://forums.frontier.co.uk/forums/elite-dangerous.24/">
+      <span class="inm">Forums Frontier <span class="lang">EN</span></span>
+      <div class="iurl">forums.frontier.co.uk</div>
+      <p class="ids">Là où se règlent les questions techniques pointues — pilotes qui ne se voient pas, binds qui
+      disparaissent, comportements non documentés. La recherche y est plus rentable que Google.</p>
+    </a>
+  </div>
+
+  <h2>La communauté francophone
+    <span class="h2sub">Elite est un jeu où l'on progresse plus vite en parlant à quelqu'un qu'en lisant un guide.</span></h2>
+  <div class="items tight">
+    <a class="item" href="http://remlok-industries.fr/">
+      <span class="inm">Remlok Industries <span class="lang fr">FR</span></span>
+      <div class="iurl">remlok-industries.fr</div>
+      <p class="ids">Le site de référence en français : guides détaillés (minage, pilote avancé, outils), actualité,
+      et un Discord francophone très actif. Le premier endroit où chercher un guide en français.</p>
+    </a>
+    <a class="item" href="https://ed-dsn.net/">
+      <span class="inm">Deep Space Network <span class="lang fr">FR</span></span>
+      <div class="iurl">ed-dsn.net</div>
+      <p class="ids">Communauté d'explorateurs francophones : expéditions, entraide, apprentissage du métier
+      d'explorateur. Neutre et sans hiérarchie, ouverte aux débutants.</p>
+    </a>
+    <a class="item" href="https://www.mille-sabords.com/forum/index.php?showforum=330">
+      <span class="inm">Mille-Sabords <span class="lang fr">FR</span></span>
+      <div class="iurl">mille-sabords.com — forum Elite Dangerous</div>
+      <p class="ids">Forum francophone de longue date, avec un fil « Débuter sur Elite Dangerous » qui classe articles
+      et vidéos par thème.</p>
+    </a>
+    <a class="item" href="http://remlok-industries.fr/comtac-commandement-tactique-francophone/">
+      <span class="inm">ComTAC <span class="lang fr">FR</span></span>
+      <div class="iurl">Commandement Tactique Francophone</div>
+      <p class="ids">Événements et opérations coordonnées entre communautés francophones : la porte d'entrée si l'on
+      veut jouer à plusieurs plutôt qu'en solo.</p>
+    </a>
+  </div>
+
+  <h2>En vidéo
+    <span class="h2sub">Pour les gestes — amarrage, scan FSS, largage de sondes — la vidéo bat le texte.</span></h2>
+  <div class="items tight">
+    <a class="item" href="https://www.youtube.com/channel/UC0Rwxz4318EEQGHz_z58nVA">
+      <span class="inm">EDTutorials by Exigeous <span class="lang">EN</span></span>
+      <div class="iurl">youtube.com — EDTutorials</div>
+      <p class="ids">Tutoriels courts et directs, orientés nouveaux pilotes et systèmes précis. La chaîne la plus
+      régulièrement citée comme première recommandation.</p>
+    </a>
+    <a class="item" href="https://www.youtube.com/@DowntoEarthAstronomy">
+      <span class="inm">Down to Earth Astronomy <span class="lang">EN</span></span>
+      <div class="iurl">youtube.com — Down to Earth Astronomy</div>
+      <p class="ids">Huit ans de tutoriels, dont beaucoup restent valables. La référence historique sur l'exploration
+      et les mécaniques de fond.</p>
+    </a>
+    <a class="item" href="https://www.youtube.com/@HawkesGaming">
+      <span class="inm">Hawkes Gaming <span class="lang">EN</span></span>
+      <div class="iurl">youtube.com — Hawkes Gaming</div>
+      <p class="ids">Guides par style de jeu : utile quand on hésite entre deux métiers et qu'on veut voir à quoi
+      ressemble une session réelle.</p>
+    </a>
+    <a class="item" href="https://www.youtube.com/@VindicatorJones">
+      <span class="inm">Vindicator Jones <span class="lang">EN</span></span>
+      <div class="iurl">youtube.com — Vindicator Jones</div>
+      <p class="ids">Guides de progression : montée en rang, missions, préparation d'objectifs longs. Ton posé,
+      format méthodique.</p>
+    </a>
+  </div>
+
+  <div class="hr"></div>
+  <h2>Comment ce dossier utilise ces sources</h2>
+  <ul>
+    <li><b>Les chiffres viennent de fichiers, jamais d'articles.</b> Les caractéristiques des vaisseaux sont extraites de
+      <code>EDCD/coriolis-data</code> par <code>tools/build-ed-ships.py</code> ; le catalogue des commandes vient du
+      fichier <code>.binds</code> du jeu lui-même, lu par <code>tools/parse-ed-binds.ps1</code>.</li>
+    <li><b>Les guides servent à comprendre les gestes</b>, pas à recopier des valeurs. Un guide de minage de 2021 reste
+      excellent sur la méthode et faux sur les prix.</li>
+    <li><b>Tout ce qui touche à un chiffre daté</b> — prix d'une marchandise, meilleur point d'extraction, rendement
+      d'une activité — se vérifie sur Inara ou Spansh le jour où l'on joue, pas dans un tutoriel.</li>
+  </ul>
+</div>
+<script src="../js/site-search.js"></script>
+</body>
+</html>

@@ -7,9 +7,11 @@ Trois chaînes indépendantes :
 - **Star Citizen** — lit les profils `layout_*.xml` exportés par le jeu et
   produit les JSON du dossier `SC/data/` (script PowerShell, aucune
   dépendance). Voir [Star Citizen](#star-citizen).
-- **Elite Dangerous** — lit le fichier `Custom.4.x.binds` écrit par le jeu et
-  produit les JSON du dossier `ED/data/` (script PowerShell, aucune
-  dépendance). Voir [Elite Dangerous](#elite-dangerous) en fin de fichier.
+- **Elite Dangerous** — deux scripts : `parse-ed-binds.ps1` lit le fichier
+  `Custom.4.x.binds` écrit par le jeu, et `build-ed-ships.py` dérive les
+  caractéristiques des vaisseaux de la base Coriolis. Tous deux produisent des
+  JSON du dossier `ED/data/`, sans dépendance.
+  Voir [Elite Dangerous](#elite-dangerous) en fin de fichier.
 
 ## Outils d'export de bindings DCS
 
@@ -361,3 +363,58 @@ produit `012F`. Il accepte aussi un nom convivial (`VPCThrottle`) déclaré dans
 confond, et un bind posé sur l'un vaut pour l'autre. Pour un rig HOSAS à deux
 manches identiques, changer le PID de l'un des deux dans le VPC Configuration
 Tool (onglet *Profile*) est le seul contournement durable.
+
+
+## `build-ed-ships.py`
+
+Dérive les caractéristiques de coque des 47 vaisseaux pilotables depuis
+[EDCD/coriolis-data](https://github.com/EDCD/coriolis-data), le dépôt de
+données du configurateur Coriolis.
+
+```bash
+python3 tools/build-ed-ships.py                        # télécharge depuis GitHub
+python3 tools/build-ed-ships.py --coriolis <dossier>   # lit un clone local
+```
+
+Sortie, **régénérée à chaque exécution** : `ED/data/ed-ships.json` — nom,
+constructeur, taille de plateforme, prix, vitesse, boost, blindage, bouclier,
+agilité sur les trois axes, équipage, points durs, emplacements optionnels, et
+plusieurs champs dérivés.
+
+`ED/data/ed-ships-fr.json` (rôles, résumés, notes) est écrit à la main et
+**n'est jamais touché** par ce script. C'est le seul fichier de données du
+dépôt qui **porte ses accents** : son contenu s'affiche tel quel dans
+`ED/vaisseaux.html`, alors que les autres ne servent qu'à alimenter du code.
+
+### Ce que le script dérive, et comment
+
+Coriolis encode les emplacements internes de trois façons, qu'il faut
+distinguer pour que les décomptes veuillent dire quelque chose :
+
+| Forme dans le JSON | Sens |
+| --- | --- |
+| un entier | emplacement optionnel libre — une cale peut y aller |
+| `{"name":"Cargo"}` | emplacement réservé à la soute |
+| `{"name":"Military"}` | emplacement militaire : blindage et cellules seulement |
+| `{"name":"Limpets"}` | emplacement réservé aux drones |
+| `{"name":"Fighter"}` | hangar à chasseur |
+| `{"name":"PlanetaryApproachSuite"}` | suite d'approche planétaire — exclue de tous les décomptes |
+
+D'où :
+
+- **`souteMax`** = somme des `2^classe` sur les emplacements libres et
+  « Cargo ». C'est le chiffre qu'affiche Coriolis : la capacité si l'on ne
+  montait *que* des cales. Vérifié sur le Mandalay (154 t).
+- **`poidsArmement`** = somme des classes de points durs. Deux points durs de
+  classe 3 pèsent 6, quatre de classe 1 pèsent 4 : l'indice compare des
+  vaisseaux que le simple nombre de points durs classerait à tort.
+- **`emplacementsMilitaires`** — leur seule présence signe un vaisseau de
+  combat ; c'est ce qui distingue un Chieftain d'un Krait de prix voisin.
+
+### Pourquoi Coriolis plutôt que le wiki
+
+Le dépôt est maintenu par EDCD, versionné, et suit les mises à jour du jeu :
+il contient déjà les coques récentes (Mandalay, Cobra Mk V, Corsair,
+Type-11 Prospector, Panther Clipper Mk II, Caspian Explorer, Kestrel Mk II).
+Une page de wiki se recopie à la main et se périme sans prévenir ; un JSON se
+régénère.

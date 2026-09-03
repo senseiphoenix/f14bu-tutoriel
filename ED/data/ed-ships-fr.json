@@ -1,0 +1,407 @@
+{
+  "note": "Roles, resumes et notes en francais pour les vaisseaux d'Elite Dangerous. Fichier ECRIT A LA MAIN : tools/build-ed-ships.py ne le touche jamais. Les chiffres cites dans les textes viennent tous de ed-ships.json, derive de la base Coriolis. Contrairement aux autres fichiers de donnees du depot, ce fichier PORTE SES ACCENTS : son contenu est affiche tel quel aux lecteurs de ED/vaisseaux.html.",
+  "roles": {
+    "debut": {
+      "label": "Début",
+      "detail": "Premiers vols et petit budget : on apprend à piloter sans risquer gros"
+    },
+    "combat": {
+      "label": "Combat",
+      "detail": "Chasse à la prime, conflits, zones de combat"
+    },
+    "explo": {
+      "label": "Exploration",
+      "detail": "Longue distance : rayon de saut, collecteur de carburant, atterrissage planétaire"
+    },
+    "fret": {
+      "label": "Fret",
+      "detail": "Commerce et transport de marchandises au volume"
+    },
+    "minage": {
+      "label": "Minage",
+      "detail": "Extraction en anneaux : drones, raffinerie, gros emplacements optionnels"
+    },
+    "passagers": {
+      "label": "Passagers",
+      "detail": "Cabines de luxe et missions de tourisme"
+    },
+    "multi": {
+      "label": "Polyvalent",
+      "detail": "Assez de place et d'armement pour changer de métier sans changer de vaisseau"
+    },
+    "course": {
+      "label": "Coursier",
+      "detail": "Vitesse pure : livraison de données, fuite, reconnaissance"
+    }
+  },
+  "constructeurs": {
+    "Faulcon DeLacy": "Le constructeur historique de la série. Des coques équilibrées, increvables, sans génie particulier mais bonnes partout.",
+    "Core Dynamics": "Fournisseur de la Fédération. Coques épaisses, armement généreux, agilité en retrait.",
+    "Lakon Spaceways": "Le transporteur. Des soutes énormes et des coques utilitaires, du Type-6 au Type-9.",
+    "Gutamaya": "Le luxe impérial. Rapides, élégants, fragiles en blindage et exigeants en rang impérial.",
+    "Zorgon Peterson": "L'outsider. Des coques atypiques, souvent très rapides ou très spécialisées.",
+    "Saud Kruger": "Le paquebot. Conçu pour les cabines de passagers et les longues traversées confortables."
+  },
+  "counts": {
+    "vaisseaux": 47
+  },
+  "ships": {
+    "sidewinder": {
+      "roles": [
+        "debut"
+      ],
+      "resume": "Le vaisseau offert au départ, et celui qu'on retrouve gratuitement après chaque destruction.",
+      "note": "Deux petits points durs et 16 t de soute : il sert à apprendre l'amarrage et la supercroisière, pas à gagner sa vie."
+    },
+    "eagle": {
+      "roles": [
+        "combat",
+        "debut"
+      ],
+      "resume": "Chasseur d'entrée de gamme : trois points durs sur une coque minuscule et très maniable.",
+      "note": "40 de blindage seulement — il vit de son agilité, jamais de sa résistance."
+    },
+    "hauler": {
+      "roles": [
+        "fret",
+        "debut"
+      ],
+      "resume": "Le plus petit cargo du jeu, et un rayon de saut étonnant pour son prix.",
+      "note": "Un seul point dur : il fuit, il ne se bat pas."
+    },
+    "adder": {
+      "roles": [
+        "multi",
+        "debut"
+      ],
+      "resume": "Petit polyvalent : un peu de soute, un peu d'armement, de quoi essayer plusieurs métiers.",
+      "note": "Souvent le deuxième vaisseau d'un pilote, avant de se spécialiser."
+    },
+    "imperial_eagle": {
+      "roles": [
+        "combat",
+        "course"
+      ],
+      "resume": "Version impériale de l'Eagle : plus rapide (300 m/s), mieux armée, toujours aussi fragile.",
+      "note": "Demande un rang impérial et l'accès à un chantier Gutamaya."
+    },
+    "viper": {
+      "roles": [
+        "combat"
+      ],
+      "resume": "Intercepteur pur : 320 m/s de pointe et quatre points durs sur une coque légère.",
+      "note": "Rapide en ligne droite, mais peu de place pour les modules de survie."
+    },
+    "cobra_mk_iii": {
+      "roles": [
+        "multi",
+        "debut"
+      ],
+      "resume": "Le couteau suisse historique : rapide, armé, 64 t de soute et un cockpit très dégagé.",
+      "note": "Le premier vaisseau qui permet vraiment de tout faire — le classique du débutant qui progresse."
+    },
+    "viper_mk_iv": {
+      "roles": [
+        "combat"
+      ],
+      "resume": "Viper renforcée : 150 de blindage et 150 de bouclier, contre 70 et 105 pour la Mk III.",
+      "note": "On échange 50 m/s de pointe contre le double de résistance."
+    },
+    "diamondback": {
+      "roles": [
+        "combat",
+        "explo"
+      ],
+      "resume": "Petit chasseur froid : sa signature thermique réduite le rend discret et endurant en combat prolongé.",
+      "note": "42 de tangage : l'un des plus agiles de sa catégorie."
+    },
+    "cobra_mk_iv": {
+      "roles": [
+        "multi",
+        "fret"
+      ],
+      "resume": "Cobra allongée : 92 t de soute et un emplacement optionnel de plus, au prix de la vitesse.",
+      "note": "Plus lente que la Mk III (200 m/s contre 280) — elle transporte, elle ne poursuit pas."
+    },
+    "dolphin": {
+      "roles": [
+        "passagers"
+      ],
+      "resume": "Le plus petit paquebot Saud Kruger : cabines de luxe sur une coque qui tient sur une petite plateforme.",
+      "note": "Très économe en chaleur : confortable pour les passagers exigeants."
+    },
+    "cobramkv": {
+      "roles": [
+        "multi",
+        "combat"
+      ],
+      "resume": "Cobra moderne : cinq points durs, 110 t de soute et trois sièges d'équipage sur une petite plateforme.",
+      "note": "Trois membres d'équipage sur un vaisseau de taille 1, ce qui est rare."
+    },
+    "diamondback_explorer": {
+      "roles": [
+        "explo"
+      ],
+      "resume": "L'explorateur d'entrée de gamme : coque légère, très froide, et un gros point dur de classe 3.",
+      "note": "Le choix classique pour un premier grand voyage sans se ruiner."
+    },
+    "imperial_courier": {
+      "roles": [
+        "combat",
+        "course"
+      ],
+      "resume": "Coursier impérial : 200 de bouclier de base, le double de la plupart des petites coques.",
+      "note": "Trois points durs de classe 2 sur une petite plateforme : très dense pour sa taille."
+    },
+    "vulture": {
+      "roles": [
+        "combat"
+      ],
+      "resume": "Deux points durs de classe 3 sur une petite plateforme : le rapport puissance de feu / taille le plus brutal du jeu.",
+      "note": "Réacteur sous-dimensionné : gérer l'énergie est le vrai défi de ce vaisseau."
+    },
+    "kestrel": {
+      "roles": [
+        "combat"
+      ],
+      "resume": "Chasseur récent de Core Dynamics : 51 de tangage, cinq points durs dont trois de classe 3, sur une petite plateforme.",
+      "note": "Le plus agile des vaisseaux armés de taille 1 d'après les caractéristiques de coque."
+    },
+    "type_6_transporter": {
+      "roles": [
+        "fret"
+      ],
+      "resume": "Le premier vrai cargo : 114 t de soute pour moins d'un million de crédits.",
+      "note": "Deux points durs de classe 1 : sans escorte, on évite les systèmes chauds."
+    },
+    "keelback": {
+      "roles": [
+        "fret",
+        "combat"
+      ],
+      "resume": "Type-6 blindé, avec un hangar à chasseur : le cargo qui peut riposter.",
+      "note": "Le premier vaisseau abordable à pouvoir emporter un chasseur télépiloté."
+    },
+    "asp_scout": {
+      "roles": [
+        "explo",
+        "combat"
+      ],
+      "resume": "Petite sœur de l'Asp Explorer : moins de soute et de rayon, mais plus agile.",
+      "note": "Souvent éclipsée par l'Asp Explorer, qui coûte à peine plus cher."
+    },
+    "asp": {
+      "roles": [
+        "explo",
+        "multi"
+      ],
+      "resume": "L'explorateur de référence : 130 t de soute, six emplacements optionnels et une verrière panoramique.",
+      "note": "Le vaisseau que la communauté recommande depuis dix ans pour un premier voyage lointain."
+    },
+    "federal_dropship": {
+      "roles": [
+        "combat"
+      ],
+      "resume": "Transport de combat fédéral : 300 de blindage, deux emplacements militaires, cinq points durs.",
+      "note": "Lent (180 m/s) : il encaisse, il ne poursuit pas."
+    },
+    "mandalay": {
+      "roles": [
+        "explo"
+      ],
+      "resume": "Explorateur récent de Zorgon Peterson : 280 m/s, 154 t de soute et six emplacements optionnels.",
+      "note": "Conçu pour l'exploration longue distance, avec une coque légère de 230 t."
+    },
+    "alliance_chieftain": {
+      "roles": [
+        "combat"
+      ],
+      "resume": "Le chasseur lourd de l'Alliance : trois emplacements militaires et 39 de tangage malgré 280 de blindage.",
+      "note": "Agile pour un vaisseau de combat de taille 2 — c'est ce qui fait sa réputation."
+    },
+    "federal_assault_ship": {
+      "roles": [
+        "combat"
+      ],
+      "resume": "Dropship allégée et réorientée vers l'attaque : plus rapide, deux points durs de classe 3.",
+      "note": "Le meilleur compromis vitesse / blindage de la famille fédérale."
+    },
+    "alliance_crusader": {
+      "roles": [
+        "combat"
+      ],
+      "resume": "Chieftain avec hangar à chasseur et quatre sièges d'équipage, au prix de l'agilité.",
+      "note": "Le seul de la famille Alliance pensé pour le combat en équipage."
+    },
+    "alliance_challenger": {
+      "roles": [
+        "combat"
+      ],
+      "resume": "Le plus blindé des trois Alliance : trois emplacements militaires et 154 t de soute.",
+      "note": "32 de tangage : on échange l'agilité du Chieftain contre de l'encaissement."
+    },
+    "federal_gunship": {
+      "roles": [
+        "combat"
+      ],
+      "resume": "Sept points durs et 350 de blindage : une plateforme de tir, pas un chasseur.",
+      "note": "170 m/s et 25 de tangage — il ne suit personne, il attend qu'on vienne."
+    },
+    "type_8_transport": {
+      "roles": [
+        "fret"
+      ],
+      "resume": "Cargo moyen récent : 406 t de soute sur une plateforme moyenne, là où il fallait un grand vaisseau avant.",
+      "note": "Permet de livrer dans les avant-postes, inaccessibles aux Type-9 et aux Cutter."
+    },
+    "krait_phantom": {
+      "roles": [
+        "explo",
+        "multi"
+      ],
+      "resume": "Krait sans hangar à chasseur : plus légère, plus rapide, taillée pour le voyage.",
+      "note": "L'alternative moderne à l'Asp Explorer quand le budget suit."
+    },
+    "krait_mkii": {
+      "roles": [
+        "combat",
+        "multi",
+        "minage"
+      ],
+      "resume": "Trois points durs de classe 3, 230 t de soute et un hangar à chasseur : le multirôle haut de gamme.",
+      "note": "L'un des vaisseaux les plus polyvalents du jeu à ce niveau de prix."
+    },
+    "fer_de_lance": {
+      "roles": [
+        "combat"
+      ],
+      "resume": "Un point dur de classe 4 et 300 de bouclier de base : le duelliste par excellence.",
+      "note": "72 t de soute seulement : c'est un vaisseau de combat, rien d'autre."
+    },
+    "python": {
+      "roles": [
+        "multi",
+        "fret",
+        "minage"
+      ],
+      "resume": "294 t de soute, trois points durs de classe 3, et il tient sur une plateforme moyenne.",
+      "note": "Le compromis le plus large du jeu : minage, fret, combat, tout lui va."
+    },
+    "mamba": {
+      "roles": [
+        "combat",
+        "course"
+      ],
+      "resume": "310 m/s de pointe et un point dur de classe 4 : l'intercepteur le plus rapide de sa catégorie.",
+      "note": "27 de tangage : redoutable en passe, maladroit en virage serré."
+    },
+    "python_nx": {
+      "roles": [
+        "combat"
+      ],
+      "resume": "Python Mk II : six points durs pour un poids d'armement de 16, le plus élevé de la taille 2.",
+      "note": "Soute réduite à 96 t par rapport à la Python d'origine — le choix est assumé."
+    },
+    "type_11_prospector": {
+      "roles": [
+        "minage",
+        "fret"
+      ],
+      "resume": "Cargo mineur de Lakon : 288 t de soute, un emplacement réservé aux drones et 272 m/s.",
+      "note": "Le seul vaisseau du jeu dont la coque réserve un emplacement aux drones."
+    },
+    "imperial_corsair": {
+      "roles": [
+        "multi",
+        "combat"
+      ],
+      "resume": "Multirôle impérial récent : 318 t de soute, six points durs et 280 m/s sur une plateforme moyenne.",
+      "note": "Un poids d'armement de 15 avec une soute de gros cargo — combinaison inhabituelle."
+    },
+    "type_7_transport": {
+      "roles": [
+        "fret"
+      ],
+      "resume": "310 t de soute pour 17 millions : le meilleur rapport volume / prix du jeu.",
+      "note": "Quatre points durs de classe 1 et 22 de tangage : sans défense et lourd à manœuvrer."
+    },
+    "imperial_clipper": {
+      "roles": [
+        "fret",
+        "course"
+      ],
+      "resume": "300 m/s avec 250 t de soute : le cargo rapide, si l'on sait poser une grande coque.",
+      "note": "Points durs placés très à l'extérieur des ailes : la visée au canon fixe est difficile."
+    },
+    "orca": {
+      "roles": [
+        "passagers"
+      ],
+      "resume": "Paquebot rapide : 300 m/s, silhouette effilée, cabines de luxe.",
+      "note": "Les passagers de haut rang paient pour le confort autant que pour la vitesse."
+    },
+    "type_9_heavy": {
+      "roles": [
+        "fret",
+        "minage"
+      ],
+      "resume": "790 t de soute : le cargo lourd classique, increvable et parfaitement immobile.",
+      "note": "130 m/s et 20 de tangage : le poser demande de la méthode."
+    },
+    "beluga": {
+      "roles": [
+        "passagers"
+      ],
+      "resume": "Le plus grand paquebot du jeu : 370 t de soute et quatre sièges d'équipage.",
+      "note": "Silhouette énorme mais 280 de bouclier : il encaisse mieux qu'il n'en a l'air."
+    },
+    "type_10_defender": {
+      "roles": [
+        "combat",
+        "fret"
+      ],
+      "resume": "Type-9 transformé en batterie volante : neuf points durs et 580 de blindage.",
+      "note": "La plus grosse coque défensive du jeu — pensée pour tenir une position, pas pour manœuvrer."
+    },
+    "anaconda": {
+      "roles": [
+        "multi",
+        "explo",
+        "combat"
+      ],
+      "resume": "Le vaisseau à tout faire du haut de gamme : 470 t de soute, huit points durs dont un de classe 4.",
+      "note": "Longtemps le roi du rayon de saut, et toujours une référence en exploration lointaine."
+    },
+    "federal_corvette": {
+      "roles": [
+        "combat"
+      ],
+      "resume": "Le vaisseau de guerre fédéral : 555 de bouclier de base et deux points durs de classe 4.",
+      "note": "Exige le rang fédéral de contre-amiral — un long travail avant de pouvoir l'acheter."
+    },
+    "explorer_nx": {
+      "roles": [
+        "explo",
+        "multi"
+      ],
+      "resume": "Caspian Explorer : grande coque d'exploration récente, 434 t de soute et quatre sièges d'équipage.",
+      "note": "Pensée pour les longues expéditions en équipage plutôt que pour le vol en solitaire."
+    },
+    "imperial_cutter": {
+      "roles": [
+        "fret",
+        "combat",
+        "minage"
+      ],
+      "resume": "794 t de soute, 600 de bouclier et 200 m/s : le cargo qui se défend, et le plus prestigieux.",
+      "note": "18 de tangage : le pire rayon de virage du jeu, à compenser aux propulseurs latéraux."
+    },
+    "panthermkii": {
+      "roles": [
+        "fret"
+      ],
+      "resume": "1046 t de soute : la plus grande capacité du jeu, loin devant le Type-9 et le Cutter.",
+      "note": "181 m/s et 620 de blindage : un immeuble qui vole, à poser avec beaucoup d'anticipation."
+    }
+  }
+}
