@@ -95,7 +95,7 @@
           <td>Le train, les points durs, les phares sont des bascules pures, sans commande ON et OFF séparées. C'est ce qui décide de ce qu'on ose mettre sur un inverseur maintenu du PTO2.</td></tr>
     </tbody>
   </table>
-  <p>Le détail, les décomptes et l'allocation proposée sont dans <code>ED/CONCEPTION-MAPPING.md</code>.</p>
+  <p>Le détail, les décomptes et l'allocation proposée sont dans <code>ED/CONCEPTION-MAPPING.md</code> ; le mapping lui-même, en données vérifiables, dans <code>ED/data/ed-mapping-plan.json</code>.</p>
 
   <div class="hr"></div>
   <h2>Le rig lu dans le jeu</h2>
@@ -121,9 +121,11 @@
     <li><span class="ok">Fait</span> — <code>ED/data/ed-actions.json</code> : 514 actions du schéma 4.2, avec contexte, couche de vol et possibilité de maintien.</li>
     <li><span class="ok">Fait</span> — <code>ED/data/ed-labels-fr.json</code> : 201 libellés et descriptions françaises, écrits à la main, jamais écrasés par le script.</li>
     <li><span class="ok">Fait</span> — conception du mapping : <code>ED/CONCEPTION-MAPPING.md</code>, allocation complète et six décisions posées.</li>
+    <li><span class="ok">Fait</span> — chaîne d'écriture des binds, testée de bout en bout : <code>tools/collect-ed-rig.ps1</code> relève le rig et repère les VID+PID en double, <code>ED/data/ed-mapping-plan.json</code> porte le mapping en données (82 entrées applicables, 11 en attente de décision), <code>tools/validate-ed-mapping.py</code> refuse un plan incohérent, et <code>tools/apply-ed-mapping.py</code> écrit le plan dans le <code>.binds</code> du jeu avec sauvegarde. Le fichier produit est relu sans conflit par le parseur.</li>
+    <li><span class="ok">Fait</span> — note d'entrée de la session de binding : <code>ED/PREPARATION-BINDING.md</code> — manipulations matérielles à faire avant, huit décisions à trancher, déroulé, et les quatre points qui restent à vérifier en jeu.</li>
     <li><span class="ok">Fait</span> — <a href="vaisseaux.html">page vaisseaux</a> : 47 coques avec leur rôle, filtrables par métier, plateforme et budget. Caractéristiques dérivées de <code>EDCD/coriolis-data</code> par <code>tools/build-ed-ships.py</code>, rôles et commentaires écrits à la main dans <code>ED/data/ed-ships-fr.json</code>.</li>
     <li><span class="ok">Fait</span> — <a href="ressources.html">page ressources</a> : outils, documentation, communauté francophone et chaînes vidéo, classés par usage.</li>
-    <li>À faire — donner deux PID distincts aux deux Alpha Prime, puis relever le rig depuis le jeu.</li>
+    <li>À faire — donner deux PID distincts aux deux Alpha Prime, puis relever le rig depuis le jeu : c'est la seule étape qui bloque l'écriture des binds, et elle demande une manipulation du matériel. Détail dans <code>ED/PREPARATION-BINDING.md</code>.</li>
     <li>À faire — planches interactives, les dix tutoriels par métier, export du preset.</li>
   </ul>
 

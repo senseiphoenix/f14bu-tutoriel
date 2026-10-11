@@ -7,11 +7,13 @@ Trois chaînes indépendantes :
 - **Star Citizen** — lit les profils `layout_*.xml` exportés par le jeu et
   produit les JSON du dossier `SC/data/` (script PowerShell, aucune
   dépendance). Voir [Star Citizen](#star-citizen).
-- **Elite Dangerous** — deux scripts : `parse-ed-binds.ps1` lit le fichier
-  `Custom.4.x.binds` écrit par le jeu, et `build-ed-ships.py` dérive les
-  caractéristiques des vaisseaux de la base Coriolis. Tous deux produisent des
-  JSON du dossier `ED/data/`, sans dépendance.
-  Voir [Elite Dangerous](#elite-dangerous) en fin de fichier.
+- **Elite Dangerous** — cinq scripts sans dépendance, qui produisent tous des
+  JSON du dossier `ED/data/` : `collect-ed-rig.ps1` relève le rig,
+  `parse-ed-binds.ps1` lit le `Custom.4.x.binds` écrit par le jeu,
+  `validate-ed-mapping.py` vérifie le plan de mapping,
+  `apply-ed-mapping.py` l'écrit dans le fichier du jeu, et
+  `build-ed-ships.py` dérive les caractéristiques des vaisseaux de la base
+  Coriolis. Voir [Elite Dangerous](#elite-dangerous) en fin de fichier.
 
 ## Outils d'export de bindings DCS
 
@@ -274,6 +276,12 @@ lever l'ambiguïté ; sinon le sujet seul suffit.
 
 # Elite Dangerous
 
+Ordre de la chaîne, du matériel au fichier installé :
+`collect-ed-rig.ps1` (relever le rig) -> `validate-ed-mapping.py` (vérifier le
+plan) -> `apply-ed-mapping.py` (écrire le `.binds`) -> `parse-ed-binds.ps1`
+(relire le fichier réellement en service et régénérer les JSON du site).
+`build-ed-ships.py` est indépendant : il alimente la page des vaisseaux.
+
 ## `parse-ed-binds.ps1`
 
 Lit le fichier de bindings écrit par le jeu et écrit les données consommées
@@ -298,6 +306,94 @@ Sorties, **régénérées à chaque exécution** :
 
 `ED/data/ed-labels-fr.json` (libellés et descriptions françaises) est écrit à
 la main et **n'est jamais touché** par ce script.
+
+## `collect-ed-rig.ps1`
+
+Relève le rig en une seule passe, avant toute écriture de binds.
+
+```bash
+powershell -ExecutionPolicy Bypass -File tools\collect-ed-rig.ps1
+```
+
+Il sauvegarde d'abord le dossier Bindings dans un zip horodaté (sous
+`Documents\Claude\ED-sauvegardes` par défaut, `-BackupDir` pour changer),
+puis écrit `ED/data/releve-rig.json` : presets et preset actif avec leur
+numéro de schéma, périphériques **tels que le jeu les nomme** avec pour chacun
+le plus grand numéro de bouton lu et la liste des axes, chaînes VID+PID vues
+en double, `DeviceMappings.xml` trouvés côté installation, et la liste à plat
+de toutes les entrées assignées.
+
+Deux points qui comptent :
+
+- **Le fichier `.binds` fait foi.** La section `windows` du relevé (énumération
+  des manettes via `Win32_PNPEntity`) est **indicative** et ne sert qu'à une
+  chose : repérer deux périphériques sous la même chaîne VID+PID avant de
+  lancer le jeu, et confirmer qu'un changement de PID a pris. Quand cette
+  énumération n'est pas disponible, le script dit *indéterminé* — il ne
+  rassure jamais à tort.
+- **Le script diffe avec le relevé précédent** et affiche les binds *apparus*
+  depuis. C'est la boucle de sondage : assigner une commande jetable dans
+  l'écran Contrôles, quitter proprement, relancer — le script dit quel numéro
+  le jeu a réellement lu. Seule façon fiable de relever les numéros au-delà de
+  32, et les cinq crans du rotacteur MODE d'un CM3.
+
+## `validate-ed-mapping.py`
+
+Garde-fou du plan de mapping écrit à la main (`ED/data/ed-mapping-plan.json`).
+Il ne corrige rien, il refuse.
+
+```bash
+python3 tools/validate-ed-mapping.py
+```
+
+Dix règles, dont : l'action existe bien dans le catalogue et du bon type ; un
+`toggleOn` ne tombe que sur l'une des 26 actions qui acceptent le maintien ;
+la syntaxe de touche est connue du jeu ; le numéro de bouton tient dans ce que
+porte le périphérique ; **pas plus de deux touches par action**, puisque le jeu
+n'offre que `Primary` et `Secondary` ; pas deux actions du **même contexte** sur
+la même entrée — alors que deux contextes différents sur la même touche sont
+au contraire la force d'Elite et sont acceptés ; aucune commande marquée
+critique laissée en attente de décision.
+
+Il signale sans refuser ce qui reste ouvert : chaînes `Device` vides, numéros à
+confirmer par le relevé, entrées et arbitrages en attente, couverture par
+contexte et par périphérique.
+
+## `apply-ed-mapping.py`
+
+Écrit le plan dans un `.binds`.
+
+```bash
+python3 tools/apply-ed-mapping.py --binds Custom.4.2.binds --blanc   # bilan seul
+python3 tools/apply-ed-mapping.py --binds Custom.4.2.binds \
+    --device mancheDroit=3344012F --device mancheGauche=3344812F \
+    --device throttle=3344A26B --device pto2=4098BB10
+python3 tools/apply-ed-mapping.py --autotest                         # sans le jeu
+```
+
+**Le script ne fabrique pas un `.binds`, il modifie celui du jeu.** C'est ce
+qui garantit qu'on respecte la forme exacte attendue par la version installée
+— numéro de schéma, actions présentes, structure de chaque bloc — sans rien
+deviner. Elite attend l'intégralité du schéma dans le fichier, y compris les
+actions laissées en `Device="{NoDevice}"` : partir du fichier du jeu évite
+d'en oublier une.
+
+Par défaut il efface d'abord toute entrée renvoyant à l'un des périphériques
+du plan, puis écrit le plan — le résultat correspond donc exactement au plan,
+sans résidu d'un profil précédent. Les binds clavier, souris et autres
+matériels sont laissés intacts. `--conserver` désactive ce nettoyage. Une
+**sauvegarde horodatée est écrite avant tout remplacement**.
+
+Il refuse de tourner tant que les chaînes `Device` manquent, et signale une
+chaîne qui n'apparaît pas dans `releve-rig.json` : aucune chaîne de
+périphérique ne doit être devinée.
+
+`--autotest` vérifie la chaîne complète sans aucun fichier du jeu : il
+fabrique un `.binds` à la forme du schéma, y laisse un résidu de profil et un
+bind clavier témoin, applique le plan, relit le résultat et vérifie que chaque
+entrée retenue est à sa place, que le résidu est parti, que le témoin clavier a
+survécu, que le numéro de schéma n'a pas bougé et qu'aucune des 514 actions n'a
+disparu.
 
 ## Le format de bindings d'Elite Dangerous
 
