@@ -1,6 +1,6 @@
 # Elite Dangerous — état et suite du travail
 
-Dernière mise à jour : 3 septembre 2026.
+Dernière mise à jour : 11 octobre 2026.
 
 Objectif du dossier : le mapping complet du rig pour Elite Dangerous — deux
 Virpil Alpha Prime en HOSAS (le gauche monté sur coude), throttle
@@ -13,6 +13,12 @@ La conception du mapping est dans
 [CONCEPTION-MAPPING.md](CONCEPTION-MAPPING.md) : mécanique de contextes propre
 à Elite, décompte des commandes, allocation proposée périphérique par
 périphérique, et les six décisions à trancher.
+
+> **La session d'écriture des binds a sa propre note d'entrée :**
+> [PREPARATION-BINDING.md](PREPARATION-BINDING.md). Elle liste ce qu'il y a à
+> faire côté matériel avant de commencer, la chaîne d'outils prête à tourner,
+> les huit décisions qui attendent une réponse et le déroulé proposé. Commencer
+> par là plutôt que par ce fichier.
 
 ## Fait
 
@@ -38,6 +44,30 @@ périphérique, et les six décisions à trancher.
   inventé.
 - **Conception du mapping** — proposition complète, sources citées, six
   décisions posées.
+- **Chaîne de mapping, testée de bout en bout.**
+  `tools/collect-ed-rig.ps1` relève le rig en une passe (sauvegarde du dossier
+  Bindings, presets et preset actif, périphériques vus par le jeu avec le plus
+  grand numéro de bouton lu, détection des chaînes VID+PID en double, et diff
+  avec le relevé précédent pour sonder les numéros hauts).
+  `ED/data/ed-mapping-plan.json` traduit la section 4 de la conception en
+  données : 12 axes et 81 boutons, chacun avec son repère physique, sa raison
+  et deux marqueurs (`statut`, `confiance`) — 82 entrées applicables, 11 en
+  attente de décision. `tools/validate-ed-mapping.py` refuse un plan
+  incohérent sur dix règles (action inexistante, mauvais type, `toggleOn`
+  illégal, plus de deux emplacements pour une action, conflit de même
+  contexte, commande critique laissée en attente…) ; les treize règles ont été
+  testées contre des plans volontairement cassés.
+  `tools/apply-ed-mapping.py` écrit le plan **dans le `.binds` du jeu** plutôt
+  que d'en fabriquer un, avec sauvegarde horodatée, et porte un `--autotest`
+  qui vérifie la chaîne sans aucun fichier du jeu. Vérifié en bout en bout :
+  le fichier produit est relu par `parse-ed-binds.ps1` — outil indépendant —
+  qui y voit les quatre périphériques, les 82 binds, la couche de modificateur
+  inter-périphérique et **aucun conflit**.
+- **Quatre trous de la proposition publiée** trouvés en la traduisant en
+  données, et documentés : `UI_*` assigné nulle part, trois touches pour une
+  action qui n'a que deux emplacements, portée du scanner proposée trois fois,
+  direction de chaque action dans un hat non précisée. Détail et propositions
+  dans [PREPARATION-BINDING.md](PREPARATION-BINDING.md) § 3.
 - **Accueil et sommaire.** Elite Dangerous partage la rangée « Simulation
   spatiale » de la page d'accueil avec Star Citizen ; `ED/index.html` liste les
   pages livrées, les planches à venir et les dix tutoriels par métier.
@@ -55,45 +85,23 @@ périphérique, et les six décisions à trancher.
 
 ## À faire, dans l'ordre
 
-### 1. Donner deux PID distincts aux deux Alpha Prime — bloquant
+### 1 à 3. Relevé matériel et décisions — voir la note de passation
 
-Elite Dangerous désigne un périphérique par sa chaîne **VID+PID**
-(`Device="3344012F"`), pas par un GUID. Deux Alpha Prime sortis d'usine
-portent la même chaîne : le jeu les confond, et un bind posé sur l'un vaut
-pour l'autre.
+Les trois premières étapes (PID distincts sur les deux Alpha Prime — bloquant,
+relevé matériel, décisions à trancher) sont détaillées dans
+[PREPARATION-BINDING.md](PREPARATION-BINDING.md), avec les manipulations
+exactes, les commandes à lancer et le déroulé de la session. Elles ne sont pas
+répétées ici.
 
-Ouvrir le **VPC Configuration Tool**, onglet *Profile*, changer le PID de l'un
-des deux manches, écrire le firmware, rebrancher. Vérifier ensuite dans
-l'écran Contrôles du jeu que les deux manches réagissent séparément.
-
-Sans cette étape, **aucun bind HOSAS ne peut être écrit**.
-
-### 2. Relevé matériel
-
-Une fois les PID distincts : brancher les quatre périphériques, assigner une
-commande quelconque sur chacun depuis l'écran Contrôles du jeu, quitter
-proprement, puis :
+Résumé : changer le PID de l'un des deux manches dans le VPC Configuration
+Tool, assigner une commande jetable sur chacun des quatre périphériques depuis
+l'écran Contrôles du jeu, quitter proprement, puis
 
 ```
-powershell -ExecutionPolicy Bypass -File tools\parse-ed-binds.ps1
+powershell -ExecutionPolicy Bypass -File tools\collect-ed-rig.ps1
 ```
 
-Objectifs du relevé :
-
-- figer les chaînes VID+PID réelles des quatre périphériques ;
-- vérifier **jusqu'à quel numéro de bouton** le jeu lit chaque périphérique
-  (le profil de référence prouve `Joy_74` ; les pages Rouge et Jaune du
-  rotacteur MODE du CM3 montent à 79 sur ce rig) ;
-- confirmer que les axes `_Landing` laissés vides ne coupent pas les axes
-  normaux train sorti.
-
-Régénérer les JSON après chaque sauvegarde de preset depuis le jeu.
-
-### 3. Trancher les six décisions
-
-Voir [CONCEPTION-MAPPING.md](CONCEPTION-MAPPING.md) § 5 : distinction des
-manches (faite à l'étape 1), relevé matériel, pédalier, twist gauche, plage de
-la manette des gaz, focus interface maintenu ou basculé.
+et commiter `ED/data/releve-rig.json`.
 
 ### 4. Gabarits et planches interactives — `ED/mapping-hotas.html`
 
@@ -168,23 +176,25 @@ excellent sur la méthode et faux sur les prix.
 > directement. Les liens sont à revalider une fois, à la main, avant d'appuyer
 > une leçon dessus.
 
-### 6. Export installable — `ED/export-bindings.html`
+### 6. Export depuis le navigateur — `ED/export-bindings.html`
 
-Génère le `Custom.4.x.binds` à déposer dans
-`%LOCALAPPDATA%\Frontier Developments\Elite Dangerous\Options\Bindings\`.
+**L'écriture des binds est déjà faite en ligne de commande** par
+`tools/apply-ed-mapping.py`, qui modifie le `.binds` du jeu depuis le plan et
+sauvegarde l'ancien. Cette page ne reste utile que pour le confort : produire
+le fichier sans ouvrir un terminal, et voir le mapping avant de l'installer.
 
-Points de vigilance :
+Si elle est écrite, elle doit reprendre les mêmes garde-fous que l'outil en
+ligne de commande :
 
 - **sauvegarder le fichier existant avant de l'écraser** ;
-- écrire le schéma **complet** : Elite attend toutes les actions dans le
-  fichier, y compris celles laissées en `Device="{NoDevice}"` ;
-- respecter le numéro de version du schéma (`MajorVersion` / `MinorVersion`)
-  du fichier écrit par la version du jeu installée — un fichier `4.0` n'est
-  pas lu par un jeu qui attend `4.2` ;
+- partir du `.binds` du jeu plutôt que d'en fabriquer un : Elite attend le
+  schéma **complet**, y compris les actions laissées en `Device="{NoDevice}"`,
+  et le fichier du jeu porte déjà le bon numéro de version (`MajorVersion` /
+  `MinorVersion`) — un fichier `4.0` n'est pas lu par un jeu qui attend `4.2` ;
 - mettre à jour `StartPreset.*.start` pour que le preset soit sélectionné au
   lancement ;
-- vérifier qu'aucune entrée ne porte deux actions du même contexte : le script
-  de lecture signale déjà ces conflits.
+- vérifier qu'aucune entrée ne porte deux actions du même contexte — les deux
+  scripts signalent déjà ces conflits.
 
 ## Rappel
 

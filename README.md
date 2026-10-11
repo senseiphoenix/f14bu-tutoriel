@@ -23,6 +23,7 @@ Ce dépôt regroupe des tutoriels HTML interactifs, un par module, pour apprendr
   - **`ressources.html`** — outils (Inara, EDSM, Spansh, Coriolis), applications à installer, documentation officielle, communauté francophone et chaînes vidéo, classés par usage.
   - **`index.html`** — sommaire : trois fondamentaux puis dix tutoriels par activité (commerce, chasse à la prime, exploration, minage, passagers, récupération, exobiologie, au sol, ingénierie, équipage et pouvoirs). En construction.
   - Mapping : la conception est écrite (`ED/CONCEPTION-MAPPING.md`), les données d'actions sont extraites du fichier `.binds` du jeu par `tools/parse-ed-binds.ps1`. La logique de bindings diffère nettement de celle de Star Citizen : ici c'est le jeu qui bascule entre huit contextes (vaisseau, SRV, à pied, FSS, DSS, équipage, caméra, colonisation), et un même bouton porte donc déjà une action par contexte sans modificateur.
+  - Écriture des binds : le mapping vit en données dans `ED/data/ed-mapping-plan.json`, `tools/validate-ed-mapping.py` refuse un plan incohérent, et `tools/apply-ed-mapping.py` l'écrit **dans le `.binds` du jeu** plutôt que d'en fabriquer un — avec sauvegarde. `tools/collect-ed-rig.ps1` relève le rig au préalable. Tout est décrit, avec les décisions qui restent à trancher, dans `ED/PREPARATION-BINDING.md`.
 
 ## Fonctionnement
 

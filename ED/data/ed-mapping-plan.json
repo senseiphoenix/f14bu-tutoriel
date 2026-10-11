@@ -1,0 +1,1114 @@
+{
+ "note": "Plan de mapping Elite Dangerous pour le rig HOSAS, en donnees. Ecrit a la main depuis ED/CONCEPTION-MAPPING.md section 4 : aucun nom d'action n'est invente, tous sont verifies contre ED/data/ed-actions.json par tools/validate-ed-mapping.py. Les chaines Device des peripheriques sont volontairement nulles : elles viennent de ED/data/releve-rig.json, ecrit par le jeu. Ne jamais les deviner.",
+ "etat": "proposition : numeros de bouton a confirmer, quatre arbitrages a trancher",
+ "source": "ED/CONCEPTION-MAPPING.md section 4",
+ "statuts": {
+  "retenu": "entree ecrite dans le .binds par tools/apply-ed-mapping.py",
+  "a-trancher": "entree listee mais NON ecrite : une decision est en attente"
+ },
+ "confiance": {
+  "releve-dcs": "numero releve sur ce rig dans le mapping DCS / Star Citizen",
+  "a-confirmer": "a figer par ED/data/releve-rig.json avant d'y placer quoi que ce soit d'utile"
+ },
+ "schema": {
+  "major": null,
+  "minor": null,
+  "note": "A reprendre de ED/data/releve-rig.json : un fichier 4.0 n'est pas lu par un jeu qui attend 4.2."
+ },
+ "peripheriques": {
+  "mancheDroit": {
+   "modele": "Virpil VPC Constellation ALPHA Prime (droit)",
+   "device": null,
+   "role": "viser et tirer",
+   "boutonsConnus": 32,
+   "axesConnus": [
+    "Joy_XAxis",
+    "Joy_YAxis",
+    "Joy_ZAxis",
+    "Joy_RXAxis",
+    "Joy_RYAxis",
+    "Joy_UAxis"
+   ],
+   "gabarit": "SC/img/VPC_Constellation_ALPHA_Prime_R.svg"
+  },
+  "mancheGauche": {
+   "modele": "Virpil VPC Constellation ALPHA Prime (gauche, extension coudee)",
+   "device": null,
+   "role": "manoeuvrer et survivre",
+   "boutonsConnus": 32,
+   "axesConnus": [
+    "Joy_XAxis",
+    "Joy_YAxis",
+    "Joy_ZAxis",
+    "Joy_RXAxis",
+    "Joy_RYAxis",
+    "Joy_UAxis"
+   ],
+   "gabarit": "SC/img/VPC_Constellation_ALPHA_Prime_L.svg",
+   "attention": "Meme VID+PID d'usine que le manche droit : le PID de l'un des deux DOIT etre change dans le VPC Configuration Tool avant tout bind. Voir decision 1."
+  },
+  "throttle": {
+   "modele": "Virpil VPC MongoosT-50CM3",
+   "device": null,
+   "role": "la vitesse d'abord, puis l'etat",
+   "boutonsConnus": 55,
+   "boutonsAvecRotacteur": 79,
+   "rotacteurMODE": {
+    "blanc": [
+     38,
+     43
+    ],
+    "bleu": [
+     56,
+     61
+    ],
+    "vert": [
+     62,
+     67
+    ],
+    "rouge": [
+     68,
+     73
+    ],
+    "jaune": [
+     74,
+     79
+    ],
+    "note": "Releve DCS : les six boutons B1-B6 emettent un numero different par cran. Le profil ED de reference prouve Joy_74 ; au-dela, a sonder."
+   },
+   "gabarit": "SC/img/throttle.png"
+  },
+  "pto2": {
+   "modele": "WinWing PTO2",
+   "device": null,
+   "role": "les etats tenus",
+   "boutonsConnus": 41,
+   "gabarit": "SC/img/PTO 2 Panel of Take Off.svg"
+  }
+ },
+ "reglages": {
+  "UIFocusMode": {
+   "valeur": "Bindings_FocusModeHold",
+   "statut": "a-trancher",
+   "pourquoi": "Decision 6 : maintenu rend la palette droite coherente avec le reste du mapping, mais interdit de garder un panneau ouvert en pilotant.",
+   "valeurAVerifier": "Chaine exacte a relire dans le .binds du jeu : ne pas l'ecrire de memoire."
+  },
+  "ThrottleRange": {
+   "valeur": null,
+   "statut": "a-trancher",
+   "pourquoi": "Decision 5 : avant seul recommande. Avec un levier CM3 sans cran central, la plage complete place le zero au milieu de la course et divise par deux la finesse dans la zone bleue.",
+   "valeurAVerifier": "Les trois chaines possibles sont a relever dans le .binds en basculant le reglage depuis le jeu."
+  }
+ },
+ "axes": [
+  {
+   "action": "RollAxisRaw",
+   "peripherique": "mancheDroit",
+   "key": "Joy_XAxis",
+   "inverse": null,
+   "zoneMorte": 0.0,
+   "repere": "cardan X",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Le roulis oriente le plan de virage : il va sur l'axe le plus rapide."
+  },
+  {
+   "action": "PitchAxisRaw",
+   "peripherique": "mancheDroit",
+   "key": "Joy_YAxis",
+   "inverse": null,
+   "zoneMorte": 0.0,
+   "repere": "cardan Y",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Sens a confirmer au premier vol : tirer = cabrer."
+  },
+  {
+   "action": "YawAxisRaw",
+   "peripherique": "mancheDroit",
+   "key": "Joy_ZAxis",
+   "inverse": null,
+   "zoneMorte": 0.0,
+   "repere": "twist",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Lacet volontairement lent sur la plupart des vaisseaux : il n'affine que la visee."
+  },
+  {
+   "action": "HeadLookYawAxis",
+   "peripherique": "mancheDroit",
+   "key": "Joy_RXAxis",
+   "inverse": null,
+   "zoneMorte": 0.0,
+   "repere": "mini-stick pouce X",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Regard libre analogique sous le pouce droit."
+  },
+  {
+   "action": "HeadLookPitchAxisRaw",
+   "peripherique": "mancheDroit",
+   "key": "Joy_RYAxis",
+   "inverse": null,
+   "zoneMorte": 0.0,
+   "repere": "mini-stick pouce Y",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Regard libre analogique sous le pouce droit."
+  },
+  {
+   "action": "RadarRangeAxis",
+   "peripherique": "mancheDroit",
+   "key": "Joy_UAxis",
+   "inverse": null,
+   "zoneMorte": 0.0,
+   "repere": "levier de frein (SLDR)",
+   "confiance": "a-confirmer",
+   "statut": "a-trancher",
+   "pourquoi": "Candidat : portee du scanner en analogique. Fait doublon avec la molette 21/22 : a trancher."
+  },
+  {
+   "action": "LateralThrustRaw",
+   "peripherique": "mancheGauche",
+   "key": "Joy_XAxis",
+   "inverse": null,
+   "zoneMorte": 0.0,
+   "repere": "cardan X",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Convention HOSAS : le manche gauche translate."
+  },
+  {
+   "action": "AheadThrust",
+   "peripherique": "mancheGauche",
+   "key": "Joy_YAxis",
+   "inverse": null,
+   "zoneMorte": 0.0,
+   "repere": "cardan Y",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Poussee avant/arriere independante de la manette des gaz."
+  },
+  {
+   "action": "VerticalThrustRaw",
+   "peripherique": "mancheGauche",
+   "key": "Joy_ZAxis",
+   "inverse": null,
+   "zoneMorte": 0.0,
+   "repere": "twist",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Decision 4 : la poussee verticale sert en permanence a l'amarrage et au combat rapproche."
+  },
+  {
+   "action": "ExplorationFSSRadioTuningX_Raw",
+   "peripherique": "mancheGauche",
+   "key": "Joy_UAxis",
+   "inverse": null,
+   "zoneMorte": 0.0,
+   "repere": "levier de frein (SLDR)",
+   "confiance": "a-confirmer",
+   "statut": "a-trancher",
+   "pourquoi": "Candidat : l'accord frequentiel du FSS merite un axe analogique. Contexte FSS, donc gratuit."
+  },
+  {
+   "action": "ThrottleAxis",
+   "peripherique": "throttle",
+   "key": "Joy_RZAxis",
+   "inverse": null,
+   "zoneMorte": 0.0,
+   "repere": "levier principal",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "L'axe le plus important du jeu : la zone bleue du bandeau de vitesse donne le meilleur taux de virage."
+  },
+  {
+   "action": "ExplorationFSSRadioTuningAbsoluteX",
+   "peripherique": "throttle",
+   "key": "Joy_RYAxis",
+   "inverse": null,
+   "zoneMorte": 0.0,
+   "repere": "second levier",
+   "confiance": "a-confirmer",
+   "statut": "a-trancher",
+   "pourquoi": "Accord FSS en position absolue, ou portee du scanner : a trancher avec l'axe du manche droit."
+  }
+ ],
+ "boutons": [
+  {
+   "action": "PrimaryFire",
+   "peripherique": "mancheDroit",
+   "key": "Joy_4",
+   "slot": "Primary",
+   "repere": "gachette cran 1",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Le geste de base."
+  },
+  {
+   "action": "SecondaryFire",
+   "peripherique": "mancheDroit",
+   "key": "Joy_5",
+   "slot": "Primary",
+   "repere": "gachette cran 2",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Second groupe de feu sur le meme doigt."
+  },
+  {
+   "action": "UIFocus",
+   "peripherique": "mancheDroit",
+   "key": "Joy_7",
+   "slot": "Primary",
+   "repere": "palette auriculaire",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Palette tenue = interface au premier plan : tous les panneaux se pilotent sans lacher les manches. Voir reglage UIFocusMode."
+  },
+  {
+   "action": "HeadLookReset",
+   "peripherique": "mancheDroit",
+   "key": "Joy_6",
+   "slot": "Primary",
+   "repere": "appui mini-stick",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Recentre le regard d'un clic de pouce."
+  },
+  {
+   "action": "SelectTarget",
+   "peripherique": "mancheDroit",
+   "key": "Joy_9",
+   "slot": "Primary",
+   "repere": "hat A haut",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Cible ce qui est devant : le geste le plus frequent en combat."
+  },
+  {
+   "action": "CyclePreviousHostileTarget",
+   "peripherique": "mancheDroit",
+   "key": "Joy_10",
+   "slot": "Primary",
+   "repere": "hat A gauche",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Horizontal = defiler la liste des hostiles."
+  },
+  {
+   "action": "SelectTargetsTarget",
+   "peripherique": "mancheDroit",
+   "key": "Joy_11",
+   "slot": "Primary",
+   "repere": "hat A bas",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Qui vise ma cible : indispensable en escadrille."
+  },
+  {
+   "action": "CycleNextHostileTarget",
+   "peripherique": "mancheDroit",
+   "key": "Joy_12",
+   "slot": "Primary",
+   "repere": "hat A droite",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Horizontal = defiler la liste des hostiles."
+  },
+  {
+   "action": "SelectHighestThreat",
+   "peripherique": "mancheDroit",
+   "key": "Joy_8",
+   "slot": "Primary",
+   "repere": "appui hat A",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "La menace immediate, en un appui.",
+   "critique": true
+  },
+  {
+   "action": "UI_Up",
+   "peripherique": "mancheDroit",
+   "key": "Joy_9",
+   "slot": "Primary",
+   "repere": "hat A haut (interface)",
+   "confiance": "releve-dcs",
+   "statut": "a-trancher",
+   "pourquoi": "Ajout : sans UI_* assigne, maintenir UIFocus ouvre un panneau qu'on ne peut pas parcourir. Contexte interface, donc gratuit."
+  },
+  {
+   "action": "UI_Left",
+   "peripherique": "mancheDroit",
+   "key": "Joy_10",
+   "slot": "Primary",
+   "repere": "hat A gauche (interface)",
+   "confiance": "releve-dcs",
+   "statut": "a-trancher",
+   "pourquoi": "Ajout, voir UI_Up."
+  },
+  {
+   "action": "UI_Down",
+   "peripherique": "mancheDroit",
+   "key": "Joy_11",
+   "slot": "Primary",
+   "repere": "hat A bas (interface)",
+   "confiance": "releve-dcs",
+   "statut": "a-trancher",
+   "pourquoi": "Ajout, voir UI_Up."
+  },
+  {
+   "action": "UI_Right",
+   "peripherique": "mancheDroit",
+   "key": "Joy_12",
+   "slot": "Primary",
+   "repere": "hat A droite (interface)",
+   "confiance": "releve-dcs",
+   "statut": "a-trancher",
+   "pourquoi": "Ajout, voir UI_Up."
+  },
+  {
+   "action": "UI_Select",
+   "peripherique": "mancheDroit",
+   "key": "Joy_8",
+   "slot": "Primary",
+   "repere": "appui hat A (interface)",
+   "confiance": "releve-dcs",
+   "statut": "a-trancher",
+   "pourquoi": "Ajout, voir UI_Up."
+  },
+  {
+   "action": "CycleFireGroupNext",
+   "peripherique": "mancheDroit",
+   "key": "Joy_15",
+   "slot": "Primary",
+   "repere": "hat B haut",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Groupes de feu sous l'index."
+  },
+  {
+   "action": "CyclePreviousSubsystem",
+   "peripherique": "mancheDroit",
+   "key": "Joy_16",
+   "slot": "Primary",
+   "repere": "hat B gauche",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Horizontal = defiler les sous-systemes."
+  },
+  {
+   "action": "CycleFireGroupPrevious",
+   "peripherique": "mancheDroit",
+   "key": "Joy_17",
+   "slot": "Primary",
+   "repere": "hat B bas",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Groupes de feu sous l'index."
+  },
+  {
+   "action": "CycleNextSubsystem",
+   "peripherique": "mancheDroit",
+   "key": "Joy_18",
+   "slot": "Primary",
+   "repere": "hat B droite",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Horizontal = defiler les sous-systemes."
+  },
+  {
+   "action": "DeployHardpointToggle",
+   "peripherique": "mancheDroit",
+   "key": "Joy_14",
+   "slot": "Primary",
+   "repere": "appui hat B",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Bascule pure, et le jeu la change seul a l'entree en supercroisiere : elle ne doit JAMAIS aller sur un inverseur maintenu."
+  },
+  {
+   "action": "CycleNextPage",
+   "peripherique": "mancheDroit",
+   "key": "Joy_24",
+   "slot": "Primary",
+   "repere": "hat C haut",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Vertical = pages dans un panneau."
+  },
+  {
+   "action": "CyclePreviousPanel",
+   "peripherique": "mancheDroit",
+   "key": "Joy_25",
+   "slot": "Primary",
+   "repere": "hat C gauche",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Horizontal = panneaux du cockpit."
+  },
+  {
+   "action": "CyclePreviousPage",
+   "peripherique": "mancheDroit",
+   "key": "Joy_26",
+   "slot": "Primary",
+   "repere": "hat C bas",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Vertical = pages dans un panneau."
+  },
+  {
+   "action": "CycleNextPanel",
+   "peripherique": "mancheDroit",
+   "key": "Joy_27",
+   "slot": "Primary",
+   "repere": "hat C droite",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Horizontal = panneaux du cockpit."
+  },
+  {
+   "action": "UI_Back",
+   "peripherique": "mancheDroit",
+   "key": "Joy_23",
+   "slot": "Primary",
+   "repere": "appui hat C",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Sortir, coherent avec la palette."
+  },
+  {
+   "action": "RadarIncreaseRange",
+   "peripherique": "mancheDroit",
+   "key": "Joy_21",
+   "slot": "Primary",
+   "repere": "molette haut",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Portee du scanner au pouce."
+  },
+  {
+   "action": "RadarDecreaseRange",
+   "peripherique": "mancheDroit",
+   "key": "Joy_22",
+   "slot": "Primary",
+   "repere": "molette bas",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Portee du scanner au pouce."
+  },
+  {
+   "action": "PlayerHUDModeToggle",
+   "peripherique": "mancheDroit",
+   "key": "Joy_19",
+   "slot": "Primary",
+   "repere": "appui molette",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Combat / analyse : la bascule la plus frequente en exploration."
+  },
+  {
+   "action": "PlayerHUDModeToggle",
+   "peripherique": "mancheDroit",
+   "key": "Joy_20",
+   "slot": "Secondary",
+   "repere": "appui profond molette",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Second slot de la meme action : les deux crans de la molette font la meme bascule."
+  },
+  {
+   "action": "FireChaffLauncher",
+   "peripherique": "mancheDroit",
+   "key": "Joy_29",
+   "slot": "Primary",
+   "repere": "bascule haut",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Critique : une avarie ne previent pas, position fixe.",
+   "critique": true
+  },
+  {
+   "action": "DeployHeatSink",
+   "peripherique": "mancheDroit",
+   "key": "Joy_30",
+   "slot": "Primary",
+   "repere": "bascule bas",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Critique : position fixe.",
+   "critique": true
+  },
+  {
+   "action": "UseShieldCell",
+   "peripherique": "mancheDroit",
+   "key": "Joy_28",
+   "slot": "Primary",
+   "repere": "appui bascule",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Critique : position fixe.",
+   "critique": true
+  },
+  {
+   "action": "TargetNextRouteSystem",
+   "peripherique": "mancheDroit",
+   "key": "Joy_3",
+   "slot": "Primary",
+   "repere": "bouton simple",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Systeme suivant de la route, sous le pouce."
+  },
+  {
+   "action": "WingNavLock",
+   "peripherique": "mancheDroit",
+   "key": "Joy_13",
+   "slot": "Primary",
+   "repere": "bouton simple",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Verrou de navigation d'escadrille."
+  },
+  {
+   "action": "UseBoostJuice",
+   "peripherique": "mancheGauche",
+   "key": "Joy_4",
+   "slot": "Primary",
+   "repere": "gachette cran 1",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Critique : le boost est le geste de survie du jeu.",
+   "critique": true
+  },
+  {
+   "action": "ToggleFlightAssist",
+   "peripherique": "mancheGauche",
+   "key": "Joy_7",
+   "slot": "Primary",
+   "repere": "palette auriculaire",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "L'action accepte le maintien : palette tenue = assistance coupee, relachee = rebranchee. Aucun doute sur l'etat.",
+   "toggleOn": 0,
+   "critique": true
+  },
+  {
+   "action": "IncreaseEnginesPower",
+   "peripherique": "mancheGauche",
+   "key": "Joy_9",
+   "slot": "Primary",
+   "repere": "hat A haut",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Triangle d'energie : reprend la disposition clavier.",
+   "critique": true
+  },
+  {
+   "action": "IncreaseSystemsPower",
+   "peripherique": "mancheGauche",
+   "key": "Joy_10",
+   "slot": "Primary",
+   "repere": "hat A gauche",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Triangle d'energie.",
+   "critique": true
+  },
+  {
+   "action": "ResetPowerDistribution",
+   "peripherique": "mancheGauche",
+   "key": "Joy_11",
+   "slot": "Primary",
+   "repere": "hat A bas",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Equilibrer : le reflexe de sortie de combat.",
+   "critique": true
+  },
+  {
+   "action": "IncreaseWeaponsPower",
+   "peripherique": "mancheGauche",
+   "key": "Joy_12",
+   "slot": "Primary",
+   "repere": "hat A droite",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Triangle d'energie.",
+   "critique": true
+  },
+  {
+   "action": "SetSpeed100",
+   "peripherique": "mancheGauche",
+   "key": "Joy_15",
+   "slot": "Primary",
+   "repere": "hat B haut",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Vitesse fixe quand la main quitte la manette des gaz."
+  },
+  {
+   "action": "SetSpeed50",
+   "peripherique": "mancheGauche",
+   "key": "Joy_16",
+   "slot": "Primary",
+   "repere": "hat B gauche",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Milieu de la zone bleue, en un appui."
+  },
+  {
+   "action": "SetSpeedZero",
+   "peripherique": "mancheGauche",
+   "key": "Joy_17",
+   "slot": "Primary",
+   "repere": "hat B bas",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Arret net."
+  },
+  {
+   "action": "SetSpeedMinus100",
+   "peripherique": "mancheGauche",
+   "key": "Joy_18",
+   "slot": "Primary",
+   "repere": "hat B droite",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Marche arriere pleine."
+  },
+  {
+   "action": "ToggleReverseThrottleInput",
+   "peripherique": "mancheGauche",
+   "key": "Joy_14",
+   "slot": "Primary",
+   "repere": "appui hat B",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Complement de la decision 5 : manette des gaz en avant seul, marche arriere par cette bascule.",
+   "toggleOn": 1
+  },
+  {
+   "action": "HyperSuperCombination",
+   "peripherique": "mancheGauche",
+   "key": "Joy_24",
+   "slot": "Primary",
+   "repere": "hat C haut",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Supercroisiere et saut sur le meme appui."
+  },
+  {
+   "action": "TargetNextRouteSystem",
+   "peripherique": "mancheGauche",
+   "key": "Joy_25",
+   "slot": "Secondary",
+   "repere": "hat C gauche",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Second slot : doublon de confort du bouton 3 du manche droit."
+  },
+  {
+   "action": "DecreaseSpeedButtonMax",
+   "peripherique": "mancheGauche",
+   "key": "Joy_26",
+   "slot": "Primary",
+   "repere": "hat C bas",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Sortie de supercroisiere : couper les gaz a fond."
+  },
+  {
+   "action": "GalaxyMapOpen",
+   "peripherique": "mancheGauche",
+   "key": "Joy_27",
+   "slot": "Primary",
+   "repere": "hat C droite",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Carte galactique sans lacher les manches."
+  },
+  {
+   "action": "SystemMapOpen",
+   "peripherique": "mancheGauche",
+   "key": "Joy_23",
+   "slot": "Primary",
+   "repere": "appui hat C",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Carte du systeme."
+  },
+  {
+   "action": "ForwardKey",
+   "peripherique": "mancheGauche",
+   "key": "Joy_21",
+   "slot": "Primary",
+   "repere": "molette haut",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Vitesse fine au pouce."
+  },
+  {
+   "action": "BackwardKey",
+   "peripherique": "mancheGauche",
+   "key": "Joy_22",
+   "slot": "Primary",
+   "repere": "molette bas",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Vitesse fine au pouce."
+  },
+  {
+   "action": "ToggleRotationLock",
+   "peripherique": "mancheGauche",
+   "key": "Joy_19",
+   "slot": "Secondary",
+   "repere": "appui molette",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Second slot : doublon de confort du PTO2, atteignable en manoeuvre d'amarrage."
+  },
+  {
+   "action": "DisableRotationCorrectToggle",
+   "peripherique": "mancheGauche",
+   "key": "Joy_20",
+   "slot": "Secondary",
+   "repere": "appui profond molette",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Second slot : doublon de confort du PTO2.",
+   "toggleOn": 1
+  },
+  {
+   "action": "ToggleCargoScoop",
+   "peripherique": "mancheGauche",
+   "key": "Joy_30",
+   "slot": "Secondary",
+   "repere": "bascule bas",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Second slot du collecteur : l'ouvrir vite quand on ramasse. Herite du maintien regle sur le PTO2."
+  },
+  {
+   "action": "LandingGearToggle",
+   "peripherique": "mancheGauche",
+   "key": "Joy_29",
+   "slot": "Primary",
+   "repere": "bascule haut",
+   "confiance": "releve-dcs",
+   "statut": "a-trancher",
+   "pourquoi": "Arbitrage 2 : une action n'a que deux slots, et le levier du PTO2 les prend tous les deux pour rester honnete. Ce doublon est donc exclu tant que le levier garde ses deux positions."
+  },
+  {
+   "action": "ShipSpotLightToggle",
+   "peripherique": "mancheGauche",
+   "key": "Joy_28",
+   "slot": "Primary",
+   "repere": "appui bascule",
+   "confiance": "releve-dcs",
+   "statut": "a-trancher",
+   "pourquoi": "Arbitrage 2 : meme raison que le train."
+  },
+  {
+   "action": "EjectAllCargo",
+   "peripherique": "mancheGauche",
+   "key": "Joy_1",
+   "slot": "Secondary",
+   "repere": "bouton simple",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Sous modificateur du manche droit : jamais par megarde. Le modificateur inter-peripherique est natif.",
+   "modificateur": {
+    "peripherique": "mancheDroit",
+    "key": "Joy_31"
+   }
+  },
+  {
+   "action": "MicrophoneMute",
+   "peripherique": "mancheGauche",
+   "key": "Joy_2",
+   "slot": "Secondary",
+   "repere": "bouton simple",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Second slot de l'alternat radio."
+  },
+  {
+   "action": "RecallDismissShip",
+   "peripherique": "mancheGauche",
+   "key": "Joy_3",
+   "slot": "Secondary",
+   "repere": "bouton simple",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Second slot : rappeler le vaisseau depuis le sol."
+  },
+  {
+   "action": "ChargeECM",
+   "peripherique": "mancheGauche",
+   "key": "Joy_13",
+   "slot": "Primary",
+   "repere": "bouton simple",
+   "confiance": "releve-dcs",
+   "statut": "retenu",
+   "pourquoi": "Brouilleur : rompre un verrou de missile.",
+   "critique": true
+  },
+  {
+   "action": "FocusCommsPanel",
+   "peripherique": "throttle",
+   "key": "Joy_9",
+   "slot": "Primary",
+   "repere": "hat haut",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Direction du hat = position du panneau dans le cockpit."
+  },
+  {
+   "action": "FocusLeftPanel",
+   "peripherique": "throttle",
+   "key": "Joy_10",
+   "slot": "Primary",
+   "repere": "hat gauche",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Panneau de navigation, a gauche."
+  },
+  {
+   "action": "FocusRadarPanel",
+   "peripherique": "throttle",
+   "key": "Joy_11",
+   "slot": "Primary",
+   "repere": "hat bas",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Panneau de role, en bas."
+  },
+  {
+   "action": "FocusRightPanel",
+   "peripherique": "throttle",
+   "key": "Joy_12",
+   "slot": "Primary",
+   "repere": "hat droite",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Panneau d'etat du vaisseau, a droite."
+  },
+  {
+   "action": "UI_Toggle",
+   "peripherique": "throttle",
+   "key": "Joy_8",
+   "slot": "Primary",
+   "repere": "appui hat",
+   "confiance": "a-confirmer",
+   "statut": "a-trancher",
+   "pourquoi": "Ouvrir/fermer l'interface."
+  },
+  {
+   "action": "LandingGearToggle",
+   "peripherique": "pto2",
+   "key": "Joy_35",
+   "slot": "Primary",
+   "repere": "levier de train, position haute",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Les deux positions extremes portent la MEME bascule : chaque mouvement du levier produit un appui, donc une inversion. La position physique reste l'etat."
+  },
+  {
+   "action": "LandingGearToggle",
+   "peripherique": "pto2",
+   "key": "Joy_37",
+   "slot": "Secondary",
+   "repere": "levier de train, position basse",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Second slot du meme levier : voir la position haute."
+  },
+  {
+   "action": "ToggleCargoScoop",
+   "peripherique": "pto2",
+   "key": "Joy_5",
+   "slot": "Primary",
+   "repere": "volets, position haute",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Action acceptant le maintien : ToggleOn=0, la position physique EST l'etat, sans derive possible.",
+   "toggleOn": 0
+  },
+  {
+   "action": "ShipSpotLightToggle",
+   "peripherique": "pto2",
+   "key": "Joy_8",
+   "slot": "Primary",
+   "repere": "inverseur 2 positions",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Bascule sur les deux positions : phares."
+  },
+  {
+   "action": "ShipSpotLightToggle",
+   "peripherique": "pto2",
+   "key": "Joy_9",
+   "slot": "Secondary",
+   "repere": "inverseur 2 positions",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Second slot du meme inverseur."
+  },
+  {
+   "action": "NightVisionToggle",
+   "peripherique": "pto2",
+   "key": "Joy_10",
+   "slot": "Primary",
+   "repere": "inverseur 2 positions",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Bascule sur les deux positions : vision nocturne."
+  },
+  {
+   "action": "NightVisionToggle",
+   "peripherique": "pto2",
+   "key": "Joy_11",
+   "slot": "Secondary",
+   "repere": "inverseur 2 positions",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Second slot du meme inverseur."
+  },
+  {
+   "action": "OrbitLinesToggle",
+   "peripherique": "pto2",
+   "key": "Joy_12",
+   "slot": "Primary",
+   "repere": "inverseur 2 positions",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Bascule sur les deux positions : lignes d'orbite."
+  },
+  {
+   "action": "OrbitLinesToggle",
+   "peripherique": "pto2",
+   "key": "Joy_13",
+   "slot": "Secondary",
+   "repere": "inverseur 2 positions",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Second slot du meme inverseur."
+  },
+  {
+   "action": "ToggleRotationLock",
+   "peripherique": "pto2",
+   "key": "Joy_32",
+   "slot": "Primary",
+   "repere": "crosse d'appontage, position haute",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Verrou de rotation a l'amarrage."
+  },
+  {
+   "action": "DisableRotationCorrectToggle",
+   "peripherique": "pto2",
+   "key": "Joy_34",
+   "slot": "Primary",
+   "repere": "crosse d'appontage, position basse",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Correction de rotation.",
+   "toggleOn": 1
+  },
+  {
+   "action": "RecallDismissShip",
+   "peripherique": "pto2",
+   "key": "Joy_14",
+   "slot": "Primary",
+   "repere": "perche, position haute",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Rappeler / renvoyer le vaisseau."
+  },
+  {
+   "action": "EjectAllCargo",
+   "peripherique": "pto2",
+   "key": "Joy_16",
+   "slot": "Primary",
+   "repere": "perche, position basse",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Position gardee : larguer la soute ne doit jamais etre un geste reflexe."
+  },
+  {
+   "action": "MicrophoneMute",
+   "peripherique": "pto2",
+   "key": "Joy_38",
+   "slot": "Primary",
+   "repere": "frein de parking",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Alternat radio en maintien : la position physique EST l'etat.",
+   "toggleOn": 0
+  },
+  {
+   "action": "GalaxyMapOpen",
+   "peripherique": "pto2",
+   "key": "Joy_1",
+   "slot": "Secondary",
+   "repere": "bouton simple",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Second slot de la carte galactique."
+  },
+  {
+   "action": "SystemMapOpen",
+   "peripherique": "pto2",
+   "key": "Joy_2",
+   "slot": "Secondary",
+   "repere": "bouton simple",
+   "confiance": "a-confirmer",
+   "statut": "retenu",
+   "pourquoi": "Second slot de la carte du systeme."
+  }
+ ],
+ "arbitrages": [
+  {
+   "id": 1,
+   "titre": "UI_* n'est assigne nulle part dans la proposition publiee",
+   "constat": "La palette droite porte UIFocus, et le hat C porte le defilement des panneaux et des pages. Mais UI_Up / UI_Down / UI_Left / UI_Right / UI_Select ne sont assignes sur aucun peripherique : maintenir la palette ouvre donc un panneau qu'on ne peut pas parcourir.",
+   "proposition": "Poser UI_Up/Left/Down/Right/Select sur le hat A du manche droit. Le contexte est interface, le hat A porte du ciblage en contexte vaisseau : les deux coexistent sans conflit et sans modificateur. Cout nul.",
+   "statut": "a-trancher"
+  },
+  {
+   "id": 2,
+   "titre": "Une action n'a que deux slots, et trois touches etaient prevues",
+   "constat": "Le train, le collecteur et les phares etaient proposes a la fois sur la bascule du manche gauche et sur le PTO2. Or le jeu n'offre que Primary et Secondary par action : trois touches ne rentrent pas.",
+   "proposition": "Le PTO2 detient l'etat. Un levier dont les deux positions emettent un numero prend les deux slots pour que sa position physique reste l'etat (train, phares, vision nocturne, lignes d'orbite). La ou une seule touche suffit (collecteur en maintien, verrous de rotation, cartes, alternat), le second slot va au manche. Consequence : le doublon de train et de phares sur le manche gauche est exclu, et les boutons 28/29 du manche gauche redeviennent libres.",
+   "statut": "a-trancher"
+  },
+  {
+   "id": 3,
+   "titre": "Portee du scanner : un axe ou une molette",
+   "constat": "RadarRangeAxis est propose sur le levier du manche droit ET sur le second levier du throttle, alors que la molette du manche droit porte deja RadarIncreaseRange / RadarDecreaseRange.",
+   "proposition": "Garder la molette (precise, crantee, sans derive) et laisser les deux leviers a l'accord du FSS, qui profite reellement d'un analogique.",
+   "statut": "a-trancher"
+  },
+  {
+   "id": 4,
+   "titre": "Direction de chaque action dans un hat",
+   "constat": "Le document de conception donne les quatre actions d'un hat sans dire quelle direction porte laquelle.",
+   "proposition": "Regle unique : horizontal = defiler une liste, vertical = designer ou valider. Appliquee a tous les hats de ce plan.",
+   "statut": "a-trancher"
+  }
+ ],
+ "horsPerimetre": {
+  "contextes": [
+   "srv",
+   "apied",
+   "fss",
+   "dss",
+   "equipage",
+   "camera",
+   "colonisation"
+  ],
+  "pourquoi": "Le noyau vaisseau + interface se livre d'abord. Les autres contextes se posent ensuite sur les MEMES doigts sans rien deplacer : c'est le jeu qui bascule, pas le pilote.",
+  "rotacteurMODE": "Confort mnemotechnique, pas une necessite : il sert a degrouper les commandes rares d'un metier, jamais a atteindre une commande vitale.",
+  "pedalier": "Decision 3 : hors perimetre par defaut, a revoir apres le premier vol."
+ }
+}
